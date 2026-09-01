@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "skills": {
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "93f53fd1c0352d3d7ec17b8f73d7351bf76f4821e55d123c9d2abc2c53ba48e4"
+    },
+    "rust-code-review": {
+      "source": "full-stack-skills/rust-skills",
+      "sourceType": "github",
+      "skillPath": "skills/rust-code-review/SKILL.md",
+      "computedHash": "aac618f00c3654b4ff3eef7604ae593aff5017cce87b361d994bdde5c48f10ab"
+    },
+    "rust-testing": {
+      "source": "full-stack-skills/rust-skills",
+      "sourceType": "github",
+      "skillPath": "skills/rust-testing/SKILL.md",
+      "computedHash": "921bc5c4e35e0d98dba51828a83d438e383ff41219f50f73737247a1265ca763"
+    },
+    "tauri": {
+      "source": "full-stack-skills/tauri-skills",
+      "sourceType": "github",
+      "skillPath": "skills/tauri/SKILL.md",
+      "computedHash": "32d3914728954a2c470d2ad8f1de258b0a573cc7f9480a9b3b0fd018ef7c184a"
+    },
+    "tauri-build": {
+      "source": "full-stack-skills/tauri-skills",
+      "sourceType": "github",
+      "skillPath": "skills/tauri-build/SKILL.md",
+      "computedHash": "28a5d463853a6065fcb282d2d78ee2f258d195bffe8dcaebed1efa8dc740b4ca"
+    },
+    "tauri-concept": {
+      "source": "full-stack-skills/tauri-skills",
+      "sourceType": "github",
+      "skillPath": "skills/tauri-concept/SKILL.md",
+      "computedHash": "2bb469247d9df1334d5e4b89335e2634de520d8e11970cfe444a4f119f235386"
+    },
+    "tauri-setup": {
+      "source": "full-stack-skills/tauri-skills",
+      "sourceType": "github",
+      "skillPath": "skills/tauri-setup/SKILL.md",
+      "computedHash": "958ee16e2f052448a1765404b443ee5de19aee5dc8517ab7ce79a5881cc81b82"
+    }
+  }
+}
