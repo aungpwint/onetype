@@ -4,6 +4,7 @@ import { initUi, useUiStore } from "./stores/ui-store";
 import { useStudentStore } from "./stores/student-store";
 import { useSettingsStore } from "./stores/settings-store";
 import { useStartupUpdateCheck } from "./services/updater/use-updater";
+import { notificationService } from "./services/notification/service";
 import { Shell } from "./components/AppShell";
 import { UpdateBanner } from "./components/UpdateBanner";
 import { UpdateDialog } from "./components/UpdateDialog";
@@ -25,6 +26,7 @@ function Boot() {
     void useUiStore.getState().setTheme(useUiStore.getState().theme);
     void useSettingsStore.getState().load();
     void useStudentStore.getState().load();
+    void notificationService.init();
   }, []);
   return null;
 }

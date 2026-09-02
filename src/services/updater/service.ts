@@ -1,7 +1,9 @@
 import { type Update } from "@tauri-apps/plugin-updater";
 import { relaunch } from "@tauri-apps/plugin-process";
 import type { UpdateStatus } from "./types";
+import { isNewerVersion, mapUpdateError } from "./types";
 import { isTauriRuntime } from "../ipc";
+import { notificationService } from "../notification/service";
 
 type Listener = (status: UpdateStatus) => void;
 
@@ -9,6 +11,8 @@ class UpdaterService {
   private status: UpdateStatus = { state: "idle" };
   private listeners = new Set<Listener>();
   private updateObj: Update | null = null;
+  private checking = false;
+  private downloading = false;
 
   subscribe(fn: Listener): () => void {
     this.listeners.add(fn);
@@ -21,12 +25,18 @@ class UpdaterService {
     for (const fn of this.listeners) fn(status);
   }
 
-  async check(): Promise<boolean> {
+  getStatus(): UpdateStatus {
+    return this.status;
+  }
+
+  async check(currentVersion?: string): Promise<boolean> {
+    if (this.checking) return false;
     if (!isTauriRuntime()) {
       this.emit({ state: "not-available" });
       return false;
     }
 
+    this.checking = true;
     this.emit({ state: "checking" });
 
     try {
@@ -34,6 +44,11 @@ class UpdaterService {
       const update = await check();
 
       if (!update) {
+        this.emit({ state: "not-available" });
+        return false;
+      }
+
+      if (currentVersion && !isNewerVersion(currentVersion, update.version)) {
         this.emit({ state: "not-available" });
         return false;
       }
@@ -47,15 +62,18 @@ class UpdaterService {
       });
       return true;
     } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
+      const message = mapUpdateError(err);
       this.emit({ state: "error", message });
       return false;
+    } finally {
+      this.checking = false;
     }
   }
 
   async downloadAndInstall(): Promise<void> {
-    if (!this.updateObj) return;
+    if (!this.updateObj || this.downloading) return;
 
+    this.downloading = true;
     this.emit({ state: "downloading", progress: 0 });
 
     try {
@@ -81,18 +99,28 @@ class UpdaterService {
       });
 
       this.emit({ state: "downloaded" });
+
+      notificationService.send({
+        title: "OneType Update Ready",
+        body: "The latest update has been downloaded and is ready to install.",
+      });
     } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
+      const message = mapUpdateError(err);
       this.emit({ state: "error", message });
+    } finally {
+      this.downloading = false;
     }
   }
 
   async install(): Promise<void> {
+    this.emit({ state: "installing" });
     await relaunch();
   }
 
   reset() {
     this.updateObj = null;
+    this.checking = false;
+    this.downloading = false;
     this.emit({ state: "idle" });
   }
 }

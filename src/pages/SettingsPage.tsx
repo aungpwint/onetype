@@ -21,6 +21,8 @@ export default function SettingsPage() {
 
   const defaultLang = settings.get("app.language");
   const confirmExit = settings.get("practice.confirmExit");
+  const notificationsEnabled = settings.get("notification.enabled");
+  const notifyUpdates = settings.get("notification.notifyUpdates");
 
   const [report, setReport] = useState<{ kind: "export" | "import"; message: string } | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -156,6 +158,44 @@ export default function SettingsPage() {
             </div>
           ))}
         </dl>
+      </section>
+
+      <section className="card p-5">
+        <h2 className="font-display text-lg">Notifications</h2>
+        <div className="mt-4 space-y-3">
+          <label className="flex items-center justify-between rounded-lg border border-line px-4 py-3">
+            <span>
+              <span className="block text-sm">Enable notifications</span>
+              <span className="block text-xs text-ink-soft">
+                Allow OneType to send native OS notifications.
+              </span>
+            </span>
+            <input
+              type="checkbox"
+              checked={notificationsEnabled !== "off"}
+              onChange={(e) =>
+                void settings.set("notification.enabled", e.target.checked ? "on" : "off")
+              }
+              className="h-5 w-5 accent-[var(--accent)]"
+            />
+          </label>
+          <label className="flex items-center justify-between rounded-lg border border-line px-4 py-3">
+            <span>
+              <span className="block text-sm">Notify about application updates</span>
+              <span className="block text-xs text-ink-soft">
+                Show a notification when a new version is available.
+              </span>
+            </span>
+            <input
+              type="checkbox"
+              checked={notifyUpdates !== "off"}
+              onChange={(e) =>
+                void settings.set("notification.notifyUpdates", e.target.checked ? "on" : "off")
+              }
+              className="h-5 w-5 accent-[var(--accent)]"
+            />
+          </label>
+        </div>
       </section>
 
       <section className="card p-5">

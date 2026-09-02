@@ -1,7 +1,7 @@
 import { useUpdater } from "../services/updater/use-updater";
 
 export function UpdateBanner() {
-  const { status, check } = useUpdater();
+  const { status, check, downloadAndInstall } = useUpdater();
 
   if (status.state !== "available") return null;
 
@@ -18,9 +18,13 @@ export function UpdateBanner() {
         >
           Check again
         </button>
-        <a href="#/settings" className="btn btn-primary !py-1 text-xs">
-          View update
-        </a>
+        <button
+          type="button"
+          className="btn btn-brass !py-1 text-xs"
+          onClick={downloadAndInstall}
+        >
+          Download &amp; install
+        </button>
       </div>
     </div>
   );

@@ -11,6 +11,9 @@ export const APP_SETTING_KEYS = [
   "view.sidebar",
   "teacher.studentCodePrefix",
   "updater.lastChecked",
+  "notification.enabled",
+  "notification.notifyUpdates",
+  "notification.lastNotifiedVersion",
 ] as const;
 
 export type AppSettingKey = (typeof APP_SETTING_KEYS)[number];
@@ -25,6 +28,9 @@ export const DEFAULT_SETTINGS: Record<AppSettingKey, string> = {
   "view.sidebar": "on",
   "teacher.studentCodePrefix": "STU",
   "updater.lastChecked": "0",
+  "notification.enabled": "on",
+  "notification.notifyUpdates": "on",
+  "notification.lastNotifiedVersion": "",
 };
 
 interface SettingsState {

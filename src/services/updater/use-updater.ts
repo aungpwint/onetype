@@ -3,6 +3,7 @@ import { updaterService } from "./service";
 import type { UpdateStatus } from "./types";
 import { useSettingsStore } from "../../stores/settings-store";
 import { CHECK_THROTTLE_MS } from "./types";
+import { notificationService } from "../notification/service";
 
 export function useUpdater() {
   const [status, setStatus] = useState<UpdateStatus>({ state: "idle" });
@@ -34,8 +35,23 @@ export function useStartupUpdateCheck() {
     if (now - last < CHECK_THROTTLE_MS) return;
 
     checked.current = true;
-    void updaterService.check().then(() => {
-      void setSetting("updater.lastChecked", String(now));
+    void updaterService.check().then(async (available) => {
+      await setSetting("updater.lastChecked", String(now));
+
+      if (available) {
+        const status = updaterService.getStatus();
+        if (status.state === "available") {
+          const notifyUpdates = useSettingsStore.getState().get("notification.notifyUpdates");
+          const lastNotified = useSettingsStore.getState().get("notification.lastNotifiedVersion");
+          if (notifyUpdates !== "off" && status.version !== lastNotified) {
+            await notificationService.send({
+              title: "OneType Update Available",
+              body: `A new version of OneType is available. Click to view the update.`,
+            });
+            await setSetting("notification.lastNotifiedVersion", status.version);
+          }
+        }
+      }
     });
   }, [autoUpdate, lastChecked, setSetting]);
 }
