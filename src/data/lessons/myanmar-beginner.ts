@@ -1,0 +1,286 @@
+import type { Difficulty } from "../../types";
+import type { LessonData } from "../curriculum/types";
+import { toPhases } from "../curriculum/types";
+
+interface LessonSeed {
+  number: number;
+  title: string;
+  titleMy: string;
+  description: string;
+  difficulty: Difficulty;
+  estimatedMinutes: number;
+  focusKeys?: string[];
+  minAccuracy: number;
+  minWpm: number | null;
+  phases: (string | string[] | { i: string; t: string | string[] })[];
+}
+
+function lesson(seed: LessonSeed): LessonData {
+  const phases = seed.phases.map((phase) => {
+    if (typeof phase === "string") {
+      return { instruction: phase, text: phase };
+    }
+    if (Array.isArray(phase)) {
+      return { instruction: "ဤပုဒ်များကို လေ့ကျင့်ပါ", text: phase.join(" ") };
+    }
+    return { instruction: phase.i, text: Array.isArray(phase.t) ? phase.t.join(" ") : phase.t };
+  });
+  return {
+    id: `lesson-my-beginner-${seed.number}`,
+    level: "beginner",
+    number: seed.number,
+    title: seed.title,
+    titleMy: seed.titleMy,
+    description: seed.description,
+    difficulty: seed.difficulty,
+    estimatedMinutes: seed.estimatedMinutes,
+    language: "myanmar",
+    layoutId: "myanmar3",
+    completion: { minAccuracy: seed.minAccuracy, minWpm: seed.minWpm },
+    focusKeys: seed.focusKeys,
+    phases: toPhases(
+      phases.map((p) => ({
+        kind: "text",
+        instruction: p.instruction,
+        text: p.text,
+      })),
+    ),
+  };
+}
+
+export const myanmarBeginnerLessons: LessonData[] = [
+  lesson({
+    number: 1,
+    title: "Myanmar3 Keyboard + Position",
+    titleMy: "Myanmar3 ကီးဘုတ် အလေ့အကျင့်",
+    description: "အိမ်အနေအထား (Home Row) အသံထွက် နှင့် ကီးဘုတ် အသုံးပြုနည်း",
+    difficulty: "basic",
+    estimatedMinutes: 5,
+    minAccuracy: 80,
+    minWpm: null,
+    focusKeys: ["KeyU", "KeyI", "KeyR", "KeyW"],
+    phases: ["က က က င င င မ မ မ တ တ တ"],
+  }),
+  lesson({
+    number: 2,
+    title: "The i Vowel ိ",
+    titleMy: "ိသရ လေ့ကျင့်ခန်း",
+    description: "ဦးချိုးသရ (ိ) နှင့် အခြေခံဗျည်း",
+    difficulty: "basic",
+    estimatedMinutes: 5,
+    minAccuracy: 80,
+    minWpm: null,
+    focusKeys: ["KeyD"],
+    phases: ["ကိ ကိ ကိ မီ မီ မိ မိ တိ တိ"],
+  }),
+  lesson({
+    number: 3,
+    title: "The Asat ် and ာ (m key)",
+    titleMy: "် နှင့် ာ လေ့ကျင့်ခန်း",
+    description: "အသတ် ် နှင့် အာထွက် ာ",
+    difficulty: "basic",
+    estimatedMinutes: 5,
+    minAccuracy: 80,
+    minWpm: null,
+    focusKeys: ["KeyF", "KeyM"],
+    phases: ["က် က် က် မာ မာ မာ တာ တာ နာ နာ"],
+  }),
+  lesson({
+    number: 4,
+    title: "Preposed Vowel ေ (a key)",
+    titleMy: "ေ သရ လေ့ကျင့်ခန်း",
+    description: "ရှေ့သရ ေ ကို ဗျည်းရှေ့မှ နှိပ်သည်",
+    difficulty: "basic",
+    estimatedMinutes: 6,
+    minAccuracy: 80,
+    minWpm: null,
+    focusKeys: ["KeyA"],
+    phases: ["ကေ ကေ ကွ ကိ ကု ကေ မယ် မယ်"],
+  }),
+  lesson({
+    number: 5,
+    title: "ျ Medial + ြ Medial",
+    titleMy: "ျ ြ အက္ခရာ လေ့ကျင့်ခန်း",
+    description: "ယ-စာလုံးကြိုနှင့် ရ-စာလုံးကြို",
+    difficulty: "easy",
+    estimatedMinutes: 8,
+    minAccuracy: 82,
+    minWpm: null,
+    focusKeys: ["KeyS", "KeyJ"],
+    phases: ["ကျာ ကျာ ကြာ ကြာ မျာ မျာ မြာ မြာ တျာ တြာ"],
+  }),
+  lesson({
+    number: 6,
+    title: "Dependent Vowels ို ူ ဲ ံ ့",
+    titleMy: "သရဆက်လေ့ကျင့်ခန်း",
+    description: "ဦးချိုး၊ အု၊ ဦ၊ ေဲနှင့် ့ ချိတ်တွဲခြင်း",
+    difficulty: "easy",
+    estimatedMinutes: 8,
+    minAccuracy: 82,
+    minWpm: null,
+    focusKeys: ["KeyD", "KeyK", "KeyL", "KeyJ", "KeyH"],
+    phases: ["မီ မု မု မူ မု မေ့ မှ မ့", "မြ မြ မြို မြို့ မြို့ မြုံ မြို့"],
+  }),
+  lesson({
+    number: 7,
+    title: "The sound း (Semicolon)",
+    titleMy: "း ဝစ္စနှစ်လုံး လေ့ကျင့်ခန်း",
+    description: "စကားလုံးအဆုံးမှ နှစ်ချောင်းငင်သင်္ကေတ း",
+    difficulty: "easy",
+    estimatedMinutes: 6,
+    minAccuracy: 82,
+    minWpm: null,
+    focusKeys: ["Semicolon"],
+    phases: ["ကား ကား မြား မြား စား စား မား မား"],
+  }),
+  lesson({
+    number: 8,
+    title: "Word Building: 2-syllable words",
+    titleMy: "နှစ်လုံးတွဲ စကားလုံး လေ့ကျင့်ခန်း",
+    description: "ကြိမ်၊ ပ၊ ည စသဖြင့် နှစ်လုံးတွဲစာလုံးများ",
+    difficulty: "easy",
+    estimatedMinutes: 8,
+    minAccuracy: 85,
+    minWpm: null,
+    phases: ["ကျောင်း ကျောင်း ပညာ ပညာ ဆရာ ဆရာ မြန်မာ မြန်မာ"],
+  }),
+  lesson({
+    number: 9,
+    title: "လှည့် ခုနှစ် နှစ် numbers",
+    titleMy: "ဂဏန်း လေ့ကျင့်ခန်း",
+    description: "မြန်မာဂဏန်း ၁-၉ နှင့် ရေတွက်နည်း",
+    difficulty: "easy",
+    estimatedMinutes: 8,
+    minAccuracy: 85,
+    minWpm: null,
+    focusKeys: ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0"],
+    phases: ["၁ ၂ ၃ ၄ ၅ ၆ ၇ ၈ ၉ ၀", "၁၂ ၂၃ ၃၄ ၄၅ ၅၆ ၆၇ ၇၈ ၈၉ ၉၀"],
+  }),
+  lesson({
+    number: 10,
+    title: "Shift Practice: ဝ အ ဧ",
+    titleMy: "Shift လေ့ကျင့်ခန်း",
+    description: "Shift နှင့် နှိပ်ရသော အက္ခရာများ",
+    difficulty: "easy",
+    estimatedMinutes: 8,
+    minAccuracy: 85,
+    minWpm: null,
+    focusKeys: ["ShiftLeft", "ShiftRight"],
+    phases: ["ဝ ဝ ဝ အ အ အ ဧ ဧ ဧ ဣ ဣ ဣ"],
+  }),
+  lesson({
+    number: 11,
+    title: "Syllable Drills: ကို ကူ ကျို",
+    titleMy: "သရစုံ ဝဏ္ဏ လေ့ကျင့်ခန်း",
+    description: "ဗျည်းတစ်လုံးနှင့် သရစုံ တွဲထားသော ဝဏ္ဏများ",
+    difficulty: "medium",
+    estimatedMinutes: 8,
+    minAccuracy: 85,
+    minWpm: null,
+    focusKeys: ["KeyK", "KeyL", "KeyD"],
+    phases: ["ကို ကို ကူ ကူ ကျို ကျို မူ မူ မှု မှု"],
+  }),
+  lesson({
+    number: 12,
+    title: "အား ည် သို့ အဆုံးသတ်များ",
+    titleMy: "စကားလုံးအဆုံးသတ် လေ့ကျင့်ခန်း",
+    description: "အား၊ ည် နှင့် သို့ စသည့် စကားလုံးနောက်ဆက်များ",
+    difficulty: "medium",
+    estimatedMinutes: 8,
+    minAccuracy: 85,
+    minWpm: null,
+    phases: ["သို့ သို့ သို့ ည် ည် ည် အားဖြင့် အားဖြင့်"],
+  }),
+  lesson({
+    number: 13,
+    title: "ဦးဆုံး နောက်ဆုံး double words",
+    titleMy: "ဦး၊ နောက်ဆုံး စကားလုံးစုံ တွဲခြင်း",
+    description: "ဦးနှင့် နောက်ဆုံး လေ့ကျင့်ခြင်း",
+    difficulty: "medium",
+    estimatedMinutes: 8,
+    minAccuracy: 85,
+    minWpm: null,
+    phases: ["ဦး ဦး ဦး နောက်ဆုံး နောက်ဆုံး ရှေ့ဆုံး ရှေ့ဆုံး"],
+  }),
+  lesson({
+    number: 14,
+    title: "အိမ် မြို့ ရွာ places",
+    titleMy: "နေရာများ လေ့ကျင့်ခန်း",
+    description: "နေရာဒေသရေးသော စာလုံးများ",
+    difficulty: "medium",
+    estimatedMinutes: 8,
+    minAccuracy: 85,
+    minWpm: null,
+    phases: ["အိမ် အိမ် မြို့ မြို့ ရွာ ရွာ နေပြည်တော် နေပြည်တော်"],
+  }),
+  lesson({
+    number: 15,
+    title: "Common Phrases",
+    titleMy: "အသုံးများသော စကားစုများ",
+    description: "မင်္ဂလာပါ စသည့် အသုံးများသော အသုံးအနှုန်းများ",
+    difficulty: "medium",
+    estimatedMinutes: 10,
+    minAccuracy: 88,
+    minWpm: null,
+    phases: ["မင်္ဂလာပါ မင်္ဂလာပါ နေကောင်းလား နေကောင်းလား", "ကျေးဇူးတင်ပါတယ် ကျေးဇူးတင်ပါတယ် ရပါတယ် ရပါတယ်"],
+  }),
+  lesson({
+    number: 16,
+    title: "ခြေ လက် မျက်စိ body parts",
+    titleMy: "ကိုယ်ခန္ဓာအစိတ်အပိုင်း လေ့ကျင့်ခန်း",
+    description: "ကိုယ်ခန္ဓာအစိတ်အပိုင်း အမည်များ",
+    difficulty: "medium",
+    estimatedMinutes: 10,
+    minAccuracy: 88,
+    minWpm: null,
+    phases: ["မျက်စိ မျက်စိ နား နား လက် လက် ခြေ ခြေ"],
+  }),
+  lesson({
+    number: 17,
+    title: "တွက်ပုံ အမျိုးမျိုး multiples",
+    titleMy: "ရေတွက်ခြင်း လေ့ကျင့်ခန်း",
+    description: "အကြိမ်၊ အများ စာလုံးများ",
+    difficulty: "medium",
+    estimatedMinutes: 10,
+    minAccuracy: 88,
+    minWpm: null,
+    phases: ["အကြိမ် အကြိမ် အများ အများ အနည်း အနည်း"],
+  }),
+  lesson({
+    number: 18,
+    title: "ကြီး ငယ် လတ် sizes",
+    titleMy: "အရွယ်အစား လေ့ကျင့်ခန်း",
+    description: "ကြီး၊ ငယ်၊ လတ်စသည့် အရွယ်အစား စာလုံးများ",
+    difficulty: "medium",
+    estimatedMinutes: 10,
+    minAccuracy: 88,
+    minWpm: null,
+    phases: ["ကြီး ကြီး ငယ် ငယ် လတ် လတ် မှတ် မှတ်"],
+  }),
+  lesson({
+    number: 19,
+    title: "ကြောက် နား ပြောင်း verbs",
+    titleMy: "ကြိယာ လေ့ကျင့်ခန်း",
+    description: "အသုံးများသော ကြိယာများ",
+    difficulty: "hard",
+    estimatedMinutes: 10,
+    minAccuracy: 90,
+    minWpm: null,
+    phases: ["သွား သွား ကြောက် ကြောက် ပြောင်း ပြောင်း စားသည် စားသည်"],
+  }),
+  lesson({
+    number: 20,
+    title: "Beginner Review",
+    titleMy: "အခြေခံ ပြန်လည်သုံးသပ်ခြင်း",
+    description: "သင်ခန်းစာ ၁-၁၉ ပါ အကြောင်းအရာများကို ပြန်လုပ်ပါ",
+    difficulty: "hard",
+    estimatedMinutes: 12,
+    minAccuracy: 90,
+    minWpm: 15,
+    phases: [
+      "မင်္ဂလာပါ၊ မင်းနေကောင်းလား။",
+      "ကျွန်တော်က ကျောင်းသားပါ။",
+      "ငါဆရာ့ကို မေးခွန်းမေးတယ်။",
+    ],
+  }),
+];

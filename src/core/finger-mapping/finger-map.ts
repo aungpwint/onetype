@@ -1,0 +1,98 @@
+import type { FingerId } from "../../types";
+
+const STANDARD: Record<string, FingerId> = {
+  Backquote: "left-pinky",
+  Digit1: "left-pinky",
+  Digit2: "left-ring",
+  Digit3: "left-middle",
+  Digit4: "left-index",
+  Digit5: "left-index",
+  Digit6: "right-index",
+  Digit7: "right-index",
+  Digit8: "right-middle",
+  Digit9: "right-ring",
+  Digit0: "right-pinky",
+  Minus: "right-pinky",
+  Equal: "right-pinky",
+  Backspace: "right-pinky",
+  Tab: "left-pinky",
+  KeyQ: "left-pinky",
+  KeyW: "left-ring",
+  KeyE: "left-middle",
+  KeyR: "left-index",
+  KeyT: "left-index",
+  KeyY: "right-index",
+  KeyU: "right-index",
+  KeyI: "right-middle",
+  KeyO: "right-ring",
+  KeyP: "right-pinky",
+  BracketLeft: "right-pinky",
+  BracketRight: "right-pinky",
+  Backslash: "right-pinky",
+  CapsLock: "left-pinky",
+  KeyA: "left-pinky",
+  KeyS: "left-ring",
+  KeyD: "left-middle",
+  KeyF: "left-index",
+  KeyG: "left-index",
+  KeyH: "right-index",
+  KeyJ: "right-index",
+  KeyK: "right-middle",
+  KeyL: "right-ring",
+  Semicolon: "right-pinky",
+  Quote: "right-pinky",
+  Enter: "right-pinky",
+  ShiftLeft: "left-pinky",
+  KeyZ: "left-pinky",
+  KeyX: "left-ring",
+  KeyC: "left-middle",
+  KeyV: "left-index",
+  KeyB: "left-index",
+  KeyN: "right-index",
+  KeyM: "right-index",
+  Comma: "right-middle",
+  Period: "right-ring",
+  Slash: "right-pinky",
+  ShiftRight: "right-pinky",
+  ControlLeft: "left-pinky",
+  AltLeft: "left-pinky",
+  MetaLeft: "left-pinky",
+  ControlRight: "right-pinky",
+  AltRight: "right-pinky",
+  MetaRight: "right-pinky",
+  Space: "left-thumb",
+};
+
+export function fingerForCode(code: string): FingerId {
+  return STANDARD[code] ?? "left-pinky";
+}
+
+export function handForFinger(finger: FingerId): "left" | "right" {
+  return finger.startsWith("left") ? "left" : "right";
+}
+
+export const FINGER_ORDER: FingerId[] = [
+  "left-pinky",
+  "left-ring",
+  "left-middle",
+  "left-index",
+  "left-thumb",
+  "right-thumb",
+  "right-index",
+  "right-middle",
+  "right-ring",
+  "right-pinky",
+];
+
+export const FINGER_LABELS: Record<FingerId, string> = {
+  "left-pinky": "Left Pinky",
+  "left-ring": "Left Ring",
+  "left-middle": "Left Middle",
+  "left-index": "Left Index",
+  "left-thumb": "Left Thumb",
+  "right-thumb": "Right Thumb",
+  "right-index": "Right Index",
+  "right-middle": "Right Middle",
+  "right-ring": "Right Ring",
+  "right-pinky": "Right Pinky",
+};

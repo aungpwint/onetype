@@ -1,51 +1,64 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
-import "./App.css";
+import { useEffect } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { initUi, useUiStore } from "./stores/ui-store";
+import { useStudentStore } from "./stores/student-store";
+import { useSettingsStore } from "./stores/settings-store";
+import { Shell } from "./components/AppShell";
+import { Onboarding } from "./components/Onboarding";
+import { Spinner } from "./components/ui";
+import Dashboard from "./pages/Dashboard";
+import Learn from "./pages/Learn";
+import { LessonPage, TestPage as TestSessionPage } from "./pages/SessionPage";
+import TestsPage from "./pages/TestsPage";
+import ProgressPage from "./pages/ProgressPage";
+import StudentsPage from "./pages/StudentsPage";
+import TeacherPage from "./pages/TeacherPage";
+import SettingsPage from "./pages/SettingsPage";
 
-function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
-
-  return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
-    </main>
-  );
+function Boot() {
+  useEffect(() => {
+    initUi();
+    void useUiStore.getState().setTheme(useUiStore.getState().theme);
+    void useSettingsStore.getState().load();
+    void useStudentStore.getState().load();
+  }, []);
+  return null;
 }
 
-export default App;
+export default function App() {
+  const loaded = useStudentStore((s) => s.loaded);
+  const loading = useStudentStore((s) => s.loading);
+  const students = useStudentStore((s) => s.students);
+  const location = useLocation();
+
+  const needsOnboarding = students.length === 0 || location.pathname === "/onboarding";
+
+  return (
+    <>
+      <Boot />
+      {!loaded || loading ? (
+        <div className="flex h-screen flex-col items-center justify-center gap-4">
+          <Spinner label="Opening the desk…" />
+        </div>
+      ) : needsOnboarding ? (
+        <Onboarding />
+      ) : (
+        <Shell>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/learn" element={<Learn />} />
+            <Route path="/learn/:level" element={<Learn />} />
+            <Route path="/lesson/:lessonId" element={<LessonPage />} />
+            <Route path="/tests" element={<TestsPage />} />
+            <Route path="/test/:testId" element={<TestSessionPage />} />
+            <Route path="/progress" element={<ProgressPage />} />
+            <Route path="/students" element={<StudentsPage />} />
+            <Route path="/teacher" element={<TeacherPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Shell>
+      )}
+    </>
+  );
+}
