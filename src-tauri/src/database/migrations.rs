@@ -1,4 +1,4 @@
-pub const SCHEMA_VERSION: i64 = 4;
+pub const SCHEMA_VERSION: i64 = 5;
 
 pub const MIGRATIONS: &[&str] = &[
     // 1: core tables
@@ -189,6 +189,13 @@ pub const MIGRATIONS: &[&str] = &[
 
     CREATE INDEX IF NOT EXISTS idx_achievements_student ON achievements(student_id);
     "#,
+    // 5: performance indexes for statistics lookups and export scans
+    r#"
+    CREATE INDEX IF NOT EXISTS idx_finger_stats_student ON finger_statistics(student_id);
+    CREATE INDEX IF NOT EXISTS idx_character_stats_student ON character_statistics(student_id);
+    CREATE INDEX IF NOT EXISTS idx_exercise_results_exercise ON exercise_results(student_id, exercise_id);
+    CREATE INDEX IF NOT EXISTS idx_typing_sessions_num ON typing_sessions(student_id, lesson_number);
+    "#,
 ];
 
 pub fn migrate(conn: &rusqlite::Connection) -> crate::error::Result<i64> {
@@ -236,11 +243,9 @@ mod tests {
         let version = migrate(&conn).expect("migrate ok");
         assert_eq!(version, SCHEMA_VERSION);
         let stored: i64 = conn
-            .query_row(
-                "SELECT MAX(version) FROM schema_metadata",
-                [],
-                |row| row.get(0),
-            )
+            .query_row("SELECT MAX(version) FROM schema_metadata", [], |row| {
+                row.get(0)
+            })
             .expect("read version");
         assert_eq!(stored, SCHEMA_VERSION);
     }
@@ -253,9 +258,7 @@ mod tests {
         assert_eq!(a, SCHEMA_VERSION);
         assert_eq!(b, SCHEMA_VERSION);
         let count: i64 = conn
-            .query_row("SELECT COUNT(*) FROM schema_metadata", [], |row| {
-                row.get(0)
-            })
+            .query_row("SELECT COUNT(*) FROM schema_metadata", [], |row| row.get(0))
             .expect("count");
         assert_eq!(count, SCHEMA_VERSION);
     }
@@ -278,10 +281,27 @@ mod tests {
                     ?19, ?20, ?21
                 )",
                 rusqlite::params![
-                    id, "s1", "l1", "e1", "beginner", 1, attempt,
-                    1, 2, 1000, 20.0, 100.0, 95.0,
-                    95, 5, 100, 0, 1,
-                    "english-qwerty", 1, 1
+                    id,
+                    "s1",
+                    "l1",
+                    "e1",
+                    "beginner",
+                    1,
+                    attempt,
+                    1,
+                    2,
+                    1000,
+                    20.0,
+                    100.0,
+                    95.0,
+                    95,
+                    5,
+                    100,
+                    0,
+                    1,
+                    "english-qwerty",
+                    1,
+                    1
                 ],
             )?;
             Ok(())

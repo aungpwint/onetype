@@ -36,6 +36,20 @@ impl Database {
     pub fn conn_mut(&mut self) -> &mut Connection {
         &mut self.conn
     }
+
+    /// Run SQLite's integrity_check. Returns the reported text if there are
+    /// problems, or None if the database is healthy.
+    pub fn integrity_check(&self) -> crate::error::Result<Option<String>> {
+        use rusqlite::OptionalExtension;
+        let result: Option<String> = self
+            .conn
+            .query_row("PRAGMA integrity_check;", [], |r| r.get(0))
+            .optional()?;
+        match result.as_deref() {
+            Some("ok") => Ok(None),
+            other => Ok(other.map(str::to_owned)),
+        }
+    }
 }
 
 #[cfg(test)]

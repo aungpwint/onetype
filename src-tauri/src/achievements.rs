@@ -28,7 +28,11 @@ pub fn record_activity(
 
 /// Compute current and longest streak (in days) from daily_activity, using local calendar dates.
 /// `today` is the caller-provided local date (YYYY-MM-DD) so timezone handling stays in the UI layer.
-pub fn compute_streak(conn: &Connection, student_id: &str, today: &str) -> crate::error::Result<StreakInfo> {
+pub fn compute_streak(
+    conn: &Connection,
+    student_id: &str,
+    today: &str,
+) -> crate::error::Result<StreakInfo> {
     let mut stmt = conn.prepare(
         "SELECT activity_date FROM daily_activity WHERE student_id = ?1 ORDER BY activity_date ASC",
     )?;
@@ -179,7 +183,12 @@ pub fn evaluate_and_unlock(
     if has_lesson_pass {
         want_tests.push("lesson-pass".into());
     }
-    for (id, threshold) in [("wpm-30", 30.0), ("wpm-50", 50.0), ("wpm-80", 80.0), ("wpm-100", 100.0)] {
+    for (id, threshold) in [
+        ("wpm-30", 30.0),
+        ("wpm-50", 50.0),
+        ("wpm-80", 80.0),
+        ("wpm-100", 100.0),
+    ] {
         if best_wpm >= threshold {
             want_tests.push(id.to_string());
         }
@@ -226,7 +235,10 @@ pub fn evaluate_and_unlock(
 }
 
 /// Return all unlocked achievement records for a student, newest first.
-pub fn list_unlocked(conn: &Connection, student_id: &str) -> crate::error::Result<Vec<AchievementRecord>> {
+pub fn list_unlocked(
+    conn: &Connection,
+    student_id: &str,
+) -> crate::error::Result<Vec<AchievementRecord>> {
     let mut stmt = conn.prepare(
         "SELECT achievement_id, unlocked_at FROM achievements
          WHERE student_id = ?1 ORDER BY unlocked_at DESC",
@@ -262,9 +274,18 @@ mod tests {
             assert_eq!(parsed as i64, day);
         }
         // Known dates
-        assert_eq!(civil_from_days(days_from_civil(2024, 1, 1) as i64), "2024-01-01");
-        assert_eq!(civil_from_days(days_from_civil(2024, 2, 29) as i64), "2024-02-29");
-        assert_eq!(civil_from_days(days_from_civil(2023, 12, 31) as i64), "2023-12-31");
+        assert_eq!(
+            civil_from_days(days_from_civil(2024, 1, 1) as i64),
+            "2024-01-01"
+        );
+        assert_eq!(
+            civil_from_days(days_from_civil(2024, 2, 29) as i64),
+            "2024-02-29"
+        );
+        assert_eq!(
+            civil_from_days(days_from_civil(2023, 12, 31) as i64),
+            "2023-12-31"
+        );
     }
 
     #[test]

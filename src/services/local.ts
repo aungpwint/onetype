@@ -366,10 +366,10 @@ export const localBackend = {
       }),
     );
     const exportFile: ExportFile = {
-      format: "onetype-backup",
+      format: "onetype-export",
       version: 1,
       exportedAt: now(),
-      schemaVersion: 3,
+      schemaVersion: 5,
       students: studentData,
       lessonProgress: [],
       exerciseResults: [],
@@ -385,7 +385,7 @@ export const localBackend = {
     const raw = localStorage.getItem(`${PREFIX}import:${path}`);
     if (!raw) throw new Error("Import source not found for browser dev mode.");
     const file = JSON.parse(raw) as ExportFile;
-    if (file.format !== "onetype-backup") throw new Error(`Unsupported format: ${file.format}`);
+    if (file.format !== "onetype-export") throw new Error(`Unsupported format: ${file.format}`);
     if (file.version !== 1) throw new Error(`Unsupported version: ${file.version}`);
     const existing = read<Student[]>(KEYS.students, []);
     const existingCodes = new Set(existing.map((s) => s.studentCode));

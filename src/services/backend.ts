@@ -221,6 +221,11 @@ export async function statsSummary(studentId: string): Promise<TrainingSummary> 
   return invokeCommand("stats_summary", { studentId });
 }
 
+export async function checkDatabaseIntegrity(): Promise<string> {
+  if (!isTauriRuntime()) return "Database integrity check is only available in the desktop app.";
+  return invokeCommand("check_database_integrity");
+}
+
 export function localDateString(d: Date = new Date()): string {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");

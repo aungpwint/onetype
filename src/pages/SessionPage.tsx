@@ -23,17 +23,9 @@ function Session({ durationSeconds, sourceName }: { durationSeconds: number | nu
   const confirmExit = useSettingsStore((s) => s.get("practice.confirmExit"));
   const [confirmOpen, setConfirmOpen] = useState(false);
 
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "p" || event.key === "P") {
-        const current = useTypingStore.getState();
-        if (current.status === "running" || current.status === "paused") togglePause();
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [togglePause]);
-
+  // Note: pausing/resuming is deliberately handled by Escape (see the global
+  // keyboard-shortcuts hook). A "P" shortcut is not used because P is a normal
+  // typing key in both English and Myanmar layouts and would pause mid-session.
   const layout = engine ? engine.layout : null;
 
   const requestExit = () => {
@@ -53,7 +45,7 @@ function Session({ durationSeconds, sourceName }: { durationSeconds: number | nu
             ✕ Exit
           </button>
           <button type="button" className="btn btn-primary" onClick={status === "running" ? togglePause : status === "paused" ? togglePause : start}>
-            {status === "paused" ? "Resume (P)" : status === "running" ? "Pause (P)" : durationSeconds === null ? "Start (first key also starts)" : "Start"}
+            {status === "paused" ? "Resume" : status === "running" ? "Pause" : durationSeconds === null ? "Start (first key also starts)" : "Start"}
           </button>
         </div>
       </div>

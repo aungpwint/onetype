@@ -1,7 +1,7 @@
+use crate::database::Database;
 use crate::error::{AppError, Result};
 use crate::models::TypingTest;
 use crate::repositories as repo;
-use crate::database::Database;
 
 pub const DEFAULT_CONTENT_VERSION: i64 = 1;
 
@@ -20,7 +20,14 @@ pub fn record_activity(
         return Err(AppError::validation("Invalid activity record."));
     }
     let tx = db.conn().unchecked_transaction()?;
-    crate::achievements::record_activity(&tx, &req.student_id, &req.activity_date, req.duration_ms, req.wpm, req.accuracy)?;
+    crate::achievements::record_activity(
+        &tx,
+        &req.student_id,
+        &req.activity_date,
+        req.duration_ms,
+        req.wpm,
+        req.accuracy,
+    )?;
     let streak = crate::achievements::compute_streak(&tx, &req.student_id, today)?;
     let newly = crate::achievements::evaluate_and_unlock(&tx, &req.student_id, streak.current)?;
     tx.commit()?;
@@ -33,10 +40,22 @@ pub fn streak(db: &Database, student_id: &str, today: &str) -> Result<crate::mod
     crate::achievements::compute_streak(db.conn(), student_id, today)
 }
 
-pub fn unlocked_achievements(db: &Database, student_id: &str) -> Result<Vec<crate::models::AchievementRecord>> {
+pub fn unlocked_achievements(
+    db: &Database,
+    student_id: &str,
+) -> Result<Vec<crate::models::AchievementRecord>> {
     crate::achievements::list_unlocked(db.conn(), student_id)
 }
 
+/// Run a database integrity check, returning a human-readable report.
+pub fn check_integrity(db: &Database) -> Result<String> {
+    match db.integrity_check()? {
+        None => Ok("Database integrity is OK.".to_string()),
+        Some(report) => Err(AppError::validation(format!(
+            "Database integrity check failed: {report}"
+        ))),
+    }
+}
 
 pub fn default_typing_tests() -> Vec<TypingTest> {
     vec![
@@ -96,12 +115,18 @@ fn validate_path(path: &str) -> Result<std::path::PathBuf> {
         return Err(AppError::validation("Invalid file path."));
     }
     if path.ends_with(':') || path.ends_with(":\\") {
-        return Err(AppError::validation("Invalid file path: must be a file, not a drive root."));
+        return Err(AppError::validation(
+            "Invalid file path: must be a file, not a drive root.",
+        ));
     }
     Ok(std::path::PathBuf::from(path))
 }
 
-pub fn export_all(db: &mut Database, path: String, student_id: Option<String>) -> Result<crate::models::ExportFile> {
+pub fn export_all(
+    db: &mut Database,
+    path: String,
+    student_id: Option<String>,
+) -> Result<crate::models::ExportFile> {
     let path = validate_path(&path)?;
     let data = repo::load_export(db.conn(), student_id.as_deref())?;
     let json = serde_json::to_string_pretty(&data)?;
@@ -111,11 +136,20 @@ pub fn export_all(db: &mut Database, path: String, student_id: Option<String>) -
 
 pub fn import_file(db: &mut Database, path: String) -> Result<crate::models::ImportReport> {
     let path = validate_path(&path)?;
-    let raw = std::fs::read_to_string(&path).map_err(|e| {
-        AppError::import_error(format!("Could not read the selected file: {e}"))
-    })?;
+    let metadata = std::fs::metadata(&path)
+        .map_err(|e| AppError::import_error(format!("Could not read the selected file: {e}")))?;
+    if metadata.len() > 50 * 1024 * 1024 {
+        return Err(AppError::import_error(
+            "This backup file is too large (over 50 MB) to import.",
+        ));
+    }
+    let raw = std::fs::read_to_string(&path)
+        .map_err(|e| AppError::import_error(format!("Could not read the selected file: {e}")))?;
     let parsed: serde_json::Value = serde_json::from_str(&raw).map_err(|e| {
-        AppError::import_error(format!("Not valid JSON: {}", e.to_string().chars().take(120).collect::<String>()))
+        AppError::import_error(format!(
+            "Not valid JSON: {}",
+            e.to_string().chars().take(120).collect::<String>()
+        ))
     })?;
     if parsed.get("format").and_then(|v| v.as_str()) != Some("onetype-export") {
         return Err(AppError::import_error(
@@ -124,9 +158,9 @@ pub fn import_file(db: &mut Database, path: String) -> Result<crate::models::Imp
     }
     let version = parsed.get("version").and_then(|v| v.as_i64()).unwrap_or(0);
     if version != 1 {
-        return Err(AppError::import_error(
-            format!("Unsupported backup version ({version}). This build supports version 1."),
-        ));
+        return Err(AppError::import_error(format!(
+            "Unsupported backup version ({version}). This build supports version 1."
+        )));
     }
     let file: crate::models::ExportFile = serde_json::from_value(parsed).map_err(|e| {
         AppError::import_error(format!("Backup file is missing or has invalid fields: {e}"))
@@ -155,7 +189,11 @@ mod tests {
         seed_default_data(&mut db).unwrap();
         let s = repo::create_student(
             db.conn(),
-            &CreateStudentRequest { name: "Maung".into(), student_code: None, display_name: None },
+            &CreateStudentRequest {
+                name: "Maung".into(),
+                student_code: None,
+                display_name: None,
+            },
         )
         .unwrap();
         repo::set_active_student(db.conn(), &s.id).unwrap();
@@ -213,13 +251,24 @@ mod tests {
     fn seed_student(db: &mut Database) -> crate::models::Student {
         repo::create_student(
             db.conn(),
-            &crate::models::CreateStudentRequest { name: "Streak".into(), student_code: None, display_name: None },
+            &crate::models::CreateStudentRequest {
+                name: "Streak".into(),
+                student_code: None,
+                display_name: None,
+            },
         )
         .unwrap()
     }
 
     /// Insert a typing session at a given started_at ms with given wpm/accuracy.
-    fn insert_session(db: &Database, student_id: &str, started_at: i64, wpm: f64, accuracy: f64, duration_ms: i64) {
+    fn insert_session(
+        db: &Database,
+        student_id: &str,
+        started_at: i64,
+        wpm: f64,
+        accuracy: f64,
+        duration_ms: i64,
+    ) {
         repo::save_typing_session(
             db.conn(),
             &crate::models::SaveTypingSessionRequest {
@@ -268,24 +317,48 @@ mod tests {
         let mut db = Database::open_in_memory().unwrap();
         let s = seed_student(&mut db);
         insert_session(&db, &s.id, 1000, 40.0, 98.0, 60000);
-        let res1 = record_activity(&db, &req(&s.id, "2024-01-01", 60000, 40.0, 98.0), "2024-01-01").unwrap();
+        let res1 = record_activity(
+            &db,
+            &req(&s.id, "2024-01-01", 60000, 40.0, 98.0),
+            "2024-01-01",
+        )
+        .unwrap();
         // first-test must unlock
         assert!(
-            res1.newly_unlocked.iter().any(|a| a.achievement_id == "first-test"),
+            res1.newly_unlocked
+                .iter()
+                .any(|a| a.achievement_id == "first-test"),
             "expected first-test, got {:?}",
-            res1.newly_unlocked.iter().map(|a| &a.achievement_id).collect::<Vec<_>>()
+            res1.newly_unlocked
+                .iter()
+                .map(|a| &a.achievement_id)
+                .collect::<Vec<_>>()
         );
         // calling again must not re-unlock
-        let res2 = record_activity(&db, &req(&s.id, "2024-01-02", 60000, 45.0, 98.0), "2024-01-02").unwrap();
+        let res2 = record_activity(
+            &db,
+            &req(&s.id, "2024-01-02", 60000, 45.0, 98.0),
+            "2024-01-02",
+        )
+        .unwrap();
         assert!(
-            !res2.newly_unlocked.iter().any(|a| a.achievement_id == "first-test"),
+            !res2
+                .newly_unlocked
+                .iter()
+                .any(|a| a.achievement_id == "first-test"),
             "first-test should not re-unlock"
         );
         let all = unlocked_achievements(&db, &s.id).unwrap();
         assert!(all.iter().any(|a| a.achievement_id == "first-test"));
     }
 
-    fn req(student_id: &str, date: &str, duration_ms: i64, wpm: f64, accuracy: f64) -> crate::models::RecordActivityRequest {
+    fn req(
+        student_id: &str,
+        date: &str,
+        duration_ms: i64,
+        wpm: f64,
+        accuracy: f64,
+    ) -> crate::models::RecordActivityRequest {
         crate::models::RecordActivityRequest {
             student_id: student_id.into(),
             activity_date: date.into(),

@@ -1,6 +1,6 @@
-use rusqlite::{params, Connection, OptionalExtension, Transaction};
 use crate::error::{AppError, Result};
 use crate::models::*;
+use rusqlite::{params, Connection, OptionalExtension, Transaction};
 
 fn require_student(conn: &Connection, student_id: &str) -> Result<()> {
     if get_student(conn, student_id)?.is_none() {
@@ -11,32 +11,39 @@ fn require_student(conn: &Connection, student_id: &str) -> Result<()> {
 
 fn check_non_negative(value: f64, field: &str) -> Result<()> {
     if !value.is_finite() || value < 0.0 {
-        return Err(AppError::validation(format!("{field} must be a non-negative number.")));
+        return Err(AppError::validation(format!(
+            "{field} must be a non-negative number."
+        )));
     }
     Ok(())
 }
 
 fn check_accuracy(value: f64, field: &str) -> Result<()> {
     if !value.is_finite() || !(0.0..=100.0).contains(&value) {
-        return Err(AppError::validation(format!("{field} must be between 0 and 100.")));
+        return Err(AppError::validation(format!(
+            "{field} must be between 0 and 100."
+        )));
     }
     Ok(())
 }
 
 fn check_positive(value: i64, field: &str) -> Result<()> {
     if value < 1 {
-        return Err(AppError::validation(format!("{field} must be a positive integer.")));
+        return Err(AppError::validation(format!(
+            "{field} must be a positive integer."
+        )));
     }
     Ok(())
 }
 
 fn check_not_negative_i64(value: i64, field: &str) -> Result<()> {
     if value < 0 {
-        return Err(AppError::validation(format!("{field} must be non-negative.")));
+        return Err(AppError::validation(format!(
+            "{field} must be non-negative."
+        )));
     }
     Ok(())
 }
-
 
 fn row_to_student(row: &rusqlite::Row<'_>) -> rusqlite::Result<Student> {
     Ok(Student {
@@ -90,8 +97,7 @@ pub fn create_student(conn: &Connection, req: &CreateStudentRequest) -> Result<S
         params![id, code, name, display, Option::<String>::None, now],
     )?;
     // first student becomes active
-    let count: i64 = conn
-        .query_row("SELECT COUNT(*) FROM students", [], |r| r.get(0))?;
+    let count: i64 = conn.query_row("SELECT COUNT(*) FROM students", [], |r| r.get(0))?;
     if count == 1 {
         conn.execute("UPDATE students SET active = 1 WHERE id = ?1", params![id])?;
     }
@@ -123,9 +129,8 @@ pub fn list_students(conn: &Connection) -> Result<Vec<Student>> {
 }
 
 pub fn update_student(conn: &Connection, req: &UpdateStudentRequest) -> Result<Student> {
-    let existing = get_student(conn, &req.id)?.ok_or_else(|| {
-        AppError::not_found("Student not found.")
-    })?;
+    let existing =
+        get_student(conn, &req.id)?.ok_or_else(|| AppError::not_found("Student not found."))?;
     let name = req
         .name
         .as_deref()
@@ -201,10 +206,12 @@ pub fn set_active_student(conn: &Connection, id: &str) -> Result<Student> {
     }
     let tx = conn.unchecked_transaction()?;
     tx.execute("UPDATE students SET active = 0", [])?;
-    tx.execute("UPDATE students SET active = 1, updated_at = ?1 WHERE id = ?2", params![now_millis(), id])?;
+    tx.execute(
+        "UPDATE students SET active = 1, updated_at = ?1 WHERE id = ?2",
+        params![now_millis(), id],
+    )?;
     tx.commit()?;
-    get_student(conn, id)?
-        .ok_or_else(|| AppError::not_found("Student not found."))
+    get_student(conn, id)?.ok_or_else(|| AppError::not_found("Student not found."))
 }
 
 pub fn get_active_student(conn: &Connection) -> Result<Option<Student>> {
@@ -238,7 +245,10 @@ fn row_to_lesson_progress(row: &rusqlite::Row<'_>) -> rusqlite::Result<LessonPro
     })
 }
 
-pub fn save_lesson_progress(conn: &Connection, req: &SaveLessonProgressRequest) -> Result<LessonProgress> {
+pub fn save_lesson_progress(
+    conn: &Connection,
+    req: &SaveLessonProgressRequest,
+) -> Result<LessonProgress> {
     require_student(conn, &req.student_id)?;
     check_not_negative_i64(req.lesson_number, "lessonNumber")?;
     check_non_negative(req.wpm, "wpm")?;
@@ -272,7 +282,11 @@ pub fn save_lesson_progress(conn: &Connection, req: &SaveLessonProgressRequest) 
         .ok_or_else(|| AppError::not_found("Lesson progress not found."))
 }
 
-pub fn get_lesson_progress(conn: &Connection, student_id: &str, lesson_id: &str) -> Result<Option<LessonProgress>> {
+pub fn get_lesson_progress(
+    conn: &Connection,
+    student_id: &str,
+    lesson_id: &str,
+) -> Result<Option<LessonProgress>> {
     conn.query_row(
         &format!(
             "SELECT {LESSON_PROGRESS_COLS} FROM lesson_progress WHERE student_id = ?1 AND lesson_id = ?2"
@@ -326,7 +340,10 @@ fn row_to_typing_session(row: &rusqlite::Row<'_>) -> rusqlite::Result<TypingSess
     })
 }
 
-pub fn save_typing_session(conn: &Connection, req: &SaveTypingSessionRequest) -> Result<TypingSession> {
+pub fn save_typing_session(
+    conn: &Connection,
+    req: &SaveTypingSessionRequest,
+) -> Result<TypingSession> {
     require_student(conn, &req.student_id)?;
     check_not_negative_i64(req.duration_ms, "durationMs")?;
     check_not_negative_i64(req.target_length, "targetLength")?;
@@ -355,7 +372,11 @@ pub fn save_typing_session(conn: &Connection, req: &SaveTypingSessionRequest) ->
     )?)
 }
 
-pub fn list_typing_sessions(conn: &Connection, student_id: &str, limit: i64) -> Result<Vec<TypingSession>> {
+pub fn list_typing_sessions(
+    conn: &Connection,
+    student_id: &str,
+    limit: i64,
+) -> Result<Vec<TypingSession>> {
     let mut stmt = conn.prepare(&format!(
         "SELECT {TYPING_SESSION_COLS} FROM typing_sessions WHERE student_id = ?1 ORDER BY started_at DESC LIMIT ?2"
     ))?;
@@ -433,7 +454,11 @@ pub fn save_exercise_result(conn: &Connection, req: &SaveExerciseResultRequest) 
     Ok(())
 }
 
-pub fn next_exercise_attempt(conn: &Connection, student_id: &str, exercise_id: &str) -> Result<i64> {
+pub fn next_exercise_attempt(
+    conn: &Connection,
+    student_id: &str,
+    exercise_id: &str,
+) -> Result<i64> {
     let max: Option<i64> = conn
         .query_row(
             "SELECT MAX(attempt) FROM exercise_results WHERE student_id = ?1 AND exercise_id = ?2",
@@ -465,13 +490,40 @@ pub fn save_statistics(conn: &Connection, req: &SaveKeyStatsRequest) -> Result<(
     }
     let tx = conn.unchecked_transaction()?;
     for record in &req.key_stats {
-        upsert_stat(&tx, "key_statistics", "key_id", &req.student_id, &record.key, &record.layout_id, record.correct, record.incorrect)?;
+        upsert_stat(
+            &tx,
+            "key_statistics",
+            "key_id",
+            &req.student_id,
+            &record.key,
+            &record.layout_id,
+            record.correct,
+            record.incorrect,
+        )?;
     }
     for record in &req.finger_stats {
-        upsert_stat(&tx, "finger_statistics", "finger", &req.student_id, &record.key, &record.layout_id, record.correct, record.incorrect)?;
+        upsert_stat(
+            &tx,
+            "finger_statistics",
+            "finger",
+            &req.student_id,
+            &record.key,
+            &record.layout_id,
+            record.correct,
+            record.incorrect,
+        )?;
     }
     for record in &req.character_stats {
-        upsert_stat(&tx, "character_statistics", "character", &req.student_id, &record.key, &record.layout_id, record.correct, record.incorrect)?;
+        upsert_stat(
+            &tx,
+            "character_statistics",
+            "character",
+            &req.student_id,
+            &record.key,
+            &record.layout_id,
+            record.correct,
+            record.incorrect,
+        )?;
     }
     tx.commit()?;
     Ok(())
@@ -489,7 +541,11 @@ fn upsert_stat(
     incorrect: i64,
 ) -> Result<()> {
     let total = correct + incorrect;
-    let accuracy = if total == 0 { 0.0 } else { correct as f64 / total as f64 * 100.0 };
+    let accuracy = if total == 0 {
+        0.0
+    } else {
+        correct as f64 / total as f64 * 100.0
+    };
     let sql = format!(
         "INSERT INTO {table} (id, student_id, {target_col}, layout_id, correct, incorrect, accuracy)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
@@ -498,11 +554,27 @@ fn upsert_stat(
             incorrect = incorrect + excluded.incorrect,
             accuracy = ((correct + excluded.correct) * 100.0) / (correct + incorrect + excluded.correct + excluded.incorrect)"
     );
-    tx.execute(&sql, params![new_id("st"), student_id, key, layout_id, correct, incorrect, accuracy])?;
+    tx.execute(
+        &sql,
+        params![
+            new_id("st"),
+            student_id,
+            key,
+            layout_id,
+            correct,
+            incorrect,
+            accuracy
+        ],
+    )?;
     Ok(())
 }
 
-pub fn weak_keys(conn: &Connection, student_id: &str, layout_id: &str, limit: i64) -> Result<Vec<WeakKey>> {
+pub fn weak_keys(
+    conn: &Connection,
+    student_id: &str,
+    layout_id: &str,
+    limit: i64,
+) -> Result<Vec<WeakKey>> {
     let mut stmt = conn.prepare(
         "SELECT key_id, accuracy, (correct + incorrect) AS attempts FROM key_statistics
          WHERE student_id = ?1 AND (?2 = '%' OR layout_id = ?2) AND (correct + incorrect) > 0
@@ -522,7 +594,12 @@ pub fn weak_keys(conn: &Connection, student_id: &str, layout_id: &str, limit: i6
     Ok(out)
 }
 
-pub fn weak_fingers(conn: &Connection, student_id: &str, layout_id: &str, limit: i64) -> Result<Vec<WeakFinger>> {
+pub fn weak_fingers(
+    conn: &Connection,
+    student_id: &str,
+    layout_id: &str,
+    limit: i64,
+) -> Result<Vec<WeakFinger>> {
     let mut stmt = conn.prepare(
         "SELECT finger, accuracy, (correct + incorrect) AS attempts FROM finger_statistics
          WHERE student_id = ?1 AND (?2 = '%' OR layout_id = ?2) AND (correct + incorrect) > 0
@@ -714,11 +791,18 @@ pub fn session_stats_in_window(
 
 // ---------- settings ----------
 
-pub fn get_settings(conn: &Connection, keys: &[String]) -> Result<std::collections::BTreeMap<String, String>> {
+pub fn get_settings(
+    conn: &Connection,
+    keys: &[String],
+) -> Result<std::collections::BTreeMap<String, String>> {
     let mut out = std::collections::BTreeMap::new();
     for key in keys {
         let value: Option<String> = conn
-            .query_row("SELECT value FROM settings WHERE key = ?1", params![key], |r| r.get(0))
+            .query_row(
+                "SELECT value FROM settings WHERE key = ?1",
+                params![key],
+                |r| r.get(0),
+            )
             .optional()?;
         if let Some(value) = value {
             out.insert(key.clone(), value);
@@ -729,9 +813,7 @@ pub fn get_settings(conn: &Connection, keys: &[String]) -> Result<std::collectio
 
 pub fn all_settings(conn: &Connection) -> Result<std::collections::BTreeMap<String, String>> {
     let mut stmt = conn.prepare("SELECT key, value FROM settings")?;
-    let rows = stmt.query_map([], |r| {
-        Ok((r.get::<_, String>(0)?, r.get::<_, String>(1)?))
-    })?;
+    let rows = stmt.query_map([], |r| Ok((r.get::<_, String>(0)?, r.get::<_, String>(1)?)))?;
     let mut out = std::collections::BTreeMap::new();
     for row in rows {
         let (k, v) = row?;
@@ -832,7 +914,8 @@ pub fn student_summary(conn: &Connection, s: &Student) -> Result<StudentSummary>
 }
 
 pub fn student_detail(conn: &Connection, student_id: &str) -> Result<StudentDetail> {
-    let student = get_student(conn, student_id)?.ok_or_else(|| AppError::not_found("Student not found."))?;
+    let student =
+        get_student(conn, student_id)?.ok_or_else(|| AppError::not_found("Student not found."))?;
     let (avg_accuracy, avg_wpm, minutes, total_sessions): (f64, f64, f64, i64) = conn.query_row(
         "SELECT COALESCE(AVG(accuracy), 0), COALESCE(AVG(wpm), 0), COALESCE(SUM(duration_ms) / 60000.0, 0), COUNT(*)
          FROM typing_sessions WHERE student_id = ?1 AND status = 'completed'",
@@ -843,25 +926,22 @@ pub fn student_detail(conn: &Connection, student_id: &str) -> Result<StudentDeta
     let weak_fingers = weak_fingers(conn, student_id, "%", 5)?;
     let recent_sessions = list_typing_sessions(conn, student_id, 20)?;
     let test_results = list_test_results(conn, student_id)?;
-    let by_level: std::collections::BTreeMap<String, i64> = conn.prepare(
-        "SELECT level, COUNT(*) FROM lesson_progress WHERE student_id = ?1 GROUP BY level",
-    )?
+    let by_level: std::collections::BTreeMap<String, i64> = conn
+        .prepare(
+            "SELECT level, COUNT(*) FROM lesson_progress WHERE student_id = ?1 GROUP BY level",
+        )?
         .query_map(params![student_id], |r| Ok((r.get(0)?, r.get(1)?)))?
         .collect::<rusqlite::Result<Vec<_>>>()?
         .into_iter()
         .collect();
-    let lesson_counts = [
-        "beginner",
-        "intermediate",
-        "advanced",
-    ]
-    .into_iter()
-    .map(|level| LessonCount {
-        level: level.to_string(),
-        completed: by_level.get(level).copied().unwrap_or(0),
-        total: 20,
-    })
-    .collect();
+    let lesson_counts = ["beginner", "intermediate", "advanced"]
+        .into_iter()
+        .map(|level| LessonCount {
+            level: level.to_string(),
+            completed: by_level.get(level).copied().unwrap_or(0),
+            total: 20,
+        })
+        .collect();
     Ok(StudentDetail {
         student,
         overall_accuracy: avg_accuracy,
@@ -880,7 +960,9 @@ pub fn student_detail(conn: &Connection, student_id: &str) -> Result<StudentDeta
 
 pub fn load_export(conn: &Connection, student_filter: Option<&str>) -> Result<ExportFile> {
     let students = match student_filter {
-        Some(id) => vec![get_student(conn, id)?.ok_or_else(|| AppError::not_found("Student not found."))?],
+        Some(id) => {
+            vec![get_student(conn, id)?.ok_or_else(|| AppError::not_found("Student not found."))?]
+        }
         None => list_students(conn)?,
     };
     let mut export_students = Vec::new();
@@ -898,7 +980,9 @@ pub fn load_export(conn: &Connection, student_filter: Option<&str>) -> Result<Ex
         }
         all_progress.extend(p.clone());
 
-        let mut stmt = conn.prepare(&format!("SELECT {TYPING_SESSION_COLS} FROM typing_sessions WHERE student_id = ?1"))?;
+        let mut stmt = conn.prepare(&format!(
+            "SELECT {TYPING_SESSION_COLS} FROM typing_sessions WHERE student_id = ?1"
+        ))?;
         let rows = stmt.query_map(params![s.id], row_to_typing_session)?;
         let mut ss = Vec::new();
         for row in rows {
@@ -906,7 +990,9 @@ pub fn load_export(conn: &Connection, student_filter: Option<&str>) -> Result<Ex
         }
         all_sessions.extend(ss.clone());
 
-        let mut stmt = conn.prepare(&format!("SELECT {EXERCISE_RESULT_COLS} FROM exercise_results WHERE student_id = ?1"))?;
+        let mut stmt = conn.prepare(&format!(
+            "SELECT {EXERCISE_RESULT_COLS} FROM exercise_results WHERE student_id = ?1"
+        ))?;
         let rows = stmt.query_map(params![s.id], row_to_exercise_result)?;
         let mut r = Vec::new();
         for row in rows {
@@ -914,7 +1000,9 @@ pub fn load_export(conn: &Connection, student_filter: Option<&str>) -> Result<Ex
         }
         all_results.extend(r.clone());
 
-        let mut stmt = conn.prepare(&format!("SELECT {TEST_RESULT_COLS} FROM test_results WHERE student_id = ?1"))?;
+        let mut stmt = conn.prepare(&format!(
+            "SELECT {TEST_RESULT_COLS} FROM test_results WHERE student_id = ?1"
+        ))?;
         let rows = stmt.query_map(params![s.id], row_to_test_result)?;
         let mut tr = Vec::new();
         for row in rows {
@@ -952,7 +1040,12 @@ pub fn load_export(conn: &Connection, student_filter: Option<&str>) -> Result<Ex
     })
 }
 
-fn list_stat_into(conn: &Connection, table: &str, target_col: &str, student_id: &str) -> Result<Vec<KeyStatistic>> {
+fn list_stat_into(
+    conn: &Connection,
+    table: &str,
+    target_col: &str,
+    student_id: &str,
+) -> Result<Vec<KeyStatistic>> {
     let sql = format!("SELECT id, student_id, {target_col} AS key_id, layout_id, correct, incorrect, accuracy FROM {table} WHERE student_id = ?1");
     let mut stmt = conn.prepare(&sql)?;
     let rows = stmt.query_map(params![student_id], |r| {
@@ -987,7 +1080,10 @@ pub fn import_export(conn: &mut Connection, file: ExportFile) -> Result<ImportRe
     for es in file.students {
         let s = &es.student;
         if s.name.trim().is_empty() {
-            report.errors.push(format!("Student '{:?}' has no name; skipped.", es.student.id));
+            report.errors.push(format!(
+                "Student '{:?}' has no name; skipped.",
+                es.student.id
+            ));
             report.skipped_students.push(es.student.id.clone());
             continue;
         }
@@ -999,7 +1095,9 @@ pub fn import_export(conn: &mut Connection, file: ExportFile) -> Result<ImportRe
             )
             .optional()?;
         if existing_id.is_some() {
-            report.skipped_students.push(format!("{} (duplicate)", s.id));
+            report
+                .skipped_students
+                .push(format!("{} (duplicate)", s.id));
             continue;
         }
         tx.execute(
@@ -1091,7 +1189,10 @@ mod tests {
     fn create_student(conn: &Connection, req: &CreateStudentRequest) -> Result<Student> {
         let student = Student {
             id: new_id("stu"),
-            student_code: req.student_code.clone().unwrap_or_else(|| next_student_code(conn).unwrap()),
+            student_code: req
+                .student_code
+                .clone()
+                .unwrap_or_else(|| next_student_code(conn).unwrap()),
             name: req.name.clone(),
             display_name: req.display_name.clone().unwrap_or_else(|| req.name.clone()),
             avatar: None,

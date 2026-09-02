@@ -1,10 +1,10 @@
 use std::sync::Mutex;
 use tauri::State;
 
+use crate::database::Database;
 use crate::error::Result;
 use crate::models::*;
 use crate::repositories as repo;
-use crate::database::Database;
 
 fn lock<'a>(state: &'a State<'_, Mutex<Database>>) -> Result<std::sync::MutexGuard<'a, Database>> {
     state
@@ -19,13 +19,19 @@ pub async fn list_students(state: State<'_, Mutex<Database>>) -> Result<Vec<Stud
 }
 
 #[tauri::command]
-pub async fn create_student(state: State<'_, Mutex<Database>>, req: CreateStudentRequest) -> Result<Student> {
+pub async fn create_student(
+    state: State<'_, Mutex<Database>>,
+    req: CreateStudentRequest,
+) -> Result<Student> {
     let db = lock(&state)?;
     repo::create_student(db.conn(), &req)
 }
 
 #[tauri::command]
-pub async fn update_student(state: State<'_, Mutex<Database>>, req: UpdateStudentRequest) -> Result<Student> {
+pub async fn update_student(
+    state: State<'_, Mutex<Database>>,
+    req: UpdateStudentRequest,
+) -> Result<Student> {
     let db = lock(&state)?;
     repo::update_student(db.conn(), &req)
 }
@@ -68,7 +74,10 @@ pub async fn get_lesson_progress(
 }
 
 #[tauri::command]
-pub async fn list_lesson_progress(state: State<'_, Mutex<Database>>, student_id: String) -> Result<Vec<LessonProgress>> {
+pub async fn list_lesson_progress(
+    state: State<'_, Mutex<Database>>,
+    student_id: String,
+) -> Result<Vec<LessonProgress>> {
     let db = lock(&state)?;
     repo::list_lesson_progress(db.conn(), &student_id)
 }
@@ -121,7 +130,10 @@ pub async fn next_exercise_attempt(
 }
 
 #[tauri::command]
-pub async fn save_statistics(state: State<'_, Mutex<Database>>, req: SaveKeyStatsRequest) -> Result<()> {
+pub async fn save_statistics(
+    state: State<'_, Mutex<Database>>,
+    req: SaveKeyStatsRequest,
+) -> Result<()> {
     let db = lock(&state)?;
     repo::save_statistics(db.conn(), &req)
 }
@@ -155,13 +167,19 @@ pub async fn list_typing_tests(state: State<'_, Mutex<Database>>) -> Result<Vec<
 }
 
 #[tauri::command]
-pub async fn save_test_result(state: State<'_, Mutex<Database>>, req: SaveTestResultRequest) -> Result<TestResult> {
+pub async fn save_test_result(
+    state: State<'_, Mutex<Database>>,
+    req: SaveTestResultRequest,
+) -> Result<TestResult> {
     let db = lock(&state)?;
     repo::save_test_result(db.conn(), &req)
 }
 
 #[tauri::command]
-pub async fn list_test_results(state: State<'_, Mutex<Database>>, student_id: String) -> Result<Vec<TestResult>> {
+pub async fn list_test_results(
+    state: State<'_, Mutex<Database>>,
+    student_id: String,
+) -> Result<Vec<TestResult>> {
     let db = lock(&state)?;
     repo::list_test_results(db.conn(), &student_id)
 }
@@ -183,7 +201,10 @@ pub async fn teacher_overview(state: State<'_, Mutex<Database>>) -> Result<Teach
 }
 
 #[tauri::command]
-pub async fn student_detail(state: State<'_, Mutex<Database>>, student_id: String) -> Result<StudentDetail> {
+pub async fn student_detail(
+    state: State<'_, Mutex<Database>>,
+    student_id: String,
+) -> Result<StudentDetail> {
     let db = lock(&state)?;
     repo::student_detail(db.conn(), &student_id)
 }
@@ -198,7 +219,9 @@ pub async fn get_settings(
 }
 
 #[tauri::command]
-pub async fn all_settings(state: State<'_, Mutex<Database>>) -> Result<std::collections::BTreeMap<String, String>> {
+pub async fn all_settings(
+    state: State<'_, Mutex<Database>>,
+) -> Result<std::collections::BTreeMap<String, String>> {
     let db = lock(&state)?;
     repo::all_settings(db.conn())
 }
@@ -236,7 +259,11 @@ pub async fn record_activity(
 }
 
 #[tauri::command]
-pub async fn get_streak(state: State<'_, Mutex<Database>>, student_id: String, today: String) -> Result<crate::models::StreakInfo> {
+pub async fn get_streak(
+    state: State<'_, Mutex<Database>>,
+    student_id: String,
+    today: String,
+) -> Result<crate::models::StreakInfo> {
     let db = lock(&state)?;
     crate::services::streak(&db, &student_id, &today)
 }
@@ -248,6 +275,12 @@ pub async fn get_achievements(
 ) -> Result<Vec<AchievementRecord>> {
     let db = lock(&state)?;
     crate::services::unlocked_achievements(&db, &student_id)
+}
+
+#[tauri::command]
+pub async fn check_database_integrity(state: State<'_, Mutex<Database>>) -> Result<String> {
+    let db = lock(&state)?;
+    crate::services::check_integrity(&db)
 }
 
 #[tauri::command]

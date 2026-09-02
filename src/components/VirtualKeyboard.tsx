@@ -110,7 +110,7 @@ export function VirtualKeyboard({ layout }: { layout: KeyboardLayout }) {
         </div>
       ))}
       <p className="mt-2 text-center text-[0.7rem] text-ink-faint">
-        {status === "ready" ? "Press the highlighted key to begin." : status === "paused" ? "Paused — press P to resume." : ""}
+        {status === "ready" ? "Press the highlighted key to begin." : status === "paused" ? "Paused — press Esc to resume." : ""}
       </p>
     </div>
   );

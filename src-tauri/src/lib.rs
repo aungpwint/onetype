@@ -66,6 +66,7 @@ pub fn run() {
             commands::get_streak,
             commands::get_achievements,
             commands::stats_summary,
+            commands::check_database_integrity,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

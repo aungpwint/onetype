@@ -53,6 +53,18 @@ export default function SettingsPage() {
     }
   };
 
+  const doHealthCheck = async () => {
+    setBusy("Check…");
+    try {
+      const message = await backend.checkDatabaseIntegrity();
+      setReport({ kind: "import", message });
+    } catch (error) {
+      setReport({ kind: "import", message: `Health check failed: ${error instanceof Error ? error.message : error}` });
+    } finally {
+      setBusy(null);
+    }
+  };
+
   return (
     <div className="mx-auto max-w-4xl space-y-6 px-4 py-6">
       <header>
@@ -158,6 +170,9 @@ export default function SettingsPage() {
           </button>
           <button type="button" className="btn btn-brass" disabled={busy !== null} onClick={() => void doImport()}>
             {busy === "Import…" ? "Working…" : "Import from backup"}
+          </button>
+          <button type="button" className="btn btn-ghost" disabled={busy !== null} onClick={doHealthCheck}>
+            {busy === "Check…" ? "Checking…" : "Check database health"}
           </button>
         </div>
         <p className="mt-3 text-xs text-ink-faint">
