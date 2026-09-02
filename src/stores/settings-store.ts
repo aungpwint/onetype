@@ -3,24 +3,28 @@ import * as backend from "../services/backend";
 
 export const APP_SETTING_KEYS = [
   "app.language",
+  "app.autoUpdate",
   "design.theme",
   "practice.sound",
   "practice.handGuide",
   "practice.confirmExit",
   "view.sidebar",
   "teacher.studentCodePrefix",
+  "updater.lastChecked",
 ] as const;
 
 export type AppSettingKey = (typeof APP_SETTING_KEYS)[number];
 
 export const DEFAULT_SETTINGS: Record<AppSettingKey, string> = {
   "app.language": "myanmar",
+  "app.autoUpdate": "on",
   "design.theme": "system",
   "practice.sound": "on",
   "practice.handGuide": "on",
   "practice.confirmExit": "on",
   "view.sidebar": "on",
   "teacher.studentCodePrefix": "STU",
+  "updater.lastChecked": "0",
 };
 
 interface SettingsState {

@@ -3,7 +3,10 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { initUi, useUiStore } from "./stores/ui-store";
 import { useStudentStore } from "./stores/student-store";
 import { useSettingsStore } from "./stores/settings-store";
+import { useStartupUpdateCheck } from "./services/updater/use-updater";
 import { Shell } from "./components/AppShell";
+import { UpdateBanner } from "./components/UpdateBanner";
+import { UpdateDialog } from "./components/UpdateDialog";
 import { Onboarding } from "./components/Onboarding";
 import { Spinner } from "./components/ui";
 import Dashboard from "./pages/Dashboard";
@@ -16,6 +19,7 @@ import TeacherPage from "./pages/TeacherPage";
 import SettingsPage from "./pages/SettingsPage";
 
 function Boot() {
+  useStartupUpdateCheck();
   useEffect(() => {
     initUi();
     void useUiStore.getState().setTheme(useUiStore.getState().theme);
@@ -36,6 +40,7 @@ export default function App() {
   return (
     <>
       <Boot />
+      <UpdateDialog />
       {!loaded || loading ? (
         <div className="flex h-screen flex-col items-center justify-center gap-4">
           <Spinner label="Opening the desk…" />
@@ -44,6 +49,9 @@ export default function App() {
         <Onboarding />
       ) : (
         <Shell>
+          <div className="px-4 pt-4">
+            <UpdateBanner />
+          </div>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/learn" element={<Learn />} />

@@ -3,6 +3,7 @@ import * as backend from "../services/backend";
 import { useUiStore } from "../stores/ui-store";
 import { useSettingsStore } from "../stores/settings-store";
 import { useStudentStore } from "../stores/student-store";
+import { useUpdater } from "../services/updater/use-updater";
 import type { ThemePreference } from "../types";
 import { Field, Modal } from "../components/ui";
 
@@ -16,6 +17,7 @@ export default function SettingsPage() {
 
   const settings = useSettingsStore();
   const active = useStudentStore((s) => s.active);
+  const updater = useUpdater();
 
   const defaultLang = settings.get("app.language");
   const confirmExit = settings.get("practice.confirmExit");
@@ -154,6 +156,61 @@ export default function SettingsPage() {
             </div>
           ))}
         </dl>
+      </section>
+
+      <section className="card p-5">
+        <h2 className="font-display text-lg">Updates</h2>
+        <div className="mt-4 space-y-3">
+          <label className="flex items-center justify-between rounded-lg border border-line px-4 py-3">
+            <span>
+              <span className="block text-sm">Check for updates automatically</span>
+              <span className="block text-xs text-ink-soft">
+                OneType will check every 6 hours. You can also check manually below.
+              </span>
+            </span>
+            <input
+              type="checkbox"
+              checked={updater.autoUpdate !== "off"}
+              onChange={(e) =>
+                void settings.set("app.autoUpdate", e.target.checked ? "on" : "off")
+              }
+              className="h-5 w-5 accent-[var(--accent)]"
+            />
+          </label>
+        </div>
+        <div className="mt-4 flex items-center gap-3">
+          <button
+            type="button"
+            className="btn btn-primary"
+            disabled={updater.status.state === "checking"}
+            onClick={updater.check}
+          >
+            {updater.status.state === "checking"
+              ? "Checking…"
+              : updater.status.state === "available"
+                ? `Update available (v${updater.status.version})`
+                : updater.status.state === "downloaded"
+                  ? "Update ready to install"
+                  : "Check for updates"}
+          </button>
+          {updater.status.state === "available" && (
+            <button
+              type="button"
+              className="btn btn-brass"
+              onClick={updater.downloadAndInstall}
+            >
+              Download &amp; install
+            </button>
+          )}
+          {updater.status.state === "downloaded" && (
+            <button type="button" className="btn btn-primary" onClick={updater.install}>
+              Restart now
+            </button>
+          )}
+          {updater.status.state === "error" && (
+            <span className="text-xs text-red-600">{updater.status.message}</span>
+          )}
+        </div>
       </section>
 
       <section className="card p-5">
