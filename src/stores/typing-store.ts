@@ -393,7 +393,11 @@ function createEngine(session: TypingSessionState): TypingEngine {
           void useTypingStore.getState().persistAndFinish();
         }, 60);
       }
-      useTypingStore.setState({ status: engine.status });
+      const current = useTypingStore.getState().status;
+      const next = engine.status;
+      if (current !== next) {
+        useTypingStore.setState({ status: next });
+      }
     },
   });
   return engine;

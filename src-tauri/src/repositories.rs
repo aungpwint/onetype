@@ -101,7 +101,8 @@ pub fn create_student(conn: &Connection, req: &CreateStudentRequest) -> Result<S
     if count == 1 {
         conn.execute("UPDATE students SET active = 1 WHERE id = ?1", params![id])?;
     }
-    Ok(get_student(conn, &id)?.expect("just inserted"))
+    get_student(conn, &id)?
+        .ok_or_else(|| AppError::validation("Student was created but could not be reloaded."))
 }
 
 pub fn get_student(conn: &Connection, id: &str) -> Result<Option<Student>> {
@@ -152,7 +153,8 @@ pub fn update_student(conn: &Connection, req: &UpdateStudentRequest) -> Result<S
         "UPDATE students SET name = ?1, display_name = ?2, avatar = ?3, updated_at = ?4 WHERE id = ?5",
         params![name, display_name, avatar, now_millis(), req.id],
     )?;
-    Ok(get_student(conn, &req.id)?.expect("updated"))
+    get_student(conn, &req.id)?
+        .ok_or_else(|| AppError::validation("Student was updated but could not be reloaded."))
 }
 
 pub fn delete_student(conn: &Connection, id: &str) -> Result<()> {
@@ -352,6 +354,7 @@ pub fn save_typing_session(
     check_not_negative_i64(req.error_count, "errorCount")?;
     check_not_negative_i64(req.backspace_count, "backspaceCount")?;
     check_non_negative(req.wpm, "wpm")?;
+    check_non_negative(req.cpm, "cpm")?;
     check_accuracy(req.accuracy, "accuracy")?;
     let id = new_id("ses");
     conn.execute(
@@ -377,6 +380,7 @@ pub fn list_typing_sessions(
     student_id: &str,
     limit: i64,
 ) -> Result<Vec<TypingSession>> {
+    check_positive(limit, "limit")?;
     let mut stmt = conn.prepare(&format!(
         "SELECT {TYPING_SESSION_COLS} FROM typing_sessions WHERE student_id = ?1 ORDER BY started_at DESC LIMIT ?2"
     ))?;
@@ -427,6 +431,7 @@ pub fn save_exercise_result(conn: &Connection, req: &SaveExerciseResultRequest) 
     check_not_negative_i64(req.total_count, "totalCount")?;
     check_not_negative_i64(req.backspace_count, "backspaceCount")?;
     check_non_negative(req.wpm, "wpm")?;
+    check_non_negative(req.cpm, "cpm")?;
     check_accuracy(req.accuracy, "accuracy")?;
     conn.execute(
         "INSERT INTO exercise_results (id, student_id, lesson_id, exercise_id, level, lesson_number, attempt, started_at, ended_at, duration_ms, wpm, cpm, accuracy, correct_count, error_count, total_count, backspace_count, passed, layout_id, layout_version, content_version)
@@ -575,6 +580,7 @@ pub fn weak_keys(
     layout_id: &str,
     limit: i64,
 ) -> Result<Vec<WeakKey>> {
+    check_positive(limit, "limit")?;
     let mut stmt = conn.prepare(
         "SELECT key_id, accuracy, (correct + incorrect) AS attempts FROM key_statistics
          WHERE student_id = ?1 AND (?2 = '%' OR layout_id = ?2) AND (correct + incorrect) > 0
@@ -600,6 +606,7 @@ pub fn weak_fingers(
     layout_id: &str,
     limit: i64,
 ) -> Result<Vec<WeakFinger>> {
+    check_positive(limit, "limit")?;
     let mut stmt = conn.prepare(
         "SELECT finger, accuracy, (correct + incorrect) AS attempts FROM finger_statistics
          WHERE student_id = ?1 AND (?2 = '%' OR layout_id = ?2) AND (correct + incorrect) > 0
@@ -691,6 +698,7 @@ pub fn save_test_result(conn: &Connection, req: &SaveTestResultRequest) -> Resul
     check_not_negative_i64(req.correct_count, "correctCount")?;
     check_not_negative_i64(req.duration_seconds, "durationSeconds")?;
     check_non_negative(req.wpm, "wpm")?;
+    check_non_negative(req.cpm, "cpm")?;
     check_accuracy(req.accuracy, "accuracy")?;
     let id = new_id("tt");
     conn.execute(
@@ -1319,5 +1327,58 @@ mod tests {
         );
         assert!(result.is_err());
         assert_eq!(result.err().unwrap().code, "validation_error");
+    }
+
+    #[test]
+    fn save_typing_session_rejects_negative_cpm() {
+        let db = Database::open_in_memory().unwrap();
+        let id = seeded_student_id(&db);
+        let result = save_typing_session(
+            db.conn(),
+            &SaveTypingSessionRequest {
+                student_id: id,
+                lesson_id: None,
+                exercise_id: None,
+                level: None,
+                lesson_number: None,
+                started_at: 0,
+                ended_at: 1,
+                duration_ms: 1000,
+                target_length: 100,
+                completed_count: 50,
+                correct_count: 45,
+                error_count: 5,
+                backspace_count: 0,
+                wpm: 20.0,
+                cpm: -1.0,
+                accuracy: 90.0,
+                layout_id: "english-qwerty".into(),
+                layout_version: 1,
+                content_version: 1,
+                status: "completed".into(),
+            },
+        );
+        assert!(result.is_err());
+        assert_eq!(result.err().unwrap().code, "validation_error");
+    }
+
+    #[test]
+    fn list_typing_sessions_rejects_non_positive_limit() {
+        let db = Database::open_in_memory().unwrap();
+        let id = seeded_student_id(&db);
+        let result = list_typing_sessions(db.conn(), &id, 0);
+        assert!(result.is_err());
+        assert_eq!(result.err().unwrap().code, "validation_error");
+        let result = list_typing_sessions(db.conn(), &id, -5);
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn teacher_overview_handles_no_students() {
+        let db = Database::open_in_memory().unwrap();
+        let overview = teacher_overview(db.conn()).unwrap();
+        assert_eq!(overview.student_count, 0);
+        assert!(overview.students.is_empty());
+        assert_eq!(overview.total_minutes, 0.0);
     }
 }

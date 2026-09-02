@@ -19,6 +19,12 @@ pub fn record_activity(
     if req.activity_date.trim().is_empty() || req.duration_ms < 0 {
         return Err(AppError::validation("Invalid activity record."));
     }
+    if !req.wpm.is_finite() || req.wpm < 0.0 {
+        return Err(AppError::validation("WPM must be a non-negative number."));
+    }
+    if !req.accuracy.is_finite() || !(0.0..=100.0).contains(&req.accuracy) {
+        return Err(AppError::validation("Accuracy must be between 0 and 100."));
+    }
     let tx = db.conn().unchecked_transaction()?;
     crate::achievements::record_activity(
         &tx,
@@ -376,5 +382,34 @@ mod tests {
 
     fn today() -> String {
         format_day_offset(0)
+    }
+
+    #[test]
+    fn record_activity_rejects_bad_metrics() {
+        let mut db = Database::open_in_memory().unwrap();
+        let s = seed_student(&mut db);
+        // negative wpm
+        let r = record_activity(
+            &db,
+            &req(&s.id, "2024-01-01", 60000, -5.0, 90.0),
+            "2024-01-01",
+        );
+        assert!(r.is_err());
+        assert_eq!(r.err().unwrap().code, "validation_error");
+        // accuracy out of range
+        let r = record_activity(
+            &db,
+            &req(&s.id, "2024-01-01", 60000, 20.0, 150.0),
+            "2024-01-01",
+        );
+        assert!(r.is_err());
+        assert_eq!(r.err().unwrap().code, "validation_error");
+        // NaN wpm
+        let r = record_activity(
+            &db,
+            &req(&s.id, "2024-01-01", 60000, f64::NAN, 90.0),
+            "2024-01-01",
+        );
+        assert!(r.is_err());
     }
 }

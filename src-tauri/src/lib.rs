@@ -75,7 +75,10 @@ pub fn run() {
             commands::check_database_integrity,
         ])
         .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .unwrap_or_else(|e| {
+            eprintln!("Failed to start application: {e}");
+            std::process::exit(1);
+        });
 }
 
 #[cfg(test)]

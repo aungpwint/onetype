@@ -13,14 +13,14 @@ export function UpdateBanner() {
       <div className="flex gap-2">
         <button
           type="button"
-          className="btn btn-ghost !py-1 text-xs"
+          className="btn btn-ghost py-1! text-xs"
           onClick={check}
         >
           Check again
         </button>
         <button
           type="button"
-          className="btn btn-brass !py-1 text-xs"
+          className="btn btn-brass py-1! text-xs"
           onClick={downloadAndInstall}
         >
           Download &amp; install

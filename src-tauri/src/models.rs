@@ -9,25 +9,26 @@ pub fn now_millis() -> i64 {
 
 pub fn new_id(prefix: &str) -> String {
     let mut buf = [0u8; 8];
-    for slot in buf.iter_mut() {
-        *slot = rand_byte();
+    if getrandom::getrandom(&mut buf).is_err() {
+        fallback_rand(&mut buf);
     }
     let hex: String = buf.iter().map(|b| format!("{b:02x}")).collect();
     format!("{prefix}_{hex}")
 }
 
-fn rand_byte() -> u8 {
+fn fallback_rand(buf: &mut [u8]) {
     use std::time::{SystemTime, UNIX_EPOCH};
     let nanos = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .map(|d| d.as_nanos())
         .unwrap_or(0);
-    let seed = (nanos & 0xffff).to_le_bytes();
-    let mut acc = 0u8;
-    for b in seed {
-        acc = acc.wrapping_mul(31).wrapping_add(b ^ (nanos & 0xff) as u8);
+    let mut acc = (nanos >> 32) as u64 ^ nanos as u64;
+    for slot in buf.iter_mut() {
+        acc = acc
+            .wrapping_mul(6364136223846793005)
+            .wrapping_add(1442695040888963407);
+        *slot = (acc >> 33) as u8;
     }
-    acc | 1
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

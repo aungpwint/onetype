@@ -114,14 +114,14 @@ export default function SettingsPage() {
               <span className="block text-sm">Key click sounds</span>
               <span className="block text-xs text-ink-faint">A short high note on correct, low on error.</span>
             </span>
-            <input type="checkbox" checked={sound} onChange={(e) => setSound(e.target.checked)} className="h-5 w-5 accent-[var(--accent)]" />
+            <input type="checkbox" checked={sound} onChange={(e) => setSound(e.target.checked)} className="h-5 w-5 accent-accent" />
           </label>
           <label className="flex items-center justify-between rounded-lg border border-line px-4 py-3">
             <span>
               <span className="block text-sm">Hand guide</span>
               <span className="block text-xs text-ink-faint">Show which finger to use next.</span>
             </span>
-            <input type="checkbox" checked={handGuide} onChange={toggleHandGuide} className="h-5 w-5 accent-[var(--accent)]" />
+            <input type="checkbox" checked={handGuide} onChange={toggleHandGuide} className="h-5 w-5 accent-accent" />
           </label>
           <label className="flex items-center justify-between rounded-lg border border-line px-4 py-3">
             <span>
@@ -132,7 +132,7 @@ export default function SettingsPage() {
               type="checkbox"
               checked={confirmExit !== "off"}
               onChange={(e) => void settings.set("practice.confirmExit", e.target.checked ? "on" : "off")}
-              className="h-5 w-5 accent-[var(--accent)]"
+              className="h-5 w-5 accent-accent"
             />
           </label>
         </div>
@@ -176,7 +176,7 @@ export default function SettingsPage() {
               onChange={(e) =>
                 void settings.set("notification.enabled", e.target.checked ? "on" : "off")
               }
-              className="h-5 w-5 accent-[var(--accent)]"
+              className="h-5 w-5 accent-accent"
             />
           </label>
           <label className="flex items-center justify-between rounded-lg border border-line px-4 py-3">
@@ -192,7 +192,7 @@ export default function SettingsPage() {
               onChange={(e) =>
                 void settings.set("notification.notifyUpdates", e.target.checked ? "on" : "off")
               }
-              className="h-5 w-5 accent-[var(--accent)]"
+              className="h-5 w-5 accent-accent"
             />
           </label>
         </div>
@@ -214,7 +214,7 @@ export default function SettingsPage() {
               onChange={(e) =>
                 void settings.set("app.autoUpdate", e.target.checked ? "on" : "off")
               }
-              className="h-5 w-5 accent-[var(--accent)]"
+              className="h-5 w-5 accent-accent"
             />
           </label>
         </div>

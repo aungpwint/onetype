@@ -3,6 +3,7 @@ import { localBackend } from "./local";
 import type {
   AchievementRecord,
   CreateStudentRequest,
+  ExerciseResult,
   ExportFile,
   ImportReport,
   LessonProgress,
@@ -86,7 +87,7 @@ export async function saveExerciseResult(req: SaveExerciseResultRequest): Promis
   return invokeCommand("save_exercise_result", { req });
 }
 
-export async function listExerciseResults(studentId: string): Promise<ReturnType<typeof localBackend.listExerciseResults> extends Promise<infer T> ? T : never> {
+export async function listExerciseResults(studentId: string): Promise<ExerciseResult[]> {
   if (!isTauriRuntime()) return localBackend.listExerciseResults(studentId);
   return invokeCommand("list_exercise_results", { studentId });
 }

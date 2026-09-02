@@ -72,7 +72,7 @@ export function ResultDialog() {
               : `Target was ${target.minAccuracy}% accuracy${target.minWpm !== null ? ` and ${target.minWpm} WPM` : ""}. One more round.`}
           </p>
         </div>
-        <button type="button" className="btn btn-ghost !px-2 !py-1 text-xs" onClick={close}>
+        <button type="button" className="btn btn-ghost px-2! py-1! text-xs" onClick={close}>
           Esc
         </button>
       </div>
