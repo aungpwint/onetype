@@ -1,6 +1,44 @@
 import type { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
+import { Component, useEffect } from "react";
+
+export class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  state = { error: null as Error | null };
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, info: unknown) {
+    // Report error metadata only; never log typed content.
+    console.error("OneType render error:", error, info);
+  }
+
+  retry = () => this.setState({ error: null });
+
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
+          <p className="font-display text-2xl">Something went wrong</p>
+          <p className="max-w-md text-sm text-ink-soft">
+            OneType hit an unexpected error. Your saved progress is safe — reload to continue.
+          </p>
+          <p className="max-w-md font-mono text-xs text-ink-faint">{String(this.state.error.message || this.state.error)}</p>
+          <div className="flex gap-2">
+            <button type="button" className="btn btn-primary" onClick={this.retry}>
+              Try again
+            </button>
+            <button type="button" className="btn btn-ghost" onClick={() => window.location.reload()}>
+              Reload
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 export function Spinner({ label }: { label?: string }) {
   return (

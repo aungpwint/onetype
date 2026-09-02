@@ -151,7 +151,17 @@ export const localBackend = {
     write(KEYS.students, students);
     const active = localStorage.getItem(KEYS.activeStudentId);
     if (active === id) localStorage.removeItem(KEYS.activeStudentId);
-    for (const key of [KEYS.lessonProgress, KEYS.exerciseResults, KEYS.typingSessions, KEYS.testResults]) {
+    for (const key of [
+      KEYS.lessonProgress,
+      KEYS.exerciseResults,
+      KEYS.typingSessions,
+      KEYS.testResults,
+      KEYS.keyStats,
+      KEYS.fingerStats,
+      KEYS.characterStats,
+      KEYS.dailyActivity,
+      KEYS.achievements,
+    ]) {
       write(
         key,
         read<{ studentId: string }[]>(key, []).filter((row) => row.studentId !== id),
@@ -238,8 +248,10 @@ export const localBackend = {
     write(KEYS.exerciseResults, all);
   },
 
-  nextExerciseAttempt: async (_studentId: string, exerciseId: string): Promise<number> => {
-    const results = read<ExerciseResult[]>(KEYS.exerciseResults, []).filter((r) => r.exerciseId === exerciseId);
+  nextExerciseAttempt: async (studentId: string, exerciseId: string): Promise<number> => {
+    const results = read<ExerciseResult[]>(KEYS.exerciseResults, []).filter(
+      (r) => r.exerciseId === exerciseId && r.studentId === studentId,
+    );
     return results.reduce((max, r) => Math.max(max, r.attempt), 0) + 1;
   },
 
@@ -278,8 +290,10 @@ export const localBackend = {
     return result;
   },
 
-  nextTestAttempt: async (_studentId: string, testId: string): Promise<number> => {
-    const results = read<TestResult[]>(KEYS.testResults, []).filter((r) => r.testId === testId);
+  nextTestAttempt: async (studentId: string, testId: string): Promise<number> => {
+    const results = read<TestResult[]>(KEYS.testResults, []).filter(
+      (r) => r.testId === testId && r.studentId === studentId,
+    );
     return results.reduce((max, r) => Math.max(max, r.attempt), 0) + 1;
   },
 
@@ -289,19 +303,23 @@ export const localBackend = {
     let totalMinutes = 0;
     let accSum = 0;
     let accCount = 0;
+    let wpmSum = 0;
+    let wpmCount = 0;
     for (const student of students) {
       const detail = await detailFor(student);
       totalMinutes += detail.totalMinutes;
       if (detail.totalSessions > 0) {
         accSum += detail.overallAccuracy;
         accCount += 1;
+        wpmSum += detail.overallWpm;
+        wpmCount += 1;
       }
     }
     return {
       studentCount: students.length,
       totalMinutes,
       avgAccuracy: accCount > 0 ? accSum / accCount : 0,
-      avgWpm: 0,
+      avgWpm: wpmCount > 0 ? wpmSum / wpmCount : 0,
       students: summaries,
     };
   },

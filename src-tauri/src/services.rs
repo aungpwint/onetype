@@ -19,9 +19,11 @@ pub fn record_activity(
     if req.activity_date.trim().is_empty() || req.duration_ms < 0 {
         return Err(AppError::validation("Invalid activity record."));
     }
-    crate::achievements::record_activity(db.conn(), &req.student_id, &req.activity_date, req.duration_ms, req.wpm, req.accuracy)?;
-    let streak = crate::achievements::compute_streak(db.conn(), &req.student_id, today)?;
-    let newly = crate::achievements::evaluate_and_unlock(db.conn(), &req.student_id, streak.current)?;
+    let tx = db.conn().unchecked_transaction()?;
+    crate::achievements::record_activity(&tx, &req.student_id, &req.activity_date, req.duration_ms, req.wpm, req.accuracy)?;
+    let streak = crate::achievements::compute_streak(&tx, &req.student_id, today)?;
+    let newly = crate::achievements::evaluate_and_unlock(&tx, &req.student_id, streak.current)?;
+    tx.commit()?;
     Ok(crate::models::RecordActivityResult {
         newly_unlocked: newly,
     })
@@ -189,9 +191,9 @@ mod tests {
     #[test]
     fn import_rejects_wrong_format() {
         let mut db = Database::open_in_memory().unwrap();
-        let mut conn = db.conn_mut();
+        let conn = db.conn_mut();
         let result = repo::import_export(
-            &mut conn,
+            conn,
             crate::models::ExportFile {
                 format: "other".into(),
                 version: 1,
@@ -232,7 +234,7 @@ mod tests {
                 target_length: 100,
                 completed_count: 100,
                 correct_count: (accuracy / 100.0 * 100.0).round() as i64,
-                error_count: (100.0 - accuracy).round() as i64 / 1,
+                error_count: (100.0 - accuracy).round() as i64,
                 backspace_count: 0,
                 wpm,
                 cpm: wpm * 5.0,

@@ -77,6 +77,6 @@ mod tests {
 
     #[test]
     fn expected_schema_is_migrated() {
-        assert!(SCHEMA_VERSION >= 4);
+        const _: () = assert!(SCHEMA_VERSION >= 4);
     }
 }

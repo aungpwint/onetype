@@ -63,7 +63,6 @@ pub struct UpdateStudentRequest {
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StudentSummary {
-    #[serde(flatten)]
     pub student: Student,
     pub level: Option<String>,
     pub lesson_number: Option<i64>,

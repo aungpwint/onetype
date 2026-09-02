@@ -101,6 +101,13 @@ export function ResultDialog() {
         <div className="flex justify-between"><dt className="text-ink-faint">Pass</dt><dd className="tnum" style={{ color: result.passed ? "var(--success)" : "var(--alert)" }}>{result.passed ? "passed" : "not yet"}</dd></div>
       </dl>
 
+      {result.saveError ? (
+        <div className="mt-4 rounded-lg border border-alert/40 bg-alert/10 p-3 text-sm" role="alert">
+          <span className="font-medium">Couldn't save this round.</span>{" "}
+          <span className="text-ink-soft">{result.saveError}</span>
+        </div>
+      ) : null}
+
       {achieved.length > 0 ? (
         <div className="mt-4 rounded-lg border border-brass/40 bg-brass/10 p-3">
           <p className="eyebrow">Achievement unlocked</p>

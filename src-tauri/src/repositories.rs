@@ -2,6 +2,42 @@ use rusqlite::{params, Connection, OptionalExtension, Transaction};
 use crate::error::{AppError, Result};
 use crate::models::*;
 
+fn require_student(conn: &Connection, student_id: &str) -> Result<()> {
+    if get_student(conn, student_id)?.is_none() {
+        return Err(AppError::not_found("Student not found."));
+    }
+    Ok(())
+}
+
+fn check_non_negative(value: f64, field: &str) -> Result<()> {
+    if !value.is_finite() || value < 0.0 {
+        return Err(AppError::validation(format!("{field} must be a non-negative number.")));
+    }
+    Ok(())
+}
+
+fn check_accuracy(value: f64, field: &str) -> Result<()> {
+    if !value.is_finite() || !(0.0..=100.0).contains(&value) {
+        return Err(AppError::validation(format!("{field} must be between 0 and 100.")));
+    }
+    Ok(())
+}
+
+fn check_positive(value: i64, field: &str) -> Result<()> {
+    if value < 1 {
+        return Err(AppError::validation(format!("{field} must be a positive integer.")));
+    }
+    Ok(())
+}
+
+fn check_not_negative_i64(value: i64, field: &str) -> Result<()> {
+    if value < 0 {
+        return Err(AppError::validation(format!("{field} must be non-negative.")));
+    }
+    Ok(())
+}
+
+
 fn row_to_student(row: &rusqlite::Row<'_>) -> rusqlite::Result<Student> {
     Ok(Student {
         id: row.get("id")?,
@@ -167,7 +203,8 @@ pub fn set_active_student(conn: &Connection, id: &str) -> Result<Student> {
     tx.execute("UPDATE students SET active = 0", [])?;
     tx.execute("UPDATE students SET active = 1, updated_at = ?1 WHERE id = ?2", params![now_millis(), id])?;
     tx.commit()?;
-    Ok(get_student(conn, id)?.expect("exists"))
+    get_student(conn, id)?
+        .ok_or_else(|| AppError::not_found("Student not found."))
 }
 
 pub fn get_active_student(conn: &Connection) -> Result<Option<Student>> {
@@ -202,9 +239,10 @@ fn row_to_lesson_progress(row: &rusqlite::Row<'_>) -> rusqlite::Result<LessonPro
 }
 
 pub fn save_lesson_progress(conn: &Connection, req: &SaveLessonProgressRequest) -> Result<LessonProgress> {
-    if get_student(conn, &req.student_id)?.is_none() {
-        return Err(AppError::not_found("Student not found."));
-    }
+    require_student(conn, &req.student_id)?;
+    check_not_negative_i64(req.lesson_number, "lessonNumber")?;
+    check_non_negative(req.wpm, "wpm")?;
+    check_accuracy(req.accuracy, "accuracy")?;
     conn.execute(
         "INSERT INTO lesson_progress (id, student_id, lesson_id, level, lesson_number, best_wpm, best_accuracy, attempts, completions, completed, last_practiced_at, content_version)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, 1, ?8, ?9, ?10, ?11)
@@ -230,8 +268,8 @@ pub fn save_lesson_progress(conn: &Connection, req: &SaveLessonProgressRequest) 
             req.content_version,
         ],
     )?;
-    Ok(get_lesson_progress(conn, &req.student_id, &req.lesson_id)?
-        .expect("just written"))
+    get_lesson_progress(conn, &req.student_id, &req.lesson_id)?
+        .ok_or_else(|| AppError::not_found("Lesson progress not found."))
 }
 
 pub fn get_lesson_progress(conn: &Connection, student_id: &str, lesson_id: &str) -> Result<Option<LessonProgress>> {
@@ -289,6 +327,15 @@ fn row_to_typing_session(row: &rusqlite::Row<'_>) -> rusqlite::Result<TypingSess
 }
 
 pub fn save_typing_session(conn: &Connection, req: &SaveTypingSessionRequest) -> Result<TypingSession> {
+    require_student(conn, &req.student_id)?;
+    check_not_negative_i64(req.duration_ms, "durationMs")?;
+    check_not_negative_i64(req.target_length, "targetLength")?;
+    check_not_negative_i64(req.completed_count, "completedCount")?;
+    check_not_negative_i64(req.correct_count, "correctCount")?;
+    check_not_negative_i64(req.error_count, "errorCount")?;
+    check_not_negative_i64(req.backspace_count, "backspaceCount")?;
+    check_non_negative(req.wpm, "wpm")?;
+    check_accuracy(req.accuracy, "accuracy")?;
     let id = new_id("ses");
     conn.execute(
         "INSERT INTO typing_sessions (id, student_id, lesson_id, exercise_id, level, lesson_number, started_at, ended_at, duration_ms, target_length, completed_count, correct_count, error_count, backspace_count, wpm, cpm, accuracy, layout_id, layout_version, content_version, status)
@@ -351,6 +398,15 @@ fn row_to_exercise_result(row: &rusqlite::Row<'_>) -> rusqlite::Result<ExerciseR
 }
 
 pub fn save_exercise_result(conn: &Connection, req: &SaveExerciseResultRequest) -> Result<()> {
+    require_student(conn, &req.student_id)?;
+    check_positive(req.attempt, "attempt")?;
+    check_not_negative_i64(req.duration_ms, "durationMs")?;
+    check_not_negative_i64(req.correct_count, "correctCount")?;
+    check_not_negative_i64(req.error_count, "errorCount")?;
+    check_not_negative_i64(req.total_count, "totalCount")?;
+    check_not_negative_i64(req.backspace_count, "backspaceCount")?;
+    check_non_negative(req.wpm, "wpm")?;
+    check_accuracy(req.accuracy, "accuracy")?;
     conn.execute(
         "INSERT INTO exercise_results (id, student_id, lesson_id, exercise_id, level, lesson_number, attempt, started_at, ended_at, duration_ms, wpm, cpm, accuracy, correct_count, error_count, total_count, backspace_count, passed, layout_id, layout_version, content_version)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19, ?20, ?21)
@@ -552,6 +608,13 @@ fn row_to_test_result(row: &rusqlite::Row<'_>) -> rusqlite::Result<TestResult> {
 }
 
 pub fn save_test_result(conn: &Connection, req: &SaveTestResultRequest) -> Result<TestResult> {
+    require_student(conn, &req.student_id)?;
+    check_positive(req.attempt, "attempt")?;
+    check_not_negative_i64(req.errors, "errors")?;
+    check_not_negative_i64(req.correct_count, "correctCount")?;
+    check_not_negative_i64(req.duration_seconds, "durationSeconds")?;
+    check_non_negative(req.wpm, "wpm")?;
+    check_accuracy(req.accuracy, "accuracy")?;
     let id = new_id("tt");
     conn.execute(
         "INSERT INTO test_results (id, student_id, test_id, attempt, wpm, cpm, accuracy, errors, correct_count, duration_seconds, passed, passed_accuracy, passed_wpm, scored_on, layout_id, content_version)
@@ -1009,4 +1072,151 @@ pub fn import_export(conn: &mut Connection, file: ExportFile) -> Result<ImportRe
 
     tx.commit()?;
     Ok(report)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::database::Database;
+
+    fn seeded_student_id(db: &Database) -> String {
+        let req = crate::models::CreateStudentRequest {
+            name: "Testy".into(),
+            student_code: None,
+            display_name: None,
+        };
+        create_student(db.conn(), &req).unwrap().id
+    }
+
+    fn create_student(conn: &Connection, req: &CreateStudentRequest) -> Result<Student> {
+        let student = Student {
+            id: new_id("stu"),
+            student_code: req.student_code.clone().unwrap_or_else(|| next_student_code(conn).unwrap()),
+            name: req.name.clone(),
+            display_name: req.display_name.clone().unwrap_or_else(|| req.name.clone()),
+            avatar: None,
+            active: false,
+            created_at: now_millis(),
+            updated_at: now_millis(),
+        };
+        conn.execute(
+            "INSERT INTO students (id, student_code, name, display_name, avatar, active, created_at, updated_at)
+             VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)",
+            params![student.id, student.student_code, student.name, student.display_name, student.avatar, i64::from(student.active), student.created_at, student.updated_at],
+        )?;
+        Ok(student)
+    }
+
+    #[test]
+    fn save_typing_session_rejects_unknown_student() {
+        let db = Database::open_in_memory().unwrap();
+        let result = save_typing_session(
+            db.conn(),
+            &SaveTypingSessionRequest {
+                student_id: "nope".into(),
+                lesson_id: None,
+                exercise_id: None,
+                level: None,
+                lesson_number: None,
+                started_at: 0,
+                ended_at: 1,
+                duration_ms: 1000,
+                target_length: 100,
+                completed_count: 50,
+                correct_count: 45,
+                error_count: 5,
+                backspace_count: 0,
+                wpm: 20.0,
+                cpm: 100.0,
+                accuracy: 90.0,
+                layout_id: "english-qwerty".into(),
+                layout_version: 1,
+                content_version: 1,
+                status: "completed".into(),
+            },
+        );
+        assert!(result.is_err());
+        let err = result.err().unwrap();
+        assert_eq!(err.code, "not_found");
+    }
+
+    #[test]
+    fn save_exercise_result_rejects_bad_accuracy() {
+        let db = Database::open_in_memory().unwrap();
+        let id = seeded_student_id(&db);
+        let result = save_exercise_result(
+            db.conn(),
+            &SaveExerciseResultRequest {
+                student_id: id,
+                lesson_id: "l".into(),
+                exercise_id: "e".into(),
+                level: "beginner".into(),
+                lesson_number: 1,
+                attempt: 1,
+                started_at: 0,
+                ended_at: 1,
+                duration_ms: 1000,
+                wpm: 20.0,
+                cpm: 100.0,
+                accuracy: 150.0,
+                correct_count: 10,
+                error_count: 5,
+                total_count: 15,
+                backspace_count: 0,
+                passed: true,
+                layout_id: "english-qwerty".into(),
+                layout_version: 1,
+                content_version: 1,
+            },
+        );
+        assert!(result.is_err());
+        assert_eq!(result.err().unwrap().code, "validation_error");
+    }
+
+    #[test]
+    fn save_test_result_accepts_valid_record() {
+        let db = Database::open_in_memory().unwrap();
+        let id = seeded_student_id(&db);
+        let result = save_test_result(
+            db.conn(),
+            &SaveTestResultRequest {
+                student_id: id,
+                test_id: "t1min".into(),
+                attempt: 1,
+                wpm: 30.0,
+                cpm: 150.0,
+                accuracy: 92.0,
+                errors: 2,
+                correct_count: 50,
+                duration_seconds: 60,
+                passed: true,
+                passed_accuracy: true,
+                passed_wpm: Some(true),
+                layout_id: "english-qwerty".into(),
+                content_version: 1,
+            },
+        );
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn save_lesson_progress_rejects_negative_wpm() {
+        let db = Database::open_in_memory().unwrap();
+        let id = seeded_student_id(&db);
+        let result = save_lesson_progress(
+            db.conn(),
+            &SaveLessonProgressRequest {
+                student_id: id,
+                lesson_id: "l1".into(),
+                level: "beginner".into(),
+                lesson_number: 1,
+                wpm: -5.0,
+                accuracy: 90.0,
+                completed: true,
+                content_version: 1,
+            },
+        );
+        assert!(result.is_err());
+        assert_eq!(result.err().unwrap().code, "validation_error");
+    }
 }

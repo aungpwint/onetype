@@ -7,7 +7,8 @@ import { buildTestMaterial } from "../core/materials/test-material";
 import type { KeyboardLayout } from "../core/keyboard-layout/layout";
 import type { Modifier, TypingMode } from "../types";
 import type { ScoreMetrics } from "../core/scoring/score";
-import type { AchievementRecord, TypingStatRecord, TypingTest } from "../services/types";import * as backend from "../services/backend";
+import type { AchievementRecord, TypingStatRecord, TypingTest } from "../services/types";
+import * as backend from "../services/backend";
 import { useStudentStore } from "./student-store";
 import { useLessonStore } from "./lesson-store";
 import { useUiStore } from "./ui-store";
@@ -36,6 +37,7 @@ export interface FinishedResult {
   finishReason: "completed" | "time-up";
   attempt: number;
   newlyUnlocked: string[];
+  saveError?: string;
 }
 
 interface TypingSessionState {
@@ -130,6 +132,7 @@ export const useTypingStore = create<TypingState>((set, get) => ({
     };
     const engine = createEngine(session);
     set({ session, engine, status: "ready", result: null, error: null, wrongFlash: null, tick: 0 });
+    bindKeys();
   },
 
   beginTest: async (test) => {
@@ -153,6 +156,7 @@ export const useTypingStore = create<TypingState>((set, get) => ({
     };
     const engine = createEngine(session);
     set({ session, engine, status: "ready", result: null, error: null, wrongFlash: null, tick: 0 });
+    bindKeys();
   },
 
   start: () => {
@@ -191,78 +195,84 @@ export const useTypingStore = create<TypingState>((set, get) => ({
     const contentVersion = CONTENT_VERSION;
     const lesson = session.resolved;
 
-    await backend.saveTypingSession({
-      studentId: active.id,
-      lessonId: session.lessonId ?? null,
-      exerciseId: session.kind === "lesson" ? (session.lessonId ?? null) : null,
-      level: session.kind === "lesson" ? lesson.level : null,
-      lessonNumber: session.kind === "lesson" ? lesson.number : null,
-      startedAt: session.startedAt,
-      endedAt: now,
-      durationMs: Math.round(engine.elapsedMs()),
-      targetLength: engine.sequence.charCount,
-      completedCount: engine.unitIndex,
-      correctCount: engine.correctCount,
-      errorCount: engine.incorrectCount,
-      backspaceCount: engine.backspaceCount,
-      wpm: metrics.grossWpm,
-      cpm: metrics.cpm,
-      accuracy: metrics.accuracy,
-      layoutId: session.layout.id,
-      layoutVersion,
-      contentVersion,
-      status: reason,
-    });
-
-    if (session.kind === "lesson") {
-      const passed = reason === "completed" && passes(metrics, lesson.completion.minAccuracy, lesson.completion.minWpm);
-      await backend.saveExerciseResult({
+    // Persistence is best-effort: the result dialog must always appear even if a
+    // write fails, so the learner never loses their score without feedback.
+    let saveError: string | undefined;
+    try {
+      await backend.saveTypingSession({
         studentId: active.id,
-        lessonId: session.lessonId ?? "",
-        exerciseId: session.lessonId ?? "",
-        level: lesson.level,
-        lessonNumber: lesson.number,
-        attempt: session.attempt,
+        lessonId: session.lessonId ?? null,
+        exerciseId: session.kind === "lesson" ? (session.lessonId ?? null) : null,
+        level: session.kind === "lesson" ? lesson.level : null,
+        lessonNumber: session.kind === "lesson" ? lesson.number : null,
         startedAt: session.startedAt,
         endedAt: now,
         durationMs: Math.round(engine.elapsedMs()),
+        targetLength: engine.sequence.charCount,
+        completedCount: engine.unitIndex,
+        correctCount: engine.correctCount,
+        errorCount: engine.incorrectCount,
+        backspaceCount: engine.backspaceCount,
         wpm: metrics.grossWpm,
         cpm: metrics.cpm,
         accuracy: metrics.accuracy,
-        correctCount: engine.correctCount,
-        errorCount: engine.incorrectCount,
-        totalCount: engine.sequence.units.length,
-        backspaceCount: engine.backspaceCount,
-        passed,
         layoutId: session.layout.id,
         layoutVersion,
         contentVersion,
+        status: reason,
       });
-      await useLessonStore.getState().saveProgress({
-        studentId: active.id,
-        lessonId: session.lessonId ?? "",
-        level: lesson.level,
-        lessonNumber: lesson.number,
-        wpm: metrics.grossWpm,
-        accuracy: metrics.accuracy,
-        completed: passed,
-        contentVersion,
-      });
-      await saveStatistics(active.id, session.layout.id);
-      const newlyUnlocked = await recordProgression(metrics, passed, reason);
-      set({
-        result: {
-          lessonId: session.lessonId,
-          mode: session.mode,
-          metrics,
-          passed,
-          finishReason: reason,
+
+      if (session.kind === "lesson") {
+        const passed = reason === "completed" && passes(metrics, lesson.completion.minAccuracy, lesson.completion.minWpm);
+        await backend.saveExerciseResult({
+          studentId: active.id,
+          lessonId: session.lessonId ?? "",
+          exerciseId: session.lessonId ?? "",
+          level: lesson.level,
+          lessonNumber: lesson.number,
           attempt: session.attempt,
-          newlyUnlocked,
-        },
-        status: "finished",
-      });
-    } else {
+          startedAt: session.startedAt,
+          endedAt: now,
+          durationMs: Math.round(engine.elapsedMs()),
+          wpm: metrics.grossWpm,
+          cpm: metrics.cpm,
+          accuracy: metrics.accuracy,
+          correctCount: engine.correctCount,
+          errorCount: engine.incorrectCount,
+          totalCount: engine.sequence.units.length,
+          backspaceCount: engine.backspaceCount,
+          passed,
+          layoutId: session.layout.id,
+          layoutVersion,
+          contentVersion,
+        });
+        await useLessonStore.getState().saveProgress({
+          studentId: active.id,
+          lessonId: session.lessonId ?? "",
+          level: lesson.level,
+          lessonNumber: lesson.number,
+          wpm: metrics.grossWpm,
+          accuracy: metrics.accuracy,
+          completed: passed,
+          contentVersion,
+        });
+        await saveStatistics(active.id, session.layout.id);
+        return recordProgression(metrics, passed, reason).then((newlyUnlocked) =>
+          set({
+            result: {
+              lessonId: session.lessonId,
+              mode: session.mode,
+              metrics,
+              passed,
+              finishReason: reason,
+              attempt: session.attempt,
+              newlyUnlocked,
+            },
+            status: "finished",
+          }),
+        );
+      }
+
       const test = session.test!;
       const passedAccuracy = metrics.accuracy >= test.minAccuracy;
       const passedWpm = test.minWpm === null ? null : metrics.grossWpm >= test.minWpm;
@@ -284,19 +294,57 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         contentVersion,
       });
       await saveStatistics(active.id, session.layout.id);
-      const newlyUnlocked = await recordProgression(metrics, passed, reason);
-      set({
-        result: {
-          testId: test.id,
-          mode: session.mode,
-          metrics,
-          passed,
-          finishReason: reason,
-          attempt: session.attempt,
-          newlyUnlocked,
-        },
-        status: "finished",
-      });
+      return recordProgression(metrics, passed, reason).then((newlyUnlocked) =>
+        set({
+          result: {
+            testId: test.id,
+            mode: session.mode,
+            metrics,
+            passed,
+            finishReason: reason,
+            attempt: session.attempt,
+            newlyUnlocked,
+          },
+          status: "finished",
+        }),
+      );
+    } catch (error) {
+      // Show the result anyway, flagging that it could not be saved.
+      saveError = error instanceof Error ? error.message : String(error);
+      if (session.kind === "lesson") {
+        const passed = reason === "completed" && passes(metrics, lesson.completion.minAccuracy, lesson.completion.minWpm);
+        set({
+          result: {
+            lessonId: session.lessonId,
+            mode: session.mode,
+            metrics,
+            passed,
+            finishReason: reason,
+            attempt: session.attempt,
+            newlyUnlocked: [],
+            saveError,
+          },
+          status: "finished",
+        });
+      } else {
+        const test = session.test!;
+        const passedAccuracy = metrics.accuracy >= test.minAccuracy;
+        const passedWpm = test.minWpm === null ? null : metrics.grossWpm >= test.minWpm;
+        const passed = reason === "completed" && passedAccuracy && (passedWpm === null || passedWpm);
+        set({
+          result: {
+            testId: test.id,
+            mode: session.mode,
+            metrics,
+            passed,
+            finishReason: reason,
+            attempt: session.attempt,
+            newlyUnlocked: [],
+            saveError,
+          },
+          status: "finished",
+        });
+      }
     }
   },
 
