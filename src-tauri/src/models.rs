@@ -376,21 +376,49 @@ pub struct ExportStudent {
     pub character_stats: Vec<KeyStatistic>,
 }
 
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct SaveResult {
-    pub ok: bool,
-}
-
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Settings {
-    pub values: std::collections::BTreeMap<String, String>,
-}
-
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SetSettingRequest {
     pub key: String,
     pub value: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DailyActivityAggregate {
+    pub sessions: i64,
+    pub total_minutes: f64,
+    pub avg_accuracy: f64,
+    pub avg_wpm: f64,
+    pub best_wpm: f64,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RecordActivityRequest {
+    pub student_id: String,
+    pub activity_date: String,
+    pub duration_ms: i64,
+    pub wpm: f64,
+    pub accuracy: f64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AchievementRecord {
+    pub achievement_id: String,
+    pub unlocked_at: i64,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct StreakInfo {
+    pub current: i64,
+    pub longest: i64,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RecordActivityResult {
+    pub newly_unlocked: Vec<AchievementRecord>,
 }

@@ -1,3 +1,4 @@
+mod achievements;
 mod commands;
 mod database;
 mod error;
@@ -61,6 +62,10 @@ pub fn run() {
             commands::set_setting,
             commands::export_all,
             commands::import_file,
+            commands::record_activity,
+            commands::get_streak,
+            commands::get_achievements,
+            commands::stats_summary,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -72,6 +77,6 @@ mod tests {
 
     #[test]
     fn expected_schema_is_migrated() {
-        assert!(SCHEMA_VERSION >= 3);
+        assert!(SCHEMA_VERSION >= 4);
     }
 }

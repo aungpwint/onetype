@@ -7,12 +7,13 @@ import { buildTestMaterial } from "../core/materials/test-material";
 import type { KeyboardLayout } from "../core/keyboard-layout/layout";
 import type { Modifier, TypingMode } from "../types";
 import type { ScoreMetrics } from "../core/scoring/score";
-import type { TypingStatRecord, TypingTest } from "../services/types";
-import * as backend from "../services/backend";
+import type { AchievementRecord, TypingStatRecord, TypingTest } from "../services/types";import * as backend from "../services/backend";
 import { useStudentStore } from "./student-store";
 import { useLessonStore } from "./lesson-store";
 import { useUiStore } from "./ui-store";
+import { useProgressionStore } from "./progression-store";
 import { CONTENT_VERSION } from "../services/local";
+import { playAchievementSound, playCompletionSound, playErrorSound, playKeySound } from "../lib/sound";
 
 export interface LiveStats {
   unitIndex: number;
@@ -34,6 +35,7 @@ export interface FinishedResult {
   passed: boolean;
   finishReason: "completed" | "time-up";
   attempt: number;
+  newlyUnlocked: string[];
 }
 
 interface TypingSessionState {
@@ -247,8 +249,17 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         contentVersion,
       });
       await saveStatistics(active.id, session.layout.id);
+      const newlyUnlocked = await recordProgression(metrics, passed, reason);
       set({
-        result: { lessonId: session.lessonId, mode: session.mode, metrics, passed, finishReason: reason, attempt: session.attempt },
+        result: {
+          lessonId: session.lessonId,
+          mode: session.mode,
+          metrics,
+          passed,
+          finishReason: reason,
+          attempt: session.attempt,
+          newlyUnlocked,
+        },
         status: "finished",
       });
     } else {
@@ -273,8 +284,17 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         contentVersion,
       });
       await saveStatistics(active.id, session.layout.id);
+      const newlyUnlocked = await recordProgression(metrics, passed, reason);
       set({
-        result: { testId: test.id, mode: session.mode, metrics, passed, finishReason: reason, attempt: session.attempt },
+        result: {
+          testId: test.id,
+          mode: session.mode,
+          metrics,
+          passed,
+          finishReason: reason,
+          attempt: session.attempt,
+          newlyUnlocked,
+        },
         status: "finished",
       });
     }
@@ -353,7 +373,8 @@ function bindKeys() {
     const correct = expected ? expected.keyCode === event.code && expected.modifier === modifier : event.code === "Space";
     engine.processKey(event.code, modifier);
     if (useUiStore.getState().soundEnabled) {
-      playKeySound(Boolean(correct));
+      if (correct) playKeySound(true);
+      else playErrorSound();
     }
     const { engine: after } = useTypingStore.getState();
     if (after && (after.status === "finished" || after.finishReason !== null)) {
@@ -388,24 +409,30 @@ async function saveStatistics(studentId: string, layoutId: string) {
   }
 }
 
-let audio: AudioContext | null = null;
-
-function playKeySound(correct: boolean) {
-  try {
-    if (typeof window === "undefined" || typeof window.AudioContext === "undefined") return;
-    if (!audio) audio = new window.AudioContext();
-    if (audio.state === "suspended") void audio.resume();
-    const osc = audio.createOscillator();
-    const gain = audio.createGain();
-    osc.type = "square";
-    osc.frequency.value = correct ? 880 : 220;
-    gain.gain.setValueAtTime(0.02, audio.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 0.08);
-    osc.connect(gain);
-    gain.connect(audio.destination);
-    osc.start();
-    osc.stop(audio.currentTime + 0.08);
-  } catch {
-    // sound unavailable; ignore
+async function recordProgression(
+  metrics: ScoreMetrics,
+  passed: boolean,
+  reason: "completed" | "time-up",
+): Promise<string[]> {
+  const { engine, session } = useTypingStore.getState();
+  const active = useStudentStore.getState().active;
+  let records: AchievementRecord[] = [];
+  if (engine && session && active && reason === "completed") {
+    records = await useProgressionStore
+      .getState()
+      .onSessionFinished({
+        studentId: active.id,
+        durationMs: Math.round(engine.elapsedMs()),
+        wpm: metrics.grossWpm,
+        accuracy: metrics.accuracy,
+        completed: true,
+      })
+      .catch(() => []);
   }
+  const sound = useUiStore.getState().soundEnabled;
+  if (sound) {
+    if (records.length > 0) playAchievementSound();
+    else if (passed) playCompletionSound();
+  }
+  return records.map((a) => a.achievementId);
 }

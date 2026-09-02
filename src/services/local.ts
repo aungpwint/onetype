@@ -1,19 +1,24 @@
 import type {
+  AchievementRecord,
   CreateStudentRequest,
   ExerciseResult,
   ExportFile,
   ImportReport,
   KeyStatistic,
   LessonProgress,
+  RecordActivityRequest,
+  RecordActivityResult,
   SaveExerciseResultRequest,
   SaveKeyStatsRequest,
   SaveLessonProgressRequest,
   SaveTestResultRequest,
   SaveTypingSessionRequest,
+  StreakInfo,
   Student,
   StudentDetail,
   TeacherOverview,
   TestResult,
+  TrainingSummary,
   TypingSession,
   TypingStatRecord,
   TypingTest,
@@ -36,6 +41,8 @@ const KEYS = {
   characterStats: `${PREFIX}characterStats`,
   settings: `${PREFIX}settings`,
   activeStudentId: `${PREFIX}activeStudentId`,
+  dailyActivity: `${PREFIX}dailyActivity`,
+  achievements: `${PREFIX}achievements`,
 };
 
 export const CONTENT_VERSION = 1;
@@ -399,6 +406,86 @@ export const localBackend = {
     write(KEYS.students, imported);
     return { importedStudents: file.students.length - skipped.length, skippedStudents: skipped, errors: [] };
   },
+
+  recordActivity: async (req: RecordActivityRequest, _today: string): Promise<RecordActivityResult> => {
+    const all = read<RecordActivityRow[]>(KEYS.dailyActivity, []);
+    const index = all.findIndex((r) => r.studentId === req.studentId && r.activityDate === req.activityDate);
+    if (index >= 0) {
+      const row = all[index];
+      row.sessionCount += 1;
+      row.totalDurationMs += req.durationMs;
+      row.bestWpm = Math.max(row.bestWpm, req.wpm);
+      row.accuracySum += req.accuracy;
+    } else {
+      all.push({
+        studentId: req.studentId,
+        activityDate: req.activityDate,
+        sessionCount: 1,
+        totalDurationMs: req.durationMs,
+        bestWpm: req.wpm,
+        accuracySum: req.accuracy,
+      });
+    }
+    write(KEYS.dailyActivity, all);
+    return { newlyUnlocked: evaluateLegacyAchievements(req.studentId) };
+  },
+
+  getStreak: async (studentId: string, today: string): Promise<StreakInfo> => {
+    const rows = read<RecordActivityRow[]>(KEYS.dailyActivity, [])
+      .filter((r) => r.studentId === studentId)
+      .map((r) => r.activityDate)
+      .sort();
+    const set = new Set(rows);
+    let longest = 0;
+    let run = 0;
+    let prev: number | null = null;
+    for (const d of rows) {
+      const days = dayNumber(d);
+      if (days === null) continue;
+      if (prev === null) run = 1;
+      else if (days === prev + 1 || days <= prev) run += 1;
+      else run = 1;
+      longest = Math.max(longest, run);
+      prev = days;
+    }
+    let current = 0;
+    const todayDays = dayNumber(today);
+    if (todayDays !== null) {
+      if (set.has(today)) current = countBack(set, todayDays);
+      else if (set.has(formatDay(todayDays - 1))) current = countBack(set, todayDays - 1);
+    }
+    return { current, longest };
+  },
+
+  getAchievements: async (studentId: string): Promise<AchievementRecord[]> => {
+    return read<StoredAchievement[]>(KEYS.achievements, [])
+      .filter((a) => a.studentId === studentId)
+      .map((a) => ({ achievementId: a.achievementId, unlockedAt: a.unlockedAt }))
+      .sort((a, b) => b.unlockedAt - a.unlockedAt);
+  },
+
+  statsSummary: async (studentId: string): Promise<TrainingSummary> => {
+    const sessions = read<TypingSession[]>(KEYS.typingSessions, [])
+      .filter((s) => s.studentId === studentId && s.status === "completed" && s.correctCount > 0);
+    let accSum = 0;
+    let wpmSum = 0;
+    let minutes = 0;
+    let best = 0;
+    for (const s of sessions) {
+      accSum += s.accuracy;
+      wpmSum += s.wpm;
+      minutes += s.durationMs / 60000;
+      best = Math.max(best, s.wpm);
+    }
+    const n = sessions.length;
+    return {
+      sessions: n,
+      totalMinutes: minutes,
+      avgAccuracy: n > 0 ? accSum / n : 0,
+      avgWpm: n > 0 ? wpmSum / n : 0,
+      bestWpm: best,
+    };
+  },
 };
 
 function listFor(studentId: string): Promise<LessonProgress[]> {
@@ -517,4 +604,69 @@ async function summaryFor(student: Student): Promise<TeacherOverview["students"]
     lastPracticedAt: detail.recentSessions[0]?.startedAt ?? null,
     attempts: detail.totalSessions,
   };
+}
+
+interface RecordActivityRow {
+  studentId: string;
+  activityDate: string;
+  sessionCount: number;
+  totalDurationMs: number;
+  bestWpm: number;
+  accuracySum: number;
+}
+
+interface StoredAchievement extends AchievementRecord {
+  studentId: string;
+}
+
+function dayNumber(date: string): number | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+  if (!m) return null;
+  return Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])) / 86400000;
+}
+
+function formatDay(days: number): string {
+  return new Date(days * 86400000).toISOString().slice(0, 10);
+}
+
+function countBack(set: Set<string>, startDays: number): number {
+  let days = startDays;
+  let count = 0;
+  while (set.has(formatDay(days))) {
+    count += 1;
+    days -= 1;
+  }
+  return count;
+}
+
+function evaluateLegacyAchievements(studentId: string): AchievementRecord[] {
+  const records = read<StoredAchievement[]>(KEYS.achievements, []);
+  const existing = new Set(records.filter((r) => r.studentId === studentId).map((r) => r.achievementId));
+  const newly: AchievementRecord[] = [];
+  const sessions = read<TypingSession[]>(KEYS.typingSessions, []).filter(
+    (s) => s.studentId === studentId && s.status === "completed" && s.correctCount > 0,
+  );
+  if (sessions.length >= 1 && !existing.has("first-test")) newly.push({ achievementId: "first-test", unlockedAt: now() });
+  if (sessions.length >= 10 && !existing.has("sessions-10")) newly.push({ achievementId: "sessions-10", unlockedAt: now() });
+  if (sessions.length >= 100 && !existing.has("sessions-100")) newly.push({ achievementId: "sessions-100", unlockedAt: now() });
+  const bestWpm = sessions.reduce((m, s) => Math.max(m, s.wpm), 0);
+  for (const [id, thresh] of [["wpm-30", 30], ["wpm-50", 50], ["wpm-80", 80], ["wpm-100", 100]] as const) {
+    if (bestWpm >= thresh && !existing.has(id)) newly.push({ achievementId: id, unlockedAt: now() });
+  }
+  const avgAcc = sessions.length > 0 ? sessions.reduce((sum, s) => sum + s.accuracy, 0) / sessions.length : 0;
+  for (const [id, thresh] of [["acc-95", 95], ["acc-99", 99]] as const) {
+    if (avgAcc >= thresh && !existing.has(id)) newly.push({ achievementId: id, unlockedAt: now() });
+  }
+  const minutes = sessions.reduce((sum, s) => sum + s.durationMs, 0) / 60000;
+  for (const [id, thresh] of [["hours-1", 60], ["hours-10", 600]] as const) {
+    if (minutes >= thresh && !existing.has(id)) newly.push({ achievementId: id, unlockedAt: now() });
+  }
+  const lessonPassed = read<LessonProgress[]>(KEYS.lessonProgress, []).some(
+    (p) => p.studentId === studentId && p.completed,
+  );
+  if (lessonPassed && !existing.has("lesson-pass")) newly.push({ achievementId: "lesson-pass", unlockedAt: now() });
+  if (newly.length > 0) {
+    write(KEYS.achievements, [...records, ...newly.map((n) => ({ ...n, studentId }))]);
+  }
+  return newly;
 }

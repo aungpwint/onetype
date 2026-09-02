@@ -235,3 +235,33 @@ export interface ExportFile {
   testResults: TestResult[];
   settings: Record<string, string>;
 }
+
+export interface RecordActivityRequest {
+  studentId: string;
+  activityDate: string;
+  durationMs: number;
+  wpm: number;
+  accuracy: number;
+}
+
+export interface AchievementRecord {
+  achievementId: string;
+  unlockedAt: number;
+}
+
+export interface RecordActivityResult {
+  newlyUnlocked: AchievementRecord[];
+}
+
+export interface StreakInfo {
+  current: number;
+  longest: number;
+}
+
+export interface TrainingSummary {
+  sessions: number;
+  totalMinutes: number;
+  avgAccuracy: number;
+  avgWpm: number;
+  bestWpm: number;
+}

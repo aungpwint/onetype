@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTypingStore } from "../stores/typing-store";
 import { useLessonStore } from "../stores/lesson-store";
+import { ACHIEVEMENT_CATALOG } from "../data/achievements";
 import { Modal } from "./ui";
 import { formatDuration } from "../lib/format";
 
@@ -14,6 +15,9 @@ export function ResultDialog() {
   const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel);
 
   if (!result || !session) return null;
+
+  const newly = result.newlyUnlocked ?? [];
+  const achieved = newly.map((id) => ACHIEVEMENT_CATALOG[id]).filter(Boolean);
 
   const metrics = result.metrics;
   const isLesson = session.kind === "lesson";
@@ -96,6 +100,21 @@ export function ResultDialog() {
         <div className="flex justify-between"><dt className="text-ink-faint">Target</dt><dd className="tnum">{target.minAccuracy}% acc{target.minWpm !== null ? ` · ${target.minWpm} wpm` : ""}</dd></div>
         <div className="flex justify-between"><dt className="text-ink-faint">Pass</dt><dd className="tnum" style={{ color: result.passed ? "var(--success)" : "var(--alert)" }}>{result.passed ? "passed" : "not yet"}</dd></div>
       </dl>
+
+      {achieved.length > 0 ? (
+        <div className="mt-4 rounded-lg border border-brass/40 bg-brass/10 p-3">
+          <p className="eyebrow">Achievement unlocked</p>
+          <ul className="mt-2 space-y-1.5">
+            {achieved.map((a) => (
+              <li key={a.id} className="flex items-center gap-2 text-sm">
+                <span aria-hidden>{a.icon}</span>
+                <span className="font-medium">{a.title}</span>
+                <span className="text-xs text-ink-soft">{a.description}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       <div className="mt-6 flex flex-wrap justify-end gap-2">
         <button type="button" className="btn btn-ghost" onClick={beforeNavigate(isLesson ? "/learn" : "/tests")}>

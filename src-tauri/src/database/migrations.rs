@@ -1,4 +1,4 @@
-pub const SCHEMA_VERSION: i64 = 3;
+pub const SCHEMA_VERSION: i64 = 4;
 
 pub const MIGRATIONS: &[&str] = &[
     // 1: core tables
@@ -163,6 +163,31 @@ pub const MIGRATIONS: &[&str] = &[
     CREATE INDEX IF NOT EXISTS idx_typing_sessions_student ON typing_sessions(student_id, started_at);
     CREATE INDEX IF NOT EXISTS idx_test_results_student ON test_results(student_id);
     CREATE INDEX IF NOT EXISTS idx_key_stats_student ON key_statistics(student_id);
+    "#,
+    // 4: daily activity (streaks) + achievements
+    r#"
+    CREATE TABLE IF NOT EXISTS daily_activity (
+        id TEXT PRIMARY KEY,
+        student_id TEXT NOT NULL,
+        activity_date TEXT NOT NULL,
+        session_count INTEGER NOT NULL DEFAULT 1,
+        total_duration_ms INTEGER NOT NULL DEFAULT 0,
+        best_wpm REAL NOT NULL DEFAULT 0,
+        accuracy_sum REAL NOT NULL DEFAULT 0,
+        UNIQUE(student_id, activity_date)
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_daily_activity_student_date ON daily_activity(student_id, activity_date);
+
+    CREATE TABLE IF NOT EXISTS achievements (
+        id TEXT PRIMARY KEY,
+        student_id TEXT NOT NULL,
+        achievement_id TEXT NOT NULL,
+        unlocked_at INTEGER NOT NULL,
+        UNIQUE(student_id, achievement_id)
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_achievements_student ON achievements(student_id);
     "#,
 ];
 

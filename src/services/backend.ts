@@ -1,19 +1,24 @@
 import { invokeCommand, isTauriRuntime, pickOpenFile, pickSavePath } from "./ipc";
 import { localBackend } from "./local";
 import type {
+  AchievementRecord,
   CreateStudentRequest,
   ExportFile,
   ImportReport,
   LessonProgress,
+  RecordActivityRequest,
+  RecordActivityResult,
   SaveExerciseResultRequest,
   SaveKeyStatsRequest,
   SaveLessonProgressRequest,
   SaveTestResultRequest,
   SaveTypingSessionRequest,
+  StreakInfo,
   Student,
   StudentDetail,
   TeacherOverview,
   TestResult,
+  TrainingSummary,
   TypingSession,
   TypingTest,
   UpdateStudentRequest,
@@ -194,6 +199,33 @@ export async function importBackup(): Promise<ImportReport | null> {
   const text = await picked.text();
   localStorage.setItem("onetype:local:import:demo", text);
   return localBackend.importFile("demo");
+}
+
+export async function recordActivity(req: RecordActivityRequest, today: string): Promise<RecordActivityResult> {
+  if (!isTauriRuntime()) return localBackend.recordActivity(req, today);
+  return invokeCommand("record_activity", { req, today });
+}
+
+export async function getStreak(studentId: string, today: string): Promise<StreakInfo> {
+  if (!isTauriRuntime()) return localBackend.getStreak(studentId, today);
+  return invokeCommand("get_streak", { studentId, today });
+}
+
+export async function getAchievements(studentId: string): Promise<AchievementRecord[]> {
+  if (!isTauriRuntime()) return localBackend.getAchievements(studentId);
+  return invokeCommand("get_achievements", { studentId });
+}
+
+export async function statsSummary(studentId: string): Promise<TrainingSummary> {
+  if (!isTauriRuntime()) return localBackend.statsSummary(studentId);
+  return invokeCommand("stats_summary", { studentId });
+}
+
+export function localDateString(d: Date = new Date()): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
 
 export { isTauriRuntime };

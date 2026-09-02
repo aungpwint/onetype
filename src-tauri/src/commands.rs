@@ -224,3 +224,37 @@ pub async fn import_file(state: State<'_, Mutex<Database>>, path: String) -> Res
     let mut db = lock(&state)?;
     crate::services::import_file(&mut db, path)
 }
+
+#[tauri::command]
+pub async fn record_activity(
+    state: State<'_, Mutex<Database>>,
+    req: RecordActivityRequest,
+    today: String,
+) -> Result<RecordActivityResult> {
+    let db = lock(&state)?;
+    crate::services::record_activity(&db, &req, &today)
+}
+
+#[tauri::command]
+pub async fn get_streak(state: State<'_, Mutex<Database>>, student_id: String, today: String) -> Result<crate::models::StreakInfo> {
+    let db = lock(&state)?;
+    crate::services::streak(&db, &student_id, &today)
+}
+
+#[tauri::command]
+pub async fn get_achievements(
+    state: State<'_, Mutex<Database>>,
+    student_id: String,
+) -> Result<Vec<AchievementRecord>> {
+    let db = lock(&state)?;
+    crate::services::unlocked_achievements(&db, &student_id)
+}
+
+#[tauri::command]
+pub async fn stats_summary(
+    state: State<'_, Mutex<Database>>,
+    student_id: String,
+) -> Result<crate::models::DailyActivityAggregate> {
+    let db = lock(&state)?;
+    repo::session_stats_in_window(db.conn(), &student_id, None)
+}

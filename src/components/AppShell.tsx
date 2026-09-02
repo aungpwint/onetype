@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useUiStore } from "../stores/ui-store";
 import { useStudentStore } from "../stores/student-store";
+import { useKeyboardShortcuts } from "../hooks/use-keyboard-shortcuts";
 import { Modal } from "./ui";
 import { StudentForm } from "./StudentForm";
 import { listLayouts } from "../core/keyboard-layout/registry";
@@ -47,6 +48,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const active = useStudentStore((s) => s.active);
   const select = useStudentStore((s) => s.select);
   const navigate = useNavigate();
+  useKeyboardShortcuts();
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);

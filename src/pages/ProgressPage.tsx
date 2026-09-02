@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
 import { useStudentStore } from "../stores/student-store";
 import * as backend from "../services/backend";
-import type { StudentDetail } from "../services/types";
+import type { StudentDetail, TypingSession } from "../services/types";
 import { Stat, Spinner } from "../components/ui";
 import { formatDateTime } from "../lib/format";
+
+type Range = "week" | "month" | "all";
+
+function inRange(s: TypingSession, range: Range): boolean {
+  if (range === "all") return true;
+  const now = Date.now();
+  const ms = range === "week" ? 7 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000;
+  return s.startedAt >= now - ms;
+}
 
 function WpmBars({ values }: { values: number[] }) {
   const w = 480;
@@ -59,6 +68,7 @@ function AccChart({ values }: { values: number[] }) {
 export default function ProgressPage() {
   const active = useStudentStore((s) => s.active);
   const [detail, setDetail] = useState<StudentDetail | null>(null);
+  const [range, setRange] = useState<Range>("all");
 
   useEffect(() => {
     if (!active) return;
@@ -75,9 +85,14 @@ export default function ProgressPage() {
       </div>
     );
 
-  const sessions = detail.recentSessions.filter((s) => s.correctCount > 0);
+  const sessions = detail.recentSessions.filter((s) => s.correctCount > 0 && inRange(s, range));
   const wpmSeries = sessions.map((s) => s.wpm).slice(0, 24);
   const accSeries = sessions.map((s) => s.accuracy).slice(0, 24);
+  const rangeSessions = sessions.length;
+  const rangeMinutes = sessions.reduce((sum, s) => sum + s.durationMs, 0) / 60000;
+  const rangeWpm = rangeSessions ? sessions.reduce((sum, s) => sum + s.wpm, 0) / rangeSessions : 0;
+  const rangeAcc = rangeSessions ? sessions.reduce((sum, s) => sum + s.accuracy, 0) / rangeSessions : 0;
+  const rangeBest = rangeSessions ? Math.max(...sessions.map((s) => s.wpm)) : 0;
 
   return (
     <div className="mx-auto max-w-6xl space-y-6 px-4 py-6">
@@ -89,11 +104,25 @@ export default function ProgressPage() {
         </p>
       </header>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Stat label="Avg accuracy" value={`${detail.overallAccuracy.toFixed(1)}%`} />
-        <Stat label="Avg WPM" value={Math.round(detail.overallWpm)} />
-        <Stat label="Minutes practiced" value={`${detail.totalMinutes.toFixed(0)}`} />
-        <Stat label="Sessions" value={detail.totalSessions} />
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <Stat label="Avg accuracy" value={`${rangeAcc.toFixed(1)}%`} />
+          <Stat label="Avg WPM" value={rangeSessions ? Math.round(rangeWpm) : "—"} />
+          <Stat label="Minutes practiced" value={`${rangeMinutes.toFixed(0)}`} />
+          <Stat label="Best WPM" value={rangeSessions ? Math.round(rangeBest) : "—"} />
+        </div>
+        <div className="flex overflow-hidden rounded-lg border border-line">
+          {(["week", "month", "all"] as Range[]).map((r) => (
+            <button
+              key={r}
+              type="button"
+              onClick={() => setRange(r)}
+              className={`px-3 py-1.5 text-xs capitalize transition-colors ${range === r ? "bg-brass text-[color:var(--paper)]" : "bg-paper text-ink-soft hover:bg-paper-2"}`}
+            >
+              {r === "week" ? "This week" : r === "month" ? "This month" : "All time"}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">

@@ -4,8 +4,37 @@ use crate::repositories as repo;
 use crate::database::Database;
 
 pub const DEFAULT_CONTENT_VERSION: i64 = 1;
-pub const ENGLISH_QWERTY_LAYOUT_VERSION: i64 = 1;
-pub const MYANMAR3_LAYOUT_VERSION: i64 = 1;
+
+/// Record a finished typing session's impact: update daily activity, recompute the streak,
+/// and unlock any achievements the student now qualifies for. Returns newly unlocked achievements.
+/// `today` is the local date (YYYY-MM-DD) used to compute the current streak.
+pub fn record_activity(
+    db: &Database,
+    req: &crate::models::RecordActivityRequest,
+    today: &str,
+) -> Result<crate::models::RecordActivityResult> {
+    if repo::get_student(db.conn(), &req.student_id)?.is_none() {
+        return Err(AppError::not_found("Student not found."));
+    }
+    if req.activity_date.trim().is_empty() || req.duration_ms < 0 {
+        return Err(AppError::validation("Invalid activity record."));
+    }
+    crate::achievements::record_activity(db.conn(), &req.student_id, &req.activity_date, req.duration_ms, req.wpm, req.accuracy)?;
+    let streak = crate::achievements::compute_streak(db.conn(), &req.student_id, today)?;
+    let newly = crate::achievements::evaluate_and_unlock(db.conn(), &req.student_id, streak.current)?;
+    Ok(crate::models::RecordActivityResult {
+        newly_unlocked: newly,
+    })
+}
+
+pub fn streak(db: &Database, student_id: &str, today: &str) -> Result<crate::models::StreakInfo> {
+    crate::achievements::compute_streak(db.conn(), student_id, today)
+}
+
+pub fn unlocked_achievements(db: &Database, student_id: &str) -> Result<Vec<crate::models::AchievementRecord>> {
+    crate::achievements::list_unlocked(db.conn(), student_id)
+}
+
 
 pub fn default_typing_tests() -> Vec<TypingTest> {
     vec![
@@ -92,9 +121,9 @@ pub fn import_file(db: &mut Database, path: String) -> Result<crate::models::Imp
         ));
     }
     let version = parsed.get("version").and_then(|v| v.as_i64()).unwrap_or(0);
-    if version < 1 || version > 1 {
+    if version != 1 {
         return Err(AppError::import_error(
-            &format!("Unsupported backup version ({version}). This build supports version 1."),
+            format!("Unsupported backup version ({version}). This build supports version 1."),
         ));
     }
     let file: crate::models::ExportFile = serde_json::from_value(parsed).map_err(|e| {
@@ -177,5 +206,100 @@ mod tests {
             },
         );
         assert!(result.is_err());
+    }
+
+    fn seed_student(db: &mut Database) -> crate::models::Student {
+        repo::create_student(
+            db.conn(),
+            &crate::models::CreateStudentRequest { name: "Streak".into(), student_code: None, display_name: None },
+        )
+        .unwrap()
+    }
+
+    /// Insert a typing session at a given started_at ms with given wpm/accuracy.
+    fn insert_session(db: &Database, student_id: &str, started_at: i64, wpm: f64, accuracy: f64, duration_ms: i64) {
+        repo::save_typing_session(
+            db.conn(),
+            &crate::models::SaveTypingSessionRequest {
+                student_id: student_id.into(),
+                lesson_id: None,
+                exercise_id: None,
+                level: None,
+                lesson_number: None,
+                started_at,
+                ended_at: started_at + duration_ms,
+                duration_ms,
+                target_length: 100,
+                completed_count: 100,
+                correct_count: (accuracy / 100.0 * 100.0).round() as i64,
+                error_count: (100.0 - accuracy).round() as i64 / 1,
+                backspace_count: 0,
+                wpm,
+                cpm: wpm * 5.0,
+                accuracy,
+                layout_id: "english-qwerty".into(),
+                layout_version: 1,
+                content_version: 1,
+                status: "completed".into(),
+            },
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn record_activity_updates_streak() {
+        let mut db = Database::open_in_memory().unwrap();
+        let s = seed_student(&mut db);
+        // three consecutive days + a session today
+        let day = |offset: i64| format_day_offset(offset);
+        record_activity(&db, &req(&s.id, &day(0), 60000, 30.0, 95.0), &today()).unwrap();
+        record_activity(&db, &req(&s.id, &day(1), 60000, 30.0, 95.0), &today()).unwrap();
+        record_activity(&db, &req(&s.id, &day(2), 60000, 30.0, 95.0), &today()).unwrap();
+        let streak = streak(&db, &s.id, &today()).unwrap();
+        assert_eq!(streak.longest, 3);
+        // current >= 1 (there is at least today)
+        assert!(streak.current >= 1);
+    }
+
+    #[test]
+    fn achievements_unlock_only_once() {
+        let mut db = Database::open_in_memory().unwrap();
+        let s = seed_student(&mut db);
+        insert_session(&db, &s.id, 1000, 40.0, 98.0, 60000);
+        let res1 = record_activity(&db, &req(&s.id, "2024-01-01", 60000, 40.0, 98.0), "2024-01-01").unwrap();
+        // first-test must unlock
+        assert!(
+            res1.newly_unlocked.iter().any(|a| a.achievement_id == "first-test"),
+            "expected first-test, got {:?}",
+            res1.newly_unlocked.iter().map(|a| &a.achievement_id).collect::<Vec<_>>()
+        );
+        // calling again must not re-unlock
+        let res2 = record_activity(&db, &req(&s.id, "2024-01-02", 60000, 45.0, 98.0), "2024-01-02").unwrap();
+        assert!(
+            !res2.newly_unlocked.iter().any(|a| a.achievement_id == "first-test"),
+            "first-test should not re-unlock"
+        );
+        let all = unlocked_achievements(&db, &s.id).unwrap();
+        assert!(all.iter().any(|a| a.achievement_id == "first-test"));
+    }
+
+    fn req(student_id: &str, date: &str, duration_ms: i64, wpm: f64, accuracy: f64) -> crate::models::RecordActivityRequest {
+        crate::models::RecordActivityRequest {
+            student_id: student_id.into(),
+            activity_date: date.into(),
+            duration_ms,
+            wpm,
+            accuracy,
+        }
+    }
+
+    fn format_day_offset(offset: i64) -> String {
+        let now = crate::models::now_millis();
+        let days = now.div_euclid(86_400_000) + offset;
+        crate::achievements::test_civil_from_days(days)
+    }
+
+    fn today() -> String {
+        format_day_offset(0)
     }
 }

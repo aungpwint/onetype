@@ -382,9 +382,10 @@ pub fn next_exercise_attempt(conn: &Connection, student_id: &str, exercise_id: &
         .query_row(
             "SELECT MAX(attempt) FROM exercise_results WHERE student_id = ?1 AND exercise_id = ?2",
             params![student_id, exercise_id],
-            |r| r.get(0),
+            |r| r.get::<_, Option<i64>>(0),
         )
-        .optional()?;
+        .optional()?
+        .flatten();
     Ok(max.unwrap_or(0) + 1)
 }
 
@@ -420,6 +421,7 @@ pub fn save_statistics(conn: &Connection, req: &SaveKeyStatsRequest) -> Result<(
     Ok(())
 }
 
+#[allow(clippy::too_many_arguments)]
 fn upsert_stat(
     tx: &Transaction<'_>,
     table: &str,
@@ -566,7 +568,7 @@ pub fn save_test_result(conn: &Connection, req: &SaveTestResultRequest) -> Resul
             req.errors, req.correct_count, req.duration_seconds,
             if req.passed { 1 } else { 0 },
             if req.passed_accuracy { 1 } else { 0 },
-            req.passed_wpm.map(|v| i64::from(v)),
+            req.passed_wpm.map(i64::from),
             now_millis(), req.layout_id, req.content_version
         ],
     )?;
@@ -582,9 +584,10 @@ pub fn next_test_attempt(conn: &Connection, student_id: &str, test_id: &str) -> 
         .query_row(
             "SELECT MAX(attempt) FROM test_results WHERE student_id = ?1 AND test_id = ?2",
             params![student_id, test_id],
-            |r| r.get(0),
+            |r| r.get::<_, Option<i64>>(0),
         )
-        .optional()?;
+        .optional()?
+        .flatten();
     Ok(max.unwrap_or(0) + 1)
 }
 
@@ -598,6 +601,52 @@ pub fn list_test_results(conn: &Connection, student_id: &str) -> Result<Vec<Test
         out.push(row?);
     }
     Ok(out)
+}
+
+// ---------- daily activity / training summary ----------
+
+/// Aggregate session stats in a given millisecond window (or all time when None).
+pub fn session_stats_in_window(
+    conn: &Connection,
+    student_id: &str,
+    since_ms: Option<i64>,
+) -> Result<DailyActivityAggregate> {
+    let (avg_accuracy, avg_wpm, total_minutes, sessions, best_wpm) = if let Some(since) = since_ms {
+        conn.query_row(
+            "SELECT
+                COALESCE(AVG(accuracy), 0),
+                COALESCE(AVG(wpm), 0),
+                COALESCE(SUM(duration_ms) / 60000.0, 0),
+                COUNT(*),
+                COALESCE(MAX(wpm), 0)
+             FROM typing_sessions WHERE student_id = ?1 AND status = 'completed' AND started_at >= ?2",
+            params![student_id, since],
+            |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?, r.get(3)?, r.get(4)?)),
+        )
+        .optional()?
+        .unwrap_or((0.0, 0.0, 0.0, 0, 0.0))
+    } else {
+        conn.query_row(
+            "SELECT
+                COALESCE(AVG(accuracy), 0),
+                COALESCE(AVG(wpm), 0),
+                COALESCE(SUM(duration_ms) / 60000.0, 0),
+                COUNT(*),
+                COALESCE(MAX(wpm), 0)
+             FROM typing_sessions WHERE student_id = ?1 AND status = 'completed'",
+            params![student_id],
+            |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?, r.get(3)?, r.get(4)?)),
+        )
+        .optional()?
+        .unwrap_or((0.0, 0.0, 0.0, 0, 0.0))
+    };
+    Ok(DailyActivityAggregate {
+        sessions,
+        total_minutes,
+        avg_accuracy,
+        avg_wpm,
+        best_wpm,
+    })
 }
 
 // ---------- settings ----------

@@ -123,6 +123,28 @@ export default function SettingsPage() {
       </section>
 
       <section className="card p-5">
+        <h2 className="font-display text-lg">Keyboard shortcuts</h2>
+        <p className="mt-1 text-sm text-ink-soft">
+          Navigate the app without the mouse. During a round, plain keys are reserved for typing.
+        </p>
+        <dl className="mt-4 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
+          {[
+            ["Ctrl / Cmd + 1…5", "Dashboard, Learn, Tests, Progress, Settings"],
+            ["Ctrl / Cmd + ,", "Settings"],
+            ["Ctrl / Cmd + Shift + T", "Timed tests"],
+            ["Ctrl / Cmd + Shift + L", "Learn"],
+            ["Esc", "Pause / resume a round"],
+            ["R", "Restart round (ready or paused)"],
+          ].map(([keys, desc]) => (
+            <div key={keys} className="flex items-start justify-between gap-3">
+              <span className="shrink-0 text-xs text-ink-faint">{keys}</span>
+              <span className="text-ink-soft">{desc}</span>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section className="card p-5">
         <h2 className="font-display text-lg">Data</h2>
         <p className="mt-1 text-sm text-ink-soft">
           Everything lives in an on-device database. Back it up or move it between machines by exporting.

@@ -21,6 +21,7 @@ impl Database {
         Ok(Self { conn })
     }
 
+    #[cfg(test)]
     pub fn open_in_memory() -> crate::error::Result<Self> {
         let conn = Connection::open_in_memory()?;
         conn.pragma_update(None, "foreign_keys", "ON")?;
@@ -34,17 +35,6 @@ impl Database {
 
     pub fn conn_mut(&mut self) -> &mut Connection {
         &mut self.conn
-    }
-
-    pub fn transaction(&mut self) -> rusqlite::Result<rusqlite::Transaction<'_>> {
-        self.conn.transaction()
-    }
-
-    pub fn backup_to(&self, path: &Path) -> crate::error::Result<()> {
-        use rusqlite::backup::Backup;
-        let mut target = Connection::open(path)?;
-        Backup::new(&self.conn, &mut target)?.run_to_completion(5, std::time::Duration::from_millis(100), None)?;
-        Ok(())
     }
 }
 
