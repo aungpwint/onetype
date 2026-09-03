@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useTypingStore } from "../stores/typing-store";
+import { containsMyanmar } from "../core/unicode/myanmar";
 
 const CARET_ANCHOR = 0.45;
 const CONTENT_INSET = 24;
@@ -17,6 +18,8 @@ export function TargetText() {
 
   const unitIndex = engine?.unitIndex ?? 0;
   const units = engine?.sequence.units;
+  const seqText = engine?.sequence.text ?? "";
+  const hasMyanmar = units ? containsMyanmar(seqText) : false;
 
   const motionOffset = useMotionValue(0);
   const springOffset = useSpring(motionOffset, {
@@ -98,7 +101,7 @@ export function TargetText() {
           style={{ x: springOffset }}
         >
           <p
-            className="heavy mx-auto whitespace-nowrap text-4xl leading-normal tracking-normal md:text-5xl"
+            className={`${hasMyanmar ? "font-myanmar" : "heavy"} mx-auto whitespace-nowrap text-4xl leading-normal tracking-normal md:text-5xl`}
             style={{ wordSpacing: "0.2em" }}
           >
             {units!.map((unit) => (
