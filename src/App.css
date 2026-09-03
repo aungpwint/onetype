@@ -66,10 +66,15 @@
   --color-key-top: var(--key-top);
   --color-key-base: var(--key-base);
 
-  --font-sans: system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans:
+    system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: Georgia, "Times New Roman", "Palatino Linotype", serif;
-  --font-mono: ui-monospace, "Cascadia Mono", "Cascadia Code", "SF Mono", Consolas, monospace;
-  --font-myanmar: "Pyidaungsu", "Myanmar Text", "Padauk", "Noto Sans Myanmar", "Myanmar Sans Pro", "system-ui", sans-serif;
+  --font-mono:
+    ui-monospace, "Cascadia Mono", "Cascadia Code", "SF Mono", Consolas,
+    monospace;
+  --font-myanmar:
+    "Pyidaungsu", "Myanmar Text", "Padauk", "Noto Sans Myanmar",
+    "Myanmar Sans Pro", "system-ui", sans-serif;
   --font-heavy: "Heavitas Regular", var(--font-myanmar);
 }
 
@@ -164,6 +169,7 @@
     cursor: pointer;
     user-select: none;
   }
+
   .btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -173,6 +179,7 @@
     background: var(--accent);
     color: var(--accent-ink);
   }
+
   .btn-primary:hover:not(:disabled) {
     background: var(--accent-strong);
   }
@@ -181,6 +188,7 @@
     background: var(--brass);
     color: var(--paper);
   }
+
   .btn-brass:hover:not(:disabled) {
     background: var(--brass-strong);
   }
@@ -189,6 +197,7 @@
     @apply border-line text-ink-soft;
     background: transparent;
   }
+
   .btn-ghost:hover:not(:disabled) {
     @apply border-line-strong text-ink;
     background: var(--paper-2);
@@ -198,6 +207,7 @@
     background: var(--alert);
     color: var(--paper);
   }
+
   .btn-danger:hover:not(:disabled) {
     filter: brightness(1.1);
   }
@@ -227,6 +237,7 @@
   .scrollbar-none {
     scrollbar-width: none;
   }
+
   .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
@@ -237,56 +248,70 @@
       color 140ms ease,
       background-color 140ms ease;
   }
+
   .char-pop {
     animation: char-pop 180ms ease-out;
   }
+
   @keyframes char-pop {
     0% {
       transform: scale(0.96);
       opacity: 0.4;
     }
+
     100% {
       transform: scale(1);
       opacity: 1;
     }
   }
+
   .text-typed {
     color: var(--success);
   }
+
   .text-sub {
     color: var(--ink-soft);
     opacity: 0.85;
   }
+
   .text-miss {
     color: var(--alert);
     text-decoration: line-through;
     text-decoration-color: color-mix(in srgb, var(--alert) 60%, transparent);
   }
+
   .bg-caret {
     background: var(--accent);
   }
+
   .cursor-glow {
     box-shadow: 0 0 8px 2px color-mix(in srgb, var(--accent) 55%, transparent);
   }
+
   .animate-caret {
     animation: caret-blink 1s ease-in-out infinite;
   }
+
   @keyframes caret-blink {
     0%,
     100% {
       opacity: 1;
     }
+
     50% {
       opacity: 0.2;
     }
   }
+
   .flash-current {
     animation: flash-current 0.18s ease-out;
   }
+
   @keyframes flash-current {
     0% {
       color: var(--alert);
     }
+
     100% {
       color: inherit;
     }
@@ -295,11 +320,13 @@
   .flash-wrong {
     animation: flash-wrong 0.16s ease-out;
   }
+
   @keyframes flash-wrong {
     0% {
       background: var(--alert);
       color: #fff;
     }
+
     100% {
       background: transparent;
     }
@@ -314,6 +341,22 @@
     border: 1px solid var(--line);
     background: color-mix(in srgb, var(--paper) 50%, transparent);
   }
+
+  .tt-viewport {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 1.25rem 0;
+  }
+
+  .tt-content {
+    width: max-content;
+    min-width: max-content;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    padding-left: 24px;
+  }
+
   .tt-header {
     display: flex;
     align-items: center;
@@ -321,6 +364,7 @@
     padding: 0.5rem 1rem;
     border-bottom: 1px solid var(--line);
   }
+
   .tt-phase {
     padding: 0.5rem 1rem;
     font-size: 0.75rem;
@@ -328,12 +372,14 @@
     border-bottom: 1px solid color-mix(in srgb, var(--line) 50%, transparent);
     background: color-mix(in srgb, var(--paper-2) 30%, transparent);
   }
+
   .tt-scroll {
     position: relative;
     overflow-y: auto;
     padding: 1.25rem 1rem;
     max-height: 18rem;
   }
+
   .tt-text {
     display: flex;
     flex-wrap: wrap;
@@ -343,6 +389,7 @@
     font-size: 1.125rem;
     letter-spacing: 0.01em;
   }
+
   @media (min-width: 768px) {
     .tt-text {
       font-size: 1.25rem;
@@ -355,19 +402,25 @@
     display: inline-flex;
     flex-wrap: wrap;
     border-radius: 0.25rem;
-    transition: background-color 160ms ease, color 160ms ease;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
     color: var(--ink-soft);
   }
+
   .tt-word-active {
     background: color-mix(in srgb, var(--brass) 8%, transparent);
     color: var(--ink);
   }
+
   .tt-word-done {
     color: var(--success);
   }
+
   .tt-word-error {
     color: var(--alert);
   }
+
   .tt-word-ahead {
     opacity: 0.4;
   }
@@ -381,30 +434,38 @@
   /* ── Character states ──────────────────────────────────────────── */
   .tt-char {
     display: inline-block;
-    transition: color 120ms ease, background-color 120ms ease;
+    transition:
+      color 120ms ease,
+      background-color 120ms ease;
     white-space: pre;
   }
+
   .tt-char-now {
     position: relative;
     border-radius: 0.2rem;
     padding: 0 0.06em;
   }
+
   .tt-char-focus {
     background: color-mix(in srgb, var(--brass) 18%, transparent);
     color: var(--ink);
   }
+
   .tt-char-flash {
     background: color-mix(in srgb, var(--alert) 25%, transparent);
     animation: flash-current 0.18s ease-out;
   }
+
   .tt-char-ok {
     color: var(--success);
   }
+
   .tt-char-miss {
     color: var(--alert);
     text-decoration: line-through;
     text-decoration-color: color-mix(in srgb, var(--alert) 55%, transparent);
   }
+
   .tt-char-typed {
     color: var(--ink-soft);
   }
@@ -437,9 +498,15 @@
     -webkit-backdrop-filter: blur(6px);
     animation: pause-fade-in 0.2s ease-out;
   }
+
   @keyframes pause-fade-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 
   /* ── Progress bar ──────────────────────────────────────────────── */
@@ -450,6 +517,7 @@
     border-radius: 999px;
     overflow: hidden;
   }
+
   .tt-progress-fill {
     height: 100%;
     border-radius: 999px;

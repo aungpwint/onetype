@@ -1,29 +1,88 @@
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useCallback, useEffect, useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useTypingStore } from "../stores/typing-store";
+
+const CARET_ANCHOR = 0.45;
+const CONTENT_INSET = 24;
 
 export function TargetText() {
   const tick = useTypingStore((s) => s.tick);
-  const { session, engine } = useTypingStore.getState();
+  const session = useTypingStore((s) => s.session);
+  const engine = useTypingStore((s) => s.engine);
 
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const viewportRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
   const caretRef = useRef<HTMLSpanElement | null>(null);
+  const offsetRef = useRef(0);
+
   const unitIndex = engine?.unitIndex ?? 0;
+  const units = engine?.sequence.units;
+
+  const motionOffset = useMotionValue(0);
+  const springOffset = useSpring(motionOffset, {
+    stiffness: 500,
+    damping: 45,
+    mass: 0.35,
+  });
+
+  const sessionKey = session
+    ? `${session.kind}-${session.lessonId ?? session.test?.id ?? ""}-${session.attempt}`
+    : null;
+
+  const prevSessionKey = useRef<string | null>(null);
 
   useEffect(() => {
-    const caret = caretRef.current;
-    const scroller = scrollRef.current;
-    if (!caret || !scroller) return;
-    const sc = scroller.getBoundingClientRect();
-    const cc = caret.getBoundingClientRect();
-    if (cc.width === 0) return;
-    const targetLeft = scroller.scrollLeft + (cc.left - sc.left) - (sc.width - cc.width) / 2;
-    scroller.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
-  }, [unitIndex, tick]);
+    if (sessionKey && sessionKey !== prevSessionKey.current) {
+      prevSessionKey.current = sessionKey;
+      offsetRef.current = 0;
+      motionOffset.set(0);
+    }
+  }, [sessionKey, motionOffset]);
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => {
+      const viewport = viewportRef.current;
+      const caret = caretRef.current;
+      if (!viewport || !caret) return;
+
+      const caretRect = caret.getBoundingClientRect();
+      if (caretRect.width === 0) return;
+
+      const viewportRect = viewport.getBoundingClientRect();
+      const caretCenter = caretRect.left + caretRect.width / 2 - viewportRect.left;
+      const targetCenter = viewportRect.width * CARET_ANCHOR;
+      const delta = caretCenter - targetCenter;
+
+      if (Math.abs(delta) < 0.5) return;
+
+      let nextOffset = offsetRef.current - delta;
+
+      const content = contentRef.current;
+      if (content) {
+        const maxOffset = 0;
+        const minOffset = Math.min(
+          0,
+          viewportRect.width - content.scrollWidth - CONTENT_INSET,
+        );
+        nextOffset = Math.min(maxOffset, Math.max(minOffset, nextOffset));
+      }
+
+      if (Math.abs(nextOffset - offsetRef.current) < 0.5) return;
+
+      offsetRef.current = nextOffset;
+      motionOffset.set(nextOffset);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [unitIndex, tick, motionOffset]);
+
+  const onCaretRef = useCallback(
+    (el: HTMLSpanElement | null) => {
+      caretRef.current = el;
+    },
+    [],
+  );
 
   if (!session || !engine) return null;
-  const units = engine.sequence.units;
-  const visibleUnits = units.slice(unitIndex);
 
   return (
     <motion.div
@@ -32,22 +91,27 @@ export function TargetText() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
     >
-      <div ref={scrollRef} className="scrollbar-none overflow-x-auto">
-        <p
-          className="heavy mx-auto w-max whitespace-nowrap text-4xl leading-normal tracking-normal md:text-5xl"
-          style={{ wordSpacing: "0.2em" }}
+      <div ref={viewportRef} className="tt-viewport">
+        <motion.div
+          ref={contentRef}
+          className="tt-content"
+          style={{ x: springOffset }}
         >
-          {visibleUnits.map((unit) => (
-            <Char
-              key={unit.index}
-              text={unit.text}
-              index={unit.index}
-              onCaret={(el) => {
-                if (unit.index === unitIndex) caretRef.current = el;
-              }}
-            />
-          ))}
-        </p>
+          <p
+            className="heavy mx-auto whitespace-nowrap text-4xl leading-normal tracking-normal md:text-5xl"
+            style={{ wordSpacing: "0.2em" }}
+          >
+            {units!.map((unit) => (
+              <Char
+                key={`${unit.index}-${unit.index < unitIndex ? (engine.unitOutcomeAt(unit.index) ?? "pending") : unit.index === unitIndex ? "current" : "pending"}`}
+                text={unit.text}
+                index={unit.index}
+                currentUnitIndex={unitIndex}
+                onCaret={unit.index === unitIndex ? onCaretRef : undefined}
+              />
+            ))}
+          </p>
+        </motion.div>
       </div>
     </motion.div>
   );
@@ -56,16 +120,21 @@ export function TargetText() {
 function Char({
   text,
   index,
+  currentUnitIndex,
   onCaret,
 }: {
   text: string;
   index: number;
-  onCaret: (el: HTMLSpanElement | null) => void;
+  currentUnitIndex: number;
+  onCaret?: (el: HTMLSpanElement | null) => void;
 }) {
   const { engine, wrongFlash } = useTypingStore.getState();
-  const currentUnitIndex = engine?.unitIndex ?? 0;
   const status =
-    index < currentUnitIndex ? (engine?.unitOutcomeAt(index) ?? "pending") : index === currentUnitIndex ? "current" : "pending";
+    index < currentUnitIndex
+      ? (engine?.unitOutcomeAt(index) ?? "pending")
+      : index === currentUnitIndex
+        ? "current"
+        : "pending";
   const flash = wrongFlash?.unitIndex === index;
 
   if (status === "current") {
