@@ -23,7 +23,7 @@ export function VirtualKeyboard({ layout }: { layout: KeyboardLayout }) {
   const expectedCode = target.keyCode;
 
   return (
-    <div className="mx-auto w-full max-w-6xl select-none rounded-2xl bg-[#151d22]/90 p-4 shadow-[0_16px_50px_rgba(0,0,0,0.5)] ring-1 ring-[#232e35] sm:p-5">
+    <div className="mx-auto w-full max-w-6xl select-none rounded-2xl bg-paper p-4 shadow-lg ring-1 ring-line sm:p-5">
       <div className="flex flex-col gap-2.5">
         {layout.rows.map((row, rowIndex) => (
           <div key={rowIndex} className="flex gap-2.5">
@@ -47,7 +47,7 @@ export function VirtualKeyboard({ layout }: { layout: KeyboardLayout }) {
           </div>
         ))}
       </div>
-      <p className="mt-3 text-center font-mono text-[11px] tracking-wide text-slate-500">
+      <p className="mt-3 text-center font-mono text-[11px] tracking-wide text-ink-faint">
         {status === "ready"
           ? "Press the highlighted key to begin"
           : status === "paused"
@@ -79,7 +79,7 @@ function Keycap({
     label = null;
   } else if (isModifier || wideLabel !== undefined) {
     label = (
-      <span className="text-[12px] font-semibold tracking-wide text-slate-300">
+      <span className="text-[12px] font-semibold tracking-wide text-ink-soft">
         {wideLabel ?? definition.label}
       </span>
     );
@@ -88,8 +88,8 @@ function Keycap({
     const primary = definition.plain ?? definition.label;
     label = (
       <span className="flex flex-col items-center justify-center">
-        <span className="text-lg leading-none text-slate-100">{primary}</span>
-        <span className="mt-1.5 text-[10px] leading-none text-slate-500/90">
+        <span className="font-myanmar text-lg leading-none text-ink">{primary}</span>
+        <span className="mt-1.5 text-[10px] leading-none text-ink-faint">
           {definition.code.replace(/^Key/, "").replace(/^Digit/, "")}
         </span>
       </span>
@@ -98,16 +98,16 @@ function Keycap({
 
   const flashBg =
     flashed === "correct"
-      ? "from-emerald-500 to-emerald-600"
+      ? "from-success to-success"
       : flashed === "incorrect"
-        ? "from-rose-500 to-rose-600"
+        ? "from-alert to-alert"
         : "";
 
   const face = isActive
-    ? "z-20 scale-105 bg-amber-400 text-slate-950 font-extrabold shadow-[0_0_24px_rgba(245,158,11,0.9)] ring-2 ring-amber-300"
+    ? "z-20 scale-105 bg-brass text-paper font-extrabold shadow-[0_0_20px_color-mix(in_srgb,var(--brass)_50%,transparent)] ring-2 ring-brass"
     : flashed
-      ? `bg-linear-to-b ${flashBg} text-white`
-      : "bg-linear-to-b from-[#1e2a34] to-[#161f26] shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_3px_0_rgba(0,0,0,0.45)] ring-1 ring-[#26343f]";
+      ? `bg-linear-to-b ${flashBg} text-paper`
+      : "bg-linear-to-b from-key-top to-key-base shadow-[inset_0_1px_0_color-mix(in_srgb,var(--ink)_5%,transparent),0_2px_0_color-mix(in_srgb,var(--ink)_20%,transparent)] ring-1 ring-line";
 
   return (
     <button
@@ -122,7 +122,7 @@ function Keycap({
       style={{ flex: width, height: isSpace ? 52 : 48, minHeight: 44 }}
     >
       {label ?? (
-        <span className="text-[13px] text-slate-400">{definition.label}</span>
+        <span className="text-[13px] text-ink-faint">{definition.label}</span>
       )}
     </button>
   );

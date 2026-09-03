@@ -71,14 +71,7 @@ function Session({ durationSeconds, sourceName }: { durationSeconds: number | nu
       ) : (
         <div className="flex flex-col gap-6">
           <StatsBar />
-          <motion.div
-            className="rounded-xl border border-line bg-paper p-4"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.05 }}
-          >
-            <TargetText />
-          </motion.div>
+          <TargetText />
           <motion.div
             className="rounded-xl border border-line bg-paper p-3"
             initial={{ opacity: 0, y: 8 }}

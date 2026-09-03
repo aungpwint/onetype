@@ -88,22 +88,22 @@ function LessonProgress() {
   return (
     <div className="mb-3 flex items-center gap-4">
       {/* Progress bar */}
-      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#1c2730]">
+      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-line">
         <div
-          className="h-full rounded-full bg-linear-to-r from-emerald-500 to-emerald-400 transition-all duration-300 ease-out"
+          className="h-full rounded-full bg-linear-to-r from-accent to-accent-strong transition-all duration-300 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
 
       {/* Active finger chip */}
       {mapping.primary ? (
-        <span className="shrink-0 rounded-full bg-amber-400/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold tracking-wider text-amber-400 uppercase ring-1 ring-amber-400/25">
+        <span className="shrink-0 rounded-full bg-brass/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold tracking-wider text-brass uppercase ring-1 ring-brass/25">
           {fingerShort(mapping.primary)}
           {mapping.shift ? ` + ${fingerShort(mapping.shift)}` : ""}
         </span>
       ) : null}
 
-      <span className="shrink-0 font-mono text-[11px] tabular-nums text-slate-500">
+      <span className="shrink-0 font-mono text-[11px] tabular-nums text-ink-faint">
         {current + 1}/{total}
       </span>
     </div>
