@@ -29,3 +29,6 @@ dist-ssr
 *.der
 src-tauri/updater.key
 src-tauri/updater.key.pub
+
+# Dev scratch / reference snapshots
+demo-layout.html

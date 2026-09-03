@@ -227,6 +227,21 @@
   }
 }
 
+/* Hand guide (reference "typing-club" style) -------------------------------- */
+/* The whole-hand-per-gesture SVG asset is centered above the keyboard and
+   capped to the same comfortable width so it reads like the reference site. */
+.typing-club-hands {
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.typing-club-hands svg {
+  width: min(100%, 600px);
+  height: auto;
+  display: block;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

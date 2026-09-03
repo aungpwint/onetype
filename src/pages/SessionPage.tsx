@@ -1,40 +1,50 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useParams } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import * as backend from "../services/backend";
 import { useTypingStore } from "../stores/typing-store";
-import { useUiStore } from "../stores/ui-store";
 import { useSettingsStore } from "../stores/settings-store";
-import { VirtualKeyboard } from "../components/VirtualKeyboard";
-import { HandGuide } from "../components/HandGuide";
+import { KeyboardContainer } from "../components/keyboard/KeyboardContainer";
 import { TargetText } from "../components/TargetText";
 import { StatsBar } from "../components/StatsBar";
 import { ResultDialog } from "../components/ResultDialog";
 import { Spinner, Modal } from "../components/ui";
 import type { TypingMode } from "../types";
 
+// ─── Session surface ─────────────────────────────────────────────────────────
+
 function Session({ durationSeconds, sourceName }: { durationSeconds: number | null; sourceName: string }) {
   const status = useTypingStore((s) => s.status);
-  const engine = useTypingStore(() => useTypingStore.getState().engine);
+  const engine = useTypingStore((s) => s.engine);
   const error = useTypingStore((s) => s.error);
   const start = useTypingStore((s) => s.start);
   const togglePause = useTypingStore((s) => s.togglePause);
   const abandon = useTypingStore((s) => s.abandon);
-  const handGuide = useUiStore((s) => s.handGuideVisible);
   const confirmExit = useSettingsStore((s) => s.get("practice.confirmExit"));
   const [confirmOpen, setConfirmOpen] = useState(false);
 
-  // Note: pausing/resuming is deliberately handled by Escape (see the global
-  // keyboard-shortcuts hook). A "P" shortcut is not used because P is a normal
-  // typing key in both English and Myanmar layouts and would pause mid-session.
-  const layout = engine ? engine.layout : null;
+  const layout = engine?.layout ?? null;
 
   const requestExit = () => {
     if (confirmExit !== "off") setConfirmOpen(true);
     else abandon();
   };
 
+  // Note: pausing/resuming is deliberately handled by Escape (see the global
+  // keyboard-shortcuts hook). A "P" shortcut is not used because P is a normal
+  // typing key in both English and Myanmar layouts and would pause mid-session.
+  const isPaused = status === "paused";
+  const toggleLabel = isPaused ? "Resume" : status === "running" ? "Pause" : durationSeconds === null ? "Start (first key also starts)" : "Start";
+  const toggleAction = status === "running" || status === "paused" ? togglePause : start;
+
   return (
-    <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
+    <motion.div
+      className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6"
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+    >
+      {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="eyebrow">{durationSeconds !== null ? "Timed practice" : "Lesson"}</p>
@@ -44,8 +54,8 @@ function Session({ durationSeconds, sourceName }: { durationSeconds: number | nu
           <button type="button" className="btn btn-ghost" onClick={requestExit}>
             ✕ Exit
           </button>
-          <button type="button" className="btn btn-primary" onClick={status === "running" ? togglePause : status === "paused" ? togglePause : start}>
-            {status === "paused" ? "Resume" : status === "running" ? "Pause" : durationSeconds === null ? "Start (first key also starts)" : "Start"}
+          <button type="button" className="btn btn-primary" onClick={toggleAction}>
+            {toggleLabel}
           </button>
         </div>
       </div>
@@ -59,24 +69,27 @@ function Session({ durationSeconds, sourceName }: { durationSeconds: number | nu
       {!layout || !engine ? (
         <Spinner label="Loading the keys…" />
       ) : (
-        <>
+        <div className="flex flex-col gap-6">
           <StatsBar />
-          <div className="rounded-xl border border-line bg-paper p-4">
+          <motion.div
+            className="rounded-xl border border-line bg-paper p-4"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+          >
             <TargetText />
-          </div>
-          <div className="grid gap-6" style={{ gridTemplateColumns: handGuide ? "minmax(0,1fr) 300px" : "minmax(0,1fr)" }}>
-            <div className="rounded-xl border border-line bg-paper p-3">
-              <VirtualKeyboard layout={layout} />
-            </div>
-            {handGuide ? (
-              <aside className="rounded-xl border border-line bg-paper p-3 flex flex-col items-center justify-center">
-                <p className="eyebrow mb-2">Hand guide</p>
-                <HandGuide />
-              </aside>
-            ) : null}
-          </div>
-        </>
+          </motion.div>
+          <motion.div
+            className="rounded-xl border border-line bg-paper p-3"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            <KeyboardContainer layout={layout} />
+          </motion.div>
+        </div>
       )}
+
       <ResultDialog />
 
       <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)}>
@@ -100,64 +113,91 @@ function Session({ durationSeconds, sourceName }: { durationSeconds: number | nu
           </button>
         </div>
       </Modal>
-    </div>
+    </motion.div>
   );
 }
 
-export function LessonPage() {
-  const { lessonId } = useParams<{ lessonId: string }>();
+// ─── Session loading gate (crossfades spinner ↔ surface) ────────────────────
+
+function SessionGate({ ready, loadingLabel, children }: { ready: boolean; loadingLabel: string; children: ReactNode }) {
+  return (
+    <AnimatePresence mode="wait">
+      {ready ? (
+        <motion.div key="session" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          {children}
+        </motion.div>
+      ) : (
+        <motion.div
+          key="loading"
+          className="flex min-h-0 flex-1 items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
+        >
+          <Spinner label={loadingLabel} />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+// ─── Shared "begin this session once" bootstrapping ─────────────────────────
+
+function useBeginSession(id: string | undefined, load: () => Promise<void>) {
   const status = useTypingStore((s) => s.status);
   const sessionKind = useTypingStore((s) => s.session?.kind);
-  const beginLesson = useTypingStore((s) => s.beginLesson);
   const startedFor = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!lessonId) return;
-    if (status === "idle" && startedFor.current !== lessonId) {
-      startedFor.current = lessonId;
-      void beginLesson(lessonId, (localStorage.getItem("onetype:lesson-mode") as TypingMode | null) ?? "guided");
+    if (!id) return;
+    if (status === "idle" && startedFor.current !== id) {
+      startedFor.current = id;
+      void load();
     }
-  }, [lessonId, status, sessionKind, beginLesson]);
+  }, [id, status, sessionKind, load]);
+}
 
+// ─── Pages ───────────────────────────────────────────────────────────────────
+
+export function LessonPage() {
+  const { lessonId } = useParams<{ lessonId: string }>();
   const session = useTypingStore((s) => s.session);
-  if (status === "idle" || sessionKind !== "lesson" || !session) {
-    return (
-      <div className="flex min-h-0 flex-1 items-center justify-center">
-        <Spinner label="Preparing the lesson…" />
-      </div>
-    );
-  }
+  const beginLesson = useTypingStore((s) => s.beginLesson);
 
-  return <Session durationSeconds={null} sourceName={`${session.resolved.title}`} />;
+  const load = useCallback(() => {
+    const mode = (localStorage.getItem("onetype:lesson-mode") as TypingMode | null) ?? "guided";
+    return lessonId ? beginLesson(lessonId, mode) : Promise.resolve();
+  }, [lessonId, beginLesson]);
+
+  useBeginSession(lessonId, load);
+
+  return (
+    <SessionGate ready={session?.kind === "lesson"} loadingLabel="Preparing the lesson…">
+      {session?.kind === "lesson" ? <Session durationSeconds={null} sourceName={session.resolved.title} /> : null}
+    </SessionGate>
+  );
 }
 
 export function TestPage() {
   const { testId } = useParams<{ testId: string }>();
-  const status = useTypingStore((s) => s.status);
-  const sessionKind = useTypingStore((s) => s.session?.kind);
-  const beginTest = useTypingStore((s) => s.beginTest);
-  const startedFor = useRef<string | null>(null);
-
-  useEffect(() => {
-    if (!testId) return;
-    if (status === "idle" && startedFor.current !== testId) {
-      startedFor.current = testId;
-      void (async () => {
-        const tests = await backend.listTypingTests();
-        const test = tests.find((t) => t.id === testId);
-        if (test) void beginTest(test);
-      })();
-    }
-  }, [testId, status, sessionKind, beginTest]);
-
   const session = useTypingStore((s) => s.session);
-  if (status === "idle" || sessionKind !== "test" || !session?.test) {
-    return (
-      <div className="flex min-h-0 flex-1 items-center justify-center">
-        <Spinner label="Rolling out the paper…" />
-      </div>
-    );
-  }
+  const beginTest = useTypingStore((s) => s.beginTest);
 
-  return <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} />;
+  const load = useCallback(async () => {
+    if (!testId) return;
+    const tests = await backend.listTypingTests();
+    const test = tests.find((t) => t.id === testId);
+    if (test) await beginTest(test);
+  }, [testId, beginTest]);
+
+  useBeginSession(testId, load);
+
+  return (
+    <SessionGate ready={session?.kind === "test" && !!session?.test} loadingLabel="Rolling out the paper…">
+      {session?.kind === "test" && session.test ? (
+        <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} />
+      ) : null}
+    </SessionGate>
+  );
 }
