@@ -29,7 +29,11 @@ export function buildTestMaterial(test: TypingTest): ResolvedLesson {
   const lines: string[] = [];
   let total = 0;
   let guard = 0;
-  while (total < targetChars && guard < 200) {
+  // Each iteration adds at least 2 chars (line.length + 1), so a bound of
+  // targetChars + headroom iterations is always enough to satisfy the char
+  // target. This keeps the cap from truncating scaling for long durations.
+  const maxLines = Math.max(200, Math.ceil(targetChars) + 1000);
+  while (total < targetChars && guard < maxLines) {
     const line = pool[Math.floor(Math.random() * pool.length)];
     lines.push(line);
     total += line.length + 1;

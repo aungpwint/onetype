@@ -1,7 +1,8 @@
 import type { Level } from "../../types";
 import { getLayoutOrThrow } from "../../core/keyboard-layout/registry";
 import { splitGraphemes } from "../../core/unicode/graphemes";
-import { buildSequence, BuiltSequence } from "../../core/typing-engine/sequence";
+import { buildSequence } from "../../core/typing-engine/sequence";
+import type { BuiltSequence, TypingUnit } from "../../core/typing-engine/sequence";
 import type { LessonData, LessonPhase } from "./types";
 
 export interface ResolvedPhase {
@@ -74,31 +75,50 @@ export function resolveLesson(data: LessonData): ResolvedLesson {
     phaseIndex += 1;
   }
 
-  let totalCharacters = 0;
-  const allUnits = unitsByPhase.flatMap((sequence) => {
-    totalCharacters += sequence.units.length;
-    return sequence.units;
-  });
-  for (let i = 0; i < allUnits.length; i++) {
-    allUnits[i].index = i;
+  // Assemble a *globally* grapheme-coherent sequence across all phases: the
+  // units, graphemes and graphemeUnitRanges must stay aligned so that helpers
+  // like remainingText/completedText/graphemeUnitRuns behave correctly for
+  // multi-phase lessons. Each unit's graphemeIndex is shifted by a running
+  // per-phase grapheme offset, and ranges are rebased onto the global unit list.
+  const allUnits: TypingUnit[] = [];
+  const graphemes: string[] = [];
+  const graphemeUnitRanges: [number, number][] = [];
+  let unitCursor = 0;
+  let graphemeOffset = 0;
+  for (const sequence of unitsByPhase) {
+    const phaseUnitBase = unitCursor;
+    for (const unit of sequence.units) {
+      allUnits.push({
+        ...unit,
+        index: unitCursor,
+        graphemeIndex: unit.graphemeIndex + graphemeOffset,
+      });
+      unitCursor += 1;
+    }
+    for (const token of sequence.graphemes) {
+      graphemes.push(token);
+    }
+    for (const [start, end] of sequence.graphemeUnitRanges) {
+      graphemeUnitRanges.push([start + phaseUnitBase, end + phaseUnitBase]);
+    }
+    graphemeOffset += sequence.graphemes.length;
   }
 
   const concatTexts = allPhases.map((phase) => phase.text);
-  const graphemes = concatTexts.flatMap((text) => splitGraphemes(text));
 
   const sequence: BuiltSequence = {
     units: allUnits,
     graphemes,
-    graphemeUnitRanges: allPhases.map((phase) => [phase.startUnit, phase.endUnit]),
+    graphemeUnitRanges,
     text: concatTexts.join(" "),
-    charCount: totalCharacters,
+    charCount: allUnits.length,
   };
 
   return {
     ...data,
     sequence,
     totalUnits: allUnits.length,
-    totalCharacters,
+    totalCharacters: allUnits.length,
     phases: allPhases,
   };
 }

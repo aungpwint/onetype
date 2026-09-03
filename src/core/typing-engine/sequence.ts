@@ -1,9 +1,9 @@
 import type { Modifier } from "../../types";
 import type { Hand } from "../../types";
 import type { FingerId } from "../../types";
-import { KeyboardLayout } from "../keyboard-layout/layout";
+import { KeyboardLayout, shiftHandFor } from "../keyboard-layout/layout";
 import { splitGraphemes } from "../unicode/graphemes";
-import { handForFinger } from "../finger-mapping/finger-map";
+import { splitMyanmarSyllables } from "../unicode/myanmar";
 
 export interface TypingUnit {
   index: number;
@@ -12,9 +12,9 @@ export interface TypingUnit {
   text: string;
   finger: FingerId;
   hand: Hand;
+  shiftHand: Hand | null;
   graphemeIndex: number;
   grapheme: string;
-  token: string;
 }
 
 export interface BuiltSequence {
@@ -26,7 +26,10 @@ export interface BuiltSequence {
 }
 
 export function buildSequence(text: string, layout: KeyboardLayout): BuiltSequence {
-  const graphemes = splitGraphemes(text);
+  // Myanmar text is split into syllable clusters (not plain graphemes) so the
+  // whole cluster — base consonant + medials + vowel signs + kinzi/stacking +
+  // tone marks — is addressed as a single unit for typing and deletion.
+  const graphemes = layout.language === "myanmar" ? splitMyanmarSyllables(text) : splitGraphemes(text);
   const graphemeUnitRanges: [number, number][] = [];
   const units: TypingUnit[] = [];
   for (let gi = 0; gi < graphemes.length; gi++) {
@@ -41,10 +44,10 @@ export function buildSequence(text: string, layout: KeyboardLayout): BuiltSequen
         modifier: pair.lookup.modifier,
         text: pair.lookup.text,
         finger: pair.lookup.finger,
-        hand: handForFinger(pair.lookup.finger),
+        hand: pair.lookup.hand,
+        shiftHand: pair.lookup.modifier === "shift" ? shiftHandFor(pair.lookup.hand) : null,
         graphemeIndex: gi,
         grapheme: token,
-        token,
       });
     }
     const end = units.length;
@@ -63,6 +66,18 @@ export function graphemeForUnit(sequence: BuiltSequence, unitIndex: number): num
   if (unitIndex <= 0) return 0;
   if (unitIndex >= sequence.units.length) return sequence.graphemes.length - 1;
   return sequence.units[unitIndex].graphemeIndex;
+}
+
+/**
+ * The unit index of the start of the cluster that owns the unit preceding
+ * `unitIndex`. Used for cluster-aware Backspace: deleting removes a whole
+ * grapheme/syllable cluster, not a single combining mark. For English (one
+ * unit per cluster) this is simply `unitIndex - 1`, so it is safe universally.
+ */
+export function clusterStartForUnit(sequence: BuiltSequence, unitIndex: number): number {
+  if (unitIndex <= 0) return 0;
+  const gi = graphemeForUnit(sequence, unitIndex - 1);
+  return sequence.graphemeUnitRanges[gi][0];
 }
 
 export function remainingText(sequence: BuiltSequence, unitIndex: number): string {

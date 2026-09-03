@@ -1,5 +1,5 @@
 import { KeyboardLayout, type KeyboardLayoutSpec, type KeyDefinition } from "./layout";
-import { fingerForCode } from "../finger-mapping/finger-map";
+import { fingerForCode, handForFinger } from "../finger-mapping/finger-map";
 
 export const MYANMAR3_REVISION = 1;
 
@@ -56,28 +56,33 @@ const DIGIT_SHIFTED: Record<string, string> = {
 };
 
 function key(code: string, label: string, plain: string, shifted: string): KeyDefinition {
-  return { code, label, finger: fingerForCode(code), plain, shifted };
+  const finger = fingerForCode(code);
+  return { code, label, finger, hand: handForFinger(finger), row: "number", plain, shifted };
 }
 
 function plainKey(code: string, label: string, plain: string): KeyDefinition {
-  return { code, label, finger: fingerForCode(code), plain };
+  const finger = fingerForCode(code);
+  return { code, label, finger, hand: handForFinger(finger), row: "number", plain };
 }
 
 function noOutputKey(code: string, label: string): KeyDefinition {
-  return { code, label, finger: fingerForCode(code) };
+  const finger = fingerForCode(code);
+  return { code, label, finger, hand: handForFinger(finger), row: "number" };
 }
 
 function modifierKey(code: string, label: string): KeyDefinition {
-  return { code, label, finger: fingerForCode(code), kind: "modifier", legend: label };
+  const finger = fingerForCode(code);
+  return { code, label, finger, hand: handForFinger(finger), row: "home", kind: "modifier", legend: label };
 }
 
-function letterKey(code: string): KeyDefinition {
+function letterKey(code: string, row: "top" | "home" | "bottom"): KeyDefinition {
   const { plain, shifted } = LETTERS[code];
-  return key(code, plain, plain, shifted);
+  const finger = fingerForCode(code);
+  return { code, label: plain, finger, hand: handForFinger(finger), row, plain, shifted };
 }
 
 function padding(width: number): KeyDefinition {
-  return { code: "", label: "", finger: "left-pinky", width, kind: "modifier" };
+  return { code: "", label: "", finger: "left-pinky", hand: "left", row: "space", width, kind: "modifier" };
 }
 
 const rows: KeyDefinition[][] = [
@@ -87,6 +92,8 @@ const rows: KeyDefinition[][] = [
       code: "Digit1",
       label: "\u1041",
       finger: fingerForCode("Digit1"),
+      hand: handForFinger(fingerForCode("Digit1")),
+      row: "number" as const,
       plain: DIGIT_PLAIN.Digit1,
       shifted: DIGIT_SHIFTED.Digit1,
     },
@@ -94,6 +101,8 @@ const rows: KeyDefinition[][] = [
       code: "Digit2",
       label: "\u1042",
       finger: fingerForCode("Digit2"),
+      hand: handForFinger(fingerForCode("Digit2")),
+      row: "number" as const,
       plain: DIGIT_PLAIN.Digit2,
       shifted: DIGIT_SHIFTED.Digit2,
     },
@@ -101,6 +110,8 @@ const rows: KeyDefinition[][] = [
       code: "Digit3",
       label: "\u1043",
       finger: fingerForCode("Digit3"),
+      hand: handForFinger(fingerForCode("Digit3")),
+      row: "number" as const,
       plain: DIGIT_PLAIN.Digit3,
       shifted: DIGIT_SHIFTED.Digit3,
     },
@@ -108,6 +119,8 @@ const rows: KeyDefinition[][] = [
       code: "Digit4",
       label: "\u1044",
       finger: fingerForCode("Digit4"),
+      hand: handForFinger(fingerForCode("Digit4")),
+      row: "number" as const,
       plain: DIGIT_PLAIN.Digit4,
       shifted: DIGIT_SHIFTED.Digit4,
     },
@@ -115,6 +128,8 @@ const rows: KeyDefinition[][] = [
       code: "Digit5",
       label: "\u1045",
       finger: fingerForCode("Digit5"),
+      hand: handForFinger(fingerForCode("Digit5")),
+      row: "number" as const,
       plain: DIGIT_PLAIN.Digit5,
       shifted: DIGIT_SHIFTED.Digit5,
     },
@@ -122,6 +137,8 @@ const rows: KeyDefinition[][] = [
       code: "Digit6",
       label: "\u1046",
       finger: fingerForCode("Digit6"),
+      hand: handForFinger(fingerForCode("Digit6")),
+      row: "number" as const,
       plain: DIGIT_PLAIN.Digit6,
       shifted: DIGIT_SHIFTED.Digit6,
     },
@@ -129,6 +146,8 @@ const rows: KeyDefinition[][] = [
       code: "Digit7",
       label: "\u1047",
       finger: fingerForCode("Digit7"),
+      hand: handForFinger(fingerForCode("Digit7")),
+      row: "number" as const,
       plain: DIGIT_PLAIN.Digit7,
       shifted: DIGIT_SHIFTED.Digit7,
     },
@@ -136,6 +155,8 @@ const rows: KeyDefinition[][] = [
       code: "Digit8",
       label: "\u1048",
       finger: fingerForCode("Digit8"),
+      hand: handForFinger(fingerForCode("Digit8")),
+      row: "number" as const,
       plain: DIGIT_PLAIN.Digit8,
       shifted: DIGIT_SHIFTED.Digit8,
     },
@@ -143,6 +164,8 @@ const rows: KeyDefinition[][] = [
       code: "Digit9",
       label: "\u1049",
       finger: fingerForCode("Digit9"),
+      hand: handForFinger(fingerForCode("Digit9")),
+      row: "number" as const,
       plain: DIGIT_PLAIN.Digit9,
       shifted: DIGIT_SHIFTED.Digit9,
     },
@@ -150,65 +173,67 @@ const rows: KeyDefinition[][] = [
       code: "Digit0",
       label: "\u1040",
       finger: fingerForCode("Digit0"),
+      hand: handForFinger(fingerForCode("Digit0")),
+      row: "number" as const,
       plain: DIGIT_PLAIN.Digit0,
       shifted: DIGIT_SHIFTED.Digit0,
     },
     noOutputKey("Minus", "-"),
     noOutputKey("Equal", "="),
-    { ...modifierKey("Backspace", "Backspace"), width: 2 },
+    { ...modifierKey("Backspace", "Backspace"), row: "number" as const, width: 2 },
   ],
   [
-    { ...modifierKey("Tab", "Tab"), width: 1.5 },
-    letterKey("KeyQ"),
-    letterKey("KeyW"),
-    letterKey("KeyE"),
-    letterKey("KeyR"),
-    letterKey("KeyT"),
-    letterKey("KeyY"),
-    letterKey("KeyU"),
-    letterKey("KeyI"),
-    letterKey("KeyO"),
-    letterKey("KeyP"),
+    { ...modifierKey("Tab", "Tab"), row: "top" as const, width: 1.5 },
+    letterKey("KeyQ", "top"),
+    letterKey("KeyW", "top"),
+    letterKey("KeyE", "top"),
+    letterKey("KeyR", "top"),
+    letterKey("KeyT", "top"),
+    letterKey("KeyY", "top"),
+    letterKey("KeyU", "top"),
+    letterKey("KeyI", "top"),
+    letterKey("KeyO", "top"),
+    letterKey("KeyP", "top"),
     key("BracketLeft", "\u101F", "\u101F", "\u1027"),
     key("BracketRight", "\u1029", "\u1029", "\u102A"),
-    { ...modifierKey("Backslash", "\\"), width: 1.5 },
+    { ...modifierKey("Backslash", "\\"), row: "top" as const, width: 1.5 },
   ],
   [
-    { ...modifierKey("CapsLock", "Caps"), width: 1.75 },
-    letterKey("KeyA"),
-    letterKey("KeyS"),
-    letterKey("KeyD"),
-    letterKey("KeyF"),
-    letterKey("KeyG"),
-    letterKey("KeyH"),
-    letterKey("KeyJ"),
-    letterKey("KeyK"),
-    letterKey("KeyL"),
+    { ...modifierKey("CapsLock", "Caps"), row: "home" as const, width: 1.75 },
+    letterKey("KeyA", "home"),
+    letterKey("KeyS", "home"),
+    letterKey("KeyD", "home"),
+    letterKey("KeyF", "home"),
+    letterKey("KeyG", "home"),
+    letterKey("KeyH", "home"),
+    letterKey("KeyJ", "home"),
+    letterKey("KeyK", "home"),
+    letterKey("KeyL", "home"),
     key("Semicolon", "\u1038", "\u1038", "\u1002"),
     noOutputKey("Quote", "`"),
-    { ...modifierKey("Enter", "Enter"), width: 2.25 },
+    { ...modifierKey("Enter", "Enter"), row: "home" as const, width: 2.25 },
   ],
   [
-    { ...modifierKey("ShiftLeft", "Shift"), width: 2.25 },
-    letterKey("KeyZ"),
-    letterKey("KeyX"),
-    letterKey("KeyC"),
-    letterKey("KeyV"),
-    letterKey("KeyB"),
-    letterKey("KeyN"),
-    letterKey("KeyM"),
+    { ...modifierKey("ShiftLeft", "Shift"), row: "bottom" as const, width: 2.25 },
+    letterKey("KeyZ", "bottom"),
+    letterKey("KeyX", "bottom"),
+    letterKey("KeyC", "bottom"),
+    letterKey("KeyV", "bottom"),
+    letterKey("KeyB", "bottom"),
+    letterKey("KeyN", "bottom"),
+    letterKey("KeyM", "bottom"),
     plainKey("Comma", "\u104A", "\u104A"),
     plainKey("Period", "\u104B", "\u104B"),
     noOutputKey("Slash", "/"),
-    { ...modifierKey("ShiftRight", "Shift"), width: 2.75 },
+    { ...modifierKey("ShiftRight", "Shift"), row: "bottom" as const, width: 2.75 },
   ],
   [
     padding(2.25),
-    { ...modifierKey("ControlLeft", "Ctrl"), width: 1.25 },
-    { ...modifierKey("MetaLeft", "Alt"), width: 1.25 },
-    { code: "Space", label: "space", finger: fingerForCode("Space"), plain: " ", width: 6.5, kind: "modifier" },
-    modifierKey("MetaRight", "Alt"),
-    modifierKey("ControlRight", "Ctrl"),
+    { ...modifierKey("ControlLeft", "Ctrl"), row: "space" as const, width: 1.25 },
+    { ...modifierKey("MetaLeft", "Alt"), row: "space" as const, width: 1.25 },
+    { code: "Space", label: "space", finger: fingerForCode("Space"), hand: "left", row: "space" as const, plain: " ", width: 6.5, kind: "modifier" },
+    { ...modifierKey("MetaRight", "Alt"), row: "space" as const },
+    { ...modifierKey("ControlRight", "Ctrl"), row: "space" as const },
     padding(2.25),
   ],
 ];

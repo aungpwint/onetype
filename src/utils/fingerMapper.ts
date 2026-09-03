@@ -1,5 +1,6 @@
 import type { FingerId } from "../types";
 import { FINGER_LABELS, fingerForCode } from "../core/finger-mapping/finger-map";
+import { shiftHandFor } from "../core/keyboard-layout/layout";
 
 /**
  * Optional human-readable label for wide keys whose layout `label` is too terse
@@ -33,7 +34,9 @@ export function resolveFingerMapping(
   const primary = keyCode ? fingerForCode(keyCode) : null;
   let shift: FingerId | null = null;
   if (withShift && primary) {
-    shift = primary.startsWith("left") ? "right-pinky" : "left-pinky";
+    const keyHand = primary.startsWith("left") ? "left" : "right";
+    const sHand = shiftHandFor(keyHand);
+    shift = sHand === "left" ? "left-pinky" : "right-pinky";
   }
   return { primary, shift };
 }

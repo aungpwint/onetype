@@ -1,9 +1,13 @@
-import type { FingerId, Modifier } from "../../types";
+import type { FingerId, Hand, Modifier } from "../../types";
+
+export type KeyboardRow = "number" | "top" | "home" | "bottom" | "space";
 
 export interface KeyDefinition {
   code: string;
   label: string;
   finger: FingerId;
+  hand: Hand;
+  row: KeyboardRow;
   plain?: string;
   shifted?: string;
   width?: number;
@@ -21,6 +25,7 @@ export interface KeyLookup {
   modifier: Modifier;
   text: string;
   finger: FingerId;
+  hand: Hand;
 }
 
 export interface KeyboardLayoutSpec {
@@ -58,24 +63,26 @@ export class KeyboardLayout {
       code: "Space",
       label: "space",
       finger: "left-thumb",
+      hand: "left",
+      row: "space",
       plain: " ",
     };
     for (const row of spec.rows) {
       for (const key of row) {
         this.byCode.set(key.code, key);
         if (key.plain === undefined) continue;
-        this.registerChar(key.plain, key.code, "none", key.finger);
+        this.registerChar(key.plain, key.code, "none", key.finger, key.hand);
         if (key.shifted !== undefined) {
-          this.registerChar(key.shifted, key.code, "shift", key.finger);
+          this.registerChar(key.shifted, key.code, "shift", key.finger, key.hand);
         }
       }
     }
-    this.registerChar("\u0020", "Space", "none", this.space.finger);
+    this.registerChar("\u0020", "Space", "none", this.space.finger, this.space.hand);
   }
 
-  private registerChar(text: string, code: string, modifier: Modifier, finger: FingerId) {
+  private registerChar(text: string, code: string, modifier: Modifier, finger: FingerId, hand: Hand) {
     if (this.charMap.has(text)) return;
-    this.charMap.set(text, { code, modifier, text, finger });
+    this.charMap.set(text, { code, modifier, text, finger, hand });
   }
 
   getKey(code: string): KeyDefinition | undefined {
@@ -108,4 +115,12 @@ export class KeyboardLayout {
     }
     return out;
   }
+}
+
+/**
+ * Returns the hand that should press Shift when typing with the given key hand.
+ * Standard touch-typing rule: left-hand keys use right Shift, right-hand keys use left Shift.
+ */
+export function shiftHandFor(hand: Hand): Hand {
+  return hand === "left" ? "right" : "left";
 }

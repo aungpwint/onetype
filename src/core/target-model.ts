@@ -1,6 +1,7 @@
 import type { FingerId, Hand, Modifier } from "../types";
 import type { TypingEngine } from "./typing-engine/engine";
 import type { KeyboardLayout } from "./keyboard-layout/layout";
+import { shiftHandFor } from "./keyboard-layout/layout";
 
 export interface TargetState {
   keyCode: string | null;
@@ -8,6 +9,7 @@ export interface TargetState {
   finger: FingerId | null;
   hand: Hand | null;
   requiresShift: boolean;
+  shiftHand: Hand | null;
 }
 
 export interface LastKeyState {
@@ -21,6 +23,7 @@ const IDLE_TARGET: TargetState = {
   finger: null,
   hand: null,
   requiresShift: false,
+  shiftHand: null,
 };
 
 const NO_LAST_KEY: LastKeyState = { keyCode: null, correct: false };
@@ -37,12 +40,14 @@ export function resolveTarget(
 ): TargetState {
   const unit = engine?.expectedUnit ?? null;
   if (!unit) return IDLE_TARGET;
+  const requiresShift = unit.modifier === "shift";
   return {
     keyCode: unit.keyCode,
     modifier: unit.modifier,
     finger: unit.finger,
     hand: unit.hand,
-    requiresShift: unit.modifier === "shift",
+    requiresShift,
+    shiftHand: requiresShift ? shiftHandFor(unit.hand) : null,
   };
 }
 

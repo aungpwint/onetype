@@ -37,6 +37,8 @@ export function KeyboardContainer({ layout }: { layout: KeyboardLayout }) {
  * key flashes correct/incorrect.
  */
 function IntegratedHandGuide() {
+  const tick = useTypingStore((s) => s.tick);
+  void tick;
   const status = useTypingStore((s) => s.status);
   const engine = useTypingStore((s) => s.engine);
   const target = resolveTarget(engine, engine?.layout ?? null);
@@ -46,6 +48,11 @@ function IntegratedHandGuide() {
     () => (inPlay ? (target.keyCode ?? null) : null),
     [inPlay, target.keyCode],
   );
+
+  const shiftKey = useMemo(() => {
+    if (!inPlay || !target.requiresShift) return null;
+    return target.shiftHand === "left" ? "ShiftLeft" : target.shiftHand === "right" ? "ShiftRight" : null;
+  }, [inPlay, target.requiresShift, target.shiftHand]);
 
   const feedbackFinger = useMemo(() => {
     const last = resolveLastKey(engine);
@@ -59,6 +66,7 @@ function IntegratedHandGuide() {
   return (
     <HandGuide
       activeKey={activeKey}
+      shiftKey={shiftKey}
       feedbackFinger={feedbackFinger}
       interactive={inPlay}
     />

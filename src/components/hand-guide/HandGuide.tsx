@@ -4,6 +4,7 @@ import handsSvg from "./hands.svg?raw";
 
 interface HandGuideProps {
   activeKey?: string | null;
+  shiftKey?: string | null;
   feedbackFinger?: { finger: FingerId; state: "correct" | "error" } | null;
   interactive?: boolean;
   ariaHidden?: boolean;
@@ -74,15 +75,25 @@ function setVisible(html: string, id: string): string {
   return html.replace(`<g id="${id}" class="st0">`, `<g id="${id}" style="display:block">`);
 }
 
-function buildSvgHtml(activeKey: string | null): string {
+function buildSvgHtml(activeKey: string | null, shiftKey: string | null): string {
   let left: string = "neutral-left";
   let right: string = "neutral-right";
+
+  // If a modifier (Shift) is required, its hand takes precedence over the
+  // neutral state; the target letter's hand then shows its own gesture.
+  const shiftGesture = shiftKey === "ShiftLeft" ? "shift-left" : shiftKey === "ShiftRight" ? "shift-right" : null;
+  if (shiftGesture !== null) {
+    if (LEFT_GESTURES.has(shiftGesture)) left = shiftGesture;
+    else if (RIGHT_GESTURES.has(shiftGesture)) right = shiftGesture;
+  }
+
   const gesture = gestureForCode(activeKey);
   if (LEFT_GESTURES.has(gesture)) {
-    left = gesture;
+    if (left === "neutral-left") left = gesture;
   } else if (RIGHT_GESTURES.has(gesture)) {
-    right = gesture;
+    if (right === "neutral-right") right = gesture;
   }
+
   return setVisible(setVisible(handsSvg, left), right);
 }
 
@@ -93,13 +104,14 @@ function buildSvgHtml(activeKey: string | null): string {
  */
 export function HandGuide({
   activeKey,
+  shiftKey,
   feedbackFinger,
   interactive = true,
   ariaHidden = false,
 }: HandGuideProps) {
   const svgHtml = useMemo(
-    () => buildSvgHtml(interactive ? activeKey ?? null : null),
-    [interactive, activeKey],
+    () => buildSvgHtml(interactive ? activeKey ?? null : null, interactive ? shiftKey ?? null : null),
+    [interactive, activeKey, shiftKey],
   );
 
   const feedback = feedbackFinger ? (feedbackFinger.state === "correct" ? "correct" : "incorrect") : null;

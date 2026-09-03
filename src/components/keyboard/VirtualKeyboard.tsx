@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { KeyboardLayout, KeyDefinition } from "../../core/keyboard-layout/layout";
 import { useTypingStore } from "../../stores/typing-store";
 import { resolveTarget, resolveLastKey } from "../../core/target-model";
+import type { Hand } from "../../types";
 import { WIDE_KEY_LABEL } from "../../utils/fingerMapper";
 
 /**
@@ -21,6 +22,11 @@ export function VirtualKeyboard({ layout }: { layout: KeyboardLayout }) {
   const target = resolveTarget(engine, layout);
   const lastKey = resolveLastKey(engine);
   const expectedCode = target.keyCode;
+  // When the target requires Shift, the modifier key pressed by the opposite
+  // hand is highlighted too. See shiftHandFor in the layout module.
+  const expectedShiftCode = target.requiresShift
+    ? shiftCodeFor(target.shiftHand)
+    : null;
 
   return (
     <div className="mx-auto w-full max-w-6xl select-none rounded-2xl bg-paper p-4 shadow-lg ring-1 ring-line sm:p-5">
@@ -29,7 +35,7 @@ export function VirtualKeyboard({ layout }: { layout: KeyboardLayout }) {
           <div key={rowIndex} className="flex gap-2.5">
             {row.map((key) => {
               const isActive =
-                key.code === expectedCode &&
+                (key.code === expectedCode || key.code === expectedShiftCode) &&
                 (status === "ready" || status === "running");
               const flashed =
                 key.code === lastKey.keyCode
@@ -41,6 +47,7 @@ export function VirtualKeyboard({ layout }: { layout: KeyboardLayout }) {
                   definition={key}
                   isActive={isActive}
                   flashed={flashed}
+                  isShiftHint={key.code === expectedShiftCode}
                 />
               );
             })}
@@ -60,14 +67,23 @@ export function VirtualKeyboard({ layout }: { layout: KeyboardLayout }) {
 
 // ─── Keycap ──────────────────────────────────────────────────────────────────
 
+/** Physical Shift code corresponding to the hand that should press it. */
+function shiftCodeFor(hand: Hand | null): string | null {
+  if (hand === "left") return "ShiftLeft";
+  if (hand === "right") return "ShiftRight";
+  return null;
+}
+
 function Keycap({
   definition,
   isActive,
   flashed,
+  isShiftHint,
 }: {
   definition: KeyDefinition;
   isActive: boolean;
   flashed: "correct" | "incorrect" | null;
+  isShiftHint: boolean;
 }) {
   const width = definition.width ?? 1;
   const isModifier = definition.kind === "modifier" || definition.plain === undefined;
@@ -103,11 +119,13 @@ function Keycap({
         ? "from-alert to-alert"
         : "";
 
-  const face = isActive
+  const face = isActive && !isShiftHint
     ? "z-20 scale-105 bg-brass text-paper font-extrabold shadow-[0_0_20px_color-mix(in_srgb,var(--brass)_50%,transparent)] ring-2 ring-brass"
-    : flashed
-      ? `bg-linear-to-b ${flashBg} text-paper`
-      : "bg-linear-to-b from-key-top to-key-base shadow-[inset_0_1px_0_color-mix(in_srgb,var(--ink)_5%,transparent),0_2px_0_color-mix(in_srgb,var(--ink)_20%,transparent)] ring-1 ring-line";
+    : isShiftHint
+      ? "z-10 bg-brass/20 text-brass ring-2 ring-brass/60"
+      : flashed
+        ? `bg-linear-to-b ${flashBg} text-paper`
+        : "bg-linear-to-b from-key-top to-key-base shadow-[inset_0_1px_0_color-mix(in_srgb,var(--ink)_5%,transparent),0_2px_0_color-mix(in_srgb,var(--ink)_20%,transparent)] ring-1 ring-line";
 
   return (
     <button

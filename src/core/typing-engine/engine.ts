@@ -1,6 +1,6 @@
 import type { Modifier, TypingMode } from "../../types";
 import { KeyboardLayout } from "../keyboard-layout/layout";
-import { BuiltSequence, TypingUnit } from "./sequence";
+import { BuiltSequence, TypingUnit, clusterStartForUnit } from "./sequence";
 import { computeScore, ScoreMetrics } from "../scoring/score";
 import { Stopwatch } from "../timing/stopwatch";
 
@@ -20,6 +20,7 @@ export interface TypingEngineEvent {
   expected?: TypingUnit;
   metrics?: ScoreMetrics;
   reason?: FinishReason;
+  errorKind?: "key" | "modifier";
 }
 
 export type EngineListener = (event: TypingEngineEvent) => void;
@@ -44,6 +45,7 @@ export class TypingEngine {
   correctCount = 0;
   incorrectCount = 0;
   backspaceCount = 0;
+  shiftErrorCount = 0;
   totalKeys = 0;
   lastEvent: TypingEngineEvent | null = null;
   finishReason: FinishReason | null = null;
@@ -153,6 +155,19 @@ export class TypingEngine {
 
     if (code === "Backspace") {
       this.backspaceCount += 1;
+      // Backspace is cluster-aware: it steps back to the start of the previous
+      // grapheme/syllable cluster (not a single combining mark). For English
+      // this is one unit; for Myanmar it removes a whole syllable cluster,
+      // which is how the learner perceives the character.
+      if (this.unitIndex > 0) {
+        const newIndex = clusterStartForUnit(this.sequence, this.unitIndex);
+        for (let i = newIndex; i < this.unitIndex; i++) {
+          this.unitOutcomes.delete(i);
+        }
+        this.unitIndex = newIndex;
+        // If we just uncovered an error, a stray backspace should not be
+        // recorded as a new error — it is a correction gesture.
+      }
       this.emit({ type: "backspace", unitIndex: this.unitIndex, expected });
       return this.lastEvent;
     }
@@ -161,7 +176,9 @@ export class TypingEngine {
     const outcome = this.keyOutcomes.get(keyKey) ?? { correct: 0, incorrect: 0 };
     this.totalKeys += 1;
 
-    const isCorrect = code === expected.keyCode && modifier === expected.modifier;
+    const keyMatches = code === expected.keyCode;
+    const isCorrect = keyMatches && modifier === expected.modifier;
+
     if (isCorrect) {
       outcome.correct += 1;
       this.keyOutcomes.set(keyKey, outcome);
@@ -179,7 +196,15 @@ export class TypingEngine {
       if (!this.unitOutcomes.has(expected.index)) {
         this.unitOutcomes.set(expected.index, false);
       }
-      this.emit({ type: "incorrect", unitIndex: expected.index, keyCode: code, modifier, expected });
+      // Classify the error. A modifier/shift error happens when the learner
+      // pressed the correct physical key but with the wrong Shift state
+      // (e.g. lowercase when uppercase was expected). This is a distinct,
+      // trackable weakness.
+      const errorKind: "key" | "modifier" = keyMatches && modifier !== expected.modifier ? "modifier" : "key";
+      if (errorKind === "modifier") {
+        this.shiftErrorCount += 1;
+      }
+      this.emit({ type: "incorrect", unitIndex: expected.index, keyCode: code, modifier, expected, errorKind });
     }
     return this.lastEvent;
   }
@@ -202,6 +227,7 @@ export class TypingEngine {
     this.correctCount = 0;
     this.incorrectCount = 0;
     this.backspaceCount = 0;
+    this.shiftErrorCount = 0;
     this.totalKeys = 0;
     this.unitOutcomes.clear();
     this.keyOutcomes.clear();
