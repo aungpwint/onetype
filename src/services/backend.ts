@@ -1,5 +1,7 @@
 import { invokeCommand, isTauriRuntime, pickOpenFile, pickSavePath } from "./ipc";
 import { localBackend } from "./local";
+import { rankWeakest, DEFAULT_WEAKNESS_CONFIG } from "../core/weakness";
+import type { StatInput } from "../core/weakness";
 import type {
   AchievementRecord,
   CreateStudentRequest,
@@ -104,12 +106,40 @@ export async function saveStatistics(req: SaveKeyStatsRequest): Promise<void> {
 
 export async function weakKeys(studentId: string, layoutId: string, limit = 10): Promise<WeakKey[]> {
   if (!isTauriRuntime()) return localBackend.weakKeys(studentId, layoutId, limit);
-  return invokeCommand("weak_keys", { studentId, layoutId, limit });
+  // The Rust command ranks by raw accuracy and applies no evidence filter, so
+  // fetch a wider pool and re-rank with the same Wilson logic the local backend
+  // uses to keep desktop/browser rankings identical (see rankWeakest).
+  const pool = await invokeCommand<WeakKey[]>("weak_keys", { studentId, layoutId, limit: 50 });
+  return reRankWeak(pool, limit);
 }
 
 export async function weakFingers(studentId: string, layoutId: string, limit = 10): Promise<WeakFinger[]> {
   if (!isTauriRuntime()) return localBackend.weakFingers(studentId, layoutId, limit);
-  return invokeCommand("weak_fingers", { studentId, layoutId, limit });
+  const pool = await invokeCommand<WeakKey[]>("weak_fingers", { studentId, layoutId, limit: 50 });
+  return reRankWeak(pool, limit).map((row) => ({ ...row, finger: row.key }));
+}
+
+/**
+ * Mirror the local backend's adaptive weak-item ranking over a raw pool of
+ * { key, accuracy, attempts } rows: rebuild the underlying counts, apply the
+ * Wilson lower-bound ranking with the minimum-attempts evidence filter, then
+ * return the top `limit`. Used to keep the Tauri path parity with the browser.
+ */
+export function reRankWeak(
+  pool: Array<{ key: string; accuracy: number; attempts: number }>,
+  limit: number,
+): WeakKey[] {
+  const stats: StatInput[] = pool.map((row) => {
+    const accuracy = Math.max(0, Math.min(1, row.accuracy / 100));
+    return {
+      key: row.key,
+      correct: Math.round(row.attempts * accuracy),
+      incorrect: row.attempts - Math.round(row.attempts * accuracy),
+    };
+  });
+  return rankWeakest(stats, DEFAULT_WEAKNESS_CONFIG)
+    .slice(0, Math.max(0, limit))
+    .map((s) => ({ key: s.key, accuracy: s.accuracy, attempts: s.attempts }));
 }
 
 export async function listTypingTests(): Promise<TypingTest[]> {

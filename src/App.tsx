@@ -12,7 +12,7 @@ import { Onboarding } from "./components/Onboarding";
 import { Spinner } from "./components/ui";
 import Dashboard from "./pages/Dashboard";
 import Learn from "./pages/Learn";
-import { LessonPage, TestPage as TestSessionPage } from "./pages/SessionPage";
+import { LessonPage, TestPage as TestSessionPage, DrillPage } from "./pages/SessionPage";
 import TestsPage from "./pages/TestsPage";
 import ProgressPage from "./pages/ProgressPage";
 import StudentsPage from "./pages/StudentsPage";
@@ -61,6 +61,7 @@ export default function App() {
             <Route path="/lesson/:lessonId" element={<LessonPage />} />
             <Route path="/tests" element={<TestsPage />} />
             <Route path="/test/:testId" element={<TestSessionPage />} />
+            <Route path="/drill" element={<DrillPage />} />
             <Route path="/progress" element={<ProgressPage />} />
             <Route path="/students" element={<StudentsPage />} />
             <Route path="/teacher" element={<TeacherPage />} />

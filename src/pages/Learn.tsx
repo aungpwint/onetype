@@ -5,6 +5,10 @@ import { useLessonStore } from "../stores/lesson-store";
 import { useStudentStore } from "../stores/student-store";
 import { useSettingsStore } from "../stores/settings-store";
 import { Spinner } from "../components/ui";
+import { computeMasteryForLessons } from "../core/mastery";
+import type { MasteryLevel } from "../core/mastery";
+import type { ExerciseResult } from "../services/types";
+import * as backend from "../services/backend";
 
 const LEVEL_ORDER: Level[] = ["beginner", "intermediate", "advanced"];
 
@@ -39,6 +43,18 @@ function LanguageToggle({ lang, setLang }: { lang: "myanmar" | "english"; setLan
   );
 }
 
+const MASTERY_LABEL: Record<MasteryLevel, { text: string; cls: string }> = {
+  "not-started": { text: "new", cls: "bg-paper-2 text-ink-faint" },
+  attempted: { text: "attempted", cls: "bg-paper-2 text-ink-soft" },
+  passed: { text: "passed", cls: "bg-success/15 text-success" },
+  mastered: { text: "mastered", cls: "bg-brass/15 text-brass" },
+};
+
+function MasteryBadge({ level }: { level: MasteryLevel }) {
+  const m = MASTERY_LABEL[level];
+  return <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${m.cls}`}>{m.text}</span>;
+}
+
 export default function Learn() {
   const { level: levelParam } = useParams<{ level: string }>();
   const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel);
@@ -50,10 +66,31 @@ export default function Learn() {
 
   const [lang, setLang] = useState<"myanmar" | "english">(defaultLang === "myanmar" ? "myanmar" : "english");
   const [level, setLevel] = useState<Level>(() => (LEVEL_ORDER as string[]).includes(levelParam ?? "") ? (levelParam as Level) : "beginner");
+  const [exerciseResults, setExerciseResults] = useState<ExerciseResult[]>([]);
 
   useEffect(() => {
     if (active) void loadProgress(active.id);
   }, [active, loadProgress]);
+
+  useEffect(() => {
+    if (active) {
+      void (async () => {
+        setExerciseResults(await backend.listExerciseResults(active.id));
+      })();
+    }
+  }, [active]);
+
+  const masteryByLesson = useMemo(() => {
+    const minAcc: Record<string, { minAccuracy: number }> = {};
+    for (const lvl of LEVEL_ORDER) {
+      for (const lesson of lessonsByLevel[lvl]) {
+        if (lesson.language === (lang === "myanmar" ? "myanmar" : "english")) {
+          minAcc[lesson.id] = { minAccuracy: lesson.completion.minAccuracy };
+        }
+      }
+    }
+    return computeMasteryForLessons(exerciseResults, minAcc);
+  }, [exerciseResults, lessonsByLevel, lang]);
 
   const list = useMemo(() => {
     return lessonsByLevel[level]
@@ -118,7 +155,8 @@ export default function Learn() {
       <div className={list.length ? "grid gap-3 sm:grid-cols-2 lg:grid-cols-3" : ""}>
         {list.map((lesson) => {
           const p = progress?.[lesson.id];
-          const passed = p?.completed;
+          const mastery = masteryByLesson.get(lesson.id) ?? "not-started";
+          const passed = mastery === "passed" || mastery === "mastered";
           return (
             <Link
               key={lesson.id}
@@ -128,10 +166,12 @@ export default function Learn() {
               <div className="flex items-center justify-between">
                 <span className="eyebrow">L. {lesson.number}</span>
                 {passed ? (
-                  <span className="rounded-full bg-success/15 px-2 py-0.5 text-xs font-medium text-success">passed</span>
-                ) : p ? (
-                  <span className="tnum text-xs text-ink-faint">{Math.round((p.attempts > 0 ? p.bestAccuracy : 0))}%</span>
-                ) : null}
+                  <MasteryBadge level={mastery} />
+                ) : mastery === "attempted" ? (
+                  <span className="tnum text-xs text-ink-faint">{Math.round(p && p.attempts > 0 ? p.bestAccuracy : 0)}%</span>
+                ) : (
+                  <MasteryBadge level={mastery} />
+                )}
               </div>
               <h3 className="ms mt-2 font-display text-xl leading-tight">{lesson.title}</h3>
               <p className="ms mt-0.5 text-xs text-ink-faint">{lesson.titleMy}</p>

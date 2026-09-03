@@ -26,6 +26,7 @@ import type {
   WeakFinger,
   WeakKey,
 } from "./types";
+import { rankWeakest, DEFAULT_WEAKNESS_CONFIG } from "../core/weakness";
 
 const PREFIX = "onetype:local:";
 
@@ -262,13 +263,15 @@ export const localBackend = {
   },
 
   weakKeys: async (studentId: string, _layoutId: string, limit: number): Promise<WeakKey[]> => {
-    return weakFrom(KEYS.keyStats, studentId).slice(0, limit);
+    return weakFrom(KEYS.keyStats, studentId, limit);
   },
 
   weakFingers: async (studentId: string, _layoutId: string, limit: number): Promise<WeakFinger[]> => {
-    return weakFrom(KEYS.fingerStats, studentId)
-      .map((k) => ({ finger: k.key, accuracy: k.accuracy, attempts: k.attempts }))
-      .slice(0, limit);
+    return weakFrom(KEYS.fingerStats, studentId, limit).map((k) => ({
+      finger: k.key,
+      accuracy: k.accuracy,
+      attempts: k.attempts,
+    }));
   },
 
   listTypingTests: async (): Promise<TypingTest[]> => {
@@ -531,11 +534,13 @@ function mergeStats(storeKey: string, studentId: string, records: TypingStatReco
   write(storeKey, Array.from(map.values()));
 }
 
-function weakFrom(storeKey: string, studentId: string): WeakKey[] {
-  return read<KeyStatistic[]>(storeKey, [])
+function weakFrom(storeKey: string, studentId: string, limit = Number.POSITIVE_INFINITY): WeakKey[] {
+  const stats = read<KeyStatistic[]>(storeKey, [])
     .filter((k) => k.studentId === studentId && k.correct + k.incorrect > 0)
-    .map((k) => ({ key: k.keyId, accuracy: k.accuracy, attempts: k.correct + k.incorrect }))
-    .sort((a, b) => a.accuracy - b.accuracy);
+    .map((k) => ({ key: k.keyId, correct: k.correct, incorrect: k.incorrect }));
+  return rankWeakest(stats, DEFAULT_WEAKNESS_CONFIG)
+    .slice(0, limit)
+    .map((w) => ({ key: w.key, accuracy: w.accuracy, attempts: w.attempts }));
 }
 
 function writeCumulative(storeKey: string, progress: LessonProgress): void {

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { TypingEngine } from "../core/typing-engine/engine";
 import { getLayoutOrThrow } from "../core/keyboard-layout/registry";
+import { englishQwerty } from "../core/keyboard-layout/english-qwerty";
 import { resolveLessonById } from "../data/curriculum";
 import type { ResolvedLesson } from "../data/curriculum/generator";
 import { buildTestMaterial } from "../core/materials/test-material";
@@ -8,6 +9,10 @@ import type { KeyboardLayout } from "../core/keyboard-layout/layout";
 import type { Modifier, TypingMode } from "../types";
 import type { ScoreMetrics } from "../core/scoring/score";
 import type { AchievementRecord, TypingStatRecord, TypingTest } from "../services/types";
+import { reinforcementFromWeakKeys } from "../core/reinforcement";
+import type { ReinforcedDrill, MuscleMemoryGoal } from "../core/reinforcement";
+import { projectMasteryDelta } from "../core/mastery";
+import type { MasteryDelta } from "../core/mastery";
 import * as backend from "../services/backend";
 import { useStudentStore } from "./student-store";
 import { useLessonStore } from "./lesson-store";
@@ -37,13 +42,15 @@ export interface FinishedResult {
   finishReason: "completed" | "time-up";
   attempt: number;
   newlyUnlocked: string[];
+  masteryDelta?: MasteryDelta;
   saveError?: string;
 }
 
 interface TypingSessionState {
-  kind: "lesson" | "test";
+  kind: "lesson" | "test" | "drill";
   lessonId?: string;
   test?: TypingTest;
+  drill?: ReinforcedDrill;
   resolved: ResolvedLesson;
   layout: KeyboardLayout;
   mode: TypingMode;
@@ -62,6 +69,7 @@ interface TypingState {
   result: FinishedResult | null;
   beginLesson: (lessonId: string, mode?: TypingMode) => Promise<void>;
   beginTest: (test: TypingTest) => Promise<void>;
+  beginDrill: (drill: ReinforcedDrill) => Promise<void>;
   start: () => void;
   togglePause: () => void;
   abandon: () => void;
@@ -99,8 +107,50 @@ const IGNORED_CODES = new Set([
   "ControlLeft", "ControlRight", "MetaLeft", "MetaRight",
   "CapsLock", "Tab", "Enter", "Escape", "F1", "F2", "F3", "F4",
   "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
-  "KeyP", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
+  "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
 ]);
+
+const ENGLISH_LAYOUT_ID = "english-qwerty";
+
+function drillResolvedLesson(drill: ReinforcedDrill): ResolvedLesson {
+  const plan = drill.plan;
+  const seq = plan.sequence;
+  return {
+    id: "drill:weakness",
+    level: "beginner",
+    number: 0,
+    sequence: seq,
+    layoutId: ENGLISH_LAYOUT_ID,
+    totalUnits: seq.units.length,
+    totalCharacters: seq.charCount,
+    phases: [],
+    difficulty: "adaptive",
+    estimatedMinutes: 0,
+    completion: { minAccuracy: 0, minWpm: null },
+    title: `Weakness drill · ${plan.goal}`,
+    titleMy: "",
+    description: "Adaptive drill targeting detected weak keys.",
+    language: "english",
+    focusKeys: plan.keys,
+  };
+}
+
+/**
+ * Build an adaptive reinforcement drill from the active student's detected
+ * English-layout weaknesses. Returns null when there is no active student or
+ * not enough evidence yet. Drills are English-layout only (Phase 15).
+ */
+export async function buildAdaptiveDrill(
+  opts: { goal?: MuscleMemoryGoal } = {},
+): Promise<ReinforcedDrill | null> {
+  const active = useStudentStore.getState().active;
+  if (!active) return null;
+  const keys = await backend.weakKeys(active.id, ENGLISH_LAYOUT_ID, 8);
+  if (keys.length === 0) return null;
+  // weakKeys is already Wilson-ranked weakest-first; preserve that order.
+  const weakIds = keys.map((k, i) => ({ key: k.key, lowerBound: keys.length - i }));
+  return reinforcementFromWeakKeys(weakIds, { goal: opts.goal ?? "finger-isolation" });
+}
 
 export const useTypingStore = create<TypingState>((set, get) => ({
   session: null,
@@ -152,6 +202,27 @@ export const useTypingStore = create<TypingState>((set, get) => ({
       mode: "test",
       durationSeconds: test.durationSeconds,
       attempt,
+      startedAt: Date.now(),
+    };
+    const engine = createEngine(session);
+    set({ session, engine, status: "ready", result: null, error: null, wrongFlash: null, tick: 0 });
+    bindKeys();
+  },
+
+  beginDrill: async (drill) => {
+    const active = await useStudentStore.getState().ensureActive();
+    if (!active) {
+      set({ error: "Please add a student profile first." });
+      return;
+    }
+    const session: TypingSessionState = {
+      kind: "drill",
+      drill,
+      resolved: drillResolvedLesson(drill),
+      layout: englishQwerty,
+      mode: "guided",
+      durationSeconds: null,
+      attempt: 1,
       startedAt: Date.now(),
     };
     const engine = createEngine(session);
@@ -257,6 +328,20 @@ export const useTypingStore = create<TypingState>((set, get) => ({
           contentVersion,
         });
         await saveStatistics(active.id, session.layout.id);
+        // Compute how this attempt moved the lesson toward mastery (Phase 12).
+        // The current attempt has already been persisted by saveExerciseResult
+        // above, so the fetched history includes it.
+        let masteryDelta: MasteryDelta | undefined;
+        try {
+          const history = await backend.listExerciseResults(active.id);
+          const attemptsForLesson = history
+            .filter((r) => r.lessonId === session.lessonId)
+            .sort((a, b) => a.attempt - b.attempt)
+            .map((r) => ({ passed: r.passed, accuracy: r.accuracy }));
+          masteryDelta = projectMasteryDelta(attemptsForLesson, lesson.completion.minAccuracy);
+        } catch {
+          masteryDelta = undefined;
+        }
         return recordProgression(metrics, passed, reason).then((newlyUnlocked) =>
           set({
             result: {
@@ -264,6 +349,26 @@ export const useTypingStore = create<TypingState>((set, get) => ({
               mode: session.mode,
               metrics,
               passed,
+              finishReason: reason,
+              attempt: session.attempt,
+              newlyUnlocked,
+              masteryDelta,
+            },
+            status: "finished",
+          }),
+        );
+      }
+
+      if (session.kind === "drill") {
+        // Drills are practice: they count toward practice/achievement stats and
+        // key/finger weakness tracking, but are never a lesson or a test result.
+        await saveStatistics(active.id, session.layout.id);
+        return recordProgression(metrics, true, reason).then((newlyUnlocked) =>
+          set({
+            result: {
+              mode: session.mode,
+              metrics,
+              passed: true,
               finishReason: reason,
               attempt: session.attempt,
               newlyUnlocked,
@@ -319,6 +424,19 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             mode: session.mode,
             metrics,
             passed,
+            finishReason: reason,
+            attempt: session.attempt,
+            newlyUnlocked: [],
+            saveError,
+          },
+          status: "finished",
+        });
+      } else if (session.kind === "drill") {
+        set({
+          result: {
+            mode: session.mode,
+            metrics,
+            passed: true,
             finishReason: reason,
             attempt: session.attempt,
             newlyUnlocked: [],
@@ -448,14 +566,31 @@ function unbindKeys() {
 async function saveStatistics(studentId: string, layoutId: string) {
   const { engine } = useTypingStore.getState();
   if (!engine) return;
+  const layout = engine.layout;
   const keyStats: TypingStatRecord[] = [];
-  for (const [key, outcome] of engine.keyOutcomes) {
+  const fingerAgg = new Map<string, { correct: number; incorrect: number }>();
+  for (const [keyId, outcome] of engine.keyOutcomes) {
     if (outcome.correct > 0 || outcome.incorrect > 0) {
-      keyStats.push({ key, layoutId, correct: outcome.correct, incorrect: outcome.incorrect });
+      keyStats.push({ key: keyId, layoutId, correct: outcome.correct, incorrect: outcome.incorrect });
+      const idx = keyId.indexOf(":");
+      const code = idx === -1 ? keyId : keyId.slice(0, idx);
+      const finger = layout.getKey(code)?.finger;
+      if (finger) {
+        const agg = fingerAgg.get(finger) ?? { correct: 0, incorrect: 0 };
+        agg.correct += outcome.correct;
+        agg.incorrect += outcome.incorrect;
+        fingerAgg.set(finger, agg);
+      }
     }
   }
+  const fingerStats: TypingStatRecord[] = [...fingerAgg.entries()].map(([finger, o]) => ({
+    key: finger,
+    layoutId,
+    correct: o.correct,
+    incorrect: o.incorrect,
+  }));
   try {
-    await backend.saveStatistics({ studentId, keyStats, fingerStats: [], characterStats: [] });
+    await backend.saveStatistics({ studentId, keyStats, fingerStats, characterStats: [] });
   } catch {
     // statistics are best-effort
   }

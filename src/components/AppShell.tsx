@@ -11,6 +11,7 @@ import { listLayouts } from "../core/keyboard-layout/registry";
 const NAV = [
   { to: "/", label: "Dashboard", en: "Dashboard" },
   { to: "/learn", label: "Learn", en: "Learn" },
+  { to: "/drill", label: "Adaptive drill", en: "Adaptive drill" },
   { to: "/tests", label: "Timed tests", en: "Timed tests" },
   { to: "/progress", label: "Progress", en: "Progress" },
   { to: "/teacher", label: "Teacher", en: "Teacher" },

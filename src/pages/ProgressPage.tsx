@@ -4,6 +4,8 @@ import * as backend from "../services/backend";
 import type { StudentDetail, TypingSession } from "../services/types";
 import { Stat, Spinner } from "../components/ui";
 import { formatDateTime } from "../lib/format";
+import { summarizePerformance } from "../core/analytics";
+import type { SessionPoint } from "../core/analytics";
 
 type Range = "week" | "month" | "all";
 
@@ -65,6 +67,41 @@ function AccChart({ values }: { values: number[] }) {
   );
 }
 
+function formatTrend(slope: number): string {
+  return `${slope >= 0 ? "+" : ""}${slope.toFixed(2)}`;
+}
+
+function TrendRow({
+  label,
+  slope,
+  valid,
+  unit,
+}: {
+  label: string;
+  slope: number;
+  valid: boolean;
+  unit: string;
+}) {
+  const up = slope > 0.0001;
+  const down = slope < -0.0001;
+  const color = valid ? (up ? "var(--success)" : down ? "var(--alert)" : "var(--ink-faint)") : "var(--ink-faint)";
+  return (
+    <div className="flex items-center justify-between text-sm">
+      <span className="text-ink-soft">{label}</span>
+      <span className="tnum" style={{ color }}>
+        {valid ? (
+          <>
+            {up ? "▲ " : down ? "▼ " : "— "}
+            {formatTrend(slope)} {unit}/per session
+          </>
+        ) : (
+          "need 2+ sessions"
+        )}
+      </span>
+    </div>
+  );
+}
+
 export default function ProgressPage() {
   const active = useStudentStore((s) => s.active);
   const [detail, setDetail] = useState<StudentDetail | null>(null);
@@ -91,8 +128,16 @@ export default function ProgressPage() {
   const rangeSessions = sessions.length;
   const rangeMinutes = sessions.reduce((sum, s) => sum + s.durationMs, 0) / 60000;
   const rangeWpm = rangeSessions ? sessions.reduce((sum, s) => sum + s.wpm, 0) / rangeSessions : 0;
-  const rangeAcc = rangeSessions ? sessions.reduce((sum, s) => sum + s.accuracy, 0) / rangeSessions : 0;
   const rangeBest = rangeSessions ? Math.max(...sessions.map((s) => s.wpm)) : 0;
+
+  const points: SessionPoint[] = sessions.map((s) => ({
+    startedAt: s.startedAt,
+    wpm: s.wpm,
+    accuracy: s.accuracy,
+    correctCount: s.correctCount,
+    errorCount: s.errorCount,
+  }));
+  const summary = summarizePerformance(points);
 
   return (
     <div className="mx-auto max-w-6xl space-y-6 px-4 py-6">
@@ -106,7 +151,7 @@ export default function ProgressPage() {
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <Stat label="Avg accuracy" value={`${rangeAcc.toFixed(1)}%`} />
+          <Stat label="Avg accuracy" value={`${summary.pooledAccuracy.toFixed(1)}%`} />
           <Stat label="Avg WPM" value={rangeSessions ? Math.round(rangeWpm) : "—"} />
           <Stat label="Minutes practiced" value={`${rangeMinutes.toFixed(0)}`} />
           <Stat label="Best WPM" value={rangeSessions ? Math.round(rangeBest) : "—"} />
@@ -136,6 +181,35 @@ export default function ProgressPage() {
           <h2 className="font-display text-lg">Accuracy, last sessions</h2>
           <div className="mt-3">
             <AccChart values={accSeries} />
+          </div>
+        </div>
+      </div>
+
+      <div className="card p-5">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-display text-lg">Trend &amp; consistency</h2>
+          <span className="text-xs text-ink-faint">{rangeSessions} session{rangeSessions === 1 ? "" : "s"} in range</span>
+        </div>
+        <div className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-3">
+          <div className="space-y-2">
+            <p className="eyebrow">Accuracy trend</p>
+            <TrendRow label="direction" slope={summary.accuracyTrend.slope} valid={summary.accuracyTrend.valid} unit="pp" />
+          </div>
+          <div className="space-y-2">
+            <p className="eyebrow">Speed trend</p>
+            <TrendRow label="direction" slope={summary.wpmTrend.slope} valid={summary.wpmTrend.valid} unit="wpm" />
+          </div>
+          <div className="space-y-2">
+            <p className="eyebrow">Consistency</p>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-ink-soft">WPM spread</span>
+              <span className="tnum" style={{ color: summary.wpmVariability === 0 ? "var(--ink-faint)" : summary.wpmVariability <= 0.2 ? "var(--success)" : summary.wpmVariability <= 0.35 ? "var(--brass)" : "var(--alert)" }}>
+                {summary.wpmVariability === 0 ? "—" : `${(summary.wpmVariability * 100).toFixed(0)}%`}
+              </span>
+            </div>
+            <p className="text-xs text-ink-faint">
+              {summary.wpmVariability === 0 ? "Unavailable yet." : summary.wpmVariability <= 0.2 ? "Steady pace" : summary.wpmVariability <= 0.35 ? "Some drift" : "Highly varied"}
+            </p>
           </div>
         </div>
       </div>

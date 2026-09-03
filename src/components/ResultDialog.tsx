@@ -1,9 +1,39 @@
 import { useNavigate } from "react-router-dom";
-import { useTypingStore } from "../stores/typing-store";
+import { useTypingStore, buildAdaptiveDrill } from "../stores/typing-store";
 import { useLessonStore } from "../stores/lesson-store";
 import { ACHIEVEMENT_CATALOG } from "../data/achievements";
 import { Modal } from "./ui";
 import { formatDuration } from "../lib/format";
+import type { MasteryDelta, MasteryLevel } from "../core/mastery";
+
+const MASTERY_COPY: Record<MasteryLevel, string> = {
+  "not-started": "new",
+  attempted: "attempted",
+  passed: "passed",
+  mastered: "mastered",
+};
+
+function MasteryNotice({ delta }: { delta: MasteryDelta }) {
+  const { before, after, improved } = delta;
+  return (
+    <div className="mt-4 rounded-lg border border-brass/40 bg-brass/10 p-3">
+      <p className="eyebrow">Mastery</p>
+      <div className="mt-1 flex flex-wrap items-center gap-2 text-sm">
+        <span className="tnum text-ink-soft">{MASTERY_COPY[before]}</span>
+        <span aria-hidden>→</span>
+        <span className={`tnum font-medium ${after === "mastered" ? "text-brass" : "text-ink"}`}>{MASTERY_COPY[after]}</span>
+        {improved ? (
+          <span className="rounded-full bg-success/15 px-2 py-0.5 text-xs font-medium text-success">improved</span>
+        ) : null}
+      </div>
+      {after === "mastered" ? (
+        <p className="mt-1 text-xs text-ink-soft">This lesson is mastered. Nice consistency!</p>
+      ) : (
+        <p className="mt-1 text-xs text-ink-soft">Reach the accuracy margin on consecutive passes to master this lesson.</p>
+      )}
+    </div>
+  );
+}
 
 export function ResultDialog() {
   const navigate = useNavigate();
@@ -12,6 +42,7 @@ export function ResultDialog() {
   const clear = useTypingStore((s) => s.clear);
   const beginLesson = useTypingStore((s) => s.beginLesson);
   const beginTest = useTypingStore((s) => s.beginTest);
+  const beginDrill = useTypingStore((s) => s.beginDrill);
   const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel);
 
   if (!result || !session) return null;
@@ -21,7 +52,13 @@ export function ResultDialog() {
 
   const metrics = result.metrics;
   const isLesson = session.kind === "lesson";
-  const target = isLesson ? session.resolved.completion : { minAccuracy: session.test!.minAccuracy, minWpm: session.test!.minWpm };
+  const isDrill = session.kind === "drill";
+  // Drills are practice without a pass/fail gate, so they always show as complete.
+  const target = isLesson
+    ? session.resolved.completion
+    : isDrill
+      ? { minAccuracy: 0, minWpm: null as number | null }
+      : { minAccuracy: session.test!.minAccuracy, minWpm: session.test!.minWpm };
 
   let nextLessonId: string | null = null;
   if (isLesson && result.passed) {
@@ -41,6 +78,11 @@ export function ResultDialog() {
       const mode = session.mode;
       clear();
       void beginLesson(id, mode);
+    } else if (session.kind === "drill") {
+      clear();
+      void buildAdaptiveDrill().then((drill) => {
+        if (drill) void beginDrill(drill);
+      });
     } else {
       const test = session.test!;
       clear();
@@ -58,18 +100,24 @@ export function ResultDialog() {
       <div className="flex items-start justify-between">
         <div>
           <p className="eyebrow">
-            {isLesson ? `Exercise · ${session.resolved.title}` : `Test · ${session.test!.code}`} · attempt{" "}
+            {isDrill
+              ? `Adaptive drill · ${session.resolved.focusKeys?.join("") ?? "weak keys"} · attempt ${result.attempt}`
+              : isLesson
+                ? `Exercise · ${session.resolved.title}`
+                : `Test · ${session.test!.code}`} · attempt{" "}
             {result.attempt}
           </p>
           <h2 className="mt-1 font-display text-2xl">
-            {result.passed ? (isLesson ? "Lesson passed" : "Test passed") : "Round finished — not yet passed"}
+            {isDrill ? "Drill complete" : result.passed ? (isLesson ? "Lesson passed" : "Test passed") : "Round finished — not yet passed"}
           </h2>
           <p className="mt-1 text-sm text-ink-soft">
-            {result.passed
-              ? isLesson
-                ? "Well typed. Move to the next line."
-                : "You beat the target. Keep the form."
-              : `Target was ${target.minAccuracy}% accuracy${target.minWpm !== null ? ` and ${target.minWpm} WPM` : ""}. One more round.`}
+            {isDrill
+              ? "Loosened up those weak spots. Practice keeps the finger memory sharp."
+              : result.passed
+                ? isLesson
+                  ? "Well typed. Move to the next line."
+                  : "You beat the target. Keep the form."
+                : `Target was ${target.minAccuracy}% accuracy${target.minWpm !== null ? ` and ${target.minWpm} WPM` : ""}. One more round.`}
           </p>
         </div>
         <button type="button" className="btn btn-ghost px-2! py-1! text-xs" onClick={close}>
@@ -97,9 +145,13 @@ export function ResultDialog() {
         <div className="flex justify-between"><dt className="text-ink-faint">Backspaces</dt><dd className="tnum">{metrics.backspaceCount}</dd></div>
         <div className="flex justify-between"><dt className="text-ink-faint">Characters typed</dt><dd className="tnum">{metrics.correctAttempts}</dd></div>
         <div className="flex justify-between"><dt className="text-ink-faint">Time</dt><dd className="tnum">{formatDuration(metrics.elapsedSeconds * 1000)}</dd></div>
-        <div className="flex justify-between"><dt className="text-ink-faint">Target</dt><dd className="tnum">{target.minAccuracy}% acc{target.minWpm !== null ? ` · ${target.minWpm} wpm` : ""}</dd></div>
+        {!isDrill ? (
+          <div className="flex justify-between"><dt className="text-ink-faint">Target</dt><dd className="tnum">{target.minAccuracy}% acc{target.minWpm !== null ? ` · ${target.minWpm} wpm` : ""}</dd></div>
+        ) : null}
         <div className="flex justify-between"><dt className="text-ink-faint">Pass</dt><dd className="tnum" style={{ color: result.passed ? "var(--success)" : "var(--alert)" }}>{result.passed ? "passed" : "not yet"}</dd></div>
       </dl>
+
+      {isLesson && result.masteryDelta ? <MasteryNotice delta={result.masteryDelta} /> : null}
 
       {result.saveError ? (
         <div className="mt-4 rounded-lg border border-alert/40 bg-alert/10 p-3 text-sm" role="alert">
@@ -124,7 +176,7 @@ export function ResultDialog() {
       ) : null}
 
       <div className="mt-6 flex flex-wrap justify-end gap-2">
-        <button type="button" className="btn btn-ghost" onClick={beforeNavigate(isLesson ? "/learn" : "/tests")}>
+        <button type="button" className="btn btn-ghost" onClick={beforeNavigate(isDrill ? "/drill" : isLesson ? "/learn" : "/tests")}>
           Back to list
         </button>
         {nextLessonId ? (

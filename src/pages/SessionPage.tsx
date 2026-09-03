@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import * as backend from "../services/backend";
-import { useTypingStore } from "../stores/typing-store";
+import { useTypingStore, buildAdaptiveDrill } from "../stores/typing-store";
 import { useSettingsStore } from "../stores/settings-store";
 import { KeyboardContainer } from "../components/keyboard/KeyboardContainer";
 import { TargetText } from "../components/TargetText";
@@ -13,7 +13,15 @@ import type { TypingMode } from "../types";
 
 // ─── Session surface ─────────────────────────────────────────────────────────
 
-function Session({ durationSeconds, sourceName }: { durationSeconds: number | null; sourceName: string }) {
+function Session({
+  durationSeconds,
+  sourceName,
+  eyebrow,
+}: {
+  durationSeconds: number | null;
+  sourceName: string;
+  eyebrow?: string;
+}) {
   const status = useTypingStore((s) => s.status);
   const engine = useTypingStore((s) => s.engine);
   const error = useTypingStore((s) => s.error);
@@ -47,7 +55,7 @@ function Session({ durationSeconds, sourceName }: { durationSeconds: number | nu
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="eyebrow">{durationSeconds !== null ? "Timed practice" : "Lesson"}</p>
+          <p className="eyebrow">{eyebrow ?? (durationSeconds !== null ? "Timed practice" : "Lesson")}</p>
           <h1 className="ms mt-1 font-display text-2xl">{sourceName}</h1>
         </div>
         <div className="flex items-center gap-2">
@@ -190,6 +198,46 @@ export function TestPage() {
     <SessionGate ready={session?.kind === "test" && !!session?.test} loadingLabel="Rolling out the paper…">
       {session?.kind === "test" && session.test ? (
         <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} />
+      ) : null}
+    </SessionGate>
+  );
+}
+
+export function DrillPage() {
+  const session = useTypingStore((s) => s.session);
+  const beginDrill = useTypingStore((s) => s.beginDrill);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = useCallback(async () => {
+    try {
+      const drill = await buildAdaptiveDrill();
+      if (drill) await beginDrill(drill);
+      else setError("Not enough typing data yet to spot weaknesses. Finish a few lessons first.");
+    } catch {
+      setError("Could not prepare an adaptive drill right now.");
+    }
+  }, [beginDrill]);
+
+  useBeginSession("drill", load);
+
+  if (error && session?.kind !== "drill") {
+    return (
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-10">
+        <p className="rounded-lg border border-alert/40 bg-alert/10 px-3 py-2 text-sm text-alert" role="alert">
+          {error}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <SessionGate ready={session?.kind === "drill"} loadingLabel="Preparing the drill…">
+      {session?.kind === "drill" && session.drill ? (
+        <Session
+          durationSeconds={null}
+          sourceName={session.resolved.title}
+          eyebrow="Adaptive drill"
+        />
       ) : null}
     </SessionGate>
   );
