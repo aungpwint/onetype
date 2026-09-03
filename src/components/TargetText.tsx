@@ -6,6 +6,13 @@ import { containsMyanmar } from "../core/unicode/myanmar";
 const CARET_ANCHOR = 0.45;
 const CONTENT_INSET = 24;
 
+interface GraphemeChar {
+  index: number;
+  text: string;
+  startUnit: number;
+  endUnit: number;
+}
+
 export function TargetText() {
   const tick = useTypingStore((s) => s.tick);
   const session = useTypingStore((s) => s.session);
@@ -17,9 +24,8 @@ export function TargetText() {
   const offsetRef = useRef(0);
 
   const unitIndex = engine?.unitIndex ?? 0;
-  const units = engine?.sequence.units;
-  const seqText = engine?.sequence.text ?? "";
-  const hasMyanmar = units ? containsMyanmar(seqText) : false;
+  const sequence = engine?.sequence;
+  const hasMyanmar = sequence ? containsMyanmar(sequence.text) : false;
 
   const motionOffset = useMotionValue(0);
   const springOffset = useSpring(motionOffset, {
@@ -87,6 +93,19 @@ export function TargetText() {
 
   if (!session || !engine) return null;
 
+  const graphemes: GraphemeChar[] = [];
+  if (sequence) {
+    const { graphemes: gtext, graphemeUnitRanges } = sequence;
+    for (let i = 0; i < gtext.length; i++) {
+      graphemes.push({
+        index: i,
+        text: gtext[i],
+        startUnit: graphemeUnitRanges[i][0],
+        endUnit: graphemeUnitRanges[i][1],
+      });
+    }
+  }
+
   return (
     <motion.div
       className="tt-container"
@@ -104,15 +123,21 @@ export function TargetText() {
             className={`${hasMyanmar ? "font-myanmar" : "heavy"} mx-auto whitespace-nowrap text-4xl leading-normal tracking-normal md:text-5xl`}
             style={{ wordSpacing: "0.2em" }}
           >
-            {units!.map((unit) => (
-              <Char
-                key={`${unit.index}-${unit.index < unitIndex ? (engine.unitOutcomeAt(unit.index) ?? "pending") : unit.index === unitIndex ? "current" : "pending"}`}
-                text={unit.text}
-                index={unit.index}
-                currentUnitIndex={unitIndex}
-                onCaret={unit.index === unitIndex ? onCaretRef : undefined}
-              />
-            ))}
+            {graphemes.map((g) => {
+              const isCurrent = unitIndex >= g.startUnit && unitIndex < g.endUnit;
+              const isCompleted = g.endUnit <= unitIndex;
+              return (
+                <Char
+                  key={g.index}
+                  text={g.text}
+                  startUnit={g.startUnit}
+                  endUnit={g.endUnit}
+                  completed={isCompleted}
+                  current={isCurrent}
+                  onCaret={isCurrent ? onCaretRef : undefined}
+                />
+              );
+            })}
           </p>
         </motion.div>
       </div>
@@ -122,23 +147,38 @@ export function TargetText() {
 
 function Char({
   text,
-  index,
-  currentUnitIndex,
+  startUnit,
+  endUnit,
+  completed,
+  current,
   onCaret,
 }: {
   text: string;
-  index: number;
-  currentUnitIndex: number;
+  startUnit: number;
+  endUnit: number;
+  completed: boolean;
+  current: boolean;
   onCaret?: (el: HTMLSpanElement | null) => void;
 }) {
   const { engine, wrongFlash } = useTypingStore.getState();
-  const status =
-    index < currentUnitIndex
-      ? (engine?.unitOutcomeAt(index) ?? "pending")
-      : index === currentUnitIndex
-        ? "current"
-        : "pending";
-  const flash = wrongFlash?.unitIndex === index;
+  const flash =
+    wrongFlash?.unitIndex !== undefined &&
+    wrongFlash.unitIndex >= startUnit &&
+    wrongFlash.unitIndex < endUnit;
+
+  let status: "correct" | "incorrect" | "current" | "pending" = "pending";
+  if (current) {
+    status = "current";
+  } else if (completed) {
+    let incorrect = false;
+    for (let u = startUnit; u < endUnit; u++) {
+      if (engine?.unitOutcomeAt(u) === "incorrect") {
+        incorrect = true;
+        break;
+      }
+    }
+    status = incorrect ? "incorrect" : "correct";
+  }
 
   if (status === "current") {
     return (
