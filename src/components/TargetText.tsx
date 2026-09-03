@@ -2,16 +2,10 @@ import { useCallback, useEffect, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useTypingStore } from "../stores/typing-store";
 import { containsMyanmar } from "../core/unicode/myanmar";
+import { graphemeUnitRuns } from "../core/typing-engine/sequence";
 
 const CARET_ANCHOR = 0.45;
 const CONTENT_INSET = 24;
-
-interface GraphemeChar {
-  index: number;
-  text: string;
-  startUnit: number;
-  endUnit: number;
-}
 
 export function TargetText() {
   const tick = useTypingStore((s) => s.tick);
@@ -93,18 +87,7 @@ export function TargetText() {
 
   if (!session || !engine) return null;
 
-  const graphemes: GraphemeChar[] = [];
-  if (sequence) {
-    const { graphemes: gtext, graphemeUnitRanges } = sequence;
-    for (let i = 0; i < gtext.length; i++) {
-      graphemes.push({
-        index: i,
-        text: gtext[i],
-        startUnit: graphemeUnitRanges[i][0],
-        endUnit: graphemeUnitRanges[i][1],
-      });
-    }
-  }
+  const graphemes = sequence ? graphemeUnitRuns(sequence) : [];
 
   return (
     <motion.div

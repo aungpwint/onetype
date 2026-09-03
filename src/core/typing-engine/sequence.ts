@@ -78,3 +78,31 @@ function unitsForGraphemesBefore(sequence: BuiltSequence, unitIndex: number): nu
   const gi = graphemeForUnit(sequence, unitIndex);
   return sequence.graphemeUnitRanges[gi][0];
 }
+
+export interface GraphemeRun {
+  index: number;
+  text: string;
+  startUnit: number;
+  endUnit: number;
+}
+
+export function graphemeUnitRuns(sequence: BuiltSequence): GraphemeRun[] {
+  const units = sequence.units;
+  const gtexts = sequence.graphemes;
+  const runs: GraphemeRun[] = [];
+  let gi = 0;
+  for (let u = 0; u < units.length && gi < gtexts.length; ) {
+    const token = gtexts[gi];
+    let e = u;
+    while (e < units.length && units[e].grapheme === token) e++;
+    runs.push({
+      index: gi,
+      text: token,
+      startUnit: u,
+      endUnit: e,
+    });
+    gi++;
+    u = e;
+  }
+  return runs;
+}

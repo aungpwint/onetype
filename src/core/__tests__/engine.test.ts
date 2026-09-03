@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { computeScore } from "../scoring/score";
-import { buildSequence } from "../typing-engine/sequence";
+import { buildSequence, graphemeUnitRuns } from "../typing-engine/sequence";
 import { TypingEngine } from "../typing-engine/engine";
 import { englishQwerty } from "../keyboard-layout/english-qwerty";
 import { myanmar3 } from "../keyboard-layout/myanmar3";
+import { resolveLessonById } from "../../data/curriculum";
 
 describe("scoring", () => {
   it("computes accuracy and WPM", () => {
@@ -38,6 +39,37 @@ describe("sequence building", () => {
     const seq = buildSequence(word, myanmar3);
     expect(seq.units.map((u) => u.keyCode)).toEqual(["KeyA", "KeyU", "KeyS", "KeyM", "KeyI", "KeyF", "Semicolon"]);
     expect(seq.units.map((u) => u.text).join("")).toBe(word);
+  });
+});
+
+describe("grapheme unit runs", () => {
+  it("covers every unit of a resolved multi-phase lesson without going out of bounds", () => {
+    for (const id of ["lesson-my-beginner-1", "lesson-my-beginner-5", "lesson-en-beginner-18"]) {
+      const resolved = resolveLessonById(id);
+      const runs = graphemeUnitRuns(resolved.sequence);
+      expect(runs.length).toBe(resolved.sequence.graphemes.length);
+      expect(runs[0].startUnit).toBe(0);
+      expect(runs[runs.length - 1].endUnit).toBe(resolved.sequence.units.length);
+      for (const run of runs) {
+        expect(run.startUnit).toBeGreaterThanOrEqual(0);
+        expect(run.endUnit).toBeGreaterThanOrEqual(run.startUnit);
+      }
+    }
+  });
+
+  it("groups Myanmar composite graphemes so each unit maps to exactly one run", () => {
+    const word = "\u1031\u1000\u103B\u102C\u1004\u103A\u1038";
+    const seq = buildSequence(word, myanmar3);
+    const runs = graphemeUnitRuns(seq);
+    expect(runs.length).toBe(seq.graphemes.length);
+    expect(runs[0].startUnit).toBe(0);
+    expect(runs[runs.length - 1].endUnit).toBe(seq.units.length);
+    for (let i = 0; i < runs.length; i++) {
+      if (i > 0) expect(runs[i].startUnit).toBe(runs[i - 1].endUnit);
+      expect(runs[i].text).toBe(seq.graphemes[runs[i].index]);
+    }
+    expect(runs.map((r) => r.text).join("")).toBe(word);
+    expect(runs.reduce((acc, r) => acc + (r.endUnit - r.startUnit), 0)).toBe(seq.units.length);
   });
 });
 
