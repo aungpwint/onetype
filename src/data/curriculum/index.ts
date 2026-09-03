@@ -5,6 +5,8 @@ import { resolveLesson, type ResolvedLesson } from "./generator";
 import { englishBeginnerLessons } from "../lessons/english-beginner";
 import { englishIntermediateLessons } from "../lessons/english-intermediate";
 import { englishAdvancedLessons } from "../lessons/english-advanced";
+import { englishShiftLessons } from "../lessons/english-shift";
+import { englishNumbersLessons } from "../lessons/english-numbers";
 import { myanmarBeginnerLessons } from "../lessons/myanmar-beginner";
 import { myanmarIntermediateLessons } from "../lessons/myanmar-intermediate";
 import { myanmarAdvancedLessons } from "../lessons/myanmar-advanced";
@@ -16,6 +18,8 @@ export interface CurriculumMeta {
 
 const SOURCE_LESSONS: LessonData[] = [
   ...englishBeginnerLessons,
+  ...englishShiftLessons,
+  ...englishNumbersLessons,
   ...englishIntermediateLessons,
   ...englishAdvancedLessons,
   ...myanmarBeginnerLessons,

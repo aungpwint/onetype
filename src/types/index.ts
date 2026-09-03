@@ -37,6 +37,31 @@ export type ThemePreference = "light" | "dark" | "system";
 
 export type Difficulty = "basic" | "easy" | "medium" | "hard";
 
+export type LessonFocus =
+  | "key-memory"
+  | "finger-control"
+  | "home-row"
+  | "top-row"
+  | "bottom-row"
+  | "row-transition"
+  | "hand-alternation"
+  | "same-hand"
+  | "finger-independence"
+  | "shift"
+  | "numbers"
+  | "symbols"
+  | "words"
+  | "sentences"
+  | "punctuation"
+  | "unicode"
+  | "syllable"
+  | "medial"
+  | "tone"
+  | "bilingual"
+  | "accuracy"
+  | "speed"
+  | "alphabet";
+
 export const LEVEL_ORDER: Level[] = ["beginner", "intermediate", "advanced"];
 
 export function isLevel(value: unknown): value is Level {

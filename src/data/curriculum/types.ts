@@ -1,4 +1,4 @@
-import type { Difficulty, Language, Level } from "../../types";
+import type { Difficulty, FingerId, Hand, Language, LessonFocus, Level } from "../../types";
 
 export interface LessonCompletionRule {
   minAccuracy: number;
@@ -30,6 +30,11 @@ export interface LessonData {
   layoutId: "english-qwerty" | "myanmar3";
   completion: LessonCompletionRule;
   focusKeys?: string[];
+  focus?: LessonFocus[];
+  targetFingers?: FingerId[];
+  targetHands?: Hand[];
+  requiresShift?: boolean;
+  prerequisites?: string[];
   phases: LessonPhase[];
 }
 

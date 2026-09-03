@@ -1,15 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { listAllLessons, resolveLessonById, hasLesson, getCurriculumMeta, allResolvedLessonIds } from "../curriculum";
+import { listAllLessons, resolveLessonById, hasLesson, getLessonData, getCurriculumMeta, allResolvedLessonIds } from "../curriculum";
 
 describe("curriculum content", () => {
   const lessons = listAllLessons();
   const meta = getCurriculumMeta();
 
   it("has the expected number of lessons per level per language", () => {
-    expect(meta.countsByLevel.beginner).toBe(40);
-    expect(meta.countsByLevel.intermediate).toBe(30);
+    expect(meta.countsByLevel.beginner).toBe(81);
+    expect(meta.countsByLevel.intermediate).toBe(33);
     expect(meta.countsByLevel.advanced).toBe(36);
-    expect(meta.totalLessons).toBe(106);
+    expect(meta.totalLessons).toBe(150);
   });
 
   it("every lesson id follows the convention lesson-{lang}-{level}-{number}", () => {
@@ -34,6 +34,14 @@ describe("curriculum content", () => {
       const key = `${lesson.language}:${lesson.level}:${lesson.number}`;
       expect(seen.has(key)).toBe(false);
       seen.add(key);
+    }
+  });
+
+  it("every prerequisite references an existing lesson", () => {
+    for (const lesson of lessons) {
+      for (const prereq of lesson.prerequisites ?? []) {
+        expect(getLessonData(prereq), `prereq "${prereq}" of "${lesson.id}"`).toBeDefined();
+      }
     }
   });
 });

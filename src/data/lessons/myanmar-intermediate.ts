@@ -1,6 +1,5 @@
-import type { Difficulty } from "../../types";
+import type { Difficulty, FingerId, Hand, LessonFocus } from "../../types";
 import type { LessonData } from "../curriculum/types";
-import { toPhases } from "../curriculum/types";
 
 interface LessonSeed {
   number: number;
@@ -10,18 +9,16 @@ interface LessonSeed {
   difficulty: Difficulty;
   estimatedMinutes: number;
   focusKeys?: string[];
+  targetFingers?: FingerId[];
+  targetHands?: Hand[];
+  focus?: LessonFocus[];
+  prerequisites?: string[];
   minAccuracy: number;
   minWpm: number | null;
-  phases: (string | { i: string; t: string })[];
+  phases: string[];
 }
 
-function lesson(seed: LessonSeed): LessonData {
-  const phases = seed.phases.map((phase) => {
-    if (typeof phase === "string") {
-      return { instruction: phase, text: phase };
-    }
-    return { instruction: phase.i, text: phase.t };
-  });
+function my(seed: LessonSeed): LessonData {
   return {
     id: `lesson-my-intermediate-${seed.number}`,
     level: "intermediate",
@@ -35,146 +32,174 @@ function lesson(seed: LessonSeed): LessonData {
     layoutId: "myanmar3",
     completion: { minAccuracy: seed.minAccuracy, minWpm: seed.minWpm },
     focusKeys: seed.focusKeys,
-    phases: toPhases(
-      phases.map((p) => ({ kind: "text", instruction: p.instruction, text: p.text })),
-    ),
+    targetFingers: seed.targetFingers,
+    targetHands: seed.targetHands,
+    focus: seed.focus,
+    prerequisites: seed.prerequisites,
+    phases: seed.phases.map((text) => ({ instruction: text, text })),
   };
 }
 
-const EVERYDAY_WORDS = [
-  "ရေ", "ဆန်", "ငါး", "ကြက်", "ဝက်", "နို့", "လက်ဖက်ရည်", "ကော်ဖီ", "ပေါင်မုန့်", "သစ်သီး",
-];
-
-const QUESTION_WORDS = [
-  "ဘာ", "ဘယ်", "ဘယ်လို", "ဘာကြောင့်", "ဘယ်အချိန်", "ဘယ်သူ", "ဘယ်နှ", "ဘယ်လောက်",
-];
-
 export const myanmarIntermediateLessons: LessonData[] = [
-  lesson({
+  my({
     number: 1,
     title: "Food Words",
-    titleMy: "စားသောက်ကုန် စကားလုံး လေ့ကျင့်ခန်း",
-    description: "နေ့စဉ်သုံး စားသောက်ကုန်စာလုံးများ",
+    titleMy: "စားသောက်ကုန် စကားလုံး",
+    description: "Common food words for building vocabulary.",
     difficulty: "easy",
     estimatedMinutes: 8,
+    focus: ["words", "unicode", "syllable"],
+    prerequisites: ["lesson-my-beginner-25"],
     minAccuracy: 88,
     minWpm: null,
-    focusKeys: ["KeyR", "KeyW", "KeyE", "KeyF"],
-    phases: [{ i: "အစားအစာများ", t: EVERYDAY_WORDS.join(" ") }],
+    phases: ["ရေ ဆန် ငါး ကြက် ဝက် နို့ လက်ဖက်ရည် ကော်ဖီ ပေါင်မုန့် သစ်သီး"],
   }),
-  lesson({
+
+  my({
     number: 2,
     title: "Question Words",
-    titleMy: "မေးခွန်းစကားလုံး လေ့ကျင့်ခန်း",
-    description: "ဘာ၊ ဘယ်၊ ဘယ်လို စသည့် မေးခွန်းစကားလုံးများ",
+    titleMy: "မေးခွန်းစကားလုံး",
+    description: "Question words: ဘာ, ဘယ်, ဘယ်လို.",
     difficulty: "easy",
     estimatedMinutes: 8,
+    focus: ["words", "unicode", "syllable"],
+    prerequisites: ["lesson-my-intermediate-1"],
     minAccuracy: 88,
     minWpm: null,
-    focusKeys: ["KeyD", "KeyJ", "KeyS"],
-    phases: [{ i: "မေးခွန်းများ", t: QUESTION_WORDS.join(" ") }],
+    phases: ["ဘာ ဘယ် ဘယ်လို ဘာကြောင့် ဘယ်အချိန် ဘယ်သူ ဘယ်နှ ဘယ်လောက်"],
   }),
-  lesson({
+
+  my({
     number: 3,
-    title: "Stacked Consonants 1",
-    titleMy: "ထည့်-ထပ်စာလုံး လေ့ကျင့်ခန်း (၁)",
-    description: "ေ္ အသတ်ဖြင့် ဗျည်းထပ်တင်စာလုံးများ",
+    title: "Complex Syllables: Stacked Consonants",
+    titleMy: "ရှုပ်ထွေးသည့် ဝဏ္ဏများ - ဗျည်းထပ်တင်",
+    description: "Words with stacked consonants using virama.",
     difficulty: "easy",
     estimatedMinutes: 10,
+    focus: ["unicode", "syllable"],
+    prerequisites: ["lesson-my-intermediate-2"],
     minAccuracy: 90,
     minWpm: null,
-    focusKeys: ["KeyF", "ShiftLeft", "ShiftRight"],
     phases: [
-      { i: "ဗျည်းထပ်တင်ခြင်း", t: "ခုနှစ် သုံးလုံး မင်္ဂလာပါ မင်္ဂလာပါ အင်္ဂါ အင်္ဂါ" },
-      { i: "ရက္ခိုက် စကားလုံးများ", t: "ကြက်သွန်း ကြက်သွန်း စားသောက် စားသောက် ဥက္ကဋ္ဌ ဥက္ကဋ္ဌ" },
+      "ခုနှစ် သုံးလုံး မင်္ဂလာပါ အင်္ဂါ",
+      "ကြက်သွန်း စားသောက် ဥက္ကဋ္ဌ",
     ],
   }),
-  lesson({
+
+  my({
     number: 4,
     title: "Travel Words",
-    titleMy: "ခရီးသွား စကားလုံး လေ့ကျင့်ခန်း",
-    description: "ဘူတာ၊ လေယာဉ်၊ ကားမှတ်တိုင် စသည့် ခရီးသွားစကားလုံးများ",
+    titleMy: "ခရီးသွား စကားလုံး",
+    description: "Travel vocabulary: bus, train, car.",
     difficulty: "easy",
     estimatedMinutes: 8,
+    focus: ["words", "unicode"],
+    prerequisites: ["lesson-my-intermediate-3"],
     minAccuracy: 88,
     minWpm: null,
-    phases: ["ဘူတာ ဘူတာ လေယာဉ် လေယာဉ် ကားမှတ်တိုင် ကားမှတ်တိုင် ရေယာဉ် ရေယာဉ်"],
+    phases: ["ဘူတာ လေယာဉ် ကားမှတ်တိုင် ရေယာဉ်"],
   }),
-  lesson({
+
+  my({
     number: 5,
     title: "School Words",
-    titleMy: "ကျောင်း စကားလုံး လေ့ကျင့်ခန်း",
-    description: "စာသင်ခန်း၊ စာမေးပွဲ၊ ဆရာ၊ ကျောင်းသား",
+    titleMy: "ကျောင်း စကားလုံး",
+    description: "School vocabulary: classroom, exam, teacher, student.",
     difficulty: "easy",
     estimatedMinutes: 8,
+    focus: ["words", "unicode"],
+    prerequisites: ["lesson-my-intermediate-4"],
     minAccuracy: 88,
     minWpm: null,
-    phases: ["စာသင်ခန်း စာသင်ခန်း စာမေးပွဲ စာမေးပွဲ ကျောင်းသား ကျောင်းသား ဆရာ ဆရာ"],
+    phases: ["စာသင်ခန်း စာမေးပွဲ ဆရာ ကျောင်းသား"],
   }),
-  lesson({
+
+  my({
     number: 6,
     title: "Time Expressions",
-    titleMy: "အချိန် ဖော်ပြချက် လေ့ကျင့်ခန်း",
-    description: "နံနက်၊ နေ့၊ ည၊ မနက်ဖြန် စသည့် အချိန်စကားလုံးများ",
+    titleMy: "အချိန် ဖော်ပြချက်",
+    description: "Time words: morning, noon, evening, tomorrow.",
     difficulty: "medium",
     estimatedMinutes: 10,
+    focus: ["words", "unicode"],
+    prerequisites: ["lesson-my-intermediate-5"],
     minAccuracy: 90,
     minWpm: null,
-    focusKeys: ["ShiftLeft"],
-    phases: ["နံနက် နံနက် နေ့လယ် နေ့လယ် ညနေ ညနေ မနက်ဖြန် မနက်ဖြန်"],
+    phases: ["နံနက် နေ့လယ် ညနေ မနက်ဖြန်"],
   }),
-  lesson({
+
+  my({
     number: 7,
     title: "Weather Words",
-    titleMy: "ရာသီဥတု စကားလုံး လေ့ကျင့်ခန်း",
-    description: "မိုး၊ နေ၊ လေ၊ ဆင်း စသည့် ရာသီဥတုစကားလုံးများ",
+    titleMy: "ရာသီဥတု စကားလုံး",
+    description: "Weather vocabulary: rain, sun, wind.",
     difficulty: "medium",
     estimatedMinutes: 10,
+    focus: ["words", "unicode"],
+    prerequisites: ["lesson-my-intermediate-6"],
     minAccuracy: 90,
     minWpm: null,
-    phases: ["မိုး မိုး နေရောင် နေရောင် လေတိုက် လေတိုက် နေသာတယ် နေသာတယ်"],
+    phases: ["မိုး နေရောင် လေတိုက် နေသာတယ်"],
   }),
-  lesson({
+
+  my({
     number: 8,
     title: "Family Members",
-    titleMy: "မိသားစုဝင် လေ့ကျင့်ခန်း",
-    description: "အဖေ၊ အမေ၊ ညီ၊ ညီမ၊ အစ်ကို စသည့် မိသားစုဝင် အမည်များ",
+    titleMy: "မိသားစုဝင်",
+    description: "Family vocabulary: father, mother, brother, sister.",
     difficulty: "medium",
     estimatedMinutes: 10,
+    focus: ["words", "unicode"],
+    prerequisites: ["lesson-my-intermediate-7"],
     minAccuracy: 90,
     minWpm: null,
-    phases: ["အဖေ အဖေ အမေ အမေ အစ်ကို အစ်ကို အစ်မ အစ်မ ညီငယ် ညီမငယ်"],
+    phases: ["အဖေ အမေ အစ်ကို အစ်မ ညီငယ် ညီမငယ်"],
   }),
-  lesson({
+
+  my({
     number: 9,
     title: "Numbers and Counting",
-    titleMy: "ဂဏန်းကိန်း လေ့ကျင့်ခန်း",
-    description: "မြန်မာဂဏန်းများ ၅၀ အထိ ရေတွက်ခြင်း",
+    titleMy: "ဂဏန်းကိန်း",
+    description: "Myanmar numbers up to 100.",
     difficulty: "medium",
     estimatedMinutes: 10,
+    focus: ["numbers", "unicode"],
+    prerequisites: ["lesson-my-intermediate-8"],
     minAccuracy: 90,
     minWpm: null,
-    focusKeys: ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0"],
-    phases: ["၁၀ ၂၀ ၃၀ ၄၀ ၅၀ ၆၀ ၇၀ ၈၀ ၉၀ ၁၀၀", "၅ ၁၀ ၁၅ ၂၀ ၂၅ ၃၀ ၃၅ ၄၀ ၄၅ ၅၀"],
+    phases: [
+      "၁၀ ၂၀ ၃၀ ၄၀ ၅၀ ၆၀ ၇၀ ၈၀ ၉၀ ၁၀၀",
+      "၅ ၁၀ ၁၅ ၂၀ ၂၅ ၃၀ ၃၅ ၄၀ ၄၅ ၅၀",
+    ],
   }),
-  lesson({
+
+  my({
     number: 10,
     title: "Body Parts + Actions",
-    titleMy: "ကိုယ်ခန္ဓာနှင့် လုပ်ဆောင်ချက် လေ့ကျင့်ခန်း",
-    description: "မျက်စိ၊ နား၊ လက်၊ ခြေ နှင့် ကြိယာစကားလုံးများ",
+    titleMy: "ကိုယ်ခန္ဓာနှင့် လုပ်ဆောင်ချက်",
+    description: "Body parts with action verbs.",
     difficulty: "medium",
     estimatedMinutes: 10,
+    focus: ["words", "sentences", "unicode"],
+    prerequisites: ["lesson-my-intermediate-9"],
     minAccuracy: 90,
     minWpm: null,
-    phases: ["မျက်စိကို ပိတ်ပါ မျက်စိကို ပိတ်ပါ နားထောင်ပါ နားထောင်ပါ ထိုင်ပါ ထိုင်ပါ"],
+    phases: [
+      "မျက်စိကို ပိတ်ပါ",
+      "နားထောင်ပါ",
+      "ထိုင်ပါ",
+    ],
   }),
-  lesson({
+
+  my({
     number: 11,
     title: "Basic Sentences",
     titleMy: "ဝါကျတို လေ့ကျင့်ခန်း",
-    description: "ရိုးရှင်းသော ဝါကျတိုများ ရိုက်ခြင်း",
+    description: "Simple declarative sentences.",
     difficulty: "medium",
     estimatedMinutes: 10,
+    focus: ["sentences", "unicode", "punctuation"],
+    prerequisites: ["lesson-my-intermediate-10"],
     minAccuracy: 92,
     minWpm: null,
     phases: [
@@ -183,13 +208,16 @@ export const myanmarIntermediateLessons: LessonData[] = [
       "ဆရာကခွေးကိုခေါ်တယ်။",
     ],
   }),
-  lesson({
+
+  my({
     number: 12,
     title: "Question Sentences",
-    titleMy: "မေးခွန်းဝါကျ လေ့ကျင့်ခန်း",
-    description: "ဘာ၊ ဘယ်နှ စသည့် မေးခွန်းဝါကျများ",
+    titleMy: "မေးခွန်းဝါကျ",
+    description: "Sentences that ask questions.",
     difficulty: "medium",
     estimatedMinutes: 10,
+    focus: ["sentences", "unicode", "punctuation"],
+    prerequisites: ["lesson-my-intermediate-11"],
     minAccuracy: 92,
     minWpm: null,
     phases: [
@@ -198,13 +226,16 @@ export const myanmarIntermediateLessons: LessonData[] = [
       "ဘယ်နှယောက်ရှိလဲ။",
     ],
   }),
-  lesson({
+
+  my({
     number: 13,
     title: "Informal Sentences",
-    titleMy: "အလွတ်စကားပြော ဝါကျ လေ့ကျင့်ခန်း",
-    description: "နေ့စဉ်သုံး စကားပြောဝါကျများ",
+    titleMy: "အလွတ်စကားပြော ဝါကျ",
+    description: "Conversational sentences for everyday use.",
     difficulty: "hard",
     estimatedMinutes: 12,
+    focus: ["sentences", "unicode", "punctuation"],
+    prerequisites: ["lesson-my-intermediate-12"],
     minAccuracy: 92,
     minWpm: 15,
     phases: [
@@ -213,26 +244,32 @@ export const myanmarIntermediateLessons: LessonData[] = [
       "ငါတို့စောင့်ကြည့်ကြရအောင်။",
     ],
   }),
-  lesson({
+
+  my({
     number: 14,
     title: "Short Paragraph 1",
     titleMy: "စာပိုဒ်တို (၁)",
-    description: "ႏိုင္ငံသုံးစကားပြော စာပိုဒ်တို",
+    description: "Type a short paragraph about oneself.",
     difficulty: "hard",
     estimatedMinutes: 12,
+    focus: ["sentences", "unicode", "punctuation", "speed"],
+    prerequisites: ["lesson-my-intermediate-13"],
     minAccuracy: 92,
     minWpm: 18,
     phases: [
       "ကျွန်တော်မွန်မြို့ကလာတယ်။ မန္တလေးမှာကျောင်းတက်တယ်။ အခုတော့ ရန်ကုန်မှာအလုပ်လုပ်တယ်။",
     ],
   }),
-  lesson({
+
+  my({
     number: 15,
     title: "Short Paragraph 2",
     titleMy: "စာပိုဒ်တို (၂)",
-    description: "နေ့စဉ်လုပ်ငန်းစဉ် အကြောင်း စာပိုဒ်တို",
+    description: "Type a paragraph about daily routine.",
     difficulty: "hard",
     estimatedMinutes: 12,
+    focus: ["sentences", "unicode", "punctuation", "speed"],
+    prerequisites: ["lesson-my-intermediate-14"],
     minAccuracy: 93,
     minWpm: 18,
     phases: [
