@@ -134,6 +134,17 @@ The Tauri updater signs each bundle with a minisign key pair.
 3. In GitHub, add `TAURI_SIGNING_PRIVATE_KEY` = **base64 of the private key**
    and `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` = its password.
 
+   If the key already lives in the local environment as
+   `TAURI_SIGNING_PRIVATE_KEY` / `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` (the
+   standard Tauri env names), `scripts/set-ci-secrets.ps1` copies that exact
+   pair to the GitHub Actions secrets verbatim — no hand-typing, trimming or
+   re-encoding:
+
+   ```
+   gh auth login
+   pwsh scripts/set-ci-secrets.ps1
+   ```
+
 > The private key (GitHub secret / local env) and the public key in
 > `tauri.conf.json` must be the **same key pair**. The release workflow's
 > `verify-updater-pubkey.mjs` step fails the build if they drift apart.
