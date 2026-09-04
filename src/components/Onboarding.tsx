@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Sparkles } from "lucide-react";
 import { useStudentStore } from "../stores/student-store";
 import { useSettingsStore } from "../stores/settings-store";
 import { useUiStore } from "../stores/ui-store";
-import { Field, inputClass } from "./ui";
+import { Field } from "./ui";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 export function Onboarding() {
   const navigate = useNavigate();
@@ -44,21 +47,21 @@ export function Onboarding() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-bg p-6">
       <div className="w-full max-w-xl">
-        <div className="card overflow-hidden">
-          <div className="border-b border-line bg-paper-2 px-8 py-6">
+        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+          <div className="border-b border-border bg-muted/60 px-8 py-6">
             <p className="eyebrow">Desk № 1 · First lesson</p>
-            <h1 className="mt-2 font-display text-3xl">
-              OneType <span className="ms text-2xl text-ink-faint">အွန်းတိုက်</span>
+            <h1 className="mt-2 flex items-center gap-2 font-display text-3xl">
+              OneType <Sparkles className="size-6 text-brass" />
+              <span className="ms text-2xl text-muted-foreground">အွန်းတိုက်</span>
             </h1>
-            <p className="mt-2 text-sm text-ink-soft">
+            <p className="mt-2 text-sm text-muted-foreground">
               Learn to touch-type English and Myanmar without looking at your hands. Your progress lives on this machine — nothing leaves
               it.
             </p>
           </div>
           <div className="space-y-4 px-8 py-6">
             <Field label="Learner's full name" hint="Goes on the teacher's roll.">
-              <input
-                className={inputClass}
+              <Input
                 value={name}
                 onChange={(e) => setName(e.currentTarget.value)}
                 placeholder="e.g. Aye Aye"
@@ -66,39 +69,38 @@ export function Onboarding() {
               />
             </Field>
             <Field label="Display name" hint="Optional nickname.">
-              <input className={inputClass} value={displayName} onChange={(e) => setDisplayName(e.currentTarget.value)} placeholder="Aye" />
+              <Input value={displayName} onChange={(e) => setDisplayName(e.currentTarget.value)} placeholder="Aye" />
             </Field>
             <Field label="Start language">
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setDefaultLang("myanmar")}
-                  className={`rounded-xl border p-4 text-left transition-colors ${
-                    defaultLang === "myanmar" ? "border-brass bg-paper-2" : "border-line hover:border-line-strong"
+                  className={`rounded-xl border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                    defaultLang === "myanmar" ? "border-brass bg-muted" : "border-border hover:border-border"
                   }`}
                 >
                   <span className="ms text-2xl leading-none">မြန်မာ</span>
-                  <span className="ms mt-1 block text-xs text-ink-soft">Myanmar3 layout</span>
+                  <span className="ms mt-1 block text-xs text-muted-foreground">Myanmar3 layout</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setDefaultLang("english")}
-                  className={`rounded-xl border p-4 text-left transition-colors ${
-                    defaultLang === "english" ? "border-brass bg-paper-2" : "border-line hover:border-line-strong"
+                  className={`rounded-xl border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                    defaultLang === "english" ? "border-brass bg-muted" : "border-border hover:border-border"
                   }`}
                 >
                   <span className="text-2xl font-semibold leading-none">Aa</span>
-                  <span className="mt-1 block text-xs text-ink-soft">QWERTY layout</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">QWERTY layout</span>
                 </button>
               </div>
             </Field>
             <div className="flex items-center justify-between">
               <Field label="Appearance">
                 <select
-                  className={inputClass}
+                  className="flex h-9 w-40 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-brass focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
                   value={theme}
                   onChange={(e) => setTheme(e.currentTarget.value as typeof theme)}
-                  style={{ width: "10rem" }}
                 >
                   <option value="system">Follow system</option>
                   <option value="light">Light desk</option>
@@ -106,13 +108,13 @@ export function Onboarding() {
                 </select>
               </Field>
             </div>
-            {message ? <p className="text-sm text-alert">{message}</p> : null}
-            <button type="button" className="btn btn-brass w-full !py-3 text-base" disabled={busy} onClick={begin}>
+            {message ? <p className="text-sm text-destructive">{message}</p> : null}
+            <Button variant="brass" size="lg" className="w-full" disabled={busy} onClick={begin}>
               {busy ? "Opening the desk…" : "Open the desk"}
-            </button>
+            </Button>
           </div>
         </div>
-        <p className="mt-4 text-center text-xs text-ink-faint">
+        <p className="mt-4 text-center text-xs text-muted-foreground">
           Every key you press here stays on this device. No account, no cloud.
         </p>
       </div>

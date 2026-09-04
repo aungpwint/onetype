@@ -1,6 +1,38 @@
 import { useEffect, useState } from "react";
+import { Gauge, Timer, Target, AlignLeft, Pause } from "lucide-react";
 import { useTypingStore } from "../stores/typing-store";
 import { formatDuration } from "../lib/format";
+import { cn } from "../lib/utils";
+
+function StatItem({
+  icon,
+  label,
+  value,
+  emphasize,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  emphasize?: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        "flex items-center gap-3 rounded-xl border bg-card px-4 py-2.5 shadow-sm transition-colors",
+        emphasize ? "border-brass" : "border-border",
+      )}
+      title={label}
+    >
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+        {icon}
+      </span>
+      <span className="min-w-0">
+        <span className="eyebrow block leading-none">{label}</span>
+        <span className="tnum mt-1 block font-display text-lg leading-none md:text-xl">{value}</span>
+      </span>
+    </div>
+  );
+}
 
 export function StatsBar() {
   const tick = useTypingStore((s) => s.tick);
@@ -21,28 +53,20 @@ export function StatsBar() {
   const isPaused = status === "paused";
 
   return (
-    <div className="grid grid-cols-4 gap-3">
-      <div className="card px-4 py-2.5">
-        <p className="eyebrow">WPM</p>
-        <p className="tnum mt-0.5 font-display text-2xl">{Math.round(stats.wpm)}</p>
-      </div>
-      <div className="card px-4 py-2.5">
-        <p className="eyebrow">CPM</p>
-        <p className="tnum mt-0.5 font-display text-2xl">{Math.round(stats.cpm)}</p>
-      </div>
-      <div className="card px-4 py-2.5">
-        <p className="eyebrow">Accuracy</p>
-        <p className="tnum mt-0.5 font-display text-2xl">{stats.accuracy.toFixed(1)}%</p>
-      </div>
-      <div
-        className={`card px-4 py-2.5 ${isPaused ? "border-brass" : ""}`}
-        title={durationSeconds !== null ? "Time remaining" : "Text progress"}
-      >
-        <p className="eyebrow">{durationSeconds !== null ? "Time" : "Progress"}</p>
-        <p className="tnum mt-0.5 font-display text-2xl">
-          {durationSeconds !== null && remaining !== null ? formatDuration(remaining * 1000) : `${stats.unitIndex}/${stats.totalUnits}`}
-        </p>
-      </div>
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <StatItem icon={<Gauge className="size-4" />} label="WPM" value={String(Math.round(stats.wpm))} />
+      <StatItem icon={<AlignLeft className="size-4" />} label="CPM" value={String(Math.round(stats.cpm))} />
+      <StatItem icon={<Target className="size-4" />} label="Accuracy" value={`${stats.accuracy.toFixed(1)}%`} />
+      <StatItem
+        icon={isPaused ? <Pause className="size-4" /> : <Timer className="size-4" />}
+        label={durationSeconds !== null ? "Time" : "Progress"}
+        value={
+          durationSeconds !== null && remaining !== null
+            ? formatDuration(remaining * 1000)
+            : `${stats.unitIndex}/${stats.totalUnits}`
+        }
+        emphasize={isPaused}
+      />
     </div>
   );
 }

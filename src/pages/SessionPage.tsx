@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { LogOut, Pause, Play, AlertCircle } from "lucide-react";
 import * as backend from "../services/backend";
 import { useTypingStore, buildAdaptiveDrill } from "../stores/typing-store";
 import { useSettingsStore } from "../stores/settings-store";
@@ -9,6 +10,7 @@ import { TargetText } from "../components/TargetText";
 import { StatsBar } from "../components/StatsBar";
 import { ResultDialog } from "../components/ResultDialog";
 import { Spinner, Modal } from "../components/ui";
+import { Button } from "../components/ui/button";
 import type { TypingMode } from "../types";
 
 // ─── Session surface ─────────────────────────────────────────────────────────
@@ -59,17 +61,23 @@ function Session({
           <h1 className="ms mt-1 font-display text-2xl">{sourceName}</h1>
         </div>
         <div className="flex items-center gap-2">
-          <button type="button" className="btn btn-ghost" onClick={requestExit}>
-            ✕ Exit
-          </button>
-          <button type="button" className="btn btn-primary" onClick={toggleAction}>
+          <Button variant="outline" onClick={requestExit}>
+            <LogOut className="size-4" />
+            Exit
+          </Button>
+          <Button onClick={toggleAction}>
+            {isPaused ? <Play className="size-4" /> : status === "running" ? <Pause className="size-4" /> : null}
             {toggleLabel}
-          </button>
+          </Button>
         </div>
       </div>
 
       {error ? (
-        <p className="rounded-lg border border-alert/40 bg-alert/10 px-3 py-2 text-sm text-alert" role="alert">
+        <p
+          className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+          role="alert"
+        >
+          <AlertCircle className="size-4 shrink-0" />
           {error}
         </p>
       ) : null}
@@ -81,7 +89,7 @@ function Session({
           <StatsBar />
           <TargetText />
           <motion.div
-            className="rounded-xl border border-line bg-paper p-3"
+            className="rounded-2xl border border-border bg-card p-3 shadow-sm"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
@@ -95,23 +103,22 @@ function Session({
 
       <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)}>
         <h2 className="font-display text-lg">Leave this round?</h2>
-        <p className="mt-2 text-sm text-ink-soft">
+        <p className="mt-2 text-sm text-muted-foreground">
           Nothing so far in this attempt will be saved. You can pick it up again any time from the lessons list.
         </p>
         <div className="mt-5 flex justify-end gap-2">
-          <button type="button" className="btn btn-ghost" onClick={() => setConfirmOpen(false)}>
+          <Button variant="outline" onClick={() => setConfirmOpen(false)}>
             Keep typing
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger"
+          </Button>
+          <Button
+            variant="destructive"
             onClick={() => {
               setConfirmOpen(false);
               abandon();
             }}
           >
             Leave the round
-          </button>
+          </Button>
         </div>
       </Modal>
     </motion.div>
@@ -223,7 +230,8 @@ export function DrillPage() {
   if (error && session?.kind !== "drill") {
     return (
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-10">
-        <p className="rounded-lg border border-alert/40 bg-alert/10 px-3 py-2 text-sm text-alert" role="alert">
+        <p className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive" role="alert">
+          <AlertCircle className="size-4 shrink-0" />
           {error}
         </p>
       </div>

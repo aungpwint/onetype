@@ -29,7 +29,7 @@ export function VirtualKeyboard({ layout }: { layout: KeyboardLayout }) {
     : null;
 
   return (
-    <div className="mx-auto w-full max-w-6xl select-none rounded-2xl bg-paper p-4 shadow-lg ring-1 ring-line sm:p-5">
+    <div className="mx-auto w-full max-w-6xl select-none rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5">
       <div className="flex flex-col gap-2.5">
         {layout.rows.map((row, rowIndex) => (
           <div key={rowIndex} className="flex gap-2.5">
@@ -54,7 +54,7 @@ export function VirtualKeyboard({ layout }: { layout: KeyboardLayout }) {
           </div>
         ))}
       </div>
-      <p className="mt-3 text-center font-mono text-[11px] tracking-wide text-ink-faint">
+      <p className="mt-3 text-center font-mono text-[11px] tracking-wide text-muted-foreground">
         {status === "ready"
           ? "Press the highlighted key to begin"
           : status === "paused"
@@ -95,7 +95,7 @@ function Keycap({
     label = null;
   } else if (isModifier || wideLabel !== undefined) {
     label = (
-      <span className="text-[12px] font-semibold tracking-wide text-ink-soft">
+      <span className="text-[12px] font-semibold tracking-wide text-muted-foreground">
         {wideLabel ?? definition.label}
       </span>
     );
@@ -104,8 +104,8 @@ function Keycap({
     const primary = definition.plain ?? definition.label;
     label = (
       <span className="flex flex-col items-center justify-center">
-        <span className="font-myanmar text-lg leading-none text-ink">{primary}</span>
-        <span className="mt-1.5 text-[10px] leading-none text-ink-faint">
+        <span className="font-myanmar text-lg leading-none text-foreground">{primary}</span>
+        <span className="mt-1.5 text-[10px] leading-none text-muted-foreground">
           {definition.code.replace(/^Key/, "").replace(/^Digit/, "")}
         </span>
       </span>
@@ -140,7 +140,7 @@ function Keycap({
       style={{ flex: width, height: isSpace ? 52 : 48, minHeight: 44 }}
     >
       {label ?? (
-        <span className="text-[13px] text-ink-faint">{definition.label}</span>
+        <span className="text-[13px] text-muted-foreground">{definition.label}</span>
       )}
     </button>
   );

@@ -96,7 +96,7 @@ function LessonProgress() {
   return (
     <div className="mb-3 flex items-center gap-4">
       {/* Progress bar */}
-      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-line">
+      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
         <div
           className="h-full rounded-full bg-linear-to-r from-accent to-accent-strong transition-all duration-300 ease-out"
           style={{ width: `${progress}%` }}
@@ -111,7 +111,7 @@ function LessonProgress() {
         </span>
       ) : null}
 
-      <span className="shrink-0 font-mono text-[11px] tabular-nums text-ink-faint">
+      <span className="shrink-0 font-mono text-[11px] tabular-nums text-muted-foreground">
         {current + 1}/{total}
       </span>
     </div>

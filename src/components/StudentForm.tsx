@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useStudentStore } from "../stores/student-store";
 import type { Student } from "../services/types";
-import { Field, inputClass } from "./ui";
+import { Field } from "./ui";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 const AVATARS = ["🐘", "🦚", "🦋", "🐠", "⭐", "🚀", "📚", "🌴"];
 
@@ -43,10 +45,10 @@ export function StudentForm({ student, onDone }: { student?: Student; onDone?: (
   return (
     <div className="space-y-4">
       <Field label="Full name" hint="As it appears on the teacher's roll.">
-        <input className={inputClass} value={name} onChange={(e) => setName(e.currentTarget.value)} placeholder="e.g. Aye Aye" autoFocus />
+        <Input value={name} onChange={(e) => setName(e.currentTarget.value)} placeholder="e.g. Aye Aye" autoFocus />
       </Field>
       <Field label="Display name" hint="Optional — a short nickname.">
-        <input className={inputClass} value={displayName} onChange={(e) => setDisplayName(e.currentTarget.value)} placeholder="e.g. Aye" />
+        <Input value={displayName} onChange={(e) => setDisplayName(e.currentTarget.value)} placeholder="e.g. Aye" />
       </Field>
       <Field label="Mark">
         <div className="flex flex-wrap gap-2">
@@ -54,8 +56,8 @@ export function StudentForm({ student, onDone }: { student?: Student; onDone?: (
             <button
               key={a}
               type="button"
-              className={`flex h-10 w-10 items-center justify-center rounded-lg border text-xl transition-colors ${
-                avatar === a ? "border-brass bg-paper-2" : "border-line hover:border-line-strong"
+              className={`flex h-10 w-10 items-center justify-center rounded-lg border text-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                avatar === a ? "border-brass bg-muted" : "border-border hover:border-border"
               }`}
               aria-label={`Use mark ${a}`}
               onClick={() => setAvatar(a)}
@@ -66,19 +68,19 @@ export function StudentForm({ student, onDone }: { student?: Student; onDone?: (
         </div>
       </Field>
       {student ? (
-        <p className="ms text-xs text-ink-faint">
+        <p className="ms text-xs text-muted-foreground">
           Code <span className="font-mono">{student.studentCode}</span> — kept for the teacher's roll.
         </p>
       ) : null}
-      {message ? <p className="text-sm text-alert">{message}</p> : null}
-      {error ? <p className="text-sm text-alert">{error}</p> : null}
+      {message ? <p className="text-sm text-destructive">{message}</p> : null}
+      {error ? <p className="text-sm text-destructive">{error}</p> : null}
       <div className="flex justify-end gap-2 pt-1">
-        <button type="button" className="btn btn-ghost" onClick={() => onDone?.(null)}>
+        <Button variant="outline" onClick={() => onDone?.(null)}>
           Cancel
-        </button>
-        <button type="button" className="btn btn-primary" disabled={busy} onClick={submit}>
+        </Button>
+        <Button disabled={busy} onClick={submit}>
           {busy ? "Saving…" : student ? "Save changes" : "Add learner"}
-        </button>
+        </Button>
       </div>
     </div>
   );

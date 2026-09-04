@@ -1,8 +1,20 @@
 import { useNavigate } from "react-router-dom";
+import {
+  Gauge,
+  Target,
+  AlignLeft,
+  ArrowRight,
+  RotateCcw,
+  ArrowLeft,
+  Trophy,
+  CheckCircle2,
+} from "lucide-react";
 import { useTypingStore, buildAdaptiveDrill } from "../stores/typing-store";
 import { useLessonStore } from "../stores/lesson-store";
 import { ACHIEVEMENT_CATALOG } from "../data/achievements";
 import { Modal } from "./ui";
+import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
 import { formatDuration } from "../lib/format";
 import type { MasteryDelta, MasteryLevel } from "../core/mastery";
 
@@ -16,20 +28,25 @@ const MASTERY_COPY: Record<MasteryLevel, string> = {
 function MasteryNotice({ delta }: { delta: MasteryDelta }) {
   const { before, after, improved } = delta;
   return (
-    <div className="mt-4 rounded-lg border border-brass/40 bg-brass/10 p-3">
+    <div className="mt-4 rounded-xl border border-brass/40 bg-brass/10 p-3">
       <p className="eyebrow">Mastery</p>
       <div className="mt-1 flex flex-wrap items-center gap-2 text-sm">
-        <span className="tnum text-ink-soft">{MASTERY_COPY[before]}</span>
-        <span aria-hidden>→</span>
-        <span className={`tnum font-medium ${after === "mastered" ? "text-brass" : "text-ink"}`}>{MASTERY_COPY[after]}</span>
+        <span className="tnum text-muted-foreground">{MASTERY_COPY[before]}</span>
+        <ArrowRight className="size-4 text-muted-foreground" />
+        <span className={`tnum font-medium ${after === "mastered" ? "text-brass" : "text-foreground"}`}>
+          {MASTERY_COPY[after]}
+        </span>
         {improved ? (
-          <span className="rounded-full bg-success/15 px-2 py-0.5 text-xs font-medium text-success">improved</span>
+          <Badge variant="success">
+            <CheckCircle2 className="size-3" />
+            improved
+          </Badge>
         ) : null}
       </div>
       {after === "mastered" ? (
-        <p className="mt-1 text-xs text-ink-soft">This lesson is mastered. Nice consistency!</p>
+        <p className="mt-1 text-xs text-muted-foreground">This lesson is mastered. Nice consistency!</p>
       ) : (
-        <p className="mt-1 text-xs text-ink-soft">Reach the accuracy margin on consecutive passes to master this lesson.</p>
+        <p className="mt-1 text-xs text-muted-foreground">Reach the accuracy margin on consecutive passes to master this lesson.</p>
       )}
     </div>
   );
@@ -97,7 +114,7 @@ export function ResultDialog() {
 
   return (
     <Modal open onClose={close}>
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between pr-10">
         <div>
           <p className="eyebrow">
             {isDrill
@@ -110,7 +127,7 @@ export function ResultDialog() {
           <h2 className="mt-1 font-display text-2xl">
             {isDrill ? "Drill complete" : result.passed ? (isLesson ? "Lesson passed" : "Test passed") : "Round finished — not yet passed"}
           </h2>
-          <p className="mt-1 text-sm text-ink-soft">
+          <p className="mt-1 text-sm text-muted-foreground">
             {isDrill
               ? "Loosened up those weak spots. Practice keeps the finger memory sharp."
               : result.passed
@@ -120,55 +137,49 @@ export function ResultDialog() {
                 : `Target was ${target.minAccuracy}% accuracy${target.minWpm !== null ? ` and ${target.minWpm} WPM` : ""}. One more round.`}
           </p>
         </div>
-        <button type="button" className="btn btn-ghost px-2! py-1! text-xs" onClick={close}>
-          Esc
-        </button>
       </div>
 
       <div className="mt-5 grid grid-cols-3 gap-3">
-        <div className="rounded-lg border border-line bg-paper-2 p-3 text-center">
-          <p className="eyebrow">WPM</p>
-          <p className="tnum mt-1 font-display text-3xl">{Math.round(metrics.grossWpm)}</p>
-        </div>
-        <div className="rounded-lg border border-line bg-paper-2 p-3 text-center">
-          <p className="eyebrow">Accuracy</p>
-          <p className="tnum mt-1 font-display text-3xl">{metrics.accuracy.toFixed(1)}%</p>
-        </div>
-        <div className="rounded-lg border border-line bg-paper-2 p-3 text-center">
-          <p className="eyebrow">CPM</p>
-          <p className="tnum mt-1 font-display text-3xl">{Math.round(metrics.cpm)}</p>
-        </div>
+        <Metric icon={<Gauge className="size-4" />} label="WPM" value={String(Math.round(metrics.grossWpm))} />
+        <Metric icon={<Target className="size-4" />} label="Accuracy" value={`${metrics.accuracy.toFixed(1)}%`} />
+        <Metric icon={<AlignLeft className="size-4" />} label="CPM" value={String(Math.round(metrics.cpm))} />
       </div>
 
       <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
-        <div className="flex justify-between"><dt className="text-ink-faint">Errors</dt><dd className="tnum">{metrics.incorrectAttempts}</dd></div>
-        <div className="flex justify-between"><dt className="text-ink-faint">Backspaces</dt><dd className="tnum">{metrics.backspaceCount}</dd></div>
-        <div className="flex justify-between"><dt className="text-ink-faint">Characters typed</dt><dd className="tnum">{metrics.correctAttempts}</dd></div>
-        <div className="flex justify-between"><dt className="text-ink-faint">Time</dt><dd className="tnum">{formatDuration(metrics.elapsedSeconds * 1000)}</dd></div>
+        <div className="flex justify-between"><dt className="text-muted-foreground">Errors</dt><dd className="tnum">{metrics.incorrectAttempts}</dd></div>
+        <div className="flex justify-between"><dt className="text-muted-foreground">Backspaces</dt><dd className="tnum">{metrics.backspaceCount}</dd></div>
+        <div className="flex justify-between"><dt className="text-muted-foreground">Characters typed</dt><dd className="tnum">{metrics.correctAttempts}</dd></div>
+        <div className="flex justify-between"><dt className="text-muted-foreground">Time</dt><dd className="tnum">{formatDuration(metrics.elapsedSeconds * 1000)}</dd></div>
         {!isDrill ? (
-          <div className="flex justify-between"><dt className="text-ink-faint">Target</dt><dd className="tnum">{target.minAccuracy}% acc{target.minWpm !== null ? ` · ${target.minWpm} wpm` : ""}</dd></div>
+          <div className="flex justify-between"><dt className="text-muted-foreground">Target</dt><dd className="tnum">{target.minAccuracy}% acc{target.minWpm !== null ? ` · ${target.minWpm} wpm` : ""}</dd></div>
         ) : null}
-        <div className="flex justify-between"><dt className="text-ink-faint">Pass</dt><dd className="tnum" style={{ color: result.passed ? "var(--success)" : "var(--alert)" }}>{result.passed ? "passed" : "not yet"}</dd></div>
+        <div className="flex justify-between">
+          <dt className="text-muted-foreground">Pass</dt>
+          <dd className={`tnum ${result.passed ? "text-success" : "text-destructive"}`}>{result.passed ? "passed" : "not yet"}</dd>
+        </div>
       </dl>
 
       {isLesson && result.masteryDelta ? <MasteryNotice delta={result.masteryDelta} /> : null}
 
       {result.saveError ? (
-        <div className="mt-4 rounded-lg border border-alert/40 bg-alert/10 p-3 text-sm" role="alert">
+        <div className="mt-4 rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-sm" role="alert">
           <span className="font-medium">Couldn't save this round.</span>{" "}
-          <span className="text-ink-soft">{result.saveError}</span>
+          <span className="text-muted-foreground">{result.saveError}</span>
         </div>
       ) : null}
 
       {achieved.length > 0 ? (
-        <div className="mt-4 rounded-lg border border-brass/40 bg-brass/10 p-3">
-          <p className="eyebrow">Achievement unlocked</p>
+        <div className="mt-4 rounded-xl border border-brass/40 bg-brass/10 p-3">
+          <p className="flex items-center gap-1.5 eyebrow">
+            <Trophy className="size-3.5 text-brass" />
+            Achievement unlocked
+          </p>
           <ul className="mt-2 space-y-1.5">
             {achieved.map((a) => (
               <li key={a.id} className="flex items-center gap-2 text-sm">
-                <span aria-hidden>{a.icon}</span>
+                <span aria-hidden className="text-base">{a.icon}</span>
                 <span className="font-medium">{a.title}</span>
-                <span className="text-xs text-ink-soft">{a.description}</span>
+                <span className="text-xs text-muted-foreground">{a.description}</span>
               </li>
             ))}
           </ul>
@@ -176,18 +187,33 @@ export function ResultDialog() {
       ) : null}
 
       <div className="mt-6 flex flex-wrap justify-end gap-2">
-        <button type="button" className="btn btn-ghost" onClick={beforeNavigate(isDrill ? "/drill" : isLesson ? "/learn" : "/tests")}>
+        <Button variant="outline" onClick={beforeNavigate(isDrill ? "/drill" : isLesson ? "/learn" : "/tests")}>
+          <ArrowLeft className="size-4" />
           Back to list
-        </button>
+        </Button>
         {nextLessonId ? (
-          <button type="button" className="btn btn-brass" onClick={beforeNavigate(`/lesson/${nextLessonId}`)}>
-            Next lesson →
-          </button>
+          <Button variant="brass" onClick={beforeNavigate(`/lesson/${nextLessonId}`)}>
+            Next lesson
+            <ArrowRight className="size-4" />
+          </Button>
         ) : null}
-        <button type="button" className="btn btn-primary" onClick={retry}>
+        <Button onClick={retry}>
+          <RotateCcw className="size-4" />
           Type again
-        </button>
+        </Button>
       </div>
     </Modal>
+  );
+}
+
+function Metric({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+  return (
+    <div className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-muted/50 p-3 text-center">
+      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-background text-muted-foreground shadow-sm">
+        {icon}
+      </span>
+      <p className="eyebrow">{label}</p>
+      <p className="tnum font-display text-2xl md:text-3xl">{value}</p>
+    </div>
   );
 }

@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { Plus, Pencil, Trash2, UserCheck, CheckCircle2 } from "lucide-react";
 import { useStudentStore } from "../stores/student-store";
 import type { Student } from "../services/types";
 import { Modal } from "../components/ui";
 import { StudentForm } from "../components/StudentForm";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
 
 export default function StudentsPage() {
   const students = useStudentStore((s) => s.students);
@@ -21,46 +24,53 @@ export default function StudentsPage() {
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow">Roll book</p>
-          <h1 className="mt-1 font-display text-3xl">Learners</h1>
-          <p className="mt-1 text-sm text-ink-soft">
+          <h1 className="mt-1 font-display text-3xl tracking-tight">Learners</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
             One keyboard lab, many learners. The active learner is who lessons and tests are saved for.
           </p>
         </div>
-        <button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
-          + Add learner
-        </button>
+        <Button onClick={() => setShowAdd(true)}>
+          <Plus className="size-4" />
+          Add learner
+        </Button>
       </header>
 
       {sorted.length === 0 ? (
-        <div className="card p-10 text-center text-sm text-ink-faint">
+        <div className="rounded-xl border border-border bg-card p-10 text-center text-sm text-muted-foreground">
           No learners yet — add the first one to open the desk.
         </div>
       ) : (
         <div className="space-y-2">
           {sorted.map((student) => (
-            <div key={student.id} className={`card flex items-center gap-4 p-4 ${active?.id === student.id ? "border-brass" : ""}`}>
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brass text-xl">
+            <div key={student.id} className={`card flex items-center gap-4 p-4 transition-colors ${active?.id === student.id ? "border-brass" : ""}`}>
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brass text-xl shadow-sm">
                 <span aria-hidden>{student.avatar ?? "🐘"}</span>
               </span>
               <div className="min-w-0 flex-1">
                 <p className="ms truncate font-medium">{student.displayName}</p>
-                <p className="ms text-xs text-ink-faint">
+                <p className="ms text-xs text-muted-foreground">
                   {student.studentCode} · {student.name}
                 </p>
               </div>
               {active?.id === student.id ? (
-                <span className="chip border-success/40 text-success">Active now</span>
+                <Badge variant="success">
+                  <CheckCircle2 className="size-3" />
+                  Active now
+                </Badge>
               ) : (
-                <button type="button" className="btn btn-ghost !py-1.5 text-xs" onClick={() => void select(student.id)}>
+                <Button variant="outline" size="sm" onClick={() => void select(student.id)}>
+                  <UserCheck className="size-3.5" />
                   Make active
-                </button>
+                </Button>
               )}
-              <button type="button" className="btn btn-ghost !py-1.5 text-xs" onClick={() => setEditing(student)}>
+              <Button variant="ghost" size="sm" onClick={() => setEditing(student)}>
+                <Pencil className="size-3.5" />
                 Edit
-              </button>
-              <button type="button" className="btn btn-danger !py-1.5 text-xs" onClick={() => setConfirming(student)}>
+              </Button>
+              <Button variant="ghost" size="sm" className="text-destructive hover:bg-destructive/10 hover:text-destructive" onClick={() => setConfirming(student)}>
+                <Trash2 className="size-3.5" />
                 Remove
-              </button>
+              </Button>
             </div>
           ))}
         </div>
@@ -73,7 +83,7 @@ export default function StudentsPage() {
           setEditing(null);
         }}
       >
-        <h2 className="mb-4 font-display text-lg">{editing ? `Edit ${editing.displayName}` : "New learner"}</h2>
+        <h2 className="mb-4 pr-8 font-display text-lg">{editing ? `Edit ${editing.displayName}` : "New learner"}</h2>
         <StudentForm
           key={editing?.id ?? "new"}
           student={editing ?? undefined}
@@ -85,24 +95,23 @@ export default function StudentsPage() {
       </Modal>
 
       <Modal open={confirming !== null} onClose={() => setConfirming(null)}>
-        <h2 className="font-display text-lg">Remove {confirming?.displayName}?</h2>
-        <p className="mt-2 text-sm text-ink-soft">
+        <h2 className="pr-8 font-display text-lg">Remove {confirming?.displayName}?</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
           This deletes the learner from the roll — their lessons, sessions and marks will not be recoverable.
         </p>
         <div className="mt-5 flex justify-end gap-2">
-          <button type="button" className="btn btn-ghost" onClick={() => setConfirming(null)}>
+          <Button variant="outline" onClick={() => setConfirming(null)}>
             Keep
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger"
+          </Button>
+          <Button
+            variant="destructive"
             onClick={() => {
               if (confirming) void remove(confirming.id);
               setConfirming(null);
             }}
           >
             Remove learner
-          </button>
+          </Button>
         </div>
       </Modal>
     </div>

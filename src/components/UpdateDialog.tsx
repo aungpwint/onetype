@@ -1,5 +1,7 @@
+import { Download, RefreshCw } from "lucide-react";
 import { useUpdater } from "../services/updater/use-updater";
 import { Modal } from "./ui";
+import { Button } from "./ui/button";
 
 export function UpdateDialog() {
   const { status, downloadAndInstall, install } = useUpdater();
@@ -20,24 +22,21 @@ export function UpdateDialog() {
             OneType v{status.version}
           </h2>
           {status.body && (
-            <div className="mt-4 max-h-48 overflow-y-auto rounded-lg border border-line bg-paper-2 p-4">
-              <p className="text-xs font-medium text-ink-faint">What&apos;s New</p>
-              <p className="mt-1 whitespace-pre-wrap text-sm text-ink-soft">
+            <div className="mt-4 max-h-48 overflow-y-auto rounded-lg border border-border bg-muted p-4">
+              <p className="text-xs font-medium text-muted-foreground">What&apos;s New</p>
+              <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">
                 {status.body}
               </p>
             </div>
           )}
           <div className="mt-5 flex justify-end gap-2">
-            <button type="button" className="btn btn-ghost" onClick={() => {}}>
+            <Button variant="ghost" onClick={() => {}}>
               Later
-            </button>
-            <button
-              type="button"
-              className="btn btn-brass"
-              onClick={downloadAndInstall}
-            >
+            </Button>
+            <Button variant="brass" onClick={downloadAndInstall}>
+              <Download className="size-4" />
               Update Now
-            </button>
+            </Button>
           </div>
         </>
       )}
@@ -47,7 +46,7 @@ export function UpdateDialog() {
           <p className="eyebrow">Downloading Update</p>
           <h2 className="mt-1 font-display text-lg">Downloading…</h2>
           <div className="mt-4">
-            <div className="h-2 overflow-hidden rounded-full bg-line">
+            <div className="h-2 overflow-hidden rounded-full bg-muted">
               <div
                 className="h-full rounded-full bg-brass transition-all"
                 style={{
@@ -57,13 +56,13 @@ export function UpdateDialog() {
                 }}
               />
             </div>
-            <p className="mt-2 text-xs text-ink-faint">
+            <p className="mt-2 text-xs text-muted-foreground">
               {status.contentLength
                 ? `${Math.round((status.progress / status.contentLength) * 100)}%`
                 : "Starting…"}
             </p>
           </div>
-          <p className="mt-3 text-xs text-ink-faint">
+          <p className="mt-3 text-xs text-muted-foreground">
             Please keep OneType open.
           </p>
         </>
@@ -73,17 +72,18 @@ export function UpdateDialog() {
         <>
           <p className="eyebrow">Update Ready</p>
           <h2 className="mt-1 font-display text-lg">Update Downloaded</h2>
-          <p className="mt-2 text-sm text-ink-soft">
+          <p className="mt-2 text-sm text-muted-foreground">
             The update has been downloaded successfully. OneType needs to
             restart to finish the installation.
           </p>
           <div className="mt-5 flex justify-end gap-2">
-            <button type="button" className="btn btn-ghost" onClick={() => {}}>
+            <Button variant="ghost" onClick={() => {}}>
               Later
-            </button>
-            <button type="button" className="btn btn-primary" onClick={install}>
+            </Button>
+            <Button variant="default" onClick={install}>
+              <RefreshCw className="size-4" />
               Restart &amp; Update
-            </button>
+            </Button>
           </div>
         </>
       )}

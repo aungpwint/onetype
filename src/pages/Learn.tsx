@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { ArrowRight, Clock } from "lucide-react";
 import type { Level } from "../types";
 import { useLessonStore } from "../stores/lesson-store";
 import { useStudentStore } from "../stores/student-store";
 import { useSettingsStore } from "../stores/settings-store";
 import { Spinner } from "../components/ui";
+import { Badge } from "../components/ui/badge";
+import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { computeMasteryForLessons } from "../core/mastery";
 import type { MasteryLevel } from "../core/mastery";
 import type { ExerciseResult } from "../services/types";
@@ -20,39 +23,27 @@ const LEVEL_COPY: Record<Level, { en: string; ms: string }> = {
 
 function LanguageToggle({ lang, setLang }: { lang: "myanmar" | "english"; setLang: (l: "myanmar" | "english") => void }) {
   return (
-    <div className="inline-flex items-center rounded-lg border border-line bg-paper p-0.5" role="tablist" aria-label="Language">
-      <button
-        type="button"
-        role="tab"
-        aria-selected={lang === "myanmar"}
-        onClick={() => setLang("myanmar")}
-        className={`rounded-md px-3 py-1.5 text-sm transition-colors ${lang === "myanmar" ? "bg-accent text-accent-ink" : "text-ink-soft hover:text-ink"}`}
-      >
-        <span className="ms">မြန်မာ</span>
-      </button>
-      <button
-        type="button"
-        role="tab"
-        aria-selected={lang === "english"}
-        onClick={() => setLang("english")}
-        className={`rounded-md px-3 py-1.5 text-sm transition-colors ${lang === "english" ? "bg-accent text-accent-ink" : "text-ink-soft hover:text-ink"}`}
-      >
-        English
-      </button>
-    </div>
+    <Tabs value={lang} onValueChange={(v) => setLang(v as "myanmar" | "english")}>
+      <TabsList className="bg-muted">
+        <TabsTrigger value="myanmar">
+          <span className="ms">မြန်မာ</span>
+        </TabsTrigger>
+        <TabsTrigger value="english">English</TabsTrigger>
+      </TabsList>
+    </Tabs>
   );
 }
 
-const MASTERY_LABEL: Record<MasteryLevel, { text: string; cls: string }> = {
-  "not-started": { text: "new", cls: "bg-paper-2 text-ink-faint" },
-  attempted: { text: "attempted", cls: "bg-paper-2 text-ink-soft" },
-  passed: { text: "passed", cls: "bg-success/15 text-success" },
-  mastered: { text: "mastered", cls: "bg-brass/15 text-brass" },
+const MASTERY_LABEL: Record<MasteryLevel, { text: string; variant: "secondary" | "success" | "warning" }> = {
+  "not-started": { text: "new", variant: "secondary" },
+  attempted: { text: "attempted", variant: "secondary" },
+  passed: { text: "passed", variant: "success" },
+  mastered: { text: "mastered", variant: "warning" },
 };
 
 function MasteryBadge({ level }: { level: MasteryLevel }) {
   const m = MASTERY_LABEL[level];
-  return <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${m.cls}`}>{m.text}</span>;
+  return <Badge variant={m.variant}>{m.text}</Badge>;
 }
 
 export default function Learn() {
@@ -106,8 +97,8 @@ export default function Learn() {
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow">Curriculum · {LEVEL_COPY[level].ms}</p>
-          <h1 className="mt-1 font-display text-3xl">Learn</h1>
-          <p className="mt-1 max-w-2xl text-sm text-ink-soft">{LEVEL_COPY[level].en}</p>
+          <h1 className="mt-1 font-display text-3xl tracking-tight">Learn</h1>
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{LEVEL_COPY[level].en}</p>
         </div>
         <LanguageToggle lang={lang} setLang={setLang} />
       </header>
@@ -121,15 +112,15 @@ export default function Learn() {
               key={l}
               to={`/learn/${l}`}
               onClick={() => setLevel(l)}
-              className={`rounded-lg border px-4 py-2 text-sm transition-colors ${
-                level === l ? "border-brass bg-paper-2 font-medium" : "border-line text-ink-soft hover:text-ink"
+              className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                level === l ? "border-brass bg-muted" : "border-border text-muted-foreground hover:text-foreground"
               }`}
               role="tab"
               aria-selected={level === l}
             >
               <span className="capitalize">{l}</span>
               {progressReady ? (
-                <span className="tnum ml-2 text-xs text-ink-faint">
+                <span className="tnum ml-2 text-xs text-muted-foreground">
                   {done}/{count}
                 </span>
               ) : null}
@@ -139,12 +130,12 @@ export default function Learn() {
       </div>
 
       {progressReady ? (
-        <div className="flex items-center gap-3 text-sm text-ink-soft">
+        <div className="flex items-center gap-3 text-sm text-muted-foreground">
           <span className="ms shrink-0">ဤအဆင့်တွင်</span>
-          <div className="h-2 flex-1 overflow-hidden rounded-full bg-paper-2">
+          <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
             <div className="h-full rounded-full bg-accent" style={{ width: `${list.length ? (doneCount / list.length) * 100 : 0}%` }} />
           </div>
-          <span className="tnum text-ink-faint">
+          <span className="tnum text-muted-foreground">
             {doneCount}/{list.length}
           </span>
         </div>
@@ -161,40 +152,43 @@ export default function Learn() {
             <Link
               key={lesson.id}
               to={`/lesson/${lesson.id}`}
-              className={`card group relative p-4 transition-colors hover:border-line-strong ${passed ? "border-success/40" : ""}`}
+              className={`card group relative p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-border hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${passed ? "border-success/40" : ""}`}
             >
               <div className="flex items-center justify-between">
                 <span className="eyebrow">L. {lesson.number}</span>
                 {passed ? (
                   <MasteryBadge level={mastery} />
                 ) : mastery === "attempted" ? (
-                  <span className="tnum text-xs text-ink-faint">{Math.round(p && p.attempts > 0 ? p.bestAccuracy : 0)}%</span>
+                  <span className="tnum text-xs text-muted-foreground">{Math.round(p && p.attempts > 0 ? p.bestAccuracy : 0)}%</span>
                 ) : (
                   <MasteryBadge level={mastery} />
                 )}
               </div>
               <h3 className="ms mt-2 font-display text-xl leading-tight">{lesson.title}</h3>
-              <p className="ms mt-0.5 text-xs text-ink-faint">{lesson.titleMy}</p>
+              <p className="ms mt-0.5 text-xs text-muted-foreground">{lesson.titleMy}</p>
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 {lesson.focusKeys && lesson.focusKeys.length > 0 ? (
-                  <span className="ms rounded border border-line bg-paper-2 px-1.5 py-0.5 text-xs">
+                  <span className="ms rounded border border-border bg-muted px-1.5 py-0.5 text-xs">
                     {lesson.focusKeys.slice(0, 6).join(" ")}
                   </span>
                 ) : null}
-                <span className="text-xs text-ink-faint">{lesson.estimatedMinutes} min</span>
-                <span className="text-xs text-ink-faint">
+                <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Clock className="size-3" />
+                  {lesson.estimatedMinutes} min
+                </span>
+                <span className="text-xs text-muted-foreground">
                   {lesson.completion.minAccuracy}% acc{lesson.completion.minWpm !== null ? ` · ${lesson.completion.minWpm} wpm` : ""}
                 </span>
               </div>
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-lg text-ink-faint opacity-0 transition-opacity group-hover:opacity-100" aria-hidden>
-                →
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" aria-hidden>
+                <ArrowRight className="size-5" />
               </span>
             </Link>
           );
         })}
       </div>
       {list.length === 0 ? (
-        <p className="text-center text-sm text-ink-faint">No lessons here yet.</p>
+        <p className="text-center text-sm text-muted-foreground">No lessons here yet.</p>
       ) : null}
     </div>
   );

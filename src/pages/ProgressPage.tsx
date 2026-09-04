@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { TrendingUp, Target, Gauge, Clock, TrendingDown, Minus, Fingerprint } from "lucide-react";
 import { useStudentStore } from "../stores/student-store";
 import * as backend from "../services/backend";
 import type { StudentDetail, TypingSession } from "../services/types";
@@ -84,14 +85,14 @@ function TrendRow({
 }) {
   const up = slope > 0.0001;
   const down = slope < -0.0001;
-  const color = valid ? (up ? "var(--success)" : down ? "var(--alert)" : "var(--ink-faint)") : "var(--ink-faint)";
+  const cls = valid ? (up ? "text-success" : down ? "text-destructive" : "text-muted-foreground") : "text-muted-foreground";
   return (
     <div className="flex items-center justify-between text-sm">
-      <span className="text-ink-soft">{label}</span>
-      <span className="tnum" style={{ color }}>
+      <span className="text-muted-foreground">{label}</span>
+      <span className={`tnum ${cls}`}>
         {valid ? (
           <>
-            {up ? "▲ " : down ? "▼ " : "— "}
+            {up ? <TrendingUp className="mr-1 inline size-3.5" /> : down ? <TrendingDown className="mr-1 inline size-3.5" /> : <Minus className="mr-1 inline size-3.5" />}
             {formatTrend(slope)} {unit}/per session
           </>
         ) : (
@@ -143,26 +144,26 @@ export default function ProgressPage() {
     <div className="mx-auto max-w-6xl space-y-6 px-4 py-6">
       <header>
         <p className="eyebrow">For {active.displayName}</p>
-        <h1 className="mt-1 font-display text-3xl">Progress</h1>
-        <p className="mt-1 text-sm text-ink-soft">
+        <h1 className="mt-1 font-display text-3xl tracking-tight">Progress</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           Everything is derived from your saved typing sessions — accuracy, speed, and the keys that need attention.
         </p>
       </header>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <Stat label="Avg accuracy" value={`${summary.pooledAccuracy.toFixed(1)}%`} />
-          <Stat label="Avg WPM" value={rangeSessions ? Math.round(rangeWpm) : "—"} />
-          <Stat label="Minutes practiced" value={`${rangeMinutes.toFixed(0)}`} />
-          <Stat label="Best WPM" value={rangeSessions ? Math.round(rangeBest) : "—"} />
+        <div className="grid w-full grid-cols-2 gap-3 lg:w-auto lg:grid-cols-4">
+          <Stat icon={<Target className="size-4" />} label="Avg accuracy" value={`${summary.pooledAccuracy.toFixed(1)}%`} />
+          <Stat icon={<Gauge className="size-4" />} label="Avg WPM" value={rangeSessions ? Math.round(rangeWpm) : "—"} />
+          <Stat icon={<Clock className="size-4" />} label="Minutes practiced" value={`${rangeMinutes.toFixed(0)}`} />
+          <Stat icon={<TrendingUp className="size-4" />} label="Best WPM" value={rangeSessions ? Math.round(rangeBest) : "—"} />
         </div>
-        <div className="flex overflow-hidden rounded-lg border border-line">
+        <div className="flex overflow-hidden rounded-md border border-border bg-background">
           {(["week", "month", "all"] as Range[]).map((r) => (
             <button
               key={r}
               type="button"
               onClick={() => setRange(r)}
-              className={`px-3 py-1.5 text-xs capitalize transition-colors ${range === r ? "bg-brass text-[color:var(--paper)]" : "bg-paper text-ink-soft hover:bg-paper-2"}`}
+              className={`px-3 py-1.5 text-xs capitalize transition-colors ${range === r ? "bg-accent font-medium text-accent-ink" : "text-muted-foreground hover:bg-muted"}`}
             >
               {r === "week" ? "This week" : r === "month" ? "This month" : "All time"}
             </button>
@@ -188,7 +189,7 @@ export default function ProgressPage() {
       <div className="card p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-display text-lg">Trend &amp; consistency</h2>
-          <span className="text-xs text-ink-faint">{rangeSessions} session{rangeSessions === 1 ? "" : "s"} in range</span>
+          <span className="text-xs text-muted-foreground">{rangeSessions} session{rangeSessions === 1 ? "" : "s"} in range</span>
         </div>
         <div className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-3">
           <div className="space-y-2">
@@ -202,12 +203,12 @@ export default function ProgressPage() {
           <div className="space-y-2">
             <p className="eyebrow">Consistency</p>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-ink-soft">WPM spread</span>
-              <span className="tnum" style={{ color: summary.wpmVariability === 0 ? "var(--ink-faint)" : summary.wpmVariability <= 0.2 ? "var(--success)" : summary.wpmVariability <= 0.35 ? "var(--brass)" : "var(--alert)" }}>
+              <span className="text-muted-foreground">WPM spread</span>
+              <span className={summary.wpmVariability === 0 ? "tnum text-muted-foreground" : summary.wpmVariability <= 0.2 ? "tnum text-success" : summary.wpmVariability <= 0.35 ? "tnum text-brass" : "tnum text-destructive"}>
                 {summary.wpmVariability === 0 ? "—" : `${(summary.wpmVariability * 100).toFixed(0)}%`}
               </span>
             </div>
-            <p className="text-xs text-ink-faint">
+            <p className="text-xs text-muted-foreground">
               {summary.wpmVariability === 0 ? "Unavailable yet." : summary.wpmVariability <= 0.2 ? "Steady pace" : summary.wpmVariability <= 0.35 ? "Some drift" : "Highly varied"}
             </p>
           </div>
@@ -221,20 +222,20 @@ export default function ProgressPage() {
             {detail.lessonCounts.map((lc) => (
               <li key={lc.level}>
                 <div className="flex items-baseline justify-between text-sm">
-                  <span className="capitalize text-ink-soft">{lc.level}</span>
-                  <span className="tnum text-xs text-ink-faint">
+                  <span className="capitalize text-muted-foreground">{lc.level}</span>
+                  <span className="tnum text-xs text-muted-foreground">
                     {lc.completed} / {lc.total}
                   </span>
                 </div>
-                <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-paper-2">
+                <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-muted">
                   <div className="h-full rounded-full bg-accent" style={{ width: `${(lc.completed / Math.max(1, lc.total)) * 100}%` }} />
                 </div>
               </li>
             ))}
           </ul>
           {detail.testResults.length > 0 ? (
-            <div className="mt-5 border-t border-line pt-4">
-              <h3 className="text-sm font-medium text-ink-soft">Timed tests bests</h3>
+            <div className="mt-5 border-t border-border pt-4">
+              <h3 className="text-sm font-medium text-muted-foreground">Timed tests bests</h3>
               <div className="mt-2 flex flex-wrap gap-2">
                 {Array.from(
                   detail.testResults
@@ -258,56 +259,62 @@ export default function ProgressPage() {
 
         <div className="space-y-4">
           <div className="card p-5">
-            <h2 className="font-display text-lg">Weak keys</h2>
+            <h2 className="flex items-center gap-2 font-display text-lg">
+              <Fingerprint className="size-4 text-muted-foreground" />
+              Weak keys
+            </h2>
             <ul className="mt-3 space-y-2">
               {detail.weakKeys.slice(0, 6).map((k) => (
                 <li key={k.key} className="flex items-center justify-between text-sm">
-                  <span className="ms rounded border border-line bg-paper-2 px-2 py-0.5">{k.key}</span>
-                  <span className="tnum text-ink-faint">
+                  <span className="ms rounded border border-border bg-muted px-2 py-0.5">{k.key}</span>
+                  <span className="tnum text-muted-foreground">
                     {k.attempts} tries · {k.accuracy.toFixed(0)}%
                   </span>
                 </li>
               ))}
-              {detail.weakKeys.length === 0 ? <li className="text-sm text-ink-faint">No data yet.</li> : null}
+              {detail.weakKeys.length === 0 ? <li className="text-sm text-muted-foreground">No data yet.</li> : null}
             </ul>
           </div>
           <div className="card p-5">
-            <h2 className="font-display text-lg">Weak fingers</h2>
+            <h2 className="flex items-center gap-2 font-display text-lg">
+              <Fingerprint className="size-4 text-muted-foreground" />
+              Weak fingers
+            </h2>
             <ul className="mt-3 space-y-2">
               {detail.weakFingers.slice(0, 6).map((k) => (
                 <li key={k.finger} className="flex items-center justify-between text-sm">
-                  <span className="text-ink-soft">{k.finger}</span>
-                  <span className="tnum text-ink-faint">
+                  <span className="text-muted-foreground">{k.finger}</span>
+                  <span className="tnum text-muted-foreground">
                     {k.attempts} tries · {k.accuracy.toFixed(0)}%
                   </span>
                 </li>
               ))}
-              {detail.weakFingers.length === 0 ? <li className="text-sm text-ink-faint">No data yet.</li> : null}
+              {detail.weakFingers.length === 0 ? <li className="text-sm text-muted-foreground">No data yet.</li> : null}
             </ul>
           </div>
         </div>
       </div>
 
       <div className="card overflow-hidden">
-        <h2 className="border-b border-line px-5 py-3 font-display text-lg">Recent sessions</h2>
+        <h2 className="border-b border-border px-5 py-3 font-display text-lg">Recent sessions</h2>
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="text-xs uppercase tracking-wider text-ink-faint">
+            <tr className="text-xs uppercase tracking-wider text-muted-foreground">
               <th className="px-5 py-2 font-normal">When</th>
               <th className="px-5 py-2 font-normal">Lesson</th>
-              <th className="px-5 py-2 font-normal text-right">WPM</th>
-              <th className="px-5 py-2 font-normal text-right">Acc</th>
-              <th className="px-5 py-2 font-normal text-right">Errors</th>
+              <th className="px-5 py-2 text-right font-normal">WPM</th>
+              <th className="px-5 py-2 text-right font-normal">Acc</th>
+              <th className="px-5 py-2 text-right font-normal">Errors</th>
             </tr>
           </thead>
           <tbody>
             {sessions.slice(0, 15).map((s) => (
-              <tr key={s.id} className="border-t border-line">
-                <td className="px-5 py-2 text-ink-soft">{formatDateTime(s.startedAt)}</td>
+              <tr key={s.id} className="border-t border-border hover:bg-muted/40">
+                <td className="px-5 py-2 text-muted-foreground">{formatDateTime(s.startedAt)}</td>
                 <td className="ms px-5 py-2">{s.lessonId?.replace(/^lesson-(en|my)-/, "") ?? "timed test"}</td>
                 <td className="tnum px-5 py-2 text-right">{Math.round(s.wpm)}</td>
                 <td className="tnum px-5 py-2 text-right">{s.accuracy.toFixed(0)}%</td>
-                <td className="tnum px-5 py-2 text-right text-ink-soft">{s.errorCount}</td>
+                <td className="tnum px-5 py-2 text-right text-muted-foreground">{s.errorCount}</td>
               </tr>
             ))}
           </tbody>

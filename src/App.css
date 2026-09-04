@@ -66,6 +66,26 @@
   --color-key-top: var(--key-top);
   --color-key-base: var(--key-base);
 
+  /* shadcn-style semantic aliases (map onto the existing palette) */
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --color-card-foreground: var(--ink);
+  --color-muted: var(--paper-2);
+  --color-muted-foreground: var(--ink-faint);
+  --color-popover: var(--paper);
+  --color-popover-foreground: var(--ink);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--accent-ink);
+  --color-secondary: var(--paper-2);
+  --color-secondary-foreground: var(--ink-soft);
+  --color-border: var(--line);
+  --color-input: var(--line);
+  --color-ring: var(--brass);
+  --color-destructive: var(--alert);
+  --color-destructive-foreground: #fff;
+
+  --radius: 0.75rem;
+
   --font-sans:
     system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: Georgia, "Times New Roman", "Palatino Linotype", serif;
