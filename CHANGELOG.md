@@ -9,6 +9,8 @@ This file is the authoritative record for human-readable release notes; the
 every GitHub Release.
 
 ## [Unreleased]
+
+## [1.0.1] - 2026
 ### Changed
 - Product name now displays as **OneType** (installer, shortcuts, window title);
   bundles are named `OneType_<version>_x64-setup.exe` / `…_x64_en-US.msi`.
@@ -52,3 +54,5 @@ every GitHub Release.
 - Backup & restore (export/import database or a single learner).
 - Teacher view for aggregated classroom progress.
 - Automatic updates via the Tauri updater plugin (signed; 6-hour throttle).
+
+[1.0.1]: https://github.com/aungpwint/onetype/releases/tag/v1.0.1
