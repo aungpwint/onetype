@@ -29,6 +29,9 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Validate version consistency
+        run: node scripts/check-versions.mjs
+
       - name: Typecheck
         run: pnpm typecheck
 

@@ -1,5 +1,25 @@
 name: Release
 
+# Builds the application on every supported platform, validates the version,
+# signs release artifacts, generates and merges the Tauri updater manifest
+# (`latest.json`), creates a GitHub Release and uploads every asset.
+#
+# Trigger: push a version tag, e.g.  v1.1.0
+#
+#   git tag v1.1.0
+#   git push origin v1.1.0
+#
+# Required repository secrets:
+#   TAURI_SIGNING_PRIVATE_KEY          base64 minisign private key (updater signing)
+#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD password for the updater signing key
+#   WINDOWS_CERTIFICATE                (optional) base64 PFX for Authenticode signing
+#   WINDOWS_CERTIFICATE_PASSWORD       (optional) PFX password
+#
+# Environment variables (must match the release):
+#   GITHUB_REPOSITORY_OWNER / GITHUB_REPOSITORY  used to build download URLs and
+#                                                release notes. Defaults are
+#                                                derived from the GitHub context.
+
 on:
   push:
     tags:
@@ -8,20 +28,48 @@ on:
 permissions:
   contents: write
 
+env:
+  GITHUB_OWNER: ${{ github.repository_owner }}
+  GITHUB_REPO: ${{ github.event.repository.name }}
+
 jobs:
-  release:
+  # ---------------------------------------------------------------------------
+  # Version validation — fail fast if the tag does not match the app version or
+  # if the three version locations disagree.
+  # ---------------------------------------------------------------------------
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate versions & tag
+        run: node scripts/check-versions.mjs --tag "${{ github.ref_name }}"
+
+  # ---------------------------------------------------------------------------
+  # Build + test + generate updater artifacts on every platform.
+  # ---------------------------------------------------------------------------
+  build:
+    needs: validate
     strategy:
       fail-fast: false
       matrix:
         include:
           - platform: windows-latest
             target: x86_64-pc-windows-msvc
+            runner-os: windows
           - platform: macos-latest
             target: aarch64-apple-darwin
+            runner-os: macos
           - platform: ubuntu-22.04
             target: x86_64-unknown-linux-gnu
+            runner-os: linux
 
     runs-on: ${{ matrix.platform }}
+
+    env:
+      WINDOWS_CERT: ${{ secrets.WINDOWS_CERTIFICATE }}
 
     steps:
       - uses: actions/checkout@v4
@@ -39,14 +87,14 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Frontend tests
-        run: pnpm test
+      - name: Frontend typecheck
+        run: pnpm typecheck
 
       - name: Frontend lint
         run: pnpm lint
 
-      - name: Frontend typecheck
-        run: pnpm typecheck
+      - name: Frontend tests
+        run: pnpm test
 
       - name: Frontend build
         run: pnpm build
@@ -85,9 +133,129 @@ jobs:
       - name: Install Tauri CLI
         run: pnpm add -D @tauri-apps/cli
 
-      - name: Build and release
+      - name: Build & sign release bundles
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm tauri build --target ${{ matrix.target }} --release
+
+      # ------------------------------------------------------------------
+      # Windows Authenticode code signing (production only). The certificate
+      # is injected via CI secrets; when absent the step is skipped so
+      # development/staging builds stay clearly distinct from signed
+      # production releases (which only occur from version tags with the
+      # certificate configured).
+      # ------------------------------------------------------------------
+      - name: Sign Windows bundles (Authenticode)
+        if: matrix.runner-os == 'windows' && env.WINDOWS_CERT != ''
+        uses: dlemstra/code-sign-action@v1
+        with:
+          certificate: ${{ secrets.WINDOWS_CERTIFICATE }}
+          password: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+          files: |
+            src-tauri/target/${{ matrix.target }}/release/bundle/nsis/*.exe
+            src-tauri/target/${{ matrix.target }}/release/bundle/msi/*.msi
+
+      - name: Upload bundle artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: onetype-${{ matrix.runner-os }}-${{ matrix.platform }}
+          path: src-tauri/target/${{ matrix.target }}/release/bundle/
+          if-no-files-found: error
+
+  publish:
+    name: Publish GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Download all platform artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/releases
+
+      - name: Gather updater assets into a flat staging dir
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist/updates
+          find dist/releases -type f \( -name "*.exe" -o -name "*.msi" -o -name "*.sig" -o -name "*.dmg" -o -name "*.AppImage" -o -name "*.app.tar.gz" -o -name "*.deb" -o -name "*.rpm" \) -exec cp -n {} dist/updates/ \;
+          ls -la dist/updates
+
+      - name: Build latest.json partials (Windows NSIS)
+        shell: bash
+        run: |
+          set -euo pipefail
+          WIN_EXE=$(ls dist/updates/*_setup.exe 2>/dev/null | head -n1 || true)
+          if [ -z "$WIN_EXE" ]; then
+            echo "No Windows NSIS updater payload found; skipping."
+            exit 0
+          fi
+          WIN_SIG="${WIN_EXE}.sig"
+          [ -f "$WIN_SIG" ] || { echo "Missing $WIN_SIG" >&2; exit 1; }
+          TAG="${{ github.ref_name }}"
+          BASE="https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/download/$TAG"
+          node scripts/generate-latest-json.mjs --partial \
+            --target windows-x86_64 \
+            --url "$BASE/$(basename "$WIN_EXE")" \
+            --sig-file "$WIN_SIG" \
+            --out dist/updates/partial-windows-x86_64.json
+
+      - name: Merge latest.json
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#v}"
+          PARTIALS=$(ls dist/updates/partial-*.json 2>/dev/null || true)
+          if [ -z "$PARTIALS" ]; then
+            echo "No updater partials found — nothing to publish." >&2
+            exit 1
+          fi
+          node scripts/generate-latest-json.mjs --merge \
+            --version "$VERSION" \
+            --pub-date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            --notes "See https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/tag/${{ github.ref_name }}" \
+            --partials "$(echo $PARTIALS | tr '\n' ' ')" \
+            --out dist/updates/latest.json
+          echo "=== merged latest.json ==="
+          cat dist/updates/latest.json
+
+      - name: Validate final latest.json
+        shell: bash
+        run: node -e "const m=require('./dist/updates/latest.json'); if(!m.version || !m.platforms || Object.keys(m.platforms).length===0){process.exit(1)} console.log('latest.json OK', m.version, Object.keys(m.platforms).join(', '))"
+
+      - name: Create GitHub Release & upload assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.ref_name }}"
+          ASSETS="dist/updates/latest.json"
+          # All downloaded platform bundles.
+          for f in dist/updates/*; do
+            if [ -f "$f" ]; then ASSETS="$ASSETS $f"; fi
+          done
+          # Create the release if it does not already exist; otherwise update.
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists; uploading missing assets."
+            gh release upload "$TAG" $ASSETS --clobber
+          else
+            gh release create "$TAG" \
+              --title "OneType $TAG" \
+              --generate-notes \
+              $ASSETS
+          fi
+
+      - name: Verify uploaded assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release view "${{ github.ref_name }}" --json assets --jq '.assets[].name' | sort
+          echo "--- latest.json served at:"
+          echo "https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/latest/download/latest.json"

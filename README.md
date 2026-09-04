@@ -57,3 +57,15 @@ pnpm tauri build
 ```
 
 This bundles the React app, embeds the Rust backend with a content security policy, and produces the platform installer under `src-tauri/target/release/bundle/`.
+
+## Releases & auto-updates
+
+OneType ships signed installers and auto-updates through GitHub Releases. See **[RELEASE.md](./RELEASE.md)** for:
+
+- How to build the Windows installer (and test offline installation).
+- Versioning and the `scripts/set-version.mjs` helper.
+- Required CI secrets (`TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]`, `WINDOWS_CERTIFICATE[_PASSWORD]`).
+- Creating a release and how the auto-updater works end to end.
+- Recovering from a failed release and rolling back a bad one.
+
+The application version must be kept identical across `package.json`, `src-tauri/Cargo.toml` and `src-tauri/tauri.conf.json`; CI enforces this with `scripts/check-versions.mjs`.

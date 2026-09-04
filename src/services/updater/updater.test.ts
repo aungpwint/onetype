@@ -118,6 +118,13 @@ describe("isNewerVersion", () => {
     expect(isNewerVersion("1.2.0", "1.1.0")).toBe(false);
     expect(isNewerVersion("2.0.0", "1.9.9")).toBe(false);
   });
+
+  it("does not treat a same-base pre-release as a downgrade", () => {
+    // Guard: a 1.1.0-beta release must never be allowed to downgrade/replace a
+    // running 1.1.0. Numeric comparison treats them as equal so this is "not
+    // newer" (safe: no downgrade). Production channel uses plain MAJOR.MINOR.PATCH.
+    expect(isNewerVersion("1.1.0", "1.1.0-beta")).toBe(false);
+  });
 });
 
 describe("mapUpdateError", () => {
@@ -157,6 +164,24 @@ describe("mapUpdateError", () => {
     );
     expect(mapUpdateError(new Error("extract error"))).toBe(
       "The update could not be installed."
+    );
+  });
+
+  it("maps disk-space errors to a friend-readable install message", () => {
+    expect(mapUpdateError(new Error("no space left on device"))).toBe(
+      "The update could not be installed."
+    );
+    expect(mapUpdateError(new Error("ENOSPC"))).toBe(
+      "The update could not be installed."
+    );
+  });
+
+  it("maps malformed metadata to a verification message", () => {
+    expect(mapUpdateError(new Error("invalid signature"))).toBe(
+      "The update could not be verified."
+    );
+    expect(mapUpdateError(new Error("unexpected end of JSON input"))).toBe(
+      "An update error occurred."
     );
   });
 

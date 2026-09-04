@@ -70,7 +70,7 @@ export function mapUpdateError(err: unknown): string {
   if (/download|transfer/i.test(message)) {
     return "The update could not be downloaded.";
   }
-  if (/install|extract/i.test(message)) {
+  if (/install|extract|space|ENOSPC|disk/i.test(message)) {
     return "The update could not be installed.";
   }
   return "An update error occurred.";
