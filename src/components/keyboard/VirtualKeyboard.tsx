@@ -38,10 +38,13 @@ export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
         w-full
         select-none
         rounded-2xl
-        border border-border/70
-        bg-card/95
+        border border-line/60
+        bg-linear-to-b
+        from-card/40
+        via-card/80
+        to-card/95
         p-3
-        shadow-sm
+        shadow-[0_1px_0_inset_rgba(255,255,255,0.4),0_8px_24px_-12px_rgba(0,0,0,0.25)]
         backdrop-blur-sm
         sm:p-4
         lg:p-5
@@ -61,9 +64,15 @@ export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
             w-full
             flex-col
             gap-1.5
+            rounded-xl
+            bg-black/[0.03]
+            p-2
             sm:gap-2
+            sm:p-2.5
             lg:gap-2.5
+            lg:p-3
             2xl:gap-3
+            2xl:p-3.5
           "
         >
           {layout.rows.map((row, rowIndex) => (
@@ -139,7 +148,9 @@ function KeyboardStatus({
 
   return (
     <p
+      key={status}
       className="
+        keyboard-status-in
         mt-3
         text-center
         font-mono
@@ -207,6 +218,8 @@ function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
     flashed,
   });
 
+  const pressClass = flashed ? "key-press" : "";
+
   return (
     <button
       type="button"
@@ -229,11 +242,11 @@ function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
         "xl:h-12.5",
         "2xl:h-14",
 
-        // Shape
+        // Shape — rounded top, slightly squarer bottom for keycap feel
         "overflow-hidden",
-        "rounded-lg",
+        "rounded-[0.5rem]",
+        "rounded-b-md",
         "border",
-        "border-transparent",
 
         // Typography
         "leading-none",
@@ -241,11 +254,14 @@ function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
         // Interaction
         "select-none",
         "transition-[transform,background-color,box-shadow,border-color]",
-        "duration-100",
+        "duration-150",
         "ease-out",
 
         // Focus / accessibility
         "outline-none",
+
+        // Motion
+        pressClass,
 
         // State
         stateClass,
@@ -365,14 +381,14 @@ function getKeyLabel({
       {showSublabel && (
         <span
           className="
-            mt-1
+            mt-0.5
             font-mono
             text-[0.5rem]
             font-medium
             uppercase
             leading-none
             tracking-tight
-            text-muted-foreground/65
+            text-muted-foreground/60
             sm:text-[0.5625rem]
             lg:text-[0.625rem]
             2xl:text-[0.6875rem]
@@ -397,15 +413,11 @@ function getKeyStateClass({
   if (isActive && !isShiftHint) {
     return [
       "z-20",
-      "scale-[1.025]",
       "border-brass",
       "bg-brass",
       "font-bold",
       "text-paper",
-      "shadow-lg",
-      "shadow-brass/20",
-      "ring-2",
-      "ring-brass",
+      "key-glow",
     ].join(" ");
   }
 
@@ -423,21 +435,15 @@ function getKeyStateClass({
 
   if (flashed === "correct") {
     return [
-      "border-success",
-      "bg-success",
-      "text-paper",
-      "shadow-md",
-      "shadow-success/15",
+      "key-flash-correct",
+      "border-success/60",
     ].join(" ");
   }
 
   if (flashed === "incorrect") {
     return [
-      "border-alert",
-      "bg-alert",
-      "text-paper",
-      "shadow-md",
-      "shadow-alert/15",
+      "key-flash-incorrect",
+      "border-alert/60",
     ].join(" ");
   }
 
@@ -447,10 +453,14 @@ function getKeyStateClass({
     "from-key-top",
     "to-key-base",
     "text-foreground",
-    "shadow-sm",
+    "shadow-[0_1.5px_0_var(--line-strong),0_2px_6px_-2px_rgba(0,0,0,0.2)]",
     "ring-1",
     "ring-border/40",
     "hover:border-border",
-    "hover:shadow-md",
+    "hover:from-key-top",
+    "hover:to-key-top",
+    "hover:shadow-[0_2px_0_var(--line-strong),0_3px_8px_-2px_rgba(0,0,0,0.25)]",
+    "active:shadow-[0_0.5px_0_var(--line-strong),0_1px_3px_-1px_rgba(0,0,0,0.2)]",
+    "active:translate-y-[1px]",
   ].join(" ");
 }
