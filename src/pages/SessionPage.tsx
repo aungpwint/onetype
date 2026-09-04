@@ -49,7 +49,7 @@ function Session({
 
   return (
     <motion.div
-      className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6"
+      className="app-page flex min-h-0 w-full flex-1 flex-col"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
@@ -229,7 +229,7 @@ export function DrillPage() {
 
   if (error && session?.kind !== "drill") {
     return (
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-10">
+      <div className="app-page flex w-full flex-col gap-4 py-10">
         <p className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive" role="alert">
           <AlertCircle className="size-4 shrink-0" />
           {error}

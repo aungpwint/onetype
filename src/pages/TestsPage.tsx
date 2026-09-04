@@ -44,7 +44,7 @@ export default function TestsPage() {
   const groups = tests ? groupByLanguage(tests) : [];
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 px-4 py-6">
+    <div className="app-page">
       <header>
         <p className="eyebrow">Examination desk</p>
         <h1 className="mt-1 font-display text-3xl tracking-tight">Timed tests</h1>

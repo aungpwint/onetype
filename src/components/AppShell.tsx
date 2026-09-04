@@ -178,7 +178,7 @@ export function Shell({ children }: { children: ReactNode }) {
                   active={handGuide}
                 />
               </div>
-              <p className="mt-3 px-1 text-[0.65rem] leading-snug text-muted-foreground">
+              <p className="mt-3 px-1 text-[0.6875rem] leading-snug text-muted-foreground">
                 {layoutCount} layouts · {activeCount > 0 ? "solo learner" : "no learner selected"}
               </p>
             </div>

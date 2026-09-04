@@ -141,7 +141,7 @@ export default function ProgressPage() {
   const summary = summarizePerformance(points);
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6 px-4 py-6">
+    <div className="app-page">
       <header>
         <p className="eyebrow">For {active.displayName}</p>
         <h1 className="mt-1 font-display text-3xl tracking-tight">Progress</h1>

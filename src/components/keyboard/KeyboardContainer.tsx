@@ -105,13 +105,13 @@ function LessonProgress() {
 
       {/* Active finger chip */}
       {mapping.primary ? (
-        <span className="shrink-0 rounded-full bg-brass/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold tracking-wider text-brass uppercase ring-1 ring-brass/25">
+        <span className="shrink-0 rounded-full bg-brass/10 px-2.5 py-0.5 font-mono text-[0.625rem] font-semibold tracking-wider text-brass uppercase ring-1 ring-brass/25">
           {fingerShort(mapping.primary)}
           {mapping.shift ? ` + ${fingerShort(mapping.shift)}` : ""}
         </span>
       ) : null}
 
-      <span className="shrink-0 font-mono text-[11px] tabular-nums text-muted-foreground">
+      <span className="shrink-0 font-mono text-[0.6875rem] tabular-nums text-muted-foreground">
         {current + 1}/{total}
       </span>
     </div>

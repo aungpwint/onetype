@@ -3,6 +3,21 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  /* ── Desktop UI scale ─────────────────────────────────────────────
+     Single source of truth for adaptive sizing on large displays.
+     rem-based measurements (Tailwind spacing, type, icons) scale with
+     html { font-size }, which is derived from --ui-scale below.
+
+       960px  → 1.00  (baseline floor)
+      1280px  → 1.00  (baseline desktop)
+      1440px  → 1.04
+      1680px  → 1.10
+      1920px  → 1.16
+      2560px  → 1.20  (max)
+      3840px  → 1.20  (capped, no runaway growth)
+  */
+  --ui-scale: clamp(1, calc(0.68 + 0.00025 * 100vw), 1.2);
+
   --bg: #e9e3d0;
   --paper: #f4f0e2;
   --paper-2: #ddd6c0;
@@ -116,7 +131,8 @@
 
 @layer base {
   html {
-    font-size: 15px;
+    /* rem-based UI scales off the viewport via the central --ui-scale token */
+    font-size: calc(15px * var(--ui-scale));
   }
 
   body {
@@ -168,6 +184,21 @@
 @layer components {
   .card {
     @apply rounded-xl border border-line bg-paper;
+  }
+
+  /* Fluid desktop page container: fill the workspace instead of a centered
+     narrow column. Space between blocks scales with --ui-scale via rems. */
+  .app-page {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .app-page > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .app-page {
+    padding: 1.5rem 1.75rem;
   }
 
   .eyebrow {
@@ -561,7 +592,7 @@
 }
 
 .typing-club-hands svg {
-  width: min(100%, 600px);
+  width: min(100%, calc(600px * var(--ui-scale)));
   height: auto;
   display: block;
 }

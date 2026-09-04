@@ -134,7 +134,7 @@ export default function Dashboard() {
   const progressLoaded = progressStudentId === active.id && (progress ?? false);
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6 px-4 py-6">
+    <div className="app-page">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow">{hourGreeting()}</p>

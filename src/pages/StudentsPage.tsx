@@ -20,7 +20,7 @@ export default function StudentsPage() {
   const sorted = [...students].sort((a, b) => a.studentCode.localeCompare(b.studentCode));
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 px-4 py-6">
+    <div className="app-page">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow">Roll book</p>
