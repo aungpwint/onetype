@@ -1,17 +1,15 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import type { KeyboardLayout } from "../../core/keyboard-layout/layout";
 import { useTypingStore } from "../../stores/typing-store";
 import { useUiStore } from "../../stores/ui-store";
 import { VirtualKeyboard } from "./VirtualKeyboard";
-import { HandGuide } from "../hand-guide/HandGuide";
+import { HandOverlay } from "../hand-guide/HandOverlay";
 import { resolveFingerMapping, fingerShort } from "../../utils/fingerMapper";
-import { resolveTarget, resolveLastKey } from "../../core/target-model";
-import { fingerForCode } from "../../core/finger-mapping/finger-map";
+import { resolveTarget } from "../../core/target-model";
 
 /**
  * Parent wrapper that arranges the Lesson Progress header bar and the virtual
- * key grid, with the whole-hand-per-gesture typing guide (matching the
- * reference Typing Club style) shown above the keyboard.
+ * key grid, with the programmatic hand overlay shown around the keyboard.
  */
 export function KeyboardContainer({ layout }: { layout: KeyboardLayout }) {
   const handGuide = useUiStore((s) => s.handGuideVisible);
@@ -23,20 +21,23 @@ export function KeyboardContainer({ layout }: { layout: KeyboardLayout }) {
 
       {/* ── Hand-guide + keyboard stack ── */}
       <div className="relative">
-        {handGuide && <IntegratedHandGuide />}
-        <VirtualKeyboard layout={layout} />
+        {handGuide ? (
+          <IntegratedHandGuide layout={layout}>
+            <VirtualKeyboard layout={layout} />
+          </IntegratedHandGuide>
+        ) : (
+          <VirtualKeyboard layout={layout} />
+        )}
       </div>
     </div>
   );
 }
 
 /**
- * Drives the whole-hand-per-gesture typing guide (the reference "typing-club"
- * asset): the hand that owns the current target key is swapped from its neutral
- * group to the gesture that highlights the responsible finger, and a just-pressed
- * key flashes correct/incorrect.
+ * Drives the programmatic hand overlay: fingers dynamically target the active
+ * key using real keyboard geometry, with the old typing-club SVG as a fallback.
  */
-function IntegratedHandGuide() {
+function IntegratedHandGuide({ layout, children }: { layout: KeyboardLayout; children: ReactNode }) {
   const tick = useTypingStore((s) => s.tick);
   void tick;
   const status = useTypingStore((s) => s.status);
@@ -54,22 +55,15 @@ function IntegratedHandGuide() {
     return target.shiftHand === "left" ? "ShiftLeft" : target.shiftHand === "right" ? "ShiftRight" : null;
   }, [inPlay, target.requiresShift, target.shiftHand]);
 
-  const feedbackFinger = useMemo(() => {
-    const last = resolveLastKey(engine);
-    if (!last.keyCode) return null;
-    return {
-      finger: fingerForCode(last.keyCode),
-      state: last.correct ? ("correct" as const) : ("error" as const),
-    };
-  }, [engine]);
-
   return (
-    <HandGuide
+    <HandOverlay
+      layout={layout}
       activeKey={activeKey}
       shiftKey={shiftKey}
-      feedbackFinger={feedbackFinger}
-      interactive={inPlay}
-    />
+      isActive={inPlay}
+    >
+      {children}
+    </HandOverlay>
   );
 }
 

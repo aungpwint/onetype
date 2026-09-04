@@ -36,6 +36,11 @@
   --key-top: #fbf7ea;
   --key-base: #d9d2bd;
   --thumb: rgba(23, 51, 49, 0.5);
+  --hand: #d8a07a;
+  --hand-shade: #c58a64;
+  --hand-stroke: rgba(23, 51, 49, 0.35);
+  --hand-nail: rgba(255, 245, 235, 0.85);
+  --hand-active: var(--brass);
   color-scheme: light;
 }
 
@@ -58,6 +63,11 @@
   --key-top: #2a3735;
   --key-base: #1b2624;
   --thumb: rgba(237, 233, 219, 0.45);
+  --hand: #7c5a4a;
+  --hand-shade: #6b4c3e;
+  --hand-stroke: rgba(16, 22, 21, 0.6);
+  --hand-nail: rgba(230, 210, 195, 0.8);
+  --hand-active: var(--brass);
   color-scheme: dark;
 }
 
@@ -80,6 +90,8 @@
   --color-success: var(--success);
   --color-key-top: var(--key-top);
   --color-key-base: var(--key-base);
+  --color-hand: var(--hand);
+  --color-hand-shade: var(--hand-shade);
 
   /* shadcn-style semantic aliases (map onto the existing palette) */
   --color-background: var(--bg);
@@ -676,18 +688,31 @@
 }
 
 /* Hand guide (reference "typing-club" style) -------------------------------- */
-/* The whole-hand-per-gesture SVG asset is centered above the keyboard and
-   capped to the same comfortable width so it reads like the reference site. */
-.typing-club-hands {
+/* The shared left-hand.svg / right-hand.svg assets are centred together and
+   capped to a comfortable width so they read like the reference site. */
+.hand-guide.typing-club-hands {
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 0;
   pointer-events: none;
 }
 
-.typing-club-hands svg {
-  width: min(100%, calc(600px * var(--ui-scale)));
-  height: auto;
+.hand-guide-hand {
   display: block;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.hand-guide-hand svg {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+/* Each pair is capped so the two hands together fit the guide panel width. */
+.typing-club-hands .hand-guide-hand {
+  width: min(50%, calc(300px * var(--ui-scale)));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -704,3 +729,57 @@
     animation: none !important;
   }
 }
+
+/* ── Hand overlay (physical keyboard typing hands) ───────────────────────────
+   Layer the keyboard (hand-overlay-keyboard, z-10) between the absolute hand
+   assets. Each hand draws as one fused artwork (palm + fingers + wrist); the
+   whole hand floats above the keys (z-30), positioned by HandOverlay from the
+   measured keyboard geometry so the fingertips reach the home row. */
+.hand-overlay-container {
+  position: relative;
+  pointer-events: none;
+}
+
+.hand-overlay-keyboard {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.hand-overlay-hand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.hand-overlay-hand svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Active-finger highlight ─────────────────────────────────────────────────
+   Each hand asset carries one `path.hand-highlight` per finger (data-finger).
+   A finger is lit when the wrapping container's `data-active-finger` (a
+   space-separated FingerId list) contains that finger. Reproduces the blue
+   highlight stroke of the original typing-club artwork. */
+.hand-highlight {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+[data-active-finger~="left-pinky"] .hand-highlight[data-finger="left-pinky"],
+[data-active-finger~="left-ring"] .hand-highlight[data-finger="left-ring"],
+[data-active-finger~="left-middle"] .hand-highlight[data-finger="left-middle"],
+[data-active-finger~="left-index"] .hand-highlight[data-finger="left-index"],
+[data-active-finger~="left-thumb"] .hand-highlight[data-finger="left-thumb"],
+[data-active-finger~="right-thumb"] .hand-highlight[data-finger="right-thumb"],
+[data-active-finger~="right-index"] .hand-highlight[data-finger="right-index"],
+[data-active-finger~="right-middle"] .hand-highlight[data-finger="right-middle"],
+[data-active-finger~="right-ring"] .hand-highlight[data-finger="right-ring"],
+[data-active-finger~="right-pinky"] .hand-highlight[data-finger="right-pinky"] {
+  opacity: 1;
+}
+

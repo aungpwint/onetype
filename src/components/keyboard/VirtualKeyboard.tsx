@@ -34,7 +34,9 @@ export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
   return (
     <section
       aria-label="Virtual keyboard"
+      data-keyboard-root
       className="
+        relative
         w-full
         select-none
         rounded-2xl
@@ -349,6 +351,10 @@ function getKeyLabel({
 
   const primary = definition.plain ?? definition.label;
 
+  // Physical keyboards use uppercase alphabetic legends as the dominant label.
+  const isAlphaKey = /^[A-Za-z]$/.test(primary);
+  const primaryDisplay = isAlphaKey ? primary.toUpperCase() : primary;
+
   const showSublabel =
     primary.toLowerCase() !== subLabel && subLabel.length <= 2;
 
@@ -374,9 +380,9 @@ function getKeyLabel({
           lg:text-lg
           2xl:text-xl
         "
-      >
-        {primary}
-      </span>
+        >
+          {primaryDisplay}
+        </span>
 
       {showSublabel && (
         <span
