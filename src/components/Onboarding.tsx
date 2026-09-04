@@ -52,7 +52,7 @@ export function Onboarding() {
             <p className="eyebrow">Desk № 1 · First lesson</p>
             <h1 className="mt-2 flex items-center gap-2 font-display text-3xl">
               OneType <Sparkles className="size-6 text-brass" />
-              <span className="ms text-2xl text-muted-foreground">အွန်းတိုက်</span>
+              <span className="ms text-2xl text-muted-foreground">ဝမ်းတိုက်</span>
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
               Learn to touch-type English and Myanmar without looking at your hands. Your progress lives on this machine — nothing leaves

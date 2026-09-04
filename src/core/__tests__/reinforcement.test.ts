@@ -5,6 +5,7 @@ import {
   keyIdToChar,
   focusCharsFromWeakKeys,
   focusCharsFromWeakFingers,
+  decideDrillGoal,
   reinforcementFromWeakKeys,
   reinforcementFromWeakFingers,
   planWeakestReinforcement,
@@ -107,9 +108,21 @@ describe("reinforcementFromWeakKeys", () => {
     expect(drill.source).toBe("keys");
     expect(drill.targeted).toEqual(["KeyA:none", "KeyS:none"]);
     expect(drill.focusKeys).toEqual(["a", "s"]);
-    expect(drill.plan.goal).toBe("finger-isolation");
+    // Weakness is spread across two fingers, so the auto-picked goal trains
+    // every weak key instead of isolating a single finger.
+    expect(drill.plan.goal).toBe("repetition");
     expect(drill.plan.sequence.units.length).toBeGreaterThan(0);
     expect(drill.plan.keys).toEqual(expect.arrayContaining(["a", "s"]));
+  });
+
+  it("isolates a finger when all weak keys share one finger", () => {
+    const drill = reinforcementFromWeakKeys([
+      { key: "KeyA:none", lowerBound: 0.1 },
+      { key: "KeyA:shift", lowerBound: 0.2 },
+      { key: "KeyZ:none", lowerBound: 0.3 },
+    ]);
+    expect(drill.focusKeys).toEqual(["a", "A", "z"]);
+    expect(drill.plan.goal).toBe("finger-isolation");
   });
 
   it("respects an override goal", () => {
@@ -137,6 +150,21 @@ describe("reinforcementFromWeakFingers", () => {
     expect(() => reinforcementFromWeakFingers(["left-thumb"])).toThrow(
       "no weak fingers carry",
     );
+  });
+});
+
+describe("decideDrillGoal", () => {
+  it("isolates a single weak finger", () => {
+    expect(decideDrillGoal(["a", "z", "A"])).toBe("finger-isolation");
+  });
+
+  it("spreads across fingers with the repetition goal", () => {
+    expect(decideDrillGoal(["a", "s"])).toBe("repetition");
+    expect(decideDrillGoal(["f", "j"])).toBe("repetition");
+  });
+
+  it("ignores characters missing from the layout", () => {
+    expect(decideDrillGoal(["a", "¶"])).toBe("finger-isolation");
   });
 });
 

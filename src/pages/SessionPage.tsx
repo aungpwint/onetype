@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { LogOut, Pause, Play, AlertCircle } from "lucide-react";
 import * as backend from "../services/backend";
@@ -19,10 +19,12 @@ function Session({
   durationSeconds,
   sourceName,
   eyebrow,
+  onExit,
 }: {
   durationSeconds: number | null;
   sourceName: string;
   eyebrow?: string;
+  onExit?: () => void;
 }) {
   const status = useTypingStore((s) => s.status);
   const engine = useTypingStore((s) => s.engine);
@@ -37,7 +39,7 @@ function Session({
 
   const requestExit = () => {
     if (confirmExit !== "off") setConfirmOpen(true);
-    else abandon();
+    else { abandon(); onExit?.(); }
   };
 
   // Note: pausing/resuming is deliberately handled by Escape (see the global
@@ -89,7 +91,7 @@ function Session({
           <StatsBar />
           <TargetText />
           <motion.div
-            className="rounded-2xl border border-border bg-card p-3 shadow-sm"
+            // className="rounded-2xl border border-border bg-card p-3 shadow-sm"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
@@ -115,6 +117,7 @@ function Session({
             onClick={() => {
               setConfirmOpen(false);
               abandon();
+              onExit?.();
             }}
           >
             Leave the round
@@ -170,6 +173,7 @@ function useBeginSession(id: string | undefined, load: () => Promise<void>) {
 
 export function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
+  const navigate = useNavigate();
   const session = useTypingStore((s) => s.session);
   const beginLesson = useTypingStore((s) => s.beginLesson);
 
@@ -182,13 +186,14 @@ export function LessonPage() {
 
   return (
     <SessionGate ready={session?.kind === "lesson"} loadingLabel="Preparing the lesson…">
-      {session?.kind === "lesson" ? <Session durationSeconds={null} sourceName={session.resolved.title} /> : null}
+      {session?.kind === "lesson" ? <Session durationSeconds={null} sourceName={session.resolved.title} onExit={() => navigate("/learn")} /> : null}
     </SessionGate>
   );
 }
 
 export function TestPage() {
   const { testId } = useParams<{ testId: string }>();
+  const navigate = useNavigate();
   const session = useTypingStore((s) => s.session);
   const beginTest = useTypingStore((s) => s.beginTest);
 
@@ -204,13 +209,14 @@ export function TestPage() {
   return (
     <SessionGate ready={session?.kind === "test" && !!session?.test} loadingLabel="Rolling out the paper…">
       {session?.kind === "test" && session.test ? (
-        <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} />
+        <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} onExit={() => navigate("/tests")} />
       ) : null}
     </SessionGate>
   );
 }
 
 export function DrillPage() {
+  const navigate = useNavigate();
   const session = useTypingStore((s) => s.session);
   const beginDrill = useTypingStore((s) => s.beginDrill);
   const [error, setError] = useState<string | null>(null);
@@ -245,6 +251,7 @@ export function DrillPage() {
           durationSeconds={null}
           sourceName={session.resolved.title}
           eyebrow="Adaptive drill"
+          onExit={() => navigate("/drill")}
         />
       ) : null}
     </SessionGate>

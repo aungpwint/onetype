@@ -124,7 +124,7 @@ export function Shell({ children }: { children: ReactNode }) {
                 </span>
                 <span className="font-display text-lg leading-none">
                   OneType
-                  <span className="ms block text-xs text-muted-foreground">အွန်းတိုက်</span>
+                  <span className="ms block text-xs text-muted-foreground">ဝမ်းတိုက်</span>
                 </span>
               </button>
             </div>

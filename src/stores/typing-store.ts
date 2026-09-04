@@ -145,11 +145,13 @@ export async function buildAdaptiveDrill(
 ): Promise<ReinforcedDrill | null> {
   const active = useStudentStore.getState().active;
   if (!active) return null;
+  // weakKeys is already Wilson-ranked weakest-first, so a lower position index
+  // means weaker. Encode that as a descending lower bound so the reinforcement
+  // layer's ascend-and-cap keeps the weakest keys first.
   const keys = await backend.weakKeys(active.id, ENGLISH_LAYOUT_ID, 8);
   if (keys.length === 0) return null;
-  // weakKeys is already Wilson-ranked weakest-first; preserve that order.
-  const weakIds = keys.map((k, i) => ({ key: k.key, lowerBound: keys.length - i }));
-  return reinforcementFromWeakKeys(weakIds, { goal: opts.goal ?? "finger-isolation" });
+  const weakIds = keys.map((k, i) => ({ key: k.key, lowerBound: i }));
+  return reinforcementFromWeakKeys(weakIds, opts);
 }
 
 export const useTypingStore = create<TypingState>((set, get) => ({

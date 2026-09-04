@@ -67,7 +67,7 @@ export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
             flex-col
             gap-1.5
             rounded-xl
-            bg-black/[0.03]
+            bg-black/3
             p-2
             sm:gap-2
             sm:p-2.5
@@ -79,7 +79,7 @@ export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
         >
           {layout.rows.map((row, rowIndex) => (
             <KeyboardRow key={rowIndex}>
-              {row.map((definition) => {
+              {row.map((definition, definitionIndex) => {
                 const isActive =
                   showHint &&
                   (definition.code === expectedCode ||
@@ -96,7 +96,7 @@ export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
 
                 return (
                   <Keycap
-                    key={`${definition.code}:${rowIndex}`}
+                    key={`${rowIndex}-${definition.code || `pad-${definitionIndex}`}`}
                     definition={definition}
                     isActive={isActive}
                     flashed={flashed}
@@ -246,7 +246,7 @@ function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
 
         // Shape — rounded top, slightly squarer bottom for keycap feel
         "overflow-hidden",
-        "rounded-[0.5rem]",
+        "rounded-lg",
         "rounded-b-md",
         "border",
 

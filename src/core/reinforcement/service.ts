@@ -63,7 +63,23 @@ export function focusCharsFromWeakKeys(
 }
 
 /**
- * Compute the character focus set for a list of weak finger ids, using the
+ * Pick a muscle-memory goal that best matches the spread of the detected
+ * weakness. When every weak character lives on a single finger, isolate that
+ * finger for focused training; when weakness is spread across several fingers,
+ * fall back to repetition so every weak key gets drilled rather than the drill
+ * narrowing onto just one finger.
+ */
+export function decideDrillGoal(focusKeys: string[]): MuscleMemoryGoal {
+  const fingers = new Set<FingerId>();
+  for (const ch of focusKeys) {
+    const lookup = englishQwerty.lookupChar(ch);
+    if (lookup) fingers.add(lookup.finger);
+  }
+  return fingers.size <= 1 ? "finger-isolation" : "repetition";
+}
+
+/**
+ * Compute the character focus set for a list of weak fingers, using the
  * English finger-key map. Dedupes and caps at `maxKeys`.
  */
 export function focusCharsFromWeakFingers(
@@ -98,7 +114,7 @@ export function reinforcementFromWeakKeys(
   weakKeys: WeakKeyId[],
   opts: ReinforcementOptions = {},
 ): ReinforcedDrill {
-  const goal = opts.goal ?? "finger-isolation";
+  const goal = opts.goal ?? decideDrillGoal(focusCharsFromWeakKeys(weakKeys, opts));
   const focusKeys = focusCharsFromWeakKeys(weakKeys, opts);
   if (focusKeys.length === 0) {
     throw new Error("reinforcement: no weak keys mapped to a character on the layout");
@@ -111,8 +127,8 @@ export function reinforcementFromWeakFingers(
   weakFingers: FingerId[],
   opts: ReinforcementOptions = {},
 ): ReinforcedDrill {
-  const goal = opts.goal ?? "finger-isolation";
   const focusKeys = focusCharsFromWeakFingers(weakFingers, opts);
+  const goal = opts.goal ?? decideDrillGoal(focusKeys);
   if (focusKeys.length === 0) {
     throw new Error("reinforcement: no weak fingers carry a usable key");
   }

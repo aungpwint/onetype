@@ -1,15 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowRight, Clock } from "lucide-react";
 import type { Level } from "../types";
 import { useLessonStore } from "../stores/lesson-store";
 import { useStudentStore } from "../stores/student-store";
 import { useSettingsStore } from "../stores/settings-store";
 import { Spinner } from "../components/ui";
-import { Badge } from "../components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs";
+import { LanguageToggle } from "../components/LanguageToggle";
+import { LessonCard } from "../components/LessonCard";
 import { computeMasteryForLessons } from "../core/mastery";
-import type { MasteryLevel } from "../core/mastery";
 import type { ExerciseResult } from "../services/types";
 import * as backend from "../services/backend";
 
@@ -21,31 +19,6 @@ const LEVEL_COPY: Record<Level, { en: string; ms: string }> = {
   advanced: { en: "Advanced — full sentences", ms: "အဆင့်မြင့်" },
 };
 
-function LanguageToggle({ lang, setLang }: { lang: "myanmar" | "english"; setLang: (l: "myanmar" | "english") => void }) {
-  return (
-    <Tabs value={lang} onValueChange={(v) => setLang(v as "myanmar" | "english")}>
-      <TabsList className="bg-muted">
-        <TabsTrigger value="myanmar">
-          <span className="ms">မြန်မာ</span>
-        </TabsTrigger>
-        <TabsTrigger value="english">English</TabsTrigger>
-      </TabsList>
-    </Tabs>
-  );
-}
-
-const MASTERY_LABEL: Record<MasteryLevel, { text: string; variant: "secondary" | "success" | "warning" }> = {
-  "not-started": { text: "new", variant: "secondary" },
-  attempted: { text: "attempted", variant: "secondary" },
-  passed: { text: "passed", variant: "success" },
-  mastered: { text: "mastered", variant: "warning" },
-};
-
-function MasteryBadge({ level }: { level: MasteryLevel }) {
-  const m = MASTERY_LABEL[level];
-  return <Badge variant={m.variant}>{m.text}</Badge>;
-}
-
 export default function Learn() {
   const { level: levelParam } = useParams<{ level: string }>();
   const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel);
@@ -53,9 +26,12 @@ export default function Learn() {
   const progressStudentId = useLessonStore((s) => s.progressStudentId);
   const loadProgress = useLessonStore((s) => s.loadProgress);
   const active = useStudentStore((s) => s.active);
-  const defaultLang = useSettingsStore((s) => s.get("app.language"));
+  const storedLang = useSettingsStore((s) => s.get("app.language"));
 
-  const [lang, setLang] = useState<"myanmar" | "english">(defaultLang === "myanmar" ? "myanmar" : "english");
+  // Derived from the persisted app.language setting so the toggle and the
+  // curriculum list stay in sync and survive a reload.
+  const lang = storedLang === "myanmar" ? "myanmar" : "english";
+
   const [level, setLevel] = useState<Level>(() => (LEVEL_ORDER as string[]).includes(levelParam ?? "") ? (levelParam as Level) : "beginner");
   const [exerciseResults, setExerciseResults] = useState<ExerciseResult[]>([]);
 
@@ -100,7 +76,7 @@ export default function Learn() {
           <h1 className="mt-1 font-display text-3xl tracking-tight">Learn</h1>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{LEVEL_COPY[level].en}</p>
         </div>
-        <LanguageToggle lang={lang} setLang={setLang} />
+        <LanguageToggle />
       </header>
 
       <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Level">
@@ -144,48 +120,14 @@ export default function Learn() {
       )}
 
       <div className={list.length ? "grid gap-3 sm:grid-cols-2 lg:grid-cols-3" : ""}>
-        {list.map((lesson) => {
-          const p = progress?.[lesson.id];
-          const mastery = masteryByLesson.get(lesson.id) ?? "not-started";
-          const passed = mastery === "passed" || mastery === "mastered";
-          return (
-            <Link
-              key={lesson.id}
-              to={`/lesson/${lesson.id}`}
-              className={`card group relative p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-border hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${passed ? "border-success/40" : ""}`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="eyebrow">L. {lesson.number}</span>
-                {passed ? (
-                  <MasteryBadge level={mastery} />
-                ) : mastery === "attempted" ? (
-                  <span className="tnum text-xs text-muted-foreground">{Math.round(p && p.attempts > 0 ? p.bestAccuracy : 0)}%</span>
-                ) : (
-                  <MasteryBadge level={mastery} />
-                )}
-              </div>
-              <h3 className="ms mt-2 font-display text-xl leading-tight">{lesson.title}</h3>
-              <p className="ms mt-0.5 text-xs text-muted-foreground">{lesson.titleMy}</p>
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                {lesson.focusKeys && lesson.focusKeys.length > 0 ? (
-                  <span className="ms rounded border border-border bg-muted px-1.5 py-0.5 text-xs">
-                    {lesson.focusKeys.slice(0, 6).join(" ")}
-                  </span>
-                ) : null}
-                <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Clock className="size-3" />
-                  {lesson.estimatedMinutes} min
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {lesson.completion.minAccuracy}% acc{lesson.completion.minWpm !== null ? ` · ${lesson.completion.minWpm} wpm` : ""}
-                </span>
-              </div>
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" aria-hidden>
-                <ArrowRight className="size-5" />
-              </span>
-            </Link>
-          );
-        })}
+        {list.map((lesson) => (
+          <LessonCard
+            key={lesson.id}
+            lesson={lesson}
+            mastery={masteryByLesson.get(lesson.id) ?? "not-started"}
+            progress={progress?.[lesson.id]}
+          />
+        ))}
       </div>
       {list.length === 0 ? (
         <p className="text-center text-sm text-muted-foreground">No lessons here yet.</p>

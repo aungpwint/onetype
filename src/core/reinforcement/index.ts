@@ -7,6 +7,7 @@ export {
 } from "./types";
 export {
   DEFAULT_MAX_KEYS,
+  decideDrillGoal,
   focusCharsFromWeakFingers,
   focusCharsFromWeakKeys,
   keyIdToChar,

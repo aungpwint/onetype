@@ -41,7 +41,7 @@ function applyTheme(theme: ThemePreference) {
 export const useUiStore = create<UiState>((set) => ({
   theme: readStoredTheme(),
   sidebarOpen: true,
-  handGuideVisible: true,
+  handGuideVisible: false,
   soundEnabled: readStoredSound(),
   setTheme: (theme) => {
     localStorage.setItem("onetype:theme", theme);
