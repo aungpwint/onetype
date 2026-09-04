@@ -37,6 +37,13 @@ every GitHub Release.
 - Additional updater failure-path tests (disk space, malformed metadata) and
   release-pipeline tests for `latest.json` generation/merging.
 
+### Fixed
+- Release workflow build command: removed the stale `--release` flag (Tauri v2
+  `tauri build` is release-only and rejects it) — the first tag build had failed
+  on every platform before producing bundles.
+- Release workflow toolchain bumped to Node 24 (Node 20 is deprecated on GitHub
+  Actions runners).
+
 ### Security
 - `.github/scripts/verify-updater-pubkey.mjs` checks in CI that the updater
   signing key matches `plugins.updater.pubkey` and fails the release otherwise.
