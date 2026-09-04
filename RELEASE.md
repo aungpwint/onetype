@@ -35,6 +35,42 @@ the release workflow.
 
 ---
 
+## 1b. Public vs private repository (update distribution is independent)
+
+Repository **visibility is not the security mechanism**. An update is trusted
+only because the artifact is cryptographically signed with the private release
+key whose public half is compiled into the app (`plugins.updater.pubkey`). The
+same installed application updates identically whether the source repository is
+public or private — the app only needs public HTTPS read access to `latest.json`
+and the signed artifacts, never GitHub authentication.
+
+**Mode A — public repository (current).** GitHub Releases serves
+`latest.json` and every bundle at unauthenticated HTTPS URLs
+(`/releases/latest/download/<asset>`). Works with zero extra infrastructure.
+
+**Mode B — private repository.** Private releases require authentication, so
+point the app at your own public HTTPS distribution layer (Cloudflare R2,
+S3/CloudFront, Azure Blob Storage, a CDN, or an app backend) and have the
+release workflow publish artifacts + `latest.json` there. The **app-side config
+does not change** — one centralized value changes:
+
+1. Build the app with the distribution URL you control:
+   `src-tauri/tauri.conf.json` → `plugins.updater.endpoints`, e.g.
+   `https://updates.example.com/latest.json`.
+2. In the workflow, keep building and signing exactly as today, then upload
+   `dist/updates/*` (the bundles, their `.sig` files and the merged
+   `latest.json`) to your object store/CDN as a CI-only write step. `latest.json`
+   (short cache TTL) and immutable versioned bundles (long cache TTL) pair best
+   with reads: `READ = public`, `WRITE = CI only`.
+3. No GitHub token, storage secret or certificate key ever enters the app —
+   the app performs **anonymous** signed-update checks. Credentials stay in
+   GitHub Actions / server-side infrastructure only.
+
+Never embed a GitHub token or storage credential in the application to "fix"
+private-repository updates.
+
+---
+
 ## 2. Versioning
 
 Versioning is **Semantic Versioning** (`MAJOR.MINOR.PATCH`, e.g. `1.0.1`). The
@@ -98,6 +134,12 @@ The Tauri updater signs each bundle with a minisign key pair.
 3. In GitHub, add `TAURI_SIGNING_PRIVATE_KEY` = **base64 of the private key**
    and `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` = its password.
 
+> The private key (GitHub secret / local env) and the public key in
+> `tauri.conf.json` must be the **same key pair**. The release workflow's
+> `verify-updater-pubkey.mjs` step fails the build if they drift apart.
+> If you rotate the signing key, update BOTH the secret **and**
+> `plugins.updater.pubkey` at the same time.
+
 ---
 
 ## 5. Creating a release (happy path)
@@ -129,6 +171,10 @@ Pushing the `v*` tag triggers `.github/workflows/release.yml`, which:
 7. The `publish` job downloads all artifacts, generates and merges
    `latest.json`, creates the GitHub Release with auto-generated notes, and
    uploads all assets — including `latest.json`.
+8. The Windows build runs `verify-updater-pubkey.mjs`, which fails the run if
+   the signing key used to produce the `.sig` does **not** match
+   `plugins.updater.pubkey` (a mismatch means installed apps would reject every
+   update).
 
 A failed test, lint, typecheck, build or version check **fails the whole
 workflow** and no release is published.
@@ -146,10 +192,16 @@ pnpm tauri build
 Output (NSIS + MSI) lands in:
 
 ```
-src-tauri/target/release/bundle/nsis/onetype_<version>_x64-setup.exe
+src-tauri/target/release/bundle/nsis/OneType_<version>_x64-setup.exe
 src-tauri/target/release/bundle/nsis/onetype_<version>_x64-setup.exe.sig   (updater signature)
-src-tauri/target/release/bundle/msi/onetype_<version>_x64_en-US.msi
+src-tauri/target/release/bundle/msi/OneType_<version>_x64_en-US.msi
 ```
+
+> Note: the updater `.sig` filename is derived from the Rust crate name
+> (`onetype_<version>_x64-setup.exe.sig`) rather than the bundle name
+> (`OneType_...`). That is expected — the release workflow matches `.sig` files
+> independently (`*_setup.exe.sig`) and embeds the signature verbatim into
+> `latest.json`, so the filename never matters at runtime.
 
 If you need the updater artifacts locally, also set the signing env vars first:
 
@@ -290,6 +342,7 @@ node scripts/set-version.mjs <version>   # bump version everywhere
 ```
 .github/workflows/ci.yml        # PR + push validation (incl. version check)
 .github/workflows/release.yml   # tag-triggered build → sign → release → upload
+.github/scripts/verify-updater-pubkey.mjs  # fails CI if signing key ≠ configured pubkey
 scripts/                        # version + updater-manifest tooling
 scripts/check-versions.mjs
 scripts/set-version.mjs

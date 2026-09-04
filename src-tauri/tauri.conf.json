@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "onetype",
+  "productName": "OneType",
   "version": "1.0.0",
   "identifier": "com.user.onetype",
   "build": {
@@ -26,7 +26,7 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDNDNkNDQzVCMjNENEM1ODUNClJXU0Z4ZFFqVzh4c1BQdUtWNU1zT3c2UHliek1EL1c3UjVUVTd6cGp2bEM2ODZMS1JtcmswT3ZKCg==",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDQ1NDQxQjE2NzVFMDc2NDQKUldUUlVRYkZuWGdka1N4OUhERDA5U1k2dU84N1YzRVlBbzRkOE1rZ1Q2VHFGdz0K",
       "endpoints": [
         "https://github.com/aungpwint/onetype/releases/latest/download/latest.json"
       ],
@@ -48,7 +48,8 @@
     ],
     "windows": {
       "nsis": {
-        "installMode": "both"
+        "installMode": "both",
+        "installerIcon": "icons/icon.ico"
       }
     }
   }

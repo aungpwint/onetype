@@ -185,7 +185,7 @@ export function LessonPage() {
   useBeginSession(lessonId, load);
 
   return (
-    <SessionGate ready={session?.kind === "lesson"} loadingLabel="Preparing the lesson…">
+    <SessionGate ready={session?.kind === "lesson"} loadingLabel="Loading lesson text, keyboard and attempt…">
       {session?.kind === "lesson" ? <Session durationSeconds={null} sourceName={session.resolved.title} onExit={() => navigate("/learn")} /> : null}
     </SessionGate>
   );
@@ -207,7 +207,7 @@ export function TestPage() {
   useBeginSession(testId, load);
 
   return (
-    <SessionGate ready={session?.kind === "test" && !!session?.test} loadingLabel="Rolling out the paper…">
+    <SessionGate ready={session?.kind === "test" && !!session?.test} loadingLabel="Preparing test text, keyboard and attempt…">
       {session?.kind === "test" && session.test ? (
         <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} onExit={() => navigate("/tests")} />
       ) : null}
@@ -245,7 +245,7 @@ export function DrillPage() {
   }
 
   return (
-    <SessionGate ready={session?.kind === "drill"} loadingLabel="Preparing the drill…">
+    <SessionGate ready={session?.kind === "drill"} loadingLabel="Building drill from your weak keys…">
       {session?.kind === "drill" && session.drill ? (
         <Session
           durationSeconds={null}

@@ -9,6 +9,18 @@ This file is the authoritative record for human-readable release notes; the
 every GitHub Release.
 
 ## [Unreleased]
+### Changed
+- Product name now displays as **OneType** (installer, shortcuts, window title);
+  bundles are named `OneType_<version>_x64-setup.exe` / `…_x64_en-US.msi`.
+- App and installer icons regenerated at high resolution from the original
+  `OneTypeLogo.png` — the Windows `icon.ico` now embeds 16/24/32/48/64/256px
+  frames so the taskbar, Alt-Tab, shortcuts and large-icon views render sharply.
+- Corrected the updater public key in `tauri.conf.json` to match the production
+  signing key (previously mismatched → all updates would have been rejected).
+- Windows updater signature files are now matched independently in the release
+  workflow (`*_setup.exe.sig`), fixing the pairing that broke when bundle names
+  changed from `onetype_*` to `OneType_*`.
+
 ### Added
 - Production release pipeline: `latest.json` updater manifest is now generated
   and uploaded to every GitHub Release so the in-app auto-updater can detect
@@ -22,6 +34,14 @@ every GitHub Release.
   (optional `WINDOWS_CERTIFICATE` / `WINDOWS_CERTIFICATE_PASSWORD` secrets).
 - Additional updater failure-path tests (disk space, malformed metadata) and
   release-pipeline tests for `latest.json` generation/merging.
+
+### Security
+- `.github/scripts/verify-updater-pubkey.mjs` checks in CI that the updater
+  signing key matches `plugins.updater.pubkey` and fails the release otherwise.
+- Documented public vs. private repository update distribution — the app treats
+  repository visibility and update authenticity as independent concerns
+  (updates are trusted by cryptographic signature, never by GitHub presence),
+  with no GitHub credentials ever embedded in the application.
 
 ## [1.0.0] - 2026
 ### Added

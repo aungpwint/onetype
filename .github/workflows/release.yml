@@ -163,6 +163,15 @@ jobs:
           path: src-tauri/target/${{ matrix.target }}/release/bundle/
           if-no-files-found: error
 
+      - name: Verify updater pubkey matches signing key
+        if: matrix.runner-os == 'windows'
+        shell: bash
+        run: |
+          set -euo pipefail
+          SIG_FILE=$(find src-tauri/target/${{ matrix.target }}/release/bundle -name "*.sig" | head -n1)
+          [ -n "$SIG_FILE" ] || { echo "No updater .sig produced — is TAURI_SIGNING_PRIVATE_KEY set?" >&2; exit 1; }
+          node .github/scripts/verify-updater-pubkey.mjs --sig "$SIG_FILE"
+
   publish:
     name: Publish GitHub Release
     needs: build
@@ -197,8 +206,8 @@ jobs:
             echo "No Windows NSIS updater payload found; skipping."
             exit 0
           fi
-          WIN_SIG="${WIN_EXE}.sig"
-          [ -f "$WIN_SIG" ] || { echo "Missing $WIN_SIG" >&2; exit 1; }
+          WIN_SIG=$(ls dist/updates/*_setup.exe.sig 2>/dev/null | head -n1 || true)
+          [ -f "$WIN_SIG" ] || { echo "Missing Windows installer signature (.sig)" >&2; exit 1; }
           TAG="${{ github.ref_name }}"
           BASE="https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/download/$TAG"
           node scripts/generate-latest-json.mjs --partial \

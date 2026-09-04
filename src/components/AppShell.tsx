@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { useUiStore } from "../stores/ui-store";
 import { useStudentStore } from "../stores/student-store";
+import logo from "../assets/logo.png";
 import { useKeyboardShortcuts } from "../hooks/use-keyboard-shortcuts";
 import { Modal } from "./ui";
 import { StudentForm } from "./StudentForm";
@@ -119,8 +120,12 @@ export function Shell({ children }: { children: ReactNode }) {
                 onClick={() => navigate("/")}
                 aria-label="Back to dashboard"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent font-display text-lg font-bold text-accent-ink shadow-sm">
-                  oT
+                <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-accent shadow-sm">
+                  <img
+                    src={logo}
+                    alt="OneType logo"
+                    className="h-full w-full object-cover"
+                  />
                 </span>
                 <span className="font-display text-lg leading-none">
                   OneType
