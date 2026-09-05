@@ -1,60 +1,32 @@
-import type { Difficulty, FingerId, Hand, Language, LessonFocus, Level } from "../../types";
+import type { NormalizedLesson } from "../../types/lesson";
 
-export interface LessonCompletionRule {
-  minAccuracy: number;
-  minWpm: number | null;
-}
+export type { LessonPhase, LessonCompletionRule } from "../../types/lesson";
 
-export interface LessonPhase {
-  instruction: string;
-  text: string;
-}
-
-export type LessonItem =
-  | { kind: "keys"; instruction: string; keys: string[]; repeats?: number }
-  | { kind: "text"; instruction: string; text: string }
-  | { kind: "words"; instruction: string; words: string[] }
-  | { kind: "sentences"; instruction: string; sentences: string[] }
-  | { kind: "paragraph"; instruction: string; text: string };
-
-export interface LessonData {
-  id: string;
-  level: Level;
-  number: number;
-  title: string;
-  titleMy: string;
-  description: string;
-  difficulty: Difficulty;
-  estimatedMinutes: number;
-  language: Language;
-  layoutId: "english-qwerty" | "myanmar3";
-  completion: LessonCompletionRule;
-  focusKeys?: string[];
-  focus?: LessonFocus[];
-  targetFingers?: FingerId[];
-  targetHands?: Hand[];
-  requiresShift?: boolean;
-  prerequisites?: string[];
-  phases: LessonPhase[];
-}
-
-export function toPhases(items: LessonItem[]): LessonPhase[] {
-  const phases: LessonPhase[] = [];
-  for (const item of items) {
-    if (item.kind === "keys") {
-      const repeats = item.repeats ?? 3;
-      const keyTexts: string[] = [];
-      for (const key of item.keys) {
-        for (let i = 0; i < repeats; i++) keyTexts.push(key);
-      }
-      phases.push({ instruction: item.instruction, text: keyTexts.join(" ") });
-    } else if (item.kind === "words") {
-      phases.push({ instruction: item.instruction, text: item.words.join(" ") });
-    } else if (item.kind === "sentences") {
-      phases.push({ instruction: item.instruction, text: item.sentences.join(" ") });
-    } else {
-      phases.push({ instruction: item.instruction, text: item.text });
-    }
-  }
-  return phases;
-}
+/**
+ * Legacy runtime lesson shape consumed by the curriculum resolver, stores, and
+ * test materials. It is a projection of the canonical normalized lesson: every
+ * field here maps 1:1 onto `NormalizedLesson` (which the repository hands out),
+ * so this alias stays structurally compatible while the domain types own the
+ * definition.
+ */
+export type LessonData = Pick<
+  NormalizedLesson,
+  | "id"
+  | "level"
+  | "number"
+  | "title"
+  | "titleMy"
+  | "description"
+  | "difficulty"
+  | "estimatedMinutes"
+  | "language"
+  | "layoutId"
+  | "completion"
+  | "focusKeys"
+  | "focus"
+  | "targetFingers"
+  | "targetHands"
+  | "requiresShift"
+  | "prerequisites"
+  | "phases"
+>;
