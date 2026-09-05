@@ -9,8 +9,19 @@ the curated source maintained alongside `scripts/release-notes.mjs`, which the
 `release` GitHub Actions workflow uses (with per-platform downloads, checksums
 and auto-update notes) to build every GitHub Release page.
 
-## [Unreleased]
+## [1.1.1] - 2026-09-05
 ### Fixed
+- Linux one-line installer `install.sh`: corrected the download filenames to the
+  real Tauri bundle names — `OneType_<version>_amd64.deb` (Debian/Ubuntu) and
+  `OneType-<version>-1.x86_64.rpm` / `…-aarch64.rpm` (Fedora/RHEL). It now
+  downloads `OneType_…` (product name), matches `checksums.txt`, and no longer
+  tries lowercase `onetype_…` or an impossible `amd64` RPM architecture.
+- README / RELEASE.md: documented the actual Linux bundle filenames
+  (`OneType_…`, arch `amd64`/`x86_64`/`aarch64`) and corrected the release-notes
+  description (notes are built by `scripts/release-notes.mjs`, not
+  `--generate-notes`).
+- CI workflow uses Node 24 (Node 20 is deprecated on GitHub Actions runners),
+  matching the release workflow.
 - `generate-latest-json.mjs` merge now validates each partial is a regular file
   (`isFile()`), wrapping read/parse errors with the exact offending path instead
   of crashing with a bare `EISDIR`. The workflow step that assembles the
@@ -124,4 +135,5 @@ and auto-update notes) to build every GitHub Release page.
 - Automatic updates via the Tauri updater plugin (signed; 6-hour throttle).
 
 [1.1.0]: https://github.com/aungpwint/onetype/releases/tag/v1.1.0
+[1.1.1]: https://github.com/aungpwint/onetype/releases/tag/v1.1.1
 [1.0.1]: https://github.com/aungpwint/onetype/releases/tag/v1.0.1

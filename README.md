@@ -12,8 +12,8 @@ Get the latest installer for your platform from the **[Latest Release](https://g
 | --- | --- | --- |
 | **Windows** | `OneType_<version>_x64-setup.exe` | Run the installer and follow the wizard. |
 | **macOS (Apple Silicon)** | `OneType_<version>_aarch64.dmg` | Open the DMG, drag **OneType.app** into Applications, then right-click → *Open* the first time (Gatekeeper). |
-| **Linux (Debian/Ubuntu)** | `onetype_<version>_amd64.deb` | `sudo apt install -y ./onetype_<version>_amd64.deb` |
-| **Linux (Fedora/RHEL)** | `onetype-<version>-1.x86_64.rpm` | `sudo dnf install -y ./onetype-<version>-1.x86_64.rpm` |
+| **Linux (Debian/Ubuntu)** | `OneType_<version>_amd64.deb` | `sudo apt install -y ./OneType_<version>_amd64.deb` |
+| **Linux (Fedora/RHEL)** | `OneType-<version>-1.x86_64.rpm` | `sudo dnf install -y ./OneType-<version>-1.x86_64.rpm` |
 
 ### Linux — one-line installer
 
@@ -35,8 +35,8 @@ bash install.sh --version v1.2.3 --repo aungpwint/onetype
 Get-FileHash .\OneType_1.0.1_x64-setup.exe -Algorithm SHA256
 
 # macOS / Linux
-shasum -a 256 OneType_1.0.1_aarch64.dmg
-sha256sum onetype_1.0.1_amd64.deb
+shasum -a 256 OneType_1.1.0_aarch64.dmg
+sha256sum OneType_1.1.0_amd64.deb
 ```
 
 Compare the output with `checksums.txt` from the release.

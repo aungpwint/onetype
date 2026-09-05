@@ -97,10 +97,18 @@ if ! [[ "$VER" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
   exit 1
 fi
 
+# --- Asset naming -----------------------------------------------------------
+# Tauri bundles are named from the product name ("OneType") plus the version.
+# Debian/AppImage arch: amd64|arm64; RPM arch: x86_64|aarch64.
 if [[ "$PKG_FLAVOR" == "deb" ]]; then
-  ASSET="onetype_${VER}_${ARCH}.deb"
+  ASSET="OneType_${VER}_${ARCH}.deb"
+  # RPMs are signed/installed via checksums.txt below.
 else
-  ASSET="onetype-${VER}-1.${ARCH}.rpm"
+  case "$ARCH" in
+    amd64) RPM_ARCH="x86_64" ;;
+    arm64) RPM_ARCH="aarch64" ;;
+  esac
+  ASSET="OneType-${VER}-1.${RPM_ARCH}.rpm"
 fi
 
 BASE="https://github.com/$REPO/releases/download/$TAG"
