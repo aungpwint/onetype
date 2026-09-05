@@ -526,10 +526,14 @@ function createEngine(session: TypingSessionState): TypingEngine {
 function bindKeys() {
   unbindKeys();
   const onKey = (event: KeyboardEvent) => {
-    const { engine, status } = useTypingStore.getState();
+    const { engine, status, session } = useTypingStore.getState();
     if (!engine) return;
     if (status !== "running" && status !== "ready") return;
     if (status === "ready") {
+      // Lesson exercises follow the trainer's "Press Tab to start" gate: a
+      // specific key opens the session instead of any first keystroke. Timed
+      // tests and drills keep the snappier first-key start.
+      if (session?.kind === "lesson" && event.code !== "Tab") return;
       useTypingStore.getState().start();
     }
     if (event.altKey || event.ctrlKey || event.metaKey) return;

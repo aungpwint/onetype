@@ -10,9 +10,13 @@ import { WIDE_KEY_LABEL } from "../../utils/fingerMapper";
 
 interface VirtualKeyboardProps {
   layout: KeyboardLayout;
+  /** Hide the built-in "press the highlighted key to begin" prompt so the
+   *  caller can surface its own start instruction (e.g. the Tab-to-start
+   *  hint on lesson exercises). */
+  hideReadyMessage?: boolean;
 }
 
-export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
+export function VirtualKeyboard({ layout, hideReadyMessage }: VirtualKeyboardProps) {
   const tick = useTypingStore((state) => state.tick);
   void tick;
 
@@ -106,7 +110,7 @@ export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
           ))}
         </div>
 
-        <KeyboardStatus status={status} />
+        <KeyboardStatus status={status} hideReadyMessage={hideReadyMessage} />
       </div>
     </section>
   );
@@ -132,12 +136,16 @@ function KeyboardRow({ children }: { children: ReactNode }) {
 
 function KeyboardStatus({
   status,
+  hideReadyMessage,
 }: {
   status: ReturnType<typeof useTypingStore.getState>["status"];
+  hideReadyMessage?: boolean;
 }) {
   const message =
     status === "ready"
-      ? "Press the highlighted key to begin"
+      ? hideReadyMessage
+        ? null
+        : "Press the highlighted key to begin"
       : status === "paused"
         ? "Paused — press Esc to resume"
         : null;

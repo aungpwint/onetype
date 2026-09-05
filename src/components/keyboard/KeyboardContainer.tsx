@@ -6,7 +6,7 @@ import { VirtualKeyboard } from "./VirtualKeyboard";
 import { HandOverlay } from "../hand-guide/HandOverlay";
 import { resolveTarget } from "../../core/target-model";
 
-export function KeyboardContainer({ layout }: { layout: KeyboardLayout }) {
+export function KeyboardContainer({ layout, hideReadyMessage }: { layout: KeyboardLayout; hideReadyMessage?: boolean }) {
   const handGuide = useUiStore((s) => s.handGuideVisible);
 
   return (
@@ -14,10 +14,10 @@ export function KeyboardContainer({ layout }: { layout: KeyboardLayout }) {
       <div className="relative">
         {handGuide ? (
           <IntegratedHandGuide layout={layout}>
-            <VirtualKeyboard layout={layout} />
+            <VirtualKeyboard layout={layout} hideReadyMessage={hideReadyMessage} />
           </IntegratedHandGuide>
         ) : (
-          <VirtualKeyboard layout={layout} />
+          <VirtualKeyboard layout={layout} hideReadyMessage={hideReadyMessage} />
         )}
       </div>
     </div>

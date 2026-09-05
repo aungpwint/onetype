@@ -15,6 +15,7 @@ import { KeyboardContainer } from "../components/keyboard/KeyboardContainer";
 import { TargetText } from "../components/TargetText";
 import { StatsBar } from "../components/StatsBar";
 import { SessionHeader } from "../components/session/SessionHeader";
+import { ExerciseWorkspace } from "../components/session/ExerciseWorkspace";
 import { ResultDialog } from "../components/ResultDialog";
 import { Spinner, Modal } from "../components/ui";
 import { Button } from "../components/ui/button";
@@ -199,11 +200,7 @@ export function LessonPage() {
       loadingLabel="Loading lesson text, keyboard and attempt…"
     >
       {session?.kind === "lesson" ? (
-        <Session
-          durationSeconds={null}
-          sourceName={session.resolved.title}
-          onExit={() => navigate("/learn")}
-        />
+        <ExerciseWorkspace onExit={() => navigate("/learn")} />
       ) : null}
     </SessionGate>
   );
