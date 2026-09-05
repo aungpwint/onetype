@@ -23,7 +23,8 @@
       opacity: 0.75;
     }
     .hand-highlight {
-      fill: none;
+      fill: var(--hand-active);
+      fill-opacity: 0.15;
       stroke: var(--hand-active);
       stroke-width: 3;
       stroke-linecap: round;

@@ -691,23 +691,69 @@
 
 /* ── Active-finger highlight ─────────────────────────────────────────────────
    Each hand asset carries one `path.hand-highlight` per finger (data-finger).
-   A finger is lit when the wrapping container's `data-active-finger` (a
-   space-separated FingerId list) contains that finger. Uses the premium blue
-   hand-active token. */
+   The path doubles as the theme "HandOverlay": a translucent theme-coloured
+   fill (fill-opacity low, see the SVG styles) over an unchanged stroke that
+   uses the hand-active token.
+
+   A finger is lit — and subtly pressed — when the wrapping container's
+   `data-active-finger` (a space-separated FingerId list) contains that finger.
+   Only the matching highlight path animates; the fused hand/palm never moves.
+
+   The press transform is the clamped nudge toward the target key centre,
+   computed by HandOverlay from the coordinate mapping (Keyboard → Hand →
+   Finger → Animation) and shipped as a `--press-<finger>` custom property on
+   the container. The path's transform is `var(--press-<finger>)` with a
+   resting fallback, so a freshly lit finger starts exactly at rest and every
+   press resolves back to rest — the transform is never accumulated.
+   transform-box: fill-box keeps any future pivot-based rotation around the
+   finger's own box rather than the SVG origin. */
 .hand-highlight {
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transform: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
 }
 
-[data-active-finger~="left-pinky"] .hand-highlight[data-finger="left-pinky"],
-[data-active-finger~="left-ring"] .hand-highlight[data-finger="left-ring"],
-[data-active-finger~="left-middle"] .hand-highlight[data-finger="left-middle"],
-[data-active-finger~="left-index"] .hand-highlight[data-finger="left-index"],
-[data-active-finger~="left-thumb"] .hand-highlight[data-finger="left-thumb"],
-[data-active-finger~="right-thumb"] .hand-highlight[data-finger="right-thumb"],
-[data-active-finger~="right-index"] .hand-highlight[data-finger="right-index"],
-[data-active-finger~="right-middle"] .hand-highlight[data-finger="right-middle"],
-[data-active-finger~="right-ring"] .hand-highlight[data-finger="right-ring"],
+[data-active-finger~="left-pinky"] .hand-highlight[data-finger="left-pinky"] {
+  opacity: 1;
+  transform: var(--press-left-pinky, translateY(0px));
+}
+[data-active-finger~="left-ring"] .hand-highlight[data-finger="left-ring"] {
+  opacity: 1;
+  transform: var(--press-left-ring, translateY(0px));
+}
+[data-active-finger~="left-middle"] .hand-highlight[data-finger="left-middle"] {
+  opacity: 1;
+  transform: var(--press-left-middle, translateY(0px));
+}
+[data-active-finger~="left-index"] .hand-highlight[data-finger="left-index"] {
+  opacity: 1;
+  transform: var(--press-left-index, translateY(0px));
+}
+[data-active-finger~="left-thumb"] .hand-highlight[data-finger="left-thumb"] {
+  opacity: 1;
+  transform: var(--press-left-thumb, translateY(0px));
+}
+[data-active-finger~="right-thumb"] .hand-highlight[data-finger="right-thumb"] {
+  opacity: 1;
+  transform: var(--press-right-thumb, translateY(0px));
+}
+[data-active-finger~="right-index"] .hand-highlight[data-finger="right-index"] {
+  opacity: 1;
+  transform: var(--press-right-index, translateY(0px));
+}
+[data-active-finger~="right-middle"] .hand-highlight[data-finger="right-middle"] {
+  opacity: 1;
+  transform: var(--press-right-middle, translateY(0px));
+}
+[data-active-finger~="right-ring"] .hand-highlight[data-finger="right-ring"] {
+  opacity: 1;
+  transform: var(--press-right-ring, translateY(0px));
+}
 [data-active-finger~="right-pinky"] .hand-highlight[data-finger="right-pinky"] {
   opacity: 1;
+  transform: var(--press-right-pinky, translateY(0px));
 }
