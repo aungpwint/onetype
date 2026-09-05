@@ -59,6 +59,7 @@
   --key-top: #ffffff;
   --key-base: #e3e9f4;
   --key-ink: #24314d;
+  --key-well: rgba(15, 28, 51, 0.055);
 
   /* Hand visualization */
   --hand: #f1d3b8;
@@ -122,6 +123,7 @@
   --key-top: #1b2a4a;
   --key-base: #121d36;
   --key-ink: #d6e0f5;
+  --key-well: rgba(3, 7, 15, 0.42);
 
   /* Hand visualization */
   --hand: #8a5a3a;
@@ -160,6 +162,7 @@
   --color-success: var(--success);
   --color-key-top: var(--key-top);
   --color-key-base: var(--key-base);
+  --color-key-well: var(--key-well);
   --color-hand: var(--hand);
   --color-hand-shade: var(--hand-shade);
 
@@ -422,21 +425,20 @@
   }
 
   /* ── Target text ────────────────────────────────────────────────── */
+  /* Flat, borderless composition: the typing sequence floats in the
+     workspace rather than sitting inside a card. The third-party
+     viewport/content span structure is preserved for the spring caret. */
   .tt-container {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border-radius: var(--radius);
-    border: 1px solid var(--line);
-    background: color-mix(in srgb, var(--surface) 92%, transparent);
-    box-shadow: var(--shadow-1);
   }
 
   .tt-viewport {
     position: relative;
     width: 100%;
     overflow: hidden;
-    padding: 1.25rem 0;
+    padding: 0.875rem 0;
   }
 
   .tt-content {
@@ -484,7 +486,7 @@
   }
 
   .tt-char-typed {
-    color: var(--ink-soft);
+    color: var(--typing-upcoming);
   }
 
   /* ── Caret ─────────────────────────────────────────────────────── */
@@ -501,32 +503,89 @@
     animation: caret-blink 1s ease-in-out infinite;
   }
 
-  /* ── Pause overlay ─────────────────────────────────────────────── */
-  .tt-paused {
-    position: absolute;
-    inset: 0;
+  /* ── Virtual keyboard keycaps ─────────────────────────────────────
+     The keycap visual is centralized here so the responsive height and
+     press/flash states stay in one place. State classes (idle / active /
+     shift-hint) only affect its borders, backgrounds and shadows. */
+
+  .keycap {
+    border: 1px solid transparent;
+    color: var(--key-ink);
+  }
+
+  .keycap-idle {
+    border: 1px solid var(--line);
+    background: linear-gradient(
+      to bottom,
+      var(--key-top),
+      var(--key-base)
+    );
+    box-shadow:
+      0 1.5px 0 var(--line-strong),
+      0 2px 6px -2px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  .keycap-idle:hover {
+    border-color: var(--line-strong);
+    background: linear-gradient(
+      to bottom,
+      var(--key-top),
+      color-mix(in srgb, var(--key-top) 55%, var(--key-base) 45%)
+    );
+    box-shadow:
+      0 2px 0 var(--line-strong),
+      0 3px 8px -2px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  }
+
+  /* Next-key hint: static accent wash (no continuous glow pulse) */
+  .keycap-active {
     z-index: 20;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: color-mix(in srgb, var(--surface) 86%, transparent);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    animation: pause-fade-in 0.2s ease-out;
+    border-color: var(--primary);
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--primary) 100%, white 6%),
+      var(--primary)
+    );
+    color: var(--primary-foreground);
+    box-shadow:
+      0 0 0 2px var(--primary-ring),
+      0 0 18px 2px color-mix(in srgb, var(--primary) 26%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
   }
 
-  @keyframes pause-fade-in {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
+  .keycap-active .keycap-primary,
+  .keycap-active .keycap-sublabel,
+  .keycap-active .keycap-mod {
+    color: var(--primary-foreground);
+    font-weight: 700;
   }
 
-  /* ── Virtual keyboard keycap animations ─────────────────────────── */
+  /* Shift modifier being help-lit alongside the active key */
+  .keycap-hint {
+    z-index: 10;
+    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+    color: var(--primary);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--primary) 35%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
+  .keycap-hint .keycap-primary,
+  .keycap-hint .keycap-sublabel,
+  .keycap-hint .keycap-mod {
+    color: var(--primary);
+  }
+
+  .keycap-mod {
+    color: color-mix(in srgb, var(--key-ink) 72%, transparent);
+  }
+
+  .keycap-sublabel {
+    color: color-mix(in srgb, var(--key-ink) 48%, transparent);
+  }
 
   /* Press-down feel: quick translate + scale for physicality */
   .key-press {
@@ -542,26 +601,6 @@
     }
     100% {
       transform: translateY(0) scale(1);
-    }
-  }
-
-  /* Subtle breathing glow for the next-key hint */
-  .key-glow {
-    animation: key-glow 2s ease-in-out infinite;
-  }
-
-  @keyframes key-glow {
-    0%, 100% {
-      box-shadow:
-        0 0 0 2px color-mix(in srgb, var(--primary) 80%, transparent),
-        0 0 14px 2px color-mix(in srgb, var(--primary) 30%, transparent),
-        0 4px 12px -2px color-mix(in srgb, var(--primary) 28%, transparent);
-    }
-    50% {
-      box-shadow:
-        0 0 0 2px var(--primary),
-        0 0 22px 6px color-mix(in srgb, var(--primary) 40%, transparent),
-        0 4px 18px -2px color-mix(in srgb, var(--primary) 34%, transparent);
     }
   }
 

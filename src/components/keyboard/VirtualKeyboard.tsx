@@ -13,7 +13,6 @@ interface VirtualKeyboardProps {
 }
 
 export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
-  // Subscribe to the store so the keyboard re-renders when typing state changes.
   const tick = useTypingStore((state) => state.tick);
   void tick;
 
@@ -40,17 +39,17 @@ export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
         w-full
         select-none
         rounded-2xl
-        border border-line/60
+        border border-line/70
         bg-linear-to-b
-        from-card/40
-        via-card/80
+        from-card/45
+        via-card/85
         to-card/95
-        p-3
-        shadow-[0_1px_0_inset_rgba(255,255,255,0.4),0_8px_24px_-12px_rgba(0,0,0,0.25)]
+        p-2.5
+        shadow-[0_1px_0_inset_rgba(255,255,255,0.35),0_10px_28px_-14px_rgba(0,0,0,0.28)]
         backdrop-blur-sm
-        sm:p-4
-        lg:p-5
-        2xl:p-6
+        sm:p-3.5
+        lg:p-4
+        2xl:p-5
       "
     >
       <div
@@ -67,13 +66,12 @@ export function VirtualKeyboard({ layout }: VirtualKeyboardProps) {
             flex-col
             gap-1.5
             rounded-xl
-            bg-black/3
+            bg-key-well
             p-2
             sm:gap-2
             sm:p-2.5
             lg:gap-2.5
             lg:p-3
-            2xl:gap-3
             2xl:p-3.5
           "
         >
@@ -153,17 +151,15 @@ function KeyboardStatus({
       key={status}
       className="
         keyboard-status-in
-        mt-3
+        mt-2.5
         text-center
         font-mono
         text-[0.6875rem]
         font-medium
         tracking-wide
         text-muted-foreground
-        sm:mt-4
-        sm:text-xs
-        lg:mt-5
-        2xl:mt-6
+        sm:mt-3
+        lg:mt-3.5
       "
     >
       {message}
@@ -190,7 +186,12 @@ interface KeycapProps {
   isShiftHint: boolean;
 }
 
-const Keycap = memo(function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
+const Keycap = memo(function Keycap({
+  definition,
+  isActive,
+  flashed,
+  isShiftHint,
+}: KeycapProps) {
   const width = definition.width ?? 1;
 
   const isModifier =
@@ -230,28 +231,26 @@ const Keycap = memo(function Keycap({ definition, isActive, flashed, isShiftHint
       aria-hidden
       data-key={definition.code}
       className={[
-        // Layout
-        "relative",
-        "flex",
-        "min-w-0",
-        "shrink",
-        "items-center",
-        "justify-center",
+        "keycap",
 
         // Responsive height
         "h-10",
         "sm:h-11",
         "lg:h-12",
-        "xl:h-12.5",
         "2xl:h-14",
 
-        // Shape — rounded top, slightly squarer bottom for keycap feel
-        "overflow-hidden",
+        // Shape — rounded top, slightly squarer bottom for a keycap feel
         "rounded-lg",
         "rounded-b-md",
-        "border",
 
-        // Typography
+        // Layout
+        "relative",
+        "min-w-0",
+        "flex",
+        "shrink",
+        "items-center",
+        "justify-center",
+        "overflow-hidden",
         "leading-none",
 
         // Interaction look
@@ -309,6 +308,7 @@ function getKeyLabel({
     return (
       <span
         className="
+          keycap-mod
           truncate
           px-1
           text-[0.625rem]
@@ -330,6 +330,7 @@ function getKeyLabel({
     return (
       <span
         className="
+          keycap-mod
           max-w-full
           truncate
           px-1
@@ -369,22 +370,23 @@ function getKeyLabel({
     >
       <span
         className="
+          keycap-primary
           font-myanmar
           text-sm
           font-medium
           leading-none
-          text-foreground
           sm:text-base
           lg:text-lg
           2xl:text-xl
         "
-        >
-          {primaryDisplay}
-        </span>
+      >
+        {primaryDisplay}
+      </span>
 
       {showSublabel && (
         <span
           className="
+            keycap-sublabel
             mt-0.5
             font-mono
             text-[0.5rem]
@@ -392,7 +394,6 @@ function getKeyLabel({
             uppercase
             leading-none
             tracking-tight
-            text-muted-foreground/60
             sm:text-[0.5625rem]
             lg:text-[0.625rem]
             2xl:text-[0.6875rem]
@@ -415,56 +416,20 @@ function getKeyStateClass({
   flashed: "correct" | "incorrect" | null;
 }) {
   if (isActive && !isShiftHint) {
-    return [
-      "z-20",
-      "border-accent",
-      "bg-accent",
-      "font-bold",
-      "text-accent-ink",
-      "key-glow",
-    ].join(" ");
+    return ["keycap-active"].join(" ");
   }
 
   if (isShiftHint) {
-    return [
-      "z-10",
-      "border-accent/60",
-      "bg-accent/15",
-      "text-accent",
-      "shadow-sm",
-      "ring-1",
-      "ring-accent/40",
-    ].join(" ");
+    return ["keycap-hint"].join(" ");
   }
 
   if (flashed === "correct") {
-    return [
-      "key-flash-correct",
-      "border-success/60",
-    ].join(" ");
+    return ["key-flash-correct", "border-success/60"].join(" ");
   }
 
   if (flashed === "incorrect") {
-    return [
-      "key-flash-incorrect",
-      "border-alert/60",
-    ].join(" ");
+    return ["key-flash-incorrect", "border-alert/60"].join(" ");
   }
 
-  return [
-    "border-border/50",
-    "bg-linear-to-b",
-    "from-key-top",
-    "to-key-base",
-    "text-foreground",
-    "shadow-[0_1.5px_0_var(--line-strong),0_2px_6px_-2px_rgba(0,0,0,0.2)]",
-    "ring-1",
-    "ring-border/40",
-    "hover:border-border",
-    "hover:from-key-top",
-    "hover:to-key-top",
-    "hover:shadow-[0_2px_0_var(--line-strong),0_3px_8px_-2px_rgba(0,0,0,0.25)]",
-    "active:shadow-[0_0.5px_0_var(--line-strong),0_1px_3px_-1px_rgba(0,0,0,0.2)]",
-    "active:translate-y-[1px]",
-  ].join(" ");
+  return ["keycap-idle"].join(" ");
 }

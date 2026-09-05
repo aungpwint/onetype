@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTypingStore } from "../stores/typing-store";
 import { formatDuration } from "../lib/format";
 
-function CompactStat({
+function Metric({
   label,
   value,
   tone,
@@ -18,10 +18,12 @@ function CompactStat({
         ? "text-destructive"
         : "text-foreground";
   return (
-    <span className="inline-flex items-center gap-1.5">
-      <span className="text-xs text-muted-foreground">{label}</span>
-      <span className={`tnum font-medium ${color}`}>{value}</span>
-    </span>
+    <div className="flex flex-col items-center gap-0.5">
+      <span className={`tnum text-lg font-semibold leading-none md:text-xl ${color}`}>{value}</span>
+      <span className="text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+        {label}
+      </span>
+    </div>
   );
 }
 
@@ -50,17 +52,18 @@ export function StatsBar() {
   const progress = stats.totalUnits > 0 ? Math.round((stats.unitIndex / stats.totalUnits) * 100) : 0;
 
   return (
-    <div className="flex flex-col gap-1.5">
-      <div className="flex items-end justify-center gap-2">
-        <span className="tnum text-5xl font-semibold leading-none tracking-tight text-foreground">
+    <div className="flex w-full flex-col items-center">
+      <div className="flex items-baseline justify-center gap-3">
+        <span className="tnum text-6xl font-semibold leading-none tracking-tight text-foreground sm:text-7xl">
           {wpm}
         </span>
-        <span className="mb-0.5 text-sm font-medium text-muted-foreground">WPM</span>
+        <span className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">WPM</span>
       </div>
 
-      <div className="mx-auto flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-sm">
-        <CompactStat label="Accuracy" value={`${stats.accuracy.toFixed(1)}%`} />
-        <CompactStat
+      <div className="mt-3 flex items-center gap-5">
+        <Metric label="Accuracy" value={`${stats.accuracy.toFixed(1)}%`} />
+        <span className="h-4 w-px bg-line-strong/60" aria-hidden />
+        <Metric
           label={durationSeconds !== null ? "Time" : "Progress"}
           value={
             durationSeconds !== null && remaining !== null
@@ -68,7 +71,8 @@ export function StatsBar() {
               : `${progress}%`
           }
         />
-        <CompactStat
+        <span className="h-4 w-px bg-line-strong/60" aria-hidden />
+        <Metric
           label="Errors"
           value={String(stats.incorrectCount)}
           tone={stats.incorrectCount > 0 ? "destructive" : "muted"}

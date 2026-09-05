@@ -5,21 +5,12 @@ import { useUiStore } from "../../stores/ui-store";
 import { VirtualKeyboard } from "./VirtualKeyboard";
 import { HandOverlay } from "../hand-guide/HandOverlay";
 import { resolveTarget } from "../../core/target-model";
-import { LessonProgress } from "./LessonProgress";
 
-/**
- * Parent wrapper that arranges the Lesson Progress header bar and the virtual
- * key grid, with the programmatic hand overlay shown around the keyboard.
- */
 export function KeyboardContainer({ layout }: { layout: KeyboardLayout }) {
   const handGuide = useUiStore((s) => s.handGuideVisible);
 
   return (
     <div className="mx-auto w-full max-w-4xl select-none">
-      {/* ── Lesson Progress header bar ── */}
-      <LessonProgress />
-
-      {/* ── Hand-guide + keyboard stack ── */}
       <div className="relative">
         {handGuide ? (
           <IntegratedHandGuide layout={layout}>
@@ -33,10 +24,6 @@ export function KeyboardContainer({ layout }: { layout: KeyboardLayout }) {
   );
 }
 
-/**
- * Drives the programmatic hand overlay: fingers dynamically target the active
- * key using real keyboard geometry, with the old typing-club SVG as a fallback.
- */
 function IntegratedHandGuide({ layout, children }: { layout: KeyboardLayout; children: ReactNode }) {
   const tick = useTypingStore((s) => s.tick);
   void tick;

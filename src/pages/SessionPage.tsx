@@ -1,19 +1,24 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { LogOut, Pause, Play, AlertCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import * as backend from "../services/backend";
 import { useTypingStore, buildAdaptiveDrill } from "../stores/typing-store";
 import { useSettingsStore } from "../stores/settings-store";
 import { KeyboardContainer } from "../components/keyboard/KeyboardContainer";
 import { TargetText } from "../components/TargetText";
 import { StatsBar } from "../components/StatsBar";
+import { SessionHeader } from "../components/session/SessionHeader";
 import { ResultDialog } from "../components/ResultDialog";
 import { Spinner, Modal } from "../components/ui";
 import { Button } from "../components/ui/button";
 import type { TypingMode } from "../types";
-
-// ─── Session surface ─────────────────────────────────────────────────────────
 
 function Session({
   durationSeconds,
@@ -39,44 +44,36 @@ function Session({
 
   const requestExit = () => {
     if (confirmExit !== "off") setConfirmOpen(true);
-    else { abandon(); onExit?.(); }
+    else {
+      abandon();
+      onExit?.();
+    }
   };
 
-  // Note: pausing/resuming is deliberately handled by Escape (see the global
-  // keyboard-shortcuts hook). A "P" shortcut is not used because P is a normal
-  // typing key in both English and Myanmar layouts and would pause mid-session.
-  const isPaused = status === "paused";
-  const toggleLabel = isPaused ? "Resume" : status === "running" ? "Pause" : durationSeconds === null ? "Start (first key also starts)" : "Start";
-  const toggleAction = status === "running" || status === "paused" ? togglePause : start;
+  const toggleAction =
+    status === "running" || status === "paused" ? togglePause : start;
 
   return (
     <motion.div
-      className="app-page flex min-h-0 w-full flex-1 flex-col"
+      className="flex h-full min-h-0 w-full flex-1 flex-col"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
     >
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="eyebrow">{eyebrow ?? (durationSeconds !== null ? "Timed practice" : "Lesson")}</p>
-          <h1 className="ms mt-1 font-display text-2xl">{sourceName}</h1>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={requestExit}>
-            <LogOut className="size-4" />
-            Exit
-          </Button>
-          <Button onClick={toggleAction}>
-            {isPaused ? <Play className="size-4" /> : status === "running" ? <Pause className="size-4" /> : null}
-            {toggleLabel}
-          </Button>
-        </div>
-      </div>
+      <SessionHeader
+        eyebrow={
+          eyebrow ?? (durationSeconds !== null ? "Timed practice" : "Lesson")
+        }
+        title={sourceName}
+        status={status}
+        durationSeconds={durationSeconds}
+        onToggle={toggleAction}
+        onExit={requestExit}
+      />
 
       {error ? (
         <p
-          className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+          className="mx-5 mt-3 flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive sm:mx-8"
           role="alert"
         >
           <AlertCircle className="size-4 shrink-0" />
@@ -85,28 +82,30 @@ function Session({
       ) : null}
 
       {!layout || !engine ? (
-        <Spinner label="Loading the keys…" />
+        <div className="flex min-h-0 flex-1 items-center justify-center">
+          <Spinner label="Loading the keys…" />
+        </div>
       ) : (
-        <div className="flex flex-col gap-6">
-          <StatsBar />
-          <TargetText />
-          <motion.div
-            // className="rounded-2xl border border-border bg-card p-3 shadow-sm"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-          >
+        <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-y-auto px-5 py-4 sm:px-8">
+          <div className="flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
+            <StatsBar />
+            <TargetText />
             <KeyboardContainer layout={layout} />
-          </motion.div>
+          </div>
         </div>
       )}
 
       <ResultDialog />
 
-      <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)} ariaLabel="Leave this round?">
+      <Modal
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        ariaLabel="Leave this round?"
+      >
         <h2 className="font-display text-lg">Leave this round?</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Nothing so far in this attempt will be saved. You can pick it up again any time from the lessons list.
+          Nothing so far in this attempt will be saved. You can pick it up again
+          any time from the lessons list.
         </p>
         <div className="mt-5 flex justify-end gap-2">
           <Button variant="outline" onClick={() => setConfirmOpen(false)}>
@@ -128,19 +127,31 @@ function Session({
   );
 }
 
-// ─── Session loading gate (crossfades spinner ↔ surface) ────────────────────
-
-function SessionGate({ ready, loadingLabel, children }: { ready: boolean; loadingLabel: string; children: ReactNode }) {
+function SessionGate({
+  ready,
+  loadingLabel,
+  children,
+}: {
+  ready: boolean;
+  loadingLabel: string;
+  children: ReactNode;
+}) {
   return (
     <AnimatePresence mode="wait">
       {ready ? (
-        <motion.div key="session" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <motion.div
+          key="session"
+          className="flex h-full min-h-0 flex-1 flex-col"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
           {children}
         </motion.div>
       ) : (
         <motion.div
           key="loading"
-          className="flex min-h-0 flex-1 items-center justify-center"
+          className="flex h-full min-h-0 flex-1 items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -152,8 +163,6 @@ function SessionGate({ ready, loadingLabel, children }: { ready: boolean; loadin
     </AnimatePresence>
   );
 }
-
-// ─── Shared "begin this session once" bootstrapping ─────────────────────────
 
 function useBeginSession(id: string | undefined, load: () => Promise<void>) {
   const status = useTypingStore((s) => s.status);
@@ -169,8 +178,6 @@ function useBeginSession(id: string | undefined, load: () => Promise<void>) {
   }, [id, status, sessionKind, load]);
 }
 
-// ─── Pages ───────────────────────────────────────────────────────────────────
-
 export function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
   const navigate = useNavigate();
@@ -178,15 +185,26 @@ export function LessonPage() {
   const beginLesson = useTypingStore((s) => s.beginLesson);
 
   const load = useCallback(() => {
-    const mode = (localStorage.getItem("onetype:lesson-mode") as TypingMode | null) ?? "guided";
+    const mode =
+      (localStorage.getItem("onetype:lesson-mode") as TypingMode | null) ??
+      "guided";
     return lessonId ? beginLesson(lessonId, mode) : Promise.resolve();
   }, [lessonId, beginLesson]);
 
   useBeginSession(lessonId, load);
 
   return (
-    <SessionGate ready={session?.kind === "lesson"} loadingLabel="Loading lesson text, keyboard and attempt…">
-      {session?.kind === "lesson" ? <Session durationSeconds={null} sourceName={session.resolved.title} onExit={() => navigate("/learn")} /> : null}
+    <SessionGate
+      ready={session?.kind === "lesson"}
+      loadingLabel="Loading lesson text, keyboard and attempt…"
+    >
+      {session?.kind === "lesson" ? (
+        <Session
+          durationSeconds={null}
+          sourceName={session.resolved.title}
+          onExit={() => navigate("/learn")}
+        />
+      ) : null}
     </SessionGate>
   );
 }
@@ -207,9 +225,16 @@ export function TestPage() {
   useBeginSession(testId, load);
 
   return (
-    <SessionGate ready={session?.kind === "test" && !!session?.test} loadingLabel="Preparing test text, keyboard and attempt…">
+    <SessionGate
+      ready={session?.kind === "test" && !!session?.test}
+      loadingLabel="Preparing test text, keyboard and attempt…"
+    >
       {session?.kind === "test" && session.test ? (
-        <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} onExit={() => navigate("/tests")} />
+        <Session
+          durationSeconds={session.test.durationSeconds}
+          sourceName={session.test.name}
+          onExit={() => navigate("/tests")}
+        />
       ) : null}
     </SessionGate>
   );
@@ -225,7 +250,10 @@ export function DrillPage() {
     try {
       const drill = await buildAdaptiveDrill();
       if (drill) await beginDrill(drill);
-      else setError("Not enough typing data yet to spot weaknesses. Finish a few lessons first.");
+      else
+        setError(
+          "Not enough typing data yet to spot weaknesses. Finish a few lessons first.",
+        );
     } catch {
       setError("Could not prepare an adaptive drill right now.");
     }
@@ -236,7 +264,10 @@ export function DrillPage() {
   if (error && session?.kind !== "drill") {
     return (
       <div className="app-page flex w-full flex-col gap-4 py-10">
-        <p className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive" role="alert">
+        <p
+          className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+          role="alert"
+        >
           <AlertCircle className="size-4 shrink-0" />
           {error}
         </p>
@@ -245,7 +276,10 @@ export function DrillPage() {
   }
 
   return (
-    <SessionGate ready={session?.kind === "drill"} loadingLabel="Building drill from your weak keys…">
+    <SessionGate
+      ready={session?.kind === "drill"}
+      loadingLabel="Building drill from your weak keys…"
+    >
       {session?.kind === "drill" && session.drill ? (
         <Session
           durationSeconds={null}

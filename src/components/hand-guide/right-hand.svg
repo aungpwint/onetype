@@ -7,15 +7,32 @@
     data-active-finger attribute; each finger highlight carries data-finger.
   -->
   <style>
-    .st1 { fill: var(--hand); }
-    .st2 { fill: none; stroke: var(--hand-stroke); stroke-width: 2; stroke-miterlimit: 10; }
-    .st4 { fill: var(--hand-nail); opacity: 0.75; }
+    .st1 {
+      fill: color-mix(in srgb, var(--hand) 40%, transparent);
+    }
+    .st2 {
+      fill: none;
+      stroke: var(--hand-stroke);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10;
+    }
+    .st4 {
+      fill: var(--hand-nail);
+      opacity: 0.75;
+    }
     .hand-highlight {
       fill: none;
       stroke: var(--hand-active);
       stroke-width: 3;
       stroke-linecap: round;
+      stroke-linejoin: round;
       stroke-miterlimit: 10;
+      filter: drop-shadow(0 0 3px color-mix(in srgb, var(--hand-active) 55%, transparent));
+    }
+    #hand {
+      filter: drop-shadow(0 3px 5px rgb(0 0 0 / 0.16));
     }
   </style>
   <g id="hand">

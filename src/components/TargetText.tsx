@@ -100,12 +100,12 @@ export function TargetText() {
 
   return (
     <motion.div
-      className="mx-auto w-full max-w-5xl"
+      className="mx-auto w-full max-w-4xl"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
     >
-      <div className="tt-container rounded-2xl">
+      <div className="tt-container">
         <div ref={viewportRef} className="tt-viewport">
           <motion.div
             ref={contentRef}
@@ -113,8 +113,8 @@ export function TargetText() {
             style={{ x: springOffset }}
           >
             <p
-              className={`${hasMyanmar ? "font-myanmar" : "heavy"} mx-auto whitespace-nowrap text-4xl leading-normal tracking-normal md:text-5xl`}
-              style={{ wordSpacing: "0.2em" }}
+              className={`${hasMyanmar ? "font-myanmar" : "heavy"} mx-auto whitespace-nowrap text-4xl leading-tight tracking-normal md:text-5xl`}
+              style={{ wordSpacing: "0.16em" }}
             >
               {graphemes.map((g) => {
                 const isCurrent = unitIndex >= g.startUnit && unitIndex < g.endUnit;

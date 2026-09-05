@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { initUi, useUiStore } from "./stores/ui-store";
 import { useStudentStore } from "./stores/student-store";
@@ -6,13 +6,12 @@ import { useSettingsStore } from "./stores/settings-store";
 import { useStartupUpdateCheck } from "./services/updater/use-updater";
 import { notificationService } from "./services/notification/service";
 import { Shell } from "./components/AppShell";
+import { SessionFocus } from "./components/session/SessionFocus";
 import { UpdateBanner } from "./components/UpdateBanner";
 import { UpdateDialog } from "./components/UpdateDialog";
 import { Onboarding } from "./components/Onboarding";
 import { Spinner } from "./components/ui";
 
-// Routes are code-split so the typing session loads only the module it needs;
-// navigating back to the dashboard reuses the cached chunk immediately.
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Learn = lazy(() => import("./pages/Learn"));
 const TestsPage = lazy(() => import("./pages/TestsPage"));
@@ -21,8 +20,6 @@ const StudentsPage = lazy(() => import("./pages/StudentsPage"));
 const TeacherPage = lazy(() => import("./pages/TeacherPage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
 
-// The three session surfaces live in one module; expose each as its own lazy
-// boundary so the bundle splits once but every route resolves to it.
 const LessonPage = lazy(() =>
   import("./pages/SessionPage").then((m) => ({ default: m.LessonPage })),
 );
@@ -35,6 +32,56 @@ const DrillPage = lazy(() =>
 
 function PageLoader() {
   return <Spinner label="Loading…" />;
+}
+
+function AppView({ children }: { children: ReactNode }) {
+  return (
+    <Shell>
+      <div className="px-4 pt-4">
+        <UpdateBanner />
+      </div>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {children}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
+    </Shell>
+  );
+}
+
+function SessionRoutes() {
+  return (
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route
+          path="/lesson/:lessonId"
+          element={
+            <SessionFocus>
+              <LessonPage />
+            </SessionFocus>
+          }
+        />
+        <Route
+          path="/test/:testId"
+          element={
+            <SessionFocus>
+              <TestSessionPage />
+            </SessionFocus>
+          }
+        />
+        <Route
+          path="/drill"
+          element={
+            <SessionFocus>
+              <DrillPage />
+            </SessionFocus>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Suspense>
+  );
 }
 
 function Boot() {
@@ -55,7 +102,10 @@ export default function App() {
   const students = useStudentStore((s) => s.students);
   const location = useLocation();
 
-  const needsOnboarding = students.length === 0 || location.pathname === "/onboarding";
+  const needsOnboarding =
+    students.length === 0 || location.pathname === "/onboarding";
+
+  const inSessionRoute = /^\/(lesson\/|test\/|drill)/.test(location.pathname);
 
   return (
     <>
@@ -67,28 +117,19 @@ export default function App() {
         </div>
       ) : needsOnboarding ? (
         <Onboarding />
+      ) : inSessionRoute ? (
+        <SessionRoutes />
       ) : (
-        <Shell>
-          <div className="px-4 pt-4">
-            <UpdateBanner />
-          </div>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/learn" element={<Learn />} />
-              <Route path="/learn/:level" element={<Learn />} />
-              <Route path="/lesson/:lessonId" element={<LessonPage />} />
-              <Route path="/tests" element={<TestsPage />} />
-              <Route path="/test/:testId" element={<TestSessionPage />} />
-              <Route path="/drill" element={<DrillPage />} />
-              <Route path="/progress" element={<ProgressPage />} />
-              <Route path="/students" element={<StudentsPage />} />
-              <Route path="/teacher" element={<TeacherPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
-        </Shell>
+        <AppView>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/learn/:level" element={<Learn />} />
+          <Route path="/tests" element={<TestsPage />} />
+          <Route path="/progress" element={<ProgressPage />} />
+          <Route path="/students" element={<StudentsPage />} />
+          <Route path="/teacher" element={<TeacherPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+        </AppView>
       )}
     </>
   );

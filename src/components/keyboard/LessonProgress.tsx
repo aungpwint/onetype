@@ -20,24 +20,36 @@ export function LessonProgress() {
   const mapping = resolveFingerMapping(unit.keyCode, unit.modifier === "shift");
 
   return (
-    <div className="mb-3 flex items-center gap-4">
-      {/* Progress bar */}
-      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+    <div className="flex w-full items-center gap-3">
+      <div
+        className="h-1 flex-1 overflow-hidden rounded-full bg-muted"
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={progress}
+        aria-label="Lesson progress"
+      >
         <div
-          className="h-full rounded-full bg-linear-to-r from-accent to-accent-strong transition-all duration-300 ease-out"
+          className="h-full rounded-full bg-accent transition-[width] duration-300 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
 
-      {/* Active finger chip */}
       {mapping.primary ? (
-        <span className="shrink-0 rounded-full bg-accent/10 px-2.5 py-0.5 font-mono text-[0.625rem] font-semibold tracking-wider text-accent uppercase ring-1 ring-accent/25">
+        <span
+          className="shrink-0 rounded-full bg-accent/10 px-2 py-px font-mono text-[0.625rem] font-semibold tracking-wider text-accent uppercase"
+          title={
+            mapping.shift
+              ? `${fingerShort(mapping.shift)} + ${fingerShort(mapping.primary)}`
+              : fingerShort(mapping.primary)
+          }
+        >
           {fingerShort(mapping.primary)}
           {mapping.shift ? ` + ${fingerShort(mapping.shift)}` : ""}
         </span>
       ) : null}
 
-      <span className="shrink-0 font-mono text-[0.6875rem] tabular-nums text-muted-foreground">
+      <span className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
         {current + 1}/{total}
       </span>
     </div>
