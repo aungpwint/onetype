@@ -23,4 +23,13 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
     },
   },
+  {
+    files: ["src/components/ui/**/*.{ts,tsx}"],
+    rules: {
+      // shadcn/ui wrappers re-export aliased Radix primitives plus constants
+      // and displayName assignments, which opaque re-export chains the fast
+      // refresh rule cannot pattern-match.
+      "react-refresh/only-export-components": "off",
+    },
+  },
 );
