@@ -10,6 +10,12 @@ the curated source maintained alongside `scripts/release-notes.mjs`, which the
 and auto-update notes) to build every GitHub Release page.
 
 ## [Unreleased]
+### Fixed
+- `generate-latest-json.mjs` merge now validates each partial is a regular file
+  (`isFile()`), wrapping read/parse errors with the exact offending path instead
+  of crashing with a bare `EISDIR`. The workflow step that assembles the
+  partials list uses `find -type f` so directories can never be passed to the
+  merge in the first place.
 
 ## [1.1.0] - 2026-09-05
 ### Added

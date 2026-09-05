@@ -328,7 +328,7 @@ jobs:
           set -euo pipefail
           VERSION="$RELEASE_TAG"
           VERSION="${VERSION#v}"
-          PARTIALS=$(ls dist/updates/partial-*.json 2>/dev/null || true)
+          PARTIALS=$(find dist/updates -maxdepth 1 -type f -name 'partial-*.json' -print | tr '\n' ' ')
           if [ -z "$PARTIALS" ]; then
             echo "No updater partials found — nothing to publish." >&2
             exit 1
@@ -337,7 +337,7 @@ jobs:
             --version "$VERSION" \
             --pub-date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
             --notes "See https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/tag/$RELEASE_TAG" \
-            --partials "$(echo $PARTIALS | tr '\n' ' ')" \
+            --partials "$PARTIALS" \
             --out dist/updates/latest.json
           echo "=== merged latest.json ==="
           cat dist/updates/latest.json

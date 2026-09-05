@@ -102,4 +102,40 @@ describe("generate-latest-json.mjs (merge)", () => {
       run("--merge", "--version", "1.1.0", "--pub-date", "x", "--partials", "", "--out", out),
     ).toThrow();
   });
+
+  it("ignores whitespace padding around the partials list", () => {
+    const p1 = join(dir, "pad1.json");
+    run("--partial", "--target", "windows-x86_64", "--url", "u", "--sig-file", sigFile, "--out", p1);
+    const out = join(dir, "pad-out.json");
+    run(
+      "--merge", "--version", "1.1.0", "--pub-date", "x",
+      "--partials", `  ${p1}\n  `,
+      "--out", out,
+    );
+    const m = JSON.parse(readFileSync(out, "utf8"));
+    expect(Object.keys(m.platforms)).toEqual(["windows-x86_64"]);
+  });
+
+  it("reports a clear error when a partial path is a directory", () => {
+    const out = join(dir, "dir-out.json");
+    expect(() =>
+      run("--merge", "--version", "1.1.0", "--pub-date", "x", "--partials", dir, "--out", out),
+    ).toThrow(/not a file/i);
+  });
+
+  it("reports a clear error when a partial is missing", () => {
+    const out = join(dir, "missing-out.json");
+    expect(() =>
+      run("--merge", "--version", "1.1.0", "--pub-date", "x", "--partials", join(dir, "nope.json"), "--out", out),
+    ).toThrow(/not found/i);
+  });
+
+  it("reports a clear error on invalid JSON in a partial", () => {
+    const bad = join(dir, "corrupt.json");
+    writeFileSync(bad, "{ not json");
+    const out = join(dir, "corrupt-out.json");
+    expect(() =>
+      run("--merge", "--version", "1.1.0", "--pub-date", "x", "--partials", bad, "--out", out),
+    ).toThrow(/invalid json/i);
+  });
 });

@@ -35,7 +35,7 @@
  * The `version` must already have passed `scripts/check-versions.mjs`.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "node:fs";
 import { resolve, dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -103,7 +103,28 @@ function modeMerge(version, pubDate, notes, partialGlob, out) {
   for (const p of partialPaths) {
     const absolute = resolve(root, p);
     if (!existsSync(absolute)) fail(`Partial manifest not found: ${absolute}`);
-    const partial = JSON.parse(readFileSync(absolute, "utf8"));
+
+    try {
+      const st = statSync(absolute);
+      if (!st.isFile()) fail(`Partial path is not a file: ${absolute}`);
+    } catch (err) {
+      fail(`Unable to stat partial path ${absolute}: ${err.message}`);
+    }
+
+    let raw;
+    try {
+      raw = readFileSync(absolute, "utf8");
+    } catch (err) {
+      fail(`Failed reading partial ${absolute}: ${err.message}`);
+    }
+
+    let partial;
+    try {
+      partial = JSON.parse(raw);
+    } catch (err) {
+      fail(`Invalid JSON in partial ${absolute}: ${err.message}`);
+    }
+
     for (const [key, value] of Object.entries(partial.platforms || {})) {
       if (combined.platforms[key]) {
         fail(`Duplicate platform "${key}" in partials — refusing to guess.`);
