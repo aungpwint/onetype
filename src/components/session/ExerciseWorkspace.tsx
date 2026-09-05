@@ -72,7 +72,7 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
 
   return (
     <motion.div
-      className="flex h-full min-h-0 w-full flex-1 flex-col"
+      className="flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
@@ -172,7 +172,7 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
           <p className="text-sm text-muted-foreground">Loading the keys…</p>
         </div>
       ) : (
-        <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-y-auto px-4 py-5 sm:px-8">
+        <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-4 py-5 sm:px-8">
           <div className="flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
             <TargetText />
             {status === "ready" ? <TabStartHint /> : null}
