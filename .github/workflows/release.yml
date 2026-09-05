@@ -243,6 +243,44 @@ jobs:
             --sig-file "$WIN_SIG" \
             --out dist/updates/partial-windows-x86_64.json
 
+      - name: Build latest.json partials (macOS ARM64)
+        shell: bash
+        run: |
+          set -euo pipefail
+          MAC_TGZ=$(ls dist/updates/*aarch64*.app.tar.gz 2>/dev/null | head -n1 || true)
+          if [ -z "$MAC_TGZ" ]; then
+            echo "No macOS aarch64 updater payload found; skipping."
+            exit 0
+          fi
+          MAC_SIG=$(ls dist/updates/*aarch64*.app.tar.gz.sig 2>/dev/null | head -n1 || true)
+          [ -f "$MAC_SIG" ] || { echo "Missing macOS updater signature (.sig)" >&2; exit 1; }
+          TAG="${{ github.ref_name }}"
+          BASE="https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/download/$TAG"
+          node scripts/generate-latest-json.mjs --partial \
+            --target darwin-aarch64 \
+            --url "$BASE/$(basename "$MAC_TGZ")" \
+            --sig-file "$MAC_SIG" \
+            --out dist/updates/partial-darwin-aarch64.json
+
+      - name: Build latest.json partials (Linux AppImage)
+        shell: bash
+        run: |
+          set -euo pipefail
+          LIN_APP=$(ls dist/updates/*.AppImage 2>/dev/null | head -n1 || true)
+          if [ -z "$LIN_APP" ]; then
+            echo "No Linux AppImage updater payload found; skipping."
+            exit 0
+          fi
+          LIN_SIG=$(ls dist/updates/*.AppImage.sig 2>/dev/null | head -n1 || true)
+          [ -f "$LIN_SIG" ] || { echo "Missing Linux updater signature (.sig)" >&2; exit 1; }
+          TAG="${{ github.ref_name }}"
+          BASE="https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/download/$TAG"
+          node scripts/generate-latest-json.mjs --partial \
+            --target linux-x86_64 \
+            --url "$BASE/$(basename "$LIN_APP")" \
+            --sig-file "$LIN_SIG" \
+            --out dist/updates/partial-linux-x86_64.json
+
       - name: Merge latest.json
         shell: bash
         run: |
@@ -273,8 +311,11 @@ jobs:
         run: |
           TAG="${{ github.ref_name }}"
           ASSETS="dist/updates/latest.json"
-          # All downloaded platform bundles.
+          # All downloaded platform bundles (skip the partial manifests and latest.json itself).
           for f in dist/updates/*; do
+            case "$(basename "$f")" in
+              partial-*.json | latest.json) continue ;;
+            esac
             if [ -f "$f" ]; then ASSETS="$ASSETS $f"; fi
           done
           # Create the release if it does not already exist; otherwise update.

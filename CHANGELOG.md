@@ -22,6 +22,10 @@ every GitHub Release.
 - Windows updater signature files are now matched independently in the release
   workflow (`*_setup.exe.sig`), fixing the pairing that broke when bundle names
   changed from `onetype_*` to `OneType_*`.
+- Updater manifests (`latest.json`) now cover every platform the release matrix
+  builds — Windows NSIS, macOS ARM64 (`.app.tar.gz`) and Linux AppImage —
+  instead of Windows only, so in-app updates work on all platforms. Partial
+  manifests are also no longer uploaded as release assets.
 
 ### Added
 - Production release pipeline: `latest.json` updater manifest is now generated
