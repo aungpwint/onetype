@@ -23,7 +23,6 @@ import {
 } from "lucide-react";
 import { useUiStore } from "../stores/ui-store";
 import { useStudentStore } from "../stores/student-store";
-import logo from "../assets/logo.png";
 import { useKeyboardShortcuts } from "../hooks/use-keyboard-shortcuts";
 import { Modal } from "./ui";
 import { StudentForm } from "./StudentForm";
@@ -120,12 +119,19 @@ export function Shell({ children }: { children: ReactNode }) {
                 onClick={() => navigate("/")}
                 aria-label="Back to dashboard"
               >
-                <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-accent shadow-sm">
-                  <img
-                    src={logo}
-                    alt="OneType logo"
-                    className="h-full w-full object-cover"
-                  />
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent font-mono text-sm font-bold text-accent-ink shadow-sm">
+                  <span className="relative flex h-full w-full items-center justify-center">
+                    <svg viewBox="0 0 32 32" className="absolute inset-0 h-full w-full" aria-hidden>
+                      <path
+                        d="M22 9.6c0-1.3-1-2.1-2.5-2.1-1 0-2 .4-2.7 1.1-.7.7-1 1.6-1 2.7v7.4c0 2.4-1.6 4.3-5.3 4.3V11.6c0-1.3-1-2.1-2.5-2.1-1 0-2 .4-2.7 1.1-.7.7-1 1.6-1 2.7"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                      />
+                      <circle cx="24" cy="24" r="3.4" fill="currentColor" />
+                    </svg>
+                  </span>
                 </span>
                 <span className="font-display text-lg leading-none">
                   OneType
@@ -159,7 +165,7 @@ export function Shell({ children }: { children: ReactNode }) {
                   className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-muted"
                   onClick={() => setPickerOpen(true)}
                 >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brass font-mono text-xs font-bold text-card shadow-sm">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-bold text-accent shadow-sm">
                     {active.displayName.slice(0, 1).toUpperCase()}
                   </span>
                   <span className="min-w-0">
@@ -232,14 +238,14 @@ export function Shell({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 className={`flex w-full items-center gap-3 rounded-xl border bg-background px-3 py-2.5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                  active?.id === student.id ? "border-brass bg-muted" : "border-border hover:border-border"
+                  active?.id === student.id ? "border-accent bg-muted" : "border-border hover:border-border"
                 }`}
                 onClick={() => {
                   void select(student.id);
                   setPickerOpen(false);
                 }}
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brass font-mono text-xs font-bold text-card shadow-sm">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-bold text-accent shadow-sm">
                   {student.displayName.slice(0, 1).toUpperCase()}
                 </span>
                 <span className="min-w-0">

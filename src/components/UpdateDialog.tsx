@@ -48,7 +48,7 @@ export function UpdateDialog() {
           <div className="mt-4">
             <div className="h-2 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-brass transition-all"
+                className="h-full rounded-full bg-accent transition-all"
                 style={{
                   width: status.contentLength
                     ? `${Math.min(100, (status.progress / status.contentLength) * 100)}%`

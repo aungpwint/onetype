@@ -9,7 +9,7 @@ const variantClasses: Record<BadgeVariant, string> = {
   destructive: "border-transparent bg-destructive text-destructive-foreground",
   outline: "text-foreground",
   success: "border-transparent bg-success/15 text-success",
-  warning: "border-transparent bg-brass/15 text-brass",
+  warning: "border-transparent bg-warning/15 text-warning",
 };
 
 export function Badge({

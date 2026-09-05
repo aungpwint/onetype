@@ -101,7 +101,7 @@ export default function SettingsPage() {
           <Field label="Theme">
             <div className="relative">
               <select
-                className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-brass focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
                 value={theme}
                 onChange={(e) => setTheme(e.currentTarget.value as ThemePreference)}
               >
@@ -114,7 +114,7 @@ export default function SettingsPage() {
           <Field label="Default language">
             <div className="relative">
               <select
-                className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-brass focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
                 value={defaultLang}
                 onChange={(e) => void settings.set("app.language", e.currentTarget.value)}
               >

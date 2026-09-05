@@ -91,38 +91,40 @@ export function TargetText() {
 
   return (
     <motion.div
-      className="tt-container rounded-2xl shadow-sm"
+      className="mx-auto w-full max-w-5xl"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
     >
-      <div ref={viewportRef} className="tt-viewport">
-        <motion.div
-          ref={contentRef}
-          className="tt-content"
-          style={{ x: springOffset }}
-        >
-          <p
-            className={`${hasMyanmar ? "font-myanmar" : "heavy"} mx-auto whitespace-nowrap text-4xl leading-normal tracking-normal md:text-5xl`}
-            style={{ wordSpacing: "0.2em" }}
+      <div className="tt-container rounded-2xl">
+        <div ref={viewportRef} className="tt-viewport">
+          <motion.div
+            ref={contentRef}
+            className="tt-content"
+            style={{ x: springOffset }}
           >
-            {graphemes.map((g) => {
-              const isCurrent = unitIndex >= g.startUnit && unitIndex < g.endUnit;
-              const isCompleted = g.endUnit <= unitIndex;
-              return (
-                <Char
-                  key={g.index}
-                  text={g.text}
-                  startUnit={g.startUnit}
-                  endUnit={g.endUnit}
-                  completed={isCompleted}
-                  current={isCurrent}
-                  onCaret={isCurrent ? onCaretRef : undefined}
-                />
-              );
-            })}
-          </p>
-        </motion.div>
+            <p
+              className={`${hasMyanmar ? "font-myanmar" : "heavy"} mx-auto whitespace-nowrap text-4xl leading-normal tracking-normal md:text-5xl`}
+              style={{ wordSpacing: "0.2em" }}
+            >
+              {graphemes.map((g) => {
+                const isCurrent = unitIndex >= g.startUnit && unitIndex < g.endUnit;
+                const isCompleted = g.endUnit <= unitIndex;
+                return (
+                  <Char
+                    key={g.index}
+                    text={g.text}
+                    startUnit={g.startUnit}
+                    endUnit={g.endUnit}
+                    completed={isCompleted}
+                    current={isCurrent}
+                    onCaret={isCurrent ? onCaretRef : undefined}
+                  />
+                );
+              })}
+            </p>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );

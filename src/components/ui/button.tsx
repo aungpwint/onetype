@@ -14,7 +14,7 @@ const variantClasses: Record<Variant, string> = {
   destructive:
     "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm",
   link: "text-primary underline-offset-4 hover:underline",
-  brass: "bg-brass text-paper shadow-sm hover:bg-brass-strong",
+  brass: "bg-accent text-accent-ink shadow-sm hover:bg-accent-strong",
 };
 
 const sizeClasses: Record<Size, string> = {

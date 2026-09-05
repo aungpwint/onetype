@@ -8,7 +8,7 @@ export function UpdateBanner() {
   if (status.state !== "available") return null;
 
   return (
-    <div className="flex items-center justify-between gap-3 rounded-lg border border-brass/30 bg-brass/10 px-4 py-2.5 text-sm">
+    <div className="flex items-center justify-between gap-3 rounded-lg border border-accent/30 bg-accent/10 px-4 py-2.5 text-sm">
       <span>
         Update available: <strong>v{status.version}</strong>
       </span>

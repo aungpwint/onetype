@@ -1,44 +1,34 @@
 import { useEffect, useState } from "react";
-import { Gauge, Timer, Target, AlignLeft, Pause } from "lucide-react";
 import { useTypingStore } from "../stores/typing-store";
 import { formatDuration } from "../lib/format";
-import { cn } from "../lib/utils";
 
-function StatItem({
-  icon,
+function CompactStat({
   label,
   value,
-  emphasize,
+  tone,
 }: {
-  icon: React.ReactNode;
   label: string;
   value: string;
-  emphasize?: boolean;
+  tone?: "success" | "destructive" | "muted";
 }) {
+  const color =
+    tone === "success"
+      ? "text-success"
+      : tone === "destructive"
+        ? "text-destructive"
+        : "text-foreground";
   return (
-    <div
-      className={cn(
-        "flex items-center gap-3 rounded-xl border bg-card px-5 py-3 shadow-sm transition-colors",
-        emphasize ? "border-brass" : "border-border",
-      )}
-      title={label}
-    >
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
-        {icon}
-      </span>
-      <span className="min-w-0">
-        <span className="eyebrow block leading-none">{label}</span>
-        <span className="tnum mt-1 block font-display text-lg leading-none md:text-xl">{value}</span>
-      </span>
-    </div>
+    <span className="inline-flex items-center gap-1.5">
+      <span className="text-xs text-muted-foreground">{label}</span>
+      <span className={`tnum font-medium ${color}`}>{value}</span>
+    </span>
   );
 }
 
 export function StatsBar() {
-  const tick = useTypingStore((s) => s.tick);
-  void tick;
-  const [, force] = useState(0);
   const status = useTypingStore((s) => s.status);
+  void status;
+  const [, force] = useState(0);
 
   useEffect(() => {
     const id = window.setInterval(() => force((n) => n + 1), 250);
@@ -50,23 +40,34 @@ export function StatsBar() {
   const engine = useTypingStore.getState().engine;
   const remaining = durationSeconds !== null && engine ? Math.max(0, durationSeconds - engine.elapsedSeconds()) : null;
 
-  const isPaused = status === "paused";
+  const wpm = Math.round(stats.wpm);
+  const progress = stats.totalUnits > 0 ? Math.round((stats.unitIndex / stats.totalUnits) * 100) : 0;
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-      <StatItem icon={<Gauge className="size-4" />} label="WPM" value={String(Math.round(stats.wpm))} />
-      <StatItem icon={<AlignLeft className="size-4" />} label="CPM" value={String(Math.round(stats.cpm))} />
-      <StatItem icon={<Target className="size-4" />} label="Accuracy" value={`${stats.accuracy.toFixed(1)}%`} />
-      <StatItem
-        icon={isPaused ? <Pause className="size-4" /> : <Timer className="size-4" />}
-        label={durationSeconds !== null ? "Time" : "Progress"}
-        value={
-          durationSeconds !== null && remaining !== null
-            ? formatDuration(remaining * 1000)
-            : `${stats.unitIndex}/${stats.totalUnits}`
-        }
-        emphasize={isPaused}
-      />
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-end justify-center gap-2">
+        <span className="tnum text-5xl font-semibold leading-none tracking-tight text-foreground">
+          {wpm}
+        </span>
+        <span className="mb-0.5 text-sm font-medium text-muted-foreground">WPM</span>
+      </div>
+
+      <div className="mx-auto flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-sm">
+        <CompactStat label="Accuracy" value={`${stats.accuracy.toFixed(1)}%`} />
+        <CompactStat
+          label={durationSeconds !== null ? "Time" : "Progress"}
+          value={
+            durationSeconds !== null && remaining !== null
+              ? formatDuration(remaining * 1000)
+              : `${progress}%`
+          }
+        />
+        <CompactStat
+          label="Errors"
+          value={String(stats.incorrectCount)}
+          tone={stats.incorrectCount > 0 ? "destructive" : "muted"}
+        />
+      </div>
     </div>
   );
 }

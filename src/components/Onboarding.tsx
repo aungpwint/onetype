@@ -51,7 +51,7 @@ export function Onboarding() {
           <div className="border-b border-border bg-muted/60 px-8 py-6">
             <p className="eyebrow">Desk № 1 · First lesson</p>
             <h1 className="mt-2 flex items-center gap-2 font-display text-3xl">
-              OneType <Sparkles className="size-6 text-brass" />
+              OneType <Sparkles className="size-6 text-accent" />
               <span className="ms text-2xl text-muted-foreground">ဝမ်းတိုက်</span>
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -77,7 +77,7 @@ export function Onboarding() {
                   type="button"
                   onClick={() => setDefaultLang("myanmar")}
                   className={`rounded-xl border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                    defaultLang === "myanmar" ? "border-brass bg-muted" : "border-border hover:border-border"
+                    defaultLang === "myanmar" ? "border-accent bg-muted ring-1 ring-accent/20" : "border-border hover:border-border"
                   }`}
                 >
                   <span className="ms text-2xl leading-none">မြန်မာ</span>
@@ -87,7 +87,7 @@ export function Onboarding() {
                   type="button"
                   onClick={() => setDefaultLang("english")}
                   className={`rounded-xl border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                    defaultLang === "english" ? "border-brass bg-muted" : "border-border hover:border-border"
+                    defaultLang === "english" ? "border-accent bg-muted ring-1 ring-accent/20" : "border-border hover:border-border"
                   }`}
                 >
                   <span className="text-2xl font-semibold leading-none">Aa</span>
@@ -98,7 +98,7 @@ export function Onboarding() {
             <div className="flex items-center justify-between">
               <Field label="Appearance">
                 <select
-                  className="flex h-9 w-40 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-brass focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                  className="flex h-9 w-40 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
                   value={theme}
                   onChange={(e) => setTheme(e.currentTarget.value as typeof theme)}
                 >

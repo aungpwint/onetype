@@ -42,8 +42,8 @@ export default function StudentsPage() {
       ) : (
         <div className="space-y-2">
           {sorted.map((student) => (
-            <div key={student.id} className={`card flex items-center gap-4 p-4 transition-colors ${active?.id === student.id ? "border-brass" : ""}`}>
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brass text-xl shadow-sm">
+            <div key={student.id} className={`card flex items-center gap-4 p-4 transition-colors ${active?.id === student.id ? "border-accent ring-1 ring-accent/20" : ""}`}>
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xl shadow-sm">
                 <span aria-hidden>{student.avatar ?? "🐘"}</span>
               </span>
               <div className="min-w-0 flex-1">

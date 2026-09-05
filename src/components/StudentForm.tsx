@@ -57,7 +57,7 @@ export function StudentForm({ student, onDone }: { student?: Student; onDone?: (
               key={a}
               type="button"
               className={`flex h-10 w-10 items-center justify-center rounded-lg border text-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                avatar === a ? "border-brass bg-muted" : "border-border hover:border-border"
+                avatar === a ? "border-accent bg-muted" : "border-border hover:border-border"
               }`}
               aria-label={`Use mark ${a}`}
               onClick={() => setAvatar(a)}

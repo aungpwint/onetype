@@ -60,9 +60,9 @@ function AccChart({ values }: { values: number[] }) {
     <svg viewBox={`0 0 ${w} ${h}`} className="w-full" role="img" aria-label="Accuracy over recent sessions">
       <line x1={0} y1={h - 0.5} x2={w} y2={h - 0.5} stroke="var(--line-strong)" />
       {points.length > 1 ? (
-        <polyline points={points.join(" ")} fill="none" stroke="var(--brass)" strokeWidth={2} />
+        <polyline points={points.join(" ")} fill="none" stroke="var(--accent)" strokeWidth={2} />
       ) : points.length === 1 ? (
-        <circle cx={points[0].split(",")[0]} cy={points[0].split(",")[1]} r={3} fill="var(--brass)" />
+        <circle cx={points[0].split(",")[0]} cy={points[0].split(",")[1]} r={3} fill="var(--accent)" />
       ) : null}
     </svg>
   );

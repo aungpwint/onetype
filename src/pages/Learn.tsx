@@ -89,7 +89,7 @@ export default function Learn() {
               to={`/learn/${l}`}
               onClick={() => setLevel(l)}
               className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                level === l ? "border-brass bg-muted" : "border-border text-muted-foreground hover:text-foreground"
+                level === l ? "border-accent bg-muted" : "border-border text-muted-foreground hover:text-foreground"
               }`}
               role="tab"
               aria-selected={level === l}

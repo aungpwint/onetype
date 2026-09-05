@@ -419,10 +419,10 @@ function getKeyStateClass({
   if (isActive && !isShiftHint) {
     return [
       "z-20",
-      "border-brass",
-      "bg-brass",
+      "border-accent",
+      "bg-accent",
       "font-bold",
-      "text-paper",
+      "text-accent-ink",
       "key-glow",
     ].join(" ");
   }
@@ -430,12 +430,12 @@ function getKeyStateClass({
   if (isShiftHint) {
     return [
       "z-10",
-      "border-brass/50",
-      "bg-brass/15",
-      "text-brass",
+      "border-accent/60",
+      "bg-accent/15",
+      "text-accent",
       "shadow-sm",
       "ring-1",
-      "ring-brass/40",
+      "ring-accent/40",
     ].join(" ");
   }
 
