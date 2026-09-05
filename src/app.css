@@ -267,6 +267,17 @@
         padding: 1.5rem 1.75rem;
     }
 
+    /* Route transition container. The transition only moves opacity/transform
+     (GPU-composited, layout-neutral), so the shell's scroll container never
+     collapses or jumps between routes. The incoming page rests in normal flow
+     (mode="wait" keeps a single page mounted), masking the layout swap.
+     Reduced-motion is handled by the root <MotionConfig reducedMotion="user">
+     in main.tsx. */
+    .page-transition {
+        width: 100%;
+        min-width: 0;
+    }
+
     .eyebrow {
         font-family: var(--font-mono);
         font-size: 0.6875rem;

@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useState, type ReactNode, type RefObject } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
@@ -69,7 +69,7 @@ function ThemeToggle() {
     return <IconButton label={label} onClick={() => setTheme(next)} icon={icon} />
 }
 
-export function Shell({ children }: { children: ReactNode }) {
+export function Shell({ children, contentRef }: { children: ReactNode; contentRef?: RefObject<HTMLElement | null> }) {
     const sidebarOpen = useUiStore((s) => s.sidebarOpen)
     const toggleSidebar = useUiStore((s) => s.toggleSidebar)
     const handGuide = useUiStore((s) => s.handGuideVisible)
@@ -214,7 +214,9 @@ export function Shell({ children }: { children: ReactNode }) {
                             </Button>
                         </div>
                     </header>
-                    <main className="min-h-0 flex-1 overflow-y-auto">{children}</main>
+                    <main ref={contentRef} className="min-h-0 flex-1 overflow-y-auto">
+                        {children}
+                    </main>
                 </div>
 
                 <Modal open={pickerOpen} onClose={() => setPickerOpen(false)} ariaLabel="Choose a learner">

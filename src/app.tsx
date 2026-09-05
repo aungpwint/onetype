@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, type ReactNode } from 'react'
+import { lazy, Suspense, useEffect, useRef, type ReactNode } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { initUi, useUiStore } from '@/stores/ui-store'
 import { useStudentStore } from '@/stores/student-store'
@@ -6,6 +6,7 @@ import { useSettingsStore } from '@/stores/settings-store'
 import { useStartupUpdateCheck } from '@/services/updater/use-updater'
 import { notificationService } from '@/services/notification/service'
 import { Shell } from '@/components/app-shell'
+import { PageTransition } from '@/components/page-transition'
 import { SessionFocus } from '@/components/session/session-focus'
 import { UpdateBanner } from '@/components/update-banner'
 import { UpdateDialog } from '@/components/update-dialog'
@@ -29,17 +30,20 @@ function PageLoader() {
 }
 
 function AppView({ children }: { children: ReactNode }) {
+    const contentRef = useRef<HTMLElement>(null)
     return (
-        <Shell>
+        <Shell contentRef={contentRef}>
             <div className="px-4 pt-4">
                 <UpdateBanner />
             </div>
-            <Suspense fallback={<PageLoader />}>
-                <Routes>
-                    {children}
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-            </Suspense>
+            <PageTransition scrollRef={contentRef}>
+                <Suspense fallback={<PageLoader />}>
+                    <Routes>
+                        {children}
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                </Suspense>
+            </PageTransition>
         </Shell>
     )
 }
