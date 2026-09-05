@@ -5,13 +5,13 @@ type Variant = 'default' | 'secondary' | 'outline' | 'ghost' | 'destructive' | '
 type Size = 'default' | 'sm' | 'lg' | 'icon' | 'icon-sm'
 
 const variantClasses: Record<Variant, string> = {
-    default: 'bg-accent text-accent-ink hover:bg-accent-strong shadow-sm disabled:hover:bg-accent',
-    secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-    outline: 'border border-border bg-background hover:bg-muted hover:text-foreground',
+    default: 'bg-primary text-primary-foreground hover:bg-primary-hover active:bg-primary-active',
+    secondary: 'bg-secondary text-ink-soft hover:bg-surface-elevated hover:text-foreground',
+    outline: 'border border-line-strong bg-background hover:bg-muted hover:text-foreground active:bg-muted',
     ghost: 'hover:bg-muted hover:text-foreground',
-    destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm',
+    destructive: 'bg-destructive text-white hover:bg-destructive/90',
     link: 'text-primary underline-offset-4 hover:underline',
-    brass: 'bg-accent text-accent-ink shadow-sm hover:bg-accent-strong',
+    brass: 'bg-primary text-primary-foreground hover:bg-primary-hover active:bg-primary-active',
 }
 
 const sizeClasses: Record<Size, string> = {
@@ -30,7 +30,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const buttonClasses = ({ variant = 'default', size = 'default', className }: Partial<ButtonProps>) =>
     cn(
-        'inline-flex items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0',
+        'inline-flex items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap transition-[color,background-color,border-color,box-shadow,transform] duration-150 ease-out focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0',
         variantClasses[variant],
         sizeClasses[size],
         className,

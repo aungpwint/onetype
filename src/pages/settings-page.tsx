@@ -20,9 +20,10 @@ import { useSettingsStore } from '@/stores/settings-store'
 import { useStudentStore } from '@/stores/student-store'
 import { useUpdater } from '@/services/updater/use-updater'
 import type { ThemePreference } from '@/types'
-import { Field, Modal } from '@/components/ui'
+import { Field, Modal, PageHeader, AsyncButton } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
+import { cn, cardClass, appPageClass, sectionTitleClass } from '@/lib/utils'
 
 export default function SettingsPage() {
     const theme = useUiStore((s) => s.theme)
@@ -90,12 +91,8 @@ export default function SettingsPage() {
     }
 
     return (
-        <div className="app-page">
-            <header>
-                <p className="eyebrow">Preferences</p>
-                <h1 className="mt-1 font-display text-3xl tracking-tight">Settings</h1>
-                <p className="mt-1 text-sm text-muted-foreground">These are stored on this machine only. Nothing here is sent anywhere.</p>
-            </header>
+        <div className={appPageClass}>
+            <PageHeader eyebrow="Preferences" title="Settings" subtitle="These are stored on this machine only. Nothing here is sent anywhere." />
 
             <Section icon={<Palette className="size-4" />} title="Appearance">
                 <div className="mt-4 flex flex-wrap items-end gap-4">
@@ -204,20 +201,18 @@ export default function SettingsPage() {
                     />
                 </div>
                 <div className="mt-4 flex flex-wrap items-center gap-3">
-                    <Button disabled={updater.status.state === 'checking'} onClick={updater.check}>
-                        {updater.status.state === 'checking' ? (
-                            <>
-                                <RefreshCw className="size-4 animate-spin" />
-                                Checking…
-                            </>
-                        ) : updater.status.state === 'available' ? (
-                            `Update available (v${updater.status.version})`
-                        ) : updater.status.state === 'downloaded' ? (
-                            'Update ready to install'
-                        ) : (
-                            'Check for updates'
-                        )}
-                    </Button>
+                    <AsyncButton
+                        disabled={updater.status.state === 'checking'}
+                        loading={updater.status.state === 'checking'}
+                        loadingLabel="Checking…"
+                        onClick={updater.check}
+                    >
+                        {updater.status.state === 'available'
+                            ? `Update available (v${updater.status.version})`
+                            : updater.status.state === 'downloaded'
+                              ? 'Update ready to install'
+                              : 'Check for updates'}
+                    </AsyncButton>
                     {updater.status.state === 'available' && (
                         <Button variant="brass" onClick={updater.downloadAndInstall}>
                             <Download className="size-4" />
@@ -239,58 +234,37 @@ export default function SettingsPage() {
                     Everything lives in an on-device database. Back it up or move it between machines by exporting.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                    <Button disabled={busy !== null} onClick={() => void doExport('all')}>
-                        {busy === 'Export all…' ? (
-                            <>
-                                <RefreshCw className="size-4 animate-spin" />
-                                Working…
-                            </>
-                        ) : (
-                            <>
-                                <DownloadCloud className="size-4" />
-                                Back up everything
-                            </>
-                        )}
-                    </Button>
-                    <Button variant="outline" disabled={busy !== null || !active} onClick={() => void doExport('one')}>
-                        {busy === 'Export one…' ? (
-                            <>
-                                <RefreshCw className="size-4 animate-spin" />
-                                Working…
-                            </>
-                        ) : (
-                            <>
-                                <HardDrive className="size-4" />
-                                Back up {active ? active.displayName : 'a learner'}
-                            </>
-                        )}
-                    </Button>
-                    <Button variant="brass" disabled={busy !== null} onClick={() => void doImport()}>
-                        {busy === 'Import…' ? (
-                            <>
-                                <RefreshCw className="size-4 animate-spin" />
-                                Working…
-                            </>
-                        ) : (
-                            <>
-                                <UploadCloud className="size-4" />
-                                Import from backup
-                            </>
-                        )}
-                    </Button>
-                    <Button variant="outline" disabled={busy !== null} onClick={doHealthCheck}>
-                        {busy === 'Check…' ? (
-                            <>
-                                <RefreshCw className="size-4 animate-spin" />
-                                Checking…
-                            </>
-                        ) : (
-                            <>
-                                <RefreshCw className="size-4" />
-                                Check database health
-                            </>
-                        )}
-                    </Button>
+                    <AsyncButton disabled={busy !== null} loading={busy === 'Export all…'} icon={DownloadCloud} onClick={() => void doExport('all')}>
+                        Back up everything
+                    </AsyncButton>
+                    <AsyncButton
+                        variant="outline"
+                        disabled={busy !== null || !active}
+                        loading={busy === 'Export one…'}
+                        icon={HardDrive}
+                        onClick={() => void doExport('one')}
+                    >
+                        Back up {active ? active.displayName : 'a learner'}
+                    </AsyncButton>
+                    <AsyncButton
+                        variant="brass"
+                        disabled={busy !== null}
+                        loading={busy === 'Import…'}
+                        icon={UploadCloud}
+                        onClick={() => void doImport()}
+                    >
+                        Import from backup
+                    </AsyncButton>
+                    <AsyncButton
+                        variant="outline"
+                        disabled={busy !== null}
+                        loading={busy === 'Check…'}
+                        loadingLabel="Checking…"
+                        icon={RefreshCw}
+                        onClick={doHealthCheck}
+                    >
+                        Check database health
+                    </AsyncButton>
                 </div>
                 <p className="mt-3 text-xs text-muted-foreground">
                     In the browser/dev preview, export downloads a JSON file and import reads one back.
@@ -310,9 +284,9 @@ export default function SettingsPage() {
 
 function Section({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
     return (
-        <section className="rounded-xl border border-border bg-card p-5 shadow-sm">
-            <h2 className="flex items-center gap-2 font-display text-lg">
-                <span className="text-muted-foreground">{icon}</span>
+        <section className={cn(cardClass, 'p-5')}>
+            <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
+                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-muted text-accent">{icon}</span>
                 {title}
             </h2>
             {children}

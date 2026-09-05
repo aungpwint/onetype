@@ -1,14 +1,15 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { AlertCircle, ArrowLeft, Hand, Pause, Play, Volume2, VolumeX } from 'lucide-react'
+import { AlertCircle, ArrowLeft, Pause, Play } from 'lucide-react'
 import { useTypingStore } from '@/stores/typing-store'
-import { useUiStore } from '@/stores/ui-store'
-import { useSettingsStore } from '@/stores/settings-store'
 import { containsMyanmar } from '@/core/unicode/myanmar'
+import { cn, eyebrowClass } from '@/lib/utils'
 import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
 import { TargetText } from '@/components/target-text'
 import { ResultDialog } from '@/components/result-dialog'
-import { Modal } from '@/components/ui'
+import { ConfirmAbandon } from '@/components/session/confirm-abandon'
+import { useConfirmExit } from '@/components/session/use-confirm-exit'
+import { SessionTools } from '@/components/session/session-tools'
+import { Metric } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 
 const LEVEL_LABEL: Record<string, string> = {
@@ -17,13 +18,6 @@ const LEVEL_LABEL: Record<string, string> = {
     advanced: 'Advanced',
 }
 
-/**
- * Lesson exercise workspace mirroring the reference trainer layout: a compact
- * single-band header (Back, brand, "Beginner • N", round + character progress,
- * WPM, accuracy, session tools), the centered exercise line, a Tab-to-start
- * gate, the keyboard with hands, and the footer hints. Test and drill sessions
- * keep the classic Session presentation.
- */
 export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
     const status = useTypingStore((s) => s.status)
     const tick = useTypingStore((s) => s.tick)
@@ -33,23 +27,13 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
     const error = useTypingStore((s) => s.error)
     const togglePause = useTypingStore((s) => s.togglePause)
     const abandon = useTypingStore((s) => s.abandon)
-    const handGuideVisible = useUiStore((s) => s.handGuideVisible)
-    const soundEnabled = useUiStore((s) => s.soundEnabled)
-    const toggleHandGuide = useUiStore((s) => s.toggleHandGuide)
-    const setSoundEnabled = useUiStore((s) => s.setSoundEnabled)
-    const confirmExit = useSettingsStore((s) => s.get('practice.confirmExit'))
-    const [confirmOpen, setConfirmOpen] = useState(false)
+    const exitGuard = useConfirmExit(() => {
+        abandon()
+        onExit?.()
+    })
 
     const resolved = session?.resolved
     const layout = engine?.layout ?? null
-
-    const requestExit = () => {
-        if (confirmExit !== 'off') setConfirmOpen(true)
-        else {
-            abandon()
-            onExit?.()
-        }
-    }
 
     if (!session || !resolved) return null
 
@@ -68,10 +52,10 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
         >
-            <header className="shrink-0 border-b border-line/70 bg-background/60 backdrop-blur-sm">
+            <header className="shrink-0 border-b border-line bg-background">
                 <div className="flex items-center justify-between gap-3 px-4 py-2.5 sm:px-6">
                     <div className="flex min-w-0 items-center gap-3">
-                        <Button variant="ghost" size="sm" onClick={requestExit} className="-ml-2 shrink-0" aria-label="Back to lessons">
+                        <Button variant="ghost" size="sm" onClick={exitGuard.requestExit} className="-ml-2 shrink-0" aria-label="Back to lessons">
                             <ArrowLeft className="size-4" />
                             <span>Back</span>
                         </Button>
@@ -84,9 +68,12 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
                             <span className="h-5 w-px bg-line/70" aria-hidden />
                         </div>
                         <div className="min-w-0">
-                            <p className="eyebrow">{label}</p>
+                            <p className={eyebrowClass}>{label}</p>
                             <h1
-                                className={`mt-0.5 truncate font-display text-sm leading-tight font-semibold text-foreground sm:text-base ${hasMyanmar ? 'ms' : ''}`}
+                                className={cn(
+                                    'mt-0.5 truncate font-display text-sm leading-tight font-semibold text-foreground sm:text-base',
+                                    hasMyanmar ? 'font-myanmar' : '',
+                                )}
                             >
                                 {title}
                             </h1>
@@ -95,40 +82,11 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
 
                     <div className="flex shrink-0 items-center gap-3 sm:gap-4">
                         <RoundProgress />
-                        <HeaderMetric value={String(Math.round(stats.wpm))} label="WPM" />
-                        <HeaderMetric value={`${Math.round(stats.accuracy)}%`} label="Accuracy" />
+                        <Metric align="end" size="sm" value={String(Math.round(stats.wpm))} label="WPM" />
+                        <Metric align="end" size="sm" value={`${Math.round(stats.accuracy)}%`} label="Accuracy" />
                         <span className="mx-1 hidden h-5 w-px bg-line/70 sm:block" aria-hidden />
                         <div className="flex items-center gap-1">
-                            <Button
-                                variant="outline"
-                                size="icon-sm"
-                                aria-label={handGuideVisible ? 'Hide hand guide' : 'Show hand guide'}
-                                aria-pressed={handGuideVisible}
-                                title={handGuideVisible ? 'Hide hand guide' : 'Show hand guide'}
-                                className={
-                                    handGuideVisible
-                                        ? 'border-primary bg-primary/10 text-primary hover:border-primary hover:bg-primary/15 hover:text-primary'
-                                        : 'border-transparent text-muted-foreground hover:text-foreground'
-                                }
-                                onClick={toggleHandGuide}
-                            >
-                                <Hand className="size-4" />
-                            </Button>
-                            <Button
-                                variant="outline"
-                                size="icon-sm"
-                                aria-label={soundEnabled ? 'Mute sounds' : 'Enable sounds'}
-                                aria-pressed={soundEnabled}
-                                title={soundEnabled ? 'Mute sounds' : 'Enable sounds'}
-                                className={
-                                    soundEnabled
-                                        ? 'border-primary bg-primary/10 text-primary hover:border-primary hover:bg-primary/15 hover:text-primary'
-                                        : 'border-transparent text-muted-foreground hover:text-foreground'
-                                }
-                                onClick={() => setSoundEnabled(!soundEnabled)}
-                            >
-                                {soundEnabled ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
-                            </Button>
+                            <SessionTools />
                             <Button
                                 variant="outline"
                                 size="icon-sm"
@@ -171,37 +129,8 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
 
             <ResultDialog />
 
-            <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)} ariaLabel="Leave this round?">
-                <h2 className="font-display text-lg">Leave this round?</h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                    Nothing so far in this attempt will be saved. You can pick it up again any time from the lessons list.
-                </p>
-                <div className="mt-5 flex justify-end gap-2">
-                    <Button variant="outline" onClick={() => setConfirmOpen(false)}>
-                        Keep typing
-                    </Button>
-                    <Button
-                        variant="destructive"
-                        onClick={() => {
-                            setConfirmOpen(false)
-                            abandon()
-                            onExit?.()
-                        }}
-                    >
-                        Leave the round
-                    </Button>
-                </div>
-            </Modal>
+            <ConfirmAbandon open={exitGuard.open} onClose={exitGuard.cancel} onConfirm={exitGuard.confirm} />
         </motion.div>
-    )
-}
-
-function HeaderMetric({ value, label }: { value: string; label: string }) {
-    return (
-        <div className="flex flex-col items-end gap-0.5">
-            <span className="tnum text-sm leading-none font-semibold text-foreground md:text-base">{value}</span>
-            <span className="text-[0.625rem] font-medium tracking-[0.12em] text-muted-foreground uppercase">{label}</span>
-        </div>
     )
 }
 
@@ -225,16 +154,7 @@ function RoundProgress() {
         chapter = within.endUnit - within.startUnit
     }
 
-    return (
-        <div className="flex flex-col items-end gap-0.5">
-            <span className="tnum text-sm leading-none font-semibold text-foreground md:text-base">
-                {current} / {chapter}
-            </span>
-            <span className="text-[0.625rem] font-medium tracking-[0.12em] text-muted-foreground uppercase">
-                Round {round}/{rounds}
-            </span>
-        </div>
-    )
+    return <Metric align="end" size="sm" label={`Round ${round}/${rounds}`} value={`${current} / ${chapter}`} />
 }
 
 function TabStartHint() {

@@ -4,10 +4,13 @@ import type { Level } from '@/types'
 import { useLessonStore } from '@/stores/lesson-store'
 import { useStudentStore } from '@/stores/student-store'
 import { useSettingsStore } from '@/stores/settings-store'
-import { Spinner } from '@/components/ui'
+import { Spinner, PageHeader } from '@/components/ui'
+import { Progress } from '@/components/ui/progress'
 import { LanguageToggle } from '@/components/language-toggle'
 import { LessonCard } from '@/components/lesson-card'
 import { computeMasteryForLessons } from '@/core/mastery'
+import { pct } from '@/lib/format'
+import { cn, appPageClass } from '@/lib/utils'
 import type { ExerciseResult } from '@/services/types'
 import * as backend from '@/services/backend'
 
@@ -67,36 +70,37 @@ export default function Learn() {
     const doneCount = list.filter((l) => progress?.[l.id]?.completed).length
 
     return (
-        <div className="app-page">
-            <header className="flex flex-wrap items-end justify-between gap-4">
-                <div>
-                    <p className="eyebrow">Curriculum · {LEVEL_COPY[level].ms}</p>
-                    <h1 className="mt-1 font-display text-3xl tracking-tight">Learn</h1>
-                    <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{LEVEL_COPY[level].en}</p>
-                </div>
+        <div className={appPageClass}>
+            <PageHeader eyebrow={`Curriculum · ${LEVEL_COPY[level].ms}`} title="Learn" subtitle={LEVEL_COPY[level].en}>
                 <LanguageToggle />
-            </header>
+            </PageHeader>
 
-            <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Level">
+            <div
+                className="inline-flex w-full flex-wrap gap-1 rounded-lg border border-line bg-muted/70 p-1 sm:w-auto"
+                role="tablist"
+                aria-label="Level"
+            >
                 {LEVEL_ORDER.map((l) => {
                     const count = lessonsByLevel[l].filter((x) => x.language === (lang === 'myanmar' ? 'myanmar' : 'english')).length
                     const done = lessonsByLevel[l].filter(
                         (x) => x.language === (lang === 'myanmar' ? 'myanmar' : 'english') && progress?.[x.id]?.completed,
                     ).length
+                    const isActive = level === l
                     return (
                         <Link
                             key={l}
                             to={`/learn/${l}`}
                             onClick={() => setLevel(l)}
-                            className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
-                                level === l ? 'border-accent bg-muted' : 'border-border text-muted-foreground hover:text-foreground'
-                            }`}
+                            className={cn(
+                                'flex-1 rounded-md px-4 py-1.5 text-sm font-medium whitespace-nowrap transition-[color,background-color,box-shadow] duration-150 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:flex-none',
+                                isActive ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground',
+                            )}
                             role="tab"
-                            aria-selected={level === l}
+                            aria-selected={isActive}
                         >
                             <span className="capitalize">{l}</span>
                             {progressReady ? (
-                                <span className="tnum ml-2 text-xs text-muted-foreground">
+                                <span className={cn('ml-2 text-xs tabular-nums', isActive ? 'font-semibold text-accent' : 'text-muted-foreground')}>
                                     {done}/{count}
                                 </span>
                             ) : null}
@@ -107,11 +111,9 @@ export default function Learn() {
 
             {progressReady ? (
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <span className="ms shrink-0">ဤအဆင့်တွင်</span>
-                    <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
-                        <div className="h-full rounded-full bg-accent" style={{ width: `${list.length ? (doneCount / list.length) * 100 : 0}%` }} />
-                    </div>
-                    <span className="tnum text-muted-foreground">
+                    <span className="shrink-0 font-myanmar">ဤအဆင့်တွင်</span>
+                    <Progress value={pct(doneCount, list.length)} className="flex-1" />
+                    <span className="text-muted-foreground tabular-nums">
                         {doneCount}/{list.length}
                     </span>
                 </div>

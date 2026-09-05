@@ -35,7 +35,7 @@ export function LanguageToggle({ lang, onChange }: LanguageToggleProps) {
         <Tabs value={value} onValueChange={(v) => handleChange(v as Language)}>
             <TabsList className="bg-muted">
                 <TabsTrigger value="myanmar">
-                    <span className="ms">မြန်မာ</span>
+                    <span className="font-myanmar">မြန်မာ</span>
                 </TabsTrigger>
                 <TabsTrigger value="english">English</TabsTrigger>
             </TabsList>

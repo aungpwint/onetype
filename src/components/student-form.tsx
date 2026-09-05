@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useStudentStore } from '@/stores/student-store'
 import type { Student } from '@/services/types'
+import { cn } from '@/lib/utils'
 import { Field } from './ui'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
@@ -56,9 +57,10 @@ export function StudentForm({ student, onDone }: { student?: Student; onDone?: (
                         <button
                             key={a}
                             type="button"
-                            className={`flex h-10 w-10 items-center justify-center rounded-lg border text-xl transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
-                                avatar === a ? 'border-accent bg-muted' : 'border-border hover:border-border'
-                            }`}
+                            className={cn(
+                                'flex h-10 w-10 items-center justify-center rounded-lg border text-xl transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+                                avatar === a ? 'border-accent bg-muted' : 'border-border hover:border-border',
+                            )}
                             aria-label={`Use mark ${a}`}
                             onClick={() => setAvatar(a)}
                         >
@@ -68,7 +70,7 @@ export function StudentForm({ student, onDone }: { student?: Student; onDone?: (
                 </div>
             </Field>
             {student ? (
-                <p className="ms text-xs text-muted-foreground">
+                <p className="font-myanmar text-xs text-muted-foreground">
                     Code <span className="font-mono">{student.studentCode}</span> — kept for the teacher's roll.
                 </p>
             ) : null}

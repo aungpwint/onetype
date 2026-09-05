@@ -4,14 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { AlertCircle, ArrowLeft, LayoutDashboard } from 'lucide-react'
 import * as backend from '@/services/backend'
 import { useTypingStore, buildAdaptiveDrill } from '@/stores/typing-store'
-import { useSettingsStore } from '@/stores/settings-store'
 import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
 import { TargetText } from '@/components/target-text'
 import { StatsBar } from '@/components/stats-bar'
 import { SessionHeader } from '@/components/session/session-header'
 import { ExerciseWorkspace } from '@/components/session/exercise-workspace'
+import { ConfirmAbandon } from '@/components/session/confirm-abandon'
+import { useConfirmExit } from '@/components/session/use-confirm-exit'
 import { ResultDialog } from '@/components/result-dialog'
-import { Spinner, Modal, EmptyState } from '@/components/ui'
+import { Spinner, EmptyState } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import type { TypingMode } from '@/types'
 
@@ -32,18 +33,12 @@ function Session({
     const start = useTypingStore((s) => s.start)
     const togglePause = useTypingStore((s) => s.togglePause)
     const abandon = useTypingStore((s) => s.abandon)
-    const confirmExit = useSettingsStore((s) => s.get('practice.confirmExit'))
-    const [confirmOpen, setConfirmOpen] = useState(false)
+    const exitGuard = useConfirmExit(() => {
+        abandon()
+        onExit?.()
+    })
 
     const layout = engine?.layout ?? null
-
-    const requestExit = () => {
-        if (confirmExit !== 'off') setConfirmOpen(true)
-        else {
-            abandon()
-            onExit?.()
-        }
-    }
 
     const toggleAction = status === 'running' || status === 'paused' ? togglePause : start
 
@@ -60,7 +55,7 @@ function Session({
                 status={status}
                 durationSeconds={durationSeconds}
                 onToggle={toggleAction}
-                onExit={requestExit}
+                onExit={exitGuard.requestExit}
             />
 
             {error ? (
@@ -89,27 +84,7 @@ function Session({
 
             <ResultDialog />
 
-            <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)} ariaLabel="Leave this round?">
-                <h2 className="font-display text-lg">Leave this round?</h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                    Nothing so far in this attempt will be saved. You can pick it up again any time from the lessons list.
-                </p>
-                <div className="mt-5 flex justify-end gap-2">
-                    <Button variant="outline" onClick={() => setConfirmOpen(false)}>
-                        Keep typing
-                    </Button>
-                    <Button
-                        variant="destructive"
-                        onClick={() => {
-                            setConfirmOpen(false)
-                            abandon()
-                            onExit?.()
-                        }}
-                    >
-                        Leave the round
-                    </Button>
-                </div>
-            </Modal>
+            <ConfirmAbandon open={exitGuard.open} onClose={exitGuard.cancel} onConfirm={exitGuard.confirm} />
         </motion.div>
     )
 }

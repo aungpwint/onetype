@@ -4,6 +4,7 @@ import { Sparkles } from 'lucide-react'
 import { useStudentStore } from '@/stores/student-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { useUiStore } from '@/stores/ui-store'
+import { cn, eyebrowClass } from '@/lib/utils'
 import { Field } from './ui'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
@@ -49,10 +50,10 @@ export function Onboarding() {
             <div className="w-full max-w-xl">
                 <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
                     <div className="border-b border-border bg-muted/60 px-8 py-6">
-                        <p className="eyebrow">Desk № 1 · First lesson</p>
+                        <p className={eyebrowClass}>Desk № 1 · First lesson</p>
                         <h1 className="mt-2 flex items-center gap-2 font-display text-3xl">
                             OneType <Sparkles className="size-6 text-accent" />
-                            <span className="ms text-2xl text-muted-foreground">ဝမ်းတိုက်</span>
+                            <span className="font-myanmar text-2xl text-muted-foreground">ဝမ်းတိုက်</span>
                         </h1>
                         <p className="mt-2 text-sm text-muted-foreground">
                             Learn to touch-type English and Myanmar without looking at your hands. Your progress lives on this machine — nothing
@@ -71,23 +72,25 @@ export function Onboarding() {
                                 <button
                                     type="button"
                                     onClick={() => setDefaultLang('myanmar')}
-                                    className={`rounded-xl border p-4 text-left transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
+                                    className={cn(
+                                        'rounded-xl border p-4 text-left transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
                                         defaultLang === 'myanmar'
                                             ? 'border-accent bg-muted ring-1 ring-accent/20'
-                                            : 'border-border hover:border-border'
-                                    }`}
+                                            : 'border-border hover:border-border',
+                                    )}
                                 >
-                                    <span className="ms text-2xl leading-none">မြန်မာ</span>
-                                    <span className="ms mt-1 block text-xs text-muted-foreground">Myanmar3 layout</span>
+                                    <span className="font-myanmar text-2xl leading-none">မြန်မာ</span>
+                                    <span className="mt-1 block font-myanmar text-xs text-muted-foreground">Myanmar3 layout</span>
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setDefaultLang('english')}
-                                    className={`rounded-xl border p-4 text-left transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
+                                    className={cn(
+                                        'rounded-xl border p-4 text-left transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
                                         defaultLang === 'english'
                                             ? 'border-accent bg-muted ring-1 ring-accent/20'
-                                            : 'border-border hover:border-border'
-                                    }`}
+                                            : 'border-border hover:border-border',
+                                    )}
                                 >
                                     <span className="text-2xl leading-none font-semibold">Aa</span>
                                     <span className="mt-1 block text-xs text-muted-foreground">QWERTY layout</span>

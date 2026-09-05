@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { useTypingStore } from '@/stores/typing-store'
+import { cn } from '@/lib/utils'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { graphemeUnitRuns } from '@/core/typing-engine/sequence'
 
@@ -20,7 +21,7 @@ export function TargetText() {
 
     const unitIndex = engine?.unitIndex ?? 0
     const sequence = engine?.sequence
-    const phases = session?.resolved.phases ?? []
+    const phases = useMemo(() => session?.resolved.phases ?? [], [session])
 
     const activePhase = useMemo(() => {
         if (phases.length === 0) return null
@@ -123,7 +124,10 @@ export function TargetText() {
                     <motion.div ref={contentRef} className="tt-content" style={{ x: springOffset }}>
                         <motion.p
                             key={activePhaseKey ?? 'all'}
-                            className={`${hasMyanmar ? 'font-myanmar' : 'heavy'} mx-auto text-4xl leading-tight tracking-normal whitespace-nowrap md:text-5xl`}
+                            className={cn(
+                                hasMyanmar ? 'font-myanmar' : 'font-heavy',
+                                'mx-auto text-4xl leading-tight tracking-normal whitespace-nowrap md:text-5xl',
+                            )}
                             style={{ wordSpacing: '0.16em' }}
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -187,7 +191,7 @@ const Char = memo(function Char({
 
     if (status === 'current') {
         return (
-            <span ref={onCaret} className={`tt-char tt-char-now ${flash ? 'tt-char-flash' : 'tt-char-focus'}`}>
+            <span ref={onCaret} className={cn('tt-char tt-char-now', flash ? 'tt-char-flash' : 'tt-char-focus')}>
                 <span className="char-pop">{text}</span>
                 <span className="tt-caret" aria-hidden />
             </span>

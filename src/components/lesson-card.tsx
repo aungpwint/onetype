@@ -47,7 +47,7 @@ export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
     return (
         <Link
             to={`/lesson/${lesson.id}`}
-            className="group relative flex flex-col overflow-hidden rounded-xl border border-line bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-[0_10px_30px_-12px_rgba(23,51,49,0.35)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="group relative flex flex-col overflow-hidden rounded-xl border border-line bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-[var(--shadow-2)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
             {/* Top accent band — encodes lesson state */}
             <span aria-hidden className={cn('h-1 w-full', bandClass)} />
@@ -61,7 +61,7 @@ export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
                     {passed ? (
                         <MasteryBadge level={mastery} />
                     ) : showAccuracy ? (
-                        <span className="tnum text-xs font-semibold text-ink-soft">{Math.round(progress.bestAccuracy)}%</span>
+                        <span className="text-xs font-semibold text-ink-soft tabular-nums">{Math.round(progress.bestAccuracy)}%</span>
                     ) : (
                         <MasteryBadge level={mastery} />
                     )}
@@ -69,7 +69,7 @@ export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
 
                 <div className="min-w-0">
                     <h3 className="font-display text-xl leading-tight text-ink">{lesson.title}</h3>
-                    <p className="ms mt-0.5 truncate text-xs text-ink-faint">{lesson.titleMy}</p>
+                    <p className="mt-0.5 truncate font-myanmar text-xs text-ink-faint">{lesson.titleMy}</p>
                 </div>
 
                 {lesson.focusKeys && lesson.focusKeys.length > 0 ? (

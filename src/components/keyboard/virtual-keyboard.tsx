@@ -3,13 +3,10 @@ import type { KeyboardLayout, KeyDefinition } from '@/core/keyboard-layout/layou
 import { useTypingStore } from '@/stores/typing-store'
 import { resolveLastKey, resolveTarget } from '@/core/target-model'
 import type { Hand } from '@/types'
-import { WIDE_KEY_LABEL } from '@/utils/finger-mapper'
+import { WIDE_KEY_LABEL } from '@/lib/finger-mapper'
 
 interface VirtualKeyboardProps {
     layout: KeyboardLayout
-    /** Hide the built-in "press the highlighted key to begin" prompt so the
-     *  caller can surface its own start instruction (e.g. the Tab-to-start
-     *  hint on lesson exercises). */
     hideReadyMessage?: boolean
 }
 
@@ -33,7 +30,7 @@ export function VirtualKeyboard({ layout, hideReadyMessage }: VirtualKeyboardPro
         <section
             aria-label="Virtual keyboard"
             data-keyboard-root
-            className="relative w-full rounded-2xl border border-line/70 bg-linear-to-b from-card/45 via-card/85 to-card/95 p-2.5 shadow-[0_1px_0_inset_rgba(255,255,255,0.35),0_10px_28px_-14px_rgba(0,0,0,0.28)] backdrop-blur-sm select-none sm:p-3.5 lg:p-4 2xl:p-5"
+            className="relative w-full rounded-2xl border border-line bg-key-well p-2.5 shadow-[var(--shadow-2)] select-none sm:p-3.5 lg:p-4 2xl:p-5"
         >
             <div className="mx-auto w-full min-w-0">
                 <div className="flex w-full flex-col gap-1.5 rounded-xl bg-key-well p-2 sm:gap-2 sm:p-2.5 lg:gap-2.5 lg:p-3 2xl:p-3.5">
@@ -144,9 +141,6 @@ const Keycap = memo(function Keycap({ definition, isActive, flashed, isShiftHint
 
     const pressClass = flashed ? 'key-press' : ''
 
-    // Keycaps are purely visual indicators of the physical keyboard: they never
-    // receive pointer or keyboard input, so render them as presentational spans
-    // (wholly hidden from assistive tech) rather than disabled/focusable buttons.
     return (
         <span
             aria-hidden

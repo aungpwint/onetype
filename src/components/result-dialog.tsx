@@ -7,6 +7,7 @@ import { Modal } from './ui'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
 import { formatDuration } from '@/lib/format'
+import { cn, eyebrowClass } from '@/lib/utils'
 import type { MasteryDelta, MasteryLevel } from '@/core/mastery'
 
 const MASTERY_COPY: Record<MasteryLevel, string> = {
@@ -20,11 +21,11 @@ function MasteryNotice({ delta }: { delta: MasteryDelta }) {
     const { before, after, improved } = delta
     return (
         <div className="mt-4 rounded-xl border border-brass/40 bg-brass/10 p-3">
-            <p className="eyebrow">Mastery</p>
+            <p className={eyebrowClass}>Mastery</p>
             <div className="mt-1 flex flex-wrap items-center gap-2 text-sm">
-                <span className="tnum text-muted-foreground">{MASTERY_COPY[before]}</span>
+                <span className="text-muted-foreground tabular-nums">{MASTERY_COPY[before]}</span>
                 <ArrowRight className="size-4 text-muted-foreground" />
-                <span className={`tnum font-medium ${after === 'mastered' ? 'text-brass' : 'text-foreground'}`}>{MASTERY_COPY[after]}</span>
+                <span className={cn('font-medium tabular-nums', after === 'mastered' ? 'text-brass' : 'text-foreground')}>{MASTERY_COPY[after]}</span>
                 {improved ? (
                     <Badge variant="success">
                         <CheckCircle2 className="size-3" />
@@ -105,7 +106,7 @@ export function ResultDialog() {
         <Modal open onClose={close} ariaLabel="Session result">
             <div className="flex items-start justify-between pr-10">
                 <div>
-                    <p className="eyebrow">
+                    <p className={eyebrowClass}>
                         {isDrill
                             ? `Adaptive drill · ${session.resolved.focusKeys?.join('') ?? 'weak keys'} · attempt ${result.attempt}`
                             : isLesson
@@ -143,31 +144,33 @@ export function ResultDialog() {
             <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
                 <div className="flex justify-between">
                     <dt className="text-muted-foreground">Errors</dt>
-                    <dd className="tnum">{metrics.incorrectAttempts}</dd>
+                    <dd className="tabular-nums">{metrics.incorrectAttempts}</dd>
                 </div>
                 <div className="flex justify-between">
                     <dt className="text-muted-foreground">Backspaces</dt>
-                    <dd className="tnum">{metrics.backspaceCount}</dd>
+                    <dd className="tabular-nums">{metrics.backspaceCount}</dd>
                 </div>
                 <div className="flex justify-between">
                     <dt className="text-muted-foreground">Characters typed</dt>
-                    <dd className="tnum">{metrics.correctAttempts}</dd>
+                    <dd className="tabular-nums">{metrics.correctAttempts}</dd>
                 </div>
                 <div className="flex justify-between">
                     <dt className="text-muted-foreground">Time</dt>
-                    <dd className="tnum">{formatDuration(metrics.elapsedSeconds * 1000)}</dd>
+                    <dd className="tabular-nums">{formatDuration(metrics.elapsedSeconds * 1000)}</dd>
                 </div>
                 {!isDrill ? (
                     <div className="flex justify-between">
                         <dt className="text-muted-foreground">Target</dt>
-                        <dd className="tnum">
+                        <dd className="tabular-nums">
                             {target.minAccuracy}% acc{target.minWpm !== null ? ` · ${target.minWpm} wpm` : ''}
                         </dd>
                     </div>
                 ) : null}
                 <div className="flex justify-between">
                     <dt className="text-muted-foreground">Pass</dt>
-                    <dd className={`tnum ${result.passed ? 'text-success' : 'text-destructive'}`}>{result.passed ? 'passed' : 'not yet'}</dd>
+                    <dd className={cn('tabular-nums', result.passed ? 'text-success' : 'text-destructive')}>
+                        {result.passed ? 'passed' : 'not yet'}
+                    </dd>
                 </div>
             </dl>
 
@@ -181,7 +184,7 @@ export function ResultDialog() {
 
             {achieved.length > 0 ? (
                 <div className="mt-4 rounded-xl border border-brass/40 bg-brass/10 p-3">
-                    <p className="eyebrow flex items-center gap-1.5">
+                    <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
                         <Trophy className="size-3.5 text-brass" />
                         Achievement unlocked
                     </p>
@@ -223,8 +226,8 @@ function Metric({ icon, label, value }: { icon: React.ReactNode; label: string; 
     return (
         <div className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-muted/50 p-3 text-center">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-background text-muted-foreground shadow-sm">{icon}</span>
-            <p className="eyebrow">{label}</p>
-            <p className="tnum font-display text-2xl md:text-3xl">{value}</p>
+            <p className={eyebrowClass}>{label}</p>
+            <p className="font-display text-2xl tabular-nums md:text-3xl">{value}</p>
         </div>
     )
 }

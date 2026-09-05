@@ -1,5 +1,6 @@
 import { useTypingStore } from '@/stores/typing-store'
-import { resolveFingerMapping, fingerShort } from '@/utils/finger-mapper'
+import { resolveFingerMapping, fingerShort } from '@/lib/finger-mapper'
+import { Progress } from '@/components/ui/progress'
 
 export function LessonProgress() {
     const tick = useTypingStore((s) => s.tick)
@@ -21,16 +22,7 @@ export function LessonProgress() {
 
     return (
         <div className="flex w-full items-center gap-3">
-            <div
-                className="h-1 flex-1 overflow-hidden rounded-full bg-muted"
-                role="progressbar"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={progress}
-                aria-label="Lesson progress"
-            >
-                <div className="h-full rounded-full bg-accent transition-[width] duration-300 ease-out" style={{ width: `${progress}%` }} />
-            </div>
+            <Progress value={progress} className="h-1 flex-1" aria-label="Lesson progress" />
 
             {mapping.primary ? (
                 <span

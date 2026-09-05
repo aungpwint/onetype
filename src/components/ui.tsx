@@ -1,8 +1,9 @@
 import { Component, useEffect, useRef, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-import { RotateCcw, X } from 'lucide-react'
-import { Button } from './ui/button'
+import { RefreshCw, RotateCcw, X, type LucideIcon } from 'lucide-react'
+import { Button, type ButtonProps } from './ui/button'
+import { cn, cardClass, eyebrowClass, pageTitleClass, sectionTitleClass } from '@/lib/utils'
 
 export class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
     state = { error: null as Error | null }
@@ -46,7 +47,10 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
 export function Spinner({ label }: { label?: string }) {
     return (
         <div className="flex items-center justify-center gap-3 py-10 text-muted-foreground" role="status">
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-accent" />
+            <span className="relative inline-flex h-5 w-5">
+                <span className="absolute inset-0 rounded-full border-2 border-muted-foreground/25" />
+                <span className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-accent" />
+            </span>
             {label ? <span className="text-sm">{label}</span> : null}
             <span className="sr-only">Loading</span>
         </div>
@@ -94,25 +98,29 @@ export function Modal({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
+                    transition={{ duration: 0.16 }}
                 >
-                    <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={onClose} aria-hidden />
+                    <div className="absolute inset-0 bg-black/45" onClick={onClose} aria-hidden />
                     <motion.div
                         role="dialog"
                         aria-modal="true"
                         aria-label={ariaLabel}
                         tabIndex={-1}
                         ref={panelRef}
-                        className={`relative z-10 w-full rounded-2xl border border-border bg-card p-6 shadow-xl outline-none ${width}`}
-                        initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                        className={cn(
+                            'relative z-10 w-full rounded-xl border border-line bg-surface p-6 shadow-[var(--shadow-3)] outline-none',
+                            width,
+                        )}
+                        initial={{ opacity: 0, y: 14, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                        transition={{ duration: 0.18 }}
+                        exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                        transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <button
                             type="button"
                             onClick={onClose}
                             aria-label="Close dialog"
-                            className="absolute top-4 right-4 rounded-md p-1 text-muted-foreground opacity-70 transition-opacity hover:bg-muted hover:opacity-100"
+                            className="absolute top-4 right-4 rounded-md p-1 text-muted-foreground opacity-70 transition-colors hover:bg-muted hover:opacity-100 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                         >
                             <X className="size-4" />
                         </button>
@@ -126,9 +134,13 @@ export function Modal({
 
 export function EmptyState({ icon, title, children }: { icon?: ReactNode; title: string; children: ReactNode }) {
     return (
-        <div className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card px-8 py-14 text-center">
-            {icon ? <div className="mb-1 text-muted-foreground">{icon}</div> : null}
-            <p className="font-display text-xl">{title}</p>
+        <div className={cn(cardClass, 'flex flex-col items-center gap-2 px-8 py-14 text-center')}>
+            {icon ? (
+                <div className="mb-1 flex h-12 w-12 items-center justify-center rounded-xl border border-line bg-muted/60 text-muted-foreground shadow-sm">
+                    {icon}
+                </div>
+            ) : null}
+            <p className={cn(sectionTitleClass, 'text-xl')}>{title}</p>
             <div className="max-w-md text-sm leading-relaxed text-muted-foreground">{children}</div>
         </div>
     )
@@ -136,13 +148,13 @@ export function EmptyState({ icon, title, children }: { icon?: ReactNode; title:
 
 export function Stat({ label, value, hint, icon }: { label: string; value: ReactNode; hint?: string; icon?: ReactNode }) {
     return (
-        <div className="rounded-xl border border-border bg-card px-4 py-3 shadow-sm">
+        <div className={cn(cardClass, 'px-4 py-3.5')}>
             <div className="flex items-center gap-1.5">
-                {icon ? <span className="text-muted-foreground">{icon}</span> : null}
-                <p className="eyebrow">{label}</p>
+                {icon ? <span className="text-accent">{icon}</span> : null}
+                <p className={eyebrowClass}>{label}</p>
             </div>
-            <p className="tnum mt-1 font-display text-2xl leading-tight">{value}</p>
-            {hint ? <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p> : null}
+            <p className="mt-1.5 font-display text-2xl leading-tight font-semibold tracking-tight tabular-nums">{value}</p>
+            {hint ? <p className="mt-1 text-xs text-muted-foreground">{hint}</p> : null}
         </div>
     )
 }
@@ -158,4 +170,94 @@ export function Field({ label, children, hint }: { label: string; children: Reac
 }
 
 export const inputClass =
-    'flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30'
+    'flex h-9 w-full rounded-lg border border-line-strong/60 bg-background px-3 py-1 text-sm shadow-sm transition-[border-color,box-shadow] placeholder:text-muted-foreground hover:border-line-strong focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30'
+
+export function PageHeader({
+    eyebrow,
+    title,
+    subtitle,
+    children,
+}: {
+    eyebrow: string
+    title: ReactNode
+    subtitle?: ReactNode
+    children?: ReactNode
+}) {
+    return (
+        <header className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+                <p className={eyebrowClass}>{eyebrow}</p>
+                <h1 className={cn(pageTitleClass, 'mt-1.5')}>{title}</h1>
+                {subtitle ? <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">{subtitle}</p> : null}
+            </div>
+            {children}
+        </header>
+    )
+}
+
+export function Metric({
+    label,
+    value,
+    align = 'center',
+    size = 'md',
+    tone,
+}: {
+    label: string
+    value: ReactNode
+    align?: 'center' | 'end'
+    size?: 'md' | 'sm'
+    tone?: 'success' | 'destructive' | 'muted'
+}) {
+    const toneClass =
+        tone === 'success'
+            ? 'text-success'
+            : tone === 'destructive'
+              ? 'text-destructive'
+              : tone === 'muted'
+                ? 'text-muted-foreground'
+                : 'text-foreground'
+    const valueClass =
+        size === 'sm'
+            ? 'text-sm leading-none font-semibold tabular-nums text-foreground md:text-base'
+            : `text-lg leading-none font-semibold tabular-nums md:text-xl ${toneClass}`
+    return (
+        <div className={cn('flex flex-col gap-0.5', align === 'end' ? 'items-end' : 'items-center')}>
+            <span className={valueClass}>{value}</span>
+            <span
+                className={cn(
+                    size === 'sm' ? 'text-[0.625rem]' : 'text-[0.6875rem]',
+                    'font-medium tracking-[0.12em] text-muted-foreground uppercase',
+                )}
+            >
+                {label}
+            </span>
+        </div>
+    )
+}
+
+export function AsyncButton({
+    loading,
+    loadingLabel = 'Working…',
+    icon: Icon,
+    loadingIcon: LoadingIcon = RefreshCw,
+    className,
+    disabled,
+    children,
+    ...props
+}: ButtonProps & { loading: boolean; loadingLabel?: ReactNode; icon?: LucideIcon; loadingIcon?: LucideIcon }) {
+    return (
+        <Button disabled={loading || disabled} className={className} {...props}>
+            {loading ? (
+                <>
+                    <LoadingIcon className="size-4 animate-spin" />
+                    {loadingLabel}
+                </>
+            ) : (
+                <>
+                    {Icon ? <Icon className="size-4" /> : null}
+                    {children}
+                </>
+            )}
+        </Button>
+    )
+}

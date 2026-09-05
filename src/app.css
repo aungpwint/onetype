@@ -2,132 +2,125 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ─────────────────────────────────────────────────────────────────────────
-   OneType — Premium Blue Design System
-   A single, coherent semantic color + elevation + radius + typography system.
-   All components consume these tokens via the Tailwind @theme mapping below.
-   No hard-coded hex values should live in React components.
-   ─────────────────────────────────────────────────────────────────────── */
-
 :root {
-    /* ── Desktop UI scale ─────────────────────────────────────────────
-     Single source of truth for adaptive sizing on large displays.
-     rem-based measurements (Tailwind spacing, type, icons) scale with
-     html { font-size }, which is derived from --ui-scale below. */
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
     --ui-scale: clamp(1, calc(0.68 + 0.00025 * 100vw), 1.2);
 
-    --bg: #f3f6fb;
-    --bg-glow: radial-gradient(1200px 700px at 50% -10%, color-mix(in srgb, #3b82f6 12%, transparent), transparent 62%);
+    --bg: #f7f8fa;
+
     --surface: #ffffff;
-    --surface-muted: #eef2f9;
+    --surface-muted: #f1f3f6;
     --surface-elevated: #ffffff;
 
-    --ink: #0f1c33;
-    --ink-soft: #44536e;
-    --ink-faint: #64738f;
+    --ink: #171a1f;
+    --ink-soft: #596170;
+    --ink-faint: #858c98;
 
-    --line: rgba(15, 28, 51, 0.1);
-    --line-strong: rgba(15, 28, 51, 0.22);
+    --line: rgba(23, 26, 31, 0.09);
+    --line-strong: rgba(23, 26, 31, 0.16);
 
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --primary-active: #1e40af;
+    --primary: #315fd4;
+    --primary-hover: #2852bf;
+    --primary-active: #2145a8;
     --primary-foreground: #ffffff;
-    --primary-ring: rgba(37, 99, 235, 0.35);
+    --primary-ring: rgba(49, 95, 212, 0.28);
 
-    --warning: #d97706;
-    --warning-soft: rgba(217, 119, 6, 0.14);
-    --success: #159a54;
-    --success-weak: rgba(21, 154, 84, 0.12);
-    --destructive: #dc2626;
-    --destructive-soft: rgba(220, 38, 38, 0.1);
+    --warning: #a86400;
+    --warning-soft: rgba(168, 100, 0, 0.1);
+    --success: #16804a;
+    --success-weak: rgba(22, 128, 74, 0.1);
+    --destructive: #c9362b;
+    --destructive-soft: rgba(201, 54, 43, 0.1);
 
-    --typing-correct: #13834b;
-    --typing-incorrect: #d43d37;
-    --typing-current-ink: #0f1c33;
-    --typing-current-bg: rgba(37, 99, 235, 0.16);
-    --typing-upcoming: #64738f;
-    --caret: #2563eb;
+    --typing-correct: #16804a;
+    --typing-incorrect: #c9362b;
+    --typing-current-ink: #171a1f;
+    --typing-current-bg: rgba(49, 95, 212, 0.1);
+    --typing-upcoming: #858c98;
+    --caret: var(--primary);
 
     --key-top: #ffffff;
-    --key-base: #e3e9f4;
-    --key-ink: #24314d;
-    --key-well: rgba(15, 28, 51, 0.055);
+    --key-base: #e8ebef;
+    --key-ink: #303744;
+    --key-well: rgba(23, 26, 31, 0.05);
 
-    --hand: #f1d3b8;
-    --hand-shade: #e4bd9c;
-    --hand-stroke: rgba(60, 40, 20, 0.35);
-    --hand-nail: rgba(255, 250, 245, 0.9);
-    --hand-active: #2563eb;
+    --hand: #e9d7c2;
+    --hand-shade: #dcc5aa;
+    --hand-stroke: rgba(60, 40, 20, 0.3);
+    --hand-nail: rgba(255, 252, 248, 0.95);
+    --hand-active: var(--primary);
 
-    --thumb: rgba(15, 28, 51, 0.35);
+    --thumb: rgba(23, 26, 31, 0.32);
 
-    --shadow-1: 0 1px 2px rgba(15, 28, 51, 0.06);
-    --shadow-2: 0 6px 20px -8px rgba(15, 28, 51, 0.18);
-    --shadow-3: 0 20px 50px -12px rgba(15, 28, 51, 0.28);
+    --shadow-1: 0 1px 2px rgba(16, 24, 40, 0.04);
+    --shadow-2: 0 4px 12px rgba(16, 24, 40, 0.06);
+    --shadow-3: 0 12px 28px rgba(16, 24, 40, 0.08);
 
     color-scheme: light;
 }
 
 .dark {
-    --bg: #0a101f;
-    --bg-glow: radial-gradient(1200px 700px at 50% -10%, color-mix(in srgb, #1d4ed8 22%, transparent), transparent 60%);
-    --surface: #101a2e;
-    --surface-muted: #182440;
-    --surface-elevated: #1a2b4a;
+    --bg: #090b0f;
 
-    --ink: #e8edf8;
-    --ink-soft: #a9b6cd;
-    --ink-faint: #6f7e99;
+    --surface: #12141a;
+    --surface-muted: #161920;
+    --surface-elevated: #1a1e26;
 
-    --line: rgba(217, 229, 255, 0.11);
-    --line-strong: rgba(217, 229, 255, 0.26);
+    --ink: #f2f4f7;
+    --ink-soft: #b4bbc6;
+    --ink-faint: #7f8794;
 
-    --primary: #4d8dff;
-    --primary-hover: #6fa2ff;
-    --primary-active: #3b76e8;
-    --primary-foreground: #081226;
-    --primary-ring: rgba(77, 141, 255, 0.4);
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.16);
 
-    --warning: #f0b429;
-    --warning-soft: rgba(240, 180, 41, 0.16);
-    --success: #4ad08a;
-    --success-weak: rgba(74, 208, 138, 0.14);
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --primary-active: #2563eb;
+    --primary-foreground: #ffffff;
+    --primary-ring: rgba(96, 165, 250, 0.35);
+
+    --warning: #d99a2b;
+    --warning-soft: rgba(217, 154, 43, 0.14);
+    --success: #3db574;
+    --success-weak: rgba(61, 181, 116, 0.14);
     --destructive: #f4645c;
     --destructive-soft: rgba(244, 100, 92, 0.14);
 
-    --typing-correct: #5ecb92;
-    --typing-incorrect: #f2807a;
-    --typing-current-ink: #f0f4ff;
-    --typing-current-bg: rgba(77, 141, 255, 0.22);
-    --typing-upcoming: #6f7e99;
-    --caret: #6fa2ff;
+    --typing-correct: #3db574;
+    --typing-incorrect: #f4645c;
+    --typing-current-ink: #f2f4f7;
+    --typing-current-bg: rgba(96, 165, 250, 0.14);
+    --typing-upcoming: #7f8794;
+    --caret: var(--primary);
 
-    --key-top: #1b2a4a;
-    --key-base: #121d36;
-    --key-ink: #d6e0f5;
-    --key-well: rgba(3, 7, 15, 0.42);
+    --key-top: #242932;
+    --key-base: #1a1e25;
+    --key-ink: #e5e9ef;
+    --key-well: rgba(0, 0, 0, 0.3);
 
-    --hand: #8a5a3a;
-    --hand-shade: #774c30;
-    --hand-stroke: rgba(8, 14, 26, 0.6);
-    --hand-nail: rgba(234, 216, 200, 0.85);
-    --hand-active: #4d8dff;
+    --hand: #5c4730;
+    --hand-shade: #4e3b27;
+    --hand-stroke: rgba(10, 16, 28, 0.55);
+    --hand-nail: rgba(200, 190, 178, 0.8);
+    --hand-active: var(--primary);
 
-    --thumb: rgba(217, 229, 255, 0.35);
+    --thumb: rgba(255, 255, 255, 0.3);
 
-    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-2: 0 8px 24px -10px rgba(0, 0, 0, 0.5);
-    --shadow-3: 0 24px 60px -16px rgba(0, 0, 0, 0.6);
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-2: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-3: 0 12px 28px rgba(0, 0, 0, 0.45);
 
     color-scheme: dark;
 }
 
 @theme inline {
-    /* Legacy CSS variable names are mapped to the new premium blue system.
-     Components reference these through Tailwind colour classes. */
     --color-bg: var(--bg);
     --color-card: var(--surface);
+    --color-surface: var(--surface);
+    --color-surface-muted: var(--surface-muted);
+    --color-surface-elevated: var(--surface-elevated);
     --color-paper: var(--surface);
     --color-paper-2: var(--surface-muted);
     --color-ink: var(--ink);
@@ -138,7 +131,7 @@
     --color-accent: var(--primary);
     --color-accent-strong: var(--primary-hover);
     --color-accent-ink: var(--primary-foreground);
-    --color-brass: var(--warning);
+    --color-brass: var(--primary);
     --color-warning: var(--warning);
     --color-alert: var(--destructive);
     --color-success: var(--success);
@@ -148,7 +141,6 @@
     --color-hand: var(--hand);
     --color-hand-shade: var(--hand-shade);
 
-    /* shadcn-style semantic aliases (map onto the premium palette) */
     --color-background: var(--bg);
     --color-foreground: var(--ink);
     --color-card-foreground: var(--ink);
@@ -168,9 +160,9 @@
 
     --radius: 0.75rem;
 
-    --font-sans: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --font-display: ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    --font-mono: ui-monospace, 'Cascadia Mono', 'Cascadia Code', 'SF Mono', Consolas, monospace;
+    --font-sans: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-display: 'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', sans-serif;
+    --font-mono: ui-monospace, 'Cascadia Mono', 'Cascadia Code', 'SF Mono', Consolas, 'Liberation Mono', monospace;
     --font-myanmar: 'Pyidaungsu', 'Myanmar Text', 'Padauk', 'Noto Sans Myanmar', 'Myanmar Sans Pro', 'system-ui', sans-serif;
     --font-heavy: 'Heavitas Regular', var(--font-myanmar);
 }
@@ -193,16 +185,15 @@
 
 @layer base {
     html {
-        /* rem-based UI scales off the viewport via the central --ui-scale token */
         font-size: calc(15px * var(--ui-scale));
     }
 
     body {
         @apply bg-bg font-sans text-ink antialiased;
-        background-image: var(--bg-glow);
-        background-repeat: no-repeat;
-        background-attachment: fixed;
         overflow-y: scroll;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -webkit-tap-highlight-color: transparent;
     }
 
     ::selection {
@@ -247,138 +238,19 @@
 }
 
 @layer components {
-    .card {
-        @apply rounded-xl border border-line bg-card;
-        box-shadow: var(--shadow-1);
-    }
-
-    /* Fluid desktop page container: fill the workspace instead of a centered
-     narrow column. Space between blocks scales with --ui-scale via rems. */
-    .app-page {
-        width: 100%;
-        min-width: 0;
-    }
-
-    .app-page > * + * {
-        margin-top: 1.5rem;
-    }
-
-    .app-page {
-        padding: 1.5rem 1.75rem;
-    }
-
-    /* Route transition container. The transition only moves opacity/transform
-     (GPU-composited, layout-neutral), so the shell's scroll container never
-     collapses or jumps between routes. The incoming page rests in normal flow
-     (mode="wait" keeps a single page mounted), masking the layout swap.
-     Reduced-motion is handled by the root <MotionConfig reducedMotion="user">
-     in main.tsx. */
     .page-transition {
         width: 100%;
         min-width: 0;
     }
 
-    .eyebrow {
-        font-family: var(--font-mono);
-        font-size: 0.6875rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--ink-faint);
-    }
-
-    .tnum {
-        font-variant-numeric: tabular-nums;
-        font-feature-settings: 'tnum';
-    }
-
-    .btn {
-        @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors;
-        border: 1px solid transparent;
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    .btn-primary {
-        background: var(--primary);
-        color: var(--primary-foreground);
-    }
-
-    .btn-primary:hover:not(:disabled) {
-        background: var(--primary-hover);
-    }
-
-    .btn-brass {
-        background: var(--primary);
-        color: var(--primary-foreground);
-    }
-
-    .btn-brass:hover:not(:disabled) {
-        background: var(--primary-hover);
-    }
-
-    .btn-ghost {
-        @apply border-line text-ink-soft;
-        background: transparent;
-    }
-
-    .btn-ghost:hover:not(:disabled) {
-        @apply border-line-strong text-ink;
-        background: var(--surface-muted);
-    }
-
-    .btn-danger {
-        background: var(--destructive);
-        color: var(--ink);
-    }
-
-    .btn-danger:hover:not(:disabled) {
-        filter: brightness(1.1);
-    }
-
-    .kbd {
-        @apply rounded border border-line-strong px-1.5 py-0.5 font-mono text-xs;
-        font-variant-numeric: tabular-nums;
-        font-feature-settings: 'tnum';
-        background: var(--key-top);
-        color: var(--key-ink);
-        box-shadow: 0 1px 0 var(--line-strong);
-    }
-
-    .chip {
-        @apply inline-flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1 text-xs;
-        background: var(--surface);
-        color: var(--ink-soft);
-    }
-
-    .ms {
-        font-family: var(--font-myanmar);
-    }
-
-    .heavy {
-        font-family: var(--font-heavy);
-    }
-
-    .scrollbar-none {
-        scrollbar-width: none;
-    }
-
-    .scrollbar-none::-webkit-scrollbar {
-        display: none;
-    }
-
     .char-pop {
-        animation: char-pop 180ms ease-out;
+        animation: char-pop 180ms var(--ease-out);
     }
 
     @keyframes char-pop {
         0% {
-            transform: scale(0.96);
-            opacity: 0.4;
+            transform: scale(0.94);
+            opacity: 0.35;
         }
 
         100% {
@@ -396,7 +268,7 @@
         }
 
         50% {
-            opacity: 0.2;
+            opacity: 0.18;
         }
     }
 
@@ -410,9 +282,6 @@
         }
     }
 
-    /* Flat, borderless composition: the typing sequence floats in the
-     workspace rather than sitting inside a card. The third-party
-     viewport/content span structure is preserved for the spring caret. */
     .tt-container {
         display: flex;
         flex-direction: column;
@@ -438,14 +307,15 @@
         display: inline-block;
         transition:
             color 120ms ease,
-            background-color 120ms ease;
+            background-color 120ms ease,
+            box-shadow 120ms ease;
         white-space: pre;
     }
 
     .tt-char-now {
         position: relative;
-        border-radius: 0.2rem;
-        padding: 0 0.06em;
+        border-radius: 0.3rem;
+        padding: 0 0.08em;
     }
 
     .tt-char-focus {
@@ -475,15 +345,17 @@
 
     .tt-caret {
         position: absolute;
-        bottom: -0.25rem;
+        bottom: -0.3rem;
         left: 50%;
         transform: translateX(-50%);
-        width: 1.25rem;
-        height: 2.5px;
+        width: 1.6rem;
+        height: 3px;
         border-radius: 999px;
         background: var(--caret);
-        box-shadow: 0 0 6px 1px color-mix(in srgb, var(--caret) 45%, transparent);
-        animation: caret-blink 1s ease-in-out infinite;
+        box-shadow:
+            0 1px 0 color-mix(in srgb, var(--caret) 20%, transparent),
+            0 1px 4px color-mix(in srgb, var(--caret) 30%, transparent);
+        animation: caret-blink 1s var(--ease-in-out) infinite;
     }
 
     /* ── Virtual keyboard keycaps ─────────────────────────────────────
@@ -501,29 +373,27 @@
         background: linear-gradient(to bottom, var(--key-top), var(--key-base));
         box-shadow:
             0 1.5px 0 var(--line-strong),
-            0 2px 6px -2px rgba(0, 0, 0, 0.2),
+            0 1px 2px rgba(0, 0, 0, 0.06),
             inset 0 1px 0 rgba(255, 255, 255, 0.35);
     }
 
     .keycap-idle:hover {
         border-color: var(--line-strong);
-        background: linear-gradient(to bottom, var(--key-top), color-mix(in srgb, var(--key-top) 55%, var(--key-base) 45%));
+        background: linear-gradient(to bottom, var(--key-top), color-mix(in srgb, var(--key-top) 70%, var(--key-base) 30%));
         box-shadow:
             0 2px 0 var(--line-strong),
-            0 3px 8px -2px rgba(0, 0, 0, 0.25),
-            inset 0 1px 0 rgba(255, 255, 255, 0.45);
+            0 2px 4px rgba(0, 0, 0, 0.08);
     }
 
-    /* Next-key hint: static accent wash (no continuous glow pulse) */
+    /* Next-key hint: solid primary keycap, subtle ring for focus */
     .keycap-active {
         z-index: 20;
-        border-color: var(--primary);
-        background: linear-gradient(to bottom, color-mix(in srgb, var(--primary) 100%, white 6%), var(--primary));
+        border-color: var(--primary-active);
+        background: var(--primary);
         color: var(--primary-foreground);
         box-shadow:
             0 0 0 2px var(--primary-ring),
-            0 0 18px 2px color-mix(in srgb, var(--primary) 26%, transparent),
-            inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            0 2px 0 var(--primary-active);
     }
 
     .keycap-active .keycap-primary,
@@ -537,11 +407,9 @@
     .keycap-hint {
         z-index: 10;
         border-color: color-mix(in srgb, var(--primary) 55%, transparent);
-        background: color-mix(in srgb, var(--primary) 14%, transparent);
+        background: color-mix(in srgb, var(--primary) 12%, transparent);
         color: var(--primary);
-        box-shadow:
-            0 0 0 1px color-mix(in srgb, var(--primary) 35%, transparent),
-            inset 0 1px 0 rgba(255, 255, 255, 0.18);
+        box-shadow: 0 1.5px 0 color-mix(in srgb, var(--primary) 28%, transparent);
     }
 
     .keycap-hint .keycap-primary,
@@ -555,7 +423,7 @@
     }
 
     .keycap-sublabel {
-        color: color-mix(in srgb, var(--key-ink) 48%, transparent);
+        color: color-mix(in srgb, var(--key-ink) 46%, transparent);
     }
 
     /* Press-down feel: quick translate + scale for physicality */
@@ -567,9 +435,11 @@
         0% {
             transform: translateY(0) scale(1);
         }
+
         40% {
-            transform: translateY(2px) scale(0.97);
+            transform: translateY(2px) scale(0.96);
         }
+
         100% {
             transform: translateY(0) scale(1);
         }
@@ -584,12 +454,11 @@
         0% {
             background-color: var(--success);
             color: #fff;
-            box-shadow: 0 0 12px 2px color-mix(in srgb, var(--success) 30%, transparent);
         }
+
         100% {
             background-color: transparent;
             color: inherit;
-            box-shadow: none;
         }
     }
 
@@ -601,20 +470,20 @@
         0% {
             background-color: var(--destructive);
             color: #fff;
-            box-shadow: 0 0 12px 2px color-mix(in srgb, var(--destructive) 30%, transparent);
         }
+
         50% {
             background-color: color-mix(in srgb, var(--destructive) 60%, transparent);
         }
+
         100% {
             background-color: transparent;
             color: inherit;
-            box-shadow: none;
         }
     }
 
     .keyboard-status-in {
-        animation: status-fade-in 400ms ease-out;
+        animation: status-fade-in 400ms var(--ease-out);
     }
 
     @keyframes status-fade-in {
@@ -622,6 +491,7 @@
             opacity: 0;
             transform: translateY(4px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -677,15 +547,18 @@
 
 /* ── Active-finger colour highlight ────────────────────────────────────────
    CSS colours the owning finger's highlight; finger-motion.ts moves it. Both
-   states share geometry, position, size and the 2px stroke width; only the
-   stroke colour changes here.
+   states share geometry, position, size and the 2px stroke width; the base
+   rule adds a faint primary fill, the active rule pulls the stroke to full
+   primary intensity.
 
    These rules are scoped to .hand-overlay-container (specificity 0,2,0) so
    they override the identical class selector inside each injected SVG's own
    <style> block; the active rules (0,3,0) win over both. */
 .hand-overlay-container .hand-highlight {
     opacity: 1;
-    stroke: color-mix(in srgb, var(--hand-active) 30%, transparent);
+    fill: var(--hand-active);
+    fill-opacity: 0.1;
+    stroke: color-mix(in srgb, var(--hand-active) 70%, transparent);
     stroke-width: 2;
     transition: stroke-color 0.15s ease;
 }

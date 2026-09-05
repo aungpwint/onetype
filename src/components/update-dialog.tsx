@@ -2,6 +2,8 @@ import { Download, RefreshCw } from 'lucide-react'
 import { useUpdater } from '@/services/updater/use-updater'
 import { Modal } from './ui'
 import { Button } from './ui/button'
+import { Progress } from './ui/progress'
+import { eyebrowClass } from '@/lib/utils'
 
 export function UpdateDialog() {
     const { status, downloadAndInstall, install } = useUpdater()
@@ -12,7 +14,7 @@ export function UpdateDialog() {
         <Modal open onClose={() => {}} ariaLabel="Update available">
             {status.state === 'available' && (
                 <>
-                    <p className="eyebrow">Update Available</p>
+                    <p className={eyebrowClass}>Update Available</p>
                     <h2 className="mt-1 font-display text-xl">OneType v{status.version}</h2>
                     {status.body && (
                         <div className="mt-4 max-h-48 overflow-y-auto rounded-lg border border-border bg-muted p-4">
@@ -34,17 +36,10 @@ export function UpdateDialog() {
 
             {status.state === 'downloading' && (
                 <>
-                    <p className="eyebrow">Downloading Update</p>
+                    <p className={eyebrowClass}>Downloading Update</p>
                     <h2 className="mt-1 font-display text-lg">Downloading…</h2>
                     <div className="mt-4">
-                        <div className="h-2 overflow-hidden rounded-full bg-muted">
-                            <div
-                                className="h-full rounded-full bg-accent transition-all"
-                                style={{
-                                    width: status.contentLength ? `${Math.min(100, (status.progress / status.contentLength) * 100)}%` : undefined,
-                                }}
-                            />
-                        </div>
+                        <Progress value={status.contentLength ? Math.min(100, (status.progress / status.contentLength) * 100) : 0} />
                         <p className="mt-2 text-xs text-muted-foreground">
                             {status.contentLength ? `${Math.round((status.progress / status.contentLength) * 100)}%` : 'Starting…'}
                         </p>
@@ -55,7 +50,7 @@ export function UpdateDialog() {
 
             {status.state === 'downloaded' && (
                 <>
-                    <p className="eyebrow">Update Ready</p>
+                    <p className={eyebrowClass}>Update Ready</p>
                     <h2 className="mt-1 font-display text-lg">Update Downloaded</h2>
                     <p className="mt-2 text-sm text-muted-foreground">
                         The update has been downloaded successfully. OneType needs to restart to finish the installation.

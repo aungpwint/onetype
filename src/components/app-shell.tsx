@@ -29,6 +29,7 @@ import { StudentForm } from './student-form'
 import { listLayouts } from '@/core/keyboard-layout/registry'
 import { Button } from './ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip'
+import { cn, sectionTitleClass, highlightClass } from '@/lib/utils'
 
 const NAV = [
     { to: '/', label: 'Dashboard', en: 'Dashboard', icon: LayoutDashboard },
@@ -95,7 +96,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                     {sidebarOpen ? (
                         <motion.aside
                             key="rail"
-                            className="flex w-60 shrink-0 flex-col border-r border-border bg-card"
+                            className="flex w-60 shrink-0 flex-col border-r border-line bg-surface"
                             initial={{ x: -40, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             exit={{ x: -40, opacity: 0 }}
@@ -104,11 +105,11 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                             <div className="flex items-center gap-2.5 px-5 pt-5 pb-4">
                                 <button
                                     type="button"
-                                    className="flex items-center gap-2.5 rounded-lg text-left focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                                    className="group flex items-center gap-2.5 rounded-lg text-left focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                                     onClick={() => navigate('/')}
                                     aria-label="Back to dashboard"
                                 >
-                                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent font-mono text-sm font-bold text-accent-ink shadow-sm">
+                                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary font-mono text-sm font-bold text-primary-foreground">
                                         <span className="relative flex h-full w-full items-center justify-center">
                                             <svg viewBox="0 0 32 32" className="absolute inset-0 h-full w-full" aria-hidden>
                                                 <path
@@ -122,9 +123,9 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                             </svg>
                                         </span>
                                     </span>
-                                    <span className="font-display text-lg leading-none">
-                                        OneType
-                                        <span className="ms block text-xs text-muted-foreground">ဝမ်းတိုက်</span>
+                                    <span className="leading-none">
+                                        <span className="font-heavy text-lg text-ink">OneType</span>
+                                        <span className="block font-myanmar text-xs text-muted-foreground">ဝမ်းတိုက်</span>
                                     </span>
                                 </button>
                             </div>
@@ -136,37 +137,38 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                         to={item.to}
                                         end={item.to === '/'}
                                         className={({ isActive }) =>
-                                            `group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
+                                            cn(
+                                                'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-[color,background-color,box-shadow] duration-150 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
                                                 isActive
-                                                    ? 'bg-accent font-medium text-accent-ink shadow-sm'
-                                                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-                                            }`
+                                                    ? 'bg-primary font-medium text-primary-foreground'
+                                                    : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                                            )
                                         }
                                     >
-                                        <item.icon className="size-4 opacity-70" />
+                                        <item.icon className="size-4 transition-transform duration-150 group-hover:scale-105" />
                                         <span>{item.en}</span>
                                     </NavLink>
                                 ))}
                             </nav>
 
-                            <div className="border-t border-border p-3">
+                            <div className="space-y-2 border-t border-line p-3">
                                 {active ? (
                                     <button
                                         type="button"
-                                        className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-muted"
+                                        className="flex w-full items-center gap-3 rounded-lg border border-transparent px-2 py-2 text-left transition-colors hover:border-line hover:bg-muted/70"
                                         onClick={() => setPickerOpen(true)}
                                     >
-                                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-bold text-accent shadow-sm">
+                                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-bold text-accent">
                                             {active.displayName.slice(0, 1).toUpperCase()}
                                         </span>
                                         <span className="min-w-0">
                                             <span className="block truncate text-sm font-medium">{active.displayName}</span>
-                                            <span className="ms block truncate text-xs text-muted-foreground">{active.studentCode}</span>
+                                            <span className="block truncate font-myanmar text-xs text-muted-foreground">{active.studentCode}</span>
                                         </span>
                                         <ChevronDown className="ml-auto size-4 text-muted-foreground" />
                                     </button>
                                 ) : null}
-                                <div className="mt-2 flex items-center justify-between">
+                                <div className="flex items-center justify-between px-1">
                                     <ThemeToggle />
                                     <IconButton
                                         label={sound ? 'Mute key sounds' : 'Enable key sounds'}
@@ -180,7 +182,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                         active={handGuide}
                                     />
                                 </div>
-                                <p className="mt-3 px-1 text-[0.6875rem] leading-snug text-muted-foreground">
+                                <p className="px-1 text-[0.6875rem] leading-snug text-muted-foreground">
                                     {layoutCount} layouts · {activeCount > 0 ? 'solo learner' : 'no learner selected'}
                                 </p>
                             </div>
@@ -189,7 +191,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                 </AnimatePresence>
 
                 <div className="flex min-w-0 flex-1 flex-col">
-                    <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background/70 px-4 backdrop-blur-xl">
+                    <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background px-4">
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Button variant="ghost" size="icon" onClick={toggleSidebar} aria-label="Toggle sidebar">
@@ -221,27 +223,28 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
 
                 <Modal open={pickerOpen} onClose={() => setPickerOpen(false)} ariaLabel="Choose a learner">
                     <div className="mb-4 flex items-center justify-between pr-8">
-                        <h2 className="font-display text-lg">Choose a learner</h2>
+                        <h2 className={cn(sectionTitleClass, 'pr-8')}>Choose a learner</h2>
                     </div>
                     <ul className="space-y-2">
                         {students.map((student) => (
                             <li key={student.id}>
                                 <button
                                     type="button"
-                                    className={`flex w-full items-center gap-3 rounded-xl border bg-background px-3 py-2.5 text-left transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
-                                        active?.id === student.id ? 'border-accent bg-muted' : 'border-border hover:border-accent/50'
-                                    }`}
+                                    className={cn(
+                                        'flex w-full items-center gap-3 rounded-xl border bg-background px-3 py-2.5 text-left transition-[border-color,background-color] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+                                        active?.id === student.id ? highlightClass : 'border-line hover:border-accent/40 hover:bg-muted/50',
+                                    )}
                                     onClick={() => {
                                         void select(student.id)
                                         setPickerOpen(false)
                                     }}
                                 >
-                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-bold text-accent shadow-sm">
+                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-bold text-accent">
                                         {student.displayName.slice(0, 1).toUpperCase()}
                                     </span>
                                     <span className="min-w-0">
                                         <span className="block truncate text-sm font-medium">{student.displayName}</span>
-                                        <span className="ms block text-xs text-muted-foreground">{student.studentCode}</span>
+                                        <span className="block font-myanmar text-xs text-muted-foreground">{student.studentCode}</span>
                                     </span>
                                     {active?.id === student.id ? <span className="ml-auto text-xs font-medium text-accent">Active</span> : null}
                                 </button>
@@ -255,7 +258,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                 </Modal>
 
                 <Modal open={addOpen} onClose={() => setAddOpen(false)} ariaLabel="New learner">
-                    <h2 className="mb-4 font-display text-lg">New learner</h2>
+                    <h2 className={cn(sectionTitleClass, 'mb-4')}>New learner</h2>
                     <StudentForm
                         onDone={(created) => {
                             setAddOpen(false)

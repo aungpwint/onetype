@@ -3,8 +3,10 @@ import { useParams } from 'react-router-dom'
 import { GraduationCap, Users, Clock, Target, Gauge } from 'lucide-react'
 import * as backend from '@/services/backend'
 import type { StudentDetail, TeacherOverview } from '@/services/types'
-import { Stat, Spinner } from '@/components/ui'
-import { formatDateTime } from '@/lib/format'
+import { Stat, Spinner, PageHeader } from '@/components/ui'
+import { Progress } from '@/components/ui/progress'
+import { formatDateTime, formatWpm, formatAccuracy, pct } from '@/lib/format'
+import { cn, cardClass, appPageClass, sectionTitleClass } from '@/lib/utils'
 
 export default function TeacherPage() {
     const { studentId } = useParams<{ studentId: string }>()
@@ -34,14 +36,12 @@ export default function TeacherPage() {
         )
 
     return (
-        <div className="app-page">
-            <header>
-                <p className="eyebrow">Teacher's desk</p>
-                <h1 className="mt-1 font-display text-3xl tracking-tight">Overview</h1>
-                <p className="mt-1 text-sm text-muted-foreground">
-                    A roll of every learner on this machine. Accuracy and WPM are rolling averages across their saved sessions.
-                </p>
-            </header>
+        <div className={appPageClass}>
+            <PageHeader
+                eyebrow="Teacher's desk"
+                title="Overview"
+                subtitle="A roll of every learner on this machine. Accuracy and WPM are rolling averages across their saved sessions."
+            />
 
             <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
                 <Stat icon={<Users className="size-4" />} label="Learners" value={overview.studentCount} />
@@ -50,7 +50,7 @@ export default function TeacherPage() {
                 <Stat icon={<Gauge className="size-4" />} label="Avg WPM" value={overview.avgWpm ? Math.round(overview.avgWpm) : '—'} />
             </div>
 
-            <div className="card overflow-hidden">
+            <div className={cn(cardClass, 'overflow-hidden')}>
                 <table className="w-full text-left text-sm">
                     <thead>
                         <tr className="text-xs tracking-wider text-muted-foreground uppercase">
@@ -73,18 +73,16 @@ export default function TeacherPage() {
                                     >
                                         {s.student.displayName}
                                     </a>
-                                    <span className="ms block text-xs text-muted-foreground">{s.student.studentCode}</span>
+                                    <span className="block font-myanmar text-xs text-muted-foreground">{s.student.studentCode}</span>
                                 </td>
                                 <td className="px-5 py-2.5 text-muted-foreground capitalize">{s.level ?? '—'}</td>
-                                <td className="tnum px-5 py-2.5 text-right">{Math.round(s.wpm)}</td>
-                                <td className="tnum px-5 py-2.5 text-right">{s.accuracy.toFixed(0)}%</td>
-                                <td className="tnum px-5 py-2.5 text-right">{s.totalMinutes.toFixed(0)}</td>
+                                <td className="px-5 py-2.5 text-right tabular-nums">{formatWpm(s.wpm)}</td>
+                                <td className="px-5 py-2.5 text-right tabular-nums">{formatAccuracy(s.accuracy)}</td>
+                                <td className="px-5 py-2.5 text-right tabular-nums">{s.totalMinutes.toFixed(0)}</td>
                                 <td className="px-5 py-2.5">
                                     <div className="flex items-center gap-2">
-                                        <div className="h-2 w-28 overflow-hidden rounded-full bg-muted">
-                                            <div className="h-full rounded-full bg-accent" style={{ width: `${s.progress * 100}%` }} />
-                                        </div>
-                                        <span className="tnum text-xs text-muted-foreground">{Math.round(s.progress * 100)}%</span>
+                                        <Progress value={pct(s.progress, 1)} className="w-28" />
+                                        <span className="text-xs text-muted-foreground tabular-nums">{Math.round(s.progress * 100)}%</span>
                                     </div>
                                 </td>
                                 <td className="px-5 py-2.5 text-right text-muted-foreground">
@@ -104,10 +102,10 @@ export default function TeacherPage() {
             </div>
 
             {detail ? (
-                <div className="card p-5">
-                    <h2 className="font-display text-xl">
+                <div className={cn(cardClass, 'p-5')}>
+                    <h2 className={sectionTitleClass}>
                         Detail — {detail.student.displayName}{' '}
-                        <span className="ms text-sm font-normal text-muted-foreground">{detail.student.studentCode}</span>
+                        <span className="font-myanmar text-sm font-normal text-muted-foreground">{detail.student.studentCode}</span>
                     </h2>
                     <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
                         <Stat icon={<Gauge className="size-4" />} label="Avg WPM" value={Math.round(detail.overallWpm)} />
@@ -119,13 +117,8 @@ export default function TeacherPage() {
                         {detail.lessonCounts.map((lc) => (
                             <div key={lc.level} className="flex items-center gap-2">
                                 <span className="w-32 capitalize">{lc.level}</span>
-                                <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
-                                    <div
-                                        className="h-full rounded-full bg-accent"
-                                        style={{ width: `${(lc.completed / Math.max(1, lc.total)) * 100}%` }}
-                                    />
-                                </div>
-                                <span className="tnum text-xs">
+                                <Progress value={pct(lc.completed, lc.total)} className="flex-1" />
+                                <span className="text-xs tabular-nums">
                                     {lc.completed}/{lc.total}
                                 </span>
                             </div>
