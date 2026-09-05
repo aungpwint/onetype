@@ -1,0 +1,1057 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "src/data/lessons/*.ts",
+  "updatedAt": "2026-09-05T17:22:45.835Z",
+  "lessons": [
+    {
+      "id": "lesson-en-advanced-1",
+      "language": "en",
+      "level": "advanced",
+      "number": 1,
+      "file": "en/advanced/001-weak-key-reinforcement.json"
+    },
+    {
+      "id": "lesson-en-advanced-2",
+      "language": "en",
+      "level": "advanced",
+      "number": 2,
+      "file": "en/advanced/002-daily-life-paragraph.json"
+    },
+    {
+      "id": "lesson-en-advanced-3",
+      "language": "en",
+      "level": "advanced",
+      "number": 3,
+      "file": "en/advanced/003-school-life-paragraph.json"
+    },
+    {
+      "id": "lesson-en-advanced-4",
+      "language": "en",
+      "level": "advanced",
+      "number": 4,
+      "file": "en/advanced/004-nature-paragraph.json"
+    },
+    {
+      "id": "lesson-en-advanced-5",
+      "language": "en",
+      "level": "advanced",
+      "number": 5,
+      "file": "en/advanced/005-technology-paragraph.json"
+    },
+    {
+      "id": "lesson-en-advanced-6",
+      "language": "en",
+      "level": "advanced",
+      "number": 6,
+      "file": "en/advanced/006-good-habits-paragraph.json"
+    },
+    {
+      "id": "lesson-en-advanced-7",
+      "language": "en",
+      "level": "advanced",
+      "number": 7,
+      "file": "en/advanced/007-a-short-story.json"
+    },
+    {
+      "id": "lesson-en-advanced-8",
+      "language": "en",
+      "level": "advanced",
+      "number": 8,
+      "file": "en/advanced/008-travel-writing.json"
+    },
+    {
+      "id": "lesson-en-advanced-9",
+      "language": "en",
+      "level": "advanced",
+      "number": 9,
+      "file": "en/advanced/009-persuasive-writing.json"
+    },
+    {
+      "id": "lesson-en-advanced-10",
+      "language": "en",
+      "level": "advanced",
+      "number": 10,
+      "file": "en/advanced/010-descriptive-writing.json"
+    },
+    {
+      "id": "lesson-en-advanced-11",
+      "language": "en",
+      "level": "advanced",
+      "number": 11,
+      "file": "en/advanced/011-explanatory-writing.json"
+    },
+    {
+      "id": "lesson-en-advanced-12",
+      "language": "en",
+      "level": "advanced",
+      "number": 12,
+      "file": "en/advanced/012-narrative-writing.json"
+    },
+    {
+      "id": "lesson-en-advanced-13",
+      "language": "en",
+      "level": "advanced",
+      "number": 13,
+      "file": "en/advanced/013-speed-drill-common-patterns.json"
+    },
+    {
+      "id": "lesson-en-advanced-14",
+      "language": "en",
+      "level": "advanced",
+      "number": 14,
+      "file": "en/advanced/014-accuracy-challenge.json"
+    },
+    {
+      "id": "lesson-en-advanced-15",
+      "language": "en",
+      "level": "advanced",
+      "number": 15,
+      "file": "en/advanced/015-essay-passage-learning.json"
+    },
+    {
+      "id": "lesson-en-advanced-16",
+      "language": "en",
+      "level": "advanced",
+      "number": 16,
+      "file": "en/advanced/016-essay-passage-community.json"
+    },
+    {
+      "id": "lesson-en-advanced-17",
+      "language": "en",
+      "level": "advanced",
+      "number": 17,
+      "file": "en/advanced/017-long-copy-library.json"
+    },
+    {
+      "id": "lesson-en-advanced-18",
+      "language": "en",
+      "level": "advanced",
+      "number": 18,
+      "file": "en/advanced/018-final-examination.json"
+    },
+    {
+      "id": "lesson-en-beginner-1",
+      "language": "en",
+      "level": "beginner",
+      "number": 1,
+      "file": "en/beginner/001-finger-anchors-f-and-j.json"
+    },
+    {
+      "id": "lesson-en-beginner-2",
+      "language": "en",
+      "level": "beginner",
+      "number": 2,
+      "file": "en/beginner/002-home-row-left-hand-a-s-d-f.json"
+    },
+    {
+      "id": "lesson-en-beginner-3",
+      "language": "en",
+      "level": "beginner",
+      "number": 3,
+      "file": "en/beginner/003-home-row-right-hand-j-k-l.json"
+    },
+    {
+      "id": "lesson-en-beginner-4",
+      "language": "en",
+      "level": "beginner",
+      "number": 4,
+      "file": "en/beginner/004-full-home-row-asdf-jkl.json"
+    },
+    {
+      "id": "lesson-en-beginner-5",
+      "language": "en",
+      "level": "beginner",
+      "number": 5,
+      "file": "en/beginner/005-left-index-stretch-g.json"
+    },
+    {
+      "id": "lesson-en-beginner-6",
+      "language": "en",
+      "level": "beginner",
+      "number": 6,
+      "file": "en/beginner/006-right-index-stretch-h.json"
+    },
+    {
+      "id": "lesson-en-beginner-7",
+      "language": "en",
+      "level": "beginner",
+      "number": 7,
+      "file": "en/beginner/007-complete-home-row-asdfg-hjkl.json"
+    },
+    {
+      "id": "lesson-en-beginner-8",
+      "language": "en",
+      "level": "beginner",
+      "number": 8,
+      "file": "en/beginner/008-left-hand-pinky-ring-q-w-a-s-z-x.json"
+    },
+    {
+      "id": "lesson-en-beginner-9",
+      "language": "en",
+      "level": "beginner",
+      "number": 9,
+      "file": "en/beginner/009-left-hand-middle-index-e-d-c-r-f-v-t-g-b.json"
+    },
+    {
+      "id": "lesson-en-beginner-10",
+      "language": "en",
+      "level": "beginner",
+      "number": 10,
+      "file": "en/beginner/010-right-hand-index-middle-y-u-h-j-n-m-i-k.json"
+    },
+    {
+      "id": "lesson-en-beginner-11",
+      "language": "en",
+      "level": "beginner",
+      "number": 11,
+      "file": "en/beginner/011-right-hand-ring-pinky-o-p-l.json"
+    },
+    {
+      "id": "lesson-en-beginner-12",
+      "language": "en",
+      "level": "beginner",
+      "number": 12,
+      "file": "en/beginner/012-full-left-hand-all-three-rows.json"
+    },
+    {
+      "id": "lesson-en-beginner-13",
+      "language": "en",
+      "level": "beginner",
+      "number": 13,
+      "file": "en/beginner/013-full-right-hand-all-three-rows.json"
+    },
+    {
+      "id": "lesson-en-beginner-14",
+      "language": "en",
+      "level": "beginner",
+      "number": 14,
+      "file": "en/beginner/014-row-transitions-top-to-home.json"
+    },
+    {
+      "id": "lesson-en-beginner-15",
+      "language": "en",
+      "level": "beginner",
+      "number": 15,
+      "file": "en/beginner/015-row-transitions-home-to-bottom.json"
+    },
+    {
+      "id": "lesson-en-beginner-16",
+      "language": "en",
+      "level": "beginner",
+      "number": 16,
+      "file": "en/beginner/016-finger-independence-left-index.json"
+    },
+    {
+      "id": "lesson-en-beginner-17",
+      "language": "en",
+      "level": "beginner",
+      "number": 17,
+      "file": "en/beginner/017-finger-independence-right-index.json"
+    },
+    {
+      "id": "lesson-en-beginner-18",
+      "language": "en",
+      "level": "beginner",
+      "number": 18,
+      "file": "en/beginner/018-finger-independence-middle-ring.json"
+    },
+    {
+      "id": "lesson-en-beginner-19",
+      "language": "en",
+      "level": "beginner",
+      "number": 19,
+      "file": "en/beginner/019-hand-alternation.json"
+    },
+    {
+      "id": "lesson-en-beginner-20",
+      "language": "en",
+      "level": "beginner",
+      "number": 20,
+      "file": "en/beginner/020-same-hand-movement.json"
+    },
+    {
+      "id": "lesson-en-beginner-21",
+      "language": "en",
+      "level": "beginner",
+      "number": 21,
+      "file": "en/beginner/021-alphabet-drills-sequential.json"
+    },
+    {
+      "id": "lesson-en-beginner-22",
+      "language": "en",
+      "level": "beginner",
+      "number": 22,
+      "file": "en/beginner/022-alphabet-drills-by-finger-group.json"
+    },
+    {
+      "id": "lesson-en-beginner-23",
+      "language": "en",
+      "level": "beginner",
+      "number": 23,
+      "file": "en/beginner/023-common-three-letter-words.json"
+    },
+    {
+      "id": "lesson-en-beginner-24",
+      "language": "en",
+      "level": "beginner",
+      "number": 24,
+      "file": "en/beginner/024-common-four-letter-words.json"
+    },
+    {
+      "id": "lesson-en-beginner-25",
+      "language": "en",
+      "level": "beginner",
+      "number": 25,
+      "file": "en/beginner/025-common-five-letter-words.json"
+    },
+    {
+      "id": "lesson-en-beginner-26",
+      "language": "en",
+      "level": "beginner",
+      "number": 26,
+      "file": "en/beginner/026-simple-sentences.json"
+    },
+    {
+      "id": "lesson-en-beginner-27",
+      "language": "en",
+      "level": "beginner",
+      "number": 27,
+      "file": "en/beginner/027-numbers-0-9.json"
+    },
+    {
+      "id": "lesson-en-beginner-28",
+      "language": "en",
+      "level": "beginner",
+      "number": 28,
+      "file": "en/beginner/028-numbers-with-letters.json"
+    },
+    {
+      "id": "lesson-en-beginner-29",
+      "language": "en",
+      "level": "beginner",
+      "number": 29,
+      "file": "en/beginner/029-beginner-review-all-keys.json"
+    },
+    {
+      "id": "lesson-en-beginner-30",
+      "language": "en",
+      "level": "beginner",
+      "number": 30,
+      "file": "en/beginner/030-beginner-final-review.json"
+    },
+    {
+      "id": "lesson-en-beginner-31",
+      "language": "en",
+      "level": "beginner",
+      "number": 31,
+      "file": "en/beginner/031-right-shift-left-hand-f-fingers.json"
+    },
+    {
+      "id": "lesson-en-beginner-32",
+      "language": "en",
+      "level": "beginner",
+      "number": 32,
+      "file": "en/beginner/032-left-shift-right-hand-j-fingers.json"
+    },
+    {
+      "id": "lesson-en-beginner-33",
+      "language": "en",
+      "level": "beginner",
+      "number": 33,
+      "file": "en/beginner/033-shift-home-row-mixed.json"
+    },
+    {
+      "id": "lesson-en-beginner-34",
+      "language": "en",
+      "level": "beginner",
+      "number": 34,
+      "file": "en/beginner/034-shift-top-row-left-q-w-e-r-t.json"
+    },
+    {
+      "id": "lesson-en-beginner-35",
+      "language": "en",
+      "level": "beginner",
+      "number": 35,
+      "file": "en/beginner/035-shift-top-row-right-y-u-i-o-p.json"
+    },
+    {
+      "id": "lesson-en-beginner-36",
+      "language": "en",
+      "level": "beginner",
+      "number": 36,
+      "file": "en/beginner/036-shift-bottom-row-z-x-c-v-b-n-m.json"
+    },
+    {
+      "id": "lesson-en-beginner-37",
+      "language": "en",
+      "level": "beginner",
+      "number": 37,
+      "file": "en/beginner/037-all-uppercase-letters.json"
+    },
+    {
+      "id": "lesson-en-beginner-38",
+      "language": "en",
+      "level": "beginner",
+      "number": 38,
+      "file": "en/beginner/038-mixed-case-words.json"
+    },
+    {
+      "id": "lesson-en-beginner-39",
+      "language": "en",
+      "level": "beginner",
+      "number": 39,
+      "file": "en/beginner/039-capitalized-sentences.json"
+    },
+    {
+      "id": "lesson-en-beginner-40",
+      "language": "en",
+      "level": "beginner",
+      "number": 40,
+      "file": "en/beginner/040-proper-nouns.json"
+    },
+    {
+      "id": "lesson-en-beginner-41",
+      "language": "en",
+      "level": "beginner",
+      "number": 41,
+      "file": "en/beginner/041-shift-numbers.json"
+    },
+    {
+      "id": "lesson-en-beginner-42",
+      "language": "en",
+      "level": "beginner",
+      "number": 42,
+      "file": "en/beginner/042-shift-symbols-brackets-and-more.json"
+    },
+    {
+      "id": "lesson-en-beginner-43",
+      "language": "en",
+      "level": "beginner",
+      "number": 43,
+      "file": "en/beginner/043-shift-review-full-keyboard.json"
+    },
+    {
+      "id": "lesson-en-beginner-44",
+      "language": "en",
+      "level": "beginner",
+      "number": 44,
+      "file": "en/beginner/044-number-row-left-hand-1-2-3-4-5.json"
+    },
+    {
+      "id": "lesson-en-beginner-45",
+      "language": "en",
+      "level": "beginner",
+      "number": 45,
+      "file": "en/beginner/045-number-row-right-hand-6-7-8-9-0.json"
+    },
+    {
+      "id": "lesson-en-beginner-46",
+      "language": "en",
+      "level": "beginner",
+      "number": 46,
+      "file": "en/beginner/046-full-number-row.json"
+    },
+    {
+      "id": "lesson-en-beginner-47",
+      "language": "en",
+      "level": "beginner",
+      "number": 47,
+      "file": "en/beginner/047-number-patterns.json"
+    },
+    {
+      "id": "lesson-en-beginner-48",
+      "language": "en",
+      "level": "beginner",
+      "number": 48,
+      "file": "en/beginner/048-numbers-and-letters-mixed.json"
+    },
+    {
+      "id": "lesson-en-beginner-49",
+      "language": "en",
+      "level": "beginner",
+      "number": 49,
+      "file": "en/beginner/049-shift-number-symbols.json"
+    },
+    {
+      "id": "lesson-en-beginner-50",
+      "language": "en",
+      "level": "beginner",
+      "number": 50,
+      "file": "en/beginner/050-shift-number-symbols.json"
+    },
+    {
+      "id": "lesson-en-beginner-51",
+      "language": "en",
+      "level": "beginner",
+      "number": 51,
+      "file": "en/beginner/051-all-shift-symbols-review.json"
+    },
+    {
+      "id": "lesson-en-beginner-52",
+      "language": "en",
+      "level": "beginner",
+      "number": 52,
+      "file": "en/beginner/052-punctuation-period-and-comma.json"
+    },
+    {
+      "id": "lesson-en-beginner-53",
+      "language": "en",
+      "level": "beginner",
+      "number": 53,
+      "file": "en/beginner/053-punctuation-semicolon-and-colon.json"
+    },
+    {
+      "id": "lesson-en-beginner-54",
+      "language": "en",
+      "level": "beginner",
+      "number": 54,
+      "file": "en/beginner/054-punctuation-question-and-exclamation.json"
+    },
+    {
+      "id": "lesson-en-beginner-55",
+      "language": "en",
+      "level": "beginner",
+      "number": 55,
+      "file": "en/beginner/055-punctuation-quotes-and-brackets.json"
+    },
+    {
+      "id": "lesson-en-beginner-56",
+      "language": "en",
+      "level": "beginner",
+      "number": 56,
+      "file": "en/beginner/056-numbers-and-symbols-final-review.json"
+    },
+    {
+      "id": "lesson-en-intermediate-1",
+      "language": "en",
+      "level": "intermediate",
+      "number": 1,
+      "file": "en/intermediate/001-high-frequency-words-1.json"
+    },
+    {
+      "id": "lesson-en-intermediate-2",
+      "language": "en",
+      "level": "intermediate",
+      "number": 2,
+      "file": "en/intermediate/002-high-frequency-words-2.json"
+    },
+    {
+      "id": "lesson-en-intermediate-3",
+      "language": "en",
+      "level": "intermediate",
+      "number": 3,
+      "file": "en/intermediate/003-common-word-pairs.json"
+    },
+    {
+      "id": "lesson-en-intermediate-4",
+      "language": "en",
+      "level": "intermediate",
+      "number": 4,
+      "file": "en/intermediate/004-same-hand-difficult-patterns.json"
+    },
+    {
+      "id": "lesson-en-intermediate-5",
+      "language": "en",
+      "level": "intermediate",
+      "number": 5,
+      "file": "en/intermediate/005-alternating-hand-words.json"
+    },
+    {
+      "id": "lesson-en-intermediate-6",
+      "language": "en",
+      "level": "intermediate",
+      "number": 6,
+      "file": "en/intermediate/006-simple-sentences-1.json"
+    },
+    {
+      "id": "lesson-en-intermediate-7",
+      "language": "en",
+      "level": "intermediate",
+      "number": 7,
+      "file": "en/intermediate/007-simple-sentences-2.json"
+    },
+    {
+      "id": "lesson-en-intermediate-8",
+      "language": "en",
+      "level": "intermediate",
+      "number": 8,
+      "file": "en/intermediate/008-contractions.json"
+    },
+    {
+      "id": "lesson-en-intermediate-9",
+      "language": "en",
+      "level": "intermediate",
+      "number": 9,
+      "file": "en/intermediate/009-possessives-and-apostrophes.json"
+    },
+    {
+      "id": "lesson-en-intermediate-10",
+      "language": "en",
+      "level": "intermediate",
+      "number": 10,
+      "file": "en/intermediate/010-compound-words.json"
+    },
+    {
+      "id": "lesson-en-intermediate-11",
+      "language": "en",
+      "level": "intermediate",
+      "number": 11,
+      "file": "en/intermediate/011-question-sentences.json"
+    },
+    {
+      "id": "lesson-en-intermediate-12",
+      "language": "en",
+      "level": "intermediate",
+      "number": 12,
+      "file": "en/intermediate/012-dialogue-typing.json"
+    },
+    {
+      "id": "lesson-en-intermediate-13",
+      "language": "en",
+      "level": "intermediate",
+      "number": 13,
+      "file": "en/intermediate/013-speed-building-1.json"
+    },
+    {
+      "id": "lesson-en-intermediate-14",
+      "language": "en",
+      "level": "intermediate",
+      "number": 14,
+      "file": "en/intermediate/014-speed-building-2.json"
+    },
+    {
+      "id": "lesson-en-intermediate-15",
+      "language": "en",
+      "level": "intermediate",
+      "number": 15,
+      "file": "en/intermediate/015-short-paragraph-1.json"
+    },
+    {
+      "id": "lesson-en-intermediate-16",
+      "language": "en",
+      "level": "intermediate",
+      "number": 16,
+      "file": "en/intermediate/016-short-paragraph-2.json"
+    },
+    {
+      "id": "lesson-en-intermediate-17",
+      "language": "en",
+      "level": "intermediate",
+      "number": 17,
+      "file": "en/intermediate/017-difficult-finger-patterns.json"
+    },
+    {
+      "id": "lesson-en-intermediate-18",
+      "language": "en",
+      "level": "intermediate",
+      "number": 18,
+      "file": "en/intermediate/018-intermediate-review.json"
+    },
+    {
+      "id": "lesson-my-advanced-1",
+      "language": "my",
+      "level": "advanced",
+      "number": 1,
+      "file": "my/advanced/001-complex-sentence-practice.json"
+    },
+    {
+      "id": "lesson-my-advanced-2",
+      "language": "my",
+      "level": "advanced",
+      "number": 2,
+      "file": "my/advanced/002-punctuation.json"
+    },
+    {
+      "id": "lesson-my-advanced-3",
+      "language": "my",
+      "level": "advanced",
+      "number": 3,
+      "file": "my/advanced/003-tone-practice.json"
+    },
+    {
+      "id": "lesson-my-advanced-4",
+      "language": "my",
+      "level": "advanced",
+      "number": 4,
+      "file": "my/advanced/004-medial-combinations.json"
+    },
+    {
+      "id": "lesson-my-advanced-5",
+      "language": "my",
+      "level": "advanced",
+      "number": 5,
+      "file": "my/advanced/005-common-words-level-1.json"
+    },
+    {
+      "id": "lesson-my-advanced-6",
+      "language": "my",
+      "level": "advanced",
+      "number": 6,
+      "file": "my/advanced/006-meeting-vocabulary.json"
+    },
+    {
+      "id": "lesson-my-advanced-7",
+      "language": "my",
+      "level": "advanced",
+      "number": 7,
+      "file": "my/advanced/007-address-and-place.json"
+    },
+    {
+      "id": "lesson-my-advanced-8",
+      "language": "my",
+      "level": "advanced",
+      "number": 8,
+      "file": "my/advanced/008-reporting-sentences.json"
+    },
+    {
+      "id": "lesson-my-advanced-9",
+      "language": "my",
+      "level": "advanced",
+      "number": 9,
+      "file": "my/advanced/009-daily-news-paragraph.json"
+    },
+    {
+      "id": "lesson-my-advanced-10",
+      "language": "my",
+      "level": "advanced",
+      "number": 10,
+      "file": "my/advanced/010-society-paragraph.json"
+    },
+    {
+      "id": "lesson-my-advanced-11",
+      "language": "my",
+      "level": "advanced",
+      "number": 11,
+      "file": "my/advanced/011-mixed-myanmar-english-words.json"
+    },
+    {
+      "id": "lesson-my-advanced-12",
+      "language": "my",
+      "level": "advanced",
+      "number": 12,
+      "file": "my/advanced/012-essay-writing.json"
+    },
+    {
+      "id": "lesson-my-advanced-13",
+      "language": "my",
+      "level": "advanced",
+      "number": 13,
+      "file": "my/advanced/013-punctuation-drills.json"
+    },
+    {
+      "id": "lesson-my-advanced-14",
+      "language": "my",
+      "level": "advanced",
+      "number": 14,
+      "file": "my/advanced/014-causal-paragraph.json"
+    },
+    {
+      "id": "lesson-my-advanced-15",
+      "language": "my",
+      "level": "advanced",
+      "number": 15,
+      "file": "my/advanced/015-formal-letter-1.json"
+    },
+    {
+      "id": "lesson-my-advanced-16",
+      "language": "my",
+      "level": "advanced",
+      "number": 16,
+      "file": "my/advanced/016-formal-letter-2.json"
+    },
+    {
+      "id": "lesson-my-advanced-17",
+      "language": "my",
+      "level": "advanced",
+      "number": 17,
+      "file": "my/advanced/017-timed-news-paragraph.json"
+    },
+    {
+      "id": "lesson-my-advanced-18",
+      "language": "my",
+      "level": "advanced",
+      "number": 18,
+      "file": "my/advanced/018-examination-practice.json"
+    },
+    {
+      "id": "lesson-my-beginner-1",
+      "language": "my",
+      "level": "beginner",
+      "number": 1,
+      "file": "my/beginner/001-first-consonants-and.json"
+    },
+    {
+      "id": "lesson-my-beginner-2",
+      "language": "my",
+      "level": "beginner",
+      "number": 2,
+      "file": "my/beginner/002-top-row-consonants-left-hand.json"
+    },
+    {
+      "id": "lesson-my-beginner-3",
+      "language": "my",
+      "level": "beginner",
+      "number": 3,
+      "file": "my/beginner/003-top-row-consonants-right-hand.json"
+    },
+    {
+      "id": "lesson-my-beginner-4",
+      "language": "my",
+      "level": "beginner",
+      "number": 4,
+      "file": "my/beginner/004-consonants-review.json"
+    },
+    {
+      "id": "lesson-my-beginner-5",
+      "language": "my",
+      "level": "beginner",
+      "number": 5,
+      "file": "my/beginner/005-consonants-and.json"
+    },
+    {
+      "id": "lesson-my-beginner-6",
+      "language": "my",
+      "level": "beginner",
+      "number": 6,
+      "file": "my/beginner/006-shift-consonants.json"
+    },
+    {
+      "id": "lesson-my-beginner-7",
+      "language": "my",
+      "level": "beginner",
+      "number": 7,
+      "file": "my/beginner/007-bottom-row-and.json"
+    },
+    {
+      "id": "lesson-my-beginner-8",
+      "language": "my",
+      "level": "beginner",
+      "number": 8,
+      "file": "my/beginner/008-vowel-i.json"
+    },
+    {
+      "id": "lesson-my-beginner-9",
+      "language": "my",
+      "level": "beginner",
+      "number": 9,
+      "file": "my/beginner/009-vowel-aa.json"
+    },
+    {
+      "id": "lesson-my-beginner-10",
+      "language": "my",
+      "level": "beginner",
+      "number": 10,
+      "file": "my/beginner/010-vowels.json"
+    },
+    {
+      "id": "lesson-my-beginner-11",
+      "language": "my",
+      "level": "beginner",
+      "number": 11,
+      "file": "my/beginner/011-medial-ya-gyat.json"
+    },
+    {
+      "id": "lesson-my-beginner-12",
+      "language": "my",
+      "level": "beginner",
+      "number": 12,
+      "file": "my/beginner/012-medial-ra-nat.json"
+    },
+    {
+      "id": "lesson-my-beginner-13",
+      "language": "my",
+      "level": "beginner",
+      "number": 13,
+      "file": "my/beginner/013-asat-and-virama.json"
+    },
+    {
+      "id": "lesson-my-beginner-14",
+      "language": "my",
+      "level": "beginner",
+      "number": 14,
+      "file": "my/beginner/014-tone-marks-and.json"
+    },
+    {
+      "id": "lesson-my-beginner-15",
+      "language": "my",
+      "level": "beginner",
+      "number": 15,
+      "file": "my/beginner/015-medial-and.json"
+    },
+    {
+      "id": "lesson-my-beginner-16",
+      "language": "my",
+      "level": "beginner",
+      "number": 16,
+      "file": "my/beginner/016-syllable-building-c-v.json"
+    },
+    {
+      "id": "lesson-my-beginner-17",
+      "language": "my",
+      "level": "beginner",
+      "number": 17,
+      "file": "my/beginner/017-syllable-building-c-m-v.json"
+    },
+    {
+      "id": "lesson-my-beginner-18",
+      "language": "my",
+      "level": "beginner",
+      "number": 18,
+      "file": "my/beginner/018-syllable-building-with-asat.json"
+    },
+    {
+      "id": "lesson-my-beginner-19",
+      "language": "my",
+      "level": "beginner",
+      "number": 19,
+      "file": "my/beginner/019-stacked-consonants.json"
+    },
+    {
+      "id": "lesson-my-beginner-20",
+      "language": "my",
+      "level": "beginner",
+      "number": 20,
+      "file": "my/beginner/020-shift-characters.json"
+    },
+    {
+      "id": "lesson-my-beginner-21",
+      "language": "my",
+      "level": "beginner",
+      "number": 21,
+      "file": "my/beginner/021-myanmar-digits.json"
+    },
+    {
+      "id": "lesson-my-beginner-22",
+      "language": "my",
+      "level": "beginner",
+      "number": 22,
+      "file": "my/beginner/022-basic-words-1.json"
+    },
+    {
+      "id": "lesson-my-beginner-23",
+      "language": "my",
+      "level": "beginner",
+      "number": 23,
+      "file": "my/beginner/023-basic-words-2.json"
+    },
+    {
+      "id": "lesson-my-beginner-24",
+      "language": "my",
+      "level": "beginner",
+      "number": 24,
+      "file": "my/beginner/024-basic-sentences.json"
+    },
+    {
+      "id": "lesson-my-beginner-25",
+      "language": "my",
+      "level": "beginner",
+      "number": 25,
+      "file": "my/beginner/025-beginner-review.json"
+    },
+    {
+      "id": "lesson-my-intermediate-1",
+      "language": "my",
+      "level": "intermediate",
+      "number": 1,
+      "file": "my/intermediate/001-food-words.json"
+    },
+    {
+      "id": "lesson-my-intermediate-2",
+      "language": "my",
+      "level": "intermediate",
+      "number": 2,
+      "file": "my/intermediate/002-question-words.json"
+    },
+    {
+      "id": "lesson-my-intermediate-3",
+      "language": "my",
+      "level": "intermediate",
+      "number": 3,
+      "file": "my/intermediate/003-complex-syllables-stacked-consonants.json"
+    },
+    {
+      "id": "lesson-my-intermediate-4",
+      "language": "my",
+      "level": "intermediate",
+      "number": 4,
+      "file": "my/intermediate/004-travel-words.json"
+    },
+    {
+      "id": "lesson-my-intermediate-5",
+      "language": "my",
+      "level": "intermediate",
+      "number": 5,
+      "file": "my/intermediate/005-school-words.json"
+    },
+    {
+      "id": "lesson-my-intermediate-6",
+      "language": "my",
+      "level": "intermediate",
+      "number": 6,
+      "file": "my/intermediate/006-time-expressions.json"
+    },
+    {
+      "id": "lesson-my-intermediate-7",
+      "language": "my",
+      "level": "intermediate",
+      "number": 7,
+      "file": "my/intermediate/007-weather-words.json"
+    },
+    {
+      "id": "lesson-my-intermediate-8",
+      "language": "my",
+      "level": "intermediate",
+      "number": 8,
+      "file": "my/intermediate/008-family-members.json"
+    },
+    {
+      "id": "lesson-my-intermediate-9",
+      "language": "my",
+      "level": "intermediate",
+      "number": 9,
+      "file": "my/intermediate/009-numbers-and-counting.json"
+    },
+    {
+      "id": "lesson-my-intermediate-10",
+      "language": "my",
+      "level": "intermediate",
+      "number": 10,
+      "file": "my/intermediate/010-body-parts-actions.json"
+    },
+    {
+      "id": "lesson-my-intermediate-11",
+      "language": "my",
+      "level": "intermediate",
+      "number": 11,
+      "file": "my/intermediate/011-basic-sentences.json"
+    },
+    {
+      "id": "lesson-my-intermediate-12",
+      "language": "my",
+      "level": "intermediate",
+      "number": 12,
+      "file": "my/intermediate/012-question-sentences.json"
+    },
+    {
+      "id": "lesson-my-intermediate-13",
+      "language": "my",
+      "level": "intermediate",
+      "number": 13,
+      "file": "my/intermediate/013-informal-sentences.json"
+    },
+    {
+      "id": "lesson-my-intermediate-14",
+      "language": "my",
+      "level": "intermediate",
+      "number": 14,
+      "file": "my/intermediate/014-short-paragraph-1.json"
+    },
+    {
+      "id": "lesson-my-intermediate-15",
+      "language": "my",
+      "level": "intermediate",
+      "number": 15,
+      "file": "my/intermediate/015-short-paragraph-2.json"
+    }
+  ]
+}

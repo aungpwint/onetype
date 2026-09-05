@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-intermediate-5",
+  "level": "intermediate",
+  "language": "my",
+  "number": 5,
+  "title": "School Words",
+  "titleMy": "ကျောင်း စကားလုံး",
+  "description": "School vocabulary: classroom, exam, teacher, student.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-intermediate-5-ex-1",
+      "kind": "text",
+      "instruction": "စာသင်ခန်း စာမေးပွဲ ဆရာ ကျောင်းသား",
+      "text": "စာသင်ခန်း စာမေးပွဲ ဆရာ ကျောင်းသား"
+    }
+  ],
+  "focus": [
+    "words",
+    "unicode"
+  ],
+  "prerequisites": [
+    "lesson-my-intermediate-4"
+  ]
+}

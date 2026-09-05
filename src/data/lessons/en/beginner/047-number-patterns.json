@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-47",
+  "level": "beginner",
+  "language": "en",
+  "number": 47,
+  "title": "Number Patterns",
+  "titleMy": "ဂဏန်းပုံစံများ",
+  "description": "Number patterns that train finger transitions on the number row.",
+  "difficulty": "medium",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-47-ex-1",
+      "kind": "text",
+      "instruction": "11 22 33 44 55 66 77 88 99 00",
+      "text": "11 22 33 44 55 66 77 88 99 00"
+    },
+    {
+      "id": "lesson-en-beginner-47-ex-2",
+      "kind": "text",
+      "instruction": "12 23 34 45 56 67 78 89 90",
+      "text": "12 23 34 45 56 67 78 89 90"
+    },
+    {
+      "id": "lesson-en-beginner-47-ex-3",
+      "kind": "text",
+      "instruction": "21 32 43 54 65 76 87 98 09",
+      "text": "21 32 43 54 65 76 87 98 09"
+    },
+    {
+      "id": "lesson-en-beginner-47-ex-4",
+      "kind": "text",
+      "instruction": "10 20 30 40 50 60 70 80 90 100",
+      "text": "10 20 30 40 50 60 70 80 90 100"
+    }
+  ],
+  "focus": [
+    "numbers",
+    "finger-control"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-46"
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-7",
+  "level": "beginner",
+  "language": "en",
+  "number": 7,
+  "title": "Complete Home Row: ASDFG HJKL;",
+  "titleMy": "အိမ်တန်း အကုန် - ASDFG HJKL;",
+  "description": "All home row keys. Practice smooth transitions across the full row.",
+  "difficulty": "basic",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-7-ex-1",
+      "kind": "text",
+      "instruction": "asdfg hjkl; asdfg hjkl; asdfg hjkl;",
+      "text": "asdfg hjkl; asdfg hjkl; asdfg hjkl;"
+    },
+    {
+      "id": "lesson-en-beginner-7-ex-2",
+      "kind": "text",
+      "instruction": ";lkj gfdsa ;lkj gfdsa ;lkj gfdsa",
+      "text": ";lkj gfdsa ;lkj gfdsa ;lkj gfdsa"
+    },
+    {
+      "id": "lesson-en-beginner-7-ex-3",
+      "kind": "text",
+      "instruction": "fgjh fgjh fgjh fgjh fgjh fgjh fgjh fgjh",
+      "text": "fgjh fgjh fgjh fgjh fgjh fgjh fgjh fgjh"
+    },
+    {
+      "id": "lesson-en-beginner-7-ex-4",
+      "kind": "text",
+      "instruction": "dkhk dkhk dkhk dkhk dkhk dkhk dkhk dkhk",
+      "text": "dkhk dkhk dkhk dkhk dkhk dkhk dkhk dkhk"
+    },
+    {
+      "id": "lesson-en-beginner-7-ex-5",
+      "kind": "text",
+      "instruction": "slal slal slal slal slal slal slal slal",
+      "text": "slal slal slal slal slal slal slal slal"
+    },
+    {
+      "id": "lesson-en-beginner-7-ex-6",
+      "kind": "text",
+      "instruction": "adj adj adj adj adj adj adj adj adj adj",
+      "text": "adj adj adj adj adj adj adj adj adj adj"
+    },
+    {
+      "id": "lesson-en-beginner-7-ex-7",
+      "kind": "text",
+      "instruction": "fjk fjk fjk fjk fjk fjk fjk fjk fjk fjk",
+      "text": "fjk fjk fjk fjk fjk fjk fjk fjk fjk fjk"
+    }
+  ],
+  "focusKeys": [
+    "KeyA",
+    "KeyS",
+    "KeyD",
+    "KeyF",
+    "KeyG",
+    "KeyH",
+    "KeyJ",
+    "KeyK",
+    "KeyL",
+    "Semicolon"
+  ],
+  "focus": [
+    "home-row",
+    "hand-alternation"
+  ],
+  "targetFingers": [
+    "left-pinky",
+    "left-ring",
+    "left-middle",
+    "left-index",
+    "right-index",
+    "right-middle",
+    "right-ring",
+    "right-pinky"
+  ],
+  "targetHands": [
+    "left",
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-5",
+    "lesson-en-beginner-6"
+  ]
+}

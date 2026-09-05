@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-23",
+  "level": "beginner",
+  "language": "en",
+  "number": 23,
+  "title": "Common Three-Letter Words",
+  "titleMy": "အသုံးများ အက္ခရာ ၃ လုံး စကားလုံး",
+  "description": "Common short words using the keys you know. Type them fluidly.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": 10
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-23-ex-1",
+      "kind": "text",
+      "instruction": "and and and the the the",
+      "text": "and and and the the the"
+    },
+    {
+      "id": "lesson-en-beginner-23-ex-2",
+      "kind": "text",
+      "instruction": "had had had has has has",
+      "text": "had had had has has has"
+    },
+    {
+      "id": "lesson-en-beginner-23-ex-3",
+      "kind": "text",
+      "instruction": "old old old man man man",
+      "text": "old old old man man man"
+    },
+    {
+      "id": "lesson-en-beginner-23-ex-4",
+      "kind": "text",
+      "instruction": "his his his let let let",
+      "text": "his his his let let let"
+    },
+    {
+      "id": "lesson-en-beginner-23-ex-5",
+      "kind": "text",
+      "instruction": "dog dog dog cat cat cat",
+      "text": "dog dog dog cat cat cat"
+    },
+    {
+      "id": "lesson-en-beginner-23-ex-6",
+      "kind": "text",
+      "instruction": "sun sun sun fun fun fun",
+      "text": "sun sun sun fun fun fun"
+    },
+    {
+      "id": "lesson-en-beginner-23-ex-7",
+      "kind": "text",
+      "instruction": "red red red big big big",
+      "text": "red red red big big big"
+    }
+  ],
+  "focusKeys": [
+    "KeyA",
+    "KeyS",
+    "KeyD",
+    "KeyF",
+    "KeyG",
+    "KeyH",
+    "KeyL",
+    "KeyM",
+    "KeyN"
+  ],
+  "focus": [
+    "words",
+    "key-memory"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-22"
+  ]
+}

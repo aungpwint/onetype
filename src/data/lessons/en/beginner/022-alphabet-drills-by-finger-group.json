@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-22",
+  "level": "beginner",
+  "language": "en",
+  "number": 22,
+  "title": "Alphabet Drills: By Finger Group",
+  "titleMy": "အက္ခရာလေ့ကျင့်ခန်း - လက်ချောင်းအုပ်စု",
+  "description": "Alphabet grouped by finger. Reinforce finger-to-key association.",
+  "difficulty": "medium",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-22-ex-1",
+      "kind": "text",
+      "instruction": "azswsxedcfrfvbgtgb",
+      "text": "azswsxedcfrfvbgtgb"
+    },
+    {
+      "id": "lesson-en-beginner-22-ex-2",
+      "kind": "text",
+      "instruction": "qazswxedcrfvtgb",
+      "text": "qazswxedcrfvtgb"
+    },
+    {
+      "id": "lesson-en-beginner-22-ex-3",
+      "kind": "text",
+      "instruction": "yhnmjuikolp",
+      "text": "yhnmjuikolp"
+    },
+    {
+      "id": "lesson-en-beginner-22-ex-4",
+      "kind": "text",
+      "instruction": "yhujnmiokl",
+      "text": "yhujnmiokl"
+    },
+    {
+      "id": "lesson-en-beginner-22-ex-5",
+      "kind": "text",
+      "instruction": "asdfjkl",
+      "text": "asdfjkl"
+    },
+    {
+      "id": "lesson-en-beginner-22-ex-6",
+      "kind": "text",
+      "instruction": "qweruiop",
+      "text": "qweruiop"
+    },
+    {
+      "id": "lesson-en-beginner-22-ex-7",
+      "kind": "text",
+      "instruction": "zxcvbnm",
+      "text": "zxcvbnm"
+    }
+  ],
+  "focus": [
+    "alphabet",
+    "finger-control",
+    "key-memory"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-21"
+  ]
+}

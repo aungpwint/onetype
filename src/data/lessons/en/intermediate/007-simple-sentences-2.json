@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-intermediate-7",
+  "level": "intermediate",
+  "language": "en",
+  "number": 7,
+  "title": "Simple Sentences 2",
+  "titleMy": "ရိုးရှင်းသော ဝါကျတိုများ (၂)",
+  "description": "Sentences with common verbs and everyday vocabulary.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 92,
+    "minWpm": 22
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-intermediate-7-ex-1",
+      "kind": "text",
+      "instruction": "They play football in the park after school.",
+      "text": "They play football in the park after school."
+    },
+    {
+      "id": "lesson-en-intermediate-7-ex-2",
+      "kind": "text",
+      "instruction": "I like to read a story before I sleep.",
+      "text": "I like to read a story before I sleep."
+    },
+    {
+      "id": "lesson-en-intermediate-7-ex-3",
+      "kind": "text",
+      "instruction": "The teacher tells us to keep quiet in class.",
+      "text": "The teacher tells us to keep quiet in class."
+    },
+    {
+      "id": "lesson-en-intermediate-7-ex-4",
+      "kind": "text",
+      "instruction": "We should drink water and eat fruit every day.",
+      "text": "We should drink water and eat fruit every day."
+    }
+  ],
+  "focus": [
+    "sentences",
+    "words",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-intermediate-6"
+  ]
+}

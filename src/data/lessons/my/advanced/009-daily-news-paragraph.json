@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-advanced-9",
+  "level": "advanced",
+  "language": "my",
+  "number": 9,
+  "title": "Daily News Paragraph",
+  "titleMy": "နေ့စဉ်သတင်း စာပိုဒ်",
+  "description": "Type a news-style paragraph.",
+  "difficulty": "hard",
+  "estimatedMinutes": 15,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 92,
+    "minWpm": 25
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-advanced-9-ex-1",
+      "kind": "text",
+      "instruction": "မနေ့က ရန်ကုန်တိုင်းဒေသကြီးတွင် မိုးကြီးရွာခဲ့သည်။ လေယာဉ်ခရီးစဉ်အချို့ နှောင့်နှေးခဲ့ရသည်။",
+      "text": "မနေ့က ရန်ကုန်တိုင်းဒေသကြီးတွင် မိုးကြီးရွာခဲ့သည်။ လေယာဉ်ခရီးစဉ်အချို့ နှောင့်နှေးခဲ့ရသည်။"
+    }
+  ],
+  "focus": [
+    "sentences",
+    "unicode",
+    "speed",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-my-advanced-8"
+  ]
+}

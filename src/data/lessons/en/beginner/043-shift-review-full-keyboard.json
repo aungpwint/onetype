@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-43",
+  "level": "beginner",
+  "language": "en",
+  "number": 43,
+  "title": "Shift Review: Full Keyboard",
+  "titleMy": "Shift ပြန်လည်သုံးသပ်ခြင်း - ကီးဘုတ် အပြည့်",
+  "description": "Complete Shift review with all key types.",
+  "difficulty": "hard",
+  "estimatedMinutes": 12,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 90,
+    "minWpm": 16
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-43-ex-1",
+      "kind": "text",
+      "instruction": "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm",
+      "text": "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm"
+    },
+    {
+      "id": "lesson-en-beginner-43-ex-2",
+      "kind": "text",
+      "instruction": "Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz",
+      "text": "Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz"
+    },
+    {
+      "id": "lesson-en-beginner-43-ex-3",
+      "kind": "text",
+      "instruction": "!@#$%^&*()Hello World 12345",
+      "text": "!@#$%^&*()Hello World 12345"
+    },
+    {
+      "id": "lesson-en-beginner-43-ex-4",
+      "kind": "text",
+      "instruction": "The Quick Brown Fox Jumps Over The Lazy Dog",
+      "text": "The Quick Brown Fox Jumps Over The Lazy Dog"
+    }
+  ],
+  "focus": [
+    "shift",
+    "accuracy",
+    "speed"
+  ],
+  "requiresShift": true,
+  "prerequisites": [
+    "lesson-en-beginner-42"
+  ]
+}

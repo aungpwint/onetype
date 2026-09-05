@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-intermediate-4",
+  "level": "intermediate",
+  "language": "my",
+  "number": 4,
+  "title": "Travel Words",
+  "titleMy": "ခရီးသွား စကားလုံး",
+  "description": "Travel vocabulary: bus, train, car.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-intermediate-4-ex-1",
+      "kind": "text",
+      "instruction": "ဘူတာ လေယာဉ် ကားမှတ်တိုင် ရေယာဉ်",
+      "text": "ဘူတာ လေယာဉ် ကားမှတ်တိုင် ရေယာဉ်"
+    }
+  ],
+  "focus": [
+    "words",
+    "unicode"
+  ],
+  "prerequisites": [
+    "lesson-my-intermediate-3"
+  ]
+}

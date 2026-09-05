@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-25",
+  "level": "beginner",
+  "language": "en",
+  "number": 25,
+  "title": "Common Five-Letter Words",
+  "titleMy": "အသုံးများ အက္ခရာ ၅ လုံး စကားလုံး",
+  "description": "Five-letter words using all keys you have learned.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": 14
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-25-ex-1",
+      "kind": "text",
+      "instruction": "which there their about these",
+      "text": "which there their about these"
+    },
+    {
+      "id": "lesson-en-beginner-25-ex-2",
+      "kind": "text",
+      "instruction": "other would could about",
+      "text": "other would could about"
+    },
+    {
+      "id": "lesson-en-beginner-25-ex-3",
+      "kind": "text",
+      "instruction": "years still state right world",
+      "text": "years still state right world"
+    },
+    {
+      "id": "lesson-en-beginner-25-ex-4",
+      "kind": "text",
+      "instruction": "house money piece table small",
+      "text": "house money piece table small"
+    },
+    {
+      "id": "lesson-en-beginner-25-ex-5",
+      "kind": "text",
+      "instruction": "light kind found place every",
+      "text": "light kind found place every"
+    }
+  ],
+  "focus": [
+    "words",
+    "speed"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-24"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-advanced-16",
+  "level": "advanced",
+  "language": "en",
+  "number": 16,
+  "title": "Essay Passage: Community",
+  "titleMy": "စာစီစာကုံး: လူ့အဖွဲ့အစည်း",
+  "description": "Type a longer essay passage about community.",
+  "difficulty": "hard",
+  "estimatedMinutes": 18,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 95,
+    "minWpm": 34
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-advanced-16-ex-1",
+      "kind": "text",
+      "instruction": "A community is a group of people who help and support one another. When someone is sick, the neighbors offer food and care. When it rains, they share umbrellas. A strong community makes life safer, warmer, and more joyful for every person who belongs to it.",
+      "text": "A community is a group of people who help and support one another. When someone is sick, the neighbors offer food and care. When it rains, they share umbrellas. A strong community makes life safer, warmer, and more joyful for every person who belongs to it."
+    }
+  ],
+  "focus": [
+    "sentences",
+    "speed",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-advanced-15"
+  ]
+}

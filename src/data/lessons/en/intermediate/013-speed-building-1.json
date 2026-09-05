@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-intermediate-13",
+  "level": "intermediate",
+  "language": "en",
+  "number": 13,
+  "title": "Speed Building 1",
+  "titleMy": "အရှိန်မြှင့် (၁)",
+  "description": "Type common pangrams and sentences quickly.",
+  "difficulty": "hard",
+  "estimatedMinutes": 12,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 93,
+    "minWpm": 25
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-intermediate-13-ex-1",
+      "kind": "text",
+      "instruction": "the quick brown fox jumps over the lazy dog",
+      "text": "the quick brown fox jumps over the lazy dog"
+    },
+    {
+      "id": "lesson-en-intermediate-13-ex-2",
+      "kind": "text",
+      "instruction": "pack my box with five dozen liquor jugs",
+      "text": "pack my box with five dozen liquor jugs"
+    },
+    {
+      "id": "lesson-en-intermediate-13-ex-3",
+      "kind": "text",
+      "instruction": "the quick brown fox jumps over the lazy dog again",
+      "text": "the quick brown fox jumps over the lazy dog again"
+    }
+  ],
+  "focus": [
+    "speed",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-intermediate-12"
+  ]
+}

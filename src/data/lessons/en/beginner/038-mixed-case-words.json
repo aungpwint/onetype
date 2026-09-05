@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-38",
+  "level": "beginner",
+  "language": "en",
+  "number": 38,
+  "title": "Mixed Case Words",
+  "titleMy": "အကြီးအသေး ရောပြီး စကားလုံး",
+  "description": "Words with capital letters. First letter capitalized.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": 14
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-38-ex-1",
+      "kind": "text",
+      "instruction": "Apple Banana Cherry Dog Elephant",
+      "text": "Apple Banana Cherry Dog Elephant"
+    },
+    {
+      "id": "lesson-en-beginner-38-ex-2",
+      "kind": "text",
+      "instruction": "Green House Island Jellyfish Kite",
+      "text": "Green House Island Jellyfish Kite"
+    },
+    {
+      "id": "lesson-en-beginner-38-ex-3",
+      "kind": "text",
+      "instruction": "Lemon Mango Orange Paper Queen",
+      "text": "Lemon Mango Orange Paper Queen"
+    },
+    {
+      "id": "lesson-en-beginner-38-ex-4",
+      "kind": "text",
+      "instruction": "River Sun Tree Umbrella Van Water",
+      "text": "River Sun Tree Umbrella Van Water"
+    }
+  ],
+  "focus": [
+    "shift",
+    "words"
+  ],
+  "requiresShift": true,
+  "prerequisites": [
+    "lesson-en-beginner-37"
+  ]
+}

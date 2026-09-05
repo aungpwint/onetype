@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-advanced-13",
+  "level": "advanced",
+  "language": "my",
+  "number": 13,
+  "title": "Punctuation Drills",
+  "titleMy": "အနားသတ် သင်္ကေတ",
+  "description": "Comma and period in various contexts.",
+  "difficulty": "hard",
+  "estimatedMinutes": 15,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 93,
+    "minWpm": 25
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-advanced-13-ex-1",
+      "kind": "text",
+      "instruction": "ဟုတ်တယ်၊ မှန်တယ်၊ ကောင်းတယ်။",
+      "text": "ဟုတ်တယ်၊ မှန်တယ်၊ ကောင်းတယ်။"
+    },
+    {
+      "id": "lesson-my-advanced-13-ex-2",
+      "kind": "text",
+      "instruction": "ရက်၊ လ၊ ခုနှစ်တွေကို သတိမှတ်ပါ။",
+      "text": "ရက်၊ လ၊ ခုနှစ်တွေကို သတိမှတ်ပါ။"
+    }
+  ],
+  "focus": [
+    "punctuation",
+    "unicode",
+    "sentences"
+  ],
+  "prerequisites": [
+    "lesson-my-advanced-12"
+  ]
+}

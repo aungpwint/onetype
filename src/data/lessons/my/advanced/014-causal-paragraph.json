@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-advanced-14",
+  "level": "advanced",
+  "language": "my",
+  "number": 14,
+  "title": "Causal Paragraph",
+  "titleMy": "အကြောင်းကျိုးဆက် စာပိုဒ်",
+  "description": "Paragraphs with cause-and-effect patterns.",
+  "difficulty": "hard",
+  "estimatedMinutes": 18,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 94,
+    "minWpm": 28
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-advanced-14-ex-1",
+      "kind": "text",
+      "instruction": "ရေအလုံအလောက်မရှိသောကြောင့် စိုက်ပျိုးရေး ဒုက္ခရောက်ခဲ့သည်။ ထို့ကြောင့် စပါးစျေးနှုန်း မြင့်တက်လာခဲ့ပါတယ်။",
+      "text": "ရေအလုံအလောက်မရှိသောကြောင့် စိုက်ပျိုးရေး ဒုက္ခရောက်ခဲ့သည်။ ထို့ကြောင့် စပါးစျေးနှုန်း မြင့်တက်လာခဲ့ပါတယ်။"
+    }
+  ],
+  "focus": [
+    "sentences",
+    "unicode",
+    "speed",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-my-advanced-13"
+  ]
+}

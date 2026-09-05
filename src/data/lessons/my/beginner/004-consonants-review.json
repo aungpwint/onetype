@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-4",
+  "level": "beginner",
+  "language": "my",
+  "number": 4,
+  "title": "Consonants Review",
+  "titleMy": "ဗျည်း ပြန်လည်သုံးသပ်",
+  "description": "Review all consonants learned so far, both hands.",
+  "difficulty": "basic",
+  "estimatedMinutes": 8,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-4-ex-1",
+      "kind": "text",
+      "instruction": "က တ အ န မ င စ သ ပ က တ အ န မ င",
+      "text": "က တ အ န မ င စ သ ပ က တ အ န မ င"
+    },
+    {
+      "id": "lesson-my-beginner-4-ex-2",
+      "kind": "text",
+      "instruction": "ပ သ စ င မ န အ တ က ပ သ စ င",
+      "text": "ပ သ စ င မ န အ တ က ပ သ စ င"
+    },
+    {
+      "id": "lesson-my-beginner-4-ex-3",
+      "kind": "text",
+      "instruction": "က စ တ သ န မ ပ င အ က စ တ သ န မ ပ င အ",
+      "text": "က စ တ သ န မ ပ င အ က စ တ သ န မ ပ င အ"
+    }
+  ],
+  "focusKeys": [
+    "KeyU",
+    "KeyI",
+    "KeyW",
+    "KeyE",
+    "KeyR",
+    "KeyT",
+    "KeyP",
+    "KeyO",
+    "KeyY"
+  ],
+  "focus": [
+    "hand-alternation",
+    "key-memory"
+  ],
+  "targetHands": [
+    "left",
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-2",
+    "lesson-my-beginner-3"
+  ]
+}

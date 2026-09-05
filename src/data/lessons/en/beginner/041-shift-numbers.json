@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-41",
+  "level": "beginner",
+  "language": "en",
+  "number": 41,
+  "title": "Shift + Numbers: ! @ # $ %",
+  "titleMy": "Shift + ဂဏန်း: ! @ # $ %",
+  "description": "Shift plus number keys produce symbols. Train the physical combination.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-41-ex-1",
+      "kind": "text",
+      "instruction": "! ! ! ! ! @ @ @ @ @",
+      "text": "! ! ! ! ! @ @ @ @ @"
+    },
+    {
+      "id": "lesson-en-beginner-41-ex-2",
+      "kind": "text",
+      "instruction": "# # # # # $ $ $ $ $",
+      "text": "# # # # # $ $ $ $ $"
+    },
+    {
+      "id": "lesson-en-beginner-41-ex-3",
+      "kind": "text",
+      "instruction": "% % % % % ^ ^ ^ ^ ^",
+      "text": "% % % % % ^ ^ ^ ^ ^"
+    },
+    {
+      "id": "lesson-en-beginner-41-ex-4",
+      "kind": "text",
+      "instruction": "& & & & & * * * * *",
+      "text": "& & & & & * * * * *"
+    },
+    {
+      "id": "lesson-en-beginner-41-ex-5",
+      "kind": "text",
+      "instruction": "( ( ( ( ( ) ) ) ) )",
+      "text": "( ( ( ( ( ) ) ) ) )"
+    },
+    {
+      "id": "lesson-en-beginner-41-ex-6",
+      "kind": "text",
+      "instruction": "! @ # $ % ^ & * ( )",
+      "text": "! @ # $ % ^ & * ( )"
+    },
+    {
+      "id": "lesson-en-beginner-41-ex-7",
+      "kind": "text",
+      "instruction": "!@! @#@ #$# $%$ %^%",
+      "text": "!@! @#@ #$# $%$ %^%"
+    }
+  ],
+  "focusKeys": [
+    "Digit1",
+    "Digit2",
+    "Digit3",
+    "Digit4",
+    "Digit5",
+    "ShiftLeft",
+    "ShiftRight"
+  ],
+  "focus": [
+    "shift",
+    "numbers",
+    "symbols"
+  ],
+  "requiresShift": true,
+  "prerequisites": [
+    "lesson-en-beginner-27",
+    "lesson-en-beginner-37"
+  ]
+}

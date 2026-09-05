@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-6",
+  "level": "beginner",
+  "language": "my",
+  "number": 6,
+  "title": "Shift Consonants: ဖ ဂ ဋ္ဌ",
+  "titleMy": "Shift ဗျည်း - ဖ ဂ ဋ္ဌ",
+  "description": "Shift consonants: ဖ (KeyZ) ဂ (Semicolon+Shift) ဋ္ဌ (Digit3+Shift + virama + KeyX+Shift)",
+  "difficulty": "easy",
+  "estimatedMinutes": 6,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-6-ex-1",
+      "kind": "text",
+      "instruction": "ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ",
+      "text": "ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ"
+    },
+    {
+      "id": "lesson-my-beginner-6-ex-2",
+      "kind": "text",
+      "instruction": "ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ",
+      "text": "ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ"
+    },
+    {
+      "id": "lesson-my-beginner-6-ex-3",
+      "kind": "text",
+      "instruction": "ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ",
+      "text": "ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ"
+    },
+    {
+      "id": "lesson-my-beginner-6-ex-4",
+      "kind": "text",
+      "instruction": "ဖ ဂ ဋ္ဌ ဖ ဂ ဋ္ဌ ဖ ဂ ဋ္ဌ",
+      "text": "ဖ ဂ ဋ္ဌ ဖ ဂ ဋ္ဌ ဖ ဂ ဋ္ဌ"
+    },
+    {
+      "id": "lesson-my-beginner-6-ex-5",
+      "kind": "text",
+      "instruction": "ခ ဖ ဃ ဂ ဋ္ဌ ခ ဖ ဃ ဂ ဋ္ဌ",
+      "text": "ခ ဖ ဃ ဂ ဋ္ဌ ခ ဖ ဃ ဂ ဋ္ဌ"
+    }
+  ],
+  "focusKeys": [
+    "KeyZ",
+    "Semicolon",
+    "Digit3",
+    "KeyX"
+  ],
+  "focus": [
+    "shift",
+    "key-memory",
+    "row-transition"
+  ],
+  "targetFingers": [
+    "left-pinky",
+    "right-pinky",
+    "left-middle",
+    "left-ring"
+  ],
+  "targetHands": [
+    "left",
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-5"
+  ]
+}

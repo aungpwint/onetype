@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-1",
+  "level": "beginner",
+  "language": "en",
+  "number": 1,
+  "title": "Finger Anchors: F and J",
+  "titleMy": "လက်ချောင်း မြဲမြဲထားနည်း - F နှင့် J",
+  "description": "Place your left index finger on F and right index finger on J. Feel the bumps.",
+  "difficulty": "basic",
+  "estimatedMinutes": 5,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-1-ex-1",
+      "kind": "text",
+      "instruction": "f f f f f f f f f f",
+      "text": "f f f f f f f f f f"
+    },
+    {
+      "id": "lesson-en-beginner-1-ex-2",
+      "kind": "text",
+      "instruction": "j j j j j j j j j j",
+      "text": "j j j j j j j j j j"
+    },
+    {
+      "id": "lesson-en-beginner-1-ex-3",
+      "kind": "text",
+      "instruction": "f j f j f j f j f j",
+      "text": "f j f j f j f j f j"
+    },
+    {
+      "id": "lesson-en-beginner-1-ex-4",
+      "kind": "text",
+      "instruction": "f j f j f j f j f j f j f j",
+      "text": "f j f j f j f j f j f j f j"
+    }
+  ],
+  "focusKeys": [
+    "KeyF",
+    "KeyJ"
+  ],
+  "focus": [
+    "home-row",
+    "finger-control",
+    "key-memory"
+  ],
+  "targetFingers": [
+    "left-index",
+    "right-index"
+  ],
+  "targetHands": [
+    "left",
+    "right"
+  ]
+}

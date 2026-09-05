@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-advanced-11",
+  "level": "advanced",
+  "language": "en",
+  "number": 11,
+  "title": "Explanatory Writing",
+  "titleMy": "ရှင်းလင်းဖော်ပြချက် စာပိုဒ်",
+  "description": "Type an explanatory paragraph about a process.",
+  "difficulty": "hard",
+  "estimatedMinutes": 15,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 94,
+    "minWpm": 33
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-advanced-11-ex-1",
+      "kind": "text",
+      "instruction": "To grow a plant, first put some soil in a pot. Next, plant a seed and cover it lightly. Then water it a little every day. Finally, place the pot near sunlight and wait for the seed to sprout.",
+      "text": "To grow a plant, first put some soil in a pot. Next, plant a seed and cover it lightly. Then water it a little every day. Finally, place the pot near sunlight and wait for the seed to sprout."
+    }
+  ],
+  "focus": [
+    "sentences",
+    "speed",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-advanced-10"
+  ]
+}

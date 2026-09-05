@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-4",
+  "level": "beginner",
+  "language": "en",
+  "number": 4,
+  "title": "Full Home Row: ASDF JKL;",
+  "titleMy": "အိမ်တန်း အပြည့် - ASDF JKL;",
+  "description": "Combine both hands on the home row. Type forward and backward.",
+  "difficulty": "basic",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-4-ex-1",
+      "kind": "text",
+      "instruction": "asdf jkl; asdf jkl; asdf jkl;",
+      "text": "asdf jkl; asdf jkl; asdf jkl;"
+    },
+    {
+      "id": "lesson-en-beginner-4-ex-2",
+      "kind": "text",
+      "instruction": ";lkj fdsa ;lkj fdsa ;lkj fdsa",
+      "text": ";lkj fdsa ;lkj fdsa ;lkj fdsa"
+    },
+    {
+      "id": "lesson-en-beginner-4-ex-3",
+      "kind": "text",
+      "instruction": "fj fj fj fj fj fj fj fj fj fj",
+      "text": "fj fj fj fj fj fj fj fj fj fj"
+    },
+    {
+      "id": "lesson-en-beginner-4-ex-4",
+      "kind": "text",
+      "instruction": "dk dk dk dk dk dk dk dk dk dk",
+      "text": "dk dk dk dk dk dk dk dk dk dk"
+    },
+    {
+      "id": "lesson-en-beginner-4-ex-5",
+      "kind": "text",
+      "instruction": "sl sl sl sl sl sl sl sl sl sl",
+      "text": "sl sl sl sl sl sl sl sl sl sl"
+    },
+    {
+      "id": "lesson-en-beginner-4-ex-6",
+      "kind": "text",
+      "instruction": "a; a; a; a; a; a; a; a; a; a;",
+      "text": "a; a; a; a; a; a; a; a; a; a;"
+    }
+  ],
+  "focusKeys": [
+    "KeyA",
+    "KeyS",
+    "KeyD",
+    "KeyF",
+    "KeyJ",
+    "KeyK",
+    "KeyL",
+    "Semicolon"
+  ],
+  "focus": [
+    "home-row",
+    "finger-control",
+    "key-memory"
+  ],
+  "targetFingers": [
+    "left-pinky",
+    "left-ring",
+    "left-middle",
+    "left-index",
+    "right-index",
+    "right-middle",
+    "right-ring",
+    "right-pinky"
+  ],
+  "targetHands": [
+    "left",
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-2",
+    "lesson-en-beginner-3"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-5",
+  "level": "beginner",
+  "language": "my",
+  "number": 5,
+  "title": "Consonants: ခ and ဃ",
+  "titleMy": "ဗျည်း - ခ နှင့် ဃ",
+  "description": "ခ (KeyC) with left middle. ဃ is the same key with Shift (KeyC+Shift).",
+  "difficulty": "easy",
+  "estimatedMinutes": 6,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-5-ex-1",
+      "kind": "text",
+      "instruction": "ခ ခ ခ ခ ခ ခ ခ ခ ခ ခ",
+      "text": "ခ ခ ခ ခ ခ ခ ခ ခ ခ ခ"
+    },
+    {
+      "id": "lesson-my-beginner-5-ex-2",
+      "kind": "text",
+      "instruction": "ဃ ဃ ဃ ဃ ဃ ဃ ဃ ဃ ဃ ဃ",
+      "text": "ဃ ဃ ဃ ဃ ဃ ဃ ဃ ဃ ဃ ဃ"
+    },
+    {
+      "id": "lesson-my-beginner-5-ex-3",
+      "kind": "text",
+      "instruction": "ခ ဃ ခ ဃ ခ ဃ ခ ဃ ခ ဃ",
+      "text": "ခ ဃ ခ ဃ ခ ဃ ခ ဃ ခ ဃ"
+    },
+    {
+      "id": "lesson-my-beginner-5-ex-4",
+      "kind": "text",
+      "instruction": "တ ခ န ဃ မ တ ခ န ဃ မ",
+      "text": "တ ခ န ဃ မ တ ခ န ဃ မ"
+    },
+    {
+      "id": "lesson-my-beginner-5-ex-5",
+      "kind": "text",
+      "instruction": "က ခ တ ဃ န က ခ တ ဃ န",
+      "text": "က ခ တ ဃ န က ခ တ ဃ န"
+    }
+  ],
+  "focusKeys": [
+    "KeyC"
+  ],
+  "focus": [
+    "key-memory",
+    "row-transition",
+    "shift"
+  ],
+  "targetFingers": [
+    "left-middle"
+  ],
+  "targetHands": [
+    "left"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-4"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-46",
+  "level": "beginner",
+  "language": "en",
+  "number": 46,
+  "title": "Full Number Row",
+  "titleMy": "ဂဏန်းတန်း အပြည့်",
+  "description": "Type all digits 0-9 in alternating patterns.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-46-ex-1",
+      "kind": "text",
+      "instruction": "1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0",
+      "text": "1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0"
+    },
+    {
+      "id": "lesson-en-beginner-46-ex-2",
+      "kind": "text",
+      "instruction": "0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1",
+      "text": "0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1"
+    },
+    {
+      "id": "lesson-en-beginner-46-ex-3",
+      "kind": "text",
+      "instruction": "1 3 5 7 9 2 4 6 8 0 1 3 5 7 9 2 4 6 8 0",
+      "text": "1 3 5 7 9 2 4 6 8 0 1 3 5 7 9 2 4 6 8 0"
+    },
+    {
+      "id": "lesson-en-beginner-46-ex-4",
+      "kind": "text",
+      "instruction": "1234567890 0987654321 1234567890",
+      "text": "1234567890 0987654321 1234567890"
+    }
+  ],
+  "focusKeys": [
+    "Digit1",
+    "Digit2",
+    "Digit3",
+    "Digit4",
+    "Digit5",
+    "Digit6",
+    "Digit7",
+    "Digit8",
+    "Digit9",
+    "Digit0"
+  ],
+  "focus": [
+    "numbers",
+    "hand-alternation",
+    "key-memory"
+  ],
+  "targetHands": [
+    "left",
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-44",
+    "lesson-en-beginner-45"
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-35",
+  "level": "beginner",
+  "language": "en",
+  "number": 35,
+  "title": "Shift Top Row Right: Y U I O P",
+  "titleMy": "Shift အပေါ်တန်း ညာဘက် - Y U I O P",
+  "description": "Right-hand top row with Left Shift. Y U I O P uppercase.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-35-ex-1",
+      "kind": "text",
+      "instruction": "yY yY yY yY yY yY yY yY yY yY",
+      "text": "yY yY yY yY yY yY yY yY yY yY"
+    },
+    {
+      "id": "lesson-en-beginner-35-ex-2",
+      "kind": "text",
+      "instruction": "uU uU uU uU uU uU uU uU uU uU",
+      "text": "uU uU uU uU uU uU uU uU uU uU"
+    },
+    {
+      "id": "lesson-en-beginner-35-ex-3",
+      "kind": "text",
+      "instruction": "iI iI iI iI iI iI iI iI iI iI",
+      "text": "iI iI iI iI iI iI iI iI iI iI"
+    },
+    {
+      "id": "lesson-en-beginner-35-ex-4",
+      "kind": "text",
+      "instruction": "oO oO oO oO oO oO oO oO oO oO",
+      "text": "oO oO oO oO oO oO oO oO oO oO"
+    },
+    {
+      "id": "lesson-en-beginner-35-ex-5",
+      "kind": "text",
+      "instruction": "pP pP pP pP pP pP pP pP pP pP",
+      "text": "pP pP pP pP pP pP pP pP pP pP"
+    },
+    {
+      "id": "lesson-en-beginner-35-ex-6",
+      "kind": "text",
+      "instruction": "Yy Yy Yy Yy Yy Yy Yy Yy Yy Yy",
+      "text": "Yy Yy Yy Yy Yy Yy Yy Yy Yy Yy"
+    },
+    {
+      "id": "lesson-en-beginner-35-ex-7",
+      "kind": "text",
+      "instruction": "Uu Uu Uu Uu Uu Uu Uu Uu Uu Uu",
+      "text": "Uu Uu Uu Uu Uu Uu Uu Uu Uu Uu"
+    },
+    {
+      "id": "lesson-en-beginner-35-ex-8",
+      "kind": "text",
+      "instruction": "Ii Ii Ii Ii Ii Ii Ii Ii Ii Ii",
+      "text": "Ii Ii Ii Ii Ii Ii Ii Ii Ii Ii"
+    },
+    {
+      "id": "lesson-en-beginner-35-ex-9",
+      "kind": "text",
+      "instruction": "Oo Oo Oo Oo Oo Oo Oo Oo Oo Oo",
+      "text": "Oo Oo Oo Oo Oo Oo Oo Oo Oo Oo"
+    },
+    {
+      "id": "lesson-en-beginner-35-ex-10",
+      "kind": "text",
+      "instruction": "Pp Pp Pp Pp Pp Pp Pp Pp Pp Pp",
+      "text": "Pp Pp Pp Pp Pp Pp Pp Pp Pp Pp"
+    }
+  ],
+  "focusKeys": [
+    "KeyY",
+    "KeyU",
+    "KeyI",
+    "KeyO",
+    "KeyP",
+    "ShiftLeft"
+  ],
+  "focus": [
+    "shift",
+    "top-row"
+  ],
+  "targetFingers": [
+    "right-index",
+    "right-middle",
+    "right-ring",
+    "right-pinky",
+    "left-pinky"
+  ],
+  "targetHands": [
+    "right",
+    "left"
+  ],
+  "requiresShift": true,
+  "prerequisites": [
+    "lesson-en-beginner-34"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-21",
+  "level": "beginner",
+  "language": "en",
+  "number": 21,
+  "title": "Alphabet Drills: Sequential",
+  "titleMy": "အက္ခရာလေ့ကျင့်ခန်း - အစဉ်လိုက်",
+  "description": "Type the alphabet in order. Reinforce key location across the full keyboard.",
+  "difficulty": "medium",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-21-ex-1",
+      "kind": "text",
+      "instruction": "abcdefghijklmnopqrstuvwxyz",
+      "text": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "id": "lesson-en-beginner-21-ex-2",
+      "kind": "text",
+      "instruction": "zyxwvutsrqponmlkjihgfedcba",
+      "text": "zyxwvutsrqponmlkjihgfedcba"
+    },
+    {
+      "id": "lesson-en-beginner-21-ex-3",
+      "kind": "text",
+      "instruction": "abcdefghijklmnopqrstuvwxy",
+      "text": "abcdefghijklmnopqrstuvwxy"
+    },
+    {
+      "id": "lesson-en-beginner-21-ex-4",
+      "kind": "text",
+      "instruction": "yxwvutsrqponmlkjihgfedcb",
+      "text": "yxwvutsrqponmlkjihgfedcb"
+    }
+  ],
+  "focus": [
+    "alphabet",
+    "key-memory"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-20"
+  ]
+}

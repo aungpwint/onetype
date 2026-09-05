@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-advanced-10",
+  "level": "advanced",
+  "language": "my",
+  "number": 10,
+  "title": "Society Paragraph",
+  "titleMy": "လူမှုဘဝ စာပိုဒ်",
+  "description": "Type about society and community.",
+  "difficulty": "hard",
+  "estimatedMinutes": 15,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 93,
+    "minWpm": 25
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-advanced-10-ex-1",
+      "kind": "text",
+      "instruction": "လူငယ်တွေအတွက် စာဖတ်ခြင်း က အရေးကြီးတယ်။ ကျောင်းအုပ်က စာကြည့်တိုက် ဖွင့်တယ်။",
+      "text": "လူငယ်တွေအတွက် စာဖတ်ခြင်း က အရေးကြီးတယ်။ ကျောင်းအုပ်က စာကြည့်တိုက် ဖွင့်တယ်။"
+    }
+  ],
+  "focus": [
+    "sentences",
+    "unicode",
+    "speed",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-my-advanced-9"
+  ]
+}

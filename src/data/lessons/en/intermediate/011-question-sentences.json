@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-intermediate-11",
+  "level": "intermediate",
+  "language": "en",
+  "number": 11,
+  "title": "Question Sentences",
+  "titleMy": "မေးခွန်းဝါကျ",
+  "description": "Sentences that ask questions. Practice question mark usage.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 92,
+    "minWpm": 22
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-intermediate-11-ex-1",
+      "kind": "text",
+      "instruction": "What is your name?",
+      "text": "What is your name?"
+    },
+    {
+      "id": "lesson-en-intermediate-11-ex-2",
+      "kind": "text",
+      "instruction": "Where do you live?",
+      "text": "Where do you live?"
+    },
+    {
+      "id": "lesson-en-intermediate-11-ex-3",
+      "kind": "text",
+      "instruction": "How old are you?",
+      "text": "How old are you?"
+    },
+    {
+      "id": "lesson-en-intermediate-11-ex-4",
+      "kind": "text",
+      "instruction": "Do you have a brother?",
+      "text": "Do you have a brother?"
+    },
+    {
+      "id": "lesson-en-intermediate-11-ex-5",
+      "kind": "text",
+      "instruction": "Why is the sky blue?",
+      "text": "Why is the sky blue?"
+    },
+    {
+      "id": "lesson-en-intermediate-11-ex-6",
+      "kind": "text",
+      "instruction": "Who made the light?",
+      "text": "Who made the light?"
+    }
+  ],
+  "focus": [
+    "sentences",
+    "punctuation",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-intermediate-10"
+  ]
+}

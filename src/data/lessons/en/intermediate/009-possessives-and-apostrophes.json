@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-intermediate-9",
+  "level": "intermediate",
+  "language": "en",
+  "number": 9,
+  "title": "Possessives and Apostrophes",
+  "titleMy": "ပိုင်ဆိုင်မှုနှင့် apostrophe",
+  "description": "Possessives: Sam's book, the cat's tail.",
+  "difficulty": "medium",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 92,
+    "minWpm": 20
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-intermediate-9-ex-1",
+      "kind": "text",
+      "instruction": "Sam's book Mary's bag the cat's tail",
+      "text": "Sam's book Mary's bag the cat's tail"
+    },
+    {
+      "id": "lesson-en-intermediate-9-ex-2",
+      "kind": "text",
+      "instruction": "the children's toys my mother's house",
+      "text": "the children's toys my mother's house"
+    },
+    {
+      "id": "lesson-en-intermediate-9-ex-3",
+      "kind": "text",
+      "instruction": "It's raining and the sky's very dark",
+      "text": "It's raining and the sky's very dark"
+    },
+    {
+      "id": "lesson-en-intermediate-9-ex-4",
+      "kind": "text",
+      "instruction": "Tom's dog ran to Kate's garden.",
+      "text": "Tom's dog ran to Kate's garden."
+    }
+  ],
+  "focus": [
+    "words",
+    "punctuation",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-intermediate-8"
+  ]
+}

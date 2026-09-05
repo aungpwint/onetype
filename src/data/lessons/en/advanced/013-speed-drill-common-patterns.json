@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-advanced-13",
+  "level": "advanced",
+  "language": "en",
+  "number": 13,
+  "title": "Speed Drill: Common Patterns",
+  "titleMy": "အရှိန်လေ့ကျင့်ခန်း - အသုံးများ ပုံစံ",
+  "description": "Repeated common English patterns for speed building.",
+  "difficulty": "hard",
+  "estimatedMinutes": 12,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 94,
+    "minWpm": 34
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-advanced-13-ex-1",
+      "kind": "text",
+      "instruction": "the the the and and and that that that",
+      "text": "the the the and and and that that that"
+    },
+    {
+      "id": "lesson-en-advanced-13-ex-2",
+      "kind": "text",
+      "instruction": "ing ing ing tion tion tion ed ed ed",
+      "text": "ing ing ing tion tion tion ed ed ed"
+    },
+    {
+      "id": "lesson-en-advanced-13-ex-3",
+      "kind": "text",
+      "instruction": "the and that have with from this they",
+      "text": "the and that have with from this they"
+    },
+    {
+      "id": "lesson-en-advanced-13-ex-4",
+      "kind": "text",
+      "instruction": "will can would could should may might",
+      "text": "will can would could should may might"
+    },
+    {
+      "id": "lesson-en-advanced-13-ex-5",
+      "kind": "text",
+      "instruction": "very much many such just also each every",
+      "text": "very much many such just also each every"
+    }
+  ],
+  "focus": [
+    "speed",
+    "finger-control"
+  ],
+  "prerequisites": [
+    "lesson-en-advanced-12"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-6",
+  "level": "beginner",
+  "language": "en",
+  "number": 6,
+  "title": "Right Index Stretch: H",
+  "titleMy": "ညာဘက်အညွှတ်ချောင်း ဆွဲ - H",
+  "description": "H is next to J. Stretch your right index finger left, then return to J.",
+  "difficulty": "basic",
+  "estimatedMinutes": 6,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-6-ex-1",
+      "kind": "text",
+      "instruction": "h h h h h h h h h h",
+      "text": "h h h h h h h h h h"
+    },
+    {
+      "id": "lesson-en-beginner-6-ex-2",
+      "kind": "text",
+      "instruction": "j h j h j h j h j h",
+      "text": "j h j h j h j h j h"
+    },
+    {
+      "id": "lesson-en-beginner-6-ex-3",
+      "kind": "text",
+      "instruction": "jh jh jh jh jh jh jh jh jh jh",
+      "text": "jh jh jh jh jh jh jh jh jh jh"
+    },
+    {
+      "id": "lesson-en-beginner-6-ex-4",
+      "kind": "text",
+      "instruction": "hj hj hj hj hj hj hj hj hj hj",
+      "text": "hj hj hj hj hj hj hj hj hj hj"
+    },
+    {
+      "id": "lesson-en-beginner-6-ex-5",
+      "kind": "text",
+      "instruction": "jhj jhj jhj jhj jhj jhj jhj jhj",
+      "text": "jhj jhj jhj jhj jhj jhj jhj jhj"
+    },
+    {
+      "id": "lesson-en-beginner-6-ex-6",
+      "kind": "text",
+      "instruction": "hjkl; hjkl; hjkl; hjkl; hjkl;",
+      "text": "hjkl; hjkl; hjkl; hjkl; hjkl;"
+    }
+  ],
+  "focusKeys": [
+    "KeyJ",
+    "KeyH"
+  ],
+  "focus": [
+    "home-row",
+    "finger-control",
+    "key-memory"
+  ],
+  "targetFingers": [
+    "right-index"
+  ],
+  "targetHands": [
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-4"
+  ]
+}

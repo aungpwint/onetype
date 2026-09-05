@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-intermediate-18",
+  "level": "intermediate",
+  "language": "en",
+  "number": 18,
+  "title": "Intermediate Review",
+  "titleMy": "အလယ်အလတ် ပြန်လည်သုံးသပ်ခြင်း",
+  "description": "Comprehensive intermediate review with mixed content.",
+  "difficulty": "hard",
+  "estimatedMinutes": 14,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 93,
+    "minWpm": 25
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-intermediate-18-ex-1",
+      "kind": "text",
+      "instruction": "the quick brown fox jumps over the lazy dog",
+      "text": "the quick brown fox jumps over the lazy dog"
+    },
+    {
+      "id": "lesson-en-intermediate-18-ex-2",
+      "kind": "text",
+      "instruction": "Pack my box with five dozen liquor jugs.",
+      "text": "Pack my box with five dozen liquor jugs."
+    },
+    {
+      "id": "lesson-en-intermediate-18-ex-3",
+      "kind": "text",
+      "instruction": "She sells seashells by the seashore.",
+      "text": "She sells seashells by the seashore."
+    },
+    {
+      "id": "lesson-en-intermediate-18-ex-4",
+      "kind": "text",
+      "instruction": "How much wood would a woodchuck chuck?",
+      "text": "How much wood would a woodchuck chuck?"
+    },
+    {
+      "id": "lesson-en-intermediate-18-ex-5",
+      "kind": "text",
+      "instruction": "A good typist can type without looking at the keyboard.",
+      "text": "A good typist can type without looking at the keyboard."
+    }
+  ],
+  "focus": [
+    "speed",
+    "accuracy",
+    "words",
+    "sentences"
+  ],
+  "prerequisites": [
+    "lesson-en-intermediate-17"
+  ]
+}

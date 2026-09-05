@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-13",
+  "level": "beginner",
+  "language": "my",
+  "number": 13,
+  "title": "Asat: ် and Virama: ္",
+  "titleMy": "အသတ် ် နှင့် ္",
+  "description": "Asat ်(KeyF) kills the inherent vowel. Virama ္(KeyF+Shift) stacks consonants.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-13-ex-1",
+      "kind": "text",
+      "instruction": "က် က် က် က် က် က် က် က် က် က်",
+      "text": "က် က် က် က် က် က် က် က် က် က်"
+    },
+    {
+      "id": "lesson-my-beginner-13-ex-2",
+      "kind": "text",
+      "instruction": "တ် တ် တ် တ် တ် တ် တ် တ် တ် တ်",
+      "text": "တ် တ် တ် တ် တ် တ် တ် တ် တ် တ်"
+    },
+    {
+      "id": "lesson-my-beginner-13-ex-3",
+      "kind": "text",
+      "instruction": "မ် မ် မ် မ် မ် မ် မ် မ် မ် မ်",
+      "text": "မ် မ် မ် မ် မ် မ် မ် မ် မ် မ်"
+    },
+    {
+      "id": "lesson-my-beginner-13-ex-4",
+      "kind": "text",
+      "instruction": "န် န် န် န် န် န် န် န် န် န်",
+      "text": "န် န် န် န် န် န် န် န် န် န်"
+    },
+    {
+      "id": "lesson-my-beginner-13-ex-5",
+      "kind": "text",
+      "instruction": "က် တ် မ် န် င် က် တ် မ် န် င်",
+      "text": "က် တ် မ် န် င် က် တ် မ် န် င်"
+    }
+  ],
+  "focusKeys": [
+    "KeyF"
+  ],
+  "focus": [
+    "unicode",
+    "syllable",
+    "key-memory"
+  ],
+  "targetFingers": [
+    "left-index"
+  ],
+  "targetHands": [
+    "left"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-10"
+  ]
+}

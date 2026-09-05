@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-intermediate-12",
+  "level": "intermediate",
+  "language": "en",
+  "number": 12,
+  "title": "Dialogue Typing",
+  "titleMy": "စကားပြော ရိုက်ခြင်း",
+  "description": "Type conversations with quotation marks and punctuation.",
+  "difficulty": "hard",
+  "estimatedMinutes": 12,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 93,
+    "minWpm": 24
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-intermediate-12-ex-1",
+      "kind": "text",
+      "instruction": "\"Hello, how are you?\" \"I am fine.\"",
+      "text": "\"Hello, how are you?\" \"I am fine.\""
+    },
+    {
+      "id": "lesson-en-intermediate-12-ex-2",
+      "kind": "text",
+      "instruction": "\"What did you do yesterday?\" \"I played with friends.\"",
+      "text": "\"What did you do yesterday?\" \"I played with friends.\""
+    },
+    {
+      "id": "lesson-en-intermediate-12-ex-3",
+      "kind": "text",
+      "instruction": "\"Where are you going?\" \"I am going to school.\"",
+      "text": "\"Where are you going?\" \"I am going to school.\""
+    },
+    {
+      "id": "lesson-en-intermediate-12-ex-4",
+      "kind": "text",
+      "instruction": "\"Can I come?\" \"Yes, let us go together.\"",
+      "text": "\"Can I come?\" \"Yes, let us go together.\""
+    }
+  ],
+  "focus": [
+    "sentences",
+    "punctuation",
+    "shift",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-intermediate-11"
+  ]
+}

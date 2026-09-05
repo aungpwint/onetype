@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-50",
+  "level": "beginner",
+  "language": "en",
+  "number": 50,
+  "title": "Shift Number Symbols: ^ & * ( )",
+  "titleMy": "Shift ဂဏန်းသင်္ကေတ: ^ & * ( )",
+  "description": "Right hand Shift symbols: ^ & * ( )",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-50-ex-1",
+      "kind": "text",
+      "instruction": "^ ^ ^ ^ ^ ^ ^ ^ ^ ^",
+      "text": "^ ^ ^ ^ ^ ^ ^ ^ ^ ^"
+    },
+    {
+      "id": "lesson-en-beginner-50-ex-2",
+      "kind": "text",
+      "instruction": "& & & & & & & & & &",
+      "text": "& & & & & & & & & &"
+    },
+    {
+      "id": "lesson-en-beginner-50-ex-3",
+      "kind": "text",
+      "instruction": "* * * * * * * * * *",
+      "text": "* * * * * * * * * *"
+    },
+    {
+      "id": "lesson-en-beginner-50-ex-4",
+      "kind": "text",
+      "instruction": "( ( ( ( ( ( ( ( ( (",
+      "text": "( ( ( ( ( ( ( ( ( ("
+    },
+    {
+      "id": "lesson-en-beginner-50-ex-5",
+      "kind": "text",
+      "instruction": ") ) ) ) ) ) ) ) ) )",
+      "text": ") ) ) ) ) ) ) ) ) )"
+    },
+    {
+      "id": "lesson-en-beginner-50-ex-6",
+      "kind": "text",
+      "instruction": "^&* (^&* (^&* (^&*",
+      "text": "^&* (^&* (^&* (^&*"
+    },
+    {
+      "id": "lesson-en-beginner-50-ex-7",
+      "kind": "text",
+      "instruction": "^&*( ) ^&*( ) ^&*( )",
+      "text": "^&*( ) ^&*( ) ^&*( )"
+    }
+  ],
+  "focusKeys": [
+    "Digit6",
+    "Digit7",
+    "Digit8",
+    "Digit9",
+    "Digit0",
+    "ShiftLeft"
+  ],
+  "focus": [
+    "shift",
+    "numbers",
+    "symbols"
+  ],
+  "targetHands": [
+    "left",
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-49"
+  ]
+}

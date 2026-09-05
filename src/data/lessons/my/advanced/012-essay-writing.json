@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-advanced-12",
+  "level": "advanced",
+  "language": "my",
+  "number": 12,
+  "title": "Essay Writing",
+  "titleMy": "စာစီစာကုံး",
+  "description": "Type an essay paragraph about education.",
+  "difficulty": "hard",
+  "estimatedMinutes": 18,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 93,
+    "minWpm": 28
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-advanced-12-ex-1",
+      "kind": "text",
+      "instruction": "ပညာရေးသည် လူ့ဘဝကို မြှင့်တင်ပေးသည်။ ကောင်းမွန်သော ပညာရေးသည် နိုင်ငံတိုးတက်ရေးအတွက် အခြေခံဖြစ်သည်။",
+      "text": "ပညာရေးသည် လူ့ဘဝကို မြှင့်တင်ပေးသည်။ ကောင်းမွန်သော ပညာရေးသည် နိုင်ငံတိုးတက်ရေးအတွက် အခြေခံဖြစ်သည်။"
+    }
+  ],
+  "focus": [
+    "sentences",
+    "unicode",
+    "speed",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-my-advanced-11"
+  ]
+}

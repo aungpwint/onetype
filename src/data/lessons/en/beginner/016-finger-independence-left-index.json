@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-16",
+  "level": "beginner",
+  "language": "en",
+  "number": 16,
+  "title": "Finger Independence: Left Index",
+  "titleMy": "လက်ချောင်း လွတ်လပ်မှု - ဘယ်ဘက်အညွှတ်",
+  "description": "Left index finger drills: F R T V B G. Other fingers stay on home row.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-16-ex-1",
+      "kind": "text",
+      "instruction": "frfr frfr frfr frfr frfr frfr frfr frfr",
+      "text": "frfr frfr frfr frfr frfr frfr frfr frfr"
+    },
+    {
+      "id": "lesson-en-beginner-16-ex-2",
+      "kind": "text",
+      "instruction": "ftft ftft ftft ftft ftft ftft ftft ftft",
+      "text": "ftft ftft ftft ftft ftft ftft ftft ftft"
+    },
+    {
+      "id": "lesson-en-beginner-16-ex-3",
+      "kind": "text",
+      "instruction": "fvfv fvfv fvfv fvfv fvfv fvfv fvfv fvfv",
+      "text": "fvfv fvfv fvfv fvfv fvfv fvfv fvfv fvfv"
+    },
+    {
+      "id": "lesson-en-beginner-16-ex-4",
+      "kind": "text",
+      "instruction": "fbfb fbfb fbfb fbfb fbfb fbfb fbfb fbfb",
+      "text": "fbfb fbfb fbfb fbfb fbfb fbfb fbfb fbfb"
+    },
+    {
+      "id": "lesson-en-beginner-16-ex-5",
+      "kind": "text",
+      "instruction": "fgfg fgfg fgfg fgfg fgfg fgfg fgfg fgfg",
+      "text": "fgfg fgfg fgfg fgfg fgfg fgfg fgfg fgfg"
+    },
+    {
+      "id": "lesson-en-beginner-16-ex-6",
+      "kind": "text",
+      "instruction": "fj fj fj fj fj fj fj fj fj fj",
+      "text": "fj fj fj fj fj fj fj fj fj fj"
+    },
+    {
+      "id": "lesson-en-beginner-16-ex-7",
+      "kind": "text",
+      "instruction": "frfr frfr frfr frfr frfr frfr frfr frfr",
+      "text": "frfr frfr frfr frfr frfr frfr frfr frfr"
+    }
+  ],
+  "focusKeys": [
+    "KeyF",
+    "KeyR",
+    "KeyT",
+    "KeyV",
+    "KeyB",
+    "KeyG"
+  ],
+  "focus": [
+    "finger-independence",
+    "finger-control"
+  ],
+  "targetFingers": [
+    "left-index"
+  ],
+  "targetHands": [
+    "left"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-12"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-advanced-9",
+  "level": "advanced",
+  "language": "en",
+  "number": 9,
+  "title": "Persuasive Writing",
+  "titleMy": "ဟောပြောချက် စာပိုဒ်",
+  "description": "Type a persuasive paragraph. Practice varied vocabulary.",
+  "difficulty": "hard",
+  "estimatedMinutes": 15,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 94,
+    "minWpm": 33
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-advanced-9-ex-1",
+      "kind": "text",
+      "instruction": "Everyone should learn to save drinking water. Clean water is a precious gift. When we close the tap and fix small leaks, we protect rivers and lakes for the future. Small actions create a big difference.",
+      "text": "Everyone should learn to save drinking water. Clean water is a precious gift. When we close the tap and fix small leaks, we protect rivers and lakes for the future. Small actions create a big difference."
+    }
+  ],
+  "focus": [
+    "sentences",
+    "speed",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-advanced-8"
+  ]
+}

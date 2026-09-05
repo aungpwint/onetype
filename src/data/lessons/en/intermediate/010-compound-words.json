@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-intermediate-10",
+  "level": "intermediate",
+  "language": "en",
+  "number": 10,
+  "title": "Compound Words",
+  "titleMy": "ပေါင်းစပ် စကားလုံးများ",
+  "description": "Words made of two smaller words. Build fluency with longer words.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 92,
+    "minWpm": 22
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-intermediate-10-ex-1",
+      "kind": "text",
+      "instruction": "sunshine rainbow moonlight fireplace",
+      "text": "sunshine rainbow moonlight fireplace"
+    },
+    {
+      "id": "lesson-en-intermediate-10-ex-2",
+      "kind": "text",
+      "instruction": "notebook keyboard laptop bookstore",
+      "text": "notebook keyboard laptop bookstore"
+    },
+    {
+      "id": "lesson-en-intermediate-10-ex-3",
+      "kind": "text",
+      "instruction": "football basketball breakfast homework",
+      "text": "football basketball breakfast homework"
+    },
+    {
+      "id": "lesson-en-intermediate-10-ex-4",
+      "kind": "text",
+      "instruction": "outside inside anything someone",
+      "text": "outside inside anything someone"
+    }
+  ],
+  "focus": [
+    "words",
+    "same-hand",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-intermediate-9"
+  ]
+}

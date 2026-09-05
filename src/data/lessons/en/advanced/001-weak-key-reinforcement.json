@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-advanced-1",
+  "level": "advanced",
+  "language": "en",
+  "number": 1,
+  "title": "Weak Key Reinforcement",
+  "titleMy": "အားနည်းသည့် ကီးများ ပြန်လည်လေ့ကျင့်ခြင်း",
+  "description": "Drills targeting commonly mistyped keys.",
+  "difficulty": "medium",
+  "estimatedMinutes": 12,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 93,
+    "minWpm": 30
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-advanced-1-ex-1",
+      "kind": "text",
+      "instruction": "edc rfv tgb edc rfv tgb edc rfv tgb",
+      "text": "edc rfv tgb edc rfv tgb edc rfv tgb"
+    },
+    {
+      "id": "lesson-en-advanced-1-ex-2",
+      "kind": "text",
+      "instruction": "ki lo ju ki lo ju ki lo ju ki lo ju",
+      "text": "ki lo ju ki lo ju ki lo ju ki lo ju"
+    },
+    {
+      "id": "lesson-en-advanced-1-ex-3",
+      "kind": "text",
+      "instruction": "pq wx vb pq wx vb pq wx vb pq wx vb",
+      "text": "pq wx vb pq wx vb pq wx vb pq wx vb"
+    },
+    {
+      "id": "lesson-en-advanced-1-ex-4",
+      "kind": "text",
+      "instruction": "freedom evaluate privilege judgment",
+      "text": "freedom evaluate privilege judgment"
+    },
+    {
+      "id": "lesson-en-advanced-1-ex-5",
+      "kind": "text",
+      "instruction": "knowledge irregular questionnaire",
+      "text": "knowledge irregular questionnaire"
+    }
+  ],
+  "focus": [
+    "finger-control",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-intermediate-18"
+  ]
+}

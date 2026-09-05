@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-20",
+  "level": "beginner",
+  "language": "my",
+  "number": 20,
+  "title": "Shift Characters",
+  "titleMy": "Shift အက္ခရာများ",
+  "description": "Myanmar characters that require Shift key.",
+  "difficulty": "medium",
+  "estimatedMinutes": 8,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-20-ex-1",
+      "kind": "text",
+      "instruction": "ဝ ဝ ဝ အ အ အ",
+      "text": "ဝ ဝ ဝ အ အ အ"
+    },
+    {
+      "id": "lesson-my-beginner-20-ex-2",
+      "kind": "text",
+      "instruction": "ဥ ဥ ဥ ဣ ဣ ဣ",
+      "text": "ဥ ဥ ဥ ဣ ဣ ဣ"
+    },
+    {
+      "id": "lesson-my-beginner-20-ex-3",
+      "kind": "text",
+      "instruction": "ဧ ဧ ဧ ဦ ဦ ဦ",
+      "text": "ဧ ဧ ဧ ဦ ဦ ဦ"
+    },
+    {
+      "id": "lesson-my-beginner-20-ex-4",
+      "kind": "text",
+      "instruction": "ဒ ဒ ဒ ဓ ဓ ဓ",
+      "text": "ဒ ဒ ဒ ဓ ဓ ဓ"
+    },
+    {
+      "id": "lesson-my-beginner-20-ex-5",
+      "kind": "text",
+      "instruction": "ဋ ဋ ဋ ဍ ဍ ဍ",
+      "text": "ဋ ဋ ဋ ဍ ဍ ဍ"
+    }
+  ],
+  "focusKeys": [
+    "ShiftLeft",
+    "ShiftRight"
+  ],
+  "focus": [
+    "shift",
+    "unicode",
+    "key-memory"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-10"
+  ]
+}

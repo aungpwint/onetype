@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-45",
+  "level": "beginner",
+  "language": "en",
+  "number": 45,
+  "title": "Number Row Right Hand: 6 7 8 9 0",
+  "titleMy": "ဂဏန်းတန်း ညာဘက်လက် - ၆ ၇ ၈ ၉ ၀",
+  "description": "Right index: 6-7, middle: 8, ring: 9, pinky: 0.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-45-ex-1",
+      "kind": "text",
+      "instruction": "6 6 6 6 6 7 7 7 7 7 8 8 8 8 8 9 9 9 9 9 0 0 0 0 0",
+      "text": "6 6 6 6 6 7 7 7 7 7 8 8 8 8 8 9 9 9 9 9 0 0 0 0 0"
+    },
+    {
+      "id": "lesson-en-beginner-45-ex-2",
+      "kind": "text",
+      "instruction": "6 7 8 9 0 6 7 8 9 0 6 7 8 9 0",
+      "text": "6 7 8 9 0 6 7 8 9 0 6 7 8 9 0"
+    },
+    {
+      "id": "lesson-en-beginner-45-ex-3",
+      "kind": "text",
+      "instruction": "6 8 0 6 8 0 6 8 0 6 8 0 6 8 0",
+      "text": "6 8 0 6 8 0 6 8 0 6 8 0 6 8 0"
+    },
+    {
+      "id": "lesson-en-beginner-45-ex-4",
+      "kind": "text",
+      "instruction": "0 9 8 7 6 0 9 8 7 6 0 9 8 7 6",
+      "text": "0 9 8 7 6 0 9 8 7 6 0 9 8 7 6"
+    },
+    {
+      "id": "lesson-en-beginner-45-ex-5",
+      "kind": "text",
+      "instruction": "67 89 0 67 89 0 67 89 0 67 89 0",
+      "text": "67 89 0 67 89 0 67 89 0 67 89 0"
+    },
+    {
+      "id": "lesson-en-beginner-45-ex-6",
+      "kind": "text",
+      "instruction": "67890 67890 67890 67890 67890",
+      "text": "67890 67890 67890 67890 67890"
+    }
+  ],
+  "focusKeys": [
+    "Digit6",
+    "Digit7",
+    "Digit8",
+    "Digit9",
+    "Digit0"
+  ],
+  "focus": [
+    "numbers",
+    "key-memory",
+    "finger-control"
+  ],
+  "targetFingers": [
+    "right-index",
+    "right-middle",
+    "right-ring",
+    "right-pinky"
+  ],
+  "targetHands": [
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-27"
+  ]
+}

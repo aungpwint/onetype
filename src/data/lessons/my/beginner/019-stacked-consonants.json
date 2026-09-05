@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-19",
+  "level": "beginner",
+  "language": "my",
+  "number": 19,
+  "title": "Stacked Consonants",
+  "titleMy": "ဗျည်းထပ်တင်",
+  "description": "Stacked consonants using virama ္. E.g., မင်္ဂလာ.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-19-ex-1",
+      "kind": "text",
+      "instruction": "မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ",
+      "text": "မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ"
+    },
+    {
+      "id": "lesson-my-beginner-19-ex-2",
+      "kind": "text",
+      "instruction": "အင်္ဂါ အင်္ဂါ အင်္ဂါ အင်္ဂါ အင်္ဂါ",
+      "text": "အင်္ဂါ အင်္ဂါ အင်္ဂါ အင်္ဂါ အင်္ဂါ"
+    },
+    {
+      "id": "lesson-my-beginner-19-ex-3",
+      "kind": "text",
+      "instruction": "သုံးလုံး သုံးလုံး သုံးလုံး သုံးလုံး",
+      "text": "သုံးလုံး သုံးလုံး သုံးလုံး သုံးလုံး"
+    },
+    {
+      "id": "lesson-my-beginner-19-ex-4",
+      "kind": "text",
+      "instruction": "ကြက်သွန်း ကြက်သွန်း ကြက်သွန်း",
+      "text": "ကြက်သွန်း ကြက်သွန်း ကြက်သွန်း"
+    },
+    {
+      "id": "lesson-my-beginner-19-ex-5",
+      "kind": "text",
+      "instruction": "ဥက္ကဋ္ဌ ဥက္ကဋ္ဌ ဥက္ကဋ္ဌ",
+      "text": "ဥက္ကဋ္ဌ ဥက္ကဋ္ဌ ဥက္ကဋ္ဌ"
+    }
+  ],
+  "focusKeys": [
+    "KeyF"
+  ],
+  "focus": [
+    "unicode",
+    "syllable"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-18"
+  ]
+}

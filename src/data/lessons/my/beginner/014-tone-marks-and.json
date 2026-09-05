@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-14",
+  "level": "beginner",
+  "language": "my",
+  "number": 14,
+  "title": "Tone Marks: း and ့",
+  "titleMy": "သံ - း နှင့် ့",
+  "description": "Visabella း(Semicolon) and Atthin ့(KeyH).",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-14-ex-1",
+      "kind": "text",
+      "instruction": "ကား ကား ကား ကား ကား ကား ကား ကား ကား ကား",
+      "text": "ကား ကား ကား ကား ကား ကား ကား ကား ကား ကား"
+    },
+    {
+      "id": "lesson-my-beginner-14-ex-2",
+      "kind": "text",
+      "instruction": "တား တား တား တား တား တား တား တား တား တား",
+      "text": "တား တား တား တား တား တား တား တား တား တား"
+    },
+    {
+      "id": "lesson-my-beginner-14-ex-3",
+      "kind": "text",
+      "instruction": "မား မား မား မား မား မား မား မား မား မား",
+      "text": "မား မား မား မား မား မား မား မား မား မား"
+    },
+    {
+      "id": "lesson-my-beginner-14-ex-4",
+      "kind": "text",
+      "instruction": "ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့",
+      "text": "ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့"
+    },
+    {
+      "id": "lesson-my-beginner-14-ex-5",
+      "kind": "text",
+      "instruction": "ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့",
+      "text": "ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့"
+    }
+  ],
+  "focusKeys": [
+    "Semicolon",
+    "KeyH"
+  ],
+  "focus": [
+    "unicode",
+    "tone",
+    "syllable",
+    "key-memory"
+  ],
+  "targetFingers": [
+    "right-pinky",
+    "right-index"
+  ],
+  "targetHands": [
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-10"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-24",
+  "level": "beginner",
+  "language": "my",
+  "number": 24,
+  "title": "Basic Sentences",
+  "titleMy": "အခြေခံ ဝါကျတိုများ",
+  "description": "Simple Myanmar sentences.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": 15
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-24-ex-1",
+      "kind": "text",
+      "instruction": "ငါကျောင်းသွားတယ်။",
+      "text": "ငါကျောင်းသွားတယ်။"
+    },
+    {
+      "id": "lesson-my-beginner-24-ex-2",
+      "kind": "text",
+      "instruction": "အမေအိမ်မှာလား။",
+      "text": "အမေအိမ်မှာလား။"
+    },
+    {
+      "id": "lesson-my-beginner-24-ex-3",
+      "kind": "text",
+      "instruction": "ဆရာကခွေးကိုခေါ်တယ်။",
+      "text": "ဆရာကခွေးကိုခေါ်တယ်။"
+    },
+    {
+      "id": "lesson-my-beginner-24-ex-4",
+      "kind": "text",
+      "instruction": "မင်္ဂလာပါ။",
+      "text": "မင်္ဂလာပါ။"
+    }
+  ],
+  "focus": [
+    "sentences",
+    "unicode",
+    "punctuation"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-23"
+  ]
+}

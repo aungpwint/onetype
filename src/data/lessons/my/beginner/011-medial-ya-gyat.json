@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-11",
+  "level": "beginner",
+  "language": "my",
+  "number": 11,
+  "title": "Medial: ျ (ya-gyat)",
+  "titleMy": "စာလုံးကြို - ျ",
+  "description": "The ျ medial (KeyS). Consonant + ျ + vowel.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-11-ex-1",
+      "kind": "text",
+      "instruction": "ျ ျ ျ ျ ျ ျ ျ ျ ျ ျ",
+      "text": "ျ ျ ျ ျ ျ ျ ျ ျ ျ ျ"
+    },
+    {
+      "id": "lesson-my-beginner-11-ex-2",
+      "kind": "text",
+      "instruction": "ကျ ကျ ကျ ကျ ကျ ကျ ကျ ကျ ကျ ကျ",
+      "text": "ကျ ကျ ကျ ကျ ကျ ကျ ကျ ကျ ကျ ကျ"
+    },
+    {
+      "id": "lesson-my-beginner-11-ex-3",
+      "kind": "text",
+      "instruction": "တျ တျ တျ တျ တျ တျ တျ တျ တျ တျ",
+      "text": "တျ တျ တျ တျ တျ တျ တျ တျ တျ တျ"
+    },
+    {
+      "id": "lesson-my-beginner-11-ex-4",
+      "kind": "text",
+      "instruction": "ကျာ ကျာ ကျာ ကျာ ကျာ ကျာ ကျာ ကျာ ကျာ ကျာ",
+      "text": "ကျာ ကျာ ကျာ ကျာ ကျာ ကျာ ကျာ ကျာ ကျာ ကျာ"
+    },
+    {
+      "id": "lesson-my-beginner-11-ex-5",
+      "kind": "text",
+      "instruction": "ကျိ ကျိ ကျိ ကျိ ကျိ ကျိ ကျိ ကျိ ကျိ ကျိ",
+      "text": "ကျိ ကျိ ကျိ ကျိ ကျိ ကျိ ကျိ ကျိ ကျိ ကျိ"
+    },
+    {
+      "id": "lesson-my-beginner-11-ex-6",
+      "kind": "text",
+      "instruction": "ကျေ ကျေ ကျေ ကျေ ကျေ ကျေ ကျေ ကျေ",
+      "text": "ကျေ ကျေ ကျေ ကျေ ကျေ ကျေ ကျေ ကျေ"
+    }
+  ],
+  "focusKeys": [
+    "KeyS"
+  ],
+  "focus": [
+    "unicode",
+    "medial",
+    "syllable",
+    "key-memory"
+  ],
+  "targetFingers": [
+    "left-ring"
+  ],
+  "targetHands": [
+    "left"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-10"
+  ]
+}

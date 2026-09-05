@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-intermediate-2",
+  "level": "intermediate",
+  "language": "my",
+  "number": 2,
+  "title": "Question Words",
+  "titleMy": "မေးခွန်းစကားလုံး",
+  "description": "Question words: ဘာ, ဘယ်, ဘယ်လို.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-intermediate-2-ex-1",
+      "kind": "text",
+      "instruction": "ဘာ ဘယ် ဘယ်လို ဘာကြောင့် ဘယ်အချိန် ဘယ်သူ ဘယ်နှ ဘယ်လောက်",
+      "text": "ဘာ ဘယ် ဘယ်လို ဘာကြောင့် ဘယ်အချိန် ဘယ်သူ ဘယ်နှ ဘယ်လောက်"
+    }
+  ],
+  "focus": [
+    "words",
+    "unicode",
+    "syllable"
+  ],
+  "prerequisites": [
+    "lesson-my-intermediate-1"
+  ]
+}

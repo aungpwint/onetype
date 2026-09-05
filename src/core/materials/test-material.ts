@@ -2,18 +2,24 @@ import type { TypingTest } from "../../services/types";
 import { getLayoutOrThrow } from "../keyboard-layout/registry";
 import { resolveLesson } from "../../data/curriculum/generator";
 import type { LessonData } from "../../data/curriculum/types";
-import { myanmarAdvancedLessons } from "../../data/lessons/myanmar-advanced";
-import { myanmarIntermediateLessons } from "../../data/lessons/myanmar-intermediate";
-import { englishAdvancedLessons } from "../../data/lessons/english-advanced";
+import { getLessonRepository } from "../../data/curriculum";
 import type { ResolvedLesson } from "../../data/curriculum/generator";
 import type { Difficulty, Language } from "../../types";
 
+const repository = getLessonRepository();
+
 const MYANMAR_POOL = [
-  ...myanmarAdvancedLessons.reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []),
-  ...myanmarIntermediateLessons.reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []),
+  ...repository
+    .listByLanguageAndLevel("my", "advanced")
+    .reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []),
+  ...repository
+    .listByLanguageAndLevel("my", "intermediate")
+    .reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []),
 ];
 
-const ENGLISH_POOL = englishAdvancedLessons.reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []);
+const ENGLISH_POOL = repository
+  .listByLanguageAndLevel("en", "advanced")
+  .reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []);
 
 export function buildTestMaterial(test: TypingTest): ResolvedLesson {
   const layout = getLayoutOrThrow(test.layoutId);

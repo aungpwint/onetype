@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-advanced-5",
+  "level": "advanced",
+  "language": "my",
+  "number": 5,
+  "title": "Common Words Level 1",
+  "titleMy": "အသုံးများသော စကားလုံး (၁)",
+  "description": "Work and daily life vocabulary.",
+  "difficulty": "medium",
+  "estimatedMinutes": 12,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 92,
+    "minWpm": 20
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-advanced-5-ex-1",
+      "kind": "text",
+      "instruction": "လုပ်ငန်း စီးပွားရေး အကောင့်",
+      "text": "လုပ်ငန်း စီးပွားရေး အကောင့်"
+    },
+    {
+      "id": "lesson-my-advanced-5-ex-2",
+      "kind": "text",
+      "instruction": "သငယ် စာတွေ ဖုန်း",
+      "text": "သငယ် စာတွေ ဖုန်း"
+    }
+  ],
+  "focus": [
+    "words",
+    "unicode",
+    "syllable"
+  ],
+  "prerequisites": [
+    "lesson-my-advanced-4"
+  ]
+}

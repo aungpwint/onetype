@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-52",
+  "level": "beginner",
+  "language": "en",
+  "number": 52,
+  "title": "Punctuation: Period and Comma",
+  "titleMy": "နားသတ်: ခြေစွန်းနှင့် ဝမ်းခြေ",
+  "description": "Period and comma in sentences.",
+  "difficulty": "medium",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 90,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-52-ex-1",
+      "kind": "text",
+      "instruction": ". . . . . . . . . .",
+      "text": ". . . . . . . . . ."
+    },
+    {
+      "id": "lesson-en-beginner-52-ex-2",
+      "kind": "text",
+      "instruction": ", , , , , , , , , ,",
+      "text": ", , , , , , , , , ,"
+    },
+    {
+      "id": "lesson-en-beginner-52-ex-3",
+      "kind": "text",
+      "instruction": "a, b, c, d, e, f.",
+      "text": "a, b, c, d, e, f."
+    },
+    {
+      "id": "lesson-en-beginner-52-ex-4",
+      "kind": "text",
+      "instruction": "one, two, three, four.",
+      "text": "one, two, three, four."
+    },
+    {
+      "id": "lesson-en-beginner-52-ex-5",
+      "kind": "text",
+      "instruction": "hello, world. yes, no.",
+      "text": "hello, world. yes, no."
+    },
+    {
+      "id": "lesson-en-beginner-52-ex-6",
+      "kind": "text",
+      "instruction": "I am here. you are there.",
+      "text": "I am here. you are there."
+    }
+  ],
+  "focusKeys": [
+    "Period",
+    "Comma"
+  ],
+  "focus": [
+    "punctuation",
+    "sentences"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-30"
+  ]
+}

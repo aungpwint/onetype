@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-37",
+  "level": "beginner",
+  "language": "en",
+  "number": 37,
+  "title": "All Uppercase Letters",
+  "titleMy": "အကြီးဖွင့် အက္ခရာ အားလုံး",
+  "description": "Type every letter uppercase. Use correct Shift hand for each.",
+  "difficulty": "easy",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-37-ex-1",
+      "kind": "text",
+      "instruction": "Aa Bb Cc Dd Ee Ff Gg",
+      "text": "Aa Bb Cc Dd Ee Ff Gg"
+    },
+    {
+      "id": "lesson-en-beginner-37-ex-2",
+      "kind": "text",
+      "instruction": "Hh Ii Jj Kk Ll Mm Nn",
+      "text": "Hh Ii Jj Kk Ll Mm Nn"
+    },
+    {
+      "id": "lesson-en-beginner-37-ex-3",
+      "kind": "text",
+      "instruction": "Oo Pp Qq Rr Ss Tt",
+      "text": "Oo Pp Qq Rr Ss Tt"
+    },
+    {
+      "id": "lesson-en-beginner-37-ex-4",
+      "kind": "text",
+      "instruction": "Uu Vv Ww Xx Yy Zz",
+      "text": "Uu Vv Ww Xx Yy Zz"
+    },
+    {
+      "id": "lesson-en-beginner-37-ex-5",
+      "kind": "text",
+      "instruction": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    },
+    {
+      "id": "lesson-en-beginner-37-ex-6",
+      "kind": "text",
+      "instruction": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    }
+  ],
+  "focusKeys": [
+    "ShiftLeft",
+    "ShiftRight"
+  ],
+  "focus": [
+    "shift",
+    "alphabet",
+    "key-memory"
+  ],
+  "targetHands": [
+    "left",
+    "right"
+  ],
+  "requiresShift": true,
+  "prerequisites": [
+    "lesson-en-beginner-36"
+  ]
+}

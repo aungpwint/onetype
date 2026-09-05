@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-advanced-3",
+  "level": "advanced",
+  "language": "en",
+  "number": 3,
+  "title": "School Life Paragraph",
+  "titleMy": "ကျောင်းဘဝ စာပိုဒ်",
+  "description": "Type about school life. Practice capital letters at sentence starts.",
+  "difficulty": "medium",
+  "estimatedMinutes": 12,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 93,
+    "minWpm": 30
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-advanced-3-ex-1",
+      "kind": "text",
+      "instruction": "Our school has many big and bright classrooms. The teachers are kind and patient. We study English, Math, and Science every day. I enjoy learning new things with my classmates.",
+      "text": "Our school has many big and bright classrooms. The teachers are kind and patient. We study English, Math, and Science every day. I enjoy learning new things with my classmates."
+    }
+  ],
+  "focus": [
+    "sentences",
+    "speed",
+    "accuracy",
+    "shift"
+  ],
+  "prerequisites": [
+    "lesson-en-advanced-2"
+  ]
+}

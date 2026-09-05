@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-39",
+  "level": "beginner",
+  "language": "en",
+  "number": 39,
+  "title": "Capitalized Sentences",
+  "titleMy": "အကြီးဖွင့် စတင်သော ဝါကျ",
+  "description": "Sentences that start with a capital letter.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": 14
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-39-ex-1",
+      "kind": "text",
+      "instruction": "I am a student.",
+      "text": "I am a student."
+    },
+    {
+      "id": "lesson-en-beginner-39-ex-2",
+      "kind": "text",
+      "instruction": "He has a big dog.",
+      "text": "He has a big dog."
+    },
+    {
+      "id": "lesson-en-beginner-39-ex-3",
+      "kind": "text",
+      "instruction": "We go to school.",
+      "text": "We go to school."
+    },
+    {
+      "id": "lesson-en-beginner-39-ex-4",
+      "kind": "text",
+      "instruction": "She likes red roses.",
+      "text": "She likes red roses."
+    },
+    {
+      "id": "lesson-en-beginner-39-ex-5",
+      "kind": "text",
+      "instruction": "They play football.",
+      "text": "They play football."
+    }
+  ],
+  "focus": [
+    "shift",
+    "sentences",
+    "words"
+  ],
+  "requiresShift": true,
+  "prerequisites": [
+    "lesson-en-beginner-38"
+  ]
+}

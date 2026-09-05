@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-7",
+  "level": "beginner",
+  "language": "my",
+  "number": 7,
+  "title": "Bottom Row: ဠ and ဘ",
+  "titleMy": "အောက်တန်း - ဠ ဘ",
+  "description": "Bottom row consonants: ဘ (KeyB) ဠ (KeyV+Shift)",
+  "difficulty": "easy",
+  "estimatedMinutes": 6,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-7-ex-1",
+      "kind": "text",
+      "instruction": "ဠ ဠ ဠ ဠ ဠ ဠ ဠ ဠ ဠ ဠ",
+      "text": "ဠ ဠ ဠ ဠ ဠ ဠ ဠ ဠ ဠ ဠ"
+    },
+    {
+      "id": "lesson-my-beginner-7-ex-2",
+      "kind": "text",
+      "instruction": "ဘ ဘ ဘ ဘ ဘ ဘ ဘ ဘ ဘ ဘ",
+      "text": "ဘ ဘ ဘ ဘ ဘ ဘ ဘ ဘ ဘ ဘ"
+    },
+    {
+      "id": "lesson-my-beginner-7-ex-3",
+      "kind": "text",
+      "instruction": "ဠ ဘ ဠ ဘ ဠ ဘ ဠ ဘ ဠ ဘ",
+      "text": "ဠ ဘ ဠ ဘ ဠ ဘ ဠ ဘ ဠ ဘ"
+    },
+    {
+      "id": "lesson-my-beginner-7-ex-4",
+      "kind": "text",
+      "instruction": "က ဠ တ ဘ န ဠ မ ဘ",
+      "text": "က ဠ တ ဘ န ဠ မ ဘ"
+    },
+    {
+      "id": "lesson-my-beginner-7-ex-5",
+      "kind": "text",
+      "instruction": "ဠ ဘ ဠ ဘ ဠ ဘ ဠ ဘ ဠ ဘ",
+      "text": "ဠ ဘ ဠ ဘ ဠ ဘ ဠ ဘ ဠ ဘ"
+    }
+  ],
+  "focusKeys": [
+    "KeyV",
+    "KeyB"
+  ],
+  "focus": [
+    "bottom-row",
+    "key-memory",
+    "row-transition",
+    "shift"
+  ],
+  "targetFingers": [
+    "left-index",
+    "right-index"
+  ],
+  "targetHands": [
+    "left",
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-4"
+  ]
+}

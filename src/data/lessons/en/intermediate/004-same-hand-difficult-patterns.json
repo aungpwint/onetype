@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-intermediate-4",
+  "level": "intermediate",
+  "language": "en",
+  "number": 4,
+  "title": "Same-Hand Difficult Patterns",
+  "titleMy": "တစ်ဖက်တည်းလက် ခက်ခဲသည့် ပုံစံများ",
+  "description": "Practice typing consecutive same-hand keys for fluency.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 90,
+    "minWpm": 20
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-intermediate-4-ex-1",
+      "kind": "text",
+      "instruction": "asd asd sdf sdf dfg dfg",
+      "text": "asd asd sdf sdf dfg dfg"
+    },
+    {
+      "id": "lesson-en-intermediate-4-ex-2",
+      "kind": "text",
+      "instruction": "jkl jkl kl; kl; hjk hjk",
+      "text": "jkl jkl kl; kl; hjk hjk"
+    },
+    {
+      "id": "lesson-en-intermediate-4-ex-3",
+      "kind": "text",
+      "instruction": "qwe qwe wer ert wert erty",
+      "text": "qwe qwe wer ert wert erty"
+    },
+    {
+      "id": "lesson-en-intermediate-4-ex-4",
+      "kind": "text",
+      "instruction": "yui yui iop uio iopiop",
+      "text": "yui yui iop uio iopiop"
+    },
+    {
+      "id": "lesson-en-intermediate-4-ex-5",
+      "kind": "text",
+      "instruction": "zxc zxc xcv cvb xcvbxcv",
+      "text": "zxc zxc xcv cvb xcvbxcv"
+    },
+    {
+      "id": "lesson-en-intermediate-4-ex-6",
+      "kind": "text",
+      "instruction": "nm nm nm nm nm nm nm nm nm nm",
+      "text": "nm nm nm nm nm nm nm nm nm nm"
+    }
+  ],
+  "focus": [
+    "same-hand",
+    "finger-control",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-intermediate-3"
+  ]
+}

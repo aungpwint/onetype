@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-intermediate-9",
+  "level": "intermediate",
+  "language": "my",
+  "number": 9,
+  "title": "Numbers and Counting",
+  "titleMy": "ဂဏန်းကိန်း",
+  "description": "Myanmar numbers up to 100.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 90,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-intermediate-9-ex-1",
+      "kind": "text",
+      "instruction": "၁၀ ၂၀ ၃၀ ၄၀ ၅၀ ၆၀ ၇၀ ၈၀ ၉၀ ၁၀၀",
+      "text": "၁၀ ၂၀ ၃၀ ၄၀ ၅၀ ၆၀ ၇၀ ၈၀ ၉၀ ၁၀၀"
+    },
+    {
+      "id": "lesson-my-intermediate-9-ex-2",
+      "kind": "text",
+      "instruction": "၅ ၁၀ ၁၅ ၂၀ ၂၅ ၃၀ ၃၅ ၄၀ ၄၅ ၅၀",
+      "text": "၅ ၁၀ ၁၅ ၂၀ ၂၅ ၃၀ ၃၅ ၄၀ ၄၅ ၅၀"
+    }
+  ],
+  "focus": [
+    "numbers",
+    "unicode"
+  ],
+  "prerequisites": [
+    "lesson-my-intermediate-8"
+  ]
+}

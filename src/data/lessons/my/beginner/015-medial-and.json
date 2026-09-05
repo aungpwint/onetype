@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-15",
+  "level": "beginner",
+  "language": "my",
+  "number": 15,
+  "title": "Medial: ွ and ှ",
+  "titleMy": "စာလုံးကြို - ွ နှင့် ှ",
+  "description": "Wa-lay ွ (KeyG+Shift) with left index, and Ha-hto ှ (KeyS+Shift) with left ring.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-15-ex-1",
+      "kind": "text",
+      "instruction": "ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ",
+      "text": "ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ"
+    },
+    {
+      "id": "lesson-my-beginner-15-ex-2",
+      "kind": "text",
+      "instruction": "ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ",
+      "text": "ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ"
+    },
+    {
+      "id": "lesson-my-beginner-15-ex-3",
+      "kind": "text",
+      "instruction": "ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ",
+      "text": "ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ"
+    },
+    {
+      "id": "lesson-my-beginner-15-ex-4",
+      "kind": "text",
+      "instruction": "ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ",
+      "text": "ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ"
+    },
+    {
+      "id": "lesson-my-beginner-15-ex-5",
+      "kind": "text",
+      "instruction": "ကွု ကွု ကွု ကွု ကွု ကွု ကွု ကွု",
+      "text": "ကွု ကွု ကွု ကွု ကွု ကွု ကွု ကွု"
+    },
+    {
+      "id": "lesson-my-beginner-15-ex-6",
+      "kind": "text",
+      "instruction": "ကျွ ကြွ ကျှ ကြှ",
+      "text": "ကျွ ကြွ ကျှ ကြှ"
+    }
+  ],
+  "focusKeys": [
+    "KeyG",
+    "KeyS"
+  ],
+  "focus": [
+    "unicode",
+    "medial",
+    "syllable",
+    "key-memory"
+  ],
+  "targetFingers": [
+    "left-index",
+    "left-ring"
+  ],
+  "targetHands": [
+    "left"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-12"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-advanced-2",
+  "level": "advanced",
+  "language": "my",
+  "number": 2,
+  "title": "Punctuation: ၍ ၑ ၒ",
+  "titleMy": "သင်္ကေတအက္ခရာ",
+  "description": "Practice with formal Myanmar punctuation marks.",
+  "difficulty": "easy",
+  "estimatedMinutes": 10,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 90,
+    "minWpm": 18
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-advanced-2-ex-1",
+      "kind": "text",
+      "instruction": "ငါစား၍ အိပ်ပါတယ်။",
+      "text": "ငါစား၍ အိပ်ပါတယ်။"
+    },
+    {
+      "id": "lesson-my-advanced-2-ex-2",
+      "kind": "text",
+      "instruction": "ဟုတ်တယ်၊ မှန်တယ်၊ ကောင်းတယ်။",
+      "text": "ဟုတ်တယ်၊ မှန်တယ်၊ ကောင်းတယ်။"
+    }
+  ],
+  "focus": [
+    "punctuation",
+    "unicode",
+    "sentences"
+  ],
+  "prerequisites": [
+    "lesson-my-advanced-1"
+  ]
+}

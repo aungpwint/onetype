@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-51",
+  "level": "beginner",
+  "language": "en",
+  "number": 51,
+  "title": "All Shift Symbols Review",
+  "titleMy": "Shift သင်္ကေတ အားလုံး ပြန်လည်သုံးသပ်ခြင်း",
+  "description": "All 10 shift-number symbols in sequence and patterns.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 88,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-51-ex-1",
+      "kind": "text",
+      "instruction": "!@#$%^&*()",
+      "text": "!@#$%^&*()"
+    },
+    {
+      "id": "lesson-en-beginner-51-ex-2",
+      "kind": "text",
+      "instruction": "!@#$%^&*() !@#$%^&*()",
+      "text": "!@#$%^&*() !@#$%^&*()"
+    },
+    {
+      "id": "lesson-en-beginner-51-ex-3",
+      "kind": "text",
+      "instruction": "())(*&%$#@!",
+      "text": "())(*&%$#@!"
+    },
+    {
+      "id": "lesson-en-beginner-51-ex-4",
+      "kind": "text",
+      "instruction": "2+2=4 3*3=9 10-5=5",
+      "text": "2+2=4 3*3=9 10-5=5"
+    }
+  ],
+  "focus": [
+    "shift",
+    "symbols",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-50"
+  ]
+}

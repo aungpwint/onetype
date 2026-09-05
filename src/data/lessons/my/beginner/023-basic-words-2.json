@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-23",
+  "level": "beginner",
+  "language": "my",
+  "number": 23,
+  "title": "Basic Words 2",
+  "titleMy": "အခြေခံ စကားလုံး (၂)",
+  "description": "Everyday words: food, family, places.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": 12
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-23-ex-1",
+      "kind": "text",
+      "instruction": "အိမ် မြို့ ရွာ",
+      "text": "အိမ် မြို့ ရွာ"
+    },
+    {
+      "id": "lesson-my-beginner-23-ex-2",
+      "kind": "text",
+      "instruction": "အဖေ အမေ ညီ ညီမ",
+      "text": "အဖေ အမေ ညီ ညီမ"
+    },
+    {
+      "id": "lesson-my-beginner-23-ex-3",
+      "kind": "text",
+      "instruction": "မျက်စိ နား လက် ခြေ",
+      "text": "မျက်စိ နား လက် ခြေ"
+    },
+    {
+      "id": "lesson-my-beginner-23-ex-4",
+      "kind": "text",
+      "instruction": "ရေ ဆန် ငါး ကြက်",
+      "text": "ရေ ဆန် ငါး ကြက်"
+    }
+  ],
+  "focus": [
+    "words",
+    "unicode",
+    "syllable"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-22"
+  ]
+}

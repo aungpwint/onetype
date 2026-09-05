@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-53",
+  "level": "beginner",
+  "language": "en",
+  "number": 53,
+  "title": "Punctuation: Semicolon and Colon",
+  "titleMy": "နားသတ်: နှစ်ချောင်းငင်နှင့် နှစ်ချက်",
+  "description": "Semicolon and colon in practice.",
+  "difficulty": "medium",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 90,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-53-ex-1",
+      "kind": "text",
+      "instruction": "; ; ; ; ; ; ; ; ; ;",
+      "text": "; ; ; ; ; ; ; ; ; ;"
+    },
+    {
+      "id": "lesson-en-beginner-53-ex-2",
+      "kind": "text",
+      "instruction": ": : : : : : : : : :",
+      "text": ": : : : : : : : : :"
+    },
+    {
+      "id": "lesson-en-beginner-53-ex-3",
+      "kind": "text",
+      "instruction": "one; two; three; four.",
+      "text": "one; two; three; four."
+    },
+    {
+      "id": "lesson-en-beginner-53-ex-4",
+      "kind": "text",
+      "instruction": "a: b: c: d: e:.",
+      "text": "a: b: c: d: e:."
+    },
+    {
+      "id": "lesson-en-beginner-53-ex-5",
+      "kind": "text",
+      "instruction": "red; blue; green; yellow.",
+      "text": "red; blue; green; yellow."
+    }
+  ],
+  "focusKeys": [
+    "Semicolon"
+  ],
+  "focus": [
+    "punctuation",
+    "sentences"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-52"
+  ]
+}

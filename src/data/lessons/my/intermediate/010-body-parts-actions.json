@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-intermediate-10",
+  "level": "intermediate",
+  "language": "my",
+  "number": 10,
+  "title": "Body Parts + Actions",
+  "titleMy": "ကိုယ်ခန္ဓာနှင့် လုပ်ဆောင်ချက်",
+  "description": "Body parts with action verbs.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 90,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-intermediate-10-ex-1",
+      "kind": "text",
+      "instruction": "မျက်စိကို ပိတ်ပါ",
+      "text": "မျက်စိကို ပိတ်ပါ"
+    },
+    {
+      "id": "lesson-my-intermediate-10-ex-2",
+      "kind": "text",
+      "instruction": "နားထောင်ပါ",
+      "text": "နားထောင်ပါ"
+    },
+    {
+      "id": "lesson-my-intermediate-10-ex-3",
+      "kind": "text",
+      "instruction": "ထိုင်ပါ",
+      "text": "ထိုင်ပါ"
+    }
+  ],
+  "focus": [
+    "words",
+    "sentences",
+    "unicode"
+  ],
+  "prerequisites": [
+    "lesson-my-intermediate-9"
+  ]
+}

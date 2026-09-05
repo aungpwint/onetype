@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-8",
+  "level": "beginner",
+  "language": "en",
+  "number": 8,
+  "title": "Left Hand Pinky & Ring: Q W A S Z X",
+  "titleMy": "ဘယ်ဘက်လက်သစ်နှင့် အရံ - Q W A S Z X",
+  "description": "Q above A, W above S. Z below A, X below S. Same finger, different rows.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-8-ex-1",
+      "kind": "text",
+      "instruction": "q q q q q w w w w w",
+      "text": "q q q q q w w w w w"
+    },
+    {
+      "id": "lesson-en-beginner-8-ex-2",
+      "kind": "text",
+      "instruction": "a q a q a q a q a q",
+      "text": "a q a q a q a q a q"
+    },
+    {
+      "id": "lesson-en-beginner-8-ex-3",
+      "kind": "text",
+      "instruction": "s w s w s w s w s w",
+      "text": "s w s w s w s w s w"
+    },
+    {
+      "id": "lesson-en-beginner-8-ex-4",
+      "kind": "text",
+      "instruction": "z a z a z a z a z a",
+      "text": "z a z a z a z a z a"
+    },
+    {
+      "id": "lesson-en-beginner-8-ex-5",
+      "kind": "text",
+      "instruction": "x s x s x s x s x s",
+      "text": "x s x s x s x s x s"
+    },
+    {
+      "id": "lesson-en-beginner-8-ex-6",
+      "kind": "text",
+      "instruction": "qs qs qs qs qs qs qs qs qs qs",
+      "text": "qs qs qs qs qs qs qs qs qs qs"
+    },
+    {
+      "id": "lesson-en-beginner-8-ex-7",
+      "kind": "text",
+      "instruction": "wx wx wx wx wx wx wx wx wx wx",
+      "text": "wx wx wx wx wx wx wx wx wx wx"
+    }
+  ],
+  "focusKeys": [
+    "KeyQ",
+    "KeyW",
+    "KeyA",
+    "KeyS",
+    "KeyZ",
+    "KeyX"
+  ],
+  "focus": [
+    "top-row",
+    "bottom-row",
+    "row-transition",
+    "key-memory"
+  ],
+  "targetFingers": [
+    "left-pinky",
+    "left-ring"
+  ],
+  "targetHands": [
+    "left"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-4"
+  ]
+}

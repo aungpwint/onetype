@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-intermediate-12",
+  "level": "intermediate",
+  "language": "my",
+  "number": 12,
+  "title": "Question Sentences",
+  "titleMy": "မေးခွန်းဝါကျ",
+  "description": "Sentences that ask questions.",
+  "difficulty": "medium",
+  "estimatedMinutes": 10,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 92,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-intermediate-12-ex-1",
+      "kind": "text",
+      "instruction": "ဒါဘာလဲ။",
+      "text": "ဒါဘာလဲ။"
+    },
+    {
+      "id": "lesson-my-intermediate-12-ex-2",
+      "kind": "text",
+      "instruction": "ဒီစာအုပ်က ဘယ်သူ့စာအုပ်လဲ။",
+      "text": "ဒီစာအုပ်က ဘယ်သူ့စာအုပ်လဲ။"
+    },
+    {
+      "id": "lesson-my-intermediate-12-ex-3",
+      "kind": "text",
+      "instruction": "ဘယ်နှယောက်ရှိလဲ။",
+      "text": "ဘယ်နှယောက်ရှိလဲ။"
+    }
+  ],
+  "focus": [
+    "sentences",
+    "unicode",
+    "punctuation"
+  ],
+  "prerequisites": [
+    "lesson-my-intermediate-11"
+  ]
+}

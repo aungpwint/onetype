@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-intermediate-8",
+  "level": "intermediate",
+  "language": "en",
+  "number": 8,
+  "title": "Contractions",
+  "titleMy": "ပေါင်းကူး စကားလုံးများ",
+  "description": "Common contractions: don't, can't, won't, etc.",
+  "difficulty": "medium",
+  "estimatedMinutes": 8,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 92,
+    "minWpm": 20
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-intermediate-8-ex-1",
+      "kind": "text",
+      "instruction": "do not don't cannot can't will not won't",
+      "text": "do not don't cannot can't will not won't"
+    },
+    {
+      "id": "lesson-en-intermediate-8-ex-2",
+      "kind": "text",
+      "instruction": "I am I'm you are you're it is it's",
+      "text": "I am I'm you are you're it is it's"
+    },
+    {
+      "id": "lesson-en-intermediate-8-ex-3",
+      "kind": "text",
+      "instruction": "he is he's she has she's we will we'll",
+      "text": "he is he's she has she's we will we'll"
+    },
+    {
+      "id": "lesson-en-intermediate-8-ex-4",
+      "kind": "text",
+      "instruction": "I will I'll you have you've they have they've",
+      "text": "I will I'll you have you've they have they've"
+    }
+  ],
+  "focus": [
+    "words",
+    "punctuation",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-en-intermediate-7"
+  ]
+}

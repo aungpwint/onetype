@@ -1,64 +1,44 @@
 import type { Level } from "../../types";
-import { LEVEL_ORDER } from "../../types";
 import type { LessonData } from "./types";
 import { resolveLesson, type ResolvedLesson } from "./generator";
-import { englishBeginnerLessons } from "../lessons/english-beginner";
-import { englishIntermediateLessons } from "../lessons/english-intermediate";
-import { englishAdvancedLessons } from "../lessons/english-advanced";
-import { englishShiftLessons } from "../lessons/english-shift";
-import { englishNumbersLessons } from "../lessons/english-numbers";
-import { myanmarBeginnerLessons } from "../lessons/myanmar-beginner";
-import { myanmarIntermediateLessons } from "../lessons/myanmar-intermediate";
-import { myanmarAdvancedLessons } from "../lessons/myanmar-advanced";
+import { createLessonRepository, type LessonRepository } from "../../lib/lessons";
+import type { Lesson } from "../../types/lesson";
 
 export interface CurriculumMeta {
   totalLessons: number;
   countsByLevel: Record<Level, number>;
 }
 
-const SOURCE_LESSONS: LessonData[] = [
-  ...englishBeginnerLessons,
-  ...englishShiftLessons,
-  ...englishNumbersLessons,
-  ...englishIntermediateLessons,
-  ...englishAdvancedLessons,
-  ...myanmarBeginnerLessons,
-  ...myanmarIntermediateLessons,
-  ...myanmarAdvancedLessons,
-];
-
-export const LESSON_IDS: string[] = SOURCE_LESSONS.map((lesson) => lesson.id);
+export const LESSON_IDS: string[] = [];
 
 export const RESOLVED_LESSON_CACHE = new Map<string, ResolvedLesson>();
 
+const repository: LessonRepository = createLessonRepository();
+
+function rebindIds(): void {
+  LESSON_IDS.length = 0;
+  LESSON_IDS.push(...repository.ids());
+}
+rebindIds();
+
 export function listAllLessons(): LessonData[] {
-  return SOURCE_LESSONS;
+  return repository.getLessons();
 }
 
 export function getLessonData(id: string): LessonData {
-  const lesson = SOURCE_LESSONS.find((l) => l.id === id);
-  if (!lesson) {
-    throw new Error(`Unknown lesson: "${id}"`);
-  }
-  return lesson;
+  return repository.getLesson(id);
 }
 
 export function hasLesson(id: string): boolean {
-  return SOURCE_LESSONS.some((l) => l.id === id);
+  return repository.hasLesson(id);
 }
 
 export function listLessons(level: Level): LessonData[] {
-  return SOURCE_LESSONS
-    .filter((lesson) => lesson.level === level)
-    .sort((a, b) => a.number - b.number);
+  return repository.listByLevel(level);
 }
 
 export function listLessonsByLevel(): Record<Level, LessonData[]> {
-  const map: Record<Level, LessonData[]> = { beginner: [], intermediate: [], advanced: [] };
-  for (const level of LEVEL_ORDER) {
-    map[level] = listLessons(level);
-  }
-  return map;
+  return repository.listAllByLevel();
 }
 
 export function resolveLessonById(id: string): ResolvedLesson {
@@ -71,21 +51,29 @@ export function resolveLessonById(id: string): ResolvedLesson {
 
 export function getCurriculumMeta(): CurriculumMeta {
   return {
-    totalLessons: SOURCE_LESSONS.length,
+    totalLessons: repository.lessonCount(),
     countsByLevel: {
-      beginner: listLessons("beginner").length,
-      intermediate: listLessons("intermediate").length,
-      advanced: listLessons("advanced").length,
+      beginner: repository.totalInLevel("beginner"),
+      intermediate: repository.totalInLevel("intermediate"),
+      advanced: repository.totalInLevel("advanced"),
     },
   };
 }
 
 export function totalLessonsInLevel(level: Level): number {
-  return listLessons(level).length;
+  return repository.totalInLevel(level);
 }
 
 export function allResolvedLessonIds(): string[] {
   return LESSON_IDS;
+}
+
+export function getLessonRepository(): LessonRepository {
+  return repository;
+}
+
+export function getCanonicalLesson(id: string): Lesson {
+  return repository.getCanonicalLesson(id);
 }
 
 export { resolveLesson } from "./generator";

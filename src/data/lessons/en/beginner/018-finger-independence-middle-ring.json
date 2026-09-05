@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-18",
+  "level": "beginner",
+  "language": "en",
+  "number": 18,
+  "title": "Finger Independence: Middle & Ring",
+  "titleMy": "လက်ချောင်း လွတ်လပ်မှု - အလယ်နှင့် အရံ",
+  "description": "Middle and ring finger drills. Practice independent movement on each hand.",
+  "difficulty": "easy",
+  "estimatedMinutes": 10,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 87,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-18-ex-1",
+      "kind": "text",
+      "instruction": "dede dede dede dede dede dede dede dede",
+      "text": "dede dede dede dede dede dede dede dede"
+    },
+    {
+      "id": "lesson-en-beginner-18-ex-2",
+      "kind": "text",
+      "instruction": "sxsx sxsx sxsx sxsx sxsx sxsx sxsx sxsx",
+      "text": "sxsx sxsx sxsx sxsx sxsx sxsx sxsx sxsx"
+    },
+    {
+      "id": "lesson-en-beginner-18-ex-3",
+      "kind": "text",
+      "instruction": "cfcf cfcf cfcf cfcf cfcf cfcf cfcf cfcf",
+      "text": "cfcf cfcf cfcf cfcf cfcf cfcf cfcf cfcf"
+    },
+    {
+      "id": "lesson-en-beginner-18-ex-4",
+      "kind": "text",
+      "instruction": "isis isis isis isis isis isis isis isis",
+      "text": "isis isis isis isis isis isis isis isis"
+    },
+    {
+      "id": "lesson-en-beginner-18-ex-5",
+      "kind": "text",
+      "instruction": "olulu olulu olulu olulu olulu olulu olulu olulu",
+      "text": "olulu olulu olulu olulu olulu olulu olulu olulu"
+    },
+    {
+      "id": "lesson-en-beginner-18-ex-6",
+      "kind": "text",
+      "instruction": "wewe wewe wewe wewe wewe wewe wewe wewe",
+      "text": "wewe wewe wewe wewe wewe wewe wewe wewe"
+    },
+    {
+      "id": "lesson-en-beginner-18-ex-7",
+      "kind": "text",
+      "instruction": "ds ds ds ds ds ds ds ds ds ds",
+      "text": "ds ds ds ds ds ds ds ds ds ds"
+    },
+    {
+      "id": "lesson-en-beginner-18-ex-8",
+      "kind": "text",
+      "instruction": "kl kl kl kl kl kl kl kl kl kl",
+      "text": "kl kl kl kl kl kl kl kl kl kl"
+    }
+  ],
+  "focusKeys": [
+    "KeyD",
+    "KeyE",
+    "KeyC",
+    "KeyS",
+    "KeyW",
+    "KeyX",
+    "KeyK",
+    "KeyI",
+    "KeyL",
+    "KeyO"
+  ],
+  "focus": [
+    "finger-independence",
+    "finger-control"
+  ],
+  "targetFingers": [
+    "left-middle",
+    "left-ring",
+    "right-middle",
+    "right-ring"
+  ],
+  "targetHands": [
+    "left",
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-16",
+    "lesson-en-beginner-17"
+  ]
+}

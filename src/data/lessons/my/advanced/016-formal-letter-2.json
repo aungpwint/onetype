@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-advanced-16",
+  "level": "advanced",
+  "language": "my",
+  "number": 16,
+  "title": "Formal Letter 2",
+  "titleMy": "တရားဝင် စာ (၂)",
+  "description": "Another formal letter template.",
+  "difficulty": "hard",
+  "estimatedMinutes": 18,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 94,
+    "minWpm": 30
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-advanced-16-ex-1",
+      "kind": "text",
+      "instruction": "အလုပ်ခွင်ထဲ တစ်ရက် လစာငွေ နှင့် ပတ်သက်ပြီး မေးမြန်းချင်ပါသည်။",
+      "text": "အလုပ်ခွင်ထဲ တစ်ရက် လစာငွေ နှင့် ပတ်သက်ပြီး မေးမြန်းချင်ပါသည်။"
+    },
+    {
+      "id": "lesson-my-advanced-16-ex-2",
+      "kind": "text",
+      "instruction": "ကြင်နာစွာ ဆောင်ရွက်ပေးပါရန် ပန်ကြားပါသည်။",
+      "text": "ကြင်နာစွာ ဆောင်ရွက်ပေးပါရန် ပန်ကြားပါသည်။"
+    }
+  ],
+  "focus": [
+    "sentences",
+    "unicode",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-my-advanced-15"
+  ]
+}

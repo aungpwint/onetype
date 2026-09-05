@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-beginner-21",
+  "level": "beginner",
+  "language": "my",
+  "number": 21,
+  "title": "Myanmar Digits",
+  "titleMy": "မြန်မာဂဏန်း",
+  "description": "Myanmar digits ၀-၉ on the number row.",
+  "difficulty": "easy",
+  "estimatedMinutes": 8,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-beginner-21-ex-1",
+      "kind": "text",
+      "instruction": "၁ ၂ ၃ ၄ ၅ ၆ ၇ ၈ ၉ ၀",
+      "text": "၁ ၂ ၃ ၄ ၅ ၆ ၇ ၈ ၉ ၀"
+    },
+    {
+      "id": "lesson-my-beginner-21-ex-2",
+      "kind": "text",
+      "instruction": "၁ ၃ ၅ ၇ ၉ ၂ ၄ ၆ ၈ ၀",
+      "text": "၁ ၃ ၅ ၇ ၉ ၂ ၄ ၆ ၈ ၀"
+    },
+    {
+      "id": "lesson-my-beginner-21-ex-3",
+      "kind": "text",
+      "instruction": "၁၂ ၂၃ ၃၄ ၄၅ ၅၆ ၆၇ ၇၈ ၈၉ ၉၀",
+      "text": "၁၂ ၂၃ ၃၄ ၄၅ ၅၆ ၆၇ ၇၈ ၈၉ ၉၀"
+    },
+    {
+      "id": "lesson-my-beginner-21-ex-4",
+      "kind": "text",
+      "instruction": "၁၂၃၄၅ ၆၇၈၉၀ ၁၂၃၄၅ ၆၇၈၉၀",
+      "text": "၁၂၃၄၅ ၆၇၈၉၀ ၁၂၃၄၅ ၆၇၈၉၀"
+    }
+  ],
+  "focusKeys": [
+    "Digit1",
+    "Digit2",
+    "Digit3",
+    "Digit4",
+    "Digit5",
+    "Digit6",
+    "Digit7",
+    "Digit8",
+    "Digit9",
+    "Digit0"
+  ],
+  "focus": [
+    "numbers",
+    "unicode",
+    "key-memory"
+  ],
+  "prerequisites": [
+    "lesson-my-beginner-4"
+  ]
+}

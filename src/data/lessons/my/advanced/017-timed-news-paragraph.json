@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-advanced-17",
+  "level": "advanced",
+  "language": "my",
+  "number": 17,
+  "title": "Timed News Paragraph",
+  "titleMy": "အချိန်ကိုက် သတင်းစာပိုဒ်",
+  "description": "Type news text quickly and accurately.",
+  "difficulty": "hard",
+  "estimatedMinutes": 20,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 94,
+    "minWpm": 30
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-advanced-17-ex-1",
+      "kind": "text",
+      "instruction": "နိုင်ငံတစ်ဝန်း ငြိမ်းချမ်းရေးအတွက် ပညာရေး စနစ်ကို တိုးတက်အောင် ဆောင်ရွက်ရန် ဆုံးဖြတ်ခဲ့ကြသည်။",
+      "text": "နိုင်ငံတစ်ဝန်း ငြိမ်းချမ်းရေးအတွက် ပညာရေး စနစ်ကို တိုးတက်အောင် ဆောင်ရွက်ရန် ဆုံးဖြတ်ခဲ့ကြသည်။"
+    }
+  ],
+  "focus": [
+    "speed",
+    "accuracy",
+    "sentences",
+    "unicode"
+  ],
+  "prerequisites": [
+    "lesson-my-advanced-16"
+  ]
+}

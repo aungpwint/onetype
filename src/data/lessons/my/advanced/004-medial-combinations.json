@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-my-advanced-4",
+  "level": "advanced",
+  "language": "my",
+  "number": 4,
+  "title": "Medial Combinations",
+  "titleMy": "စာလုံးကြို ပေါင်းစပ်",
+  "description": "Complex medial combinations in words.",
+  "difficulty": "medium",
+  "estimatedMinutes": 12,
+  "keyboard": "myanmar3",
+  "completion": {
+    "minAccuracy": 92,
+    "minWpm": 20
+  },
+  "exercises": [
+    {
+      "id": "lesson-my-advanced-4-ex-1",
+      "kind": "text",
+      "instruction": "ကျွန်ုပ် မျှော်လင့်",
+      "text": "ကျွန်ုပ် မျှော်လင့်"
+    },
+    {
+      "id": "lesson-my-advanced-4-ex-2",
+      "kind": "text",
+      "instruction": "ချည်း ညွှန် ပြုံး",
+      "text": "ချည်း ညွှန် ပြုံး"
+    }
+  ],
+  "focus": [
+    "unicode",
+    "medial",
+    "syllable",
+    "accuracy"
+  ],
+  "prerequisites": [
+    "lesson-my-advanced-3"
+  ]
+}

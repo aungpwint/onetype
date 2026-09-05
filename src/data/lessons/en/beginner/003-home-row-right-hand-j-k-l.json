@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "lesson-en-beginner-3",
+  "level": "beginner",
+  "language": "en",
+  "number": 3,
+  "title": "Home Row Right Hand: J K L ;",
+  "titleMy": "ညာဘက်လက် အိမ်တန်း - J K L ;",
+  "description": "Place right index on J, middle on K, ring on L, pinky on semicolon.",
+  "difficulty": "basic",
+  "estimatedMinutes": 6,
+  "keyboard": "qwerty",
+  "completion": {
+    "minAccuracy": 85,
+    "minWpm": null
+  },
+  "exercises": [
+    {
+      "id": "lesson-en-beginner-3-ex-1",
+      "kind": "text",
+      "instruction": "j j j j j k k k k k l l l l l ; ; ; ; ;",
+      "text": "j j j j j k k k k k l l l l l ; ; ; ; ;"
+    },
+    {
+      "id": "lesson-en-beginner-3-ex-2",
+      "kind": "text",
+      "instruction": "j k j k j k j k j k",
+      "text": "j k j k j k j k j k"
+    },
+    {
+      "id": "lesson-en-beginner-3-ex-3",
+      "kind": "text",
+      "instruction": "j k l j k l j k l j k l",
+      "text": "j k l j k l j k l j k l"
+    },
+    {
+      "id": "lesson-en-beginner-3-ex-4",
+      "kind": "text",
+      "instruction": "j k l ; j k l ; j k l ; j k l ;",
+      "text": "j k l ; j k l ; j k l ; j k l ;"
+    },
+    {
+      "id": "lesson-en-beginner-3-ex-5",
+      "kind": "text",
+      "instruction": "; l k j ; l k j ; l k j ; l k j",
+      "text": "; l k j ; l k j ; l k j ; l k j"
+    }
+  ],
+  "focusKeys": [
+    "KeyJ",
+    "KeyK",
+    "KeyL",
+    "Semicolon"
+  ],
+  "focus": [
+    "home-row",
+    "finger-control",
+    "key-memory"
+  ],
+  "targetFingers": [
+    "right-index",
+    "right-middle",
+    "right-ring",
+    "right-pinky"
+  ],
+  "targetHands": [
+    "right"
+  ],
+  "prerequisites": [
+    "lesson-en-beginner-1"
+  ]
+}
