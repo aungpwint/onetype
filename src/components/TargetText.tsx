@@ -20,15 +20,42 @@ export function TargetText() {
 
   const unitIndex = engine?.unitIndex ?? 0;
   const sequence = engine?.sequence;
-  const hasMyanmar = sequence ? containsMyanmar(sequence.text) : false;
+  const phases = session?.resolved.phases ?? [];
+
+  // Lessons (and tests) split their material into phases, each covering a
+  // contiguous unit range. Show only the phase the caret is currently inside,
+  // so a long multi-phase lesson never fills the screen with its full text.
+  // Sessions without phases (drills) fall back to the whole sequence.
+  const activePhase = useMemo(() => {
+    if (phases.length === 0) return null;
+    const index = phases.findIndex(
+      (p) => unitIndex >= p.startUnit && unitIndex < p.endUnit,
+    );
+    // Past the end (finished/time-up), stay on the final phase.
+    return phases[index === -1 ? phases.length - 1 : index];
+  }, [phases, unitIndex]);
+
+  const activePhaseKey = activePhase
+    ? `${activePhase.label}-${activePhase.startUnit}`
+    : null;
+
+  const hasMyanmar = activePhase
+    ? containsMyanmar(activePhase.text)
+    : sequence
+      ? containsMyanmar(sequence.text)
+      : false;
 
   // The unit runs derive solely from the sequence, so they are stable for the
   // lifetime of an engine. Memoising avoids rebuilding the character tree and
   // lets the memoised Char components bail out unless their own state changed.
-  const graphemes = useMemo(
-    () => (sequence ? graphemeUnitRuns(sequence) : []),
-    [sequence],
-  );
+  // When a phase is active, the runs are narrowed to that phase's unit range.
+  const graphemes = useMemo(() => {
+    const runs = sequence ? graphemeUnitRuns(sequence) : [];
+    if (!activePhase) return runs;
+    return runs.filter(
+      (g) => g.startUnit >= activePhase.startUnit && g.endUnit <= activePhase.endUnit,
+    );
+  }, [sequence, activePhase]);
 
   const motionOffset = useMotionValue(0);
   const springOffset = useSpring(motionOffset, {
@@ -51,6 +78,19 @@ export function TargetText() {
     }
   }, [sessionKey, motionOffset]);
 
+  // When the caret crosses into another phase, the new phase's line should
+  // start left-aligned at the caret anchor rather than inheriting the previous
+  // phase's pan offset.
+  const prevPhaseKey = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (activePhaseKey && activePhaseKey !== prevPhaseKey.current) {
+      prevPhaseKey.current = activePhaseKey;
+      offsetRef.current = 0;
+      motionOffset.set(0);
+    }
+  }, [activePhaseKey, motionOffset]);
+
   useEffect(() => {
     const raf = requestAnimationFrame(() => {
       const viewport = viewportRef.current;
@@ -71,10 +111,12 @@ export function TargetText() {
 
       const content = contentRef.current;
       if (content) {
-        const maxOffset = 0;
+        const contentWidth = content.scrollWidth;
+        const viewportWidth = viewportRect.width;
+        const maxOffset = Math.max(0, (viewportWidth - contentWidth) / 2);
         const minOffset = Math.min(
-          0,
-          viewportRect.width - content.scrollWidth - CONTENT_INSET,
+          maxOffset,
+          viewportWidth - contentWidth - CONTENT_INSET,
         );
         nextOffset = Math.min(maxOffset, Math.max(minOffset, nextOffset));
       }
@@ -112,9 +154,13 @@ export function TargetText() {
             className="tt-content"
             style={{ x: springOffset }}
           >
-            <p
+            <motion.p
+              key={activePhaseKey ?? "all"}
               className={`${hasMyanmar ? "font-myanmar" : "heavy"} mx-auto whitespace-nowrap text-4xl leading-tight tracking-normal md:text-5xl`}
               style={{ wordSpacing: "0.16em" }}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
             >
               {graphemes.map((g) => {
                 const isCurrent = unitIndex >= g.startUnit && unitIndex < g.endUnit;
@@ -132,7 +178,7 @@ export function TargetText() {
                   />
                 );
               })}
-            </p>
+            </motion.p>
           </motion.div>
         </div>
       </div>
