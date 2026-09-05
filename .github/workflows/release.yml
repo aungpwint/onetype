@@ -133,6 +133,33 @@ jobs:
       - name: Install Tauri CLI
         run: pnpm add -D @tauri-apps/cli
 
+      - name: Validate updater signing secrets
+        shell: bash
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          key="${TAURI_SIGNING_PRIVATE_KEY:-}"
+          pw="${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}"
+          if [ -z "$key" ]; then
+            echo "::error::TAURI_SIGNING_PRIVATE_KEY secret is empty — run 'gh auth login' then scripts/set-ci-secrets.ps1, and re-trigger the release." >&2
+            exit 1
+          fi
+          if [ -z "$pw" ]; then
+            echo "::error::TAURI_SIGNING_PRIVATE_KEY_PASSWORD secret is empty — run scripts/set-ci-secrets.ps1." >&2
+            exit 1
+          fi
+          dec="$(printf '%s' "$key" | base64 -d 2>/dev/null || true)"
+          case "$dec" in
+            "untrusted comment:"*) ;;
+            *)
+              echo "::error::TAURI_SIGNING_PRIVATE_KEY is not a valid base64 rsign/minisign key (decoded text must start with 'untrusted comment:'). Re-run scripts/set-ci-secrets.ps1." >&2
+              exit 1
+              ;;
+          esac
+          echo "updater signing key secret: OK (length ${#key}); password secret: OK (non-empty)"
+
       - name: Build & sign release bundles
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}

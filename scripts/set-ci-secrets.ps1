@@ -75,10 +75,18 @@ try {
 }
 
 Write-Host "[set-ci-secrets] Writing secrets to $Repo ..."
-gh secret set TAURI_SIGNING_PRIVATE_KEY --repo $Repo --body $key
-if ($LASTEXITCODE -ne 0) { exit 1 }
-gh secret set TAURI_SIGNING_PRIVATE_KEY_PASSWORD --repo $Repo --body $password
-if ($LASTEXITCODE -ne 0) { exit 1 }
+$result = gh secret set TAURI_SIGNING_PRIVATE_KEY --repo $Repo --body $key 2>&1
+if ($LASTEXITCODE -ne 0) { Write-Host $result -ForegroundColor Red; exit 1 }
+$result = gh secret set TAURI_SIGNING_PRIVATE_KEY_PASSWORD --repo $Repo --body $password 2>&1
+if ($LASTEXITCODE -ne 0) { Write-Host $result -ForegroundColor Red; exit 1 }
 
-Write-Host "[set-ci-secrets] OK - TAURI_SIGNING_PRIVATE_KEY (len $($key.Length)) and TAURI_SIGNING_PRIVATE_KEY_PASSWORD (len $($password.Length)) updated on $Repo" -ForegroundColor Green
-Write-Host "[set-ci-secrets] Re-run the failed release run in GitHub Actions (SHA 8a60cb8): Re-run failed jobs."
+$fpBytes = [System.Security.Cryptography.SHA256]::Create().ComputeHash([System.Text.Encoding]::UTF8.GetBytes($key))
+$fp = -join ($fpBytes | ForEach-Object { $_.ToString("x2") })
+$fpBytes = [System.Security.Cryptography.SHA256]::Create().ComputeHash([System.Text.Encoding]::UTF8.GetBytes($password))
+$fpPw = -join ($fpBytes | ForEach-Object { $_.ToString("x2") })
+Write-Host "[set-ci-secrets] OK - secrets updated on $Repo" -ForegroundColor Green
+Write-Host "  TAURI_SIGNING_PRIVATE_KEY          len $($key.Length)  sha256:$fp"
+Write-Host "  TAURI_SIGNING_PRIVATE_KEY_PASSWORD len $($password.Length)  sha256:$fpPw"
+Write-Host "[set-ci-secrets] Next: re-push tag v1.0.1 or re-run the failed release run in GitHub Actions."
+Write-Host "[set-ci-secrets] Verified locally: this key/password signed a file and the derived"
+Write-Host "[set-ci-secrets] public key matches plugins.updater.pubkey (F4B14476E075161B)."

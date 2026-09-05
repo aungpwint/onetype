@@ -57,6 +57,10 @@ every GitHub Release.
 ### Security
 - `.github/scripts/verify-updater-pubkey.mjs` checks in CI that the updater
   signing key matches `plugins.updater.pubkey` and fails the release otherwise.
+- Release workflow now validates the `TAURI_SIGNING_PRIVATE_KEY` /
+  `_PASSWORD` secrets *before* compiling, failing fast with an actionable
+  message instead of the cryptic `Missing comment in secret key` from the
+  bundler.
 - Documented public vs. private repository update distribution — the app treats
   repository visibility and update authenticity as independent concerns
   (updates are trusted by cryptographic signature, never by GitHub presence),
