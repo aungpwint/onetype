@@ -1,8 +1,8 @@
 import type { ZodIssue } from "zod";
-import type { Lesson } from "../../types/lesson";
-import { LESSON_SCHEMA_VERSION } from "../../types/lesson";
-import { isLessonExerciseKind } from "../../types/exercise";
-import { lessonSchema } from "../../schemas/lesson";
+import { LESSON_SCHEMA_VERSION, type Lesson } from "@/types/lesson";
+
+import { isLessonExerciseKind } from "@/types/exercise";
+import { lessonSchema } from "@/schemas/lesson";
 import {
   LessonValidationError,
   LessonParseError,

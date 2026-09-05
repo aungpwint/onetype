@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { computeScore } from "../../src/core/scoring/score";
-import type { ScoreMetrics } from "../../src/core/scoring/score";
-import { buildSequence, graphemeUnitRuns } from "../../src/core/typing-engine/sequence";
-import { TypingEngine } from "../../src/core/typing-engine/engine";
-import { englishQwerty } from "../../src/core/keyboard-layout/english-qwerty";
-import { myanmar3 } from "../../src/core/keyboard-layout/myanmar3";
-import { resolveLessonById } from "../../src/data/curriculum";
+import { computeScore, type ScoreMetrics } from "@/core/scoring/score";
+
+import { buildSequence, graphemeUnitRuns } from "@/core/typing-engine/sequence";
+import { TypingEngine } from "@/core/typing-engine/engine";
+import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
+import { myanmar3 } from "@/core/keyboard-layout/myanmar3";
+import { resolveLessonById } from "@/data/curriculum";
 
 describe("scoring", () => {
   it("computes accuracy and WPM", () => {

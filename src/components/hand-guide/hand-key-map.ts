@@ -1,5 +1,5 @@
-import type { FingerId, Hand } from "../../types";
-import { fingerForCode } from "../../core/finger-mapping/finger-map";
+import type { FingerId, Hand } from "@/types";
+import { fingerForCode } from "@/core/finger-mapping/finger-map";
 
 /**
  * The set of physical keyboard `event.code` values that have a defined finger.

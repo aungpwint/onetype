@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { listAllLessons, resolveLessonById } from "../../src/data/curriculum";
+import { listAllLessons, resolveLessonById } from "@/data/curriculum";
 
 /**
  * Phase 9 — Curriculum Quality Audit.

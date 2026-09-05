@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useKeyboardShortcuts } from "../../hooks/use-keyboard-shortcuts";
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 
 export function SessionFocus({ children }: { children: ReactNode }) {
   useKeyboardShortcuts();

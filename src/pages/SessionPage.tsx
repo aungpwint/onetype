@@ -8,18 +8,18 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertCircle, ArrowLeft, LayoutDashboard } from "lucide-react";
-import * as backend from "../services/backend";
-import { useTypingStore, buildAdaptiveDrill } from "../stores/typing-store";
-import { useSettingsStore } from "../stores/settings-store";
-import { KeyboardContainer } from "../components/keyboard/KeyboardContainer";
-import { TargetText } from "../components/TargetText";
-import { StatsBar } from "../components/StatsBar";
-import { SessionHeader } from "../components/session/SessionHeader";
-import { ExerciseWorkspace } from "../components/session/ExerciseWorkspace";
-import { ResultDialog } from "../components/ResultDialog";
-import { Spinner, Modal, EmptyState } from "../components/ui";
-import { Button } from "../components/ui/button";
-import type { TypingMode } from "../types";
+import * as backend from "@/services/backend";
+import { useTypingStore, buildAdaptiveDrill } from "@/stores/typing-store";
+import { useSettingsStore } from "@/stores/settings-store";
+import { KeyboardContainer } from "@/components/keyboard/KeyboardContainer";
+import { TargetText } from "@/components/TargetText";
+import { StatsBar } from "@/components/StatsBar";
+import { SessionHeader } from "@/components/session/SessionHeader";
+import { ExerciseWorkspace } from "@/components/session/ExerciseWorkspace";
+import { ResultDialog } from "@/components/ResultDialog";
+import { Spinner, Modal, EmptyState } from "@/components/ui";
+import { Button } from "@/components/ui/button";
+import type { TypingMode } from "@/types";
 
 function Session({
   durationSeconds,

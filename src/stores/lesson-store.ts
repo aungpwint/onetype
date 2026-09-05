@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import * as backend from "../services/backend";
-import type { LessonProgress } from "../services/types";
-import { listLessonsByLevel } from "../data/curriculum";
-import type { LessonData } from "../data/curriculum/types";
+import * as backend from "@/services/backend";
+import type { LessonProgress } from "@/services/types";
+import { listLessonsByLevel } from "@/data/curriculum";
+import type { LessonData } from "@/data/curriculum/types";
 
 interface LessonState {
   lessonsByLevel: Record<"beginner" | "intermediate" | "advanced", LessonData[]>;

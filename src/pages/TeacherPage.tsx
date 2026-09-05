@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GraduationCap, Users, Clock, Target, Gauge } from "lucide-react";
-import * as backend from "../services/backend";
-import type { StudentDetail, TeacherOverview } from "../services/types";
-import { Stat, Spinner } from "../components/ui";
-import { formatDateTime } from "../lib/format";
+import * as backend from "@/services/backend";
+import type { StudentDetail, TeacherOverview } from "@/services/types";
+import { Stat, Spinner } from "@/components/ui";
+import { formatDateTime } from "@/lib/format";
 
 export default function TeacherPage() {
   const { studentId } = useParams<{ studentId: string }>();

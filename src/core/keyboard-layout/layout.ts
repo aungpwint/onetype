@@ -1,4 +1,4 @@
-import type { FingerId, Hand, Modifier } from "../../types";
+import type { FingerId, Hand, Modifier } from "@/types";
 
 export type KeyboardRow = "number" | "top" | "home" | "bottom" | "space";
 

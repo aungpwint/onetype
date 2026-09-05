@@ -14,15 +14,15 @@ import {
   Hand,
   LogOut,
 } from "lucide-react";
-import * as backend from "../services/backend";
-import { useUiStore } from "../stores/ui-store";
-import { useSettingsStore } from "../stores/settings-store";
-import { useStudentStore } from "../stores/student-store";
-import { useUpdater } from "../services/updater/use-updater";
-import type { ThemePreference } from "../types";
-import { Field, Modal } from "../components/ui";
-import { Button } from "../components/ui/button";
-import { Switch } from "../components/ui/switch";
+import * as backend from "@/services/backend";
+import { useUiStore } from "@/stores/ui-store";
+import { useSettingsStore } from "@/stores/settings-store";
+import { useStudentStore } from "@/stores/student-store";
+import { useUpdater } from "@/services/updater/use-updater";
+import type { ThemePreference } from "@/types";
+import { Field, Modal } from "@/components/ui";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 
 export default function SettingsPage() {
   const theme = useUiStore((s) => s.theme);

@@ -1,10 +1,10 @@
 import { useMemo, type ReactNode } from "react";
-import type { KeyboardLayout } from "../../core/keyboard-layout/layout";
-import { useTypingStore } from "../../stores/typing-store";
-import { useUiStore } from "../../stores/ui-store";
+import type { KeyboardLayout } from "@/core/keyboard-layout/layout";
+import { useTypingStore } from "@/stores/typing-store";
+import { useUiStore } from "@/stores/ui-store";
 import { VirtualKeyboard } from "./VirtualKeyboard";
-import { HandOverlay } from "../hand-guide/HandOverlay";
-import { resolveTarget } from "../../core/target-model";
+import { HandOverlay } from "@/components/hand-guide/HandOverlay";
+import { resolveTarget } from "@/core/target-model";
 
 export function KeyboardContainer({ layout, hideReadyMessage }: { layout: KeyboardLayout; hideReadyMessage?: boolean }) {
   const handGuide = useUiStore((s) => s.handGuideVisible);

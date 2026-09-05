@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Check, X, Trophy, Timer } from "lucide-react";
-import * as backend from "../services/backend";
-import type { TestResult, TypingTest } from "../services/types";
-import { useStudentStore } from "../stores/student-store";
-import { Spinner } from "../components/ui";
+import * as backend from "@/services/backend";
+import type { TestResult, TypingTest } from "@/services/types";
+import { useStudentStore } from "@/stores/student-store";
+import { Spinner } from "@/components/ui";
 
 function groupByLanguage(tests: TypingTest[]): Array<{ language: string; tests: TypingTest[] }> {
   const order = ["myanmar", "english", "mixed"];

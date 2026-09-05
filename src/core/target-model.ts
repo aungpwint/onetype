@@ -1,7 +1,7 @@
-import type { FingerId, Hand, Modifier } from "../types";
+import type { FingerId, Hand, Modifier } from "@/types";
 import type { TypingEngine } from "./typing-engine/engine";
-import type { KeyboardLayout } from "./keyboard-layout/layout";
-import { shiftHandFor } from "./keyboard-layout/layout";
+import { shiftHandFor, type KeyboardLayout } from "./keyboard-layout/layout";
+
 
 export interface TargetState {
   keyCode: string | null;

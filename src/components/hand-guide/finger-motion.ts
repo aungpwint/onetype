@@ -1,4 +1,4 @@
-import type { FingerId } from "../../types";
+import type { FingerId } from "@/types";
 import {
   LEFT_GEOMETRY,
   RIGHT_GEOMETRY,

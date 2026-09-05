@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { TrendingUp, Target, Gauge, Clock, TrendingDown, Minus, Fingerprint } from "lucide-react";
-import { useStudentStore } from "../stores/student-store";
-import * as backend from "../services/backend";
-import type { StudentDetail, TypingSession } from "../services/types";
-import { Stat, Spinner } from "../components/ui";
-import { formatDateTime } from "../lib/format";
-import { summarizePerformance } from "../core/analytics";
-import type { SessionPoint } from "../core/analytics";
+import { useStudentStore } from "@/stores/student-store";
+import * as backend from "@/services/backend";
+import type { StudentDetail, TypingSession } from "@/services/types";
+import { Stat, Spinner } from "@/components/ui";
+import { formatDateTime } from "@/lib/format";
+import { summarizePerformance, type SessionPoint } from "@/core/analytics";
+
 
 type Range = "week" | "month" | "all";
 

@@ -12,16 +12,12 @@ import {
   generateWordDrill,
   generateConstrainedDrill,
   generateRowTransitionDrill,
-} from "../../src/core/drills/generator";
-import {
-  HOME_ROW_KEYS,
-  TOP_ROW_KEYS,
-  DEFAULT_ENGLISH_CONSTRAINTS,
-} from "../../src/core/drills/types";
-import type { DrillConfig, WordList } from "../../src/core/drills/types";
-import { englishQwerty } from "../../src/core/keyboard-layout/english-qwerty";
-import { handForFinger } from "../../src/core/finger-mapping/finger-map";
-import type { FingerId } from "../../src/types";
+} from "@/core/drills/generator";
+import { HOME_ROW_KEYS, TOP_ROW_KEYS, DEFAULT_ENGLISH_CONSTRAINTS, type DrillConfig, type WordList } from "@/core/drills/types";
+
+import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
+import { handForFinger } from "@/core/finger-mapping/finger-map";
+import type { FingerId } from "@/types";
 
 // Build a character -> finger map for the English layout, matching how the
 // drills generators use `layout.lookupChar(ch).finger`.

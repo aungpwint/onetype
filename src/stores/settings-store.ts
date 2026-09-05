@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import * as backend from "../services/backend";
+import * as backend from "@/services/backend";
 
 export const APP_SETTING_KEYS = [
   "app.language",

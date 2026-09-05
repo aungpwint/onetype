@@ -1,4 +1,4 @@
-import type { Lesson } from "../../types/lesson";
+import type { Lesson } from "@/types/lesson";
 import { validateLesson } from "./lesson-validator";
 import { LessonCatalogError } from "./lesson-errors";
 

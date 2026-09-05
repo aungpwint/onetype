@@ -1,13 +1,13 @@
-import type { Level } from "../../types";
-import type { LessonLanguage } from "../../types/language";
-import type { NormalizedExercise } from "../../types/exercise";
-import type { NormalizedLesson } from "../../types/lesson";
-import type { Lesson } from "../../types/lesson";
-import { LEVEL_ORDER } from "../../types";
+import { LEVEL_ORDER, type Level } from "@/types";
+import type { LessonLanguage } from "@/types/language";
+import type { NormalizedExercise } from "@/types/exercise";
+import type { NormalizedLesson } from "@/types/lesson";
+import type { Lesson } from "@/types/lesson";
+
 import { normalizeLesson } from "./lesson-normalizer";
 import { LessonNotFoundError } from "./lesson-errors";
-import type { LessonRecord } from "./lesson-loader";
-import { loadLessonRecords } from "./lesson-loader";
+import { loadLessonRecords, type LessonRecord } from "./lesson-loader";
+
 import { LessonRegistry } from "./lesson-registry";
 
 const EMPTY_BY_LANGUAGE = (): Record<LessonLanguage, NormalizedLesson[]> => ({ en: [], my: [] });

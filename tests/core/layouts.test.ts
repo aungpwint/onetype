@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { myanmar3 } from "../../src/core/keyboard-layout/myanmar3";
-import { englishQwerty } from "../../src/core/keyboard-layout/english-qwerty";
+import { myanmar3 } from "@/core/keyboard-layout/myanmar3";
+import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
 
 describe("myanmar3 layout", () => {
   it("maps the core consonants exactly as SIL Myanmar3", () => {

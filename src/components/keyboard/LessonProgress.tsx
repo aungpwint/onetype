@@ -1,5 +1,5 @@
-import { useTypingStore } from "../../stores/typing-store";
-import { resolveFingerMapping, fingerShort } from "../../utils/fingerMapper";
+import { useTypingStore } from "@/stores/typing-store";
+import { resolveFingerMapping, fingerShort } from "@/utils/fingerMapper";
 
 export function LessonProgress() {
   const tick = useTypingStore((s) => s.tick);

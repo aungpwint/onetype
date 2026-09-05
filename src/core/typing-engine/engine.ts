@@ -1,8 +1,8 @@
-import type { Modifier, TypingMode } from "../../types";
-import { KeyboardLayout } from "../keyboard-layout/layout";
+import type { Modifier, TypingMode } from "@/types";
+import { KeyboardLayout } from "@/core/keyboard-layout/layout";
 import { BuiltSequence, TypingUnit, clusterStartForUnit } from "./sequence";
-import { computeScore, ScoreMetrics } from "../scoring/score";
-import { Stopwatch } from "../timing/stopwatch";
+import { computeScore, ScoreMetrics } from "@/core/scoring/score";
+import { Stopwatch } from "@/core/timing/stopwatch";
 
 export type EngineStatus = "ready" | "running" | "paused" | "finished";
 export type FinishReason = "completed" | "time-up" | "stopped" | "failed";

@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import { Component, useEffect, useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Component, useEffect, useRef } from "react";
+
 import { RotateCcw, X } from "lucide-react";
 import { Button } from "./ui/button";
 

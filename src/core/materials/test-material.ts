@@ -1,10 +1,10 @@
-import type { TypingTest } from "../../services/types";
-import { getLayoutOrThrow } from "../keyboard-layout/registry";
-import { resolveLesson } from "../../data/curriculum/generator";
-import type { LessonData } from "../../data/curriculum/types";
-import { getLessonRepository } from "../../data/curriculum";
-import type { ResolvedLesson } from "../../data/curriculum/generator";
-import type { Difficulty, Language } from "../../types";
+import type { TypingTest } from "@/services/types";
+import { getLayoutOrThrow } from "@/core/keyboard-layout/registry";
+import { resolveLesson, type ResolvedLesson } from "@/data/curriculum/generator";
+import type { LessonData } from "@/data/curriculum/types";
+import { getLessonRepository } from "@/data/curriculum";
+
+import type { Difficulty, Language } from "@/types";
 
 const repository = getLessonRepository();
 

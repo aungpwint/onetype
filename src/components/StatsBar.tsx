@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useTypingStore } from "../stores/typing-store";
-import { formatDuration } from "../lib/format";
+import { useTypingStore } from "@/stores/typing-store";
+import { formatDuration } from "@/lib/format";
 
 function Metric({
   label,

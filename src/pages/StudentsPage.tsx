@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2, UserCheck, CheckCircle2 } from "lucide-react";
-import { useStudentStore } from "../stores/student-store";
-import type { Student } from "../services/types";
-import { Modal } from "../components/ui";
-import { StudentForm } from "../components/StudentForm";
-import { Button } from "../components/ui/button";
-import { Badge } from "../components/ui/badge";
+import { useStudentStore } from "@/stores/student-store";
+import type { Student } from "@/services/types";
+import { Modal } from "@/components/ui";
+import { StudentForm } from "@/components/StudentForm";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export default function StudentsPage() {
   const students = useStudentStore((s) => s.students);

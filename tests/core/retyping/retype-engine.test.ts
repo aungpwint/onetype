@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { RetypeEngine, retypeMatch } from "../../../src/core/retyping";
-import { getLayoutOrThrow } from "../../../src/core/keyboard-layout/registry";
-import { splitMyanmarSyllables } from "../../../src/core/unicode/myanmar";
+import { RetypeEngine, retypeMatch } from "@/core/retyping";
+import { getLayoutOrThrow } from "@/core/keyboard-layout/registry";
+import { splitMyanmarSyllables } from "@/core/unicode/myanmar";
 
 describe("RetypeEngine (text retyping)", () => {
   const qwerty = getLayoutOrThrow("english-qwerty");

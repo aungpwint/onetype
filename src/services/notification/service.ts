@@ -1,4 +1,4 @@
-import { isTauriRuntime } from "../ipc";
+import { isTauriRuntime } from "@/services/ipc";
 import type { NotificationOptions, NotificationState } from "./types";
 
 class NotificationService {

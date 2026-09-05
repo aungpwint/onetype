@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import type { Lesson } from "../../../src/types/lesson";
-import { createLessonRepository, loadLessonRecords, type LessonRecord } from "../../../src/lib/lessons";
-import { LessonNotFoundError, LessonCatalogError } from "../../../src/lib/lessons/lesson-errors";
+import type { Lesson } from "@/types/lesson";
+import { createLessonRepository, loadLessonRecords, type LessonRecord } from "@/lib/lessons";
+import { LessonNotFoundError, LessonCatalogError } from "@/lib/lessons/lesson-errors";
 
 function customLesson(overrides: Partial<Lesson> = {}): Lesson {
   return {

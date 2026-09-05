@@ -12,9 +12,9 @@ import {
   validateHandLayout,
   type KeyAnchor,
   type KeyboardGeometry,
-} from "../../../src/components/hand-guide/hand-geometry";
-import { resolveFinger, fingerHand } from "../../../src/components/hand-guide/hand-key-map";
-import type { FingerId } from "../../../src/types";
+} from "@/components/hand-guide/hand-geometry";
+import { resolveFinger, fingerHand } from "@/components/hand-guide/hand-key-map";
+import type { FingerId } from "@/types";
 
 /** Standard QWERTY home row: A..; at 40px pitch, home row centred on Y=400. */
 function standardKeyboard(): { kb: KeyboardGeometry; anchors: Map<string, KeyAnchor> } {

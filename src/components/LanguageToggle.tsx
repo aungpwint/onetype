@@ -1,4 +1,4 @@
-import { useSettingsStore } from "../stores/settings-store";
+import { useSettingsStore } from "@/stores/settings-store";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
 export type Language = "myanmar" | "english";

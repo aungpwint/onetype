@@ -1,6 +1,6 @@
-import type { NormalizedLesson } from "../../types/lesson";
+import type { NormalizedLesson } from "@/types/lesson";
 
-export type { LessonPhase, LessonCompletionRule } from "../../types/lesson";
+export type { LessonPhase, LessonCompletionRule } from "@/types/lesson";
 
 /**
  * Legacy runtime lesson shape consumed by the curriculum resolver, stores, and

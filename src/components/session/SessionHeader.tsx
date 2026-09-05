@@ -1,9 +1,9 @@
 import { Pause, Play, LogOut, Hand, Volume2, VolumeX } from "lucide-react";
-import { useTypingStore } from "../../stores/typing-store";
-import { useUiStore } from "../../stores/ui-store";
-import { containsMyanmar } from "../../core/unicode/myanmar";
-import { LessonProgress } from "../keyboard/LessonProgress";
-import { Button } from "../ui/button";
+import { useTypingStore } from "@/stores/typing-store";
+import { useUiStore } from "@/stores/ui-store";
+import { containsMyanmar } from "@/core/unicode/myanmar";
+import { LessonProgress } from "@/components/keyboard/LessonProgress";
+import { Button } from "@/components/ui/button";
 
 type SessionStatus = ReturnType<typeof useTypingStore.getState>["status"];
 

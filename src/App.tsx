@@ -1,33 +1,33 @@
 import { lazy, Suspense, useEffect, type ReactNode } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { initUi, useUiStore } from "./stores/ui-store";
-import { useStudentStore } from "./stores/student-store";
-import { useSettingsStore } from "./stores/settings-store";
-import { useStartupUpdateCheck } from "./services/updater/use-updater";
-import { notificationService } from "./services/notification/service";
-import { Shell } from "./components/AppShell";
-import { SessionFocus } from "./components/session/SessionFocus";
-import { UpdateBanner } from "./components/UpdateBanner";
-import { UpdateDialog } from "./components/UpdateDialog";
-import { Onboarding } from "./components/Onboarding";
-import { Spinner } from "./components/ui";
+import { initUi, useUiStore } from "@/stores/ui-store";
+import { useStudentStore } from "@/stores/student-store";
+import { useSettingsStore } from "@/stores/settings-store";
+import { useStartupUpdateCheck } from "@/services/updater/use-updater";
+import { notificationService } from "@/services/notification/service";
+import { Shell } from "@/components/AppShell";
+import { SessionFocus } from "@/components/session/SessionFocus";
+import { UpdateBanner } from "@/components/UpdateBanner";
+import { UpdateDialog } from "@/components/UpdateDialog";
+import { Onboarding } from "@/components/Onboarding";
+import { Spinner } from "@/components/ui";
 
-const Dashboard = lazy(() => import("./pages/Dashboard"));
-const Learn = lazy(() => import("./pages/Learn"));
-const TestsPage = lazy(() => import("./pages/TestsPage"));
-const ProgressPage = lazy(() => import("./pages/ProgressPage"));
-const StudentsPage = lazy(() => import("./pages/StudentsPage"));
-const TeacherPage = lazy(() => import("./pages/TeacherPage"));
-const SettingsPage = lazy(() => import("./pages/SettingsPage"));
+const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const Learn = lazy(() => import("@/pages/Learn"));
+const TestsPage = lazy(() => import("@/pages/TestsPage"));
+const ProgressPage = lazy(() => import("@/pages/ProgressPage"));
+const StudentsPage = lazy(() => import("@/pages/StudentsPage"));
+const TeacherPage = lazy(() => import("@/pages/TeacherPage"));
+const SettingsPage = lazy(() => import("@/pages/SettingsPage"));
 
 const LessonPage = lazy(() =>
-  import("./pages/SessionPage").then((m) => ({ default: m.LessonPage })),
+  import("@/pages/SessionPage").then((m) => ({ default: m.LessonPage })),
 );
 const TestSessionPage = lazy(() =>
-  import("./pages/SessionPage").then((m) => ({ default: m.TestPage })),
+  import("@/pages/SessionPage").then((m) => ({ default: m.TestPage })),
 );
 const DrillPage = lazy(() =>
-  import("./pages/SessionPage").then((m) => ({ default: m.DrillPage })),
+  import("@/pages/SessionPage").then((m) => ({ default: m.DrillPage })),
 );
 
 function PageLoader() {

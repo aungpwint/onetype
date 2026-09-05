@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { splitGraphemes, graphemeCount } from "../../src/core/unicode/graphemes";
-import { containsMyanmar, detectLanguage } from "../../src/core/unicode/myanmar";
+import { splitGraphemes, graphemeCount } from "@/core/unicode/graphemes";
+import { containsMyanmar, detectLanguage } from "@/core/unicode/myanmar";
 
 describe("grapheme segmentation", () => {
   it("splits ASCII into single graphemes", () => {

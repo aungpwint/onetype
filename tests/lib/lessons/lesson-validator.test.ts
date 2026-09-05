@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import type { Lesson } from "../../../src/types/lesson";
-import { parseLesson, validateLesson } from "../../../src/lib/lessons/lesson-validator";
-import { normalizeLesson } from "../../../src/lib/lessons/lesson-normalizer";
-import { exerciseText, type LessonExercise } from "../../../src/types/exercise";
+import type { Lesson } from "@/types/lesson";
+import { parseLesson, validateLesson } from "@/lib/lessons/lesson-validator";
+import { normalizeLesson } from "@/lib/lessons/lesson-normalizer";
+import { exerciseText, type LessonExercise } from "@/types/exercise";
 import {
   LessonParseError,
   LessonValidationError,
   UnsupportedExerciseTypeError,
   UnsupportedLessonSchemaError,
-} from "../../../src/lib/lessons/lesson-errors";
+} from "@/lib/lessons/lesson-errors";
 
 function canonicalLesson(overrides: Partial<Lesson> = {}): Lesson {
   return {

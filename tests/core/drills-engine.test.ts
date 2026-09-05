@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
   planMuscleMemorySession,
   MUSCLE_MEMORY_GOALS,
-} from "../../src/core/drills/engine";
-import { englishQwerty } from "../../src/core/keyboard-layout/english-qwerty";
-import { handForFinger } from "../../src/core/finger-mapping/finger-map";
+} from "@/core/drills/engine";
+import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
+import { handForFinger } from "@/core/finger-mapping/finger-map";
 
 describe("muscle-memory drill engine", () => {
   it("exposes a stable list of supported goals", () => {

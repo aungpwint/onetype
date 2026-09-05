@@ -1,7 +1,7 @@
-import type { FingerId, Hand } from "../../types";
-import { englishQwerty } from "../keyboard-layout/english-qwerty";
-import { buildSequence, type BuiltSequence } from "../typing-engine/sequence";
-import { handForFinger } from "../finger-mapping/finger-map";
+import type { FingerId, Hand } from "@/types";
+import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
+import { buildSequence, type BuiltSequence } from "@/core/typing-engine/sequence";
+import { handForFinger } from "@/core/finger-mapping/finger-map";
 import {
   generateRepetitionDrill,
   generatePairDrill,
@@ -12,8 +12,8 @@ import {
   generateRowTransitionDrill,
   type GeneratedDrill,
 } from "./generator";
-import { DEFAULT_ENGLISH_CONSTRAINTS } from "./types";
-import type { DrillConstraints } from "./types";
+import { DEFAULT_ENGLISH_CONSTRAINTS, type DrillConstraints } from "./types";
+
 
 /**
  * The kinds of muscle-memory practice the engine can build for English,

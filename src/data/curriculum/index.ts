@@ -1,8 +1,8 @@
-import type { Level } from "../../types";
+import type { Level } from "@/types";
 import type { LessonData } from "./types";
 import { resolveLesson, type ResolvedLesson } from "./generator";
-import { createLessonRepository, type LessonRepository } from "../../lib/lessons";
-import type { Lesson } from "../../types/lesson";
+import { createLessonRepository, type LessonRepository } from "@/lib/lessons";
+import type { Lesson } from "@/types/lesson";
 
 export interface CurriculumMeta {
   totalLessons: number;

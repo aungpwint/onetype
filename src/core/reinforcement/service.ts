@@ -1,11 +1,11 @@
-import type { KeyboardLayout } from "../keyboard-layout/layout";
-import { englishQwerty } from "../keyboard-layout/english-qwerty";
-import { ENGLISH_FINGER_KEYS } from "../drills/types";
+import type { KeyboardLayout } from "@/core/keyboard-layout/layout";
+import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
+import { ENGLISH_FINGER_KEYS } from "@/core/drills/types";
 import {
   planMuscleMemorySession,
   type MuscleMemoryGoal,
   type MuscleMemoryPlan,
-} from "../drills/engine";
+} from "@/core/drills/engine";
 import type {
   FingerId,
   ParsedKeyId,

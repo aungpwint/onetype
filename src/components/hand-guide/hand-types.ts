@@ -1,4 +1,4 @@
-import type { FingerId, Hand } from "../../types";
+import type { FingerId, Hand } from "@/types";
 
 /**
  * Shared types for the hand-guide layer. `FingerId` and `Hand` are the single

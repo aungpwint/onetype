@@ -1,5 +1,5 @@
-import type { FingerId, Hand } from "../../types";
-import { handForFinger } from "../finger-mapping/finger-map";
+import type { FingerId, Hand } from "@/types";
+import { handForFinger } from "@/core/finger-mapping/finger-map";
 import type {
   DrillConfig,
   WordList,

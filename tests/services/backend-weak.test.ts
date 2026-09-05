@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { reRankWeak } from "../../src/services/backend";
+import { reRankWeak } from "@/services/backend";
 
 /**
  * Parity coverage for the Tauri weak-key/finger re-ranking shim (Phase 21).

@@ -26,7 +26,7 @@ import type {
   WeakFinger,
   WeakKey,
 } from "./types";
-import { rankWeakest, DEFAULT_WEAKNESS_CONFIG } from "../core/weakness";
+import { rankWeakest, DEFAULT_WEAKNESS_CONFIG } from "@/core/weakness";
 
 const PREFIX = "onetype:local:";
 

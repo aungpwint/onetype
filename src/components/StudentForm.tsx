@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useStudentStore } from "../stores/student-store";
-import type { Student } from "../services/types";
+import { useStudentStore } from "@/stores/student-store";
+import type { Student } from "@/services/types";
 import { Field } from "./ui";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";

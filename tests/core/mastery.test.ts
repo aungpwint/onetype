@@ -8,7 +8,7 @@ import {
   projectMasteryDelta,
   MASTERY_ORDER,
   type MasteryLevel,
-} from "../../src/core/mastery";
+} from "@/core/mastery";
 
 type Att = { passed: boolean; accuracy: number };
 const p = (accuracy: number): Att => ({ passed: true, accuracy });

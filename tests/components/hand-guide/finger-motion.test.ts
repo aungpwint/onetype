@@ -8,7 +8,7 @@ import {
   type HandPlacement,
   type KeyAnchor,
   type KeyboardGeometry,
-} from "../../../src/components/hand-guide/hand-geometry";
+} from "@/components/hand-guide/hand-geometry";
 import {
   APPROACH_PEAK,
   FINGER_PROFILES,
@@ -21,9 +21,9 @@ import {
   targetForKey,
   toTransformAttribute,
   type FingerAnimState,
-} from "../../../src/components/hand-guide/finger-motion";
-import { fingerHand, resolveFinger } from "../../../src/components/hand-guide/hand-key-map";
-import type { FingerId } from "../../../src/types";
+} from "@/components/hand-guide/finger-motion";
+import { fingerHand, resolveFinger } from "@/components/hand-guide/hand-key-map";
+import type { FingerId } from "@/types";
 
 /*
  * Standard QWERTY fixture (40px pitch, home row on Y=400), matching the

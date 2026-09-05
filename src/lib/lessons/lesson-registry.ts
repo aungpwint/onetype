@@ -1,7 +1,7 @@
-import type { Level } from "../../types";
-import type { LessonLanguage } from "../../types/language";
-import type { Lesson } from "../../types/lesson";
-import { LEVEL_ORDER } from "../../types";
+import { LEVEL_ORDER, type Level } from "@/types";
+import type { LessonLanguage } from "@/types/language";
+import type { Lesson } from "@/types/lesson";
+
 import { LessonCatalogError } from "./lesson-errors";
 import type { LessonRecord } from "./lesson-loader";
 

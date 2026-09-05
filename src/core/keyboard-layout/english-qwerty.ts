@@ -1,5 +1,5 @@
 import { KeyboardLayout, type KeyboardLayoutSpec, type KeyDefinition } from "./layout";
-import { fingerForCode, handForFinger } from "../finger-mapping/finger-map";
+import { fingerForCode, handForFinger } from "@/core/finger-mapping/finger-map";
 
 const LETTERS: Record<string, string> = {
   KeyQ: "q",

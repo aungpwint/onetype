@@ -21,12 +21,12 @@ import {
   ChevronDown,
   UserRound,
 } from "lucide-react";
-import { useUiStore } from "../stores/ui-store";
-import { useStudentStore } from "../stores/student-store";
-import { useKeyboardShortcuts } from "../hooks/use-keyboard-shortcuts";
+import { useUiStore } from "@/stores/ui-store";
+import { useStudentStore } from "@/stores/student-store";
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { Modal } from "./ui";
 import { StudentForm } from "./StudentForm";
-import { listLayouts } from "../core/keyboard-layout/registry";
+import { listLayouts } from "@/core/keyboard-layout/registry";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 

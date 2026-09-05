@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { updaterService } from "./service";
-import type { UpdateStatus } from "./types";
-import { useSettingsStore } from "../../stores/settings-store";
-import { CHECK_THROTTLE_MS } from "./types";
-import { notificationService } from "../notification/service";
+import { CHECK_THROTTLE_MS, type UpdateStatus } from "./types";
+import { useSettingsStore } from "@/stores/settings-store";
+
+import { notificationService } from "@/services/notification/service";
 
 export function useUpdater() {
   const [status, setStatus] = useState<UpdateStatus>({ state: "idle" });

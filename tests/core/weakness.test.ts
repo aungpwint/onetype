@@ -6,7 +6,7 @@ import {
   topWeakest,
   attempts,
   accuracyFraction,
-} from "../../src/core/weakness";
+} from "@/core/weakness";
 
 describe("wilsonLowerBound", () => {
   it("returns 0 for no attempts", () => {

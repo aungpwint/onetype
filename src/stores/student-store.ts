@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import * as backend from "../services/backend";
-import type { CreateStudentRequest, Student, UpdateStudentRequest } from "../services/types";
+import * as backend from "@/services/backend";
+import type { CreateStudentRequest, Student, UpdateStudentRequest } from "@/services/types";
 
 interface StudentState {
   students: Student[];

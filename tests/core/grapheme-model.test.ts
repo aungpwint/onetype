@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { buildSequence } from "../../src/core/typing-engine/sequence";
-import { englishQwerty } from "../../src/core/keyboard-layout/english-qwerty";
-import { myanmar3 } from "../../src/core/keyboard-layout/myanmar3";
-import { splitGraphemes } from "../../src/core/unicode/graphemes";
-import { shiftHandFor } from "../../src/core/keyboard-layout/layout";
+import { buildSequence } from "@/core/typing-engine/sequence";
+import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
+import { myanmar3 } from "@/core/keyboard-layout/myanmar3";
+import { splitGraphemes } from "@/core/unicode/graphemes";
+import { shiftHandFor } from "@/core/keyboard-layout/layout";
 
 describe("typing unit model", () => {
   it("maps English lowercase to single units with correct hand/finger", () => {

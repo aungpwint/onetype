@@ -8,7 +8,7 @@ import {
   coefficientOfVariation,
   summarizePerformance,
   type SessionPoint,
-} from "../../src/core/analytics";
+} from "@/core/analytics";
 
 function pt(over: Partial<SessionPoint> & { startedAt: number }): SessionPoint {
   return { wpm: 0, accuracy: 0, correctCount: 0, errorCount: 0, ...over };

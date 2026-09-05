@@ -1,4 +1,4 @@
-import type { FingerId } from "../../types";
+import type { FingerId } from "@/types";
 
 const STANDARD: Record<string, FingerId> = {
   Backquote: "left-pinky",

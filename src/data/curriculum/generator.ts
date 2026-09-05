@@ -1,8 +1,8 @@
-import type { Level } from "../../types";
-import { getLayoutOrThrow } from "../../core/keyboard-layout/registry";
-import { splitGraphemes } from "../../core/unicode/graphemes";
-import { buildSequence } from "../../core/typing-engine/sequence";
-import type { BuiltSequence, TypingUnit } from "../../core/typing-engine/sequence";
+import type { Level } from "@/types";
+import { getLayoutOrThrow } from "@/core/keyboard-layout/registry";
+import { splitGraphemes } from "@/core/unicode/graphemes";
+import { buildSequence, type BuiltSequence, type TypingUnit } from "@/core/typing-engine/sequence";
+
 import type { LessonData, LessonPhase } from "./types";
 
 export interface ResolvedPhase {

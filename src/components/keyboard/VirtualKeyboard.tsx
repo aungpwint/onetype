@@ -2,11 +2,11 @@ import { memo, type ReactNode } from "react";
 import type {
   KeyboardLayout,
   KeyDefinition,
-} from "../../core/keyboard-layout/layout";
-import { useTypingStore } from "../../stores/typing-store";
-import { resolveLastKey, resolveTarget } from "../../core/target-model";
-import type { Hand } from "../../types";
-import { WIDE_KEY_LABEL } from "../../utils/fingerMapper";
+} from "@/core/keyboard-layout/layout";
+import { useTypingStore } from "@/stores/typing-store";
+import { resolveLastKey, resolveTarget } from "@/core/target-model";
+import type { Hand } from "@/types";
+import { WIDE_KEY_LABEL } from "@/utils/fingerMapper";
 
 interface VirtualKeyboardProps {
   layout: KeyboardLayout;

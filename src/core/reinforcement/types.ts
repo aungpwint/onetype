@@ -1,5 +1,5 @@
-import type { FingerId, Modifier } from "../../types";
-import type { MuscleMemoryGoal, MuscleMemoryPlan } from "../drills/engine";
+import type { FingerId, Modifier } from "@/types";
+import type { MuscleMemoryGoal, MuscleMemoryPlan } from "@/core/drills/engine";
 
 /**
  * A weakness reported by the adaptive detection layer. `key` is a layout key

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { listAllLessons, resolveLessonById, hasLesson, getLessonData, getCurriculumMeta, allResolvedLessonIds } from "../../src/data/curriculum";
-import { getLayoutOrThrow } from "../../src/core/keyboard-layout/registry";
-import { remainingText, completedText } from "../../src/core/typing-engine/sequence";
+import { listAllLessons, resolveLessonById, hasLesson, getLessonData, getCurriculumMeta, allResolvedLessonIds } from "@/data/curriculum";
+import { getLayoutOrThrow } from "@/core/keyboard-layout/registry";
+import { remainingText, completedText } from "@/core/typing-engine/sequence";
 
 describe("curriculum content", () => {
   const lessons = listAllLessons();

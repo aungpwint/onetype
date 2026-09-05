@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import type { Level } from "../types";
-import { useLessonStore } from "../stores/lesson-store";
-import { useStudentStore } from "../stores/student-store";
-import { useSettingsStore } from "../stores/settings-store";
-import { Spinner } from "../components/ui";
-import { LanguageToggle } from "../components/LanguageToggle";
-import { LessonCard } from "../components/LessonCard";
-import { computeMasteryForLessons } from "../core/mastery";
-import type { ExerciseResult } from "../services/types";
-import * as backend from "../services/backend";
+import type { Level } from "@/types";
+import { useLessonStore } from "@/stores/lesson-store";
+import { useStudentStore } from "@/stores/student-store";
+import { useSettingsStore } from "@/stores/settings-store";
+import { Spinner } from "@/components/ui";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { LessonCard } from "@/components/LessonCard";
+import { computeMasteryForLessons } from "@/core/mastery";
+import type { ExerciseResult } from "@/services/types";
+import * as backend from "@/services/backend";
 
 const LEVEL_ORDER: Level[] = ["beginner", "intermediate", "advanced"];
 

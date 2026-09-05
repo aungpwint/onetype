@@ -1,4 +1,4 @@
-import type { FingerId, Hand } from "../../types";
+import type { FingerId, Hand } from "@/types";
 
 /*
  * Deterministic coordinate mapping for the hand guide.

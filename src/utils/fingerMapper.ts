@@ -1,6 +1,6 @@
-import type { FingerId } from "../types";
-import { FINGER_LABELS, fingerForCode } from "../core/finger-mapping/finger-map";
-import { shiftHandFor } from "../core/keyboard-layout/layout";
+import type { FingerId } from "@/types";
+import { FINGER_LABELS, fingerForCode } from "@/core/finger-mapping/finger-map";
+import { shiftHandFor } from "@/core/keyboard-layout/layout";
 
 /**
  * Optional human-readable label for wide keys whose layout `label` is too terse

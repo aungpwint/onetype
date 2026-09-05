@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { buildTestMaterial } from "../../src/core/materials/test-material";
-import { getLayoutOrThrow } from "../../src/core/keyboard-layout/registry";
-import type { TypingTest } from "../../src/services/types";
+import { buildTestMaterial } from "@/core/materials/test-material";
+import { getLayoutOrThrow } from "@/core/keyboard-layout/registry";
+import type { TypingTest } from "@/services/types";
 
 function makeTest(overrides: Partial<TypingTest> = {}): TypingTest {
   return {

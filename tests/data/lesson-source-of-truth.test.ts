@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import catalog from "../../src/data/lesson-catalog.json";
-import { getLessonRepository, getCanonicalLesson } from "../../src/data/curriculum";
+import catalog from "@/data/lesson-catalog.json";
+import { getLessonRepository, getCanonicalLesson } from "@/data/curriculum";
 
 type CatalogJson = {
   schemaVersion: number;

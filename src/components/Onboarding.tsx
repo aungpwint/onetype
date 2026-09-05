@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sparkles } from "lucide-react";
-import { useStudentStore } from "../stores/student-store";
-import { useSettingsStore } from "../stores/settings-store";
-import { useUiStore } from "../stores/ui-store";
+import { useStudentStore } from "@/stores/student-store";
+import { useSettingsStore } from "@/stores/settings-store";
+import { useUiStore } from "@/stores/ui-store";
 import { Field } from "./ui";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";

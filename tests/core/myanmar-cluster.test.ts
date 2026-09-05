@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { splitMyanmarSyllables } from "../../src/core/unicode/myanmar";
-import { buildSequence, clusterStartForUnit } from "../../src/core/typing-engine/sequence";
-import { myanmar3 } from "../../src/core/keyboard-layout/myanmar3";
-import { englishQwerty } from "../../src/core/keyboard-layout/english-qwerty";
+import { splitMyanmarSyllables } from "@/core/unicode/myanmar";
+import { buildSequence, clusterStartForUnit } from "@/core/typing-engine/sequence";
+import { myanmar3 } from "@/core/keyboard-layout/myanmar3";
+import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
 
 describe("Myanmar syllable cluster segmentation", () => {
   it("groups a base consonant with its medials, vowels and tone marks into one cluster", () => {

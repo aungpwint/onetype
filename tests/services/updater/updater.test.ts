@@ -1,11 +1,6 @@
 import { describe, it, expect } from "vitest";
-import type { UpdateStatus } from "../../../src/services/updater/types";
-import {
-  CHECK_THROTTLE_MS,
-  compareVersions,
-  isNewerVersion,
-  mapUpdateError,
-} from "../../../src/services/updater/types";
+import { CHECK_THROTTLE_MS, compareVersions, isNewerVersion, mapUpdateError, type UpdateStatus } from "@/services/updater/types";
+
 
 describe("update state machine", () => {
   it("idle state exists", () => {

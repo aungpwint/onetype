@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Clock, Crosshair, Gauge } from "lucide-react";
-import type { LessonData } from "../data/curriculum/types";
-import type { MasteryLevel } from "../core/mastery";
-import type { LessonProgress } from "../services/types";
+import type { LessonData } from "@/data/curriculum/types";
+import type { MasteryLevel } from "@/core/mastery";
+import type { LessonProgress } from "@/services/types";
 import { Badge } from "./ui/badge";
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 
 interface LessonCardProps {
   lesson: LessonData;

@@ -1,8 +1,8 @@
 import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { useTypingStore } from "../stores/typing-store";
-import { containsMyanmar } from "../core/unicode/myanmar";
-import { graphemeUnitRuns } from "../core/typing-engine/sequence";
+import { useTypingStore } from "@/stores/typing-store";
+import { containsMyanmar } from "@/core/unicode/myanmar";
+import { graphemeUnitRuns } from "@/core/typing-engine/sequence";
 
 const CARET_ANCHOR = 0.45;
 const CONTENT_INSET = 24;

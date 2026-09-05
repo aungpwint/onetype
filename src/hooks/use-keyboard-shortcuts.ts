@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTypingStore } from "../stores/typing-store";
+import { useTypingStore } from "@/stores/typing-store";
 
 /**
  * Global keyboard shortcuts for navigation and common actions.

@@ -9,15 +9,15 @@ import {
   Volume2,
   VolumeX,
 } from "lucide-react";
-import { useTypingStore } from "../../stores/typing-store";
-import { useUiStore } from "../../stores/ui-store";
-import { useSettingsStore } from "../../stores/settings-store";
-import { containsMyanmar } from "../../core/unicode/myanmar";
-import { KeyboardContainer } from "../keyboard/KeyboardContainer";
-import { TargetText } from "../TargetText";
-import { ResultDialog } from "../ResultDialog";
-import { Modal } from "../ui";
-import { Button } from "../ui/button";
+import { useTypingStore } from "@/stores/typing-store";
+import { useUiStore } from "@/stores/ui-store";
+import { useSettingsStore } from "@/stores/settings-store";
+import { containsMyanmar } from "@/core/unicode/myanmar";
+import { KeyboardContainer } from "@/components/keyboard/KeyboardContainer";
+import { TargetText } from "@/components/TargetText";
+import { ResultDialog } from "@/components/ResultDialog";
+import { Modal } from "@/components/ui";
+import { Button } from "@/components/ui/button";
 
 const LEVEL_LABEL: Record<string, string> = {
   beginner: "Beginner",

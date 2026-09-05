@@ -16,4 +16,4 @@ export {
   reinforcementFromWeakFingers,
   reinforcementFromWeakKeys,
 } from "./service";
-export type { MuscleMemoryGoal } from "../drills/engine";
+export type { MuscleMemoryGoal } from "@/core/drills/engine";

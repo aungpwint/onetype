@@ -1,5 +1,5 @@
 import type { FingerId, Hand } from "./index";
-import type { KeyboardRow } from "../core/keyboard-layout/layout";
+import type { KeyboardRow } from "@/core/keyboard-layout/layout";
 
 /**
  * Canonical keyboard identifiers referenced by lesson JSON files.

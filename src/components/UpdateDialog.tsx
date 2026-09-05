@@ -1,5 +1,5 @@
 import { Download, RefreshCw } from "lucide-react";
-import { useUpdater } from "../services/updater/use-updater";
+import { useUpdater } from "@/services/updater/use-updater";
 import { Modal } from "./ui";
 import { Button } from "./ui/button";
 

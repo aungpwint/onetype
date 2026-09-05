@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import * as backend from "../services/backend";
+import * as backend from "@/services/backend";
 import type {
   AchievementRecord,
   StreakInfo,
   TrainingSummary,
-} from "../services/types";
+} from "@/services/types";
 
 interface ProgressionState {
   streak: StreakInfo | null;

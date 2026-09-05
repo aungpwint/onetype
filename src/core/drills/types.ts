@@ -1,5 +1,5 @@
-import type { FingerId, Hand } from "../../types";
-import type { KeyboardLayout } from "../keyboard-layout/layout";
+import type { FingerId, Hand } from "@/types";
+import type { KeyboardLayout } from "@/core/keyboard-layout/layout";
 
 export interface DrillConfig {
   layout: KeyboardLayout;

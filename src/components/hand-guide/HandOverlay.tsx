@@ -31,7 +31,7 @@ import {
   targetForKey,
   type FingerTarget,
 } from "./finger-motion";
-import type { FingerId, Hand } from "../../types";
+import type { FingerId, Hand } from "@/types";
 
 /*
  * HandOverlay renders the pair of hand SVG assets (left-hand.svg /

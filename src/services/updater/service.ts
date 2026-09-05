@@ -1,9 +1,9 @@
 import { type Update } from "@tauri-apps/plugin-updater";
 import { relaunch } from "@tauri-apps/plugin-process";
-import type { UpdateStatus } from "./types";
-import { isNewerVersion, mapUpdateError } from "./types";
-import { isTauriRuntime } from "../ipc";
-import { notificationService } from "../notification/service";
+import { isNewerVersion, mapUpdateError, type UpdateStatus } from "./types";
+
+import { isTauriRuntime } from "@/services/ipc";
+import { notificationService } from "@/services/notification/service";
 
 type Listener = (status: UpdateStatus) => void;
 

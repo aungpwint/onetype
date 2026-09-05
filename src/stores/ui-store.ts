@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ThemePreference } from "../types";
+import type { ThemePreference } from "@/types";
 
 interface UiState {
   theme: ThemePreference;

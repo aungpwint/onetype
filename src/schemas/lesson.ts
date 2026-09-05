@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { LESSON_LANGUAGES } from "../types/language";
-import { LESSON_KEYBOARD_IDS } from "../types/keyboard";
+import { LESSON_LANGUAGES } from "@/types/language";
+import { LESSON_KEYBOARD_IDS } from "@/types/keyboard";
 
 /**
  * Canonical runtime validation schemas for the lesson platform.

@@ -9,14 +9,14 @@ import {
   Trophy,
   CheckCircle2,
 } from "lucide-react";
-import { useTypingStore, buildAdaptiveDrill } from "../stores/typing-store";
-import { useLessonStore } from "../stores/lesson-store";
-import { ACHIEVEMENT_CATALOG } from "../data/achievements";
+import { useTypingStore, buildAdaptiveDrill } from "@/stores/typing-store";
+import { useLessonStore } from "@/stores/lesson-store";
+import { ACHIEVEMENT_CATALOG } from "@/data/achievements";
 import { Modal } from "./ui";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { formatDuration } from "../lib/format";
-import type { MasteryDelta, MasteryLevel } from "../core/mastery";
+import { formatDuration } from "@/lib/format";
+import type { MasteryDelta, MasteryLevel } from "@/core/mastery";
 
 const MASTERY_COPY: Record<MasteryLevel, string> = {
   "not-started": "new",

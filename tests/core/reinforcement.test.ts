@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { englishQwerty } from "../../src/core/keyboard-layout/english-qwerty";
+import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
 import {
   parseKeyId,
   keyIdToChar,
@@ -9,7 +9,7 @@ import {
   reinforcementFromWeakKeys,
   reinforcementFromWeakFingers,
   planWeakestReinforcement,
-} from "../../src/core/reinforcement";
+} from "@/core/reinforcement";
 
 describe("parseKeyId", () => {
   it("parses code and modifier", () => {

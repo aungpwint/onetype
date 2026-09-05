@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import type { NotificationOptions, NotificationState } from "../../../src/services/notification/types";
-import { NOTIFICATION_KEYS } from "../../../src/services/notification/types";
+import { NOTIFICATION_KEYS, type NotificationOptions, type NotificationState } from "@/services/notification/types";
+
 
 describe("notification types", () => {
   it("NotificationOptions has title", () => {

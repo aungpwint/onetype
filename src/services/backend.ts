@@ -1,7 +1,7 @@
 import { invokeCommand, isTauriRuntime, pickOpenFile, pickSavePath } from "./ipc";
 import { localBackend } from "./local";
-import { rankWeakest, DEFAULT_WEAKNESS_CONFIG } from "../core/weakness";
-import type { StatInput } from "../core/weakness";
+import { rankWeakest, DEFAULT_WEAKNESS_CONFIG, type StatInput } from "@/core/weakness";
+
 import type {
   AchievementRecord,
   CreateStudentRequest,

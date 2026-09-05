@@ -1,6 +1,6 @@
-import type { LessonExercise } from "../../types/exercise";
-import { exerciseText } from "../../types/exercise";
-import type { LessonPhase } from "../../types/lesson";
+import { exerciseText, type LessonExercise } from "@/types/exercise";
+
+import type { LessonPhase } from "@/types/lesson";
 
 /**
  * Convert an exercise into the legacy `{ instruction, text }` phase a phase

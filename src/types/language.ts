@@ -1,5 +1,5 @@
-import type { Language } from "./index";
-import { isLanguage } from "./index";
+import { isLanguage, type Language } from "./index";
+
 
 /**
  * Canonical lesson language identifiers used inside lesson JSON files and the

@@ -1,9 +1,9 @@
-import type { Modifier } from "../../types";
-import type { Hand } from "../../types";
-import type { FingerId } from "../../types";
-import { KeyboardLayout, shiftHandFor } from "../keyboard-layout/layout";
-import { splitGraphemes } from "../unicode/graphemes";
-import { splitMyanmarSyllables } from "../unicode/myanmar";
+import type { Modifier } from "@/types";
+import type { Hand } from "@/types";
+import type { FingerId } from "@/types";
+import { KeyboardLayout, shiftHandFor } from "@/core/keyboard-layout/layout";
+import { splitGraphemes } from "@/core/unicode/graphemes";
+import { splitMyanmarSyllables } from "@/core/unicode/myanmar";
 
 export interface TypingUnit {
   index: number;

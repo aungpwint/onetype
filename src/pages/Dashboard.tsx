@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Flame, Trophy, Timer, Target, Gauge, BookOpen, BarChart3 } from "lucide-react";
-import { useStudentStore } from "../stores/student-store";
-import { useLessonStore } from "../stores/lesson-store";
-import { useSettingsStore } from "../stores/settings-store";
-import { useProgressionStore } from "../stores/progression-store";
-import * as backend from "../services/backend";
-import type { TypingSession, TypingTest } from "../services/types";
-import { ACHIEVEMENT_CATALOG } from "../data/achievements";
-import { Spinner, Stat } from "../components/ui";
-import { Button } from "../components/ui/button";
-import { formatDuration } from "../lib/format";
+import { useStudentStore } from "@/stores/student-store";
+import { useLessonStore } from "@/stores/lesson-store";
+import { useSettingsStore } from "@/stores/settings-store";
+import { useProgressionStore } from "@/stores/progression-store";
+import * as backend from "@/services/backend";
+import type { TypingSession, TypingTest } from "@/services/types";
+import { ACHIEVEMENT_CATALOG } from "@/data/achievements";
+import { Spinner, Stat } from "@/components/ui";
+import { Button } from "@/components/ui/button";
+import { formatDuration } from "@/lib/format";
 
 function hourGreeting(): string {
   const h = new Date().getHours();

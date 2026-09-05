@@ -1,25 +1,25 @@
 import { create } from "zustand";
-import { TypingEngine } from "../core/typing-engine/engine";
-import { getLayoutOrThrow } from "../core/keyboard-layout/registry";
-import { englishQwerty } from "../core/keyboard-layout/english-qwerty";
-import { resolveLessonById } from "../data/curriculum";
-import type { ResolvedLesson } from "../data/curriculum/generator";
-import { buildTestMaterial } from "../core/materials/test-material";
-import type { KeyboardLayout } from "../core/keyboard-layout/layout";
-import type { Modifier, TypingMode } from "../types";
-import type { ScoreMetrics } from "../core/scoring/score";
-import type { AchievementRecord, TypingStatRecord, TypingTest } from "../services/types";
-import { reinforcementFromWeakKeys } from "../core/reinforcement";
-import type { ReinforcedDrill, MuscleMemoryGoal } from "../core/reinforcement";
-import { projectMasteryDelta } from "../core/mastery";
-import type { MasteryDelta } from "../core/mastery";
-import * as backend from "../services/backend";
+import { TypingEngine } from "@/core/typing-engine/engine";
+import { getLayoutOrThrow } from "@/core/keyboard-layout/registry";
+import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
+import { resolveLessonById } from "@/data/curriculum";
+import type { ResolvedLesson } from "@/data/curriculum/generator";
+import { buildTestMaterial } from "@/core/materials/test-material";
+import type { KeyboardLayout } from "@/core/keyboard-layout/layout";
+import type { Modifier, TypingMode } from "@/types";
+import type { ScoreMetrics } from "@/core/scoring/score";
+import type { AchievementRecord, TypingStatRecord, TypingTest } from "@/services/types";
+import { reinforcementFromWeakKeys, type ReinforcedDrill, type MuscleMemoryGoal } from "@/core/reinforcement";
+
+import { projectMasteryDelta, type MasteryDelta } from "@/core/mastery";
+
+import * as backend from "@/services/backend";
 import { useStudentStore } from "./student-store";
 import { useLessonStore } from "./lesson-store";
 import { useUiStore } from "./ui-store";
 import { useProgressionStore } from "./progression-store";
-import { CONTENT_VERSION } from "../services/local";
-import { playAchievementSound, playCompletionSound, playErrorSound, playKeySound } from "../lib/sound";
+import { CONTENT_VERSION } from "@/services/local";
+import { playAchievementSound, playCompletionSound, playErrorSound, playKeySound } from "@/lib/sound";
 
 export interface LiveStats {
   unitIndex: number;

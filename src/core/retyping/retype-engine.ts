@@ -1,9 +1,9 @@
-import type { Modifier } from "../../types";
-import { KeyboardLayout } from "../keyboard-layout/layout";
-import { buildSequence, graphemeUnitRuns } from "../typing-engine/sequence";
-import { TypingEngine, type EngineStatus, type FinishReason } from "../typing-engine/engine";
-import { computeScore, type ScoreMetrics } from "../scoring/score";
-import type { NormalizedExercise } from "../../types/exercise";
+import type { Modifier } from "@/types";
+import { KeyboardLayout } from "@/core/keyboard-layout/layout";
+import { buildSequence, graphemeUnitRuns } from "@/core/typing-engine/sequence";
+import { TypingEngine, type EngineStatus, type FinishReason } from "@/core/typing-engine/engine";
+import { computeScore, type ScoreMetrics } from "@/core/scoring/score";
+import type { NormalizedExercise } from "@/types/exercise";
 
 export interface RetypeOptions {
   /** Backspace may be used to correct mistakes. Defaults to true. */

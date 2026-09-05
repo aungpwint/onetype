@@ -1,8 +1,8 @@
-import { exerciseText } from "../../types/exercise";
-import type { NormalizedExercise } from "../../types/exercise";
-import type { Lesson, LessonPhase, NormalizedLesson } from "../../types/lesson";
-import { toLegacyLanguage } from "../../types/language";
-import { toLayoutId } from "../../types/keyboard";
+import { exerciseText, type NormalizedExercise } from "@/types/exercise";
+
+import type { Lesson, LessonPhase, NormalizedLesson } from "@/types/lesson";
+import { toLegacyLanguage } from "@/types/language";
+import { toLayoutId } from "@/types/keyboard";
 import { lessonPhaseFromExercise } from "./lesson-phase";
 
 /**
