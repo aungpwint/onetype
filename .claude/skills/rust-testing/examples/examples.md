@@ -1,6 +1,7 @@
 # Testing Examples
 
 ## Unit test module
+
 ```rust
 pub fn add(a: i32, b: i32) -> i32 { a + b }
 
@@ -27,6 +28,7 @@ mod tests {
 ```
 
 ## Integration test
+
 ```rust
 // tests/integration_test.rs
 use my_crate::add;
@@ -38,7 +40,8 @@ fn integration_test() {
 ```
 
 ## Doc test
-```rust
+
+````rust
 /// Adds two numbers.
 ///
 /// ```
@@ -46,4 +49,4 @@ fn integration_test() {
 /// assert_eq!(add(2, 3), 5);
 /// ```
 pub fn add(a: i32, b: i32) -> i32 { a + b }
-```
+````

@@ -1,14 +1,10 @@
+export { type PerformanceSummary, type SessionPoint, type Trend } from './types'
 export {
-  type PerformanceSummary,
-  type SessionPoint,
-  type Trend,
-} from "./types";
-export {
-  coefficientOfVariation,
-  linearTrend,
-  metricTrend,
-  orderChronologically,
-  pooledAccuracy,
-  standardDeviation,
-  summarizePerformance,
-} from "./service";
+    coefficientOfVariation,
+    linearTrend,
+    metricTrend,
+    orderChronologically,
+    pooledAccuracy,
+    standardDeviation,
+    summarizePerformance,
+} from './service'

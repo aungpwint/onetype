@@ -1,34 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-intermediate-15",
-  "level": "intermediate",
-  "language": "my",
-  "number": 15,
-  "title": "Short Paragraph 2",
-  "titleMy": "စာပိုဒ်တို (၂)",
-  "description": "Type a paragraph about daily routine.",
-  "difficulty": "hard",
-  "estimatedMinutes": 12,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 93,
-    "minWpm": 18
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-intermediate-15-ex-1",
-      "kind": "text",
-      "instruction": "နံနက် ခြောက်နာရီမှာ အိပ်ရာကထတယ်။ မျက်နှာသစ်ပြီး လက်ဖက်ရည်သောက်တယ်။ ပြီးတော့ အလုပ်သွားတယ်။",
-      "text": "နံနက် ခြောက်နာရီမှာ အိပ်ရာကထတယ်။ မျက်နှာသစ်ပြီး လက်ဖက်ရည်သောက်တယ်။ ပြီးတော့ အလုပ်သွားတယ်။"
-    }
-  ],
-  "focus": [
-    "sentences",
-    "unicode",
-    "punctuation",
-    "speed"
-  ],
-  "prerequisites": [
-    "lesson-my-intermediate-14"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-my-intermediate-15",
+    "level": "intermediate",
+    "language": "my",
+    "number": 15,
+    "title": "Short Paragraph 2",
+    "titleMy": "စာပိုဒ်တို (၂)",
+    "description": "Type a paragraph about daily routine.",
+    "difficulty": "hard",
+    "estimatedMinutes": 12,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 93,
+        "minWpm": 18
+    },
+    "exercises": [
+        {
+            "id": "lesson-my-intermediate-15-ex-1",
+            "kind": "text",
+            "instruction": "နံနက် ခြောက်နာရီမှာ အိပ်ရာကထတယ်။ မျက်နှာသစ်ပြီး လက်ဖက်ရည်သောက်တယ်။ ပြီးတော့ အလုပ်သွားတယ်။",
+            "text": "နံနက် ခြောက်နာရီမှာ အိပ်ရာကထတယ်။ မျက်နှာသစ်ပြီး လက်ဖက်ရည်သောက်တယ်။ ပြီးတော့ အလုပ်သွားတယ်။"
+        }
+    ],
+    "focus": ["sentences", "unicode", "punctuation", "speed"],
+    "prerequisites": ["lesson-my-intermediate-14"]
 }

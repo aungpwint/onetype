@@ -4,12 +4,12 @@ description: Comprehensive index for Tauri framework development, including Rust
 license: Complete terms in LICENSE.txt
 ---
 
-
 ## When to use this skill
 
 Use this skill as the **primary entry point** for any Tauri-related request. It serves as a "Total Index" (like `nvm`) that routes you to specific sub-skills.
 
 **Why?**
+
 - **Token Efficiency**: Each sub-skill contains local `examples/` and `templates/` directories, providing detailed, offline-ready documentation without expensive network searches.
 - **Tauri v2 Ready**: All sub-skills are updated for Tauri v2.0+ (plugins, capabilities, permissions).
 
@@ -22,9 +22,11 @@ Use this skill as the **primary entry point** for any Tauri-related request. It 
 ### Sub-skill Map
 
 **Planning & Architecture**
+
 - `tauri-app-planning`: **START HERE**. Requirement analysis, plugin selection, architecture design, and Todo list generation. Includes orchestration patterns.
 
 **Core & Lifecycle**
+
 - `tauri-setup`: Project initialization and environment setup.
 - `tauri-scaffold`: Creating files and structures.
 - `tauri-app-develop`: Development workflow (dev, build, debug).
@@ -33,6 +35,7 @@ Use this skill as the **primary entry point** for any Tauri-related request. It 
 - `tauri-mobile`: Android and iOS specific development.
 
 **System Integration**
+
 - `tauri-app-shell`: Spawn sidecars and run system commands.
 - `tauri-app-os-info`: Get OS version, arch, and locale.
 - `tauri-app-clipboard`: Read/write to system clipboard.
@@ -45,6 +48,7 @@ Use this skill as the **primary entry point** for any Tauri-related request. It 
 - `tauri-app-deep-linking`: Handle custom protocol links (e.g., `myapp://`).
 
 **Data & Networking**
+
 - `tauri-app-http-client`: Rust-based HTTP client (CORS-free).
 - `tauri-app-websocket`: WebSocket client.
 - `tauri-app-upload`: File upload utility.
@@ -54,6 +58,7 @@ Use this skill as the **primary entry point** for any Tauri-related request. It 
 - `tauri-app-file-system`: Read/write files (sandboxed).
 
 **Window & UI**
+
 - `tauri-app-window-menu`: Native application menus and context menus.
 - `tauri-app-system-tray`: System tray icon and menu.
 - `tauri-app-window-state`: Persist window size/position.
@@ -63,11 +68,13 @@ Use this skill as the **primary entry point** for any Tauri-related request. It 
 ## Examples and Templates
 
 **Global Examples** (General Architecture)
+
 - `examples/start/`: Introduction and Quick Start.
 - `examples/guide/`: Architecture, Frontend/Backend patterns.
 
 **Sub-skill Examples** (Specific Features)
 **CRITICAL**: Every sub-skill above has its own local assets.
+
 - `skills/tauri-app-dialog/examples/usage.md`: detailed Dialog plugin usage.
 - `skills/tauri-app-sql/examples/usage.md`: detailed SQL plugin usage.
 - `...` and so on for all skills.
@@ -89,31 +96,39 @@ Tauri, tauri v2, rust, desktop app, mobile app, plugins, capabilities, permissio
 ## 能力边界
 
 ### ✅ 适用场景
+
 - 当你需要使用此技能对应的技术栈时
 - 当项目需要遵循最佳实践时
 - 当需要快速上手或深入理解核心概念时
 
 ### ⚠️ 需要注意
+
 - 复杂业务逻辑需要结合具体场景调整
 - 性能优化需要根据实际数据量评估
 
 ### ❌ 不适用场景
+
 - 不相关的技术栈或框架
 - 需要完全自定义的特殊场景
 
 ## 使用流程
 
 ### Step 1: 环境准备
+
 确保开发环境已安装必要的依赖和工具。
 
 ### Step 2: 配置初始化
+
 根据项目需求进行基础配置。
 
 ### Step 3: 核心功能使用
+
 按照示例代码实现核心功能。
 
 ### Step 4: 测试验证
+
 运行测试确保功能正常。
 
 ### Step 5: 部署上线
+
 完成开发后进行部署和监控。

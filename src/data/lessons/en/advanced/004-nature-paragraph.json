@@ -1,33 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-advanced-4",
-  "level": "advanced",
-  "language": "en",
-  "number": 4,
-  "title": "Nature Paragraph",
-  "titleMy": "သဘာဝ စာပိုဒ်",
-  "description": "Type about nature. Build rhythm and consistency.",
-  "difficulty": "medium",
-  "estimatedMinutes": 12,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 93,
-    "minWpm": 30
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-advanced-4-ex-1",
-      "kind": "text",
-      "instruction": "The forest is full of tall green trees and colorful flowers. A clear stream flows between the rocks. Birds sing sweet songs in the early morning. Nature gives us fresh air and calmness.",
-      "text": "The forest is full of tall green trees and colorful flowers. A clear stream flows between the rocks. Birds sing sweet songs in the early morning. Nature gives us fresh air and calmness."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "speed",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-advanced-3"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-en-advanced-4",
+    "level": "advanced",
+    "language": "en",
+    "number": 4,
+    "title": "Nature Paragraph",
+    "titleMy": "သဘာဝ စာပိုဒ်",
+    "description": "Type about nature. Build rhythm and consistency.",
+    "difficulty": "medium",
+    "estimatedMinutes": 12,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 93,
+        "minWpm": 30
+    },
+    "exercises": [
+        {
+            "id": "lesson-en-advanced-4-ex-1",
+            "kind": "text",
+            "instruction": "The forest is full of tall green trees and colorful flowers. A clear stream flows between the rocks. Birds sing sweet songs in the early morning. Nature gives us fresh air and calmness.",
+            "text": "The forest is full of tall green trees and colorful flowers. A clear stream flows between the rocks. Birds sing sweet songs in the early morning. Nature gives us fresh air and calmness."
+        }
+    ],
+    "focus": ["sentences", "speed", "accuracy"],
+    "prerequisites": ["lesson-en-advanced-3"]
 }

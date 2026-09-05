@@ -1,73 +1,60 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-12",
-  "level": "beginner",
-  "language": "my",
-  "number": 12,
-  "title": "Medial: ြ (ra-nat)",
-  "titleMy": "စာလုံးကြို - ြ",
-  "description": "The ြ medial (KeyJ). Consonant + ြ + vowel.",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-12-ex-1",
-      "kind": "text",
-      "instruction": "ြ ြ ြ ြ ြ ြ ြ ြ ြ ြ",
-      "text": "ြ ြ ြ ြ ြ ြ ြ ြ ြ ြ"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-12",
+    "level": "beginner",
+    "language": "my",
+    "number": 12,
+    "title": "Medial: ြ (ra-nat)",
+    "titleMy": "စာလုံးကြို - ြ",
+    "description": "The ြ medial (KeyJ). Consonant + ြ + vowel.",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-beginner-12-ex-2",
-      "kind": "text",
-      "instruction": "ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ",
-      "text": "ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ"
-    },
-    {
-      "id": "lesson-my-beginner-12-ex-3",
-      "kind": "text",
-      "instruction": "တြ တြ တြ တြ တြ တြ တြ တြ တြ တြ",
-      "text": "တြ တြ တြ တြ တြ တြ တြ တြ တြ တြ"
-    },
-    {
-      "id": "lesson-my-beginner-12-ex-4",
-      "kind": "text",
-      "instruction": "ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ",
-      "text": "ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ"
-    },
-    {
-      "id": "lesson-my-beginner-12-ex-5",
-      "kind": "text",
-      "instruction": "ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ",
-      "text": "ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ"
-    },
-    {
-      "id": "lesson-my-beginner-12-ex-6",
-      "kind": "text",
-      "instruction": "ကျာ ကြာ တျာ တြာ မျာ မြာ",
-      "text": "ကျာ ကြာ တျာ တြာ မျာ မြာ"
-    }
-  ],
-  "focusKeys": [
-    "KeyJ"
-  ],
-  "focus": [
-    "unicode",
-    "medial",
-    "syllable",
-    "key-memory"
-  ],
-  "targetFingers": [
-    "right-index"
-  ],
-  "targetHands": [
-    "right"
-  ],
-  "prerequisites": [
-    "lesson-my-beginner-11"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-12-ex-1",
+            "kind": "text",
+            "instruction": "ြ ြ ြ ြ ြ ြ ြ ြ ြ ြ",
+            "text": "ြ ြ ြ ြ ြ ြ ြ ြ ြ ြ"
+        },
+        {
+            "id": "lesson-my-beginner-12-ex-2",
+            "kind": "text",
+            "instruction": "ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ",
+            "text": "ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ ကြ"
+        },
+        {
+            "id": "lesson-my-beginner-12-ex-3",
+            "kind": "text",
+            "instruction": "တြ တြ တြ တြ တြ တြ တြ တြ တြ တြ",
+            "text": "တြ တြ တြ တြ တြ တြ တြ တြ တြ တြ"
+        },
+        {
+            "id": "lesson-my-beginner-12-ex-4",
+            "kind": "text",
+            "instruction": "ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ",
+            "text": "ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ ကြာ"
+        },
+        {
+            "id": "lesson-my-beginner-12-ex-5",
+            "kind": "text",
+            "instruction": "ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ",
+            "text": "ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ ကြိ"
+        },
+        {
+            "id": "lesson-my-beginner-12-ex-6",
+            "kind": "text",
+            "instruction": "ကျာ ကြာ တျာ တြာ မျာ မြာ",
+            "text": "ကျာ ကြာ တျာ တြာ မျာ မြာ"
+        }
+    ],
+    "focusKeys": ["KeyJ"],
+    "focus": ["unicode", "medial", "syllable", "key-memory"],
+    "targetFingers": ["right-index"],
+    "targetHands": ["right"],
+    "prerequisites": ["lesson-my-beginner-11"]
 }

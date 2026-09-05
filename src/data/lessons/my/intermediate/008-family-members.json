@@ -1,32 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-intermediate-8",
-  "level": "intermediate",
-  "language": "my",
-  "number": 8,
-  "title": "Family Members",
-  "titleMy": "မိသားစုဝင်",
-  "description": "Family vocabulary: father, mother, brother, sister.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-intermediate-8-ex-1",
-      "kind": "text",
-      "instruction": "အဖေ အမေ အစ်ကို အစ်မ ညီငယ် ညီမငယ်",
-      "text": "အဖေ အမေ အစ်ကို အစ်မ ညီငယ် ညီမငယ်"
-    }
-  ],
-  "focus": [
-    "words",
-    "unicode"
-  ],
-  "prerequisites": [
-    "lesson-my-intermediate-7"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-my-intermediate-8",
+    "level": "intermediate",
+    "language": "my",
+    "number": 8,
+    "title": "Family Members",
+    "titleMy": "မိသားစုဝင်",
+    "description": "Family vocabulary: father, mother, brother, sister.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": null
+    },
+    "exercises": [
+        {
+            "id": "lesson-my-intermediate-8-ex-1",
+            "kind": "text",
+            "instruction": "အဖေ အမေ အစ်ကို အစ်မ ညီငယ် ညီမငယ်",
+            "text": "အဖေ အမေ အစ်ကို အစ်မ ညီငယ် ညီမငယ်"
+        }
+    ],
+    "focus": ["words", "unicode"],
+    "prerequisites": ["lesson-my-intermediate-7"]
 }

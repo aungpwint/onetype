@@ -1,45 +1,39 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-intermediate-3",
-  "level": "intermediate",
-  "language": "en",
-  "number": 3,
-  "title": "Common Word Pairs",
-  "titleMy": "အသုံးများ စကားလုံး စုံတွဲ",
-  "description": "Common two-word combinations for smooth typing.",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": 20
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-intermediate-3-ex-1",
-      "kind": "text",
-      "instruction": "of the in the to the at the from the",
-      "text": "of the in the to the at the from the"
+    "schemaVersion": 1,
+    "id": "lesson-en-intermediate-3",
+    "level": "intermediate",
+    "language": "en",
+    "number": 3,
+    "title": "Common Word Pairs",
+    "titleMy": "အသုံးများ စကားလုံး စုံတွဲ",
+    "description": "Common two-word combinations for smooth typing.",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": 20
     },
-    {
-      "id": "lesson-en-intermediate-3-ex-2",
-      "kind": "text",
-      "instruction": "for the and the with the on the in the",
-      "text": "for the and the with the on the in the"
-    },
-    {
-      "id": "lesson-en-intermediate-3-ex-3",
-      "kind": "text",
-      "instruction": "it is he is she is we are they are",
-      "text": "it is he is she is we are they are"
-    }
-  ],
-  "focus": [
-    "words",
-    "hand-alternation",
-    "speed"
-  ],
-  "prerequisites": [
-    "lesson-en-intermediate-2"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-intermediate-3-ex-1",
+            "kind": "text",
+            "instruction": "of the in the to the at the from the",
+            "text": "of the in the to the at the from the"
+        },
+        {
+            "id": "lesson-en-intermediate-3-ex-2",
+            "kind": "text",
+            "instruction": "for the and the with the on the in the",
+            "text": "for the and the with the on the in the"
+        },
+        {
+            "id": "lesson-en-intermediate-3-ex-3",
+            "kind": "text",
+            "instruction": "it is he is she is we are they are",
+            "text": "it is he is she is we are they are"
+        }
+    ],
+    "focus": ["words", "hand-alternation", "speed"],
+    "prerequisites": ["lesson-en-intermediate-2"]
 }

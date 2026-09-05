@@ -1,94 +1,77 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-15",
-  "level": "beginner",
-  "language": "en",
-  "number": 15,
-  "title": "Row Transitions: Home to Bottom",
-  "titleMy": "တန်းကူးလေ့ကျင့်ခန်း - အိမ်တန်းမှ အောက်",
-  "description": "Practice reaching from the home row down to the bottom row and returning.",
-  "difficulty": "easy",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 87,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-15-ex-1",
-      "kind": "text",
-      "instruction": "az az az az az az az az az az",
-      "text": "az az az az az az az az az az"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-15",
+    "level": "beginner",
+    "language": "en",
+    "number": 15,
+    "title": "Row Transitions: Home to Bottom",
+    "titleMy": "တန်းကူးလေ့ကျင့်ခန်း - အိမ်တန်းမှ အောက်",
+    "description": "Practice reaching from the home row down to the bottom row and returning.",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 87,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-15-ex-2",
-      "kind": "text",
-      "instruction": "sx sx sx sx sx sx sx sx sx sx",
-      "text": "sx sx sx sx sx sx sx sx sx sx"
-    },
-    {
-      "id": "lesson-en-beginner-15-ex-3",
-      "kind": "text",
-      "instruction": "dc dc dc dc dc dc dc dc dc dc",
-      "text": "dc dc dc dc dc dc dc dc dc dc"
-    },
-    {
-      "id": "lesson-en-beginner-15-ex-4",
-      "kind": "text",
-      "instruction": "fv fv fv fv fv fv fv fv fv fv",
-      "text": "fv fv fv fv fv fv fv fv fv fv"
-    },
-    {
-      "id": "lesson-en-beginner-15-ex-5",
-      "kind": "text",
-      "instruction": "gb gb gb gb gb gb gb gb gb gb",
-      "text": "gb gb gb gb gb gb gb gb gb gb"
-    },
-    {
-      "id": "lesson-en-beginner-15-ex-6",
-      "kind": "text",
-      "instruction": "hn hn hn hn hn hn hn hn hn hn",
-      "text": "hn hn hn hn hn hn hn hn hn hn"
-    },
-    {
-      "id": "lesson-en-beginner-15-ex-7",
-      "kind": "text",
-      "instruction": "jm jm jm jm jm jm jm jm jm jm",
-      "text": "jm jm jm jm jm jm jm jm jm jm"
-    },
-    {
-      "id": "lesson-en-beginner-15-ex-8",
-      "kind": "text",
-      "instruction": "k, k, k, k, k, k, k, k, k, k",
-      "text": "k, k, k, k, k, k, k, k, k, k"
-    },
-    {
-      "id": "lesson-en-beginner-15-ex-9",
-      "kind": "text",
-      "instruction": "l. l. l. l. l. l. l. l. l. l.",
-      "text": "l. l. l. l. l. l. l. l. l. l."
-    }
-  ],
-  "focusKeys": [
-    "KeyZ",
-    "KeyX",
-    "KeyC",
-    "KeyV",
-    "KeyB",
-    "KeyN",
-    "KeyM"
-  ],
-  "focus": [
-    "row-transition",
-    "finger-control",
-    "key-memory"
-  ],
-  "targetHands": [
-    "left",
-    "right"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-14"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-15-ex-1",
+            "kind": "text",
+            "instruction": "az az az az az az az az az az",
+            "text": "az az az az az az az az az az"
+        },
+        {
+            "id": "lesson-en-beginner-15-ex-2",
+            "kind": "text",
+            "instruction": "sx sx sx sx sx sx sx sx sx sx",
+            "text": "sx sx sx sx sx sx sx sx sx sx"
+        },
+        {
+            "id": "lesson-en-beginner-15-ex-3",
+            "kind": "text",
+            "instruction": "dc dc dc dc dc dc dc dc dc dc",
+            "text": "dc dc dc dc dc dc dc dc dc dc"
+        },
+        {
+            "id": "lesson-en-beginner-15-ex-4",
+            "kind": "text",
+            "instruction": "fv fv fv fv fv fv fv fv fv fv",
+            "text": "fv fv fv fv fv fv fv fv fv fv"
+        },
+        {
+            "id": "lesson-en-beginner-15-ex-5",
+            "kind": "text",
+            "instruction": "gb gb gb gb gb gb gb gb gb gb",
+            "text": "gb gb gb gb gb gb gb gb gb gb"
+        },
+        {
+            "id": "lesson-en-beginner-15-ex-6",
+            "kind": "text",
+            "instruction": "hn hn hn hn hn hn hn hn hn hn",
+            "text": "hn hn hn hn hn hn hn hn hn hn"
+        },
+        {
+            "id": "lesson-en-beginner-15-ex-7",
+            "kind": "text",
+            "instruction": "jm jm jm jm jm jm jm jm jm jm",
+            "text": "jm jm jm jm jm jm jm jm jm jm"
+        },
+        {
+            "id": "lesson-en-beginner-15-ex-8",
+            "kind": "text",
+            "instruction": "k, k, k, k, k, k, k, k, k, k",
+            "text": "k, k, k, k, k, k, k, k, k, k"
+        },
+        {
+            "id": "lesson-en-beginner-15-ex-9",
+            "kind": "text",
+            "instruction": "l. l. l. l. l. l. l. l. l. l.",
+            "text": "l. l. l. l. l. l. l. l. l. l."
+        }
+    ],
+    "focusKeys": ["KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM"],
+    "focus": ["row-transition", "finger-control", "key-memory"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-en-beginner-14"]
 }

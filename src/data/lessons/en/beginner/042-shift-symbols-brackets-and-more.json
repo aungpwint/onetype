@@ -1,72 +1,59 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-42",
-  "level": "beginner",
-  "language": "en",
-  "number": 42,
-  "title": "Shift + Symbols: Brackets and More",
-  "titleMy": "Shift + သင်္ကေတ: အချိတ်အဆက်များ",
-  "description": "Shift for brackets, quotes, and other symbols.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 88,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-42-ex-1",
-      "kind": "text",
-      "instruction": "{ } { } { } { } { } { }",
-      "text": "{ } { } { } { } { } { }"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-42",
+    "level": "beginner",
+    "language": "en",
+    "number": 42,
+    "title": "Shift + Symbols: Brackets and More",
+    "titleMy": "Shift + သင်္ကေတ: အချိတ်အဆက်များ",
+    "description": "Shift for brackets, quotes, and other symbols.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 88,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-42-ex-2",
-      "kind": "text",
-      "instruction": "[ ] [ ] [ ] [ ] [ ] [ ]",
-      "text": "[ ] [ ] [ ] [ ] [ ] [ ]"
-    },
-    {
-      "id": "lesson-en-beginner-42-ex-3",
-      "kind": "text",
-      "instruction": "< > < > < > < > < > < >",
-      "text": "< > < > < > < > < > < >"
-    },
-    {
-      "id": "lesson-en-beginner-42-ex-4",
-      "kind": "text",
-      "instruction": "? ? ? ? ? ? ? ? ? ?",
-      "text": "? ? ? ? ? ? ? ? ? ?"
-    },
-    {
-      "id": "lesson-en-beginner-42-ex-5",
-      "kind": "text",
-      "instruction": ": : : : : : : : : :",
-      "text": ": : : : : : : : : :"
-    },
-    {
-      "id": "lesson-en-beginner-42-ex-6",
-      "kind": "text",
-      "instruction": "\" \" \" \" \" \" \" \" \" \"",
-      "text": "\" \" \" \" \" \" \" \" \" \""
-    }
-  ],
-  "focusKeys": [
-    "BracketLeft",
-    "BracketRight",
-    "Quote",
-    "Comma",
-    "Period",
-    "Slash"
-  ],
-  "focus": [
-    "shift",
-    "symbols",
-    "punctuation"
-  ],
-  "requiresShift": true,
-  "prerequisites": [
-    "lesson-en-beginner-41"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-42-ex-1",
+            "kind": "text",
+            "instruction": "{ } { } { } { } { } { }",
+            "text": "{ } { } { } { } { } { }"
+        },
+        {
+            "id": "lesson-en-beginner-42-ex-2",
+            "kind": "text",
+            "instruction": "[ ] [ ] [ ] [ ] [ ] [ ]",
+            "text": "[ ] [ ] [ ] [ ] [ ] [ ]"
+        },
+        {
+            "id": "lesson-en-beginner-42-ex-3",
+            "kind": "text",
+            "instruction": "< > < > < > < > < > < >",
+            "text": "< > < > < > < > < > < >"
+        },
+        {
+            "id": "lesson-en-beginner-42-ex-4",
+            "kind": "text",
+            "instruction": "? ? ? ? ? ? ? ? ? ?",
+            "text": "? ? ? ? ? ? ? ? ? ?"
+        },
+        {
+            "id": "lesson-en-beginner-42-ex-5",
+            "kind": "text",
+            "instruction": ": : : : : : : : : :",
+            "text": ": : : : : : : : : :"
+        },
+        {
+            "id": "lesson-en-beginner-42-ex-6",
+            "kind": "text",
+            "instruction": "\" \" \" \" \" \" \" \" \" \"",
+            "text": "\" \" \" \" \" \" \" \" \" \""
+        }
+    ],
+    "focusKeys": ["BracketLeft", "BracketRight", "Quote", "Comma", "Period", "Slash"],
+    "focus": ["shift", "symbols", "punctuation"],
+    "requiresShift": true,
+    "prerequisites": ["lesson-en-beginner-41"]
 }

@@ -1,51 +1,45 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-intermediate-5",
-  "level": "intermediate",
-  "language": "en",
-  "number": 5,
-  "title": "Alternating-Hand Words",
-  "titleMy": "လက်နှစ်ဖက် အလှည့်ကျ စကားလုံး",
-  "description": "Words that alternate between left and right hands.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": 22
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-intermediate-5-ex-1",
-      "kind": "text",
-      "instruction": "alternating quick jumpy fix band",
-      "text": "alternating quick jumpy fix band"
+    "schemaVersion": 1,
+    "id": "lesson-en-intermediate-5",
+    "level": "intermediate",
+    "language": "en",
+    "number": 5,
+    "title": "Alternating-Hand Words",
+    "titleMy": "လက်နှစ်ဖက် အလှည့်ကျ စကားလုံး",
+    "description": "Words that alternate between left and right hands.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": 22
     },
-    {
-      "id": "lesson-en-intermediate-5-ex-2",
-      "kind": "text",
-      "instruction": "kingdom label jump theme common",
-      "text": "kingdom label jump theme common"
-    },
-    {
-      "id": "lesson-en-intermediate-5-ex-3",
-      "kind": "text",
-      "instruction": "figured burned paper novel video",
-      "text": "figured burned paper novel video"
-    },
-    {
-      "id": "lesson-en-intermediate-5-ex-4",
-      "kind": "text",
-      "instruction": "noticed lambda applied changes global",
-      "text": "noticed lambda applied changes global"
-    }
-  ],
-  "focus": [
-    "hand-alternation",
-    "words",
-    "speed"
-  ],
-  "prerequisites": [
-    "lesson-en-intermediate-4"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-intermediate-5-ex-1",
+            "kind": "text",
+            "instruction": "alternating quick jumpy fix band",
+            "text": "alternating quick jumpy fix band"
+        },
+        {
+            "id": "lesson-en-intermediate-5-ex-2",
+            "kind": "text",
+            "instruction": "kingdom label jump theme common",
+            "text": "kingdom label jump theme common"
+        },
+        {
+            "id": "lesson-en-intermediate-5-ex-3",
+            "kind": "text",
+            "instruction": "figured burned paper novel video",
+            "text": "figured burned paper novel video"
+        },
+        {
+            "id": "lesson-en-intermediate-5-ex-4",
+            "kind": "text",
+            "instruction": "noticed lambda applied changes global",
+            "text": "noticed lambda applied changes global"
+        }
+    ],
+    "focus": ["hand-alternation", "words", "speed"],
+    "prerequisites": ["lesson-en-intermediate-4"]
 }

@@ -8,12 +8,12 @@ Every learner's data lives in a local SQLite database — nothing leaves the mac
 
 Get the latest installer for your platform from the **[Latest Release](https://github.com/aungpwint/onetype/releases/latest)**. Every release ships checksums (`checksums.txt`) and a signed auto-update manifest, and installed apps auto-update in the background when a new version is published.
 
-| Platform | File (from the latest release) | Install |
-| --- | --- | --- |
-| **Windows** | `OneType_<version>_x64-setup.exe` | Run the installer and follow the wizard. |
-| **macOS (Apple Silicon)** | `OneType_<version>_aarch64.dmg` | Open the DMG, drag **OneType.app** into Applications, then right-click → *Open* the first time (Gatekeeper). |
-| **Linux (Debian/Ubuntu)** | `OneType_<version>_amd64.deb` | `sudo apt install -y ./OneType_<version>_amd64.deb` |
-| **Linux (Fedora/RHEL)** | `OneType-<version>-1.x86_64.rpm` | `sudo dnf install -y ./OneType-<version>-1.x86_64.rpm` |
+| Platform                  | File (from the latest release)    | Install                                                                                                      |
+| ------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **Windows**               | `OneType_<version>_x64-setup.exe` | Run the installer and follow the wizard.                                                                     |
+| **macOS (Apple Silicon)** | `OneType_<version>_aarch64.dmg`   | Open the DMG, drag **OneType.app** into Applications, then right-click → _Open_ the first time (Gatekeeper). |
+| **Linux (Debian/Ubuntu)** | `OneType_<version>_amd64.deb`     | `sudo apt install -y ./OneType_<version>_amd64.deb`                                                          |
+| **Linux (Fedora/RHEL)**   | `OneType-<version>-1.x86_64.rpm`  | `sudo dnf install -y ./OneType-<version>-1.x86_64.rpm`                                                       |
 
 ### Linux — one-line installer
 
@@ -55,14 +55,14 @@ Compare the output with `checksums.txt` from the release.
 
 ## Tech stack
 
-| Layer | Choice |
-| --- | --- |
-| Shell | Tauri 2 (Rust) |
-| Frontend | React 19 + TypeScript (strict) |
-| Styling | Tailwind v4 + custom theme (light/dark) |
-| State | Zustand |
-| Storage | SQLite via `rusqlite` (Tauri) / localStorage (browser preview) |
-| Tests | Vitest (frontend), cargo test (Rust) |
+| Layer    | Choice                                                         |
+| -------- | -------------------------------------------------------------- |
+| Shell    | Tauri 2 (Rust)                                                 |
+| Frontend | React 19 + TypeScript (strict)                                 |
+| Styling  | Tailwind v4 + custom theme (light/dark)                        |
+| State    | Zustand                                                        |
+| Storage  | SQLite via `rusqlite` (Tauri) / localStorage (browser preview) |
+| Tests    | Vitest (frontend), cargo test (Rust)                           |
 
 The `src/services/backend.ts` facade switches between Tauri IPC and a localStorage-backed `localBackend` so the app also runs as a plain Vite+React app in the browser during development.
 

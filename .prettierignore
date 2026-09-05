@@ -1,0 +1,6 @@
+node_modules
+dist
+dist-ssr
+src-tauri
+pnpm-lock.yaml
+*.tsbuildinfo

@@ -1,66 +1,58 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-54",
-  "level": "beginner",
-  "language": "en",
-  "number": 54,
-  "title": "Punctuation: Question and Exclamation",
-  "titleMy": "နားသတ်: မေးခွန်းနှင့် အံ့ဩ",
-  "description": "Question marks and exclamation marks.",
-  "difficulty": "medium",
-  "estimatedMinutes": 8,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-54-ex-1",
-      "kind": "text",
-      "instruction": "? ? ? ? ? ? ? ? ? ?",
-      "text": "? ? ? ? ? ? ? ? ? ?"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-54",
+    "level": "beginner",
+    "language": "en",
+    "number": 54,
+    "title": "Punctuation: Question and Exclamation",
+    "titleMy": "နားသတ်: မေးခွန်းနှင့် အံ့ဩ",
+    "description": "Question marks and exclamation marks.",
+    "difficulty": "medium",
+    "estimatedMinutes": 8,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-54-ex-2",
-      "kind": "text",
-      "instruction": "! ! ! ! ! ! ! ! ! !",
-      "text": "! ! ! ! ! ! ! ! ! !"
-    },
-    {
-      "id": "lesson-en-beginner-54-ex-3",
-      "kind": "text",
-      "instruction": "yes? no? why? how?",
-      "text": "yes? no? why? how?"
-    },
-    {
-      "id": "lesson-en-beginner-54-ex-4",
-      "kind": "text",
-      "instruction": "wow! great! nice! good!",
-      "text": "wow! great! nice! good!"
-    },
-    {
-      "id": "lesson-en-beginner-54-ex-5",
-      "kind": "text",
-      "instruction": "can you? I can! do it?",
-      "text": "can you? I can! do it?"
-    },
-    {
-      "id": "lesson-en-beginner-54-ex-6",
-      "kind": "text",
-      "instruction": "hello? yes! thank you.",
-      "text": "hello? yes! thank you."
-    }
-  ],
-  "focusKeys": [
-    "Slash"
-  ],
-  "focus": [
-    "punctuation",
-    "shift",
-    "sentences"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-53"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-54-ex-1",
+            "kind": "text",
+            "instruction": "? ? ? ? ? ? ? ? ? ?",
+            "text": "? ? ? ? ? ? ? ? ? ?"
+        },
+        {
+            "id": "lesson-en-beginner-54-ex-2",
+            "kind": "text",
+            "instruction": "! ! ! ! ! ! ! ! ! !",
+            "text": "! ! ! ! ! ! ! ! ! !"
+        },
+        {
+            "id": "lesson-en-beginner-54-ex-3",
+            "kind": "text",
+            "instruction": "yes? no? why? how?",
+            "text": "yes? no? why? how?"
+        },
+        {
+            "id": "lesson-en-beginner-54-ex-4",
+            "kind": "text",
+            "instruction": "wow! great! nice! good!",
+            "text": "wow! great! nice! good!"
+        },
+        {
+            "id": "lesson-en-beginner-54-ex-5",
+            "kind": "text",
+            "instruction": "can you? I can! do it?",
+            "text": "can you? I can! do it?"
+        },
+        {
+            "id": "lesson-en-beginner-54-ex-6",
+            "kind": "text",
+            "instruction": "hello? yes! thank you.",
+            "text": "hello? yes! thank you."
+        }
+    ],
+    "focusKeys": ["Slash"],
+    "focus": ["punctuation", "shift", "sentences"],
+    "prerequisites": ["lesson-en-beginner-53"]
 }

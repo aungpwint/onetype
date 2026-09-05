@@ -1,45 +1,39 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-intermediate-13",
-  "level": "intermediate",
-  "language": "my",
-  "number": 13,
-  "title": "Informal Sentences",
-  "titleMy": "အလွတ်စကားပြော ဝါကျ",
-  "description": "Conversational sentences for everyday use.",
-  "difficulty": "hard",
-  "estimatedMinutes": 12,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 92,
-    "minWpm": 15
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-intermediate-13-ex-1",
-      "kind": "text",
-      "instruction": "ဒီနေ့ရာသီဥတုက သာယာတယ်။",
-      "text": "ဒီနေ့ရာသီဥတုက သာယာတယ်။"
+    "schemaVersion": 1,
+    "id": "lesson-my-intermediate-13",
+    "level": "intermediate",
+    "language": "my",
+    "number": 13,
+    "title": "Informal Sentences",
+    "titleMy": "အလွတ်စကားပြော ဝါကျ",
+    "description": "Conversational sentences for everyday use.",
+    "difficulty": "hard",
+    "estimatedMinutes": 12,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 92,
+        "minWpm": 15
     },
-    {
-      "id": "lesson-my-intermediate-13-ex-2",
-      "kind": "text",
-      "instruction": "ညနေကျရင်တော့ မိုးရွာနိုင်တယ်။",
-      "text": "ညနေကျရင်တော့ မိုးရွာနိုင်တယ်။"
-    },
-    {
-      "id": "lesson-my-intermediate-13-ex-3",
-      "kind": "text",
-      "instruction": "ငါတို့စောင့်ကြည့်ကြရအောင်။",
-      "text": "ငါတို့စောင့်ကြည့်ကြရအောင်။"
-    }
-  ],
-  "focus": [
-    "sentences",
-    "unicode",
-    "punctuation"
-  ],
-  "prerequisites": [
-    "lesson-my-intermediate-12"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-intermediate-13-ex-1",
+            "kind": "text",
+            "instruction": "ဒီနေ့ရာသီဥတုက သာယာတယ်။",
+            "text": "ဒီနေ့ရာသီဥတုက သာယာတယ်။"
+        },
+        {
+            "id": "lesson-my-intermediate-13-ex-2",
+            "kind": "text",
+            "instruction": "ညနေကျရင်တော့ မိုးရွာနိုင်တယ်။",
+            "text": "ညနေကျရင်တော့ မိုးရွာနိုင်တယ်။"
+        },
+        {
+            "id": "lesson-my-intermediate-13-ex-3",
+            "kind": "text",
+            "instruction": "ငါတို့စောင့်ကြည့်ကြရအောင်။",
+            "text": "ငါတို့စောင့်ကြည့်ကြရအောင်။"
+        }
+    ],
+    "focus": ["sentences", "unicode", "punctuation"],
+    "prerequisites": ["lesson-my-intermediate-12"]
 }

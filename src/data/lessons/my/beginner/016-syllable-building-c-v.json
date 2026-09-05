@@ -1,56 +1,51 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-16",
-  "level": "beginner",
-  "language": "my",
-  "number": 16,
-  "title": "Syllable Building: C+V",
-  "titleMy": "ဝဏ္ဏ ဖွဲ့ - ဗျည်း + သရ",
-  "description": "Build syllables with consonant + vowel combinations.",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 87,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-16-ex-1",
-      "kind": "text",
-      "instruction": "ကိ ကီ ကု ကူ ကေ ကဲ",
-      "text": "ကိ ကီ ကု ကူ ကေ ကဲ"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-16",
+    "level": "beginner",
+    "language": "my",
+    "number": 16,
+    "title": "Syllable Building: C+V",
+    "titleMy": "ဝဏ္ဏ ဖွဲ့ - ဗျည်း + သရ",
+    "description": "Build syllables with consonant + vowel combinations.",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 87,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-beginner-16-ex-2",
-      "kind": "text",
-      "instruction": "တိ တီ တု တူ တေ တဲ",
-      "text": "တိ တီ တု တူ တေ တဲ"
-    },
-    {
-      "id": "lesson-my-beginner-16-ex-3",
-      "kind": "text",
-      "instruction": "မိ မီ မု မူ မေ မဲ",
-      "text": "မိ မီ မု မူ မေ မဲ"
-    },
-    {
-      "id": "lesson-my-beginner-16-ex-4",
-      "kind": "text",
-      "instruction": "နိ နီ နု နူ နေ နဲ",
-      "text": "နိ နီ နု နူ နေ နဲ"
-    },
-    {
-      "id": "lesson-my-beginner-16-ex-5",
-      "kind": "text",
-      "instruction": "ကာ တာ မာ နာ ကိ တိ မိ နိ",
-      "text": "ကာ တာ မာ နာ ကိ တိ မိ နိ"
-    }
-  ],
-  "focus": [
-    "unicode",
-    "syllable"
-  ],
-  "prerequisites": [
-    "lesson-my-beginner-14"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-16-ex-1",
+            "kind": "text",
+            "instruction": "ကိ ကီ ကု ကူ ကေ ကဲ",
+            "text": "ကိ ကီ ကု ကူ ကေ ကဲ"
+        },
+        {
+            "id": "lesson-my-beginner-16-ex-2",
+            "kind": "text",
+            "instruction": "တိ တီ တု တူ တေ တဲ",
+            "text": "တိ တီ တု တူ တေ တဲ"
+        },
+        {
+            "id": "lesson-my-beginner-16-ex-3",
+            "kind": "text",
+            "instruction": "မိ မီ မု မူ မေ မဲ",
+            "text": "မိ မီ မု မူ မေ မဲ"
+        },
+        {
+            "id": "lesson-my-beginner-16-ex-4",
+            "kind": "text",
+            "instruction": "နိ နီ နု နူ နေ နဲ",
+            "text": "နိ နီ နု နူ နေ နဲ"
+        },
+        {
+            "id": "lesson-my-beginner-16-ex-5",
+            "kind": "text",
+            "instruction": "ကာ တာ မာ နာ ကိ တိ မိ နိ",
+            "text": "ကာ တာ မာ နာ ကိ တိ မိ နိ"
+        }
+    ],
+    "focus": ["unicode", "syllable"],
+    "prerequisites": ["lesson-my-beginner-14"]
 }

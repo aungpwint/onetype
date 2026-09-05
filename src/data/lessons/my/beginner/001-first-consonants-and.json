@@ -1,59 +1,47 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-1",
-  "level": "beginner",
-  "language": "my",
-  "number": 1,
-  "title": "First Consonants: က and င",
-  "titleMy": "ပထမအက္ခရာများ - က နှင့် င",
-  "description": "Typing Myanmar consonants on the top row. က (KeyU) with right index, င (KeyI) with right middle.",
-  "difficulty": "basic",
-  "estimatedMinutes": 5,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-1-ex-1",
-      "kind": "text",
-      "instruction": "က က က က က က က က က က",
-      "text": "က က က က က က က က က က"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-1",
+    "level": "beginner",
+    "language": "my",
+    "number": 1,
+    "title": "First Consonants: က and င",
+    "titleMy": "ပထမအက္ခရာများ - က နှင့် င",
+    "description": "Typing Myanmar consonants on the top row. က (KeyU) with right index, င (KeyI) with right middle.",
+    "difficulty": "basic",
+    "estimatedMinutes": 5,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-beginner-1-ex-2",
-      "kind": "text",
-      "instruction": "င င င င င င င င င င",
-      "text": "င င င င င င င င င င"
-    },
-    {
-      "id": "lesson-my-beginner-1-ex-3",
-      "kind": "text",
-      "instruction": "က င က င က င က င က င",
-      "text": "က င က င က င က င က င"
-    },
-    {
-      "id": "lesson-my-beginner-1-ex-4",
-      "kind": "text",
-      "instruction": "က င က င က င က င က င က င က င",
-      "text": "က င က င က င က င က င က င က င"
-    }
-  ],
-  "focusKeys": [
-    "KeyU",
-    "KeyI"
-  ],
-  "focus": [
-    "top-row",
-    "finger-control",
-    "key-memory"
-  ],
-  "targetFingers": [
-    "right-index",
-    "right-middle"
-  ],
-  "targetHands": [
-    "right"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-1-ex-1",
+            "kind": "text",
+            "instruction": "က က က က က က က က က က",
+            "text": "က က က က က က က က က က"
+        },
+        {
+            "id": "lesson-my-beginner-1-ex-2",
+            "kind": "text",
+            "instruction": "င င င င င င င င င င",
+            "text": "င င င င င င င င င င"
+        },
+        {
+            "id": "lesson-my-beginner-1-ex-3",
+            "kind": "text",
+            "instruction": "က င က င က င က င က င",
+            "text": "က င က င က င က င က င"
+        },
+        {
+            "id": "lesson-my-beginner-1-ex-4",
+            "kind": "text",
+            "instruction": "က င က င က င က င က င က င က င",
+            "text": "က င က င က င က င က င က င က င"
+        }
+    ],
+    "focusKeys": ["KeyU", "KeyI"],
+    "focus": ["top-row", "finger-control", "key-memory"],
+    "targetFingers": ["right-index", "right-middle"],
+    "targetHands": ["right"]
 }

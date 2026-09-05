@@ -1,73 +1,60 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-5",
-  "level": "beginner",
-  "language": "en",
-  "number": 5,
-  "title": "Left Index Stretch: G",
-  "titleMy": "ဘယ်ဘက်အညွှတ်ချောင်း ဆွဲ - G",
-  "description": "G is next to F. Stretch your left index finger right, then return to F.",
-  "difficulty": "basic",
-  "estimatedMinutes": 6,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-5-ex-1",
-      "kind": "text",
-      "instruction": "g g g g g g g g g g",
-      "text": "g g g g g g g g g g"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-5",
+    "level": "beginner",
+    "language": "en",
+    "number": 5,
+    "title": "Left Index Stretch: G",
+    "titleMy": "ဘယ်ဘက်အညွှတ်ချောင်း ဆွဲ - G",
+    "description": "G is next to F. Stretch your left index finger right, then return to F.",
+    "difficulty": "basic",
+    "estimatedMinutes": 6,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-5-ex-2",
-      "kind": "text",
-      "instruction": "f g f g f g f g f g",
-      "text": "f g f g f g f g f g"
-    },
-    {
-      "id": "lesson-en-beginner-5-ex-3",
-      "kind": "text",
-      "instruction": "fg fg fg fg fg fg fg fg fg fg",
-      "text": "fg fg fg fg fg fg fg fg fg fg"
-    },
-    {
-      "id": "lesson-en-beginner-5-ex-4",
-      "kind": "text",
-      "instruction": "gf gf gf gf gf gf gf gf gf gf",
-      "text": "gf gf gf gf gf gf gf gf gf gf"
-    },
-    {
-      "id": "lesson-en-beginner-5-ex-5",
-      "kind": "text",
-      "instruction": "fgf fgf fgf fgf fgf fgf fgf fgf",
-      "text": "fgf fgf fgf fgf fgf fgf fgf fgf"
-    },
-    {
-      "id": "lesson-en-beginner-5-ex-6",
-      "kind": "text",
-      "instruction": "asdfg asdfg asdfg asdfg asdfg",
-      "text": "asdfg asdfg asdfg asdfg asdfg"
-    }
-  ],
-  "focusKeys": [
-    "KeyF",
-    "KeyG"
-  ],
-  "focus": [
-    "home-row",
-    "finger-control",
-    "key-memory"
-  ],
-  "targetFingers": [
-    "left-index"
-  ],
-  "targetHands": [
-    "left"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-4"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-5-ex-1",
+            "kind": "text",
+            "instruction": "g g g g g g g g g g",
+            "text": "g g g g g g g g g g"
+        },
+        {
+            "id": "lesson-en-beginner-5-ex-2",
+            "kind": "text",
+            "instruction": "f g f g f g f g f g",
+            "text": "f g f g f g f g f g"
+        },
+        {
+            "id": "lesson-en-beginner-5-ex-3",
+            "kind": "text",
+            "instruction": "fg fg fg fg fg fg fg fg fg fg",
+            "text": "fg fg fg fg fg fg fg fg fg fg"
+        },
+        {
+            "id": "lesson-en-beginner-5-ex-4",
+            "kind": "text",
+            "instruction": "gf gf gf gf gf gf gf gf gf gf",
+            "text": "gf gf gf gf gf gf gf gf gf gf"
+        },
+        {
+            "id": "lesson-en-beginner-5-ex-5",
+            "kind": "text",
+            "instruction": "fgf fgf fgf fgf fgf fgf fgf fgf",
+            "text": "fgf fgf fgf fgf fgf fgf fgf fgf"
+        },
+        {
+            "id": "lesson-en-beginner-5-ex-6",
+            "kind": "text",
+            "instruction": "asdfg asdfg asdfg asdfg asdfg",
+            "text": "asdfg asdfg asdfg asdfg asdfg"
+        }
+    ],
+    "focusKeys": ["KeyF", "KeyG"],
+    "focus": ["home-row", "finger-control", "key-memory"],
+    "targetFingers": ["left-index"],
+    "targetHands": ["left"],
+    "prerequisites": ["lesson-en-beginner-4"]
 }

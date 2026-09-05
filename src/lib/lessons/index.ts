@@ -1,11 +1,11 @@
-export * from "./lesson-errors";
-export { validateLesson, parseLesson, lessonSchemaInfo, isRecord } from "./lesson-validator";
-export type { LessonSchemaValidation } from "./lesson-validator";
-export { lessonPhaseFromExercise } from "./lesson-phase";
-export { normalizeLesson } from "./lesson-normalizer";
-export { loadLessonRecords } from "./lesson-loader";
-export type { LessonRecord } from "./lesson-loader";
-export { LessonRegistry, getRegisteredSources } from "./lesson-registry";
-export type { LessonCatalogIndexes } from "./lesson-registry";
-export { createLessonRepository } from "./lesson-repository";
-export type { LessonRepository } from "./lesson-repository";
+export * from './lesson-errors'
+export { validateLesson, parseLesson, lessonSchemaInfo, isRecord } from './lesson-validator'
+export type { LessonSchemaValidation } from './lesson-validator'
+export { lessonPhaseFromExercise } from './lesson-phase'
+export { normalizeLesson } from './lesson-normalizer'
+export { loadLessonRecords } from './lesson-loader'
+export type { LessonRecord } from './lesson-loader'
+export { LessonRegistry, getRegisteredSources } from './lesson-registry'
+export type { LessonCatalogIndexes } from './lesson-registry'
+export { createLessonRepository } from './lesson-repository'
+export type { LessonRepository } from './lesson-repository'

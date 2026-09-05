@@ -1,68 +1,63 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-24",
-  "level": "beginner",
-  "language": "en",
-  "number": 24,
-  "title": "Common Four-Letter Words",
-  "titleMy": "အသုံးများ အက္ခရာ ၄ လုံး စကားလုံး",
-  "description": "Four-letter words for more practice with the keys you know.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 88,
-    "minWpm": 12
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-24-ex-1",
-      "kind": "text",
-      "instruction": "that that that with with with",
-      "text": "that that that with with with"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-24",
+    "level": "beginner",
+    "language": "en",
+    "number": 24,
+    "title": "Common Four-Letter Words",
+    "titleMy": "အသုံးများ အက္ခရာ ၄ လုံး စကားလုံး",
+    "description": "Four-letter words for more practice with the keys you know.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 88,
+        "minWpm": 12
     },
-    {
-      "id": "lesson-en-beginner-24-ex-2",
-      "kind": "text",
-      "instruction": "have have have from from from",
-      "text": "have have have from from from"
-    },
-    {
-      "id": "lesson-en-beginner-24-ex-3",
-      "kind": "text",
-      "instruction": "this this this they they they",
-      "text": "this this this they they they"
-    },
-    {
-      "id": "lesson-en-beginner-24-ex-4",
-      "kind": "text",
-      "instruction": "will will will more more more",
-      "text": "will will will more more more"
-    },
-    {
-      "id": "lesson-en-beginner-24-ex-5",
-      "kind": "text",
-      "instruction": "look look look hand hand hand",
-      "text": "look look look hand hand hand"
-    },
-    {
-      "id": "lesson-en-beginner-24-ex-6",
-      "kind": "text",
-      "instruction": "word word word make make make",
-      "text": "word word word make make make"
-    },
-    {
-      "id": "lesson-en-beginner-24-ex-7",
-      "kind": "text",
-      "instruction": "come come come time time time",
-      "text": "come come come time time time"
-    }
-  ],
-  "focus": [
-    "words",
-    "key-memory"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-23"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-24-ex-1",
+            "kind": "text",
+            "instruction": "that that that with with with",
+            "text": "that that that with with with"
+        },
+        {
+            "id": "lesson-en-beginner-24-ex-2",
+            "kind": "text",
+            "instruction": "have have have from from from",
+            "text": "have have have from from from"
+        },
+        {
+            "id": "lesson-en-beginner-24-ex-3",
+            "kind": "text",
+            "instruction": "this this this they they they",
+            "text": "this this this they they they"
+        },
+        {
+            "id": "lesson-en-beginner-24-ex-4",
+            "kind": "text",
+            "instruction": "will will will more more more",
+            "text": "will will will more more more"
+        },
+        {
+            "id": "lesson-en-beginner-24-ex-5",
+            "kind": "text",
+            "instruction": "look look look hand hand hand",
+            "text": "look look look hand hand hand"
+        },
+        {
+            "id": "lesson-en-beginner-24-ex-6",
+            "kind": "text",
+            "instruction": "word word word make make make",
+            "text": "word word word make make make"
+        },
+        {
+            "id": "lesson-en-beginner-24-ex-7",
+            "kind": "text",
+            "instruction": "come come come time time time",
+            "text": "come come come time time time"
+        }
+    ],
+    "focus": ["words", "key-memory"],
+    "prerequisites": ["lesson-en-beginner-23"]
 }

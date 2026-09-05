@@ -1,32 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-intermediate-7",
-  "level": "intermediate",
-  "language": "my",
-  "number": 7,
-  "title": "Weather Words",
-  "titleMy": "ရာသီဥတု စကားလုံး",
-  "description": "Weather vocabulary: rain, sun, wind.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-intermediate-7-ex-1",
-      "kind": "text",
-      "instruction": "မိုး နေရောင် လေတိုက် နေသာတယ်",
-      "text": "မိုး နေရောင် လေတိုက် နေသာတယ်"
-    }
-  ],
-  "focus": [
-    "words",
-    "unicode"
-  ],
-  "prerequisites": [
-    "lesson-my-intermediate-6"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-my-intermediate-7",
+    "level": "intermediate",
+    "language": "my",
+    "number": 7,
+    "title": "Weather Words",
+    "titleMy": "ရာသီဥတု စကားလုံး",
+    "description": "Weather vocabulary: rain, sun, wind.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": null
+    },
+    "exercises": [
+        {
+            "id": "lesson-my-intermediate-7-ex-1",
+            "kind": "text",
+            "instruction": "မိုး နေရောင် လေတိုက် နေသာတယ်",
+            "text": "မိုး နေရောင် လေတိုက် နေသာတယ်"
+        }
+    ],
+    "focus": ["words", "unicode"],
+    "prerequisites": ["lesson-my-intermediate-6"]
 }

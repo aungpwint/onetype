@@ -1,38 +1,33 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-intermediate-3",
-  "level": "intermediate",
-  "language": "my",
-  "number": 3,
-  "title": "Complex Syllables: Stacked Consonants",
-  "titleMy": "ရှုပ်ထွေးသည့် ဝဏ္ဏများ - ဗျည်းထပ်တင်",
-  "description": "Words with stacked consonants using virama.",
-  "difficulty": "easy",
-  "estimatedMinutes": 10,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-intermediate-3-ex-1",
-      "kind": "text",
-      "instruction": "ခုနှစ် သုံးလုံး မင်္ဂလာပါ အင်္ဂါ",
-      "text": "ခုနှစ် သုံးလုံး မင်္ဂလာပါ အင်္ဂါ"
+    "schemaVersion": 1,
+    "id": "lesson-my-intermediate-3",
+    "level": "intermediate",
+    "language": "my",
+    "number": 3,
+    "title": "Complex Syllables: Stacked Consonants",
+    "titleMy": "ရှုပ်ထွေးသည့် ဝဏ္ဏများ - ဗျည်းထပ်တင်",
+    "description": "Words with stacked consonants using virama.",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-intermediate-3-ex-2",
-      "kind": "text",
-      "instruction": "ကြက်သွန်း စားသောက် ဥက္ကဋ္ဌ",
-      "text": "ကြက်သွန်း စားသောက် ဥက္ကဋ္ဌ"
-    }
-  ],
-  "focus": [
-    "unicode",
-    "syllable"
-  ],
-  "prerequisites": [
-    "lesson-my-intermediate-2"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-intermediate-3-ex-1",
+            "kind": "text",
+            "instruction": "ခုနှစ် သုံးလုံး မင်္ဂလာပါ အင်္ဂါ",
+            "text": "ခုနှစ် သုံးလုံး မင်္ဂလာပါ အင်္ဂါ"
+        },
+        {
+            "id": "lesson-my-intermediate-3-ex-2",
+            "kind": "text",
+            "instruction": "ကြက်သွန်း စားသောက် ဥက္ကဋ္ဌ",
+            "text": "ကြက်သွန်း စားသောက် ဥက္ကဋ္ဌ"
+        }
+    ],
+    "focus": ["unicode", "syllable"],
+    "prerequisites": ["lesson-my-intermediate-2"]
 }

@@ -1,40 +1,33 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-advanced-18",
-  "level": "advanced",
-  "language": "my",
-  "number": 18,
-  "title": "Examination Practice",
-  "titleMy": "စာမေးပွဲ ကြိုတင် လေ့ကျင့်ခန်း",
-  "description": "Final examination passage for Myanmar.",
-  "difficulty": "hard",
-  "estimatedMinutes": 20,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 95,
-    "minWpm": 32
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-advanced-18-ex-1",
-      "kind": "text",
-      "instruction": "ပတ်ဝန်းကျင် ထိန်းသိမ်းရေးကို လူတိုင်း ပါဝင်ကူညီသင့်သည်။ အမှိုက်စနစ်တကျရှင်းခြင်းသည် ရိုးရှင်းသော နည်းလမ်းတစ်ခုဖြစ်သည်။",
-      "text": "ပတ်ဝန်းကျင် ထိန်းသိမ်းရေးကို လူတိုင်း ပါဝင်ကူညီသင့်သည်။ အမှိုက်စနစ်တကျရှင်းခြင်းသည် ရိုးရှင်းသော နည်းလမ်းတစ်ခုဖြစ်သည်။"
+    "schemaVersion": 1,
+    "id": "lesson-my-advanced-18",
+    "level": "advanced",
+    "language": "my",
+    "number": 18,
+    "title": "Examination Practice",
+    "titleMy": "စာမေးပွဲ ကြိုတင် လေ့ကျင့်ခန်း",
+    "description": "Final examination passage for Myanmar.",
+    "difficulty": "hard",
+    "estimatedMinutes": 20,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 95,
+        "minWpm": 32
     },
-    {
-      "id": "lesson-my-advanced-18-ex-2",
-      "kind": "text",
-      "instruction": "အချိန်ကိုလေးစားပါ။ စာကိုပုံမှန်လေ့လာပါ။ ကျန်းမာရေးအတွက် အိပ်ရေးဝဝအိပ်ပါ။",
-      "text": "အချိန်ကိုလေးစားပါ။ စာကိုပုံမှန်လေ့လာပါ။ ကျန်းမာရေးအတွက် အိပ်ရေးဝဝအိပ်ပါ။"
-    }
-  ],
-  "focus": [
-    "speed",
-    "accuracy",
-    "sentences",
-    "unicode"
-  ],
-  "prerequisites": [
-    "lesson-my-advanced-17"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-advanced-18-ex-1",
+            "kind": "text",
+            "instruction": "ပတ်ဝန်းကျင် ထိန်းသိမ်းရေးကို လူတိုင်း ပါဝင်ကူညီသင့်သည်။ အမှိုက်စနစ်တကျရှင်းခြင်းသည် ရိုးရှင်းသော နည်းလမ်းတစ်ခုဖြစ်သည်။",
+            "text": "ပတ်ဝန်းကျင် ထိန်းသိမ်းရေးကို လူတိုင်း ပါဝင်ကူညီသင့်သည်။ အမှိုက်စနစ်တကျရှင်းခြင်းသည် ရိုးရှင်းသော နည်းလမ်းတစ်ခုဖြစ်သည်။"
+        },
+        {
+            "id": "lesson-my-advanced-18-ex-2",
+            "kind": "text",
+            "instruction": "အချိန်ကိုလေးစားပါ။ စာကိုပုံမှန်လေ့လာပါ။ ကျန်းမာရေးအတွက် အိပ်ရေးဝဝအိပ်ပါ။",
+            "text": "အချိန်ကိုလေးစားပါ။ စာကိုပုံမှန်လေ့လာပါ။ ကျန်းမာရေးအတွက် အိပ်ရေးဝဝအိပ်ပါ။"
+        }
+    ],
+    "focus": ["speed", "accuracy", "sentences", "unicode"],
+    "prerequisites": ["lesson-my-advanced-17"]
 }

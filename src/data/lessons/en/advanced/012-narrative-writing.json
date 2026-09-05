@@ -1,33 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-advanced-12",
-  "level": "advanced",
-  "language": "en",
-  "number": 12,
-  "title": "Narrative Writing",
-  "titleMy": "ဇာတ်လမ်း စာပိုဒ်",
-  "description": "Type a narrative paragraph with past tense verbs.",
-  "difficulty": "hard",
-  "estimatedMinutes": 15,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 94,
-    "minWpm": 34
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-advanced-12-ex-1",
-      "kind": "text",
-      "instruction": "Last summer, my family visited a small town by the sea. We woke up early to watch the fishermen pull in their boats. I collected bright shells on the sand. It was the happiest day of my year.",
-      "text": "Last summer, my family visited a small town by the sea. We woke up early to watch the fishermen pull in their boats. I collected bright shells on the sand. It was the happiest day of my year."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "speed",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-advanced-11"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-en-advanced-12",
+    "level": "advanced",
+    "language": "en",
+    "number": 12,
+    "title": "Narrative Writing",
+    "titleMy": "ဇာတ်လမ်း စာပိုဒ်",
+    "description": "Type a narrative paragraph with past tense verbs.",
+    "difficulty": "hard",
+    "estimatedMinutes": 15,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 94,
+        "minWpm": 34
+    },
+    "exercises": [
+        {
+            "id": "lesson-en-advanced-12-ex-1",
+            "kind": "text",
+            "instruction": "Last summer, my family visited a small town by the sea. We woke up early to watch the fishermen pull in their boats. I collected bright shells on the sand. It was the happiest day of my year.",
+            "text": "Last summer, my family visited a small town by the sea. We woke up early to watch the fishermen pull in their boats. I collected bright shells on the sand. It was the happiest day of my year."
+        }
+    ],
+    "focus": ["sentences", "speed", "accuracy"],
+    "prerequisites": ["lesson-en-advanced-11"]
 }

@@ -1,85 +1,66 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-11",
-  "level": "beginner",
-  "language": "en",
-  "number": 11,
-  "title": "Right Hand Ring & Pinky: O P L ; . / [ ]",
-  "titleMy": "ညာဘက်လက် အရံနှင့် လက်သစ် - O P L ; . /",
-  "description": "O above L, P above semicolon. Period below L. Slash below semicolon.",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-11-ex-1",
-      "kind": "text",
-      "instruction": "o o o o o p p p p p",
-      "text": "o o o o o p p p p p"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-11",
+    "level": "beginner",
+    "language": "en",
+    "number": 11,
+    "title": "Right Hand Ring & Pinky: O P L ; . / [ ]",
+    "titleMy": "ညာဘက်လက် အရံနှင့် လက်သစ် - O P L ; . /",
+    "description": "O above L, P above semicolon. Period below L. Slash below semicolon.",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-11-ex-2",
-      "kind": "text",
-      "instruction": "l o l o l o l o l o",
-      "text": "l o l o l o l o l o"
-    },
-    {
-      "id": "lesson-en-beginner-11-ex-3",
-      "kind": "text",
-      "instruction": "; p ; p ; p ; p ; p",
-      "text": "; p ; p ; p ; p ; p"
-    },
-    {
-      "id": "lesson-en-beginner-11-ex-4",
-      "kind": "text",
-      "instruction": ". l . l . l . l . l",
-      "text": ". l . l . l . l . l"
-    },
-    {
-      "id": "lesson-en-beginner-11-ex-5",
-      "kind": "text",
-      "instruction": "/ ; / ; / ; / ; / ;",
-      "text": "/ ; / ; / ; / ; / ;"
-    },
-    {
-      "id": "lesson-en-beginner-11-ex-6",
-      "kind": "text",
-      "instruction": "lo lo lo lo lo lo lo lo lo lo",
-      "text": "lo lo lo lo lo lo lo lo lo lo"
-    },
-    {
-      "id": "lesson-en-beginner-11-ex-7",
-      "kind": "text",
-      "instruction": "p; p; p; p; p; p; p; p; p; p;",
-      "text": "p; p; p; p; p; p; p; p; p; p;"
-    }
-  ],
-  "focusKeys": [
-    "KeyO",
-    "KeyP",
-    "KeyL",
-    "Semicolon",
-    "Period",
-    "Slash"
-  ],
-  "focus": [
-    "top-row",
-    "bottom-row",
-    "row-transition",
-    "key-memory"
-  ],
-  "targetFingers": [
-    "right-ring",
-    "right-pinky"
-  ],
-  "targetHands": [
-    "right"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-10"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-11-ex-1",
+            "kind": "text",
+            "instruction": "o o o o o p p p p p",
+            "text": "o o o o o p p p p p"
+        },
+        {
+            "id": "lesson-en-beginner-11-ex-2",
+            "kind": "text",
+            "instruction": "l o l o l o l o l o",
+            "text": "l o l o l o l o l o"
+        },
+        {
+            "id": "lesson-en-beginner-11-ex-3",
+            "kind": "text",
+            "instruction": "; p ; p ; p ; p ; p",
+            "text": "; p ; p ; p ; p ; p"
+        },
+        {
+            "id": "lesson-en-beginner-11-ex-4",
+            "kind": "text",
+            "instruction": ". l . l . l . l . l",
+            "text": ". l . l . l . l . l"
+        },
+        {
+            "id": "lesson-en-beginner-11-ex-5",
+            "kind": "text",
+            "instruction": "/ ; / ; / ; / ; / ;",
+            "text": "/ ; / ; / ; / ; / ;"
+        },
+        {
+            "id": "lesson-en-beginner-11-ex-6",
+            "kind": "text",
+            "instruction": "lo lo lo lo lo lo lo lo lo lo",
+            "text": "lo lo lo lo lo lo lo lo lo lo"
+        },
+        {
+            "id": "lesson-en-beginner-11-ex-7",
+            "kind": "text",
+            "instruction": "p; p; p; p; p; p; p; p; p; p;",
+            "text": "p; p; p; p; p; p; p; p; p; p;"
+        }
+    ],
+    "focusKeys": ["KeyO", "KeyP", "KeyL", "Semicolon", "Period", "Slash"],
+    "focus": ["top-row", "bottom-row", "row-transition", "key-memory"],
+    "targetFingers": ["right-ring", "right-pinky"],
+    "targetHands": ["right"],
+    "prerequisites": ["lesson-en-beginner-10"]
 }

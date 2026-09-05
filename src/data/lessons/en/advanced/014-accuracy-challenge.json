@@ -1,38 +1,33 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-advanced-14",
-  "level": "advanced",
-  "language": "en",
-  "number": 14,
-  "title": "Accuracy Challenge",
-  "titleMy": "တိကျမှု စိန်ခေါ်မှု",
-  "description": "Type complex text with precision. No errors allowed.",
-  "difficulty": "hard",
-  "estimatedMinutes": 15,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 95,
-    "minWpm": 34
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-advanced-14-ex-1",
-      "kind": "text",
-      "instruction": "The equilibrium between progress and preservation requires careful judgment. Administrative procedures demand attention to extraordinary details that many people frequently overlook.",
-      "text": "The equilibrium between progress and preservation requires careful judgment. Administrative procedures demand attention to extraordinary details that many people frequently overlook."
+    "schemaVersion": 1,
+    "id": "lesson-en-advanced-14",
+    "level": "advanced",
+    "language": "en",
+    "number": 14,
+    "title": "Accuracy Challenge",
+    "titleMy": "တိကျမှု စိန်ခေါ်မှု",
+    "description": "Type complex text with precision. No errors allowed.",
+    "difficulty": "hard",
+    "estimatedMinutes": 15,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 95,
+        "minWpm": 34
     },
-    {
-      "id": "lesson-en-advanced-14-ex-2",
-      "kind": "text",
-      "instruction": "Manufacturing processes must comply with environmental regulations. Pharmaceutical companies conduct thorough investigation before commercializing revolutionary treatment methodologies.",
-      "text": "Manufacturing processes must comply with environmental regulations. Pharmaceutical companies conduct thorough investigation before commercializing revolutionary treatment methodologies."
-    }
-  ],
-  "focus": [
-    "accuracy",
-    "sentences"
-  ],
-  "prerequisites": [
-    "lesson-en-advanced-13"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-advanced-14-ex-1",
+            "kind": "text",
+            "instruction": "The equilibrium between progress and preservation requires careful judgment. Administrative procedures demand attention to extraordinary details that many people frequently overlook.",
+            "text": "The equilibrium between progress and preservation requires careful judgment. Administrative procedures demand attention to extraordinary details that many people frequently overlook."
+        },
+        {
+            "id": "lesson-en-advanced-14-ex-2",
+            "kind": "text",
+            "instruction": "Manufacturing processes must comply with environmental regulations. Pharmaceutical companies conduct thorough investigation before commercializing revolutionary treatment methodologies.",
+            "text": "Manufacturing processes must comply with environmental regulations. Pharmaceutical companies conduct thorough investigation before commercializing revolutionary treatment methodologies."
+        }
+    ],
+    "focus": ["accuracy", "sentences"],
+    "prerequisites": ["lesson-en-advanced-13"]
 }

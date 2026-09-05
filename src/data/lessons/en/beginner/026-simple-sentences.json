@@ -1,57 +1,51 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-26",
-  "level": "beginner",
-  "language": "en",
-  "number": 26,
-  "title": "Simple Sentences",
-  "titleMy": "ရိုးရှင်းသော ဝါကျတိုများ",
-  "description": "Short sentences using words you already know. Focus on rhythm.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": 14
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-26-ex-1",
-      "kind": "text",
-      "instruction": "i am a man.",
-      "text": "i am a man."
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-26",
+    "level": "beginner",
+    "language": "en",
+    "number": 26,
+    "title": "Simple Sentences",
+    "titleMy": "ရိုးရှင်းသော ဝါကျတိုများ",
+    "description": "Short sentences using words you already know. Focus on rhythm.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": 14
     },
-    {
-      "id": "lesson-en-beginner-26-ex-2",
-      "kind": "text",
-      "instruction": "he is old.",
-      "text": "he is old."
-    },
-    {
-      "id": "lesson-en-beginner-26-ex-3",
-      "kind": "text",
-      "instruction": "the dog had fun.",
-      "text": "the dog had fun."
-    },
-    {
-      "id": "lesson-en-beginner-26-ex-4",
-      "kind": "text",
-      "instruction": "she has a red hat.",
-      "text": "she has a red hat."
-    },
-    {
-      "id": "lesson-en-beginner-26-ex-5",
-      "kind": "text",
-      "instruction": "we will make more.",
-      "text": "we will make more."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "words",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-25"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-26-ex-1",
+            "kind": "text",
+            "instruction": "i am a man.",
+            "text": "i am a man."
+        },
+        {
+            "id": "lesson-en-beginner-26-ex-2",
+            "kind": "text",
+            "instruction": "he is old.",
+            "text": "he is old."
+        },
+        {
+            "id": "lesson-en-beginner-26-ex-3",
+            "kind": "text",
+            "instruction": "the dog had fun.",
+            "text": "the dog had fun."
+        },
+        {
+            "id": "lesson-en-beginner-26-ex-4",
+            "kind": "text",
+            "instruction": "she has a red hat.",
+            "text": "she has a red hat."
+        },
+        {
+            "id": "lesson-en-beginner-26-ex-5",
+            "kind": "text",
+            "instruction": "we will make more.",
+            "text": "we will make more."
+        }
+    ],
+    "focus": ["sentences", "words", "accuracy"],
+    "prerequisites": ["lesson-en-beginner-25"]
 }

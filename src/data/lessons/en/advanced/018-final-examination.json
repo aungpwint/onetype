@@ -1,33 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-advanced-18",
-  "level": "advanced",
-  "language": "en",
-  "number": 18,
-  "title": "Final Examination",
-  "titleMy": "နောက်ဆုံး စမ်းသုံး",
-  "description": "Final exam passage. Demonstrate mastery of touch typing.",
-  "difficulty": "hard",
-  "estimatedMinutes": 20,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 95,
-    "minWpm": 36
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-advanced-18-ex-1",
-      "kind": "text",
-      "instruction": "Success is not built in a single day. It is the sum of many small, honest efforts repeated with care. A writer practices every page, a runner trains every mile, and a typist trains every key. Now that you have reached this lesson, you have already learned the most important secret: steady daily practice turns a beginner into an expert.",
-      "text": "Success is not built in a single day. It is the sum of many small, honest efforts repeated with care. A writer practices every page, a runner trains every mile, and a typist trains every key. Now that you have reached this lesson, you have already learned the most important secret: steady daily practice turns a beginner into an expert."
-    }
-  ],
-  "focus": [
-    "speed",
-    "accuracy",
-    "sentences"
-  ],
-  "prerequisites": [
-    "lesson-en-advanced-17"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-en-advanced-18",
+    "level": "advanced",
+    "language": "en",
+    "number": 18,
+    "title": "Final Examination",
+    "titleMy": "နောက်ဆုံး စမ်းသုံး",
+    "description": "Final exam passage. Demonstrate mastery of touch typing.",
+    "difficulty": "hard",
+    "estimatedMinutes": 20,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 95,
+        "minWpm": 36
+    },
+    "exercises": [
+        {
+            "id": "lesson-en-advanced-18-ex-1",
+            "kind": "text",
+            "instruction": "Success is not built in a single day. It is the sum of many small, honest efforts repeated with care. A writer practices every page, a runner trains every mile, and a typist trains every key. Now that you have reached this lesson, you have already learned the most important secret: steady daily practice turns a beginner into an expert.",
+            "text": "Success is not built in a single day. It is the sum of many small, honest efforts repeated with care. A writer practices every page, a runner trains every mile, and a typist trains every key. Now that you have reached this lesson, you have already learned the most important secret: steady daily practice turns a beginner into an expert."
+        }
+    ],
+    "focus": ["speed", "accuracy", "sentences"],
+    "prerequisites": ["lesson-en-advanced-17"]
 }

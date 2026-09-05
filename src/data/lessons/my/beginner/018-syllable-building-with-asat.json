@@ -1,56 +1,51 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-18",
-  "level": "beginner",
-  "language": "my",
-  "number": 18,
-  "title": "Syllable Building: With Asat",
-  "titleMy": "ဝဏ္ဏ ဖွဲ့ - အသတ်ဖြင့်",
-  "description": "Syllables ending with asat (closed syllables).",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 87,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-18-ex-1",
-      "kind": "text",
-      "instruction": "က် တ် မ် န် င် စ် ဆ်",
-      "text": "က် တ် မ် န် င် စ် ဆ်"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-18",
+    "level": "beginner",
+    "language": "my",
+    "number": 18,
+    "title": "Syllable Building: With Asat",
+    "titleMy": "ဝဏ္ဏ ဖွဲ့ - အသတ်ဖြင့်",
+    "description": "Syllables ending with asat (closed syllables).",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 87,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-beginner-18-ex-2",
-      "kind": "text",
-      "instruction": "ကန် တမ် မန် နက် ငံ",
-      "text": "ကန် တမ် မန် နက် ငံ"
-    },
-    {
-      "id": "lesson-my-beginner-18-ex-3",
-      "kind": "text",
-      "instruction": "ကျောင်း ကျောင်း ကျောင်း ကျောင်း ကျောင်း",
-      "text": "ကျောင်း ကျောင်း ကျောင်း ကျောင်း ကျောင်း"
-    },
-    {
-      "id": "lesson-my-beginner-18-ex-4",
-      "kind": "text",
-      "instruction": "ပညာ ပညာ ပညာ ပညာ ပညာ",
-      "text": "ပညာ ပညာ ပညာ ပညာ ပညာ"
-    },
-    {
-      "id": "lesson-my-beginner-18-ex-5",
-      "kind": "text",
-      "instruction": "ဆရာ ဆရာ ဆရာ ဆရာ ဆရာ",
-      "text": "ဆရာ ဆရာ ဆရာ ဆရာ ဆရာ"
-    }
-  ],
-  "focus": [
-    "unicode",
-    "syllable"
-  ],
-  "prerequisites": [
-    "lesson-my-beginner-17"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-18-ex-1",
+            "kind": "text",
+            "instruction": "က် တ် မ် န် င် စ် ဆ်",
+            "text": "က် တ် မ် န် င် စ် ဆ်"
+        },
+        {
+            "id": "lesson-my-beginner-18-ex-2",
+            "kind": "text",
+            "instruction": "ကန် တမ် မန် နက် ငံ",
+            "text": "ကန် တမ် မန် နက် ငံ"
+        },
+        {
+            "id": "lesson-my-beginner-18-ex-3",
+            "kind": "text",
+            "instruction": "ကျောင်း ကျောင်း ကျောင်း ကျောင်း ကျောင်း",
+            "text": "ကျောင်း ကျောင်း ကျောင်း ကျောင်း ကျောင်း"
+        },
+        {
+            "id": "lesson-my-beginner-18-ex-4",
+            "kind": "text",
+            "instruction": "ပညာ ပညာ ပညာ ပညာ ပညာ",
+            "text": "ပညာ ပညာ ပညာ ပညာ ပညာ"
+        },
+        {
+            "id": "lesson-my-beginner-18-ex-5",
+            "kind": "text",
+            "instruction": "ဆရာ ဆရာ ဆရာ ဆရာ ဆရာ",
+            "text": "ဆရာ ဆရာ ဆရာ ဆရာ ဆရာ"
+        }
+    ],
+    "focus": ["unicode", "syllable"],
+    "prerequisites": ["lesson-my-beginner-17"]
 }

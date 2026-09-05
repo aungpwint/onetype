@@ -1,51 +1,45 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-29",
-  "level": "beginner",
-  "language": "en",
-  "number": 29,
-  "title": "Beginner Review: All Keys",
-  "titleMy": "အခြေခံ ပြန်လည်သုံးသပ်ခြင်း - ကီးအားလုံး",
-  "description": "Review all keys with controlled sequences and real words.",
-  "difficulty": "medium",
-  "estimatedMinutes": 12,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": 15
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-29-ex-1",
-      "kind": "text",
-      "instruction": "qwert yuiop asdfgh jkl;nm zxcvbn",
-      "text": "qwert yuiop asdfgh jkl;nm zxcvbn"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-29",
+    "level": "beginner",
+    "language": "en",
+    "number": 29,
+    "title": "Beginner Review: All Keys",
+    "titleMy": "အခြေခံ ပြန်လည်သုံးသပ်ခြင်း - ကီးအားလုံး",
+    "description": "Review all keys with controlled sequences and real words.",
+    "difficulty": "medium",
+    "estimatedMinutes": 12,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": 15
     },
-    {
-      "id": "lesson-en-beginner-29-ex-2",
-      "kind": "text",
-      "instruction": "the quick brown fox jumps over the lazy dog",
-      "text": "the quick brown fox jumps over the lazy dog"
-    },
-    {
-      "id": "lesson-en-beginner-29-ex-3",
-      "kind": "text",
-      "instruction": "pack my box with five dozen liquor jugs",
-      "text": "pack my box with five dozen liquor jugs"
-    },
-    {
-      "id": "lesson-en-beginner-29-ex-4",
-      "kind": "text",
-      "instruction": "I can type letters numbers and punctuation",
-      "text": "I can type letters numbers and punctuation"
-    }
-  ],
-  "focus": [
-    "key-memory",
-    "accuracy",
-    "speed"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-28"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-29-ex-1",
+            "kind": "text",
+            "instruction": "qwert yuiop asdfgh jkl;nm zxcvbn",
+            "text": "qwert yuiop asdfgh jkl;nm zxcvbn"
+        },
+        {
+            "id": "lesson-en-beginner-29-ex-2",
+            "kind": "text",
+            "instruction": "the quick brown fox jumps over the lazy dog",
+            "text": "the quick brown fox jumps over the lazy dog"
+        },
+        {
+            "id": "lesson-en-beginner-29-ex-3",
+            "kind": "text",
+            "instruction": "pack my box with five dozen liquor jugs",
+            "text": "pack my box with five dozen liquor jugs"
+        },
+        {
+            "id": "lesson-en-beginner-29-ex-4",
+            "kind": "text",
+            "instruction": "I can type letters numbers and punctuation",
+            "text": "I can type letters numbers and punctuation"
+        }
+    ],
+    "focus": ["key-memory", "accuracy", "speed"],
+    "prerequisites": ["lesson-en-beginner-28"]
 }

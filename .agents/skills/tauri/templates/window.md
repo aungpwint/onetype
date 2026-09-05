@@ -15,8 +15,8 @@
 ## Runtime Control
 
 ```ts
-import { appWindow } from "@tauri-apps/api/window";
+import { appWindow } from '@tauri-apps/api/window'
 
-await appWindow.setFocus();
-await appWindow.setAlwaysOnTop(true);
+await appWindow.setFocus()
+await appWindow.setAlwaysOnTop(true)
 ```

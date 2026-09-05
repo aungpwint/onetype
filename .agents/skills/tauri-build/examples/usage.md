@@ -6,17 +6,17 @@ This document provides at least 5 usage examples for the **tauri-build** skill.
 
 ```typescript
 // Example initialization for Build
-import { init } from 'tauri-plugin-tauri-build';
+import { init } from 'tauri-plugin-tauri-build'
 
-await init();
+await init()
 ```
 
 ## Example 2: Basic Usage of Build
 
 ```typescript
 // Basic operation
-const result = await invoke('plugin:tauri-build|do_something');
-console.log(result);
+const result = await invoke('plugin:tauri-build|do_something')
+console.log(result)
 ```
 
 ## Example 3: Configure Build Settings
@@ -36,9 +36,9 @@ console.log(result);
 
 ```typescript
 try {
-  await performAction();
+    await performAction()
 } catch (error) {
-  console.error('Build Error:', error);
+    console.error('Build Error:', error)
 }
 ```
 
@@ -46,8 +46,7 @@ try {
 
 ```typescript
 // Combine with other Tauri APIs
-import { emit } from '@tauri-apps/api/event';
+import { emit } from '@tauri-apps/api/event'
 
-emit('tauri-build-event', { status: 'active' });
+emit('tauri-build-event', { status: 'active' })
 ```
-

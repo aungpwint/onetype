@@ -1,46 +1,39 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-25",
-  "level": "beginner",
-  "language": "my",
-  "number": 25,
-  "title": "Beginner Review",
-  "titleMy": "အခြေခံ ပြန်လည်သုံးသပ်ခြင်း",
-  "description": "Review all beginner Myanmar skills.",
-  "difficulty": "hard",
-  "estimatedMinutes": 12,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": 15
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-25-ex-1",
-      "kind": "text",
-      "instruction": "မင်္ဂလာပါ။ မင်းနေကောင်းလား။",
-      "text": "မင်္ဂလာပါ။ မင်းနေကောင်းလား။"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-25",
+    "level": "beginner",
+    "language": "my",
+    "number": 25,
+    "title": "Beginner Review",
+    "titleMy": "အခြေခံ ပြန်လည်သုံးသပ်ခြင်း",
+    "description": "Review all beginner Myanmar skills.",
+    "difficulty": "hard",
+    "estimatedMinutes": 12,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": 15
     },
-    {
-      "id": "lesson-my-beginner-25-ex-2",
-      "kind": "text",
-      "instruction": "ကျွန်တော်က ကျောင်းသားပါ။",
-      "text": "ကျွန်တော်က ကျောင်းသားပါ။"
-    },
-    {
-      "id": "lesson-my-beginner-25-ex-3",
-      "kind": "text",
-      "instruction": "ငါဆရာ့ကို မေးခွန်းမေးတယ်။",
-      "text": "ငါဆရာ့ကို မေးခွန်းမေးတယ်။"
-    }
-  ],
-  "focus": [
-    "accuracy",
-    "speed",
-    "unicode",
-    "syllable"
-  ],
-  "prerequisites": [
-    "lesson-my-beginner-24"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-25-ex-1",
+            "kind": "text",
+            "instruction": "မင်္ဂလာပါ။ မင်းနေကောင်းလား။",
+            "text": "မင်္ဂလာပါ။ မင်းနေကောင်းလား။"
+        },
+        {
+            "id": "lesson-my-beginner-25-ex-2",
+            "kind": "text",
+            "instruction": "ကျွန်တော်က ကျောင်းသားပါ။",
+            "text": "ကျွန်တော်က ကျောင်းသားပါ။"
+        },
+        {
+            "id": "lesson-my-beginner-25-ex-3",
+            "kind": "text",
+            "instruction": "ငါဆရာ့ကို မေးခွန်းမေးတယ်။",
+            "text": "ငါဆရာ့ကို မေးခွန်းမေးတယ်။"
+        }
+    ],
+    "focus": ["accuracy", "speed", "unicode", "syllable"],
+    "prerequisites": ["lesson-my-beginner-24"]
 }

@@ -1,33 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-advanced-17",
-  "level": "advanced",
-  "language": "en",
-  "number": 17,
-  "title": "Long Copy: Library",
-  "titleMy": "ရှည်လျားသည့် စာပိုဒ်: စာကြည့်တိုက်",
-  "description": "Extended passage for building typing stamina.",
-  "difficulty": "hard",
-  "estimatedMinutes": 20,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 95,
-    "minWpm": 35
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-advanced-17-ex-1",
-      "kind": "text",
-      "instruction": "The library stands at the heart of our town like a quiet guardian of stories. Its tall shelves hold books of every color, some old with yellow pages and others brand new. On rainy afternoons, children gather there to read, and the only sound is the turning of pages and the soft rain on the roof.",
-      "text": "The library stands at the heart of our town like a quiet guardian of stories. Its tall shelves hold books of every color, some old with yellow pages and others brand new. On rainy afternoons, children gather there to read, and the only sound is the turning of pages and the soft rain on the roof."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "speed",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-advanced-16"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-en-advanced-17",
+    "level": "advanced",
+    "language": "en",
+    "number": 17,
+    "title": "Long Copy: Library",
+    "titleMy": "ရှည်လျားသည့် စာပိုဒ်: စာကြည့်တိုက်",
+    "description": "Extended passage for building typing stamina.",
+    "difficulty": "hard",
+    "estimatedMinutes": 20,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 95,
+        "minWpm": 35
+    },
+    "exercises": [
+        {
+            "id": "lesson-en-advanced-17-ex-1",
+            "kind": "text",
+            "instruction": "The library stands at the heart of our town like a quiet guardian of stories. Its tall shelves hold books of every color, some old with yellow pages and others brand new. On rainy afternoons, children gather there to read, and the only sound is the turning of pages and the soft rain on the roof.",
+            "text": "The library stands at the heart of our town like a quiet guardian of stories. Its tall shelves hold books of every color, some old with yellow pages and others brand new. On rainy afternoons, children gather there to read, and the only sound is the turning of pages and the soft rain on the roof."
+        }
+    ],
+    "focus": ["sentences", "speed", "accuracy"],
+    "prerequisites": ["lesson-en-advanced-16"]
 }

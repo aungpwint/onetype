@@ -1,72 +1,54 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-33",
-  "level": "beginner",
-  "language": "en",
-  "number": 33,
-  "title": "Shift Home Row Mixed",
-  "titleMy": "Shift အိမ်တန်း ရောနှော",
-  "description": "Mix uppercase and lowercase across both hands on the home row.",
-  "difficulty": "easy",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 87,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-33-ex-1",
-      "kind": "text",
-      "instruction": "aA sS dD fF jJ kK lL",
-      "text": "aA sS dD fF jJ kK lL"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-33",
+    "level": "beginner",
+    "language": "en",
+    "number": 33,
+    "title": "Shift Home Row Mixed",
+    "titleMy": "Shift အိမ်တန်း ရောနှော",
+    "description": "Mix uppercase and lowercase across both hands on the home row.",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 87,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-33-ex-2",
-      "kind": "text",
-      "instruction": "As Sd Df Fj Jk Kl",
-      "text": "As Sd Df Fj Jk Kl"
-    },
-    {
-      "id": "lesson-en-beginner-33-ex-3",
-      "kind": "text",
-      "instruction": "aS dF jK lA sD fJ kL",
-      "text": "aS dF jK lA sD fJ kL"
-    },
-    {
-      "id": "lesson-en-beginner-33-ex-4",
-      "kind": "text",
-      "instruction": "Aa Ss Dd Ff Jj Kk Ll",
-      "text": "Aa Ss Dd Ff Jj Kk Ll"
-    },
-    {
-      "id": "lesson-en-beginner-33-ex-5",
-      "kind": "text",
-      "instruction": "aA sS dD fF jJ kK lL aA sS dD fF jJ kK lL",
-      "text": "aA sS dD fF jJ kK lL aA sS dD fF jJ kK lL"
-    }
-  ],
-  "focusKeys": [
-    "KeyA",
-    "KeyS",
-    "KeyD",
-    "KeyF",
-    "KeyJ",
-    "KeyK",
-    "KeyL",
-    "ShiftLeft",
-    "ShiftRight"
-  ],
-  "focus": [
-    "shift",
-    "hand-alternation"
-  ],
-  "targetHands": [
-    "left",
-    "right"
-  ],
-  "requiresShift": true,
-  "prerequisites": [
-    "lesson-en-beginner-32"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-33-ex-1",
+            "kind": "text",
+            "instruction": "aA sS dD fF jJ kK lL",
+            "text": "aA sS dD fF jJ kK lL"
+        },
+        {
+            "id": "lesson-en-beginner-33-ex-2",
+            "kind": "text",
+            "instruction": "As Sd Df Fj Jk Kl",
+            "text": "As Sd Df Fj Jk Kl"
+        },
+        {
+            "id": "lesson-en-beginner-33-ex-3",
+            "kind": "text",
+            "instruction": "aS dF jK lA sD fJ kL",
+            "text": "aS dF jK lA sD fJ kL"
+        },
+        {
+            "id": "lesson-en-beginner-33-ex-4",
+            "kind": "text",
+            "instruction": "Aa Ss Dd Ff Jj Kk Ll",
+            "text": "Aa Ss Dd Ff Jj Kk Ll"
+        },
+        {
+            "id": "lesson-en-beginner-33-ex-5",
+            "kind": "text",
+            "instruction": "aA sS dD fF jJ kK lL aA sS dD fF jJ kK lL",
+            "text": "aA sS dD fF jJ kK lL aA sS dD fF jJ kK lL"
+        }
+    ],
+    "focusKeys": ["KeyA", "KeyS", "KeyD", "KeyF", "KeyJ", "KeyK", "KeyL", "ShiftLeft", "ShiftRight"],
+    "focus": ["shift", "hand-alternation"],
+    "targetHands": ["left", "right"],
+    "requiresShift": true,
+    "prerequisites": ["lesson-en-beginner-32"]
 }

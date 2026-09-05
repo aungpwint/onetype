@@ -1,39 +1,33 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-advanced-15",
-  "level": "advanced",
-  "language": "my",
-  "number": 15,
-  "title": "Formal Letter 1",
-  "titleMy": "တရားဝင် စာ (၁)",
-  "description": "Formal letter writing style.",
-  "difficulty": "hard",
-  "estimatedMinutes": 18,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 94,
-    "minWpm": 28
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-advanced-15-ex-1",
-      "kind": "text",
-      "instruction": "ခင်လေးဇာ လေးစားစွာဖြင့် အကြောင်းကြားအပ်ပါသည်။",
-      "text": "ခင်လေးဇာ လေးစားစွာဖြင့် အကြောင်းကြားအပ်ပါသည်။"
+    "schemaVersion": 1,
+    "id": "lesson-my-advanced-15",
+    "level": "advanced",
+    "language": "my",
+    "number": 15,
+    "title": "Formal Letter 1",
+    "titleMy": "တရားဝင် စာ (၁)",
+    "description": "Formal letter writing style.",
+    "difficulty": "hard",
+    "estimatedMinutes": 18,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 94,
+        "minWpm": 28
     },
-    {
-      "id": "lesson-my-advanced-15-ex-2",
-      "kind": "text",
-      "instruction": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။",
-      "text": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။"
-    }
-  ],
-  "focus": [
-    "sentences",
-    "unicode",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-my-advanced-14"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-advanced-15-ex-1",
+            "kind": "text",
+            "instruction": "ခင်လေးဇာ လေးစားစွာဖြင့် အကြောင်းကြားအပ်ပါသည်။",
+            "text": "ခင်လေးဇာ လေးစားစွာဖြင့် အကြောင်းကြားအပ်ပါသည်။"
+        },
+        {
+            "id": "lesson-my-advanced-15-ex-2",
+            "kind": "text",
+            "instruction": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။",
+            "text": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။"
+        }
+    ],
+    "focus": ["sentences", "unicode", "accuracy"],
+    "prerequisites": ["lesson-my-advanced-14"]
 }

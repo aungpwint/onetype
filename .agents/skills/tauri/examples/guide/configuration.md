@@ -10,25 +10,25 @@ Tauri uses tauri.conf.json for core settings.
 
 ```json
 {
-  "$schema": "https://schema.tauri.app/config/2",
-  "productName": "MyApp",
-  "version": "0.1.0",
-  "build": {
-    "frontendDist": "../dist",
-    "devUrl": "http://localhost:5173"
-  },
-  "app": {
-    "withGlobalTauri": false
-  },
-  "tauri": {
-    "windows": [
-      {
-        "title": "MyApp",
-        "width": 1024,
-        "height": 768
-      }
-    ]
-  }
+    "$schema": "https://schema.tauri.app/config/2",
+    "productName": "MyApp",
+    "version": "0.1.0",
+    "build": {
+        "frontendDist": "../dist",
+        "devUrl": "http://localhost:5173"
+    },
+    "app": {
+        "withGlobalTauri": false
+    },
+    "tauri": {
+        "windows": [
+            {
+                "title": "MyApp",
+                "width": 1024,
+                "height": 768
+            }
+        ]
+    }
 }
 ```
 

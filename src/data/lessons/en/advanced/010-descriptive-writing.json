@@ -1,33 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-advanced-10",
-  "level": "advanced",
-  "language": "en",
-  "number": 10,
-  "title": "Descriptive Writing",
-  "titleMy": "ဖော်ပြချက် စာပိုဒ်",
-  "description": "Type a descriptive paragraph with rich vocabulary.",
-  "difficulty": "hard",
-  "estimatedMinutes": 15,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 94,
-    "minWpm": 33
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-advanced-10-ex-1",
-      "kind": "text",
-      "instruction": "The sunset turned the sky into a sea of orange and pink. Long shadows stretched across the quiet field. A cool breeze carried the smell of fresh grass while the first little star began to shine.",
-      "text": "The sunset turned the sky into a sea of orange and pink. Long shadows stretched across the quiet field. A cool breeze carried the smell of fresh grass while the first little star began to shine."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "speed",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-advanced-9"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-en-advanced-10",
+    "level": "advanced",
+    "language": "en",
+    "number": 10,
+    "title": "Descriptive Writing",
+    "titleMy": "ဖော်ပြချက် စာပိုဒ်",
+    "description": "Type a descriptive paragraph with rich vocabulary.",
+    "difficulty": "hard",
+    "estimatedMinutes": 15,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 94,
+        "minWpm": 33
+    },
+    "exercises": [
+        {
+            "id": "lesson-en-advanced-10-ex-1",
+            "kind": "text",
+            "instruction": "The sunset turned the sky into a sea of orange and pink. Long shadows stretched across the quiet field. A cool breeze carried the smell of fresh grass while the first little star began to shine.",
+            "text": "The sunset turned the sky into a sea of orange and pink. Long shadows stretched across the quiet field. A cool breeze carried the smell of fresh grass while the first little star began to shine."
+        }
+    ],
+    "focus": ["sentences", "speed", "accuracy"],
+    "prerequisites": ["lesson-en-advanced-9"]
 }

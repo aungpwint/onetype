@@ -1,93 +1,73 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-31",
-  "level": "beginner",
-  "language": "en",
-  "number": 31,
-  "title": "Right Shift + Left Hand: F Fingers",
-  "titleMy": "ညာဘက် Shift + ဘယ်ဘက်လက်: F ချောင်းများ",
-  "description": "Press Right Shift with your right pinky while typing left-hand letters.",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 87,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-31-ex-1",
-      "kind": "text",
-      "instruction": "aA aA aA aA aA aA aA aA aA aA",
-      "text": "aA aA aA aA aA aA aA aA aA aA"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-31",
+    "level": "beginner",
+    "language": "en",
+    "number": 31,
+    "title": "Right Shift + Left Hand: F Fingers",
+    "titleMy": "ညာဘက် Shift + ဘယ်ဘက်လက်: F ချောင်းများ",
+    "description": "Press Right Shift with your right pinky while typing left-hand letters.",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 87,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-31-ex-2",
-      "kind": "text",
-      "instruction": "sS sS sS sS sS sS sS sS sS sS",
-      "text": "sS sS sS sS sS sS sS sS sS sS"
-    },
-    {
-      "id": "lesson-en-beginner-31-ex-3",
-      "kind": "text",
-      "instruction": "dD dD dD dD dD dD dD dD dD dD",
-      "text": "dD dD dD dD dD dD dD dD dD dD"
-    },
-    {
-      "id": "lesson-en-beginner-31-ex-4",
-      "kind": "text",
-      "instruction": "fF fF fF fF fF fF fF fF fF fF",
-      "text": "fF fF fF fF fF fF fF fF fF fF"
-    },
-    {
-      "id": "lesson-en-beginner-31-ex-5",
-      "kind": "text",
-      "instruction": "Aa Aa Aa Aa Aa Aa Aa Aa Aa Aa",
-      "text": "Aa Aa Aa Aa Aa Aa Aa Aa Aa Aa"
-    },
-    {
-      "id": "lesson-en-beginner-31-ex-6",
-      "kind": "text",
-      "instruction": "Ss Ss Ss Ss Ss Ss Ss Ss Ss Ss",
-      "text": "Ss Ss Ss Ss Ss Ss Ss Ss Ss Ss"
-    },
-    {
-      "id": "lesson-en-beginner-31-ex-7",
-      "kind": "text",
-      "instruction": "Dd Dd Dd Dd Dd Dd Dd Dd Dd Dd",
-      "text": "Dd Dd Dd Dd Dd Dd Dd Dd Dd Dd"
-    },
-    {
-      "id": "lesson-en-beginner-31-ex-8",
-      "kind": "text",
-      "instruction": "Ff Ff Ff Ff Ff Ff Ff Ff Ff Ff",
-      "text": "Ff Ff Ff Ff Ff Ff Ff Ff Ff Ff"
-    }
-  ],
-  "focusKeys": [
-    "KeyA",
-    "KeyS",
-    "KeyD",
-    "KeyF",
-    "ShiftRight"
-  ],
-  "focus": [
-    "shift",
-    "finger-control"
-  ],
-  "targetFingers": [
-    "left-pinky",
-    "left-ring",
-    "left-middle",
-    "left-index",
-    "right-pinky"
-  ],
-  "targetHands": [
-    "left",
-    "right"
-  ],
-  "requiresShift": true,
-  "prerequisites": [
-    "lesson-en-beginner-30"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-31-ex-1",
+            "kind": "text",
+            "instruction": "aA aA aA aA aA aA aA aA aA aA",
+            "text": "aA aA aA aA aA aA aA aA aA aA"
+        },
+        {
+            "id": "lesson-en-beginner-31-ex-2",
+            "kind": "text",
+            "instruction": "sS sS sS sS sS sS sS sS sS sS",
+            "text": "sS sS sS sS sS sS sS sS sS sS"
+        },
+        {
+            "id": "lesson-en-beginner-31-ex-3",
+            "kind": "text",
+            "instruction": "dD dD dD dD dD dD dD dD dD dD",
+            "text": "dD dD dD dD dD dD dD dD dD dD"
+        },
+        {
+            "id": "lesson-en-beginner-31-ex-4",
+            "kind": "text",
+            "instruction": "fF fF fF fF fF fF fF fF fF fF",
+            "text": "fF fF fF fF fF fF fF fF fF fF"
+        },
+        {
+            "id": "lesson-en-beginner-31-ex-5",
+            "kind": "text",
+            "instruction": "Aa Aa Aa Aa Aa Aa Aa Aa Aa Aa",
+            "text": "Aa Aa Aa Aa Aa Aa Aa Aa Aa Aa"
+        },
+        {
+            "id": "lesson-en-beginner-31-ex-6",
+            "kind": "text",
+            "instruction": "Ss Ss Ss Ss Ss Ss Ss Ss Ss Ss",
+            "text": "Ss Ss Ss Ss Ss Ss Ss Ss Ss Ss"
+        },
+        {
+            "id": "lesson-en-beginner-31-ex-7",
+            "kind": "text",
+            "instruction": "Dd Dd Dd Dd Dd Dd Dd Dd Dd Dd",
+            "text": "Dd Dd Dd Dd Dd Dd Dd Dd Dd Dd"
+        },
+        {
+            "id": "lesson-en-beginner-31-ex-8",
+            "kind": "text",
+            "instruction": "Ff Ff Ff Ff Ff Ff Ff Ff Ff Ff",
+            "text": "Ff Ff Ff Ff Ff Ff Ff Ff Ff Ff"
+        }
+    ],
+    "focusKeys": ["KeyA", "KeyS", "KeyD", "KeyF", "ShiftRight"],
+    "focus": ["shift", "finger-control"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-pinky"],
+    "targetHands": ["left", "right"],
+    "requiresShift": true,
+    "prerequisites": ["lesson-en-beginner-30"]
 }

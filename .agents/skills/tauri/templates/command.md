@@ -12,7 +12,7 @@ fn greet(name: String) -> String {
 ## Frontend
 
 ```ts
-import { invoke } from "@tauri-apps/api/tauri";
+import { invoke } from '@tauri-apps/api/tauri'
 
-const msg = await invoke<string>("greet", { name: "world" });
+const msg = await invoke<string>('greet', { name: 'world' })
 ```

@@ -1,34 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-advanced-7",
-  "level": "advanced",
-  "language": "en",
-  "number": 7,
-  "title": "A Short Story",
-  "titleMy": "အတိုဇာတ်လမ်း",
-  "description": "Type a short story with dialogue and description.",
-  "difficulty": "hard",
-  "estimatedMinutes": 15,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 93,
-    "minWpm": 32
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-advanced-7-ex-1",
-      "kind": "text",
-      "instruction": "One evening, Sam could not find his house key. He searched the bag and the pocket many times. At last he saw the key hanging on the door. He laughed at his own mistake and walked inside.",
-      "text": "One evening, Sam could not find his house key. He searched the bag and the pocket many times. At last he saw the key hanging on the door. He laughed at his own mistake and walked inside."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "punctuation",
-    "speed",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-advanced-6"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-en-advanced-7",
+    "level": "advanced",
+    "language": "en",
+    "number": 7,
+    "title": "A Short Story",
+    "titleMy": "အတိုဇာတ်လမ်း",
+    "description": "Type a short story with dialogue and description.",
+    "difficulty": "hard",
+    "estimatedMinutes": 15,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 93,
+        "minWpm": 32
+    },
+    "exercises": [
+        {
+            "id": "lesson-en-advanced-7-ex-1",
+            "kind": "text",
+            "instruction": "One evening, Sam could not find his house key. He searched the bag and the pocket many times. At last he saw the key hanging on the door. He laughed at his own mistake and walked inside.",
+            "text": "One evening, Sam could not find his house key. He searched the bag and the pocket many times. At last he saw the key hanging on the door. He laughed at his own mistake and walked inside."
+        }
+    ],
+    "focus": ["sentences", "punctuation", "speed", "accuracy"],
+    "prerequisites": ["lesson-en-advanced-6"]
 }

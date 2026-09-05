@@ -12,11 +12,9 @@
 
 ```json
 {
-  "tauri": {
-    "windows": [
-      { "label": "main", "title": "MyApp" }
-    ]
-  }
+    "tauri": {
+        "windows": [{ "label": "main", "title": "MyApp" }]
+    }
 }
 ```
 

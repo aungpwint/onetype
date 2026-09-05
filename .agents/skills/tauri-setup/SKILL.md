@@ -4,15 +4,16 @@ description: Guidance for Tauri v2 prerequisites and environment setup across ma
 license: Complete terms in LICENSE.txt
 ---
 
-
 ## When to use this skill
 
 **ALWAYS use this skill when the user mentions:**
+
 - Tauri v2 prerequisites or environment setup / Tauri v2 前置环境或安装配置
 - Rust toolchain, Node.js, build tools, Xcode, Android SDK/NDK / Rust 工具链、Node.js、构建工具、Xcode、Android SDK/NDK
 - Desktop and mobile environment checks / 桌面与移动端环境检查
 
 **Trigger phrases include:**
+
 - "prerequisites", "toolchain", "Xcode", "Android SDK", "NDK"
 - "前置环境", "工具链", "Xcode", "Android Studio", "NDK"
 
@@ -54,16 +55,21 @@ tauri v2, prerequisites, rust, node.js, build tools, xcode, android studio, ndk,
 ## 使用流程
 
 ### Step 1: 环境准备
+
 确保开发环境已安装必要的依赖和工具。
 
 ### Step 2: 配置初始化
+
 根据项目需求进行基础配置。
 
 ### Step 3: 核心功能使用
+
 按照示例代码实现核心功能。
 
 ### Step 4: 测试验证
+
 运行测试确保功能正常。
 
 ### Step 5: 部署上线
+
 完成开发后进行部署和监控。

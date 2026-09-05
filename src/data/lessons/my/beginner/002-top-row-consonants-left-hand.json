@@ -1,65 +1,48 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-2",
-  "level": "beginner",
-  "language": "my",
-  "number": 2,
-  "title": "Top Row Consonants: Left Hand",
-  "titleMy": "အပေါ်တန်း ဗျည်း - ဘယ်ဘက်လက်",
-  "description": "Left hand top row: တ(KeyW) န(KeyE) မ(KeyR) အ(KeyT)",
-  "difficulty": "basic",
-  "estimatedMinutes": 6,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-2-ex-1",
-      "kind": "text",
-      "instruction": "တ တ တ တ တ န န န န န မ မ မ မ မ",
-      "text": "တ တ တ တ တ န န န န န မ မ မ မ မ"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-2",
+    "level": "beginner",
+    "language": "my",
+    "number": 2,
+    "title": "Top Row Consonants: Left Hand",
+    "titleMy": "အပေါ်တန်း ဗျည်း - ဘယ်ဘက်လက်",
+    "description": "Left hand top row: တ(KeyW) န(KeyE) မ(KeyR) အ(KeyT)",
+    "difficulty": "basic",
+    "estimatedMinutes": 6,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-beginner-2-ex-2",
-      "kind": "text",
-      "instruction": "တ န မ တ န မ တ န မ တ န မ",
-      "text": "တ န မ တ န မ တ န မ တ န မ"
-    },
-    {
-      "id": "lesson-my-beginner-2-ex-3",
-      "kind": "text",
-      "instruction": "တ န မ အ တ န မ အ",
-      "text": "တ န မ အ တ န မ အ"
-    },
-    {
-      "id": "lesson-my-beginner-2-ex-4",
-      "kind": "text",
-      "instruction": "တ န မ တ န မ တ န မ တ န မ",
-      "text": "တ န မ တ န မ တ န မ တ န မ"
-    }
-  ],
-  "focusKeys": [
-    "KeyW",
-    "KeyE",
-    "KeyR",
-    "KeyT"
-  ],
-  "focus": [
-    "top-row",
-    "key-memory",
-    "finger-control"
-  ],
-  "targetFingers": [
-    "left-ring",
-    "left-middle",
-    "left-index"
-  ],
-  "targetHands": [
-    "left"
-  ],
-  "prerequisites": [
-    "lesson-my-beginner-1"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-2-ex-1",
+            "kind": "text",
+            "instruction": "တ တ တ တ တ န န န န န မ မ မ မ မ",
+            "text": "တ တ တ တ တ န န န န န မ မ မ မ မ"
+        },
+        {
+            "id": "lesson-my-beginner-2-ex-2",
+            "kind": "text",
+            "instruction": "တ န မ တ န မ တ န မ တ န မ",
+            "text": "တ န မ တ န မ တ န မ တ န မ"
+        },
+        {
+            "id": "lesson-my-beginner-2-ex-3",
+            "kind": "text",
+            "instruction": "တ န မ အ တ န မ အ",
+            "text": "တ န မ အ တ န မ အ"
+        },
+        {
+            "id": "lesson-my-beginner-2-ex-4",
+            "kind": "text",
+            "instruction": "တ န မ တ န မ တ န မ တ န မ",
+            "text": "တ န မ တ န မ တ န မ တ န မ"
+        }
+    ],
+    "focusKeys": ["KeyW", "KeyE", "KeyR", "KeyT"],
+    "focus": ["top-row", "key-memory", "finger-control"],
+    "targetFingers": ["left-ring", "left-middle", "left-index"],
+    "targetHands": ["left"],
+    "prerequisites": ["lesson-my-beginner-1"]
 }

@@ -1,6 +1,6 @@
-import { exerciseText, type LessonExercise } from "@/types/exercise";
+import { exerciseText, type LessonExercise } from '@/types/exercise'
 
-import type { LessonPhase } from "@/types/lesson";
+import type { LessonPhase } from '@/types/lesson'
 
 /**
  * Convert an exercise into the legacy `{ instruction, text }` phase a phase
@@ -11,9 +11,9 @@ import type { LessonPhase } from "@/types/lesson";
  * instructions (when present) are preserved verbatim.
  */
 export function lessonPhaseFromExercise(exercise: LessonExercise): LessonPhase {
-  const text = exerciseText(exercise);
-  return {
-    instruction: exercise.instruction ?? text,
-    text,
-  };
+    const text = exerciseText(exercise)
+    return {
+        instruction: exercise.instruction ?? text,
+        text,
+    }
 }

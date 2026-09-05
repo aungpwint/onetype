@@ -1,106 +1,85 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-34",
-  "level": "beginner",
-  "language": "en",
-  "number": 34,
-  "title": "Shift Top Row Left: Q W E R T",
-  "titleMy": "Shift အပေါ်တန်း ဘယ်ဘက် - Q W E R T",
-  "description": "Left-hand top row with Right Shift. Q W E R T uppercase.",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 87,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-34-ex-1",
-      "kind": "text",
-      "instruction": "qQ qQ qQ qQ qQ qQ qQ qQ qQ qQ",
-      "text": "qQ qQ qQ qQ qQ qQ qQ qQ qQ qQ"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-34",
+    "level": "beginner",
+    "language": "en",
+    "number": 34,
+    "title": "Shift Top Row Left: Q W E R T",
+    "titleMy": "Shift အပေါ်တန်း ဘယ်ဘက် - Q W E R T",
+    "description": "Left-hand top row with Right Shift. Q W E R T uppercase.",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 87,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-34-ex-2",
-      "kind": "text",
-      "instruction": "wW wW wW wW wW wW wW wW wW wW",
-      "text": "wW wW wW wW wW wW wW wW wW wW"
-    },
-    {
-      "id": "lesson-en-beginner-34-ex-3",
-      "kind": "text",
-      "instruction": "eE eE eE eE eE eE eE eE eE eE",
-      "text": "eE eE eE eE eE eE eE eE eE eE"
-    },
-    {
-      "id": "lesson-en-beginner-34-ex-4",
-      "kind": "text",
-      "instruction": "rR rR rR rR rR rR rR rR rR rR",
-      "text": "rR rR rR rR rR rR rR rR rR rR"
-    },
-    {
-      "id": "lesson-en-beginner-34-ex-5",
-      "kind": "text",
-      "instruction": "tT tT tT tT tT tT tT tT tT tT",
-      "text": "tT tT tT tT tT tT tT tT tT tT"
-    },
-    {
-      "id": "lesson-en-beginner-34-ex-6",
-      "kind": "text",
-      "instruction": "Qq Qq Qq Qq Qq Qq Qq Qq Qq Qq",
-      "text": "Qq Qq Qq Qq Qq Qq Qq Qq Qq Qq"
-    },
-    {
-      "id": "lesson-en-beginner-34-ex-7",
-      "kind": "text",
-      "instruction": "Ww Ww Ww Ww Ww Ww Ww Ww Ww Ww",
-      "text": "Ww Ww Ww Ww Ww Ww Ww Ww Ww Ww"
-    },
-    {
-      "id": "lesson-en-beginner-34-ex-8",
-      "kind": "text",
-      "instruction": "Ee Ee Ee Ee Ee Ee Ee Ee Ee Ee",
-      "text": "Ee Ee Ee Ee Ee Ee Ee Ee Ee Ee"
-    },
-    {
-      "id": "lesson-en-beginner-34-ex-9",
-      "kind": "text",
-      "instruction": "Rr Rr Rr Rr Rr Rr Rr Rr Rr Rr",
-      "text": "Rr Rr Rr Rr Rr Rr Rr Rr Rr Rr"
-    },
-    {
-      "id": "lesson-en-beginner-34-ex-10",
-      "kind": "text",
-      "instruction": "Tt Tt Tt Tt Tt Tt Tt Tt Tt Tt",
-      "text": "Tt Tt Tt Tt Tt Tt Tt Tt Tt Tt"
-    }
-  ],
-  "focusKeys": [
-    "KeyQ",
-    "KeyW",
-    "KeyE",
-    "KeyR",
-    "KeyT",
-    "ShiftRight"
-  ],
-  "focus": [
-    "shift",
-    "top-row"
-  ],
-  "targetFingers": [
-    "left-pinky",
-    "left-ring",
-    "left-middle",
-    "left-index",
-    "right-pinky"
-  ],
-  "targetHands": [
-    "left",
-    "right"
-  ],
-  "requiresShift": true,
-  "prerequisites": [
-    "lesson-en-beginner-33"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-34-ex-1",
+            "kind": "text",
+            "instruction": "qQ qQ qQ qQ qQ qQ qQ qQ qQ qQ",
+            "text": "qQ qQ qQ qQ qQ qQ qQ qQ qQ qQ"
+        },
+        {
+            "id": "lesson-en-beginner-34-ex-2",
+            "kind": "text",
+            "instruction": "wW wW wW wW wW wW wW wW wW wW",
+            "text": "wW wW wW wW wW wW wW wW wW wW"
+        },
+        {
+            "id": "lesson-en-beginner-34-ex-3",
+            "kind": "text",
+            "instruction": "eE eE eE eE eE eE eE eE eE eE",
+            "text": "eE eE eE eE eE eE eE eE eE eE"
+        },
+        {
+            "id": "lesson-en-beginner-34-ex-4",
+            "kind": "text",
+            "instruction": "rR rR rR rR rR rR rR rR rR rR",
+            "text": "rR rR rR rR rR rR rR rR rR rR"
+        },
+        {
+            "id": "lesson-en-beginner-34-ex-5",
+            "kind": "text",
+            "instruction": "tT tT tT tT tT tT tT tT tT tT",
+            "text": "tT tT tT tT tT tT tT tT tT tT"
+        },
+        {
+            "id": "lesson-en-beginner-34-ex-6",
+            "kind": "text",
+            "instruction": "Qq Qq Qq Qq Qq Qq Qq Qq Qq Qq",
+            "text": "Qq Qq Qq Qq Qq Qq Qq Qq Qq Qq"
+        },
+        {
+            "id": "lesson-en-beginner-34-ex-7",
+            "kind": "text",
+            "instruction": "Ww Ww Ww Ww Ww Ww Ww Ww Ww Ww",
+            "text": "Ww Ww Ww Ww Ww Ww Ww Ww Ww Ww"
+        },
+        {
+            "id": "lesson-en-beginner-34-ex-8",
+            "kind": "text",
+            "instruction": "Ee Ee Ee Ee Ee Ee Ee Ee Ee Ee",
+            "text": "Ee Ee Ee Ee Ee Ee Ee Ee Ee Ee"
+        },
+        {
+            "id": "lesson-en-beginner-34-ex-9",
+            "kind": "text",
+            "instruction": "Rr Rr Rr Rr Rr Rr Rr Rr Rr Rr",
+            "text": "Rr Rr Rr Rr Rr Rr Rr Rr Rr Rr"
+        },
+        {
+            "id": "lesson-en-beginner-34-ex-10",
+            "kind": "text",
+            "instruction": "Tt Tt Tt Tt Tt Tt Tt Tt Tt Tt",
+            "text": "Tt Tt Tt Tt Tt Tt Tt Tt Tt Tt"
+        }
+    ],
+    "focusKeys": ["KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "ShiftRight"],
+    "focus": ["shift", "top-row"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-pinky"],
+    "targetHands": ["left", "right"],
+    "requiresShift": true,
+    "prerequisites": ["lesson-en-beginner-33"]
 }

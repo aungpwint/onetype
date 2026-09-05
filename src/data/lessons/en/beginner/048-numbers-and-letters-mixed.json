@@ -1,57 +1,51 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-48",
-  "level": "beginner",
-  "language": "en",
-  "number": 48,
-  "title": "Numbers and Letters Mixed",
-  "titleMy": "ဂဏန်းနှင့် အက္ခရာ ရောနှော",
-  "description": "Combine numbers and letters. Practice switching between rows.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 88,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-48-ex-1",
-      "kind": "text",
-      "instruction": "1a 2b 3c 4d 5e 6f 7g 8h 9i 0j",
-      "text": "1a 2b 3c 4d 5e 6f 7g 8h 9i 0j"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-48",
+    "level": "beginner",
+    "language": "en",
+    "number": 48,
+    "title": "Numbers and Letters Mixed",
+    "titleMy": "ဂဏန်းနှင့် အက္ခရာ ရောနှော",
+    "description": "Combine numbers and letters. Practice switching between rows.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 88,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-48-ex-2",
-      "kind": "text",
-      "instruction": "a1 b2 c3 d4 e5 f6 g7 h8 i9 j0",
-      "text": "a1 b2 c3 d4 e5 f6 g7 h8 i9 j0"
-    },
-    {
-      "id": "lesson-en-beginner-48-ex-3",
-      "kind": "text",
-      "instruction": "1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th",
-      "text": "1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th"
-    },
-    {
-      "id": "lesson-en-beginner-48-ex-4",
-      "kind": "text",
-      "instruction": "page 1 chapter 2 line 3 word 4",
-      "text": "page 1 chapter 2 line 3 word 4"
-    },
-    {
-      "id": "lesson-en-beginner-48-ex-5",
-      "kind": "text",
-      "instruction": "2024 1990 2025 1985 2000 2016 2030",
-      "text": "2024 1990 2025 1985 2000 2016 2030"
-    }
-  ],
-  "focus": [
-    "numbers",
-    "words",
-    "row-transition"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-47"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-48-ex-1",
+            "kind": "text",
+            "instruction": "1a 2b 3c 4d 5e 6f 7g 8h 9i 0j",
+            "text": "1a 2b 3c 4d 5e 6f 7g 8h 9i 0j"
+        },
+        {
+            "id": "lesson-en-beginner-48-ex-2",
+            "kind": "text",
+            "instruction": "a1 b2 c3 d4 e5 f6 g7 h8 i9 j0",
+            "text": "a1 b2 c3 d4 e5 f6 g7 h8 i9 j0"
+        },
+        {
+            "id": "lesson-en-beginner-48-ex-3",
+            "kind": "text",
+            "instruction": "1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th",
+            "text": "1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th"
+        },
+        {
+            "id": "lesson-en-beginner-48-ex-4",
+            "kind": "text",
+            "instruction": "page 1 chapter 2 line 3 word 4",
+            "text": "page 1 chapter 2 line 3 word 4"
+        },
+        {
+            "id": "lesson-en-beginner-48-ex-5",
+            "kind": "text",
+            "instruction": "2024 1990 2025 1985 2000 2016 2030",
+            "text": "2024 1990 2025 1985 2000 2016 2030"
+        }
+    ],
+    "focus": ["numbers", "words", "row-transition"],
+    "prerequisites": ["lesson-en-beginner-47"]
 }

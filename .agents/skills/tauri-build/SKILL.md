@@ -4,15 +4,16 @@ description: Guidance for Tauri v2 production builds, signing, and distribution 
 license: Complete terms in LICENSE.txt
 ---
 
-
 ## When to use this skill
 
 **ALWAYS use this skill when the user mentions:**
+
 - Production builds or packaging / 生产构建或打包
 - Signing or release artifacts / 签名或发布产物
 - CI pipelines for distribution / 分发相关 CI 流水线
 
 **Trigger phrases include:**
+
 - "build", "release", "signing", "distribution", "pipeline"
 - "构建", "发布", "签名", "分发", "流水线"
 
@@ -73,16 +74,21 @@ tauri build, release, signing, packaging, distribution
 ## 使用流程
 
 ### Step 1: 环境准备
+
 确保开发环境已安装必要的依赖和工具。
 
 ### Step 2: 配置初始化
+
 根据项目需求进行基础配置。
 
 ### Step 3: 核心功能使用
+
 按照示例代码实现核心功能。
 
 ### Step 4: 测试验证
+
 运行测试确保功能正常。
 
 ### Step 5: 部署上线
+
 完成开发后进行部署和监控。

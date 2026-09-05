@@ -1,33 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-intermediate-16",
-  "level": "intermediate",
-  "language": "en",
-  "number": 16,
-  "title": "Short Paragraph 2",
-  "titleMy": "စာပိုဒ်တို (၂)",
-  "description": "A longer paragraph about a familiar topic.",
-  "difficulty": "hard",
-  "estimatedMinutes": 12,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 92,
-    "minWpm": 24
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-intermediate-16-ex-1",
-      "kind": "text",
-      "instruction": "The cat sleeps on the soft mat all day. At night it wakes up and walks in the garden. It catches a small mouse and brings it to the door.",
-      "text": "The cat sleeps on the soft mat all day. At night it wakes up and walks in the garden. It catches a small mouse and brings it to the door."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "speed",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-intermediate-15"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-en-intermediate-16",
+    "level": "intermediate",
+    "language": "en",
+    "number": 16,
+    "title": "Short Paragraph 2",
+    "titleMy": "စာပိုဒ်တို (၂)",
+    "description": "A longer paragraph about a familiar topic.",
+    "difficulty": "hard",
+    "estimatedMinutes": 12,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 92,
+        "minWpm": 24
+    },
+    "exercises": [
+        {
+            "id": "lesson-en-intermediate-16-ex-1",
+            "kind": "text",
+            "instruction": "The cat sleeps on the soft mat all day. At night it wakes up and walks in the garden. It catches a small mouse and brings it to the door.",
+            "text": "The cat sleeps on the soft mat all day. At night it wakes up and walks in the garden. It catches a small mouse and brings it to the door."
+        }
+    ],
+    "focus": ["sentences", "speed", "accuracy"],
+    "prerequisites": ["lesson-en-intermediate-15"]
 }

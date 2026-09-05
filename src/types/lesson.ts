@@ -1,14 +1,14 @@
-import type { LessonExercise, ExerciseOptions, NormalizedExercise } from "./exercise";
-import type { LessonLanguage } from "./language";
-import type { KeyboardId } from "./keyboard";
-import type { Difficulty, FingerId, Hand, Language, Level, LessonFocus } from "./index";
+import type { LessonExercise, ExerciseOptions, NormalizedExercise } from './exercise'
+import type { LessonLanguage } from './language'
+import type { KeyboardId } from './keyboard'
+import type { Difficulty, FingerId, Hand, Language, Level, LessonFocus } from './index'
 
 /** Current lesson JSON schema version understood by the loader. */
-export const LESSON_SCHEMA_VERSION = 1;
+export const LESSON_SCHEMA_VERSION = 1
 
 export interface LessonCompletionRule {
-  minAccuracy: number;
-  minWpm: number | null;
+    minAccuracy: number
+    minWpm: number | null
 }
 
 /**
@@ -21,38 +21,38 @@ export interface LessonCompletionRule {
  * drives pass/fail scoring.
  */
 export interface Lesson {
-  schemaVersion: number;
-  id: string;
-  level: Level;
-  language: LessonLanguage;
-  number: number;
-  title: string;
-  titleMy?: string;
-  description: string;
-  difficulty: Difficulty;
-  estimatedMinutes: number;
-  /** Canonical keyboard reference. See KeyboardId. */
-  keyboard: KeyboardId;
-  completion: LessonCompletionRule;
-  focusKeys?: string[];
-  focus?: LessonFocus[];
-  targetFingers?: FingerId[];
-  targetHands?: Hand[];
-  requiresShift?: boolean;
-  prerequisites?: string[];
-  exercises: LessonExercise[];
-  metadata?: LessonMetadata;
+    schemaVersion: number
+    id: string
+    level: Level
+    language: LessonLanguage
+    number: number
+    title: string
+    titleMy?: string
+    description: string
+    difficulty: Difficulty
+    estimatedMinutes: number
+    /** Canonical keyboard reference. See KeyboardId. */
+    keyboard: KeyboardId
+    completion: LessonCompletionRule
+    focusKeys?: string[]
+    focus?: LessonFocus[]
+    targetFingers?: FingerId[]
+    targetHands?: Hand[]
+    requiresShift?: boolean
+    prerequisites?: string[]
+    exercises: LessonExercise[]
+    metadata?: LessonMetadata
 }
 
 export interface LessonMetadata {
-  author?: string;
-  version?: string;
-  tags?: string[];
-  estimatedDuration?: number;
-  difficulty?: Difficulty;
-  prerequisites?: string[];
-  createdAt?: string;
-  updatedAt?: string;
+    author?: string
+    version?: string
+    tags?: string[]
+    estimatedDuration?: number
+    difficulty?: Difficulty
+    prerequisites?: string[]
+    createdAt?: string
+    updatedAt?: string
 }
 
 /**
@@ -61,8 +61,8 @@ export interface LessonMetadata {
  * exercise normalizes to at least one phase.
  */
 export interface LessonPhase {
-  instruction: string;
-  text: string;
+    instruction: string
+    text: string
 }
 
 /**
@@ -72,27 +72,27 @@ export interface LessonPhase {
  * while also carrying the canonical keyboard reference and resolved exercises.
  */
 export interface NormalizedLesson {
-  id: string;
-  level: Level;
-  number: number;
-  title: string;
-  titleMy: string;
-  description: string;
-  difficulty: Difficulty;
-  estimatedMinutes: number;
-  language: Language;
-  layoutId: "english-qwerty" | "myanmar3";
-  completion: LessonCompletionRule;
-  focusKeys?: string[];
-  focus?: LessonFocus[];
-  targetFingers?: FingerId[];
-  targetHands?: Hand[];
-  requiresShift?: boolean;
-  prerequisites?: string[];
-  phases: LessonPhase[];
-  /** Canonical keyboard reference used by the typing engine. */
-  keyboard: KeyboardId;
-  exercises: NormalizedExercise[];
-  options?: ExerciseOptions;
-  metadata?: LessonMetadata;
+    id: string
+    level: Level
+    number: number
+    title: string
+    titleMy: string
+    description: string
+    difficulty: Difficulty
+    estimatedMinutes: number
+    language: Language
+    layoutId: 'english-qwerty' | 'myanmar3'
+    completion: LessonCompletionRule
+    focusKeys?: string[]
+    focus?: LessonFocus[]
+    targetFingers?: FingerId[]
+    targetHands?: Hand[]
+    requiresShift?: boolean
+    prerequisites?: string[]
+    phases: LessonPhase[]
+    /** Canonical keyboard reference used by the typing engine. */
+    keyboard: KeyboardId
+    exercises: NormalizedExercise[]
+    options?: ExerciseOptions
+    metadata?: LessonMetadata
 }

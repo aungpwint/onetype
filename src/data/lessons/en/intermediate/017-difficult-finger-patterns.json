@@ -1,63 +1,57 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-intermediate-17",
-  "level": "intermediate",
-  "language": "en",
-  "number": 17,
-  "title": "Difficult Finger Patterns",
-  "titleMy": "ခက်ခဲသည့် လက်ချောင်း ပုံစံများ",
-  "description": "Practice awkward letter combinations that cause errors.",
-  "difficulty": "hard",
-  "estimatedMinutes": 12,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 93,
-    "minWpm": 24
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-intermediate-17-ex-1",
-      "kind": "text",
-      "instruction": "ed ed ed rf rf rf tg tg tg",
-      "text": "ed ed ed rf rf rf tg tg tg"
+    "schemaVersion": 1,
+    "id": "lesson-en-intermediate-17",
+    "level": "intermediate",
+    "language": "en",
+    "number": 17,
+    "title": "Difficult Finger Patterns",
+    "titleMy": "ခက်ခဲသည့် လက်ချောင်း ပုံစံများ",
+    "description": "Practice awkward letter combinations that cause errors.",
+    "difficulty": "hard",
+    "estimatedMinutes": 12,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 93,
+        "minWpm": 24
     },
-    {
-      "id": "lesson-en-intermediate-17-ex-2",
-      "kind": "text",
-      "instruction": "ki ki ki lo lo lo ju ju ju",
-      "text": "ki ki ki lo lo lo ju ju ju"
-    },
-    {
-      "id": "lesson-en-intermediate-17-ex-3",
-      "kind": "text",
-      "instruction": "pq pq pq wx wx wx vb vb vb",
-      "text": "pq pq pq wx wx wx vb vb vb"
-    },
-    {
-      "id": "lesson-en-intermediate-17-ex-4",
-      "kind": "text",
-      "instruction": "edc rfv tgb ki lo ju pq wx",
-      "text": "edc rfv tgb ki lo ju pq wx"
-    },
-    {
-      "id": "lesson-en-intermediate-17-ex-5",
-      "kind": "text",
-      "instruction": "freedom evaluate privilege irregular",
-      "text": "freedom evaluate privilege irregular"
-    },
-    {
-      "id": "lesson-en-intermediate-17-ex-6",
-      "kind": "text",
-      "instruction": "judgment knowledge questionnaire",
-      "text": "judgment knowledge questionnaire"
-    }
-  ],
-  "focus": [
-    "finger-control",
-    "accuracy",
-    "same-hand"
-  ],
-  "prerequisites": [
-    "lesson-en-intermediate-16"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-intermediate-17-ex-1",
+            "kind": "text",
+            "instruction": "ed ed ed rf rf rf tg tg tg",
+            "text": "ed ed ed rf rf rf tg tg tg"
+        },
+        {
+            "id": "lesson-en-intermediate-17-ex-2",
+            "kind": "text",
+            "instruction": "ki ki ki lo lo lo ju ju ju",
+            "text": "ki ki ki lo lo lo ju ju ju"
+        },
+        {
+            "id": "lesson-en-intermediate-17-ex-3",
+            "kind": "text",
+            "instruction": "pq pq pq wx wx wx vb vb vb",
+            "text": "pq pq pq wx wx wx vb vb vb"
+        },
+        {
+            "id": "lesson-en-intermediate-17-ex-4",
+            "kind": "text",
+            "instruction": "edc rfv tgb ki lo ju pq wx",
+            "text": "edc rfv tgb ki lo ju pq wx"
+        },
+        {
+            "id": "lesson-en-intermediate-17-ex-5",
+            "kind": "text",
+            "instruction": "freedom evaluate privilege irregular",
+            "text": "freedom evaluate privilege irregular"
+        },
+        {
+            "id": "lesson-en-intermediate-17-ex-6",
+            "kind": "text",
+            "instruction": "judgment knowledge questionnaire",
+            "text": "judgment knowledge questionnaire"
+        }
+    ],
+    "focus": ["finger-control", "accuracy", "same-hand"],
+    "prerequisites": ["lesson-en-intermediate-16"]
 }

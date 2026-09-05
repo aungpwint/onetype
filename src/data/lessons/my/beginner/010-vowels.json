@@ -1,71 +1,54 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-10",
-  "level": "beginner",
-  "language": "my",
-  "number": 10,
-  "title": "Vowels: ေ ု ူ ဲ",
-  "titleMy": "သရများ - ေ ု ူ ဲ",
-  "description": "More vowels: ေ(KeyA) ု(KeyK) ူ(KeyL) ဲ(KeyJ+Shift)",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-10-ex-1",
-      "kind": "text",
-      "instruction": "ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ",
-      "text": "ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-10",
+    "level": "beginner",
+    "language": "my",
+    "number": 10,
+    "title": "Vowels: ေ ု ူ ဲ",
+    "titleMy": "သရများ - ေ ု ူ ဲ",
+    "description": "More vowels: ေ(KeyA) ု(KeyK) ူ(KeyL) ဲ(KeyJ+Shift)",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-beginner-10-ex-2",
-      "kind": "text",
-      "instruction": "ကု ကု ကု ကု ကု ကု ကု ကု ကု ကု",
-      "text": "ကု ကု ကု ကု ကု ကု ကု ကု ကု ကု"
-    },
-    {
-      "id": "lesson-my-beginner-10-ex-3",
-      "kind": "text",
-      "instruction": "ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ",
-      "text": "ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ"
-    },
-    {
-      "id": "lesson-my-beginner-10-ex-4",
-      "kind": "text",
-      "instruction": "ကေ ကု ကူ ကဲ ကေ ကု ကူ ကဲ",
-      "text": "ကေ ကု ကူ ကဲ ကေ ကု ကူ ကဲ"
-    },
-    {
-      "id": "lesson-my-beginner-10-ex-5",
-      "kind": "text",
-      "instruction": "တေ တု တူ မေ မု မူ နေ နု နူ",
-      "text": "တေ တု တူ မေ မု မူ နေ နု နူ"
-    }
-  ],
-  "focusKeys": [
-    "KeyA",
-    "KeyK",
-    "KeyL"
-  ],
-  "focus": [
-    "unicode",
-    "syllable",
-    "key-memory"
-  ],
-  "targetFingers": [
-    "left-pinky",
-    "right-middle",
-    "right-ring"
-  ],
-  "targetHands": [
-    "left",
-    "right"
-  ],
-  "prerequisites": [
-    "lesson-my-beginner-9"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-10-ex-1",
+            "kind": "text",
+            "instruction": "ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ",
+            "text": "ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ"
+        },
+        {
+            "id": "lesson-my-beginner-10-ex-2",
+            "kind": "text",
+            "instruction": "ကု ကု ကု ကု ကု ကု ကု ကု ကု ကု",
+            "text": "ကု ကု ကု ကု ကု ကု ကု ကု ကု ကု"
+        },
+        {
+            "id": "lesson-my-beginner-10-ex-3",
+            "kind": "text",
+            "instruction": "ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ",
+            "text": "ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ"
+        },
+        {
+            "id": "lesson-my-beginner-10-ex-4",
+            "kind": "text",
+            "instruction": "ကေ ကု ကူ ကဲ ကေ ကု ကူ ကဲ",
+            "text": "ကေ ကု ကူ ကဲ ကေ ကု ကူ ကဲ"
+        },
+        {
+            "id": "lesson-my-beginner-10-ex-5",
+            "kind": "text",
+            "instruction": "တေ တု တူ မေ မု မူ နေ နု နူ",
+            "text": "တေ တု တူ မေ မု မူ နေ နု နူ"
+        }
+    ],
+    "focusKeys": ["KeyA", "KeyK", "KeyL"],
+    "focus": ["unicode", "syllable", "key-memory"],
+    "targetFingers": ["left-pinky", "right-middle", "right-ring"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-my-beginner-9"]
 }

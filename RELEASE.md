@@ -103,12 +103,12 @@ the app version **fails**.
 
 Secrets are configured in GitHub → Settings → Secrets and variables → Actions.
 
-| Secret | Purpose | Required |
-| --- | --- | --- |
-| `TAURI_SIGNING_PRIVATE_KEY` | base64 minisign **private** key used to sign update bundles. Without it, updater artifacts (`.sig`) cannot be produced. | **Yes** |
-| `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` | password for the above key. | **Yes** |
-| `WINDOWS_CERTIFICATE` | base64 of a PFX containing the Authenticode certificate. | No (see §7) |
-| `WINDOWS_CERTIFICATE_PASSWORD` | password for the PFX. | No (see §7) |
+| Secret                               | Purpose                                                                                                                 | Required    |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `TAURI_SIGNING_PRIVATE_KEY`          | base64 minisign **private** key used to sign update bundles. Without it, updater artifacts (`.sig`) cannot be produced. | **Yes**     |
+| `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` | password for the above key.                                                                                             | **Yes**     |
+| `WINDOWS_CERTIFICATE`                | base64 of a PFX containing the Authenticode certificate.                                                                | No (see §7) |
+| `WINDOWS_CERTIFICATE_PASSWORD`       | password for the PFX.                                                                                                   | No (see §7) |
 
 The workflow passes `TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]` exactly as Tauri
 expects. They are masked by GitHub and never printed in logs. Only the **public**
@@ -123,27 +123,27 @@ signatures.
 The Tauri updater signs each bundle with a minisign key pair.
 
 1. Generate a key pair (this is a Tauri CLI command):
-   ```bash
-   pnpm tauri signer generate -w ~/.tauri/onetype.key
-   ```
-   It writes `onetype.key` (private) and `onetype.key.pub` (public). Keep the
-   private key **out of the repository** (the repo `.gitignore` already excludes
-   `src-tauri/updater.key*`).
+    ```bash
+    pnpm tauri signer generate -w ~/.tauri/onetype.key
+    ```
+    It writes `onetype.key` (private) and `onetype.key.pub` (public). Keep the
+    private key **out of the repository** (the repo `.gitignore` already excludes
+    `src-tauri/updater.key*`).
 2. Set the public key into `src-tauri/tauri.conf.json` → `plugins.updater.pubkey`
    (paste the full contents of `onetype.key.pub`).
 3. In GitHub, add `TAURI_SIGNING_PRIVATE_KEY` = **base64 of the private key**
    and `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` = its password.
 
-   If the key already lives in the local environment as
-   `TAURI_SIGNING_PRIVATE_KEY` / `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` (the
-   standard Tauri env names), `scripts/set-ci-secrets.ps1` copies that exact
-   pair to the GitHub Actions secrets verbatim — no hand-typing, trimming or
-   re-encoding:
+    If the key already lives in the local environment as
+    `TAURI_SIGNING_PRIVATE_KEY` / `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` (the
+    standard Tauri env names), `scripts/set-ci-secrets.ps1` copies that exact
+    pair to the GitHub Actions secrets verbatim — no hand-typing, trimming or
+    re-encoding:
 
-   ```
-   gh auth login
-   pwsh scripts/set-ci-secrets.ps1
-   ```
+    ```
+    gh auth login
+    pwsh scripts/set-ci-secrets.ps1
+    ```
 
 > The private key (GitHub secret / local env) and the public key in
 > `tauri.conf.json` must be the **same key pair**. The release workflow's
@@ -230,6 +230,7 @@ The NSIS installer is self-contained. Runtime components:
   stays in the local SQLite database under the app's data directory.
 
 To test offline installation:
+
 ```
 1. Build the installer (above).
 2. Put the .exe on a USB drive.
@@ -306,14 +307,14 @@ The authoritative human-readable history lives in `CHANGELOG.md`.
   release was created, so nothing to clean up.
 - **Partial release created but an asset upload failed**: re-run the `publish`
   job, or upload the missing asset manually:
-  ```bash
-  gh release upload v1.1.0 path/to/artifact --clobber
-  ```
+    ```bash
+    gh release upload v1.1.0 path/to/artifact --clobber
+    ```
 - **`latest.json` is missing from the release**: the updater falls back to the
   previous behavior (no update detected). Regenerate and upload it:
-  ```bash
-  gh release upload v1.1.0 latest.json --clobber
-  ```
+    ```bash
+    gh release upload v1.1.0 latest.json --clobber
+    ```
 
 ---
 

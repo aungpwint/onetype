@@ -1,33 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-advanced-6",
-  "level": "advanced",
-  "language": "en",
-  "number": 6,
-  "title": "Good Habits Paragraph",
-  "titleMy": "ကောင်းသည့် အလေ့အကျင့် စာပိုဒ်",
-  "description": "Type about building good habits.",
-  "difficulty": "hard",
-  "estimatedMinutes": 15,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 93,
-    "minWpm": 32
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-advanced-6-ex-1",
-      "kind": "text",
-      "instruction": "Good habits start with small steps. If you read a little every day, you will read many books in a year. If you practice typing daily, your speed and accuracy will grow quickly. Keep going and never give up.",
-      "text": "Good habits start with small steps. If you read a little every day, you will read many books in a year. If you practice typing daily, your speed and accuracy will grow quickly. Keep going and never give up."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "speed",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-advanced-5"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-en-advanced-6",
+    "level": "advanced",
+    "language": "en",
+    "number": 6,
+    "title": "Good Habits Paragraph",
+    "titleMy": "ကောင်းသည့် အလေ့အကျင့် စာပိုဒ်",
+    "description": "Type about building good habits.",
+    "difficulty": "hard",
+    "estimatedMinutes": 15,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 93,
+        "minWpm": 32
+    },
+    "exercises": [
+        {
+            "id": "lesson-en-advanced-6-ex-1",
+            "kind": "text",
+            "instruction": "Good habits start with small steps. If you read a little every day, you will read many books in a year. If you practice typing daily, your speed and accuracy will grow quickly. Keep going and never give up.",
+            "text": "Good habits start with small steps. If you read a little every day, you will read many books in a year. If you practice typing daily, your speed and accuracy will grow quickly. Keep going and never give up."
+        }
+    ],
+    "focus": ["sentences", "speed", "accuracy"],
+    "prerequisites": ["lesson-en-advanced-5"]
 }

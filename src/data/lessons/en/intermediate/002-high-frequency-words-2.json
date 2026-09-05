@@ -1,44 +1,39 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-intermediate-2",
-  "level": "intermediate",
-  "language": "en",
-  "number": 2,
-  "title": "High-Frequency Words 2",
-  "titleMy": "အသုံးများဆုံး စကားလုံးများ (၂)",
-  "description": "More high-frequency words for building rhythm.",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": 18
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-intermediate-2-ex-1",
-      "kind": "text",
-      "instruction": "this but his by from they we say her she or",
-      "text": "this but his by from they we say her she or"
+    "schemaVersion": 1,
+    "id": "lesson-en-intermediate-2",
+    "level": "intermediate",
+    "language": "en",
+    "number": 2,
+    "title": "High-Frequency Words 2",
+    "titleMy": "အသုံးများဆုံး စကားလုံးများ (၂)",
+    "description": "More high-frequency words for building rhythm.",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": 18
     },
-    {
-      "id": "lesson-en-intermediate-2-ex-2",
-      "kind": "text",
-      "instruction": "an will my one all would there their what so",
-      "text": "an will my one all would there their what so"
-    },
-    {
-      "id": "lesson-en-intermediate-2-ex-3",
-      "kind": "text",
-      "instruction": "this but his by from they we say her she or an will my",
-      "text": "this but his by from they we say her she or an will my"
-    }
-  ],
-  "focus": [
-    "words",
-    "speed"
-  ],
-  "prerequisites": [
-    "lesson-en-intermediate-1"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-intermediate-2-ex-1",
+            "kind": "text",
+            "instruction": "this but his by from they we say her she or",
+            "text": "this but his by from they we say her she or"
+        },
+        {
+            "id": "lesson-en-intermediate-2-ex-2",
+            "kind": "text",
+            "instruction": "an will my one all would there their what so",
+            "text": "an will my one all would there their what so"
+        },
+        {
+            "id": "lesson-en-intermediate-2-ex-3",
+            "kind": "text",
+            "instruction": "this but his by from they we say her she or an will my",
+            "text": "this but his by from they we say her she or an will my"
+        }
+    ],
+    "focus": ["words", "speed"],
+    "prerequisites": ["lesson-en-intermediate-1"]
 }

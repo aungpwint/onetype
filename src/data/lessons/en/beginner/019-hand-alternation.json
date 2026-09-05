@@ -1,88 +1,71 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-19",
-  "level": "beginner",
-  "language": "en",
-  "number": 19,
-  "title": "Hand Alternation",
-  "titleMy": "လက်နှစ်ဖက် အလှည့်ကျ",
-  "description": "Alternate between left and right hands. This builds speed and rhythm.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 87,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-19-ex-1",
-      "kind": "text",
-      "instruction": "ad ad ad ad ad ad ad ad ad ad",
-      "text": "ad ad ad ad ad ad ad ad ad ad"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-19",
+    "level": "beginner",
+    "language": "en",
+    "number": 19,
+    "title": "Hand Alternation",
+    "titleMy": "လက်နှစ်ဖက် အလှည့်ကျ",
+    "description": "Alternate between left and right hands. This builds speed and rhythm.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 87,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-19-ex-2",
-      "kind": "text",
-      "instruction": "jk jk jk jk jk jk jk jk jk jk",
-      "text": "jk jk jk jk jk jk jk jk jk jk"
-    },
-    {
-      "id": "lesson-en-beginner-19-ex-3",
-      "kind": "text",
-      "instruction": "af af af af af af af af af af",
-      "text": "af af af af af af af af af af"
-    },
-    {
-      "id": "lesson-en-beginner-19-ex-4",
-      "kind": "text",
-      "instruction": "jl jl jl jl jl jl jl jl jl jl",
-      "text": "jl jl jl jl jl jl jl jl jl jl"
-    },
-    {
-      "id": "lesson-en-beginner-19-ex-5",
-      "kind": "text",
-      "instruction": "as kl as kl as kl as kl as kl",
-      "text": "as kl as kl as kl as kl as kl"
-    },
-    {
-      "id": "lesson-en-beginner-19-ex-6",
-      "kind": "text",
-      "instruction": "fd jh fd jh fd jh fd jh fd jh",
-      "text": "fd jh fd jh fd jh fd jh fd jh"
-    },
-    {
-      "id": "lesson-en-beginner-19-ex-7",
-      "kind": "text",
-      "instruction": "sf lk sf lk sf lk sf lk sf lk",
-      "text": "sf lk sf lk sf lk sf lk sf lk"
-    },
-    {
-      "id": "lesson-en-beginner-19-ex-8",
-      "kind": "text",
-      "instruction": "dj ha dj ha dj ha dj ha dj ha",
-      "text": "dj ha dj ha dj ha dj ha dj ha"
-    }
-  ],
-  "focusKeys": [
-    "KeyA",
-    "KeyS",
-    "KeyD",
-    "KeyF",
-    "KeyJ",
-    "KeyK",
-    "KeyL",
-    "KeyH"
-  ],
-  "focus": [
-    "hand-alternation",
-    "finger-control"
-  ],
-  "targetHands": [
-    "left",
-    "right"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-18"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-19-ex-1",
+            "kind": "text",
+            "instruction": "ad ad ad ad ad ad ad ad ad ad",
+            "text": "ad ad ad ad ad ad ad ad ad ad"
+        },
+        {
+            "id": "lesson-en-beginner-19-ex-2",
+            "kind": "text",
+            "instruction": "jk jk jk jk jk jk jk jk jk jk",
+            "text": "jk jk jk jk jk jk jk jk jk jk"
+        },
+        {
+            "id": "lesson-en-beginner-19-ex-3",
+            "kind": "text",
+            "instruction": "af af af af af af af af af af",
+            "text": "af af af af af af af af af af"
+        },
+        {
+            "id": "lesson-en-beginner-19-ex-4",
+            "kind": "text",
+            "instruction": "jl jl jl jl jl jl jl jl jl jl",
+            "text": "jl jl jl jl jl jl jl jl jl jl"
+        },
+        {
+            "id": "lesson-en-beginner-19-ex-5",
+            "kind": "text",
+            "instruction": "as kl as kl as kl as kl as kl",
+            "text": "as kl as kl as kl as kl as kl"
+        },
+        {
+            "id": "lesson-en-beginner-19-ex-6",
+            "kind": "text",
+            "instruction": "fd jh fd jh fd jh fd jh fd jh",
+            "text": "fd jh fd jh fd jh fd jh fd jh"
+        },
+        {
+            "id": "lesson-en-beginner-19-ex-7",
+            "kind": "text",
+            "instruction": "sf lk sf lk sf lk sf lk sf lk",
+            "text": "sf lk sf lk sf lk sf lk sf lk"
+        },
+        {
+            "id": "lesson-en-beginner-19-ex-8",
+            "kind": "text",
+            "instruction": "dj ha dj ha dj ha dj ha dj ha",
+            "text": "dj ha dj ha dj ha dj ha dj ha"
+        }
+    ],
+    "focusKeys": ["KeyA", "KeyS", "KeyD", "KeyF", "KeyJ", "KeyK", "KeyL", "KeyH"],
+    "focus": ["hand-alternation", "finger-control"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-en-beginner-18"]
 }

@@ -1,115 +1,84 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-12",
-  "level": "beginner",
-  "language": "en",
-  "number": 12,
-  "title": "Full Left Hand: All Three Rows",
-  "titleMy": "ဘယ်ဘက်လက် အပြည့် - QWERT ASDFG ZXCVB",
-  "description": "All left-hand keys across all three rows. Practice smooth vertical movement.",
-  "difficulty": "easy",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-12-ex-1",
-      "kind": "text",
-      "instruction": "qaz qaz qaz qaz qaz qaz qaz qaz qaz qaz",
-      "text": "qaz qaz qaz qaz qaz qaz qaz qaz qaz qaz"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-12",
+    "level": "beginner",
+    "language": "en",
+    "number": 12,
+    "title": "Full Left Hand: All Three Rows",
+    "titleMy": "ဘယ်ဘက်လက် အပြည့် - QWERT ASDFG ZXCVB",
+    "description": "All left-hand keys across all three rows. Practice smooth vertical movement.",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-12-ex-2",
-      "kind": "text",
-      "instruction": "wsx wsx wsx wsx wsx wsx wsx wsx wsx wsx",
-      "text": "wsx wsx wsx wsx wsx wsx wsx wsx wsx wsx"
-    },
-    {
-      "id": "lesson-en-beginner-12-ex-3",
-      "kind": "text",
-      "instruction": "edc edc edc edc edc edc edc edc edc edc",
-      "text": "edc edc edc edc edc edc edc edc edc edc"
-    },
-    {
-      "id": "lesson-en-beginner-12-ex-4",
-      "kind": "text",
-      "instruction": "rfv rfv rfv rfv rfv rfv rfv rfv rfv rfv",
-      "text": "rfv rfv rfv rfv rfv rfv rfv rfv rfv rfv"
-    },
-    {
-      "id": "lesson-en-beginner-12-ex-5",
-      "kind": "text",
-      "instruction": "tgb tgb tgb tgb tgb tgb tgb tgb tgb tgb",
-      "text": "tgb tgb tgb tgb tgb tgb tgb tgb tgb tgb"
-    },
-    {
-      "id": "lesson-en-beginner-12-ex-6",
-      "kind": "text",
-      "instruction": "qwe qwe qwe qwe qwe qwe qwe qwe qwe qwe",
-      "text": "qwe qwe qwe qwe qwe qwe qwe qwe qwe qwe"
-    },
-    {
-      "id": "lesson-en-beginner-12-ex-7",
-      "kind": "text",
-      "instruction": "ert ert ert ert ert ert ert ert ert ert",
-      "text": "ert ert ert ert ert ert ert ert ert ert"
-    },
-    {
-      "id": "lesson-en-beginner-12-ex-8",
-      "kind": "text",
-      "instruction": "asd asd asd asd asd asd asd asd asd asd",
-      "text": "asd asd asd asd asd asd asd asd asd asd"
-    },
-    {
-      "id": "lesson-en-beginner-12-ex-9",
-      "kind": "text",
-      "instruction": "zxc zxc zxc zxc zxc zxc zxc zxc zxc zxc",
-      "text": "zxc zxc zxc zxc zxc zxc zxc zxc zxc zxc"
-    },
-    {
-      "id": "lesson-en-beginner-12-ex-10",
-      "kind": "text",
-      "instruction": "cvb cvb cvb cvb cvb cvb cvb cvb cvb cvb",
-      "text": "cvb cvb cvb cvb cvb cvb cvb cvb cvb cvb"
-    }
-  ],
-  "focusKeys": [
-    "KeyQ",
-    "KeyW",
-    "KeyE",
-    "KeyR",
-    "KeyT",
-    "KeyA",
-    "KeyS",
-    "KeyD",
-    "KeyF",
-    "KeyG",
-    "KeyZ",
-    "KeyX",
-    "KeyC",
-    "KeyV",
-    "KeyB"
-  ],
-  "focus": [
-    "top-row",
-    "home-row",
-    "bottom-row",
-    "row-transition",
-    "finger-control"
-  ],
-  "targetFingers": [
-    "left-pinky",
-    "left-ring",
-    "left-middle",
-    "left-index"
-  ],
-  "targetHands": [
-    "left"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-9"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-12-ex-1",
+            "kind": "text",
+            "instruction": "qaz qaz qaz qaz qaz qaz qaz qaz qaz qaz",
+            "text": "qaz qaz qaz qaz qaz qaz qaz qaz qaz qaz"
+        },
+        {
+            "id": "lesson-en-beginner-12-ex-2",
+            "kind": "text",
+            "instruction": "wsx wsx wsx wsx wsx wsx wsx wsx wsx wsx",
+            "text": "wsx wsx wsx wsx wsx wsx wsx wsx wsx wsx"
+        },
+        {
+            "id": "lesson-en-beginner-12-ex-3",
+            "kind": "text",
+            "instruction": "edc edc edc edc edc edc edc edc edc edc",
+            "text": "edc edc edc edc edc edc edc edc edc edc"
+        },
+        {
+            "id": "lesson-en-beginner-12-ex-4",
+            "kind": "text",
+            "instruction": "rfv rfv rfv rfv rfv rfv rfv rfv rfv rfv",
+            "text": "rfv rfv rfv rfv rfv rfv rfv rfv rfv rfv"
+        },
+        {
+            "id": "lesson-en-beginner-12-ex-5",
+            "kind": "text",
+            "instruction": "tgb tgb tgb tgb tgb tgb tgb tgb tgb tgb",
+            "text": "tgb tgb tgb tgb tgb tgb tgb tgb tgb tgb"
+        },
+        {
+            "id": "lesson-en-beginner-12-ex-6",
+            "kind": "text",
+            "instruction": "qwe qwe qwe qwe qwe qwe qwe qwe qwe qwe",
+            "text": "qwe qwe qwe qwe qwe qwe qwe qwe qwe qwe"
+        },
+        {
+            "id": "lesson-en-beginner-12-ex-7",
+            "kind": "text",
+            "instruction": "ert ert ert ert ert ert ert ert ert ert",
+            "text": "ert ert ert ert ert ert ert ert ert ert"
+        },
+        {
+            "id": "lesson-en-beginner-12-ex-8",
+            "kind": "text",
+            "instruction": "asd asd asd asd asd asd asd asd asd asd",
+            "text": "asd asd asd asd asd asd asd asd asd asd"
+        },
+        {
+            "id": "lesson-en-beginner-12-ex-9",
+            "kind": "text",
+            "instruction": "zxc zxc zxc zxc zxc zxc zxc zxc zxc zxc",
+            "text": "zxc zxc zxc zxc zxc zxc zxc zxc zxc zxc"
+        },
+        {
+            "id": "lesson-en-beginner-12-ex-10",
+            "kind": "text",
+            "instruction": "cvb cvb cvb cvb cvb cvb cvb cvb cvb cvb",
+            "text": "cvb cvb cvb cvb cvb cvb cvb cvb cvb cvb"
+        }
+    ],
+    "focusKeys": ["KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB"],
+    "focus": ["top-row", "home-row", "bottom-row", "row-transition", "finger-control"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index"],
+    "targetHands": ["left"],
+    "prerequisites": ["lesson-en-beginner-9"]
 }

@@ -1,18 +1,8 @@
-import type { KeyboardLayout } from "@/core/keyboard-layout/layout";
-import { englishQwerty } from "@/core/keyboard-layout/english-qwerty";
-import { ENGLISH_FINGER_KEYS } from "@/core/drills/types";
-import {
-  planMuscleMemorySession,
-  type MuscleMemoryGoal,
-  type MuscleMemoryPlan,
-} from "@/core/drills/engine";
-import type {
-  FingerId,
-  ParsedKeyId,
-  ReinforcedDrill,
-  ReinforcementOptions,
-  WeakKeyId,
-} from "./types";
+import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
+import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
+import { ENGLISH_FINGER_KEYS } from '@/core/drills/types'
+import { planMuscleMemorySession, type MuscleMemoryGoal, type MuscleMemoryPlan } from '@/core/drills/engine'
+import type { FingerId, ParsedKeyId, ReinforcedDrill, ReinforcementOptions, WeakKeyId } from './types'
 
 /**
  * Adaptive reinforcement. Converts detected weaknesses (Phase 14) into targeted
@@ -21,24 +11,24 @@ import type {
  * drill engine. Pure functions, no side effects.
  */
 
-export const DEFAULT_MAX_KEYS = 8;
+export const DEFAULT_MAX_KEYS = 8
 
 /** Split an engine key id into its code and modifier. */
 export function parseKeyId(id: string): ParsedKeyId {
-  const idx = id.indexOf(":");
-  if (idx === -1) return { code: id, modifier: "none" };
-  const code = id.slice(0, idx);
-  const modifier = id.slice(idx + 1);
-  return {
-    code,
-    modifier: modifier === "shift" || modifier === "none" ? modifier : "none",
-  };
+    const idx = id.indexOf(':')
+    if (idx === -1) return { code: id, modifier: 'none' }
+    const code = id.slice(0, idx)
+    const modifier = id.slice(idx + 1)
+    return {
+        code,
+        modifier: modifier === 'shift' || modifier === 'none' ? modifier : 'none',
+    }
 }
 
 /** Map a weak key id to the character it emits on the layout, if any. */
 export function keyIdToChar(id: string, layout: KeyboardLayout = englishQwerty): string | undefined {
-  const { code, modifier } = parseKeyId(id);
-  return layout.outputFor(code, modifier)?.text;
+    const { code, modifier } = parseKeyId(id)
+    return layout.outputFor(code, modifier)?.text
 }
 
 /**
@@ -47,19 +37,19 @@ export function keyIdToChar(id: string, layout: KeyboardLayout = englishQwerty):
  * `maxKeys`. Un-mappable ids are skipped.
  */
 export function focusCharsFromWeakKeys(
-  weakKeys: WeakKeyId[],
-  opts: Pick<ReinforcementOptions, "maxKeys"> = {},
-  layout: KeyboardLayout = englishQwerty,
+    weakKeys: WeakKeyId[],
+    opts: Pick<ReinforcementOptions, 'maxKeys'> = {},
+    layout: KeyboardLayout = englishQwerty,
 ): string[] {
-  const maxKeys = opts.maxKeys ?? DEFAULT_MAX_KEYS;
-  const sorted = [...weakKeys].sort((a, b) => a.lowerBound - b.lowerBound);
-  const seen = new Set<string>();
-  for (const wk of sorted) {
-    if (seen.size >= maxKeys) break;
-    const ch = keyIdToChar(wk.key, layout);
-    if (ch !== undefined && !seen.has(ch)) seen.add(ch);
-  }
-  return [...seen];
+    const maxKeys = opts.maxKeys ?? DEFAULT_MAX_KEYS
+    const sorted = [...weakKeys].sort((a, b) => a.lowerBound - b.lowerBound)
+    const seen = new Set<string>()
+    for (const wk of sorted) {
+        if (seen.size >= maxKeys) break
+        const ch = keyIdToChar(wk.key, layout)
+        if (ch !== undefined && !seen.has(ch)) seen.add(ch)
+    }
+    return [...seen]
 }
 
 /**
@@ -70,12 +60,12 @@ export function focusCharsFromWeakKeys(
  * narrowing onto just one finger.
  */
 export function decideDrillGoal(focusKeys: string[]): MuscleMemoryGoal {
-  const fingers = new Set<FingerId>();
-  for (const ch of focusKeys) {
-    const lookup = englishQwerty.lookupChar(ch);
-    if (lookup) fingers.add(lookup.finger);
-  }
-  return fingers.size <= 1 ? "finger-isolation" : "repetition";
+    const fingers = new Set<FingerId>()
+    for (const ch of focusKeys) {
+        const lookup = englishQwerty.lookupChar(ch)
+        if (lookup) fingers.add(lookup.finger)
+    }
+    return fingers.size <= 1 ? 'finger-isolation' : 'repetition'
 }
 
 /**
@@ -83,56 +73,56 @@ export function decideDrillGoal(focusKeys: string[]): MuscleMemoryGoal {
  * English finger-key map. Dedupes and caps at `maxKeys`.
  */
 export function focusCharsFromWeakFingers(
-  fingers: FingerId[],
-  opts: Pick<ReinforcementOptions, "maxKeys"> = {},
-  layout: KeyboardLayout = englishQwerty,
+    fingers: FingerId[],
+    opts: Pick<ReinforcementOptions, 'maxKeys'> = {},
+    layout: KeyboardLayout = englishQwerty,
 ): string[] {
-  const maxKeys = opts.maxKeys ?? DEFAULT_MAX_KEYS;
-  const seen = new Set<string>();
-  for (const finger of fingers) {
-    for (const ch of ENGLISH_FINGER_KEYS[finger] ?? []) {
-      if (seen.size >= maxKeys) break;
-      if (ch !== " " && layout.lookupChar(ch)) seen.add(ch);
+    const maxKeys = opts.maxKeys ?? DEFAULT_MAX_KEYS
+    const seen = new Set<string>()
+    for (const finger of fingers) {
+        for (const ch of ENGLISH_FINGER_KEYS[finger] ?? []) {
+            if (seen.size >= maxKeys) break
+            if (ch !== ' ' && layout.lookupChar(ch)) seen.add(ch)
+        }
     }
-  }
-  return [...seen];
+    return [...seen]
 }
 
 function makeDrill(
-  goal: MuscleMemoryGoal,
-  focusKeys: string[],
-  targeted: string[],
-  source: "keys" | "fingers",
-  length: number | undefined,
+    goal: MuscleMemoryGoal,
+    focusKeys: string[],
+    targeted: string[],
+    source: 'keys' | 'fingers',
+    length: number | undefined,
 ): ReinforcedDrill {
-  const plan = planMuscleMemorySession(goal, focusKeys, { length });
-  return { goal, source, targeted, focusKeys, plan };
+    const plan = planMuscleMemorySession(goal, focusKeys, { length })
+    return { goal, source, targeted, focusKeys, plan }
 }
 
 /** Build an adaptive reinforcement drill targeting the given weak keys. */
-export function reinforcementFromWeakKeys(
-  weakKeys: WeakKeyId[],
-  opts: ReinforcementOptions = {},
-): ReinforcedDrill {
-  const goal = opts.goal ?? decideDrillGoal(focusCharsFromWeakKeys(weakKeys, opts));
-  const focusKeys = focusCharsFromWeakKeys(weakKeys, opts);
-  if (focusKeys.length === 0) {
-    throw new Error("reinforcement: no weak keys mapped to a character on the layout");
-  }
-  return makeDrill(goal, focusKeys, weakKeys.map((w) => w.key), "keys", opts.length);
+export function reinforcementFromWeakKeys(weakKeys: WeakKeyId[], opts: ReinforcementOptions = {}): ReinforcedDrill {
+    const goal = opts.goal ?? decideDrillGoal(focusCharsFromWeakKeys(weakKeys, opts))
+    const focusKeys = focusCharsFromWeakKeys(weakKeys, opts)
+    if (focusKeys.length === 0) {
+        throw new Error('reinforcement: no weak keys mapped to a character on the layout')
+    }
+    return makeDrill(
+        goal,
+        focusKeys,
+        weakKeys.map((w) => w.key),
+        'keys',
+        opts.length,
+    )
 }
 
 /** Build an adaptive reinforcement drill targeting the given weak fingers. */
-export function reinforcementFromWeakFingers(
-  weakFingers: FingerId[],
-  opts: ReinforcementOptions = {},
-): ReinforcedDrill {
-  const focusKeys = focusCharsFromWeakFingers(weakFingers, opts);
-  const goal = opts.goal ?? decideDrillGoal(focusKeys);
-  if (focusKeys.length === 0) {
-    throw new Error("reinforcement: no weak fingers carry a usable key");
-  }
-  return makeDrill(goal, focusKeys, weakFingers, "fingers", opts.length);
+export function reinforcementFromWeakFingers(weakFingers: FingerId[], opts: ReinforcementOptions = {}): ReinforcedDrill {
+    const focusKeys = focusCharsFromWeakFingers(weakFingers, opts)
+    const goal = opts.goal ?? decideDrillGoal(focusKeys)
+    if (focusKeys.length === 0) {
+        throw new Error('reinforcement: no weak fingers carry a usable key')
+    }
+    return makeDrill(goal, focusKeys, weakFingers, 'fingers', opts.length)
 }
 
 /**
@@ -140,12 +130,9 @@ export function reinforcementFromWeakFingers(
  * (Phase 14): the weakest key (lowest lower bound) is isolated for drilling.
  * See `reinforcementFromWeakKeys` for override options.
  */
-export function planWeakestReinforcement(
-  ranks: { key: string; lowerBound: number }[],
-  opts: ReinforcementOptions = {},
-): ReinforcedDrill {
-  return reinforcementFromWeakKeys(ranks, opts);
+export function planWeakestReinforcement(ranks: { key: string; lowerBound: number }[], opts: ReinforcementOptions = {}): ReinforcedDrill {
+    return reinforcementFromWeakKeys(ranks, opts)
 }
 
 /** @internal re-export for convenience/tests. */
-export type { MuscleMemoryPlan };
+export type { MuscleMemoryPlan }

@@ -1,44 +1,39 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-intermediate-1",
-  "level": "intermediate",
-  "language": "en",
-  "number": 1,
-  "title": "High-Frequency Words 1",
-  "titleMy": "အသုံးများဆုံး စကားလုံးများ (၁)",
-  "description": "The 20 most common English words.",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": 18
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-intermediate-1-ex-1",
-      "kind": "text",
-      "instruction": "the be to of and a in that have I",
-      "text": "the be to of and a in that have I"
+    "schemaVersion": 1,
+    "id": "lesson-en-intermediate-1",
+    "level": "intermediate",
+    "language": "en",
+    "number": 1,
+    "title": "High-Frequency Words 1",
+    "titleMy": "အသုံးများဆုံး စကားလုံးများ (၁)",
+    "description": "The 20 most common English words.",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": 18
     },
-    {
-      "id": "lesson-en-intermediate-1-ex-2",
-      "kind": "text",
-      "instruction": "it for not on with he as you do at",
-      "text": "it for not on with he as you do at"
-    },
-    {
-      "id": "lesson-en-intermediate-1-ex-3",
-      "kind": "text",
-      "instruction": "the be to of and a in that have I it for not on with",
-      "text": "the be to of and a in that have I it for not on with"
-    }
-  ],
-  "focus": [
-    "words",
-    "speed"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-30"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-intermediate-1-ex-1",
+            "kind": "text",
+            "instruction": "the be to of and a in that have I",
+            "text": "the be to of and a in that have I"
+        },
+        {
+            "id": "lesson-en-intermediate-1-ex-2",
+            "kind": "text",
+            "instruction": "it for not on with he as you do at",
+            "text": "it for not on with he as you do at"
+        },
+        {
+            "id": "lesson-en-intermediate-1-ex-3",
+            "kind": "text",
+            "instruction": "the be to of and a in that have I it for not on with",
+            "text": "the be to of and a in that have I it for not on with"
+        }
+    ],
+    "focus": ["words", "speed"],
+    "prerequisites": ["lesson-en-beginner-30"]
 }

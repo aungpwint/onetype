@@ -1,72 +1,54 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-2",
-  "level": "beginner",
-  "language": "en",
-  "number": 2,
-  "title": "Home Row Left Hand: A S D F",
-  "titleMy": "ဘယ်ဘက်လက် အိမ်တန်း - A S D F",
-  "description": "Place left pinky on A, ring on S, middle on D, index on F.",
-  "difficulty": "basic",
-  "estimatedMinutes": 6,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-2-ex-1",
-      "kind": "text",
-      "instruction": "a a a a a s s s s s d d d d d f f f f f",
-      "text": "a a a a a s s s s s d d d d d f f f f f"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-2",
+    "level": "beginner",
+    "language": "en",
+    "number": 2,
+    "title": "Home Row Left Hand: A S D F",
+    "titleMy": "ဘယ်ဘက်လက် အိမ်တန်း - A S D F",
+    "description": "Place left pinky on A, ring on S, middle on D, index on F.",
+    "difficulty": "basic",
+    "estimatedMinutes": 6,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-2-ex-2",
-      "kind": "text",
-      "instruction": "a s a s a s a s a s",
-      "text": "a s a s a s a s a s"
-    },
-    {
-      "id": "lesson-en-beginner-2-ex-3",
-      "kind": "text",
-      "instruction": "a s d a s d a s d a s d",
-      "text": "a s d a s d a s d a s d"
-    },
-    {
-      "id": "lesson-en-beginner-2-ex-4",
-      "kind": "text",
-      "instruction": "a s d f a s d f a s d f a s d f",
-      "text": "a s d f a s d f a s d f a s d f"
-    },
-    {
-      "id": "lesson-en-beginner-2-ex-5",
-      "kind": "text",
-      "instruction": "f d s a f d s a f d s a f d s a",
-      "text": "f d s a f d s a f d s a f d s a"
-    }
-  ],
-  "focusKeys": [
-    "KeyA",
-    "KeyS",
-    "KeyD",
-    "KeyF"
-  ],
-  "focus": [
-    "home-row",
-    "finger-control",
-    "key-memory"
-  ],
-  "targetFingers": [
-    "left-pinky",
-    "left-ring",
-    "left-middle",
-    "left-index"
-  ],
-  "targetHands": [
-    "left"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-1"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-2-ex-1",
+            "kind": "text",
+            "instruction": "a a a a a s s s s s d d d d d f f f f f",
+            "text": "a a a a a s s s s s d d d d d f f f f f"
+        },
+        {
+            "id": "lesson-en-beginner-2-ex-2",
+            "kind": "text",
+            "instruction": "a s a s a s a s a s",
+            "text": "a s a s a s a s a s"
+        },
+        {
+            "id": "lesson-en-beginner-2-ex-3",
+            "kind": "text",
+            "instruction": "a s d a s d a s d a s d",
+            "text": "a s d a s d a s d a s d"
+        },
+        {
+            "id": "lesson-en-beginner-2-ex-4",
+            "kind": "text",
+            "instruction": "a s d f a s d f a s d f a s d f",
+            "text": "a s d f a s d f a s d f a s d f"
+        },
+        {
+            "id": "lesson-en-beginner-2-ex-5",
+            "kind": "text",
+            "instruction": "f d s a f d s a f d s a f d s a",
+            "text": "f d s a f d s a f d s a f d s a"
+        }
+    ],
+    "focusKeys": ["KeyA", "KeyS", "KeyD", "KeyF"],
+    "focus": ["home-row", "finger-control", "key-memory"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index"],
+    "targetHands": ["left"],
+    "prerequisites": ["lesson-en-beginner-1"]
 }

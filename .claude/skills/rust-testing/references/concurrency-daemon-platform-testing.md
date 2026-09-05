@@ -4,13 +4,13 @@ The correctness of production asynchronous systems often hinges on "when tasks c
 
 ## Test Layers
 
-| Layer | Objective |
-|---|---|
-| Pure Unit Tests | State machines, queue watermarks (high/low), frame codec, ID overflow policies |
-| Async Components | Channel full/close semantics, cancellation, reordering completions, partial failures, lag |
-| In-Memory Transport | Complete request-response cycles over `duplex` socket pairs |
-| Real Processes | CLI daemon startup, stdio/stdout/stderr behavior, exit codes, disconnections and cleanup |
-| Platform Integration | Unix sockets, Windows named pipes via ConPTY, signals handling |
+| Layer                          | Objective                                                                                                                              |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Pure Unit Tests                | State machines, queue watermarks (high/low), frame codec, ID overflow policies                                                         |
+| Async Components               | Channel full/close semantics, cancellation, reordering completions, partial failures, lag                                              |
+| In-Memory Transport            | Complete request-response cycles over `duplex` socket pairs                                                                            |
+| Real Processes                 | CLI daemon startup, stdio/stdout/stderr behavior, exit codes, disconnections and cleanup                                               |
+| Platform Integration           | Unix sockets, Windows named pipes via ConPTY, signals handling                                                                         |
 | Stress/Performance Smoke Tests | Concurrent subscriptions, slow attach scenarios, large numbers of short-lived connections, RSS (Resident Set Size) and latency budgets |
 
 ## Waiting Without Guessing Luck

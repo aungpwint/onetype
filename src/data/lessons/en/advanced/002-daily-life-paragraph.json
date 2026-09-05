@@ -1,33 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-advanced-2",
-  "level": "advanced",
-  "language": "en",
-  "number": 2,
-  "title": "Daily Life Paragraph",
-  "titleMy": "နေ့စဉ်ဘဝ စာပိုဒ်",
-  "description": "Type a paragraph about daily life. Focus on smooth flow.",
-  "difficulty": "medium",
-  "estimatedMinutes": 12,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 93,
-    "minWpm": 30
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-advanced-2-ex-1",
-      "kind": "text",
-      "instruction": "I wake up at six in the morning and brush my teeth. Then I eat breakfast and take the bus to work. I return home in the evening and watch a little television.",
-      "text": "I wake up at six in the morning and brush my teeth. Then I eat breakfast and take the bus to work. I return home in the evening and watch a little television."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "speed",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-advanced-1"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-en-advanced-2",
+    "level": "advanced",
+    "language": "en",
+    "number": 2,
+    "title": "Daily Life Paragraph",
+    "titleMy": "နေ့စဉ်ဘဝ စာပိုဒ်",
+    "description": "Type a paragraph about daily life. Focus on smooth flow.",
+    "difficulty": "medium",
+    "estimatedMinutes": 12,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 93,
+        "minWpm": 30
+    },
+    "exercises": [
+        {
+            "id": "lesson-en-advanced-2-ex-1",
+            "kind": "text",
+            "instruction": "I wake up at six in the morning and brush my teeth. Then I eat breakfast and take the bus to work. I return home in the evening and watch a little television.",
+            "text": "I wake up at six in the morning and brush my teeth. Then I eat breakfast and take the bus to work. I return home in the evening and watch a little television."
+        }
+    ],
+    "focus": ["sentences", "speed", "accuracy"],
+    "prerequisites": ["lesson-en-advanced-1"]
 }

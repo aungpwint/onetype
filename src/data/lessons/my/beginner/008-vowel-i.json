@@ -1,72 +1,60 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-8",
-  "level": "beginner",
-  "language": "my",
-  "number": 8,
-  "title": "Vowel: ိ (i)",
-  "titleMy": "သရ - ိ",
-  "description": "The ိ vowel (KeyD). Type consonant then ိ.",
-  "difficulty": "easy",
-  "estimatedMinutes": 6,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-8-ex-1",
-      "kind": "text",
-      "instruction": "ိ ိ ိ ိ ိ ိ ိ ိ ိ ိ",
-      "text": "ိ ိ ိ ိ ိ ိ ိ ိ ိ ိ"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-8",
+    "level": "beginner",
+    "language": "my",
+    "number": 8,
+    "title": "Vowel: ိ (i)",
+    "titleMy": "သရ - ိ",
+    "description": "The ိ vowel (KeyD). Type consonant then ိ.",
+    "difficulty": "easy",
+    "estimatedMinutes": 6,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-beginner-8-ex-2",
-      "kind": "text",
-      "instruction": "ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ",
-      "text": "ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ"
-    },
-    {
-      "id": "lesson-my-beginner-8-ex-3",
-      "kind": "text",
-      "instruction": "တိ တိ တိ တိ တိ တိ တိ တိ တိ တိ",
-      "text": "တိ တိ တိ တိ တိ တိ တိ တိ တိ တိ"
-    },
-    {
-      "id": "lesson-my-beginner-8-ex-4",
-      "kind": "text",
-      "instruction": "နိ နိ နိ နိ နိ နိ နိ နိ နိ နိ",
-      "text": "နိ နိ နိ နိ နိ နိ နိ နိ နိ နိ"
-    },
-    {
-      "id": "lesson-my-beginner-8-ex-5",
-      "kind": "text",
-      "instruction": "မိ မိ မိ မိ မိ မိ မိ မိ မိ မိ",
-      "text": "မိ မိ မိ မိ မိ မိ မိ မိ မိ မိ"
-    },
-    {
-      "id": "lesson-my-beginner-8-ex-6",
-      "kind": "text",
-      "instruction": "ကိ တိ နိ မိ ငိ ကိ တိ နိ မိ ငိ",
-      "text": "ကိ တိ နိ မိ ငိ ကိ တိ နိ မိ ငိ"
-    }
-  ],
-  "focusKeys": [
-    "KeyD"
-  ],
-  "focus": [
-    "unicode",
-    "syllable",
-    "key-memory"
-  ],
-  "targetFingers": [
-    "left-middle"
-  ],
-  "targetHands": [
-    "left"
-  ],
-  "prerequisites": [
-    "lesson-my-beginner-4"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-8-ex-1",
+            "kind": "text",
+            "instruction": "ိ ိ ိ ိ ိ ိ ိ ိ ိ ိ",
+            "text": "ိ ိ ိ ိ ိ ိ ိ ိ ိ ိ"
+        },
+        {
+            "id": "lesson-my-beginner-8-ex-2",
+            "kind": "text",
+            "instruction": "ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ",
+            "text": "ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ"
+        },
+        {
+            "id": "lesson-my-beginner-8-ex-3",
+            "kind": "text",
+            "instruction": "တိ တိ တိ တိ တိ တိ တိ တိ တိ တိ",
+            "text": "တိ တိ တိ တိ တိ တိ တိ တိ တိ တိ"
+        },
+        {
+            "id": "lesson-my-beginner-8-ex-4",
+            "kind": "text",
+            "instruction": "နိ နိ နိ နိ နိ နိ နိ နိ နိ နိ",
+            "text": "နိ နိ နိ နိ နိ နိ နိ နိ နိ နိ"
+        },
+        {
+            "id": "lesson-my-beginner-8-ex-5",
+            "kind": "text",
+            "instruction": "မိ မိ မိ မိ မိ မိ မိ မိ မိ မိ",
+            "text": "မိ မိ မိ မိ မိ မိ မိ မိ မိ မိ"
+        },
+        {
+            "id": "lesson-my-beginner-8-ex-6",
+            "kind": "text",
+            "instruction": "ကိ တိ နိ မိ ငိ ကိ တိ နိ မိ ငိ",
+            "text": "ကိ တိ နိ မိ ငိ ကိ တိ နိ မိ ငိ"
+        }
+    ],
+    "focusKeys": ["KeyD"],
+    "focus": ["unicode", "syllable", "key-memory"],
+    "targetFingers": ["left-middle"],
+    "targetHands": ["left"],
+    "prerequisites": ["lesson-my-beginner-4"]
 }

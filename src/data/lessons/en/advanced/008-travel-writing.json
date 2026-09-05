@@ -1,33 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-advanced-8",
-  "level": "advanced",
-  "language": "en",
-  "number": 8,
-  "title": "Travel Writing",
-  "titleMy": "ခရီးသွား စာပိုဒ်",
-  "description": "Type about travel. Practice varied sentence structures.",
-  "difficulty": "hard",
-  "estimatedMinutes": 15,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 94,
-    "minWpm": 33
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-advanced-8-ex-1",
-      "kind": "text",
-      "instruction": "Traveling opens our eyes to new places and cultures. We meet friendly people, taste new food, and hear different languages. Each journey teaches us something that no classroom can show us.",
-      "text": "Traveling opens our eyes to new places and cultures. We meet friendly people, taste new food, and hear different languages. Each journey teaches us something that no classroom can show us."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "speed",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-advanced-7"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-en-advanced-8",
+    "level": "advanced",
+    "language": "en",
+    "number": 8,
+    "title": "Travel Writing",
+    "titleMy": "ခရီးသွား စာပိုဒ်",
+    "description": "Type about travel. Practice varied sentence structures.",
+    "difficulty": "hard",
+    "estimatedMinutes": 15,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 94,
+        "minWpm": 33
+    },
+    "exercises": [
+        {
+            "id": "lesson-en-advanced-8-ex-1",
+            "kind": "text",
+            "instruction": "Traveling opens our eyes to new places and cultures. We meet friendly people, taste new food, and hear different languages. Each journey teaches us something that no classroom can show us.",
+            "text": "Traveling opens our eyes to new places and cultures. We meet friendly people, taste new food, and hear different languages. Each journey teaches us something that no classroom can show us."
+        }
+    ],
+    "focus": ["sentences", "speed", "accuracy"],
+    "prerequisites": ["lesson-en-advanced-7"]
 }

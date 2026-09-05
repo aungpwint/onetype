@@ -1,68 +1,58 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-55",
-  "level": "beginner",
-  "language": "en",
-  "number": 55,
-  "title": "Punctuation: Quotes and Brackets",
-  "titleMy": "နားသတ်:  quote နှင့် brackets",
-  "description": "Quotation marks, single quotes, and brackets.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 88,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-55-ex-1",
-      "kind": "text",
-      "instruction": "\" \" \" \" \" \" \" \" \" \"",
-      "text": "\" \" \" \" \" \" \" \" \" \""
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-55",
+    "level": "beginner",
+    "language": "en",
+    "number": 55,
+    "title": "Punctuation: Quotes and Brackets",
+    "titleMy": "နားသတ်:  quote နှင့် brackets",
+    "description": "Quotation marks, single quotes, and brackets.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 88,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-55-ex-2",
-      "kind": "text",
-      "instruction": "' ' ' ' ' ' ' ' ' '",
-      "text": "' ' ' ' ' ' ' ' ' '"
-    },
-    {
-      "id": "lesson-en-beginner-55-ex-3",
-      "kind": "text",
-      "instruction": "[ ] [ ] [ ] [ ] [ ]",
-      "text": "[ ] [ ] [ ] [ ] [ ]"
-    },
-    {
-      "id": "lesson-en-beginner-55-ex-4",
-      "kind": "text",
-      "instruction": "{ } { } { } { } { }",
-      "text": "{ } { } { } { } { }"
-    },
-    {
-      "id": "lesson-en-beginner-55-ex-5",
-      "kind": "text",
-      "instruction": "\"hello\" \"world\" \"test\"",
-      "text": "\"hello\" \"world\" \"test\""
-    },
-    {
-      "id": "lesson-en-beginner-55-ex-6",
-      "kind": "text",
-      "instruction": "[one] [two] [three]",
-      "text": "[one] [two] [three]"
-    }
-  ],
-  "focusKeys": [
-    "Quote",
-    "BracketLeft",
-    "BracketRight"
-  ],
-  "focus": [
-    "punctuation",
-    "shift",
-    "sentences"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-54"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-55-ex-1",
+            "kind": "text",
+            "instruction": "\" \" \" \" \" \" \" \" \" \"",
+            "text": "\" \" \" \" \" \" \" \" \" \""
+        },
+        {
+            "id": "lesson-en-beginner-55-ex-2",
+            "kind": "text",
+            "instruction": "' ' ' ' ' ' ' ' ' '",
+            "text": "' ' ' ' ' ' ' ' ' '"
+        },
+        {
+            "id": "lesson-en-beginner-55-ex-3",
+            "kind": "text",
+            "instruction": "[ ] [ ] [ ] [ ] [ ]",
+            "text": "[ ] [ ] [ ] [ ] [ ]"
+        },
+        {
+            "id": "lesson-en-beginner-55-ex-4",
+            "kind": "text",
+            "instruction": "{ } { } { } { } { }",
+            "text": "{ } { } { } { } { }"
+        },
+        {
+            "id": "lesson-en-beginner-55-ex-5",
+            "kind": "text",
+            "instruction": "\"hello\" \"world\" \"test\"",
+            "text": "\"hello\" \"world\" \"test\""
+        },
+        {
+            "id": "lesson-en-beginner-55-ex-6",
+            "kind": "text",
+            "instruction": "[one] [two] [three]",
+            "text": "[one] [two] [three]"
+        }
+    ],
+    "focusKeys": ["Quote", "BracketLeft", "BracketRight"],
+    "focus": ["punctuation", "shift", "sentences"],
+    "prerequisites": ["lesson-en-beginner-54"]
 }

@@ -1,39 +1,33 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-advanced-7",
-  "level": "advanced",
-  "language": "my",
-  "number": 7,
-  "title": "Address and Place",
-  "titleMy": "လိပ်စာနှင့် နေရာ",
-  "description": "Sentences about addresses and locations.",
-  "difficulty": "medium",
-  "estimatedMinutes": 12,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 92,
-    "minWpm": 22
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-advanced-7-ex-1",
-      "kind": "text",
-      "instruction": "ကျွန်တော့်လိပ်စာက ရန်ကုန်မြို့ လမ်း ၃ဝ မှာပါ။",
-      "text": "ကျွန်တော့်လိပ်စာက ရန်ကုန်မြို့ လမ်း ၃ဝ မှာပါ။"
+    "schemaVersion": 1,
+    "id": "lesson-my-advanced-7",
+    "level": "advanced",
+    "language": "my",
+    "number": 7,
+    "title": "Address and Place",
+    "titleMy": "လိပ်စာနှင့် နေရာ",
+    "description": "Sentences about addresses and locations.",
+    "difficulty": "medium",
+    "estimatedMinutes": 12,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 92,
+        "minWpm": 22
     },
-    {
-      "id": "lesson-my-advanced-7-ex-2",
-      "kind": "text",
-      "instruction": "သူတို့နေအိမ်က စျေးနားမှာ ရှိတယ်။",
-      "text": "သူတို့နေအိမ်က စျေးနားမှာ ရှိတယ်။"
-    }
-  ],
-  "focus": [
-    "sentences",
-    "unicode",
-    "numbers"
-  ],
-  "prerequisites": [
-    "lesson-my-advanced-6"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-advanced-7-ex-1",
+            "kind": "text",
+            "instruction": "ကျွန်တော့်လိပ်စာက ရန်ကုန်မြို့ လမ်း ၃ဝ မှာပါ။",
+            "text": "ကျွန်တော့်လိပ်စာက ရန်ကုန်မြို့ လမ်း ၃ဝ မှာပါ။"
+        },
+        {
+            "id": "lesson-my-advanced-7-ex-2",
+            "kind": "text",
+            "instruction": "သူတို့နေအိမ်က စျေးနားမှာ ရှိတယ်။",
+            "text": "သူတို့နေအိမ်က စျေးနားမှာ ရှိတယ်။"
+        }
+    ],
+    "focus": ["sentences", "unicode", "numbers"],
+    "prerequisites": ["lesson-my-advanced-6"]
 }

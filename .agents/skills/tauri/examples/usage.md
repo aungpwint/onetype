@@ -6,17 +6,17 @@ This document provides at least 5 usage examples for the **tauri** skill.
 
 ```typescript
 // Example initialization for Tauri
-import { init } from 'tauri-plugin-tauri';
+import { init } from 'tauri-plugin-tauri'
 
-await init();
+await init()
 ```
 
 ## Example 2: Basic Usage of Tauri
 
 ```typescript
 // Basic operation
-const result = await invoke('plugin:tauri|do_something');
-console.log(result);
+const result = await invoke('plugin:tauri|do_something')
+console.log(result)
 ```
 
 ## Example 3: Configure Tauri Settings
@@ -36,9 +36,9 @@ console.log(result);
 
 ```typescript
 try {
-  await performAction();
+    await performAction()
 } catch (error) {
-  console.error('Tauri Error:', error);
+    console.error('Tauri Error:', error)
 }
 ```
 
@@ -46,8 +46,7 @@ try {
 
 ```typescript
 // Combine with other Tauri APIs
-import { emit } from '@tauri-apps/api/event';
+import { emit } from '@tauri-apps/api/event'
 
-emit('tauri-event', { status: 'active' });
+emit('tauri-event', { status: 'active' })
 ```
-

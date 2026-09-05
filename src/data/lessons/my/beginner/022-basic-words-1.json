@@ -1,51 +1,45 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-22",
-  "level": "beginner",
-  "language": "my",
-  "number": 22,
-  "title": "Basic Words 1",
-  "titleMy": "အခြေခံ စကားလုံး (၁)",
-  "description": "Common two-syllable words using learned keys.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 87,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-22-ex-1",
-      "kind": "text",
-      "instruction": "ကျောင်း ကျောင်း ပညာ ပညာ",
-      "text": "ကျောင်း ကျောင်း ပညာ ပညာ"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-22",
+    "level": "beginner",
+    "language": "my",
+    "number": 22,
+    "title": "Basic Words 1",
+    "titleMy": "အခြေခံ စကားလုံး (၁)",
+    "description": "Common two-syllable words using learned keys.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 87,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-beginner-22-ex-2",
-      "kind": "text",
-      "instruction": "ဆရာ ဆရာ မြန်မာ မြန်မာ",
-      "text": "ဆရာ ဆရာ မြန်မာ မြန်မာ"
-    },
-    {
-      "id": "lesson-my-beginner-22-ex-3",
-      "kind": "text",
-      "instruction": "စာသင်ခန်း စာသင်ခန်း",
-      "text": "စာသင်ခန်း စာသင်ခန်း"
-    },
-    {
-      "id": "lesson-my-beginner-22-ex-4",
-      "kind": "text",
-      "instruction": "ကျောင်းသား ကျောင်းသား",
-      "text": "ကျောင်းသား ကျောင်းသား"
-    }
-  ],
-  "focus": [
-    "words",
-    "unicode",
-    "syllable"
-  ],
-  "prerequisites": [
-    "lesson-my-beginner-19"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-22-ex-1",
+            "kind": "text",
+            "instruction": "ကျောင်း ကျောင်း ပညာ ပညာ",
+            "text": "ကျောင်း ကျောင်း ပညာ ပညာ"
+        },
+        {
+            "id": "lesson-my-beginner-22-ex-2",
+            "kind": "text",
+            "instruction": "ဆရာ ဆရာ မြန်မာ မြန်မာ",
+            "text": "ဆရာ ဆရာ မြန်မာ မြန်မာ"
+        },
+        {
+            "id": "lesson-my-beginner-22-ex-3",
+            "kind": "text",
+            "instruction": "စာသင်ခန်း စာသင်ခန်း",
+            "text": "စာသင်ခန်း စာသင်ခန်း"
+        },
+        {
+            "id": "lesson-my-beginner-22-ex-4",
+            "kind": "text",
+            "instruction": "ကျောင်းသား ကျောင်းသား",
+            "text": "ကျောင်းသား ကျောင်းသား"
+        }
+    ],
+    "focus": ["words", "unicode", "syllable"],
+    "prerequisites": ["lesson-my-beginner-19"]
 }

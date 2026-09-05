@@ -1,51 +1,45 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-intermediate-6",
-  "level": "intermediate",
-  "language": "en",
-  "number": 6,
-  "title": "Simple Sentences 1",
-  "titleMy": "ရိုးရှင်းသော ဝါကျတိုများ (၁)",
-  "description": "Short, common sentences for building typing rhythm.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 92,
-    "minWpm": 20
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-intermediate-6-ex-1",
-      "kind": "text",
-      "instruction": "This is my pen and that is your book.",
-      "text": "This is my pen and that is your book."
+    "schemaVersion": 1,
+    "id": "lesson-en-intermediate-6",
+    "level": "intermediate",
+    "language": "en",
+    "number": 6,
+    "title": "Simple Sentences 1",
+    "titleMy": "ရိုးရှင်းသော ဝါကျတိုများ (၁)",
+    "description": "Short, common sentences for building typing rhythm.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 92,
+        "minWpm": 20
     },
-    {
-      "id": "lesson-en-intermediate-6-ex-2",
-      "kind": "text",
-      "instruction": "We go to school every morning by bus.",
-      "text": "We go to school every morning by bus."
-    },
-    {
-      "id": "lesson-en-intermediate-6-ex-3",
-      "kind": "text",
-      "instruction": "She has a small dog named Lucky.",
-      "text": "She has a small dog named Lucky."
-    },
-    {
-      "id": "lesson-en-intermediate-6-ex-4",
-      "kind": "text",
-      "instruction": "The sun rises in the east every day.",
-      "text": "The sun rises in the east every day."
-    }
-  ],
-  "focus": [
-    "sentences",
-    "words",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-intermediate-5"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-intermediate-6-ex-1",
+            "kind": "text",
+            "instruction": "This is my pen and that is your book.",
+            "text": "This is my pen and that is your book."
+        },
+        {
+            "id": "lesson-en-intermediate-6-ex-2",
+            "kind": "text",
+            "instruction": "We go to school every morning by bus.",
+            "text": "We go to school every morning by bus."
+        },
+        {
+            "id": "lesson-en-intermediate-6-ex-3",
+            "kind": "text",
+            "instruction": "She has a small dog named Lucky.",
+            "text": "She has a small dog named Lucky."
+        },
+        {
+            "id": "lesson-en-intermediate-6-ex-4",
+            "kind": "text",
+            "instruction": "The sun rises in the east every day.",
+            "text": "The sun rises in the east every day."
+        }
+    ],
+    "focus": ["sentences", "words", "accuracy"],
+    "prerequisites": ["lesson-en-intermediate-5"]
 }

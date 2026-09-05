@@ -1,39 +1,33 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-advanced-8",
-  "level": "advanced",
-  "language": "my",
-  "number": 8,
-  "title": "Reporting Sentences",
-  "titleMy": "သတင်းနှင့် အစီရင်ခံ",
-  "description": "News and reporting style sentences.",
-  "difficulty": "hard",
-  "estimatedMinutes": 15,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 92,
-    "minWpm": 25
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-advanced-8-ex-1",
-      "kind": "text",
-      "instruction": "ယခုနှစ်တွင် စားသောက်ကုန် ဈေးနှုန်းများ မြင့်တက်လာသည်။",
-      "text": "ယခုနှစ်တွင် စားသောက်ကုန် ဈေးနှုန်းများ မြင့်တက်လာသည်။"
+    "schemaVersion": 1,
+    "id": "lesson-my-advanced-8",
+    "level": "advanced",
+    "language": "my",
+    "number": 8,
+    "title": "Reporting Sentences",
+    "titleMy": "သတင်းနှင့် အစီရင်ခံ",
+    "description": "News and reporting style sentences.",
+    "difficulty": "hard",
+    "estimatedMinutes": 15,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 92,
+        "minWpm": 25
     },
-    {
-      "id": "lesson-my-advanced-8-ex-2",
-      "kind": "text",
-      "instruction": "အစိုးရက ကျောင်းအသစ်များ ဆောက်လုပ်ပေးနေသည်။",
-      "text": "အစိုးရက ကျောင်းအသစ်များ ဆောက်လုပ်ပေးနေသည်။"
-    }
-  ],
-  "focus": [
-    "sentences",
-    "unicode",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-my-advanced-7"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-advanced-8-ex-1",
+            "kind": "text",
+            "instruction": "ယခုနှစ်တွင် စားသောက်ကုန် ဈေးနှုန်းများ မြင့်တက်လာသည်။",
+            "text": "ယခုနှစ်တွင် စားသောက်ကုန် ဈေးနှုန်းများ မြင့်တက်လာသည်။"
+        },
+        {
+            "id": "lesson-my-advanced-8-ex-2",
+            "kind": "text",
+            "instruction": "အစိုးရက ကျောင်းအသစ်များ ဆောက်လုပ်ပေးနေသည်။",
+            "text": "အစိုးရက ကျောင်းအသစ်များ ဆောက်လုပ်ပေးနေသည်။"
+        }
+    ],
+    "focus": ["sentences", "unicode", "accuracy"],
+    "prerequisites": ["lesson-my-advanced-7"]
 }

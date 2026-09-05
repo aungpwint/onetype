@@ -1,70 +1,54 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-3",
-  "level": "beginner",
-  "language": "my",
-  "number": 3,
-  "title": "Top Row Consonants: Right Hand",
-  "titleMy": "အပေါ်တန်း ဗျည်း - ညာဘက်လက်",
-  "description": "Right hand top row: စ(KeyP) သ(KeyO) ပ(KeyY)",
-  "difficulty": "basic",
-  "estimatedMinutes": 6,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-3-ex-1",
-      "kind": "text",
-      "instruction": "စ စ စ စ စ သ သ သ သ သ",
-      "text": "စ စ စ စ စ သ သ သ သ သ"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-3",
+    "level": "beginner",
+    "language": "my",
+    "number": 3,
+    "title": "Top Row Consonants: Right Hand",
+    "titleMy": "အပေါ်တန်း ဗျည်း - ညာဘက်လက်",
+    "description": "Right hand top row: စ(KeyP) သ(KeyO) ပ(KeyY)",
+    "difficulty": "basic",
+    "estimatedMinutes": 6,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-beginner-3-ex-2",
-      "kind": "text",
-      "instruction": "ပ ပ ပ ပ ပ စ စ စ စ စ",
-      "text": "ပ ပ ပ ပ ပ စ စ စ စ စ"
-    },
-    {
-      "id": "lesson-my-beginner-3-ex-3",
-      "kind": "text",
-      "instruction": "စ သ ပ စ သ ပ စ သ ပ စ သ ပ",
-      "text": "စ သ ပ စ သ ပ စ သ ပ စ သ ပ"
-    },
-    {
-      "id": "lesson-my-beginner-3-ex-4",
-      "kind": "text",
-      "instruction": "ပ သ စ ပ သ စ ပ သ စ ပ သ စ",
-      "text": "ပ သ စ ပ သ စ ပ သ စ ပ သ စ"
-    },
-    {
-      "id": "lesson-my-beginner-3-ex-5",
-      "kind": "text",
-      "instruction": "စ သ ပ စ သ ပ စ သ ပ စ သ ပ",
-      "text": "စ သ ပ စ သ ပ စ သ ပ စ သ ပ"
-    }
-  ],
-  "focusKeys": [
-    "KeyP",
-    "KeyO",
-    "KeyY"
-  ],
-  "focus": [
-    "top-row",
-    "key-memory",
-    "finger-control"
-  ],
-  "targetFingers": [
-    "right-pinky",
-    "right-ring",
-    "right-index"
-  ],
-  "targetHands": [
-    "right"
-  ],
-  "prerequisites": [
-    "lesson-my-beginner-1"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-3-ex-1",
+            "kind": "text",
+            "instruction": "စ စ စ စ စ သ သ သ သ သ",
+            "text": "စ စ စ စ စ သ သ သ သ သ"
+        },
+        {
+            "id": "lesson-my-beginner-3-ex-2",
+            "kind": "text",
+            "instruction": "ပ ပ ပ ပ ပ စ စ စ စ စ",
+            "text": "ပ ပ ပ ပ ပ စ စ စ စ စ"
+        },
+        {
+            "id": "lesson-my-beginner-3-ex-3",
+            "kind": "text",
+            "instruction": "စ သ ပ စ သ ပ စ သ ပ စ သ ပ",
+            "text": "စ သ ပ စ သ ပ စ သ ပ စ သ ပ"
+        },
+        {
+            "id": "lesson-my-beginner-3-ex-4",
+            "kind": "text",
+            "instruction": "ပ သ စ ပ သ စ ပ သ စ ပ သ စ",
+            "text": "ပ သ စ ပ သ စ ပ သ စ ပ သ စ"
+        },
+        {
+            "id": "lesson-my-beginner-3-ex-5",
+            "kind": "text",
+            "instruction": "စ သ ပ စ သ ပ စ သ ပ စ သ ပ",
+            "text": "စ သ ပ စ သ ပ စ သ ပ စ သ ပ"
+        }
+    ],
+    "focusKeys": ["KeyP", "KeyO", "KeyY"],
+    "focus": ["top-row", "key-memory", "finger-control"],
+    "targetFingers": ["right-pinky", "right-ring", "right-index"],
+    "targetHands": ["right"],
+    "prerequisites": ["lesson-my-beginner-1"]
 }

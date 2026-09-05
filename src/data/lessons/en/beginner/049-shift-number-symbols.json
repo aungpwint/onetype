@@ -1,81 +1,65 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-49",
-  "level": "beginner",
-  "language": "en",
-  "number": 49,
-  "title": "Shift Number Symbols: ! @ # $ %",
-  "titleMy": "Shift ဂဏန်းသင်္ကေတ: ! @ # $ %",
-  "description": "Left hand Shift symbols: ! @ # $ %",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 88,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-49-ex-1",
-      "kind": "text",
-      "instruction": "! ! ! ! ! ! ! ! ! !",
-      "text": "! ! ! ! ! ! ! ! ! !"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-49",
+    "level": "beginner",
+    "language": "en",
+    "number": 49,
+    "title": "Shift Number Symbols: ! @ # $ %",
+    "titleMy": "Shift ဂဏန်းသင်္ကေတ: ! @ # $ %",
+    "description": "Left hand Shift symbols: ! @ # $ %",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 88,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-49-ex-2",
-      "kind": "text",
-      "instruction": "@ @ @ @ @ @ @ @ @ @",
-      "text": "@ @ @ @ @ @ @ @ @ @"
-    },
-    {
-      "id": "lesson-en-beginner-49-ex-3",
-      "kind": "text",
-      "instruction": "# # # # # # # # # #",
-      "text": "# # # # # # # # # #"
-    },
-    {
-      "id": "lesson-en-beginner-49-ex-4",
-      "kind": "text",
-      "instruction": "$ $ $ $ $ $ $ $ $ $",
-      "text": "$ $ $ $ $ $ $ $ $ $"
-    },
-    {
-      "id": "lesson-en-beginner-49-ex-5",
-      "kind": "text",
-      "instruction": "% % % % % % % % % %",
-      "text": "% % % % % % % % % %"
-    },
-    {
-      "id": "lesson-en-beginner-49-ex-6",
-      "kind": "text",
-      "instruction": "!@! @#@ #$# $%$",
-      "text": "!@! @#@ #$# $%$"
-    },
-    {
-      "id": "lesson-en-beginner-49-ex-7",
-      "kind": "text",
-      "instruction": "!@#$% !@#$% !@#$% !@#$%",
-      "text": "!@#$% !@#$% !@#$% !@#$%"
-    }
-  ],
-  "focusKeys": [
-    "Digit1",
-    "Digit2",
-    "Digit3",
-    "Digit4",
-    "Digit5",
-    "ShiftRight"
-  ],
-  "focus": [
-    "shift",
-    "numbers",
-    "symbols"
-  ],
-  "targetHands": [
-    "right",
-    "left"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-41"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-49-ex-1",
+            "kind": "text",
+            "instruction": "! ! ! ! ! ! ! ! ! !",
+            "text": "! ! ! ! ! ! ! ! ! !"
+        },
+        {
+            "id": "lesson-en-beginner-49-ex-2",
+            "kind": "text",
+            "instruction": "@ @ @ @ @ @ @ @ @ @",
+            "text": "@ @ @ @ @ @ @ @ @ @"
+        },
+        {
+            "id": "lesson-en-beginner-49-ex-3",
+            "kind": "text",
+            "instruction": "# # # # # # # # # #",
+            "text": "# # # # # # # # # #"
+        },
+        {
+            "id": "lesson-en-beginner-49-ex-4",
+            "kind": "text",
+            "instruction": "$ $ $ $ $ $ $ $ $ $",
+            "text": "$ $ $ $ $ $ $ $ $ $"
+        },
+        {
+            "id": "lesson-en-beginner-49-ex-5",
+            "kind": "text",
+            "instruction": "% % % % % % % % % %",
+            "text": "% % % % % % % % % %"
+        },
+        {
+            "id": "lesson-en-beginner-49-ex-6",
+            "kind": "text",
+            "instruction": "!@! @#@ #$# $%$",
+            "text": "!@! @#@ #$# $%$"
+        },
+        {
+            "id": "lesson-en-beginner-49-ex-7",
+            "kind": "text",
+            "instruction": "!@#$% !@#$% !@#$% !@#$%",
+            "text": "!@#$% !@#$% !@#$% !@#$%"
+        }
+    ],
+    "focusKeys": ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "ShiftRight"],
+    "focus": ["shift", "numbers", "symbols"],
+    "targetHands": ["right", "left"],
+    "prerequisites": ["lesson-en-beginner-41"]
 }

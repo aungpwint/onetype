@@ -6,17 +6,17 @@ This document provides at least 5 usage examples for the **tauri-concept** skill
 
 ```typescript
 // Example initialization for Concept
-import { init } from 'tauri-plugin-tauri-concept';
+import { init } from 'tauri-plugin-tauri-concept'
 
-await init();
+await init()
 ```
 
 ## Example 2: Basic Usage of Concept
 
 ```typescript
 // Basic operation
-const result = await invoke('plugin:tauri-concept|do_something');
-console.log(result);
+const result = await invoke('plugin:tauri-concept|do_something')
+console.log(result)
 ```
 
 ## Example 3: Configure Concept Settings
@@ -36,9 +36,9 @@ console.log(result);
 
 ```typescript
 try {
-  await performAction();
+    await performAction()
 } catch (error) {
-  console.error('Concept Error:', error);
+    console.error('Concept Error:', error)
 }
 ```
 
@@ -46,8 +46,7 @@ try {
 
 ```typescript
 // Combine with other Tauri APIs
-import { emit } from '@tauri-apps/api/event';
+import { emit } from '@tauri-apps/api/event'
 
-emit('tauri-concept-event', { status: 'active' });
+emit('tauri-concept-event', { status: 'active' })
 ```
-

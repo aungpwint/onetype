@@ -1,32 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-intermediate-6",
-  "level": "intermediate",
-  "language": "my",
-  "number": 6,
-  "title": "Time Expressions",
-  "titleMy": "အချိန် ဖော်ပြချက်",
-  "description": "Time words: morning, noon, evening, tomorrow.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-intermediate-6-ex-1",
-      "kind": "text",
-      "instruction": "နံနက် နေ့လယ် ညနေ မနက်ဖြန်",
-      "text": "နံနက် နေ့လယ် ညနေ မနက်ဖြန်"
-    }
-  ],
-  "focus": [
-    "words",
-    "unicode"
-  ],
-  "prerequisites": [
-    "lesson-my-intermediate-5"
-  ]
+    "schemaVersion": 1,
+    "id": "lesson-my-intermediate-6",
+    "level": "intermediate",
+    "language": "my",
+    "number": 6,
+    "title": "Time Expressions",
+    "titleMy": "အချိန် ဖော်ပြချက်",
+    "description": "Time words: morning, noon, evening, tomorrow.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": null
+    },
+    "exercises": [
+        {
+            "id": "lesson-my-intermediate-6-ex-1",
+            "kind": "text",
+            "instruction": "နံနက် နေ့လယ် ညနေ မနက်ဖြန်",
+            "text": "နံနက် နေ့လယ် ညနေ မနက်ဖြန်"
+        }
+    ],
+    "focus": ["words", "unicode"],
+    "prerequisites": ["lesson-my-intermediate-5"]
 }

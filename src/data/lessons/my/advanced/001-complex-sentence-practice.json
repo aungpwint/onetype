@@ -1,45 +1,39 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-advanced-1",
-  "level": "advanced",
-  "language": "my",
-  "number": 1,
-  "title": "Complex Sentence Practice",
-  "titleMy": "ရှုပ်ထွေးသည့် ဝါကျ လေ့ကျင့်ခန်း",
-  "description": "Type complex sentences accurately.",
-  "difficulty": "easy",
-  "estimatedMinutes": 10,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": 18
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-advanced-1-ex-1",
-      "kind": "text",
-      "instruction": "စကားကို ဖြေးဖြေးပြောပြီး ကြိုးစားပါ။",
-      "text": "စကားကို ဖြေးဖြေးပြောပြီး ကြိုးစားပါ။"
+    "schemaVersion": 1,
+    "id": "lesson-my-advanced-1",
+    "level": "advanced",
+    "language": "my",
+    "number": 1,
+    "title": "Complex Sentence Practice",
+    "titleMy": "ရှုပ်ထွေးသည့် ဝါကျ လေ့ကျင့်ခန်း",
+    "description": "Type complex sentences accurately.",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": 18
     },
-    {
-      "id": "lesson-my-advanced-1-ex-2",
-      "kind": "text",
-      "instruction": "လူတိုင်း အမှားလုပ်တတ်တယ်။",
-      "text": "လူတိုင်း အမှားလုပ်တတ်တယ်။"
-    },
-    {
-      "id": "lesson-my-advanced-1-ex-3",
-      "kind": "text",
-      "instruction": "ကျောင်းသားတွေ အချိန်မှန်လာကြတယ်။",
-      "text": "ကျောင်းသားတွေ အချိန်မှန်လာကြတယ်။"
-    }
-  ],
-  "focus": [
-    "sentences",
-    "unicode",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-my-intermediate-15"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-advanced-1-ex-1",
+            "kind": "text",
+            "instruction": "စကားကို ဖြေးဖြေးပြောပြီး ကြိုးစားပါ။",
+            "text": "စကားကို ဖြေးဖြေးပြောပြီး ကြိုးစားပါ။"
+        },
+        {
+            "id": "lesson-my-advanced-1-ex-2",
+            "kind": "text",
+            "instruction": "လူတိုင်း အမှားလုပ်တတ်တယ်။",
+            "text": "လူတိုင်း အမှားလုပ်တတ်တယ်။"
+        },
+        {
+            "id": "lesson-my-advanced-1-ex-3",
+            "kind": "text",
+            "instruction": "ကျောင်းသားတွေ အချိန်မှန်လာကြတယ်။",
+            "text": "ကျောင်းသားတွေ အချိန်မှန်လာကြတယ်။"
+        }
+    ],
+    "focus": ["sentences", "unicode", "accuracy"],
+    "prerequisites": ["lesson-my-intermediate-15"]
 }

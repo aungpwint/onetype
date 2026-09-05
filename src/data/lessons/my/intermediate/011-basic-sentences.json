@@ -1,45 +1,39 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-intermediate-11",
-  "level": "intermediate",
-  "language": "my",
-  "number": 11,
-  "title": "Basic Sentences",
-  "titleMy": "ဝါကျတို လေ့ကျင့်ခန်း",
-  "description": "Simple declarative sentences.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 92,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-intermediate-11-ex-1",
-      "kind": "text",
-      "instruction": "ငါကျောင်းသွားတယ်။",
-      "text": "ငါကျောင်းသွားတယ်။"
+    "schemaVersion": 1,
+    "id": "lesson-my-intermediate-11",
+    "level": "intermediate",
+    "language": "my",
+    "number": 11,
+    "title": "Basic Sentences",
+    "titleMy": "ဝါကျတို လေ့ကျင့်ခန်း",
+    "description": "Simple declarative sentences.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 92,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-intermediate-11-ex-2",
-      "kind": "text",
-      "instruction": "အမေအိမ်မှာလား။",
-      "text": "အမေအိမ်မှာလား။"
-    },
-    {
-      "id": "lesson-my-intermediate-11-ex-3",
-      "kind": "text",
-      "instruction": "ဆရာကခွေးကိုခေါ်တယ်။",
-      "text": "ဆရာကခွေးကိုခေါ်တယ်။"
-    }
-  ],
-  "focus": [
-    "sentences",
-    "unicode",
-    "punctuation"
-  ],
-  "prerequisites": [
-    "lesson-my-intermediate-10"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-intermediate-11-ex-1",
+            "kind": "text",
+            "instruction": "ငါကျောင်းသွားတယ်။",
+            "text": "ငါကျောင်းသွားတယ်။"
+        },
+        {
+            "id": "lesson-my-intermediate-11-ex-2",
+            "kind": "text",
+            "instruction": "အမေအိမ်မှာလား။",
+            "text": "အမေအိမ်မှာလား။"
+        },
+        {
+            "id": "lesson-my-intermediate-11-ex-3",
+            "kind": "text",
+            "instruction": "ဆရာကခွေးကိုခေါ်တယ်။",
+            "text": "ဆရာကခွေးကိုခေါ်တယ်။"
+        }
+    ],
+    "focus": ["sentences", "unicode", "punctuation"],
+    "prerequisites": ["lesson-my-intermediate-10"]
 }

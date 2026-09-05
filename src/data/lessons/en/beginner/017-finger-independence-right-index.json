@@ -1,82 +1,66 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-17",
-  "level": "beginner",
-  "language": "en",
-  "number": 17,
-  "title": "Finger Independence: Right Index",
-  "titleMy": "လက်ချောင်း လွတ်လပ်မှု - ညာဘက်အညွှတ်",
-  "description": "Right index finger drills: J Y U H N M. Other fingers stay on home row.",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 87,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-17-ex-1",
-      "kind": "text",
-      "instruction": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy",
-      "text": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-17",
+    "level": "beginner",
+    "language": "en",
+    "number": 17,
+    "title": "Finger Independence: Right Index",
+    "titleMy": "လက်ချောင်း လွတ်လပ်မှု - ညာဘက်အညွှတ်",
+    "description": "Right index finger drills: J Y U H N M. Other fingers stay on home row.",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 87,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-17-ex-2",
-      "kind": "text",
-      "instruction": "juju juju juju juju juju juju juju juju",
-      "text": "juju juju juju juju juju juju juju juju"
-    },
-    {
-      "id": "lesson-en-beginner-17-ex-3",
-      "kind": "text",
-      "instruction": "jnjn jnjn jnjn jnjn jnjn jnjn jnjn jnjn",
-      "text": "jnjn jnjn jnjn jnjn jnjn jnjn jnjn jnjn"
-    },
-    {
-      "id": "lesson-en-beginner-17-ex-4",
-      "kind": "text",
-      "instruction": "jmjm jmjm jmjm jmjm jmjm jmjm jmjm jmjm",
-      "text": "jmjm jmjm jmjm jmjm jmjm jmjm jmjm jmjm"
-    },
-    {
-      "id": "lesson-en-beginner-17-ex-5",
-      "kind": "text",
-      "instruction": "jhjh jhjh jhjh jhjh jhjh jhjh jhjh jhjh",
-      "text": "jhjh jhjh jhjh jhjh jhjh jhjh jhjh jhjh"
-    },
-    {
-      "id": "lesson-en-beginner-17-ex-6",
-      "kind": "text",
-      "instruction": "jf jf jf jf jf jf jf jf jf jf",
-      "text": "jf jf jf jf jf jf jf jf jf jf"
-    },
-    {
-      "id": "lesson-en-beginner-17-ex-7",
-      "kind": "text",
-      "instruction": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy",
-      "text": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy"
-    }
-  ],
-  "focusKeys": [
-    "KeyJ",
-    "KeyY",
-    "KeyU",
-    "KeyH",
-    "KeyN",
-    "KeyM"
-  ],
-  "focus": [
-    "finger-independence",
-    "finger-control"
-  ],
-  "targetFingers": [
-    "right-index"
-  ],
-  "targetHands": [
-    "right"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-13"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-17-ex-1",
+            "kind": "text",
+            "instruction": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy",
+            "text": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy"
+        },
+        {
+            "id": "lesson-en-beginner-17-ex-2",
+            "kind": "text",
+            "instruction": "juju juju juju juju juju juju juju juju",
+            "text": "juju juju juju juju juju juju juju juju"
+        },
+        {
+            "id": "lesson-en-beginner-17-ex-3",
+            "kind": "text",
+            "instruction": "jnjn jnjn jnjn jnjn jnjn jnjn jnjn jnjn",
+            "text": "jnjn jnjn jnjn jnjn jnjn jnjn jnjn jnjn"
+        },
+        {
+            "id": "lesson-en-beginner-17-ex-4",
+            "kind": "text",
+            "instruction": "jmjm jmjm jmjm jmjm jmjm jmjm jmjm jmjm",
+            "text": "jmjm jmjm jmjm jmjm jmjm jmjm jmjm jmjm"
+        },
+        {
+            "id": "lesson-en-beginner-17-ex-5",
+            "kind": "text",
+            "instruction": "jhjh jhjh jhjh jhjh jhjh jhjh jhjh jhjh",
+            "text": "jhjh jhjh jhjh jhjh jhjh jhjh jhjh jhjh"
+        },
+        {
+            "id": "lesson-en-beginner-17-ex-6",
+            "kind": "text",
+            "instruction": "jf jf jf jf jf jf jf jf jf jf",
+            "text": "jf jf jf jf jf jf jf jf jf jf"
+        },
+        {
+            "id": "lesson-en-beginner-17-ex-7",
+            "kind": "text",
+            "instruction": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy",
+            "text": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy"
+        }
+    ],
+    "focusKeys": ["KeyJ", "KeyY", "KeyU", "KeyH", "KeyN", "KeyM"],
+    "focus": ["finger-independence", "finger-control"],
+    "targetFingers": ["right-index"],
+    "targetHands": ["right"],
+    "prerequisites": ["lesson-en-beginner-13"]
 }

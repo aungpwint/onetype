@@ -10,7 +10,9 @@ the curated source maintained alongside `scripts/release-notes.mjs`, which the
 and auto-update notes) to build every GitHub Release page.
 
 ## [1.1.1] - 2026-09-05
+
 ### Fixed
+
 - Linux one-line installer `install.sh`: corrected the download filenames to the
   real Tauri bundle names — `OneType_<version>_amd64.deb` (Debian/Ubuntu) and
   `OneType-<version>-1.x86_64.rpm` / `…-aarch64.rpm` (Fedora/RHEL). It now
@@ -29,7 +31,9 @@ and auto-update notes) to build every GitHub Release page.
   merge in the first place.
 
 ## [1.1.0] - 2026-09-05
+
 ### Added
+
 - SHA256 checksums: every release now publishes `checksums.txt`
   (`scripts/generate-checksums.mjs`) and the release workflow recomputes and
   verifies it (`--verify`) before anything is published.
@@ -55,6 +59,7 @@ and auto-update notes) to build every GitHub Release page.
   verification and the Linux installer instructions.
 
 ### Fixed
+
 - Release workflow artifact matching: corrected the updater-payload globs to
   match the real bundle names — Windows NSIS (`*_setup.exe` → `*-setup.exe`,
   the artifact is `OneType_<version>_x64-setup.exe`) and the versionless macOS
@@ -65,7 +70,9 @@ and auto-update notes) to build every GitHub Release page.
   `--partials` can no longer resolve to the repository root directory.
 
 ## [1.0.1] - 2026
+
 ### Changed
+
 - Product name now displays as **OneType** (installer, shortcuts, window title);
   bundles are named `OneType_<version>_x64-setup.exe` / `…_x64_en-US.msi`.
 - App and installer icons regenerated at high resolution from the original
@@ -82,6 +89,7 @@ and auto-update notes) to build every GitHub Release page.
   manifests are also no longer uploaded as release assets.
 
 ### Added
+
 - Production release pipeline: `latest.json` updater manifest is now generated
   and uploaded to every GitHub Release so the in-app auto-updater can detect
   new versions.
@@ -96,6 +104,7 @@ and auto-update notes) to build every GitHub Release page.
   release-pipeline tests for `latest.json` generation/merging.
 
 ### Fixed
+
 - Release workflow build command: removed the stale `--release` flag (Tauri v2
   `tauri build` is release-only and rejects it) — the first tag build had failed
   on every platform before producing bundles.
@@ -113,10 +122,11 @@ and auto-update notes) to build every GitHub Release page.
   byte-halving that could never match.
 
 ### Security
+
 - `.github/scripts/verify-updater-pubkey.mjs` checks in CI that the updater
   signing key matches `plugins.updater.pubkey` and fails the release otherwise.
 - Release workflow now validates the `TAURI_SIGNING_PRIVATE_KEY` /
-  `_PASSWORD` secrets *before* compiling, failing fast with an actionable
+  `_PASSWORD` secrets _before_ compiling, failing fast with an actionable
   message instead of the cryptic `Missing comment in secret key` from the
   bundler.
 - Documented public vs. private repository update distribution — the app treats
@@ -125,7 +135,9 @@ and auto-update notes) to build every GitHub Release page.
   with no GitHub credentials ever embedded in the application.
 
 ## [1.0.0] - 2026
+
 ### Added
+
 - English & Myanmar keyboard layouts with per-key statistics.
 - Progressive curriculum (beginner → intermediate → advanced) and timed tests.
 - Live WPM/CPM/accuracy scoring with resizable exercises.

@@ -1,52 +1,46 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-40",
-  "level": "beginner",
-  "language": "en",
-  "number": 40,
-  "title": "Proper Nouns",
-  "titleMy": "ကိုယ်ပိုင်နာမ်များ",
-  "description": "Names and places always start with a capital letter.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 88,
-    "minWpm": 14
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-40-ex-1",
-      "kind": "text",
-      "instruction": "Monday Tuesday Wednesday Thursday Friday",
-      "text": "Monday Tuesday Wednesday Thursday Friday"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-40",
+    "level": "beginner",
+    "language": "en",
+    "number": 40,
+    "title": "Proper Nouns",
+    "titleMy": "ကိုယ်ပိုင်နာမ်များ",
+    "description": "Names and places always start with a capital letter.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 88,
+        "minWpm": 14
     },
-    {
-      "id": "lesson-en-beginner-40-ex-2",
-      "kind": "text",
-      "instruction": "January February March April May June",
-      "text": "January February March April May June"
-    },
-    {
-      "id": "lesson-en-beginner-40-ex-3",
-      "kind": "text",
-      "instruction": "London Paris Tokyo Beijing Yangon",
-      "text": "London Paris Tokyo Beijing Yangon"
-    },
-    {
-      "id": "lesson-en-beginner-40-ex-4",
-      "kind": "text",
-      "instruction": "Tom Mary Jack Kate Sam Lucy",
-      "text": "Tom Mary Jack Kate Sam Lucy"
-    }
-  ],
-  "focus": [
-    "shift",
-    "words",
-    "sentences"
-  ],
-  "requiresShift": true,
-  "prerequisites": [
-    "lesson-en-beginner-39"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-40-ex-1",
+            "kind": "text",
+            "instruction": "Monday Tuesday Wednesday Thursday Friday",
+            "text": "Monday Tuesday Wednesday Thursday Friday"
+        },
+        {
+            "id": "lesson-en-beginner-40-ex-2",
+            "kind": "text",
+            "instruction": "January February March April May June",
+            "text": "January February March April May June"
+        },
+        {
+            "id": "lesson-en-beginner-40-ex-3",
+            "kind": "text",
+            "instruction": "London Paris Tokyo Beijing Yangon",
+            "text": "London Paris Tokyo Beijing Yangon"
+        },
+        {
+            "id": "lesson-en-beginner-40-ex-4",
+            "kind": "text",
+            "instruction": "Tom Mary Jack Kate Sam Lucy",
+            "text": "Tom Mary Jack Kate Sam Lucy"
+        }
+    ],
+    "focus": ["shift", "words", "sentences"],
+    "requiresShift": true,
+    "prerequisites": ["lesson-en-beginner-39"]
 }

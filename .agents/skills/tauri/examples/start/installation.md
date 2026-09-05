@@ -50,17 +50,20 @@ cargo tauri init
 ### System Dependencies
 
 **macOS**
+
 ```bash
 xcode-select --install
 ```
 
 **Linux（Ubuntu/Debian）**
+
 ```bash
 sudo apt update
 sudo apt install libwebkit2gtk-4.0-dev build-essential curl wget libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
 ```
 
 **Windows**
+
 - Microsoft Visual Studio C++ Build Tools
 - WebView2 runtime
 

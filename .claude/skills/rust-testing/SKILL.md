@@ -5,11 +5,12 @@ description: Design, implement, and validate Rust tests, including unit, integra
 
 # Rust Testing and Benchmarking
 
-> Based on Chapter 11 of *The Rust Programming Language* and the Rust Book.
+> Based on Chapter 11 of _The Rust Programming Language_ and the Rust Book.
 
 ## Capability Boundaries
 
 ### ✅ Strengths
+
 1. Unit tests (using `#[test]`, organizing test modules with `#[cfg(test)]`)
 2. Assertion macros (`assert!`, `assert_eq!`, `assert_ne!`, `debug_assert!`)
 3. Test attributes (`#[should_panic]`, `#[ignore]`, `#[cfg(test)]`)
@@ -21,9 +22,11 @@ description: Design, implement, and validate Rust tests, including unit, integra
 9. Asynchronous race conditions, backpressure, timeouts, process/daemon models, platform matrices, and resource-constrained testing
 
 ### ⚠️ Prerequisites
+
 1. Understanding of Rust module system (rust-workspace)
 
 ### ❌ Out of Scope
+
 1. Property-based tests (`proptest`) → Not currently covered
 2. Mock objects → Not currently covered
 3. Basic Rust syntax → Use `rust-stable` skill instead
@@ -106,7 +109,7 @@ pub fn setup() { /* ... */ }
 
 ## Documentation Tests (doctest)
 
-```rust
+````rust
 /// Add two numbers.
 ///
 /// ```
@@ -123,7 +126,7 @@ pub fn setup() { /* ... */ }
 /// loop {}
 /// ```
 pub fn add(a: i32, b: i32) -> i32 { a + b }
-```
+````
 
 ## cargo test Commands
 

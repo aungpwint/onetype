@@ -1,58 +1,51 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-56",
-  "level": "beginner",
-  "language": "en",
-  "number": 56,
-  "title": "Numbers and Symbols: Final Review",
-  "titleMy": "ဂဏန်းနှင့် သင်္ကေတ နောက်ဆုံး ပြန်လည်သုံးသပ်ခြင်း",
-  "description": "Complete review of numbers, symbols, and punctuation.",
-  "difficulty": "hard",
-  "estimatedMinutes": 12,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 90,
-    "minWpm": 16
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-56-ex-1",
-      "kind": "text",
-      "instruction": "1+2=3 4+5=9 6+7=13 8+9=17",
-      "text": "1+2=3 4+5=9 6+7=13 8+9=17"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-56",
+    "level": "beginner",
+    "language": "en",
+    "number": 56,
+    "title": "Numbers and Symbols: Final Review",
+    "titleMy": "ဂဏန်းနှင့် သင်္ကေတ နောက်ဆုံး ပြန်လည်သုံးသပ်ခြင်း",
+    "description": "Complete review of numbers, symbols, and punctuation.",
+    "difficulty": "hard",
+    "estimatedMinutes": 12,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 90,
+        "minWpm": 16
     },
-    {
-      "id": "lesson-en-beginner-56-ex-2",
-      "kind": "text",
-      "instruction": "I have 3 cats and 2 dogs!",
-      "text": "I have 3 cats and 2 dogs!"
-    },
-    {
-      "id": "lesson-en-beginner-56-ex-3",
-      "kind": "text",
-      "instruction": "Call me at (555) 123-4567.",
-      "text": "Call me at (555) 123-4567."
-    },
-    {
-      "id": "lesson-en-beginner-56-ex-4",
-      "kind": "text",
-      "instruction": "Email: test@example.com",
-      "text": "Email: test@example.com"
-    },
-    {
-      "id": "lesson-en-beginner-56-ex-5",
-      "kind": "text",
-      "instruction": "Price: $19.99 (10% off)",
-      "text": "Price: $19.99 (10% off)"
-    }
-  ],
-  "focus": [
-    "numbers",
-    "symbols",
-    "punctuation",
-    "accuracy"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-55"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-56-ex-1",
+            "kind": "text",
+            "instruction": "1+2=3 4+5=9 6+7=13 8+9=17",
+            "text": "1+2=3 4+5=9 6+7=13 8+9=17"
+        },
+        {
+            "id": "lesson-en-beginner-56-ex-2",
+            "kind": "text",
+            "instruction": "I have 3 cats and 2 dogs!",
+            "text": "I have 3 cats and 2 dogs!"
+        },
+        {
+            "id": "lesson-en-beginner-56-ex-3",
+            "kind": "text",
+            "instruction": "Call me at (555) 123-4567.",
+            "text": "Call me at (555) 123-4567."
+        },
+        {
+            "id": "lesson-en-beginner-56-ex-4",
+            "kind": "text",
+            "instruction": "Email: test@example.com",
+            "text": "Email: test@example.com"
+        },
+        {
+            "id": "lesson-en-beginner-56-ex-5",
+            "kind": "text",
+            "instruction": "Price: $19.99 (10% off)",
+            "text": "Price: $19.99 (10% off)"
+        }
+    ],
+    "focus": ["numbers", "symbols", "punctuation", "accuracy"],
+    "prerequisites": ["lesson-en-beginner-55"]
 }

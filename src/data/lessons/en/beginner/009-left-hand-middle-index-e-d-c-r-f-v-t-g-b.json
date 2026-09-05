@@ -1,100 +1,78 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-9",
-  "level": "beginner",
-  "language": "en",
-  "number": 9,
-  "title": "Left Hand Middle & Index: E D C R F V T G B",
-  "titleMy": "ဘယ်ဘက်လက် အလယ်နှင့် အညွှတ် - E D C R F V T G B",
-  "description": "E above D, R above F, T above G. C below D, V below F, B below G.",
-  "difficulty": "easy",
-  "estimatedMinutes": 8,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 85,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-9-ex-1",
-      "kind": "text",
-      "instruction": "e e e e e r r r r r t t t t t",
-      "text": "e e e e e r r r r r t t t t t"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-9",
+    "level": "beginner",
+    "language": "en",
+    "number": 9,
+    "title": "Left Hand Middle & Index: E D C R F V T G B",
+    "titleMy": "ဘယ်ဘက်လက် အလယ်နှင့် အညွှတ် - E D C R F V T G B",
+    "description": "E above D, R above F, T above G. C below D, V below F, B below G.",
+    "difficulty": "easy",
+    "estimatedMinutes": 8,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 85,
+        "minWpm": null
     },
-    {
-      "id": "lesson-en-beginner-9-ex-2",
-      "kind": "text",
-      "instruction": "d e d e d e d e d e",
-      "text": "d e d e d e d e d e"
-    },
-    {
-      "id": "lesson-en-beginner-9-ex-3",
-      "kind": "text",
-      "instruction": "f r f r f r f r f r",
-      "text": "f r f r f r f r f r"
-    },
-    {
-      "id": "lesson-en-beginner-9-ex-4",
-      "kind": "text",
-      "instruction": "g t g t g t g t g t",
-      "text": "g t g t g t g t g t"
-    },
-    {
-      "id": "lesson-en-beginner-9-ex-5",
-      "kind": "text",
-      "instruction": "c d c d c d c d c d",
-      "text": "c d c d c d c d c d"
-    },
-    {
-      "id": "lesson-en-beginner-9-ex-6",
-      "kind": "text",
-      "instruction": "v f v f v f v f v f",
-      "text": "v f v f v f v f v f"
-    },
-    {
-      "id": "lesson-en-beginner-9-ex-7",
-      "kind": "text",
-      "instruction": "b g b g b g b g b g",
-      "text": "b g b g b g b g b g"
-    },
-    {
-      "id": "lesson-en-beginner-9-ex-8",
-      "kind": "text",
-      "instruction": "ed ed ed ed ed ed ed ed ed ed",
-      "text": "ed ed ed ed ed ed ed ed ed ed"
-    },
-    {
-      "id": "lesson-en-beginner-9-ex-9",
-      "kind": "text",
-      "instruction": "rf rf rf rf rf rf rf rf rf rf",
-      "text": "rf rf rf rf rf rf rf rf rf rf"
-    }
-  ],
-  "focusKeys": [
-    "KeyE",
-    "KeyD",
-    "KeyC",
-    "KeyR",
-    "KeyF",
-    "KeyV",
-    "KeyT",
-    "KeyG",
-    "KeyB"
-  ],
-  "focus": [
-    "top-row",
-    "bottom-row",
-    "row-transition",
-    "key-memory"
-  ],
-  "targetFingers": [
-    "left-middle",
-    "left-index"
-  ],
-  "targetHands": [
-    "left"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-8"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-9-ex-1",
+            "kind": "text",
+            "instruction": "e e e e e r r r r r t t t t t",
+            "text": "e e e e e r r r r r t t t t t"
+        },
+        {
+            "id": "lesson-en-beginner-9-ex-2",
+            "kind": "text",
+            "instruction": "d e d e d e d e d e",
+            "text": "d e d e d e d e d e"
+        },
+        {
+            "id": "lesson-en-beginner-9-ex-3",
+            "kind": "text",
+            "instruction": "f r f r f r f r f r",
+            "text": "f r f r f r f r f r"
+        },
+        {
+            "id": "lesson-en-beginner-9-ex-4",
+            "kind": "text",
+            "instruction": "g t g t g t g t g t",
+            "text": "g t g t g t g t g t"
+        },
+        {
+            "id": "lesson-en-beginner-9-ex-5",
+            "kind": "text",
+            "instruction": "c d c d c d c d c d",
+            "text": "c d c d c d c d c d"
+        },
+        {
+            "id": "lesson-en-beginner-9-ex-6",
+            "kind": "text",
+            "instruction": "v f v f v f v f v f",
+            "text": "v f v f v f v f v f"
+        },
+        {
+            "id": "lesson-en-beginner-9-ex-7",
+            "kind": "text",
+            "instruction": "b g b g b g b g b g",
+            "text": "b g b g b g b g b g"
+        },
+        {
+            "id": "lesson-en-beginner-9-ex-8",
+            "kind": "text",
+            "instruction": "ed ed ed ed ed ed ed ed ed ed",
+            "text": "ed ed ed ed ed ed ed ed ed ed"
+        },
+        {
+            "id": "lesson-en-beginner-9-ex-9",
+            "kind": "text",
+            "instruction": "rf rf rf rf rf rf rf rf rf rf",
+            "text": "rf rf rf rf rf rf rf rf rf rf"
+        }
+    ],
+    "focusKeys": ["KeyE", "KeyD", "KeyC", "KeyR", "KeyF", "KeyV", "KeyT", "KeyG", "KeyB"],
+    "focus": ["top-row", "bottom-row", "row-transition", "key-memory"],
+    "targetFingers": ["left-middle", "left-index"],
+    "targetHands": ["left"],
+    "prerequisites": ["lesson-en-beginner-8"]
 }

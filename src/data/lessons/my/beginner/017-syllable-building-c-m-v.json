@@ -1,57 +1,51 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-my-beginner-17",
-  "level": "beginner",
-  "language": "my",
-  "number": 17,
-  "title": "Syllable Building: C+M+V",
-  "titleMy": "ဝဏ္ဏ ဖွဲ့ - ဗျည်း + စာလုံးကြို + သရ",
-  "description": "Build syllables with consonant + medial + vowel.",
-  "difficulty": "medium",
-  "estimatedMinutes": 10,
-  "keyboard": "myanmar3",
-  "completion": {
-    "minAccuracy": 87,
-    "minWpm": null
-  },
-  "exercises": [
-    {
-      "id": "lesson-my-beginner-17-ex-1",
-      "kind": "text",
-      "instruction": "ကျိ ကြိ ကျာ ကြာ",
-      "text": "ကျိ ကြိ ကျာ ကြာ"
+    "schemaVersion": 1,
+    "id": "lesson-my-beginner-17",
+    "level": "beginner",
+    "language": "my",
+    "number": 17,
+    "title": "Syllable Building: C+M+V",
+    "titleMy": "ဝဏ္ဏ ဖွဲ့ - ဗျည်း + စာလုံးကြို + သရ",
+    "description": "Build syllables with consonant + medial + vowel.",
+    "difficulty": "medium",
+    "estimatedMinutes": 10,
+    "keyboard": "myanmar3",
+    "completion": {
+        "minAccuracy": 87,
+        "minWpm": null
     },
-    {
-      "id": "lesson-my-beginner-17-ex-2",
-      "kind": "text",
-      "instruction": "တျိ တြိ တျာ တြာ",
-      "text": "တျိ တြိ တျာ တြာ"
-    },
-    {
-      "id": "lesson-my-beginner-17-ex-3",
-      "kind": "text",
-      "instruction": "မျိ မြိ မျာ မြာ",
-      "text": "မျိ မြိ မျာ မြာ"
-    },
-    {
-      "id": "lesson-my-beginner-17-ex-4",
-      "kind": "text",
-      "instruction": "ကျေ ကြေ ကျွ ကြွ",
-      "text": "ကျေ ကြေ ကျွ ကြွ"
-    },
-    {
-      "id": "lesson-my-beginner-17-ex-5",
-      "kind": "text",
-      "instruction": "ကျို ကြို တျို တြို",
-      "text": "ကျို ကြို တျို တြို"
-    }
-  ],
-  "focus": [
-    "unicode",
-    "syllable",
-    "medial"
-  ],
-  "prerequisites": [
-    "lesson-my-beginner-16"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-my-beginner-17-ex-1",
+            "kind": "text",
+            "instruction": "ကျိ ကြိ ကျာ ကြာ",
+            "text": "ကျိ ကြိ ကျာ ကြာ"
+        },
+        {
+            "id": "lesson-my-beginner-17-ex-2",
+            "kind": "text",
+            "instruction": "တျိ တြိ တျာ တြာ",
+            "text": "တျိ တြိ တျာ တြာ"
+        },
+        {
+            "id": "lesson-my-beginner-17-ex-3",
+            "kind": "text",
+            "instruction": "မျိ မြိ မျာ မြာ",
+            "text": "မျိ မြိ မျာ မြာ"
+        },
+        {
+            "id": "lesson-my-beginner-17-ex-4",
+            "kind": "text",
+            "instruction": "ကျေ ကြေ ကျွ ကြွ",
+            "text": "ကျေ ကြေ ကျွ ကြွ"
+        },
+        {
+            "id": "lesson-my-beginner-17-ex-5",
+            "kind": "text",
+            "instruction": "ကျို ကြို တျို တြို",
+            "text": "ကျို ကြို တျို တြို"
+        }
+    ],
+    "focus": ["unicode", "syllable", "medial"],
+    "prerequisites": ["lesson-my-beginner-16"]
 }

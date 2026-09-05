@@ -1,52 +1,45 @@
 {
-  "schemaVersion": 1,
-  "id": "lesson-en-beginner-30",
-  "level": "beginner",
-  "language": "en",
-  "number": 30,
-  "title": "Beginner Final Review",
-  "titleMy": "အခြေခံ နောက်ဆုံး ပြန်လည်သုံးသပ်ခြင်း",
-  "description": "Final review. Demonstrate accuracy across all learned skills.",
-  "difficulty": "hard",
-  "estimatedMinutes": 12,
-  "keyboard": "qwerty",
-  "completion": {
-    "minAccuracy": 92,
-    "minWpm": 16
-  },
-  "exercises": [
-    {
-      "id": "lesson-en-beginner-30-ex-1",
-      "kind": "text",
-      "instruction": "the quick brown fox jumps over the lazy dog",
-      "text": "the quick brown fox jumps over the lazy dog"
+    "schemaVersion": 1,
+    "id": "lesson-en-beginner-30",
+    "level": "beginner",
+    "language": "en",
+    "number": 30,
+    "title": "Beginner Final Review",
+    "titleMy": "အခြေခံ နောက်ဆုံး ပြန်လည်သုံးသပ်ခြင်း",
+    "description": "Final review. Demonstrate accuracy across all learned skills.",
+    "difficulty": "hard",
+    "estimatedMinutes": 12,
+    "keyboard": "qwerty",
+    "completion": {
+        "minAccuracy": 92,
+        "minWpm": 16
     },
-    {
-      "id": "lesson-en-beginner-30-ex-2",
-      "kind": "text",
-      "instruction": "pack my box with five dozen liquor jugs",
-      "text": "pack my box with five dozen liquor jugs"
-    },
-    {
-      "id": "lesson-en-beginner-30-ex-3",
-      "kind": "text",
-      "instruction": "I practice typing every day to get faster",
-      "text": "I practice typing every day to get faster"
-    },
-    {
-      "id": "lesson-en-beginner-30-ex-4",
-      "kind": "text",
-      "instruction": "a good typist does not look at the keyboard",
-      "text": "a good typist does not look at the keyboard"
-    }
-  ],
-  "focus": [
-    "accuracy",
-    "speed",
-    "words",
-    "sentences"
-  ],
-  "prerequisites": [
-    "lesson-en-beginner-29"
-  ]
+    "exercises": [
+        {
+            "id": "lesson-en-beginner-30-ex-1",
+            "kind": "text",
+            "instruction": "the quick brown fox jumps over the lazy dog",
+            "text": "the quick brown fox jumps over the lazy dog"
+        },
+        {
+            "id": "lesson-en-beginner-30-ex-2",
+            "kind": "text",
+            "instruction": "pack my box with five dozen liquor jugs",
+            "text": "pack my box with five dozen liquor jugs"
+        },
+        {
+            "id": "lesson-en-beginner-30-ex-3",
+            "kind": "text",
+            "instruction": "I practice typing every day to get faster",
+            "text": "I practice typing every day to get faster"
+        },
+        {
+            "id": "lesson-en-beginner-30-ex-4",
+            "kind": "text",
+            "instruction": "a good typist does not look at the keyboard",
+            "text": "a good typist does not look at the keyboard"
+        }
+    ],
+    "focus": ["accuracy", "speed", "words", "sentences"],
+    "prerequisites": ["lesson-en-beginner-29"]
 }
