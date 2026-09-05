@@ -11,6 +11,14 @@ name: Release
 #   git tag v1.1.0
 #   git push origin v1.1.0
 #
+# Or run manually (Actions tab -> "Release" -> Run workflow):
+#   version:  the version to release as MAJOR.MINOR.PATCH (no leading "v").
+#             It must exactly match the application version; the pipeline
+#             fails otherwise (no silent version correction, ever).
+#   draft:    start as "true" (recommended) to leave the release unpublished
+#             for inspection; set to "false" to publish automatically after
+#             all validation passes.
+#
 # Required repository secrets:
 #   TAURI_SIGNING_PRIVATE_KEY          base64 minisign private key (updater signing)
 #   TAURI_SIGNING_PRIVATE_KEY_PASSWORD password for the updater signing key
@@ -26,6 +34,21 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: >-
+          Version to release as MAJOR.MINOR.PATCH (no leading "v"), e.g. 1.1.0.
+          Must match the application version across package.json, Cargo.toml
+          and tauri.conf.json, or the run fails before building.
+        required: true
+      draft:
+        description: >-
+          Keep the GitHub Release as an unpublished draft after the build and
+          stop. Set to "false" to publish it automatically once all validation
+          passes.
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -33,11 +56,14 @@ permissions:
 env:
   GITHUB_OWNER: ${{ github.repository_owner }}
   GITHUB_REPO: ${{ github.event.repository.name }}
+  # The tag the release is published under: on tag pushes it is the pushed tag
+  # itself; on manual dispatch it is derived from the validated version input.
+  RELEASE_TAG: ${{ github.event_name == 'push' && github.ref_name || format('v{0}', inputs.version) }}
 
 jobs:
   # ---------------------------------------------------------------------------
-  # Version validation — fail fast if the tag does not match the app version or
-  # if the three version locations disagree.
+  # Version validation — fail fast if the release version does not match the app
+  # version or if the three version locations disagree.
   # ---------------------------------------------------------------------------
   validate:
     runs-on: ubuntu-latest
@@ -46,8 +72,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      - name: Validate manual release version format
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          set -euo pipefail
+          VERSION="${{ inputs.version }}"
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Invalid version input '$VERSION'. Use MAJOR.MINOR.PATCH (e.g. 1.1.0)." >&2
+            exit 1
+          fi
+          echo "Manual release version input OK: $VERSION"
       - name: Validate versions & tag
-        run: node scripts/check-versions.mjs --tag "${{ github.ref_name }}"
+        run: node scripts/check-versions.mjs --tag "$RELEASE_TAG"
 
   # ---------------------------------------------------------------------------
   # Build + test + generate updater artifacts on every platform.
@@ -240,7 +276,7 @@ jobs:
           fi
           WIN_SIG=$(ls dist/updates/*_setup.exe.sig 2>/dev/null | head -n1 || true)
           [ -f "$WIN_SIG" ] || { echo "Missing Windows installer signature (.sig)" >&2; exit 1; }
-          TAG="${{ github.ref_name }}"
+          TAG="$RELEASE_TAG"
           BASE="https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/download/$TAG"
           node scripts/generate-latest-json.mjs --partial \
             --target windows-x86_64 \
@@ -259,7 +295,7 @@ jobs:
           fi
           MAC_SIG=$(ls dist/updates/*aarch64*.app.tar.gz.sig 2>/dev/null | head -n1 || true)
           [ -f "$MAC_SIG" ] || { echo "Missing macOS updater signature (.sig)" >&2; exit 1; }
-          TAG="${{ github.ref_name }}"
+          TAG="$RELEASE_TAG"
           BASE="https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/download/$TAG"
           node scripts/generate-latest-json.mjs --partial \
             --target darwin-aarch64 \
@@ -278,7 +314,7 @@ jobs:
           fi
           LIN_SIG=$(ls dist/updates/*.AppImage.sig 2>/dev/null | head -n1 || true)
           [ -f "$LIN_SIG" ] || { echo "Missing Linux updater signature (.sig)" >&2; exit 1; }
-          TAG="${{ github.ref_name }}"
+          TAG="$RELEASE_TAG"
           BASE="https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/download/$TAG"
           node scripts/generate-latest-json.mjs --partial \
             --target linux-x86_64 \
@@ -290,7 +326,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          VERSION="${{ github.ref_name }}"
+          VERSION="$RELEASE_TAG"
           VERSION="${VERSION#v}"
           PARTIALS=$(ls dist/updates/partial-*.json 2>/dev/null || true)
           if [ -z "$PARTIALS" ]; then
@@ -300,7 +336,7 @@ jobs:
           node scripts/generate-latest-json.mjs --merge \
             --version "$VERSION" \
             --pub-date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-            --notes "See https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/tag/${{ github.ref_name }}" \
+            --notes "See https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/tag/$RELEASE_TAG" \
             --partials "$(echo $PARTIALS | tr '\n' ' ')" \
             --out dist/updates/latest.json
           echo "=== merged latest.json ==="
@@ -314,7 +350,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          TAG="${{ github.ref_name }}"
+          TAG="$RELEASE_TAG"
           VERSION="${TAG#v}"
           node scripts/validate-release.mjs \
             --dir dist/updates \
@@ -326,7 +362,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          TAG="${{ github.ref_name }}"
+          TAG="$RELEASE_TAG"
           VERSION="${TAG#v}"
           node scripts/release-notes.mjs \
             --version "$VERSION" \
@@ -342,7 +378,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          TAG="${{ github.ref_name }}"
+          TAG="$RELEASE_TAG"
           # latest.json + checksums.txt + all downloaded platform bundles
           # (partial manifests are never uploaded as release assets).
           ASSETS="dist/updates/latest.json dist/updates/checksums.txt"
@@ -368,11 +404,14 @@ jobs:
           gh release view "$TAG" --json assets --jq '.assets[].name' | sort
 
       - name: Publish draft release (safety gate passed)
+        # Manual runs default to draft=true: leave the release unpublished for
+        # human review. Re-run with draft=false (or the tag push) to publish.
+        if: github.event_name != 'workflow_dispatch' || inputs.draft == false
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          TAG="${{ github.ref_name }}"
+          TAG="$RELEASE_TAG"
           # Never flip a draft to "published" unless assets are actually attached.
           COUNT=$(gh release view "$TAG" --json assets --jq '.assets | length')
           echo "attached assets: $COUNT"
@@ -387,6 +426,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release view "${{ github.ref_name }}" --json assets --jq '.assets[].name' | sort
+          gh release view "$RELEASE_TAG" --json assets --jq '.assets[].name' | sort
           echo "--- latest.json served at:"
           echo "https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/latest/download/latest.json"

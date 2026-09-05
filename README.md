@@ -108,3 +108,5 @@ OneType ships signed installers and auto-updates through GitHub Releases. See **
 The application version must be kept identical across `package.json`, `src-tauri/Cargo.toml` and `src-tauri/tauri.conf.json`; CI enforces this with `scripts/check-versions.mjs`.
 
 To cut a release, run `npm run release -- --next <version> --push` from a clean tree — it bumps the version, runs the quality gates, creates the `v<version>` tag, and the GitHub Actions workflow builds, signs, validates checksums, and publishes the release.
+
+You can also trigger the same pipeline manually from the **Actions** tab ("Release" → Run workflow): type the version as `MAJOR.MINOR.PATCH` and keep `draft` checked to inspect the unpublished release first.

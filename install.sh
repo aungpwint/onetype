@@ -20,7 +20,7 @@
 #   ./install.sh --arch amd64|arm64    # override architecture detection
 #
 # Environment (for private repositories):
-#   GH_TOKEN=ghp_xxx ./install.sh
+#   GH_TOKEN=<personal access token> ./install.sh
 #   (the token is used only for the download, never embedded anywhere)
 #
 set -euo pipefail
