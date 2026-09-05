@@ -187,9 +187,9 @@ export function ResultDialog() {
       ) : null}
 
       <div className="mt-6 flex flex-wrap justify-end gap-2">
-        <Button variant="outline" onClick={beforeNavigate(isDrill ? "/drill" : isLesson ? "/learn" : "/tests")}>
+        <Button variant="outline" onClick={beforeNavigate(isDrill ? "/" : isLesson ? "/learn" : "/tests")}>
           <ArrowLeft className="size-4" />
-          Back to list
+          {isDrill ? "Dashboard" : "Back to list"}
         </Button>
         {nextLessonId ? (
           <Button variant="brass" onClick={beforeNavigate(`/lesson/${nextLessonId}`)}>

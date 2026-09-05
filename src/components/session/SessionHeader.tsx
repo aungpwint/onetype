@@ -21,7 +21,7 @@ interface SessionHeaderProps {
 function toggleLabel(status: SessionStatus, durationSeconds: number | null): string {
   if (status === "paused") return "Resume";
   if (status === "running") return "Pause";
-  return durationSeconds === null ? "Start (first key also starts)" : "Start";
+  return durationSeconds === null ? "First key starts" : "Start";
 }
 
 /**

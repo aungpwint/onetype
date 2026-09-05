@@ -4,7 +4,6 @@ import {
   AlertCircle,
   ArrowLeft,
   Hand,
-  LogOut,
   Pause,
   Play,
   Volume2,
@@ -147,10 +146,6 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
                 title={isPaused ? "Resume" : "Pause"}
               >
                 {isPaused ? <Play className="size-4" /> : <Pause className="size-4" />}
-              </Button>
-              <Button variant="outline" size="sm" onClick={requestExit} className="hidden sm:inline-flex">
-                <LogOut className="size-4" />
-                <span>Exit</span>
               </Button>
             </div>
           </div>

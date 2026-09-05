@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, ArrowLeft, LayoutDashboard } from "lucide-react";
 import * as backend from "../services/backend";
 import { useTypingStore, buildAdaptiveDrill } from "../stores/typing-store";
 import { useSettingsStore } from "../stores/settings-store";
@@ -17,7 +17,7 @@ import { StatsBar } from "../components/StatsBar";
 import { SessionHeader } from "../components/session/SessionHeader";
 import { ExerciseWorkspace } from "../components/session/ExerciseWorkspace";
 import { ResultDialog } from "../components/ResultDialog";
-import { Spinner, Modal } from "../components/ui";
+import { Spinner, Modal, EmptyState } from "../components/ui";
 import { Button } from "../components/ui/button";
 import type { TypingMode } from "../types";
 
@@ -272,14 +272,20 @@ export function DrillPage() {
 
   if (error && session?.kind !== "drill") {
     return (
-      <div className="app-page flex w-full flex-col gap-4 py-10">
-        <p
-          className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
-          role="alert"
-        >
-          <AlertCircle className="size-4 shrink-0" />
-          {error}
-        </p>
+      <div className="flex h-full min-h-0 w-full flex-1 items-center justify-center px-6">
+        <EmptyState icon={<AlertCircle className="size-8" />} title="Never mind the keys for now">
+          <p className="text-destructive">{error}</p>
+          <div className="mt-5 flex justify-center gap-2">
+            <Button variant="outline" onClick={() => navigate("/learn")}>
+              <ArrowLeft className="size-4" />
+              Back to lessons
+            </Button>
+            <Button onClick={() => navigate("/")}>
+              <LayoutDashboard className="size-4" />
+              Dashboard
+            </Button>
+          </div>
+        </EmptyState>
       </div>
     );
   }
@@ -294,7 +300,7 @@ export function DrillPage() {
           durationSeconds={null}
           sourceName={session.resolved.title}
           eyebrow="Adaptive drill"
-          onExit={() => navigate("/drill")}
+          onExit={() => navigate("/")}
         />
       ) : null}
     </SessionGate>
