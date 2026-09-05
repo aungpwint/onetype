@@ -43,6 +43,16 @@ every GitHub Release.
   on every platform before producing bundles.
 - Release workflow toolchain bumped to Node 24 (Node 20 is deprecated on GitHub
   Actions runners).
+- Replaced the malformed `plugins.updater.pubkey` in `tauri.conf.json` (corrupt
+  base64 after a copy/paste mangling — `tauri build` failed with
+  `failed to decode pubkey`) with the public key derived from the production
+  signing machine's secret key; a signed local build now produces valid
+  installers and `.sig` files.
+- Rewrote `verify-updater-pubkey.mjs` for the real minisign format: a signature
+  token embeds magic + 8-byte key id + 64-byte signature (the public key is not
+  inside a signature), so the guard now compares the key id embedded in the
+  produced `.sig` with the configured pubkey instead of the previous
+  byte-halving that could never match.
 
 ### Security
 - `.github/scripts/verify-updater-pubkey.mjs` checks in CI that the updater
