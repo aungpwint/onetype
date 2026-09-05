@@ -9,6 +9,30 @@ This file is the authoritative record for human-readable release notes; the
 every GitHub Release.
 
 ## [Unreleased]
+### Added
+- SHA256 checksums: every release now publishes `checksums.txt`
+  (`scripts/generate-checksums.mjs`) and the release workflow recomputes and
+  verifies it (`--verify`) before anything is published.
+- Pre-publish artifact validation (`scripts/validate-release.mjs`): filenames
+  must carry the released version, no zero-byte artifacts, every installer must
+  be covered by `checksums.txt`, and `latest.json` must agree with the tag and
+  reference real, produced payloads. The release fails with an actionable
+  message instead of shipping a broken release.
+- Professional GitHub Release notes (`scripts/release-notes.mjs`): What's New
+  (categorised from commit history since the previous tag, with a curated
+  override), per-platform Downloads, Installation Instructions and the actual
+  SHA256 Checksums block — generated from the build artifacts, never hand-typed.
+- Draft-then-publish release flow: the release is created as a draft, assets
+  and checksums are inspected, and only then is it flipped to published — a build
+  failure can never leak a broken release to users.
+- Linux one-line installer `install.sh`: detects distro/architecture, downloads
+  the correct package from the latest release over HTTPS, verifies its SHA256
+  against `checksums.txt`, and only then installs it (no `curl | bash`).
+- Local release command `npm run release` (`scripts/release.mjs`): checks the
+  tree is clean, synchronises the version, runs typecheck/lint/tests/build,
+  creates the annotated `v<version>` tag and pushes it on confirmation.
+- README installation section with per-platform files, manual checksum
+  verification and the Linux installer instructions.
 
 ## [1.0.1] - 2026
 ### Changed

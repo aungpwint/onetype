@@ -1,8 +1,10 @@
 name: Release
 
 # Builds the application on every supported platform, validates the version,
-# signs release artifacts, generates and merges the Tauri updater manifest
-# (`latest.json`), creates a GitHub Release and uploads every asset.
+# signs release artifacts, generates SHA256 checksums, generates and merges the
+# Tauri updater manifest (`latest.json`), creates a *draft* GitHub Release,
+# validates it, and only then publishes it. A build that fails any validation
+# gate can never produce a live, published release.
 #
 # Trigger: push a version tag, e.g.  v1.1.0
 #
@@ -205,6 +207,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -301,33 +306,82 @@ jobs:
           echo "=== merged latest.json ==="
           cat dist/updates/latest.json
 
-      - name: Validate final latest.json
+      - name: Generate SHA256 checksums
         shell: bash
-        run: node -e "const m=require('./dist/updates/latest.json'); if(!m.version || !m.platforms || Object.keys(m.platforms).length===0){process.exit(1)} console.log('latest.json OK', m.version, Object.keys(m.platforms).join(', '))"
+        run: node scripts/generate-checksums.mjs --dir dist/updates
 
-      - name: Create GitHub Release & upload assets
+      - name: Validate release artifacts, checksums & manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${{ github.ref_name }}"
+          VERSION="${TAG#v}"
+          node scripts/validate-release.mjs \
+            --dir dist/updates \
+            --version "$VERSION" \
+            --tag "$TAG" \
+            --latest-json dist/updates/latest.json
+
+      - name: Generate release notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${{ github.ref_name }}"
+          VERSION="${TAG#v}"
+          node scripts/release-notes.mjs \
+            --version "$VERSION" \
+            --tag "$TAG" \
+            --owner "${{ env.GITHUB_OWNER }}" \
+            --repo "${{ env.GITHUB_REPO }}" \
+            --assets-dir dist/updates \
+            --checksums dist/updates/checksums.txt \
+            --out dist/release-notes.md
+
+      - name: Create GitHub Release (draft) & upload assets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -euo pipefail
           TAG="${{ github.ref_name }}"
-          ASSETS="dist/updates/latest.json"
-          # All downloaded platform bundles (skip the partial manifests and latest.json itself).
+          # latest.json + checksums.txt + all downloaded platform bundles
+          # (partial manifests are never uploaded as release assets).
+          ASSETS="dist/updates/latest.json dist/updates/checksums.txt"
           for f in dist/updates/*; do
             case "$(basename "$f")" in
-              partial-*.json | latest.json) continue ;;
+              partial-*.json | latest.json | checksums.txt) continue ;;
             esac
             if [ -f "$f" ]; then ASSETS="$ASSETS $f"; fi
           done
-          # Create the release if it does not already exist; otherwise update.
+          # Create the draft if it does not exist yet; otherwise refresh it.
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "Release $TAG already exists; uploading missing assets."
             gh release upload "$TAG" $ASSETS --clobber
+            gh release edit "$TAG" --notes-file dist/release-notes.md --draft=true
           else
             gh release create "$TAG" \
               --title "OneType $TAG" \
-              --generate-notes \
+              --notes-file dist/release-notes.md \
+              --draft \
               $ASSETS
           fi
+          echo "--- Draft release assets:"
+          gh release view "$TAG" --json assets --jq '.assets[].name' | sort
+
+      - name: Publish draft release (safety gate passed)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          TAG="${{ github.ref_name }}"
+          # Never flip a draft to "published" unless assets are actually attached.
+          COUNT=$(gh release view "$TAG" --json assets --jq '.assets | length')
+          echo "attached assets: $COUNT"
+          if [ "$COUNT" -lt 1 ]; then
+            echo "::error::No assets attached to draft release $TAG — aborting publish." >&2
+            exit 1
+          fi
+          gh release edit "$TAG" --draft=false
+          echo "Published $TAG."
 
       - name: Verify uploaded assets
         env:

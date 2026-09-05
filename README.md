@@ -4,6 +4,43 @@ An on-device typing tutor for **English and Myanmar (မြန်မာ)**, buil
 
 Every learner's data lives in a local SQLite database — nothing leaves the machine.
 
+## Installation
+
+Get the latest installer for your platform from the **[Latest Release](https://github.com/aungpwint/onetype/releases/latest)**. Installers are signed, every release ships a `checksums.txt` for verification, and installed apps auto-update in the background when a new version is published.
+
+| Platform | File (from the latest release) | Install |
+| --- | --- | --- |
+| **Windows** | `OneType_<version>_x64-setup.exe` | Run the installer and follow the wizard. |
+| **macOS (Apple Silicon)** | `OneType_<version>_aarch64.dmg` | Open the DMG, drag **OneType.app** into Applications, then right-click → *Open* the first time (Gatekeeper). |
+| **Linux (Debian/Ubuntu)** | `onetype_<version>_amd64.deb` | `sudo apt install -y ./onetype_<version>_amd64.deb` |
+| **Linux (Fedora/RHEL)** | `onetype-<version>-1.x86_64.rpm` | `sudo dnf install -y ./onetype-<version>-1.x86_64.rpm` |
+
+### Linux — one-line installer
+
+```bash
+curl -fsSL -o install.sh https://raw.githubusercontent.com/aungpwint/onetype/main/install.sh
+bash install.sh
+```
+
+`install.sh` detects your distribution and architecture, downloads the correct package from the latest GitHub Release, **verifies its SHA256 checksum** against the release's `checksums.txt`, and only then installs it. Nothing is executed until the download passes verification. Pin a version or override the repository:
+
+```bash
+bash install.sh --version v1.2.3 --repo aungpwint/onetype
+```
+
+### Verify downloads manually
+
+```bash
+# Windows (PowerShell)
+Get-FileHash .\OneType_1.0.1_x64-setup.exe -Algorithm SHA256
+
+# macOS / Linux
+shasum -a 256 OneType_1.0.1_aarch64.dmg
+sha256sum onetype_1.0.1_amd64.deb
+```
+
+Compare the output with `checksums.txt` from the release.
+
 ## Features
 
 - **English & Myanmar keyboard layouts** with per-key statistics (accuracy, weak keys, weak fingers).
@@ -69,3 +106,5 @@ OneType ships signed installers and auto-updates through GitHub Releases. See **
 - Recovering from a failed release and rolling back a bad one.
 
 The application version must be kept identical across `package.json`, `src-tauri/Cargo.toml` and `src-tauri/tauri.conf.json`; CI enforces this with `scripts/check-versions.mjs`.
+
+To cut a release, run `npm run release -- --next <version> --push` from a clean tree — it bumps the version, runs the quality gates, creates the `v<version>` tag, and the GitHub Actions workflow builds, signs, validates checksums, and publishes the release.
