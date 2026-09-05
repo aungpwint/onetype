@@ -5,7 +5,7 @@ import { useStudentStore } from '@/stores/student-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { useUiStore } from '@/stores/ui-store'
 import { cn, eyebrowClass } from '@/lib/utils'
-import { Field } from './ui'
+import { Field, Atmosphere } from './ui'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 
@@ -46,9 +46,10 @@ export function Onboarding() {
     }
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-bg p-6">
-            <div className="w-full max-w-xl">
-                <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+        <div className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-bg p-6">
+            <Atmosphere className="-z-10" />
+            <div className="relative z-10 w-full max-w-xl">
+                <div className="overflow-hidden rounded-2xl border border-border bg-card/75 shadow-xl backdrop-blur-2xl">
                     <div className="border-b border-border bg-muted/60 px-8 py-6">
                         <p className={eyebrowClass}>Desk № 1 · First lesson</p>
                         <h1 className="mt-2 flex items-center gap-2 font-display text-3xl">

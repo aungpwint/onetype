@@ -52,7 +52,7 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
         >
-            <header className="shrink-0 border-b border-line bg-background">
+            <header className="shrink-0 border-b border-line bg-background/60 backdrop-blur-xl">
                 <div className="flex items-center justify-between gap-3 px-4 py-2.5 sm:px-6">
                     <div className="flex min-w-0 items-center gap-3">
                         <Button variant="ghost" size="sm" onClick={exitGuard.requestExit} className="-ml-2 shrink-0" aria-label="Back to lessons">

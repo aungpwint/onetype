@@ -24,7 +24,7 @@ import {
 import { useUiStore } from '@/stores/ui-store'
 import { useStudentStore } from '@/stores/student-store'
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts'
-import { Modal } from './ui'
+import { Modal, Atmosphere } from './ui'
 import { StudentForm } from './student-form'
 import { listLayouts } from '@/core/keyboard-layout/registry'
 import { Button } from './ui/button'
@@ -91,12 +91,13 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
 
     return (
         <TooltipProvider>
-            <div className="flex h-screen overflow-hidden">
+            <div className="relative isolate flex h-screen overflow-hidden">
+                <Atmosphere />
                 <AnimatePresence initial={false}>
                     {sidebarOpen ? (
                         <motion.aside
                             key="rail"
-                            className="flex w-60 shrink-0 flex-col border-r border-line bg-surface"
+                            className="relative z-10 flex w-60 shrink-0 flex-col border-r border-line bg-card/60 backdrop-blur-2xl"
                             initial={{ x: -40, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             exit={{ x: -40, opacity: 0 }}
@@ -140,8 +141,8 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                             cn(
                                                 'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-[color,background-color,box-shadow] duration-150 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
                                                 isActive
-                                                    ? 'bg-primary font-medium text-primary-foreground'
-                                                    : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                                                    ? 'border border-accent/15 bg-accent/10 font-medium text-accent'
+                                                    : 'border border-transparent text-muted-foreground hover:bg-muted/70 hover:text-foreground',
                                             )
                                         }
                                     >
@@ -190,8 +191,8 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                     ) : null}
                 </AnimatePresence>
 
-                <div className="flex min-w-0 flex-1 flex-col">
-                    <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background px-4">
+                <div className="relative z-10 flex min-w-0 flex-1 flex-col">
+                    <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background/60 px-4 backdrop-blur-xl">
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Button variant="ghost" size="icon" onClick={toggleSidebar} aria-label="Toggle sidebar">

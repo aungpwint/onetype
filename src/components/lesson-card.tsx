@@ -47,7 +47,7 @@ export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
     return (
         <Link
             to={`/lesson/${lesson.id}`}
-            className="group relative flex flex-col overflow-hidden rounded-xl border border-line bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-[var(--shadow-2)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="group relative flex flex-col overflow-hidden rounded-xl border border-line bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-(--shadow-2) focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
             {/* Top accent band — encodes lesson state */}
             <span aria-hidden className={cn('h-1 w-full', bandClass)} />

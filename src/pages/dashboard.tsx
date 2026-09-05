@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { WpmBars } from '@/components/wpm-bars'
 import { formatDuration, formatWpm, formatAccuracy, formatLessonLabel, pct, bestResultByTest } from '@/lib/format'
-import { cn, cardClass, appPageClass, eyebrowClass, kbdClass, chipClass, sectionTitleClass, highlightClass } from '@/lib/utils'
+import { cn, cardClass, appPageClass, eyebrowClass, kbdClass, chipClass, sectionTitleClass, featuredClass } from '@/lib/utils'
 
 function hourGreeting(): string {
     const h = new Date().getHours()
@@ -135,20 +135,26 @@ export default function Dashboard() {
                 <Link
                     to={nextLesson ? `/lesson/${nextLesson.id}` : '/learn'}
                     className={cn(
-                        highlightClass,
-                        'group p-5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+                        featuredClass,
+                        'group p-6 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-950/20 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
                     )}
                 >
-                    <p className={eyebrowClass}>Continue learning</p>
-                    <div className="mt-3 flex items-center justify-between">
-                        <span className="font-display font-myanmar text-xl leading-tight">
-                            {nextLesson ? nextLesson.title : 'Curriculum finished'}
-                        </span>
-                        <ArrowRight className="size-5 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+                    <div aria-hidden className="pointer-events-none absolute inset-0">
+                        <div className="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-blue-500/[0.08] blur-[100px]" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.06] via-transparent to-transparent" />
                     </div>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                        {nextLesson ? `Level ${nextLesson.level} · line ${nextLesson.number}` : 'Every line passed. Try a timed test.'}
-                    </p>
+                    <div className="relative z-10">
+                        <p className={eyebrowClass}>Continue learning</p>
+                        <div className="mt-3 flex items-center justify-between">
+                            <span className="font-display font-myanmar text-xl leading-tight">
+                                {nextLesson ? nextLesson.title : 'Curriculum finished'}
+                            </span>
+                            <ArrowRight className="size-5 text-accent transition-transform group-hover:translate-x-0.5" />
+                        </div>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                            {nextLesson ? `Level ${nextLesson.level} · line ${nextLesson.number}` : 'Every line passed. Try a timed test.'}
+                        </p>
+                    </div>
                 </Link>
 
                 <div className={cn(cardClass, 'p-5')}>

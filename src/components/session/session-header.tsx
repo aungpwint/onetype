@@ -27,7 +27,7 @@ export function SessionHeader({ eyebrow, title, status, durationSeconds, onToggl
     const isPaused = status === 'paused'
 
     return (
-        <header className="shrink-0 border-b border-line bg-background">
+        <header className="shrink-0 border-b border-line bg-background/60 backdrop-blur-xl">
             <div className="flex items-center justify-between gap-4 px-5 py-3 sm:px-8">
                 <div className="min-w-0">
                     <p className={eyebrowClass}>{eyebrow}</p>

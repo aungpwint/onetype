@@ -30,7 +30,7 @@ export function VirtualKeyboard({ layout, hideReadyMessage }: VirtualKeyboardPro
         <section
             aria-label="Virtual keyboard"
             data-keyboard-root
-            className="relative w-full rounded-2xl border border-line bg-key-well p-2.5 shadow-[var(--shadow-2)] select-none sm:p-3.5 lg:p-4 2xl:p-5"
+            className="relative w-full rounded-2xl border border-line bg-card/55 p-2.5 shadow-(--shadow-2) backdrop-blur-xl select-none sm:p-3.5 lg:p-4 2xl:p-5"
         >
             <div className="mx-auto w-full min-w-0">
                 <div className="flex w-full flex-col gap-1.5 rounded-xl bg-key-well p-2 sm:gap-2 sm:p-2.5 lg:gap-2.5 lg:p-3 2xl:p-3.5">

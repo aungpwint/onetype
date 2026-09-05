@@ -37,9 +37,7 @@
     --typing-correct: #16804a;
     --typing-incorrect: #c9362b;
     --typing-current-ink: #171a1f;
-    --typing-current-bg: rgba(49, 95, 212, 0.1);
     --typing-upcoming: #858c98;
-    --caret: var(--primary);
 
     --key-top: #ffffff;
     --key-base: #e8ebef;
@@ -62,15 +60,15 @@
 }
 
 .dark {
-    --bg: #090b0f;
+    --bg: #0a1120;
 
-    --surface: #12141a;
-    --surface-muted: #161920;
-    --surface-elevated: #1a1e26;
+    --surface: #0f172a;
+    --surface-muted: #152136;
+    --surface-elevated: #1b2944;
 
-    --ink: #f2f4f7;
-    --ink-soft: #b4bbc6;
-    --ink-faint: #7f8794;
+    --ink: #e8eef7;
+    --ink-soft: #a6b4c8;
+    --ink-faint: #6b7890;
 
     --line: rgba(255, 255, 255, 0.08);
     --line-strong: rgba(255, 255, 255, 0.16);
@@ -90,15 +88,13 @@
 
     --typing-correct: #3db574;
     --typing-incorrect: #f4645c;
-    --typing-current-ink: #f2f4f7;
-    --typing-current-bg: rgba(96, 165, 250, 0.14);
-    --typing-upcoming: #7f8794;
-    --caret: var(--primary);
+    --typing-current-ink: #e8eef7;
+    --typing-upcoming: #6b7890;
 
-    --key-top: #242932;
-    --key-base: #1a1e25;
-    --key-ink: #e5e9ef;
-    --key-well: rgba(0, 0, 0, 0.3);
+    --key-top: #1e293b;
+    --key-base: #131e30;
+    --key-ink: #c9d4e4;
+    --key-well: rgba(2, 6, 18, 0.5);
 
     --hand: #5c4730;
     --hand-shade: #4e3b27;
@@ -106,7 +102,7 @@
     --hand-nail: rgba(200, 190, 178, 0.8);
     --hand-active: var(--primary);
 
-    --thumb: rgba(255, 255, 255, 0.3);
+    --thumb: rgba(255, 255, 255, 0.26);
 
     --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-2: 0 4px 12px rgba(0, 0, 0, 0.35);
@@ -268,7 +264,7 @@
         }
 
         50% {
-            opacity: 0.18;
+            opacity: 0;
         }
     }
 
@@ -319,9 +315,7 @@
     }
 
     .tt-char-focus {
-        background: var(--typing-current-bg);
         color: var(--typing-current-ink);
-        box-shadow: 0 0 0 1px var(--primary-ring);
     }
 
     .tt-char-flash {
@@ -345,16 +339,9 @@
 
     .tt-caret {
         position: absolute;
-        bottom: -0.3rem;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 1.6rem;
-        height: 3px;
-        border-radius: 999px;
-        background: var(--caret);
-        box-shadow:
-            0 1px 0 color-mix(in srgb, var(--caret) 20%, transparent),
-            0 1px 4px color-mix(in srgb, var(--caret) 30%, transparent);
+        top: 0;
+        bottom: 0;
+        left: 0;
         animation: caret-blink 1s var(--ease-in-out) infinite;
     }
 
@@ -385,21 +372,21 @@
             0 2px 4px rgba(0, 0, 0, 0.08);
     }
 
-    /* Next-key hint: solid primary keycap, subtle ring for focus */
+    /* Next-key hint: translucent primary wash, blue text + soft ring */
     .keycap-active {
         z-index: 20;
-        border-color: var(--primary-active);
-        background: var(--primary);
-        color: var(--primary-foreground);
+        border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+        background: color-mix(in srgb, var(--primary) 28%, transparent);
+        color: var(--primary);
         box-shadow:
-            0 0 0 2px var(--primary-ring),
-            0 2px 0 var(--primary-active);
+            0 0 0 2px color-mix(in srgb, var(--primary) 30%, transparent),
+            0 2px 0 color-mix(in srgb, var(--primary) 40%, transparent);
     }
 
     .keycap-active .keycap-primary,
     .keycap-active .keycap-sublabel,
     .keycap-active .keycap-mod {
-        color: var(--primary-foreground);
+        color: var(--primary);
         font-weight: 700;
     }
 

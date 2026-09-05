@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
+import { memo, useCallback, useLayoutEffect, useMemo, useRef } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { useTypingStore } from '@/stores/typing-store'
 import { cn } from '@/lib/utils'
@@ -9,7 +9,6 @@ const CARET_ANCHOR = 0.45
 const CONTENT_INSET = 24
 
 export function TargetText() {
-    const tick = useTypingStore((s) => s.tick)
     const session = useTypingStore((s) => s.session)
     const engine = useTypingStore((s) => s.engine)
     const wrongFlash = useTypingStore((s) => s.wrongFlash)
@@ -17,7 +16,6 @@ export function TargetText() {
     const viewportRef = useRef<HTMLDivElement | null>(null)
     const contentRef = useRef<HTMLDivElement | null>(null)
     const caretRef = useRef<HTMLSpanElement | null>(null)
-    const offsetRef = useRef(0)
 
     const unitIndex = engine?.unitIndex ?? 0
     const sequence = engine?.sequence
@@ -42,67 +40,40 @@ export function TargetText() {
 
     const motionOffset = useMotionValue(0)
     const springOffset = useSpring(motionOffset, {
-        stiffness: 500,
-        damping: 45,
-        mass: 0.35,
+        stiffness: 1100,
+        damping: 60,
+        mass: 0.22,
     })
 
     const sessionKey = session ? `${session.kind}-${session.lessonId ?? session.test?.id ?? ''}-${session.attempt}` : null
 
-    const prevSessionKey = useRef<string | null>(null)
+    useLayoutEffect(() => {
+        const viewport = viewportRef.current
+        const caret = caretRef.current
+        const content = contentRef.current
+        if (!viewport || !caret || !content) return
 
-    useEffect(() => {
-        if (sessionKey && sessionKey !== prevSessionKey.current) {
-            prevSessionKey.current = sessionKey
-            offsetRef.current = 0
-            motionOffset.set(0)
-        }
-    }, [sessionKey, motionOffset])
+        const caretRect = caret.getBoundingClientRect()
+        if (caretRect.width === 0) return
 
-    const prevPhaseKey = useRef<string | null>(null)
+        const viewportRect = viewport.getBoundingClientRect()
+        const contentRect = content.getBoundingClientRect()
 
-    useEffect(() => {
-        if (activePhaseKey && activePhaseKey !== prevPhaseKey.current) {
-            prevPhaseKey.current = activePhaseKey
-            offsetRef.current = 0
-            motionOffset.set(0)
-        }
-    }, [activePhaseKey, motionOffset])
+        const caretCenter = caretRect.left + caretRect.width / 2 - viewportRect.left
+        const targetCenter = viewportRect.width * CARET_ANCHOR
 
-    useEffect(() => {
-        const raf = requestAnimationFrame(() => {
-            const viewport = viewportRef.current
-            const caret = caretRef.current
-            if (!viewport || !caret) return
+        const viewportWidth = viewportRect.width
+        const contentWidth = content.scrollWidth
+        const maxOffset = Math.max(0, (viewportWidth - contentWidth) / 2)
+        const minOffset = Math.min(maxOffset, viewportWidth - contentWidth - CONTENT_INSET)
 
-            const caretRect = caret.getBoundingClientRect()
-            if (caretRect.width === 0) return
+        const currentLeft = contentRect.left - viewportRect.left
+        const nextOffset = Math.min(maxOffset, Math.max(minOffset, currentLeft - (caretCenter - targetCenter)))
 
-            const viewportRect = viewport.getBoundingClientRect()
-            const caretCenter = caretRect.left + caretRect.width / 2 - viewportRect.left
-            const targetCenter = viewportRect.width * CARET_ANCHOR
-            const delta = caretCenter - targetCenter
+        if (Math.abs(currentLeft - nextOffset) < 0.5) return
 
-            if (Math.abs(delta) < 0.5) return
-
-            let nextOffset = offsetRef.current - delta
-
-            const content = contentRef.current
-            if (content) {
-                const contentWidth = content.scrollWidth
-                const viewportWidth = viewportRect.width
-                const maxOffset = Math.max(0, (viewportWidth - contentWidth) / 2)
-                const minOffset = Math.min(maxOffset, viewportWidth - contentWidth - CONTENT_INSET)
-                nextOffset = Math.min(maxOffset, Math.max(minOffset, nextOffset))
-            }
-
-            if (Math.abs(nextOffset - offsetRef.current) < 0.5) return
-
-            offsetRef.current = nextOffset
-            motionOffset.set(nextOffset)
-        })
-        return () => cancelAnimationFrame(raf)
-    }, [unitIndex, tick, motionOffset])
+        motionOffset.set(nextOffset)
+    }, [sessionKey, activePhaseKey, unitIndex, motionOffset])
 
     const onCaretRef = useCallback((el: HTMLSpanElement | null) => {
         caretRef.current = el
@@ -125,8 +96,8 @@ export function TargetText() {
                         <motion.p
                             key={activePhaseKey ?? 'all'}
                             className={cn(
-                                hasMyanmar ? 'font-myanmar' : 'font-heavy',
-                                'mx-auto text-4xl leading-tight tracking-normal whitespace-nowrap md:text-5xl',
+                                hasMyanmar ? 'font-myanmar leading-[normal]' : 'font-heavy leading-tight',
+                                'mx-auto text-4xl tracking-normal whitespace-nowrap md:text-5xl',
                             )}
                             style={{ wordSpacing: '0.16em' }}
                             initial={{ opacity: 0, y: 8 }}
@@ -193,7 +164,7 @@ const Char = memo(function Char({
         return (
             <span ref={onCaret} className={cn('tt-char tt-char-now', flash ? 'tt-char-flash' : 'tt-char-focus')}>
                 <span className="char-pop">{text}</span>
-                <span className="tt-caret" aria-hidden />
+                <span aria-hidden className="tt-caret z-10 mr-3 w-1 bg-primary" />
             </span>
         )
     }

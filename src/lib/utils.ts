@@ -21,6 +21,14 @@ export const cardClass = cn('rounded-xl border border-line bg-surface shadow-[va
  */
 export const highlightClass = cn('rounded-xl border border-blue-500/20 bg-gradient-to-b from-blue-950/30 to-slate-900/40')
 
+/** Level 2 glass surface — translucent elevated panels (sidebar, header, tray, popovers). */
+export const glassClass = cn('rounded-2xl border border-line bg-card/60 shadow-[var(--shadow-2)] backdrop-blur-2xl')
+
+/** Level 3 featured/hero surface — glass + soft blue ambient shadow. Overlays are added in JSX. */
+export const featuredClass = cn(
+    'relative overflow-hidden rounded-3xl border border-blue-500/25 bg-card/75 shadow-[var(--shadow-3)] backdrop-blur-2xl',
+)
+
 /** Page column wrapper: full-bleed scroll area with a roomy vertical rhythm. */
 export const appPageClass = cn('w-full min-w-0 space-y-6 px-[clamp(1.5rem,2.5vw,2.5rem)] pt-8 pb-12')
 

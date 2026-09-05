@@ -44,6 +44,22 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
     }
 }
 
+/**
+ * Decorative atmospheric backdrop — dark-navy base with a few large, static,
+ * low-opacity blue glows and a subtle gradient wash. Pure Tailwind, inert,
+ * and painted below every surface layer (wrap surfaces in `relative z-10`).
+ */
+export function Atmosphere({ className }: { className?: string }) {
+    return (
+        <div aria-hidden className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)}>
+            <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-blue-600/8 blur-[120px]" />
+            <div className="absolute top-16 -right-24 h-80 w-80 rounded-full bg-sky-500/6 blur-[110px]" />
+            <div className="absolute -bottom-40 left-1/3 h-96 w-96 rounded-full bg-indigo-500/5 blur-[130px]" />
+            <div className="absolute inset-0 bg-linear-to-br from-blue-500/4.5 via-transparent to-transparent" />
+        </div>
+    )
+}
+
 export function Spinner({ label }: { label?: string }) {
     return (
         <div className="flex items-center justify-center gap-3 py-10 text-muted-foreground" role="status">
@@ -108,7 +124,7 @@ export function Modal({
                         tabIndex={-1}
                         ref={panelRef}
                         className={cn(
-                            'relative z-10 w-full rounded-xl border border-line bg-surface p-6 shadow-[var(--shadow-3)] outline-none',
+                            'relative z-10 w-full rounded-xl border border-line bg-card/85 p-6 shadow-(--shadow-3) backdrop-blur-2xl outline-none',
                             width,
                         )}
                         initial={{ opacity: 0, y: 14, scale: 0.98 }}
