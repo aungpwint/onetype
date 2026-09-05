@@ -4,11 +4,14 @@ All notable changes to OneType are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project
 follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-This file is the authoritative record for human-readable release notes; the
-`release` GitHub Actions workflow attaches it (via auto-generated notes) to
-every GitHub Release.
+This file is the authoritative record for the project's version history; it is
+the curated source maintained alongside `scripts/release-notes.mjs`, which the
+`release` GitHub Actions workflow uses (with per-platform downloads, checksums
+and auto-update notes) to build every GitHub Release page.
 
 ## [Unreleased]
+
+## [1.1.0] - 2026-09-05
 ### Added
 - SHA256 checksums: every release now publishes `checksums.txt`
   (`scripts/generate-checksums.mjs`) and the release workflow recomputes and
@@ -104,4 +107,5 @@ every GitHub Release.
 - Teacher view for aggregated classroom progress.
 - Automatic updates via the Tauri updater plugin (signed; 6-hour throttle).
 
+[1.1.0]: https://github.com/aungpwint/onetype/releases/tag/v1.1.0
 [1.0.1]: https://github.com/aungpwint/onetype/releases/tag/v1.0.1

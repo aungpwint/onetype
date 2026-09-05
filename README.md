@@ -6,7 +6,7 @@ Every learner's data lives in a local SQLite database — nothing leaves the mac
 
 ## Installation
 
-Get the latest installer for your platform from the **[Latest Release](https://github.com/aungpwint/onetype/releases/latest)**. Installers are signed, every release ships a `checksums.txt` for verification, and installed apps auto-update in the background when a new version is published.
+Get the latest installer for your platform from the **[Latest Release](https://github.com/aungpwint/onetype/releases/latest)**. Every release ships checksums (`checksums.txt`) and a signed auto-update manifest, and installed apps auto-update in the background when a new version is published.
 
 | Platform | File (from the latest release) | Install |
 | --- | --- | --- |
