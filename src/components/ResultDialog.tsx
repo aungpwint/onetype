@@ -113,7 +113,7 @@ export function ResultDialog() {
   };
 
   return (
-    <Modal open onClose={close}>
+    <Modal open onClose={close} ariaLabel="Session result">
       <div className="flex items-start justify-between pr-10">
         <div>
           <p className="eyebrow">

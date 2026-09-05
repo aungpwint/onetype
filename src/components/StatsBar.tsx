@@ -26,14 +26,20 @@ function CompactStat({
 }
 
 export function StatsBar() {
+  // Re-render on every keystroke (tick) so WPM/accuracy update immediately,
+  // plus a light interval that ticks the clock only while running.
+  const tick = useTypingStore((s) => s.tick);
   const status = useTypingStore((s) => s.status);
-  void status;
+  void tick;
   const [, force] = useState(0);
 
+  const running = status === "running";
+
   useEffect(() => {
+    if (!running) return;
     const id = window.setInterval(() => force((n) => n + 1), 250);
     return () => window.clearInterval(id);
-  }, []);
+  }, [running]);
 
   const stats = useTypingStore.getState().getLiveStats();
   const durationSeconds = useTypingStore.getState().session?.durationSeconds ?? null;

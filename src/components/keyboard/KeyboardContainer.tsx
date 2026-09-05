@@ -15,7 +15,7 @@ export function KeyboardContainer({ layout }: { layout: KeyboardLayout }) {
   const handGuide = useUiStore((s) => s.handGuideVisible);
 
   return (
-    <div className="select-none">
+    <div className="mx-auto w-full max-w-4xl select-none">
       {/* ── Lesson Progress header bar ── */}
       <LessonProgress />
 

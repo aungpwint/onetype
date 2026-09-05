@@ -265,7 +265,7 @@ export default function SettingsPage() {
         </p>
       </Section>
 
-      <Modal open={report !== null} onClose={() => setReport(null)}>
+      <Modal open={report !== null} onClose={() => setReport(null)} ariaLabel="Report">
         <h2 className="font-display text-lg capitalize">{report?.kind}</h2>
         <p className="mt-2 text-sm text-muted-foreground">{report?.message}</p>
         <div className="mt-5 flex justify-end">

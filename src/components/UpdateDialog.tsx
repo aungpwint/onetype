@@ -14,7 +14,7 @@ export function UpdateDialog() {
     return null;
 
   return (
-    <Modal open onClose={() => {}}>
+    <Modal open onClose={() => {}} ariaLabel="Update available">
       {status.state === "available" && (
         <>
           <p className="eyebrow">Update Available</p>

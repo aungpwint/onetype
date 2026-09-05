@@ -9,6 +9,20 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("onetype:theme");
+          var dark;
+          if (theme === "dark" || theme === "light") {
+            dark = theme === "dark";
+          } else {
+            dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          }
+          if (dark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
     <title>OneType — English &amp; Myanmar Typing Tutor</title>
   </head>
 

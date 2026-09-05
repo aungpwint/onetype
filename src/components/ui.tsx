@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Component, useEffect } from "react";
+import { Component, useEffect, useRef } from "react";
 import { RotateCcw, X } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -60,19 +60,32 @@ export function Modal({
   onClose,
   children,
   width = "max-w-lg",
+  ariaLabel = "Dialog",
 }: {
   open: boolean;
   onClose: () => void;
   children: ReactNode;
   width?: string;
+  ariaLabel?: string;
 }) {
+  const panelRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (!open) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    // Move focus into the panel on open so keyboard users land in the dialog.
+    const raf = requestAnimationFrame(() => {
+      panelRef.current?.focus();
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("keydown", onKey);
+      previouslyFocused?.focus();
+    };
   }, [open, onClose]);
 
   return (
@@ -88,7 +101,10 @@ export function Modal({
           <motion.div
             role="dialog"
             aria-modal="true"
-            className={`relative z-10 w-full rounded-2xl border border-border bg-card p-6 shadow-xl ${width}`}
+            aria-label={ariaLabel}
+            tabIndex={-1}
+            ref={panelRef}
+            className={`relative z-10 w-full rounded-2xl border border-border bg-card p-6 shadow-xl outline-none ${width}`}
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}

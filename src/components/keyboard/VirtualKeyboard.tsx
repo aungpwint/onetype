@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import type {
   KeyboardLayout,
   KeyDefinition,
@@ -190,7 +190,7 @@ interface KeycapProps {
   isShiftHint: boolean;
 }
 
-function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
+const Keycap = memo(function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
   const width = definition.width ?? 1;
 
   const isModifier =
@@ -222,10 +222,11 @@ function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
 
   const pressClass = flashed ? "key-press" : "";
 
+  // Keycaps are purely visual indicators of the physical keyboard: they never
+  // receive pointer or keyboard input, so render them as presentational spans
+  // (wholly hidden from assistive tech) rather than disabled/focusable buttons.
   return (
-    <button
-      type="button"
-      tabIndex={-1}
+    <span
       aria-hidden
       data-key={definition.code}
       className={[
@@ -253,14 +254,11 @@ function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
         // Typography
         "leading-none",
 
-        // Interaction
+        // Interaction look
         "select-none",
         "transition-[transform,background-color,box-shadow,border-color]",
         "duration-150",
         "ease-out",
-
-        // Focus / accessibility
-        "outline-none",
 
         // Motion
         pressClass,
@@ -274,9 +272,9 @@ function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
       }}
     >
       <KeycapContent>{label}</KeycapContent>
-    </button>
+    </span>
   );
-}
+});
 
 function KeycapContent({ children }: { children: ReactNode }) {
   return (

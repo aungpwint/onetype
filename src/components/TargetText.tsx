@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useTypingStore } from "../stores/typing-store";
 import { containsMyanmar } from "../core/unicode/myanmar";
@@ -11,6 +11,7 @@ export function TargetText() {
   const tick = useTypingStore((s) => s.tick);
   const session = useTypingStore((s) => s.session);
   const engine = useTypingStore((s) => s.engine);
+  const wrongFlash = useTypingStore((s) => s.wrongFlash);
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -20,6 +21,14 @@ export function TargetText() {
   const unitIndex = engine?.unitIndex ?? 0;
   const sequence = engine?.sequence;
   const hasMyanmar = sequence ? containsMyanmar(sequence.text) : false;
+
+  // The unit runs derive solely from the sequence, so they are stable for the
+  // lifetime of an engine. Memoising avoids rebuilding the character tree and
+  // lets the memoised Char components bail out unless their own state changed.
+  const graphemes = useMemo(
+    () => (sequence ? graphemeUnitRuns(sequence) : []),
+    [sequence],
+  );
 
   const motionOffset = useMotionValue(0);
   const springOffset = useSpring(motionOffset, {
@@ -87,7 +96,7 @@ export function TargetText() {
 
   if (!session || !engine) return null;
 
-  const graphemes = sequence ? graphemeUnitRuns(sequence) : [];
+  const flashAt = wrongFlash?.unitIndex ?? -1;
 
   return (
     <motion.div
@@ -118,6 +127,7 @@ export function TargetText() {
                     endUnit={g.endUnit}
                     completed={isCompleted}
                     current={isCurrent}
+                    flash={flashAt >= g.startUnit && flashAt < g.endUnit}
                     onCaret={isCurrent ? onCaretRef : undefined}
                   />
                 );
@@ -130,12 +140,13 @@ export function TargetText() {
   );
 }
 
-function Char({
+const Char = memo(function Char({
   text,
   startUnit,
   endUnit,
   completed,
   current,
+  flash,
   onCaret,
 }: {
   text: string;
@@ -143,14 +154,10 @@ function Char({
   endUnit: number;
   completed: boolean;
   current: boolean;
+  flash: boolean;
   onCaret?: (el: HTMLSpanElement | null) => void;
 }) {
-  const { engine, wrongFlash } = useTypingStore.getState();
-  const flash =
-    wrongFlash?.unitIndex !== undefined &&
-    wrongFlash.unitIndex >= startUnit &&
-    wrongFlash.unitIndex < endUnit;
-
+  const engine = useTypingStore.getState().engine;
   let status: "correct" | "incorrect" | "current" | "pending" = "pending";
   if (current) {
     status = "current";
@@ -185,4 +192,4 @@ function Char({
         : "tt-char tt-char-typed";
 
   return <span className={cls}>{text}</span>;
-}
+});

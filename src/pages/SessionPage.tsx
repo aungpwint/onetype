@@ -103,7 +103,7 @@ function Session({
 
       <ResultDialog />
 
-      <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)}>
+      <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)} ariaLabel="Leave this round?">
         <h2 className="font-display text-lg">Leave this round?</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           Nothing so far in this attempt will be saved. You can pick it up again any time from the lessons list.

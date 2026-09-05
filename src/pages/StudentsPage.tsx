@@ -82,6 +82,7 @@ export default function StudentsPage() {
           setShowAdd(false);
           setEditing(null);
         }}
+        ariaLabel={editing ? `Edit ${editing.displayName}` : "New learner"}
       >
         <h2 className="mb-4 pr-8 font-display text-lg">{editing ? `Edit ${editing.displayName}` : "New learner"}</h2>
         <StudentForm
@@ -94,7 +95,7 @@ export default function StudentsPage() {
         />
       </Modal>
 
-      <Modal open={confirming !== null} onClose={() => setConfirming(null)}>
+      <Modal open={confirming !== null} onClose={() => setConfirming(null)} ariaLabel="Remove learner">
         <h2 className="pr-8 font-display text-lg">Remove {confirming?.displayName}?</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           This deletes the learner from the roll — their lessons, sessions and marks will not be recoverable.

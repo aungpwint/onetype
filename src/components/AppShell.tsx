@@ -228,7 +228,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <main className="min-h-0 flex-1 overflow-y-auto">{children}</main>
       </div>
 
-      <Modal open={pickerOpen} onClose={() => setPickerOpen(false)}>
+      <Modal open={pickerOpen} onClose={() => setPickerOpen(false)} ariaLabel="Choose a learner">
         <div className="mb-4 flex items-center justify-between pr-8">
           <h2 className="font-display text-lg">Choose a learner</h2>
         </div>
@@ -238,7 +238,7 @@ export function Shell({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 className={`flex w-full items-center gap-3 rounded-xl border bg-background px-3 py-2.5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                  active?.id === student.id ? "border-accent bg-muted" : "border-border hover:border-border"
+                  active?.id === student.id ? "border-accent bg-muted" : "border-border hover:border-accent/50"
                 }`}
                 onClick={() => {
                   void select(student.id);
@@ -263,7 +263,7 @@ export function Shell({ children }: { children: ReactNode }) {
         </Button>
       </Modal>
 
-      <Modal open={addOpen} onClose={() => setAddOpen(false)}>
+      <Modal open={addOpen} onClose={() => setAddOpen(false)} ariaLabel="New learner">
         <h2 className="mb-4 font-display text-lg">New learner</h2>
         <StudentForm
           onDone={(created) => {

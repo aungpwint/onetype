@@ -12,11 +12,11 @@ import { resolveFinger, fingerOnHand } from "./hand-key-map";
 import type { FingerId } from "../../types";
 
 /*
- * HandOverlay renders the SAME pair of hand SVG assets that HandGuide uses
- * (left-hand.svg / right-hand.svg) positioned over the real keyboard. The
- * keyboard is the geometric source of truth: each hand is measured against the
- * DOM geometry (`[data-key]` bounding rects) and placed with a deterministic,
- * derived transform rather than hardcoded pixel offsets.
+ * HandOverlay renders the pair of hand SVG assets (left-hand.svg /
+ * right-hand.svg) positioned over the real keyboard. The keyboard is the
+ * geometric source of truth: each hand is measured against the DOM geometry
+ * (`[data-key]` bounding rects) and placed with a deterministic, derived
+ * transform rather than hardcoded pixel offsets.
  *
  * Transform model (per hand):
  *   1. SCALE — derived from the home-row key pitch: the artwork's natural
@@ -35,8 +35,7 @@ import type { FingerId } from "../../types";
  * one shape), a true palm/fingers depth split is not possible; the whole hand
  * is layered above the keys (z-30), which reads naturally for a top-down typing
  * view. The responsible finger(s) are lit via the container's
- * `data-active-finger` attribute (a space-separated list of FingerId),
- * matching HandGuide's visual.
+ * `data-active-finger` attribute (a space-separated list of FingerId).
  */
 
 interface HandOverlayProps {
