@@ -172,6 +172,18 @@ describe("validate-release.mjs", () => {
     expect(res.code).not.toBe(0);
     expect(res.stderr).toMatch(/does not contain the released version/i);
   });
+
+  it("accepts the versionless macOS app-bundle updater payload", () => {
+    setUpValid(assets);
+    // Tauri names the macOS updater artifact <ProductName>.app.tar.gz — no
+    // version in the filename. It must pass validation, unlike installers.
+    writeFileSync(join(assets, "OneType.app.tar.gz"), "mac-app-bundle");
+    writeFileSync(join(assets, "OneType.app.tar.gz.sig"), SIG);
+    // Updating artifacts invalidates checksums.txt; regenerate to cover them.
+    runSync(checksumsScript, "--dir", assets);
+    const res = validate();
+    expect(res.code).toBe(0);
+  });
 });
 
 describe("release-notes.mjs", () => {

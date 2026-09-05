@@ -97,7 +97,11 @@ function validateRelease(options) {
   for (const f of distributables) {
     const size = stat(f).size;
     if (size === 0) fail(`Produced a zero-byte artifact: ${f}.`);
-    if (!containsVersionInName(f, version)) {
+    // The macOS updater payload is the app bundle itself and is named
+    // <ProductName>.app.tar.gz — it does not (and cannot) carry the version,
+    // unlike every other installer. Version-match only non-app-bundle files.
+    const isMacAppBundle = f.endsWith(".app.tar.gz");
+    if (!isMacAppBundle && !containsVersionInName(f, version)) {
       fail(
         `Artifact "${f}" does not contain the released version "${version}" in its filename. ` +
           `Stray artifacts from another version must not ship in the v${version} release.`,

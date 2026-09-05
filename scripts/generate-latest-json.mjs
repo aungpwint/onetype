@@ -95,7 +95,7 @@ function modeMerge(version, pubDate, notes, partialGlob, out) {
   if (!version) fail("--version is required for --merge mode.");
   if (!pubDate) fail("--pub-date is required for --merge mode.");
   const partialPaths = partialGlob
-    ? partialGlob.split(argsDelimiter())
+    ? partialGlob.split(argsDelimiter()).filter(Boolean)
     : [];
   if (partialPaths.length === 0) fail("--partials must list at least one partial file.");
 

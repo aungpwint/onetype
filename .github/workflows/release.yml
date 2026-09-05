@@ -269,12 +269,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          WIN_EXE=$(ls dist/updates/*_setup.exe 2>/dev/null | head -n1 || true)
+          WIN_EXE=$(ls dist/updates/*-setup.exe 2>/dev/null | head -n1 || true)
           if [ -z "$WIN_EXE" ]; then
             echo "No Windows NSIS updater payload found; skipping."
             exit 0
           fi
-          WIN_SIG=$(ls dist/updates/*_setup.exe.sig 2>/dev/null | head -n1 || true)
+          WIN_SIG=$(ls dist/updates/*-setup.exe.sig 2>/dev/null | head -n1 || true)
           [ -f "$WIN_SIG" ] || { echo "Missing Windows installer signature (.sig)" >&2; exit 1; }
           TAG="$RELEASE_TAG"
           BASE="https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/download/$TAG"
@@ -288,12 +288,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          MAC_TGZ=$(ls dist/updates/*aarch64*.app.tar.gz 2>/dev/null | head -n1 || true)
+          MAC_TGZ=$(ls dist/updates/*.app.tar.gz 2>/dev/null | head -n1 || true)
           if [ -z "$MAC_TGZ" ]; then
             echo "No macOS aarch64 updater payload found; skipping."
             exit 0
           fi
-          MAC_SIG=$(ls dist/updates/*aarch64*.app.tar.gz.sig 2>/dev/null | head -n1 || true)
+          MAC_SIG=$(ls dist/updates/*.app.tar.gz.sig 2>/dev/null | head -n1 || true)
           [ -f "$MAC_SIG" ] || { echo "Missing macOS updater signature (.sig)" >&2; exit 1; }
           TAG="$RELEASE_TAG"
           BASE="https://github.com/${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }}/releases/download/$TAG"

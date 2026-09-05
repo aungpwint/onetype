@@ -37,6 +37,16 @@ and auto-update notes) to build every GitHub Release page.
 - README installation section with per-platform files, manual checksum
   verification and the Linux installer instructions.
 
+### Fixed
+- Release workflow artifact matching: corrected the updater-payload globs to
+  match the real bundle names — Windows NSIS (`*_setup.exe` → `*-setup.exe`,
+  the artifact is `OneType_<version>_x64-setup.exe`) and the versionless macOS
+  app bundle (`*aarch64*.app.tar.gz` → `*.app.tar.gz`), which otherwise let the
+  run skip producing Windows/macOS updater payloads entirely.
+- `latest.json` merge no longer fails with `EISDIR`: partial paths are filtered
+  of empty entries before resolving, so a trailing space/newline in
+  `--partials` can no longer resolve to the repository root directory.
+
 ## [1.0.1] - 2026
 ### Changed
 - Product name now displays as **OneType** (installer, shortcuts, window title);

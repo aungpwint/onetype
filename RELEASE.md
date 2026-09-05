@@ -208,11 +208,11 @@ src-tauri/target/release/bundle/nsis/onetype_<version>_x64-setup.exe.sig   (upda
 src-tauri/target/release/bundle/msi/OneType_<version>_x64_en-US.msi
 ```
 
-> Note: the updater `.sig` filename is derived from the Rust crate name
-> (`onetype_<version>_x64-setup.exe.sig`) rather than the bundle name
-> (`OneType_...`). That is expected — the release workflow matches `.sig` files
-> independently (`*_setup.exe.sig`) and embeds the signature verbatim into
-> `latest.json`, so the filename never matters at runtime.
+> Note: the updater `.sig` filename is derived from the bundle name
+> (`OneType_<version>_x64-setup.exe.sig`). That is expected — the release
+> workflow matches `.sig` files independently (`*-setup.exe.sig`) and embeds
+> the signature verbatim into `latest.json`, so the filename never matters at
+> runtime.
 
 If you need the updater artifacts locally, also set the signing env vars first:
 
