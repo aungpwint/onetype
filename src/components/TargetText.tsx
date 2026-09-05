@@ -22,16 +22,12 @@ export function TargetText() {
   const sequence = engine?.sequence;
   const phases = session?.resolved.phases ?? [];
 
-  // Lessons (and tests) split their material into phases, each covering a
-  // contiguous unit range. Show only the phase the caret is currently inside,
-  // so a long multi-phase lesson never fills the screen with its full text.
-  // Sessions without phases (drills) fall back to the whole sequence.
   const activePhase = useMemo(() => {
     if (phases.length === 0) return null;
     const index = phases.findIndex(
       (p) => unitIndex >= p.startUnit && unitIndex < p.endUnit,
     );
-    // Past the end (finished/time-up), stay on the final phase.
+
     return phases[index === -1 ? phases.length - 1 : index];
   }, [phases, unitIndex]);
 
@@ -45,15 +41,13 @@ export function TargetText() {
       ? containsMyanmar(sequence.text)
       : false;
 
-  // The unit runs derive solely from the sequence, so they are stable for the
-  // lifetime of an engine. Memoising avoids rebuilding the character tree and
-  // lets the memoised Char components bail out unless their own state changed.
-  // When a phase is active, the runs are narrowed to that phase's unit range.
   const graphemes = useMemo(() => {
     const runs = sequence ? graphemeUnitRuns(sequence) : [];
     if (!activePhase) return runs;
     return runs.filter(
-      (g) => g.startUnit >= activePhase.startUnit && g.endUnit <= activePhase.endUnit,
+      (g) =>
+        g.startUnit >= activePhase.startUnit &&
+        g.endUnit <= activePhase.endUnit,
     );
   }, [sequence, activePhase]);
 
@@ -78,9 +72,6 @@ export function TargetText() {
     }
   }, [sessionKey, motionOffset]);
 
-  // When the caret crosses into another phase, the new phase's line should
-  // start left-aligned at the caret anchor rather than inheriting the previous
-  // phase's pan offset.
   const prevPhaseKey = useRef<string | null>(null);
 
   useEffect(() => {
@@ -101,7 +92,8 @@ export function TargetText() {
       if (caretRect.width === 0) return;
 
       const viewportRect = viewport.getBoundingClientRect();
-      const caretCenter = caretRect.left + caretRect.width / 2 - viewportRect.left;
+      const caretCenter =
+        caretRect.left + caretRect.width / 2 - viewportRect.left;
       const targetCenter = viewportRect.width * CARET_ANCHOR;
       const delta = caretCenter - targetCenter;
 
@@ -129,12 +121,9 @@ export function TargetText() {
     return () => cancelAnimationFrame(raf);
   }, [unitIndex, tick, motionOffset]);
 
-  const onCaretRef = useCallback(
-    (el: HTMLSpanElement | null) => {
-      caretRef.current = el;
-    },
-    [],
-  );
+  const onCaretRef = useCallback((el: HTMLSpanElement | null) => {
+    caretRef.current = el;
+  }, []);
 
   if (!session || !engine) return null;
 
@@ -163,7 +152,8 @@ export function TargetText() {
               transition={{ duration: 0.22, ease: "easeOut" }}
             >
               {graphemes.map((g) => {
-                const isCurrent = unitIndex >= g.startUnit && unitIndex < g.endUnit;
+                const isCurrent =
+                  unitIndex >= g.startUnit && unitIndex < g.endUnit;
                 const isCompleted = g.endUnit <= unitIndex;
                 return (
                   <Char

@@ -72,6 +72,34 @@ describe("grapheme unit runs", () => {
     expect(runs.map((r) => r.text).join("")).toBe(word);
     expect(runs.reduce((acc, r) => acc + (r.endUnit - r.startUnit), 0)).toBe(seq.units.length);
   });
+
+  it("keeps runs inside a single grapheme so phase text renders intact", () => {
+    // Regression: a run must be bounded by its grapheme's unit range, not by
+    // text equality. When one phase ends with ";" and the next starts with ";",
+    // grouping by text merged the two into a run that spilled past the phase
+    // boundary (endUnit > endUnit), so TargetText's phase filter dropped the
+    // trailing ";" and the learner could not see the final character.
+    const resolved = resolveLessonById("lesson-en-beginner-3");
+    for (const phase of resolved.phases) {
+      const runs = graphemeUnitRuns(resolved.sequence).filter(
+        (g) => g.startUnit >= phase.startUnit && g.endUnit <= phase.endUnit,
+      );
+      expect(runs.map((r) => r.text).join("")).toBe(phase.text);
+      const minStart = Math.min(...runs.map((r) => r.startUnit));
+      const maxEnd = Math.max(...runs.map((r) => r.endUnit));
+      expect(minStart).toBe(phase.startUnit);
+      expect(maxEnd).toBe(phase.endUnit);
+    }
+  });
+
+  it("produces one run per repeated grapheme instead of merging them", () => {
+    const seq = buildSequence("hello", englishQwerty);
+    const runs = graphemeUnitRuns(seq);
+    expect(runs.map((r) => r.text)).toEqual(["h", "e", "l", "l", "o"]);
+    for (const run of runs) {
+      expect(run.endUnit).toBeGreaterThan(run.startUnit);
+    }
+  });
 });
 
 describe("typing engine", () => {
