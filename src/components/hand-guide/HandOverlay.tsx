@@ -4,28 +4,33 @@ import {
   useMemo,
   useRef,
   useState,
-  type CSSProperties,
   type ReactNode,
 } from "react";
 import { leftHandSvg, rightHandSvg } from "./hand-assets";
-import { resolveFinger, fingerHand } from "./hand-key-map";
+import { fingerHand, resolveFinger } from "./hand-key-map";
 import {
   LEFT_GEOMETRY,
   RIGHT_GEOMETRY,
   computeHandLayout,
   fingerAnchors,
-  fingerRest,
+  fingerGeometry,
   handArtExtent,
-  handGeometry,
+  handToKeyboard,
   inspectHandLayout,
   keyboardToPixel,
-  pressDelta,
   validateHandLayout,
   type KeyAnchor,
   type KeyboardGeometry,
   type HandLayout,
   type HandPlacement,
 } from "./hand-geometry";
+import {
+  FINGER_PROFILES,
+  FingerAnimator,
+  fingertipInKeyboard,
+  targetForKey,
+  type FingerTarget,
+} from "./finger-motion";
 import type { FingerId, Hand } from "../../types";
 
 /*
@@ -43,14 +48,13 @@ import type { FingerId, Hand } from "../../types";
  *    keyboard axis (F↔J midpoint) from hand geometry: the left hand anchors its
  *    index fingertip on KeyF centre, the right hand mirrors the left window.
  * 3. FINGER — fingertip anchors are hand-local SVG units in the assets, lifted
- *    into keyboard space by handToKeyboard() (see hand-geometry.ts).
- * 4. ANIMATION — the hands stay static; pressing feedback is a tiny, clamped
- *    nudge of the active `.hand-highlight` toward its target key. Because every
- *    finger is key-anchored by construction, the nudge is small (see MAX_PRESS)
- *    and is recomputed every render from the rest position, so it never
- *    accumulates. The press transform ships to CSS as a `--press-<finger>`
- *    custom property on this container (falling back to the resting transform
- *    when no nudge is computed).
+ *    into keyboard space by handToKeyboard() (see hand-geometry.ts), so every
+ *    fingertip rests on its home key centre.
+ * 4. ANIMATION — pressing a key bends that finger's .hand-finger group around
+ *    its base pivot (FingerAnimator in finger-motion.ts, one rAF loop, absolute
+ *    SVG-unit targets). The palm blob stays perfectly static; the active set is
+ *    additionally shipped to CSS as `data-active-finger` on this container for
+ *    the colour/highlight cue, and reduced-motion users get the colour cue only.
  */
 
 interface HandOverlayProps {
@@ -151,6 +155,103 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
     [geometry],
   );
 
+  /**
+   * The finger animator lives only while the hand SVGs are mounted. It is
+   * created after render (so the injected .hand-finger groups exist) and
+   * destroyed when the hands unmount — keyed on presence, not on the layout
+   * object, so re-measures never restart an in-flight animation.
+   */
+  const animatorRef = useRef<FingerAnimator | null>(null);
+  const handsMounted = handLayout !== null;
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || !handsMounted) {
+      animatorRef.current?.destroy();
+      animatorRef.current = null;
+      return;
+    }
+    const animator = new FingerAnimator(container);
+    animatorRef.current = animator;
+    return () => {
+      animator.destroy();
+      if (animatorRef.current === animator) animatorRef.current = null;
+    };
+  }, [handsMounted]);
+
+  // Drive the targets from the current key state. Fingers absent from the map
+  // are released by the animator; present ones are reached/retargeted.
+  useEffect(() => {
+    const animator = animatorRef.current;
+    if (!animator || !handLayout) return;
+
+    const targets = new Map<FingerId, FingerTarget | null>();
+
+    const reachFinger = (finger: FingerId | null, code: string) => {
+      if (!finger) return;
+      const anchor = geometry?.anchors.get(code);
+      if (!anchor) return;
+      const hand = fingerHand(finger);
+      const place = handLayout[hand === "left" ? "left" : "right"];
+      const geom = hand === "left" ? LEFT_GEOMETRY : RIGHT_GEOMETRY;
+      const target = targetForKey(finger, place, geom, FINGER_PROFILES[finger], {
+        x: anchor.x,
+        y: anchor.y,
+      });
+      if (target) targets.set(finger, target);
+    };
+
+    if (isActive) {
+      if (activeKey) reachFinger(resolveFinger(activeKey), activeKey);
+      if (shiftKey === "ShiftLeft") reachFinger("left-pinky", shiftKey);
+      else if (shiftKey === "ShiftRight") reachFinger("right-pinky", shiftKey);
+    }
+
+    animator.setTargets(targets);
+  }, [isActive, activeKey, shiftKey, handLayout, geometry]);
+
+  // Dev-only live anatomy markers: connect the animator's per-frame sample to
+  // the HandDebugLayer circles so CURRENT follows the real envelope (no React
+  // re-render per frame — the loop writes SVG attributes directly).
+  useEffect(() => {
+    const animator = animatorRef.current;
+    const scope = containerRef.current;
+    if (!animator || !scope || !debug || !handLayout) return;
+
+    const boxes = HANDS.flatMap((h) => {
+      const place = handLayout[h.placementKey];
+      return Array.from(fingerAnchors(h.geom)).map(([finger]) => {
+        const geo = fingerGeometry(h.hand, h.geom, finger);
+        const rest = handToKeyboard(place, geo.tip);
+        const baseLocal = h.geom.bases[finger] ?? geo.base;
+        const base = handToKeyboard(place, baseLocal);
+        return { finger, place, geo, rest, base };
+      });
+    });
+
+    animator.onSample = () => {
+      for (const b of boxes) {
+        const p = animator.currentP(b.finger);
+        const t = animator.currentTarget(b.finger);
+        const tip = fingertipInKeyboard(b.place, b.geo, FINGER_PROFILES[b.finger], t, p);
+        const cur = scope.querySelector(`#dbg-cur-${b.finger}`);
+        if (cur) {
+          cur.setAttribute("cx", tip.x.toFixed(1));
+          cur.setAttribute("cy", tip.y.toFixed(1));
+        }
+        const vec = scope.querySelector(`#dbg-vec-${b.finger}`);
+        if (vec) {
+          vec.setAttribute("x1", b.base.x.toFixed(1));
+          vec.setAttribute("y1", b.base.y.toFixed(1));
+          vec.setAttribute("x2", tip.x.toFixed(1));
+          vec.setAttribute("y2", tip.y.toFixed(1));
+        }
+      }
+    };
+    return () => {
+      animator.onSample = null;
+    };
+  }, [debug, handLayout]);
+
   // Active finger(s): the target key's finger plus the shift-chord pinky.
   const activeFingers = useMemo<Set<FingerId>>(() => {
     const fingers = new Set<FingerId>();
@@ -162,31 +263,7 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
     return fingers;
   }, [isActive, activeKey, shiftKey]);
 
-  // Per-finger press nudges: Keyboard → Hand → Finger → Animation.
-  // The nudge is fresh each render (rest fingertip → target key centre),
-  // clamped to MAX_PRESS, and applied only to the active highlight via a CSS
-  // custom property on this container.
-  const pressVars = useMemo<CSSProperties>(() => {
-    const vars: Record<string, string> = {};
-    if (!handLayout || !geometry) return {};
-    for (const finger of activeFingers) {
-      const hand = fingerHand(finger);
-      const geom = handGeometry(hand);
-      const place = handLayout[hand];
-      const rest = fingerRest(place, geom, finger);
-      const isShiftPinky =
-        (finger === "left-pinky" && shiftKey === "ShiftLeft") ||
-        (finger === "right-pinky" && shiftKey === "ShiftRight");
-      const target = geometry.anchors.get(
-        isShiftPinky ? (hand === "left" ? "ShiftLeft" : "ShiftRight") : activeKey ?? "",
-      );
-      const { dx, dy } = pressDelta({ geom, rest, target: target ?? null, scale: place.scale });
-      vars[`--press-${finger}`] = `translate(${dx}px, ${dy}px)`;
-    }
-    return vars as CSSProperties;
-  }, [handLayout, geometry, activeFingers, activeKey, shiftKey]);
-
-  // Collision / overlap validation (dev only, logs the geometry to inspect).
+  // Collision validation (dev only, logs the geometry to inspect).
   useEffect(() => {
     if (import.meta.env.DEV && handLayout && geometry) {
       validateHandLayout(handLayout, geometry.kb);
@@ -210,7 +287,6 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
       ref={containerRef}
       className="hand-overlay-container"
       {...containerAttrs}
-      style={pressVars}
     >
       {/* Keyboard layer (z-10) */}
       <div className="hand-overlay-keyboard">{children}</div>
@@ -270,12 +346,19 @@ function HandDebugLayer({ kb, layout, anchors }: HandDebugLayerProps) {
   const keyMarkers = Array.from(anchors.values());
   const fingerMarkers = HANDS.flatMap((h) => {
     const place = layout[h.placementKey];
-    return Array.from(fingerAnchors(h.geom)).map(([finger, anchor]) => {
-      const kbPoint = {
-        x: place.x + anchor.x * place.scale,
-        y: place.y + anchor.y * place.scale,
+    return Array.from(fingerAnchors(h.geom)).map(([finger]) => {
+      const geo = fingerGeometry(h.hand, h.geom, finger);
+      const rest = handToKeyboard(place, geo.tip);
+      const baseLocal = h.geom.bases[finger] ?? geo.base;
+      const base = handToKeyboard(place, baseLocal);
+      return {
+        finger,
+        rest,
+        base,
+        prof: FINGER_PROFILES[finger],
+        place,
+        geo,
       };
-      return { finger, ...kbPoint };
     });
   });
 
@@ -357,18 +440,23 @@ function HandDebugLayer({ kb, layout, anchors }: HandDebugLayerProps) {
           </g>
         ))}
 
-        {/* Finger anchors */}
+        {/* Finger anatomy: base pivot (square), rest tip (dot + label), live
+            current tip (filled dot) and base→current vector — the last two are
+            driven per-frame by the animator's onSample hook. */}
         {fingerMarkers.map((m) => (
           <g key={m.finger}>
-            <circle cx={m.x} cy={m.y} r={2} fill="#d34" opacity={0.9} />
-            <text x={m.x + 3} y={m.y - 2}>{m.finger}</text>
+            <rect x={m.base.x - 1.5} y={m.base.y - 1.5} width={3} height={3} fill="none" stroke="#f80" strokeWidth={1} />
+            <circle cx={m.rest.x} cy={m.rest.y} r={2} fill="#d34" opacity={0.9} />
+            <text x={m.rest.x + 3} y={m.rest.y - 2}>{m.finger}</text>
+            <line id={`dbg-vec-${m.finger}`} x1={m.base.x} y1={m.base.y} x2={m.rest.x} y2={m.rest.y} stroke="#f80" strokeWidth={0.75} strokeDasharray="2 2" opacity={0.6} />
+            <circle id={`dbg-cur-${m.finger}`} cx={m.rest.x} cy={m.rest.y} r={2.5} fill="#0ff" opacity={0.95} />
           </g>
         ))}
 
-        {diagnostics.thumbClearancePx < 0 && (
+        {diagnostics.axisClearancePx < 0 && (
           <text x={4} y={kb.height - 6} fill="#d34">
-            OVERLAP: thumb clearance {diagnostics.thumbClearancePx.toFixed(1)}px — inspect the mapping
-            (diagnostics logged to console)
+            OVERLAP: axis clearance {diagnostics.axisClearancePx.toFixed(1)}px — inspect the
+            mapping (diagnostics logged to console)
           </text>
         )}
       </g>

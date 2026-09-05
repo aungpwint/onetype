@@ -3,7 +3,7 @@ import type { FingerId, Hand } from "../../types";
 /*
  * Deterministic coordinate mapping for the hand guide.
  *
- * THE HIERARCHY IS ALWAYS: Keyboard -> Hand -> Finger -> Animation.
+*  THE HIERARCHY IS ALWAYS: Keyboard -> Hand -> Finger -> Animation.
  *
  *  1. KEYBOARD — the source of truth. Every key resolves to a deterministic
  *     centre (KeyAnchor) in a keyboard-local coordinate space measured in
@@ -15,20 +15,23 @@ import type { FingerId, Hand } from "../../types";
  *     fingertip anchors). The two hands are mirrors of the same artwork, so the
  *     right hand is placed as the exact mirror of the left hand's window about
  *     the axis — which keeps the mirrored palms symmetric and never crossing.
- *  3. FINGER — fingertip anchors live in hand-local SVG user units
- *     (relative to the hand's viewBox origin) and are lifted into keyboard
- *     space by handToKeyboard() (anchor + local × scale).
- *  4. ANIMATION — a press nudge is the vector from the finger's resting
- *     fingertip to the target key centre, clamped to a small travel. It is
- *     recomputed fresh each render from the resting position — never
- *     accumulated — and applied only to the active .hand-highlight.
+ *  3. FINGER — each finger has a resting fingertip anchor and a proximal pivot
+ *     (base). Anchors live in hand-local SVG user units (relative to the hand's
+ *     viewBox origin) and are lifted into keyboard space by handToKeyboard() so
+ *     the four home-row anchors of each hand sit on the artwork's exact
+ *     finger-pitch grid and a resting fingertip lands precisely on the centre
+ *     of its home key (A/S/D/F and J/K/L/;).
+ *  4. ANIMATION — finger-motion.ts turns the delta between the resting
+ *     fingertip and the pressed key centre into a per-finger reach: a small
+ *     bend (rotation) about the finger's base plus a clamped axial
+ *     extension/retraction, all in absolute SVG user units so there is zero
+ *     accumulated drift. The hands stay static; only each finger's highlight
+ *     path moves, and only as far as its motion profile allows.
  *
- * The only free constants live here, in the hand geometry configuration, and
- * are expressed as fractions of the MEASURED home-key pitch (so they scale with
- * the keyboard instead of being viewport magic numbers):
- *   CENTER_GAP — symmetric clearance between the mirrored hands at the axis
- *                (the mirrored thumbs would otherwise touch there).
- *   MAX_PRESS  — how far an active finger may travel toward its target key.
+ * The fingertip-region validation band (artBounds) covers the fused fingers at
+ * the home-row band, NOT the thumbs: the mirrored thumbs deliberately converge
+ * toward the shared space key, so they may overlap the axis while the palms
+ * and fingers never cross it.
  */
 
 export interface Vec2 {
@@ -59,6 +62,13 @@ export interface HandGeometry {
   index: Vec2;
   /** Fingertip anchors for the fingers this hand owns (hand-local units). */
   tips: Partial<Record<FingerId, Vec2>>;
+  /**
+   * Proximal pivots (MP/CMC joints) for the fingers this hand owns, in
+   * hand-local units. Each value sits at the palm end of the finger's
+   * highlight path in the asset so finger animation bends around the
+   * anatomically correct joint instead of sliding the whole hand.
+   */
+  bases: Partial<Record<FingerId, Vec2>>;
   /** Solid hand art extent (hand-local units, minX/minY-relative). */
   artBounds: { minX: number; maxX: number };
 }
@@ -79,8 +89,6 @@ export interface HandLayout {
   homeRowY: number;
   /** Measured home-row pitch (px). */
   pitchPx: number;
-  /** Symmetric clearance applied at the axis (px). */
-  centerGapPx: number;
 }
 
 /** Shared by both assets (left-hand.svg is the exact mirror of right-hand.svg). */
@@ -91,18 +99,30 @@ const SHARED = {
   pitch: 25.6667,
 };
 
+/** Hand-local fingertip band used for axis-collision validation (see module doc). */
+const BAND = { x0: 40, x1: 145 };
+
 export const LEFT_GEOMETRY: HandGeometry = {
   view: { w: SHARED.w, h: SHARED.h, minX: 120, minY: SHARED.minY },
   pitch: SHARED.pitch,
   index: { x: 131.6, y: 10.1 },
   tips: {
     "left-pinky": { x: 54.6, y: 15.9 },
-    "left-ring": { x: 80.4, y: 9.9 },
-    "left-middle": { x: 108.2, y: 7.1 },
+    "left-ring": { x: 80.27, y: 9.9 },
+    "left-middle": { x: 105.93, y: 7.1 },
     "left-index": { x: 131.6, y: 10.1 },
     "left-thumb": { x: 172.6, y: 69.2 },
   },
-  artBounds: { minX: 6.7, maxX: 172.6 },
+  // Pivots sit at the palm end of each finger's highlight path in the asset
+  // (left-hand.svg). The right hand mirrors these exactly (bases are tested).
+  bases: {
+    "left-pinky": { x: 58, y: 88 },
+    "left-ring": { x: 72.4, y: 104.5 },
+    "left-middle": { x: 107.5, y: 113.9 },
+    "left-index": { x: 148, y: 92.4 },
+    "left-thumb": { x: 146.4, y: 168.2 },
+  },
+  artBounds: { minX: BAND.x0, maxX: BAND.x1 },
 };
 
 export const RIGHT_GEOMETRY: HandGeometry = {
@@ -111,18 +131,20 @@ export const RIGHT_GEOMETRY: HandGeometry = {
   index: { x: 53.4, y: 10.1 },
   tips: {
     "right-pinky": { x: 130.4, y: 15.9 },
-    "right-ring": { x: 104.6, y: 9.9 },
-    "right-middle": { x: 76.8, y: 7.1 },
+    "right-ring": { x: 104.73, y: 9.9 },
+    "right-middle": { x: 79.07, y: 7.1 },
     "right-index": { x: 53.4, y: 10.1 },
     "right-thumb": { x: 12.4, y: 69.2 },
   },
-  artBounds: { minX: 12.4, maxX: 178.3 },
+  bases: {
+    "right-pinky": { x: 127, y: 88 },
+    "right-ring": { x: 112.6, y: 104.5 },
+    "right-middle": { x: 77.5, y: 113.9 },
+    "right-index": { x: 37, y: 92.4 },
+    "right-thumb": { x: 38.6, y: 168.2 },
+  },
+  artBounds: { minX: BAND.x0, maxX: BAND.x1 },
 };
-
-/** Symmetric thumb clearance, as a fraction of the measured home-key pitch. */
-export const CENTER_GAP = 0.25;
-/** Max press travel toward the target key, as a fraction of the hand's pitch. */
-export const MAX_PRESS = 0.12;
 
 export function handGeometry(hand: Hand): HandGeometry {
   return hand === "left" ? LEFT_GEOMETRY : RIGHT_GEOMETRY;
@@ -146,31 +168,13 @@ export function fingerRest(place: HandPlacement, geom: HandGeometry, finger: Fin
   return handToKeyboard(place, geom.tips[finger] ?? geom.index);
 }
 
-function clamp(v: number, lo: number, hi: number): number {
-  return Math.min(hi, Math.max(lo, v));
-}
-
-/** Clamped press nudge (hand-local units) from the resting fingertip toward the target key. */
-export function pressDelta(params: {
-  geom: HandGeometry;
-  rest: Vec2;
-  target: Vec2 | null;
-  scale: number;
-}): { dx: number; dy: number } {
-  const { geom, rest, target, scale } = params;
-  if (!target) return { dx: 0, dy: 0 };
-  const travel = MAX_PRESS * geom.pitch;
-  return {
-    dx: clamp((target.x - rest.x) / scale, -travel, travel),
-    dy: clamp((target.y - rest.y) / scale, -travel, travel),
-  };
-}
-
 /**
  * Derive both hand placements from the measured key anchors (the keyboard is
  * the source of truth — anchors are keyboard-local by construction). The left
  * hand is anchored on the KeyF centre; the right hand is the exact horizontal
- * mirror of the left hand's window about the keyboard axis.
+ * mirror of the left hand's window about the keyboard axis. Because the
+ * home-row fingertip anchors sit on the artwork's finger-pitch grid, every
+ * fingertip rests exactly on its home key centre.
  */
 export function computeHandLayout(
   anchors: ReadonlyMap<string, KeyAnchor>,
@@ -190,13 +194,10 @@ export function computeHandLayout(
   const leftScale = Math.max(0.1, leftPitchPx / LEFT_GEOMETRY.pitch);
   const rightScale = Math.max(0.1, rightPitchPx / RIGHT_GEOMETRY.pitch);
 
-  const pitchPx = (leftPitchPx + rightPitchPx) / 2;
-  const centerGapPx = CENTER_GAP * pitchPx;
-
-  // LEFT: index tip rests on KeyF centre, then pushed outward of the axis by
-  // the symmetric clearance. offset = distance from the axis to the window's
-  // top-left corner, built only from measured geometry + hand geometry.
-  const leftOffset = (axisX - f.x) + LEFT_GEOMETRY.index.x * leftScale + centerGapPx;
+  // LEFT: index fingertip rests exactly on the KeyF centre — no seam: the
+  // mirrored thumbs deliberately converge toward the shared space key, while
+  // the palms/fingers stay clear of the axis (validated by handArtExtent).
+  const leftOffset = (axisX - f.x) + LEFT_GEOMETRY.index.x * leftScale;
   const left: HandPlacement = {
     x: axisX - leftOffset,
     y: homeRowY - LEFT_GEOMETRY.index.y * leftScale,
@@ -205,15 +206,15 @@ export function computeHandLayout(
 
   // RIGHT: mirror of the left hand's window about the keyboard axis. Because
   // both hands are the mirrored same artwork, this lands the right index
-  // fingertip exactly on KeyJ centre while keeping the mirrored palms
-  // symmetric about the axis (they can never cross it).
+  // fingertip exactly on the KeyJ centre while keeping the mirrored palms
+  // symmetric about the axis.
   const right: HandPlacement = {
     x: 2 * axisX - (left.x + LEFT_GEOMETRY.view.w * leftScale),
     y: homeRowY - RIGHT_GEOMETRY.index.y * rightScale,
     scale: rightScale,
   };
 
-  return { left, right, axisX, homeRowY, pitchPx, centerGapPx };
+  return { left, right, axisX, homeRowY, pitchPx: (leftPitchPx + rightPitchPx) / 2 };
 }
 
 /** Solid hand-art x-extent in keyboard-local coordinates. */
@@ -231,9 +232,8 @@ export interface LayoutDiagnostics {
   rightAnchor: HandPlacement;
   leftArt: { left: number; right: number };
   rightArt: { left: number; right: number };
-  centerGapPx: number;
-  /** rightArt.left − leftArt.right. ≥ 0 ⇒ the hands do not overlap at the axis. */
-  thumbClearancePx: number;
+  /** rightArt.left − leftArt.right. ≥ 0 ⇒ the finger bands do not cross the axis. */
+  axisClearancePx: number;
 }
 
 export function inspectHandLayout(layout: HandLayout, kb: KeyboardGeometry): LayoutDiagnostics {
@@ -246,29 +246,29 @@ export function inspectHandLayout(layout: HandLayout, kb: KeyboardGeometry): Lay
     rightAnchor: layout.right,
     leftArt,
     rightArt,
-    centerGapPx: layout.centerGapPx,
-    thumbClearancePx: rightArt.left - leftArt.right,
+    axisClearancePx: rightArt.left - leftArt.right,
   };
 }
 
 /**
- * Collision validation (dev only). When the two hands' solid art overlaps at
- * the keyboard axis, report the full set of causes the spec asks to inspect —
- * viewBox, transparent padding, rendered scale, anchor, keyboard width, art
- * extent — instead of blindly increasing spacing.
+ * Collision validation (dev only). The mirrored thumb tips may converge toward
+ * the shared space key, but the palms and finger bands must never cross the
+ * keyboard axis. When they do, report the full set of causes the spec asks to
+ * inspect — SVG viewBox, transparent padding, rendered scale, hand anchor,
+ * keyboard width, art extent — instead of blindly increasing spacing.
  */
 export function validateHandLayout(layout: HandLayout, kb: KeyboardGeometry): boolean {
   const d = inspectHandLayout(layout, kb);
-  const clear = d.thumbClearancePx >= 0;
+  const clear = d.axisClearancePx >= 0;
   if (!clear && typeof console !== "undefined") {
     console.warn(
-      "[hand-guide] Hand art overlaps at the keyboard axis. Inspect the coordinate mapping:\n" +
+      "[hand-guide] Hand finger bands overlap at the keyboard axis. Inspect the coordinate mapping:\n" +
         `  keyboard width ${d.keyboardWidthPx.toFixed(1)}px, axis ${d.axisX.toFixed(1)}\n` +
         `  left  anchor (${d.leftAnchor.x.toFixed(1)}, ${d.leftAnchor.y.toFixed(1)}) scale ${d.leftAnchor.scale.toFixed(3)}\n` +
         `  right anchor (${d.rightAnchor.x.toFixed(1)}, ${d.rightAnchor.y.toFixed(1)}) scale ${d.rightAnchor.scale.toFixed(3)}\n` +
-        `  left  art x[${d.leftArt.left.toFixed(1)}, ${d.leftArt.right.toFixed(1)}]\n` +
-        `  right art x[${d.rightArt.left.toFixed(1)}, ${d.rightArt.right.toFixed(1)}]\n` +
-        `  center clearance ${d.centerGapPx.toFixed(1)}px, thumb clearance ${d.thumbClearancePx.toFixed(1)}px`,
+        `  left  band x[${d.leftArt.left.toFixed(1)}, ${d.leftArt.right.toFixed(1)}]\n` +
+        `  right band x[${d.rightArt.left.toFixed(1)}, ${d.rightArt.right.toFixed(1)}]\n` +
+        `  axis clearance ${d.axisClearancePx.toFixed(1)}px`,
     );
   }
   return clear;
@@ -281,4 +281,44 @@ export function fingerAnchors(geom: HandGeometry): Set<[FingerId, Vec2]> {
     out.add([id, geom.tips[id] as Vec2]);
   }
   return out;
+}
+
+/** The shared width of both hand assets (both viewBoxes are 185×250). */
+export const HAND_WIDTH = SHARED.w;
+
+/**
+ * Mirror a hand-local point about the hand asset's vertical centre (the axis
+ * both hands mirror about: local x' = 185 − x). THE RIGHT HAND IS THE EXACT
+ * MIRROR OF THE LEFT, so every right-hand geometry value can be derived and
+ * cross-checked from the left (see the mirror-safety tests).
+ */
+export function mirrorHandLocalX(point: Vec2): Vec2 {
+  return { x: HAND_WIDTH - point.x, y: point.y };
+}
+
+/**
+ * The animation harness for a single finger: its resting tip (hand-local), its
+ * proximal pivot (base, hand-local) and the lever arm between them. All motion
+ * is expressed relative to these absolute values — drift-free by construction.
+ */
+export interface FingerGeometry {
+  hand: Hand;
+  finger: FingerId;
+  /** Resting fingertip in hand-local SVG user units. */
+  tip: Vec2;
+  /** Proximal joint pivot in hand-local SVG user units. */
+  base: Vec2;
+  /** Lever arm from the pivot to the fingertip (SVG user units). */
+  length: number;
+}
+
+/**
+ * Animation geometry for one finger. Uses the configured base pivot when
+ * available; otherwise falls back to a point one pitch below the fingertip
+ * along the hand axis (so every finger always has a usable lever arm).
+ */
+export function fingerGeometry(hand: Hand, geom: HandGeometry, finger: FingerId): FingerGeometry {
+  const tip = geom.tips[finger] ?? geom.index;
+  const base = geom.bases[finger] ?? { x: tip.x, y: tip.y + geom.pitch };
+  return { hand, finger, tip, base, length: Math.hypot(tip.x - base.x, tip.y - base.y) };
 }

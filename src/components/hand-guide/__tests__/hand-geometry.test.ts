@@ -2,18 +2,19 @@ import { describe, expect, it } from "vitest";
 import {
   LEFT_GEOMETRY,
   RIGHT_GEOMETRY,
-  CENTER_GAP,
-  MAX_PRESS,
   computeHandLayout,
+  fingerGeometry,
   fingerRest,
   handArtExtent,
   handToKeyboard,
   keyboardToPixel,
-  pressDelta,
+  mirrorHandLocalX,
   validateHandLayout,
   type KeyAnchor,
   type KeyboardGeometry,
 } from "../hand-geometry";
+import { resolveFinger, fingerHand } from "../hand-key-map";
+import type { FingerId } from "../../../types";
 
 /** Standard QWERTY home row: A..; at 40px pitch, home row centred on Y=400. */
 function standardKeyboard(): { kb: KeyboardGeometry; anchors: Map<string, KeyAnchor> } {
@@ -48,17 +49,15 @@ describe("computeHandLayout", () => {
   const f = homeAnchor(anchors, "KeyF");
   const j = homeAnchor(anchors, "KeyJ");
 
-  it("anchors both hands from the measured keyboard geometry with symmetric clearance", () => {
+  it("anchors both hands from the measured keyboard geometry, mirrored about the axis", () => {
     const layout = computeHandLayout(anchors);
     expect(layout).not.toBeNull();
     if (!layout) return;
 
     const scale = 40 / LEFT_GEOMETRY.pitch;
-    const seam = CENTER_GAP * 40; // 10px
 
-    // Finger tips rest on their home keys, pushed outward by the seam.
-    expect(layout.left.x).toBeCloseTo(f.x - LEFT_GEOMETRY.index.x * scale - seam, 1);
-    expect(layout.right.x).toBeCloseTo(j.x - RIGHT_GEOMETRY.index.x * scale + seam, 1);
+    // No seam: the left index fingertip takes the KeyF centre exactly.
+    expect(layout.left.x).toBeCloseTo(f.x - LEFT_GEOMETRY.index.x * scale, 1);
 
     // The right hand window is the exact mirror of the left about the axis.
     expect(layout.right.x).toBeCloseTo(
@@ -67,17 +66,22 @@ describe("computeHandLayout", () => {
     );
 
     expect(layout.axisX).toBeCloseTo((f.x + j.x) / 2, 6);
+    expect(layout.homeRowY).toBeCloseTo(400, 6);
     expect(layout.pitchPx).toBeCloseTo(40, 6);
-    expect(layout.centerGapPx).toBeCloseTo(seam, 6);
   });
 
-  it("rests every finger tip on its home key (keyboard is the source of truth)", () => {
+  it("rests every finger tip EXACTLY on its home key centre (keyboard is the source of truth)", () => {
     const layout = computeHandLayout(anchors);
     if (!layout) return;
-    expect(fingerRest(layout.left, LEFT_GEOMETRY, "left-pinky").x).toBeCloseTo(120 - 10, 1);
-    expect(fingerRest(layout.left, LEFT_GEOMETRY, "left-index").x).toBeCloseTo(240 - 10, 1);
-    expect(fingerRest(layout.right, RIGHT_GEOMETRY, "right-index").x).toBeCloseTo(360 + 10, 1);
-    expect(fingerRest(layout.right, RIGHT_GEOMETRY, "right-pinky").x).toBeCloseTo(480 + 10, 1);
+    // Left: pinky→A, ring→S, middle→D, index→F. Right: index→J, middle→K, ring→L, pinky→;.
+    expect(fingerRest(layout.left, LEFT_GEOMETRY, "left-pinky").x).toBeCloseTo(120, 1);
+    expect(fingerRest(layout.left, LEFT_GEOMETRY, "left-ring").x).toBeCloseTo(160, 1);
+    expect(fingerRest(layout.left, LEFT_GEOMETRY, "left-middle").x).toBeCloseTo(200, 1);
+    expect(fingerRest(layout.left, LEFT_GEOMETRY, "left-index").x).toBeCloseTo(240, 1);
+    expect(fingerRest(layout.right, RIGHT_GEOMETRY, "right-index").x).toBeCloseTo(360, 1);
+    expect(fingerRest(layout.right, RIGHT_GEOMETRY, "right-middle").x).toBeCloseTo(400, 1);
+    expect(fingerRest(layout.right, RIGHT_GEOMETRY, "right-ring").x).toBeCloseTo(440, 1);
+    expect(fingerRest(layout.right, RIGHT_GEOMETRY, "right-pinky").x).toBeCloseTo(480, 1);
     for (const [hand, geom, place] of [
       ["left", LEFT_GEOMETRY, layout.left],
       ["right", RIGHT_GEOMETRY, layout.right],
@@ -87,12 +91,21 @@ describe("computeHandLayout", () => {
     }
   });
 
-  it("does not collide the two hands' solid art at the axis", () => {
+  it("rests both thumbs toward the shared space-key region near the axis", () => {
+    const layout = computeHandLayout(anchors);
+    if (!layout) return;
+    const leftThumb = fingerRest(layout.left, LEFT_GEOMETRY, "left-thumb");
+    const rightThumb = fingerRest(layout.right, RIGHT_GEOMETRY, "right-thumb");
+    for (const t of [leftThumb, rightThumb]) {
+      expect(Math.abs(t.x - layout.axisX)).toBeLessThan(40);
+    }
+  });
+
+  it("keeps the finger bands clear of the axis while the thumbs converge", () => {
     const layout = computeHandLayout(anchors);
     if (!layout) return;
     const leftArt = handArtExtent(layout.left, LEFT_GEOMETRY);
     const rightArt = handArtExtent(layout.right, RIGHT_GEOMETRY);
-    // Symmetric palms keep a clean gap between the thumbs at the axis.
     expect(rightArt.left).toBeGreaterThan(leftArt.right);
     expect(validateHandLayout(layout, kb)).toBe(true);
   });
@@ -120,47 +133,112 @@ describe("coordinate conversions", () => {
   });
 });
 
-describe("pressDelta", () => {
-  const { anchors } = standardKeyboard();
+/**
+ * §21 Full-range validation: every key the project maps to a finger must
+ * resolve to the owning finger, and that finger must have a resting anchor in
+ * the correct hand's geometry config. Uses the authoritative finger-map
+ * (resolveFinger) — nothing is hard-coded here.
+ */
+describe("every mapped finger has a resting anchor", () => {
+  const cases: Record<string, string> = {
+    // Left hand.
+    KeyQ: "left-pinky",
+    KeyA: "left-pinky",
+    KeyZ: "left-pinky",
+    KeyW: "left-ring",
+    KeyS: "left-ring",
+    KeyX: "left-ring",
+    KeyE: "left-middle",
+    KeyD: "left-middle",
+    KeyC: "left-middle",
+    KeyR: "left-index",
+    KeyT: "left-index",
+    KeyF: "left-index",
+    KeyG: "left-index",
+    KeyV: "left-index",
+    KeyB: "left-index",
+    // Right hand.
+    KeyY: "right-index",
+    KeyU: "right-index",
+    KeyH: "right-index",
+    KeyJ: "right-index",
+    KeyN: "right-index",
+    KeyM: "right-index",
+    KeyI: "right-middle",
+    KeyK: "right-middle",
+    Comma: "right-middle",
+    KeyO: "right-ring",
+    KeyL: "right-ring",
+    Period: "right-ring",
+    KeyP: "right-pinky",
+    Semicolon: "right-pinky",
+    Slash: "right-pinky",
+    Space: "left-thumb",
+  };
 
-  it("moves toward the target key, clamped to a small travel, never accumulating", () => {
-    const layout = computeHandLayout(anchors);
-    if (!layout) return;
-    const rest = fingerRest(layout.right, RIGHT_GEOMETRY, "right-index");
-    const farTarget = { x: rest.x + 500, y: rest.y };
-    const travel = MAX_PRESS * RIGHT_GEOMETRY.pitch;
+  it("resolves every listed key to its finger and anchor", () => {
+    for (const [code, expected] of Object.entries(cases)) {
+      const finger = resolveFinger(code);
+      expect(finger, code).toBe(expected);
+      const hand = fingerHand(finger as FingerId);
+      const geom = hand === "left" ? LEFT_GEOMETRY : RIGHT_GEOMETRY;
+      expect(geom.tips[finger as FingerId], code).toBeDefined();
+    }
+  });
+});
 
-    const first = pressDelta({ geom: RIGHT_GEOMETRY, rest, target: farTarget, scale: layout.right.scale });
-    const second = pressDelta({ geom: RIGHT_GEOMETRY, rest, target: farTarget, scale: layout.right.scale });
-    // Stateless: identical inputs give identical clamped output (never accumulates).
-    expect(first).toEqual(second);
-    expect(first.dx).toBeCloseTo(travel, 6);
-    expect(Math.abs(first.dx)).toBeLessThanOrEqual(travel);
+/**
+ * A§43 Finger anatomy, mirrored. The right-hand asset is the exact mirror of
+ * the left, so every right base/tip must derive from the left across the hand
+ * axis (mirrorHandLocalX). The finger animation pivots every finger about its
+ * base — a misconfigured base (missing, wrong hand, non-positive lever arm)
+ * would silently break the reach, so it is asserted for all ten fingers.
+ */
+describe("finger pivot geometry (bases)", () => {
+  const fingers = Object.keys(LEFT_GEOMETRY.tips) as FingerId[];
 
-    // No target ⇒ no motion (exact rest position).
-    expect(pressDelta({ geom: RIGHT_GEOMETRY, rest, target: null, scale: 1 })).toEqual({ dx: 0, dy: 0 });
+  it("mirrors every left tip + base to the right hand across the axis", () => {
+    expect(fingers.length).toBe(5);
+    for (const f of fingers) {
+      const rightId = f.replace("left", "right") as FingerId;
+      const lt = LEFT_GEOMETRY.tips[f] as { x: number; y: number };
+      const lb = LEFT_GEOMETRY.bases[f] as { x: number; y: number };
+      const rt = RIGHT_GEOMETRY.tips[rightId] as { x: number; y: number } | undefined;
+      const rb = RIGHT_GEOMETRY.bases[rightId] as { x: number; y: number } | undefined;
+      expect(rt, `${rightId} tip`).toBeDefined();
+      expect(rb, `${rightId} base`).toBeDefined();
+      if (!rt || !rb) continue;
+      const mirrorTip = mirrorHandLocalX(lt);
+      const mirrorBase = mirrorHandLocalX(lb);
+      expect(rt.x, `${rightId} tip.x`).toBeCloseTo(mirrorTip.x, 2);
+      expect(rt.y, `${rightId} tip.y`).toBeCloseTo(mirrorTip.y, 2);
+      expect(rb.x, `${rightId} base.x`).toBeCloseTo(mirrorBase.x, 2);
+      expect(rb.y, `${rightId} base.y`).toBeCloseTo(mirrorBase.y, 2);
+    }
   });
 
-  it("presses home-row keys horizontally, clamped, from the seamed rest position", () => {
-    const layout = computeHandLayout(anchors);
-    if (!layout) return;
-    // Right index rests at KeyJ centre + outward seam → the KeyJ target drives a
-    // clamped nudge back toward the key (negative x), with no vertical travel.
-    const rest = fingerRest(layout.right, RIGHT_GEOMETRY, "right-index");
-    const home = anchors.get("KeyJ")!;
-    const d = pressDelta({ geom: RIGHT_GEOMETRY, rest, target: home, scale: layout.right.scale });
-    expect(d.dx < 0).toBe(true);
-    expect(d.dy).toBeCloseTo(0, 6);
-    expect(Math.abs(d.dx)).toBeLessThanOrEqual(MAX_PRESS * RIGHT_GEOMETRY.pitch);
+  it("gives every finger a positive lever arm with a defined base pivot", () => {
+    for (const f of fingers) {
+      const geo = fingerGeometry("left", LEFT_GEOMETRY, f);
+      expect(LEFT_GEOMETRY.bases[f], `${f} base configured`).toBeDefined();
+      expect(geo.base).toEqual(LEFT_GEOMETRY.bases[f]);
+      expect(geo.tip).toEqual(LEFT_GEOMETRY.tips[f]);
+      expect(geo.length, `${f} lever arm`).toBeGreaterThan(0);
+      // The base must sit below the tip (toward the palm/wrist on the +Y axis).
+      expect(geo.base.y, `${f} base above tip`).toBeGreaterThan(geo.tip.y);
+    }
   });
 
-  it("presses top-row keys upward and bottom-row keys downward", () => {
-    const layout = computeHandLayout(anchors);
-    if (!layout) return;
-    const rest = fingerRest(layout.left, LEFT_GEOMETRY, "left-pinky");
-    const above = { x: rest.x, y: rest.y - 40 };
-    const below = { x: rest.x, y: rest.y + 40 };
-    expect(pressDelta({ geom: LEFT_GEOMETRY, rest, target: above, scale: layout.left.scale }).dy).toBeLessThan(0);
-    expect(pressDelta({ geom: LEFT_GEOMETRY, rest, target: below, scale: layout.left.scale }).dy).toBeGreaterThan(0);
+  it("no base falls outside its hand's div-local bounds (0..view.w × 0..view.h)", () => {
+    for (const f of fingers) {
+      const b = LEFT_GEOMETRY.bases[f] as { x: number; y: number };
+      expect(b.x, `${f} base.x in view`).toBeGreaterThanOrEqual(0);
+      expect(b.x, `${f} base.x in view`).toBeLessThan(LEFT_GEOMETRY.view.w);
+      expect(b.y, `${f} base.y in view`).toBeGreaterThanOrEqual(0);
+      expect(b.y, `${f} base.y in view`).toBeLessThan(LEFT_GEOMETRY.view.h);
+      // The base must live below its fingertip (toward the palm, +Y axis).
+      const tip = LEFT_GEOMETRY.tips[f] as { x: number; y: number };
+      expect(b.y, `${f} base below tip`).toBeGreaterThan(tip.y);
+    }
   });
 });
