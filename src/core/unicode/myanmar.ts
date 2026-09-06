@@ -1,14 +1,25 @@
-export const MYANMAR_BASE_MIN = 0x1000
-export const MYANMAR_BASE_MAX = 0x109f
+import { isMyanmarCodePoint, isMyanmarAttachingMark, isMyanmarSyllableHead, isPreBaseVowel, isAsat, isVirama } from './classification'
 
-export function isMyanmarCodePoint(code: number): boolean {
-    return code >= MYANMAR_BASE_MIN && code <= MYANMAR_BASE_MAX
-}
+export { isMyanmarCodePoint } from './classification'
+
+/**
+ * The Myanmar typing model has four deliberately distinct layers that must not
+ * be conflated:
+ *
+ *   Code Points      → the canonical Unicode code-point sequence of a string.
+ *   Myanmar Cluster  → one syllable: base + medials + vowel signs + tone/asat.
+ *   Visual Grapheme  → the shaped text run the font renders from that cluster.
+ *   Keyboard Input   → the physical-key press order the learner types.
+ *
+ * A pre-base vowel (ေ U+1031) is STORED after its base in the canonical
+ * sequence, is typed FIRST (it is the leftmost glyph), and shapes in that
+ * visual position. This module owns the canonical/validation layer; keyboard
+ * press order lives in the typing-engine sequence model.
+ */
 
 export function containsMyanmar(text: string): boolean {
     for (const ch of text) {
-        const code = ch.codePointAt(0) ?? 0
-        if (isMyanmarCodePoint(code)) return true
+        if (isMyanmarCodePoint(ch.codePointAt(0) ?? 0)) return true
     }
     return false
 }
@@ -22,17 +33,6 @@ export function detectLanguage(text: string): 'myanmar' | 'english' {
     return isMyanmarText(text) ? 'myanmar' : 'english'
 }
 
-export function toUnicodeLabels(text: string): string[] {
-    return Array.from(text).map((ch) => `U+${(ch.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, '0')}`)
-}
-
-export function charNames(text: string): string[] {
-    return Array.from(text).map((ch) => {
-        const cp = ch.codePointAt(0) ?? 0
-        return `U+${cp.toString(16).padStart(4, '0')}`
-    })
-}
-
 // --- Zero-width invisible character policy -----------------------------------
 //
 // Myanmar lesson text and typing targets must be canonical Unicode. The
@@ -43,7 +43,9 @@ export function charNames(text: string): string[] {
 // These helpers keep the detection / cleaning policy in one small, reusable,
 // deterministic place instead of scattering string surgery through the app.
 
-const SUSPICIOUS_CODEPOINTS: ReadonlySet<number> = new Set([0x200b, 0x200c, 0x200d, 0x200e, 0x200f, 0x202a, 0x202b, 0x202c, 0x202d, 0x202e, 0x2060, 0xfeff, 0x034f])
+const SUSPICIOUS_CODEPOINTS: ReadonlySet<number> = new Set([
+    0x200b, 0x200c, 0x200d, 0x200e, 0x200f, 0x202a, 0x202b, 0x202c, 0x202d, 0x202e, 0x2060, 0xfeff, 0x034f,
+])
 
 export interface SuspiciousCharacter {
     index: number
@@ -64,7 +66,8 @@ function describeSuspicious(codePoint: number, next: number): string {
     if (codePoint === 0x200b) return 'zero width space (U+200B)'
     if (codePoint === 0xfeff) return 'byte order mark (U+FEFF)'
     if (codePoint === 0x034f) return 'combining grapheme joiner (U+034F)'
-    if (codePoint === 0x200e || codePoint === 0x200f || codePoint === 0x2060) return `format character U+${codePoint.toString(16).toUpperCase().padStart(4, '0')}`
+    if (codePoint === 0x200e || codePoint === 0x200f || codePoint === 0x2060)
+        return `format character U+${codePoint.toString(16).toUpperCase().padStart(4, '0')}`
     return `embedded directional character U+${codePoint.toString(16).toUpperCase().padStart(4, '0')}`
 }
 
@@ -144,14 +147,11 @@ export function normalizeMyanmarText(text: string): string {
 // (e.g. the preposed vowel U+1031 is left standalone), so we implement the
 // canonical Myanmar syllable-break rules here. Input to this function is
 // expected to be canonical (see `validateMyanmarText`).
-
-/**
- * Characters that, as a class, start or continue Myanmar syllables. We operate
- * on code points so surrogate pairing is handled correctly.
- */
-const RE_CONSONANT = /[\u1000-\u1021\u1023-\u1027\u1029-\u102A\u103F]/
-const RE_ATTACHING = /[\u102B-\u1032\u1036-\u103E]/
-const PREPOSED_VOWEL = 0x1031 // ေ
+//
+// Character membership is supplied by the classification core
+// (`@/core/unicode/classification`): syllable heads are base consonants and
+// independent vowels, and attaching marks are vowel signs, medials, asat,
+// virama and tone marks. No code-point tables live here.
 
 /**
  * Split Myanmar text into syllable clusters. Each returned cluster is a string
@@ -174,7 +174,7 @@ export function splitMyanmarSyllables(text: string): string[] {
         const prev = i > 0 ? (chars[i - 1].codePointAt(0) ?? 0) : 0
         const next = i + 1 < chars.length ? (chars[i + 1].codePointAt(0) ?? 0) : 0
 
-        if (code === PREPOSED_VOWEL) {
+        if (isPreBaseVowel(code)) {
             // U+1031 is stored after its base and rendered before it; hold it
             // until we know whether a following base consonant claims it or it
             // completes the current (word-final) syllable.
@@ -185,7 +185,7 @@ export function splitMyanmarSyllables(text: string): string[] {
         if (isSyllableStart(code, prev, next)) {
             // A held preposed vowel can only merge into a cluster headed by a
             // real base that hosts it (consonant / independent vowel letter).
-            if (pending.length > 0 && !RE_CONSONANT.test(chars[i])) {
+            if (pending.length > 0 && !isMyanmarSyllableHead(code)) {
                 // The next char is a word space, punctuation, digit, … that
                 // cannot host the vowel: re-join the vowel to the syllable it
                 // logically follows, then open a fresh cluster.
@@ -224,17 +224,17 @@ export function segmentMyanmarText(text: string): string[] {
 function isSyllableStart(code: number, prev: number, next: number): boolean {
     // Base consonants (and vowel-letter bases like ဣ ဤ ဥ ဦ ဧ ဩ ဿ) attach any
     // cluster-internal marks.
-    if (RE_CONSONANT.test(String.fromCodePoint(code))) {
+    if (isMyanmarSyllableHead(code)) {
         // Final consonants (followed by asat U+103A) and stacked consonants
         // (following virama U+1039 / asat U+103A) continue the previous cluster.
-        if (next === 0x103a) return false
-        if (prev === 0x103a || prev === 0x1039) return false
+        if (isAsat(next)) return false
+        if (isAsat(prev) || isVirama(prev)) return false
         // A consonant directly after a consonant starts a new syllable, unless the
         // preceding one already carried a vowel (handled by the independent rules).
         return true
     }
     // Medials and vowel signs always attach to the current cluster.
-    if (RE_ATTACHING.test(String.fromCodePoint(code))) return false
+    if (isMyanmarAttachingMark(code)) return false
     // Anything else (punctuation, whitespace, digits) starts a new group.
     return true
 }
