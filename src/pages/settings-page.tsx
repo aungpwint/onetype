@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import {
     Palette,
     Keyboard,
@@ -16,6 +16,8 @@ import {
     Focus,
     Eye,
     Timer,
+    Search,
+    CornerDownLeft,
 } from 'lucide-react'
 import * as backend from '@/services/backend'
 import { useUiStore, previewThemePreset, applyCurrentTheme } from '@/stores/ui-store'
@@ -24,7 +26,8 @@ import { useStudentStore } from '@/stores/student-store'
 import { useUpdater } from '@/services/updater/use-updater'
 import type { ThemePreference } from '@/types'
 import { THEMES, DEFAULT_THEME_PRESET_ID } from '@/core/themes/registry'
-import { Field, Modal, PageHeader, AsyncButton } from '@/components/ui'
+import { searchSettings, groupMatches, type SettingsEntry } from '@/core/settings/catalog'
+import { Field, Modal, PageHeader, AsyncButton, inputClass } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
 import { cn, cardClass, appPageClass, sectionTitleClass } from '@/lib/utils'
@@ -66,6 +69,14 @@ export default function SettingsPage() {
 
     const [report, setReport] = useState<{ kind: 'export' | 'import'; message: string } | null>(null)
     const [busy, setBusy] = useState<string | null>(null)
+    const [query, setQuery] = useState('')
+
+    const searchResults = useMemo(() => (query.trim() === '' ? null : groupMatches(searchSettings(query))), [query])
+
+    const jumpTo = useCallback((id: string) => {
+        setQuery('')
+        document.getElementById(`settings-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, [])
 
     const doExport = async (scope: 'all' | 'one') => {
         setBusy(`Export ${scope}…`)
@@ -116,9 +127,11 @@ export default function SettingsPage() {
         <div className={appPageClass}>
             <PageHeader eyebrow="Preferences" title="Settings" subtitle="These are stored on this machine only. Nothing here is sent anywhere." />
 
-            <Section icon={<Palette className="size-4" />} title="Appearance">
+            <SettingsSearch query={query} onQuery={setQuery} results={searchResults} onJump={jumpTo} />
+
+            <Section icon={<Palette className="size-4" />} title="Appearance" id="settings-appearance">
                 <div className="mt-4 flex flex-wrap items-end gap-4">
-                    <Field label="Theme">
+                    <Field label="Theme" id="settings-theme">
                         <div className="relative">
                             <select
                                 className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -131,7 +144,7 @@ export default function SettingsPage() {
                             </select>
                         </div>
                     </Field>
-                    <Field label="Default language">
+                    <Field label="Default language" id="settings-default-language">
                         <div className="relative">
                             <select
                                 className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -145,7 +158,7 @@ export default function SettingsPage() {
                     </Field>
                 </div>
 
-                <Field label="Desk palette" hint="A curated desk to write on. Live preview as you hover." className="mt-5">
+                <Field label="Desk palette" hint="A curated desk to write on. Live preview as you hover." className="mt-5" id="settings-palette">
                     <div className="flex flex-wrap gap-2">
                         <button
                             type="button"
@@ -196,7 +209,7 @@ export default function SettingsPage() {
                     </div>
                 </Field>
 
-                <Field label="Background effect" className="mt-4">
+                <Field label="Background effect" className="mt-4" id="settings-background-effect">
                     <div className="relative">
                         <select
                             className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -211,7 +224,7 @@ export default function SettingsPage() {
                 </Field>
             </Section>
 
-            <Section icon={<Palette className="size-4" />} title="Typing experience">
+            <Section icon={<Palette className="size-4" />} title="Typing experience" id="settings-typing-experience">
                 <div className="mt-4 space-y-3">
                     <SettingRow
                         title="Time warning sound"
@@ -219,11 +232,12 @@ export default function SettingsPage() {
                         checked={timeWarning !== 'off'}
                         onChecked={(v) => void settings.set('practice.timeWarning', v ? 'on' : 'off')}
                         icon={Bell}
+                        id="settings-time-warning"
                     />
                 </div>
 
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                    <Field label="Quick restart key">
+                    <Field label="Quick restart key" id="settings-quick-restart">
                         <div className="relative">
                             <select
                                 className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -236,7 +250,7 @@ export default function SettingsPage() {
                             </select>
                         </div>
                     </Field>
-                    <Field label="Sound volume">
+                    <Field label="Sound volume" id="settings-sound-volume">
                         <div className="relative">
                             <input
                                 type="range"
@@ -253,7 +267,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                    <Field label="Highlight">
+                    <Field label="Highlight" id="settings-highlight">
                         <div className="relative">
                             <select
                                 className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -266,7 +280,7 @@ export default function SettingsPage() {
                             </select>
                         </div>
                     </Field>
-                    <Field label="Blind mode">
+                    <Field label="Blind mode" id="settings-blind-mode">
                         <div className="relative">
                             <select
                                 className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -281,7 +295,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                    <Field label="Caret style">
+                    <Field label="Caret style" id="settings-caret-style">
                         <div className="relative">
                             <select
                                 className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -295,7 +309,7 @@ export default function SettingsPage() {
                             </select>
                         </div>
                     </Field>
-                    <Field label="Smooth caret">
+                    <Field label="Smooth caret" id="settings-smooth-caret">
                         <div className="relative">
                             <select
                                 className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -318,6 +332,7 @@ export default function SettingsPage() {
                         checked={paceCaret !== 'off'}
                         onChecked={(v) => void settings.set('practice.paceCaret', v ? 'on' : 'off')}
                         icon={Timer}
+                        id="settings-pace-caret"
                     />
                     <SettingRow
                         title="Hide extra letters"
@@ -325,11 +340,12 @@ export default function SettingsPage() {
                         checked={hideExtraLetters !== 'off'}
                         onChecked={(v) => void settings.set('practice.hideExtraLetters', v ? 'on' : 'off')}
                         icon={Eye}
+                        id="settings-hide-extra-letters"
                     />
                 </div>
 
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                    <Field label="Timer style">
+                    <Field label="Timer style" id="settings-timer-style">
                         <div className="relative">
                             <select
                                 className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -346,7 +362,7 @@ export default function SettingsPage() {
                 </div>
             </Section>
 
-            <Section icon={<Keyboard className="size-4" />} title="Practice">
+            <Section icon={<Keyboard className="size-4" />} title="Practice" id="settings-practice">
                 <div className="mt-4 space-y-3">
                     <SettingRow
                         title="Key click sounds"
@@ -354,6 +370,7 @@ export default function SettingsPage() {
                         checked={sound}
                         onChecked={(v) => setSound(v)}
                         icon={Volume2}
+                        id="settings-key-sounds"
                     />
                     <SettingRow
                         title="Hand guide"
@@ -361,6 +378,7 @@ export default function SettingsPage() {
                         checked={handGuide}
                         onChecked={toggleHandGuide}
                         icon={Hand}
+                        id="settings-hand-guide"
                     />
                     <SettingRow
                         title="Focus mode"
@@ -368,6 +386,7 @@ export default function SettingsPage() {
                         checked={focusMode}
                         onChecked={setFocusMode}
                         icon={Focus}
+                        id="settings-focus-mode"
                     />
                     <SettingRow
                         title="Confirm before abandoning a round"
@@ -375,11 +394,12 @@ export default function SettingsPage() {
                         checked={confirmExit !== 'off'}
                         onChecked={(v) => void settings.set('practice.confirmExit', v ? 'on' : 'off')}
                         icon={LogOut}
+                        id="settings-confirm-exit"
                     />
                 </div>
 
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                    <Field label="Pause when you leave the window">
+                    <Field label="Pause when you leave the window" id="settings-focus-guard">
                         <div className="relative">
                             <select
                                 className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -392,7 +412,7 @@ export default function SettingsPage() {
                             </select>
                         </div>
                     </Field>
-                    <Field label="How mistakes are shown">
+                    <Field label="How mistakes are shown" id="settings-indicate-typos">
                         <div className="relative">
                             <select
                                 className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
@@ -404,7 +424,7 @@ export default function SettingsPage() {
                             </select>
                         </div>
                     </Field>
-                    <Field label="Daily practice goal (minutes)">
+                    <Field label="Daily practice goal (minutes)" id="settings-daily-goal">
                         <input
                             type="number"
                             min={0}
@@ -417,7 +437,7 @@ export default function SettingsPage() {
                 </div>
             </Section>
 
-            <Section icon={<Paintbrush className="size-4" />} title="Keyboard shortcuts">
+            <Section icon={<Paintbrush className="size-4" />} title="Keyboard shortcuts" id="settings-shortcuts">
                 <p className="mt-1 text-sm text-muted-foreground">
                     Navigate the app without the mouse. During a round, plain keys are reserved for typing.
                 </p>
@@ -438,7 +458,7 @@ export default function SettingsPage() {
                 </dl>
             </Section>
 
-            <Section icon={<Bell className="size-4" />} title="Notifications">
+            <Section icon={<Bell className="size-4" />} title="Notifications" id="settings-notifications">
                 <div className="mt-4 space-y-3">
                     <SettingRow
                         title="Enable notifications"
@@ -446,6 +466,7 @@ export default function SettingsPage() {
                         checked={notificationsEnabled !== 'off'}
                         onChecked={(v) => void settings.set('notification.enabled', v ? 'on' : 'off')}
                         icon={Bell}
+                        id="settings-notifications-enabled"
                     />
                     <SettingRow
                         title="Notify about application updates"
@@ -453,11 +474,12 @@ export default function SettingsPage() {
                         checked={notifyUpdates !== 'off'}
                         onChecked={(v) => void settings.set('notification.notifyUpdates', v ? 'on' : 'off')}
                         icon={Download}
+                        id="settings-notify-updates"
                     />
                 </div>
             </Section>
 
-            <Section icon={<DownloadCloud className="size-4" />} title="Updates">
+            <Section icon={<DownloadCloud className="size-4" />} title="Updates" id="settings-updates">
                 <div className="mt-4 space-y-3">
                     <SettingRow
                         title="Check for updates automatically"
@@ -465,6 +487,7 @@ export default function SettingsPage() {
                         checked={updater.autoUpdate !== 'off'}
                         onChecked={(v) => void settings.set('app.autoUpdate', v ? 'on' : 'off')}
                         icon={DownloadCloud}
+                        id="settings-auto-update"
                     />
                 </div>
                 <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -496,12 +519,12 @@ export default function SettingsPage() {
                 </div>
             </Section>
 
-            <Section icon={<Database className="size-4" />} title="Data">
+            <Section icon={<Database className="size-4" />} title="Data" id="settings-data">
                 <p className="mt-1 text-sm text-muted-foreground">
                     Everything lives in an on-device database. Back it up or move it between machines by exporting.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                    <AsyncButton disabled={busy !== null} loading={busy === 'Export all…'} icon={DownloadCloud} onClick={() => void doExport('all')}>
+                    <AsyncButton disabled={busy !== null} loading={busy === 'Export all…'} icon={DownloadCloud} onClick={() => void doExport('all')} id="settings-export-all">
                         Back up everything
                     </AsyncButton>
                     <AsyncButton
@@ -510,6 +533,7 @@ export default function SettingsPage() {
                         loading={busy === 'Export one…'}
                         icon={HardDrive}
                         onClick={() => void doExport('one')}
+                        id="settings-export-one"
                     >
                         Back up {active ? active.displayName : 'a learner'}
                     </AsyncButton>
@@ -519,6 +543,7 @@ export default function SettingsPage() {
                         loading={busy === 'Import…'}
                         icon={UploadCloud}
                         onClick={() => void doImport()}
+                        id="settings-import-backup"
                     >
                         Import from backup
                     </AsyncButton>
@@ -529,6 +554,7 @@ export default function SettingsPage() {
                         loadingLabel="Checking…"
                         icon={RefreshCw}
                         onClick={doHealthCheck}
+                        id="settings-health-check"
                     >
                         Check database health
                     </AsyncButton>
@@ -549,9 +575,9 @@ export default function SettingsPage() {
     )
 }
 
-function Section({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
+function Section({ icon, title, children, id }: { icon: React.ReactNode; title: string; children: React.ReactNode; id?: string }) {
     return (
-        <section className={cn(cardClass, 'p-5')}>
+        <section id={id} className={cn(cardClass, 'p-5')}>
             <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
                 <span className="flex h-7 w-7 items-center justify-center rounded-md bg-muted text-accent">{icon}</span>
                 {title}
@@ -567,15 +593,17 @@ function SettingRow({
     checked,
     onChecked,
     icon: Icon,
+    id,
 }: {
     title: string
     description: string
     checked: boolean
     onChecked: (v: boolean) => void
     icon: React.ComponentType<{ className?: string }>
+    id?: string
 }) {
     return (
-        <label className="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-border px-4 py-3 transition-colors hover:bg-muted/40">
+        <label id={id} className="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-border px-4 py-3 transition-colors hover:bg-muted/40">
             <span className="flex items-start gap-3">
                 <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
                     <Icon className="size-4" />
@@ -587,5 +615,64 @@ function SettingRow({
             </span>
             <Switch checked={checked} onCheckedChange={onChecked} />
         </label>
+    )
+}
+
+function SettingsSearch({
+    query,
+    onQuery,
+    results,
+    onJump,
+}: {
+    query: string
+    onQuery: (q: string) => void
+    results: { section: string; items: SettingsEntry[] }[] | null
+    onJump: (id: string) => void
+}) {
+    return (
+        <div className="sticky top-3 z-30">
+            <div className="relative">
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <input
+                    value={query}
+                    onChange={(e) => onQuery(e.target.value)}
+                    placeholder="Search settings… e.g. caret, sound, backup"
+                    className={cn(inputClass, 'pl-9 pr-20')}
+                />
+                {query !== '' ? (
+                    <button
+                        onClick={() => onQuery('')}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-muted-foreground hover:text-foreground"
+                    >
+                        Clear
+                    </button>
+                ) : null}
+            </div>
+            {results ? (
+                <div className="mt-2 max-h-[60vh] overflow-y-auto rounded-xl border border-border bg-background shadow-lg">
+                    {results.length === 0 ? (
+                        <p className="px-4 py-3 text-sm text-muted-foreground">No settings match “{query.trim()}”.</p>
+                    ) : (
+                        results.map((group) => (
+                            <div key={group.section} className="border-b border-border/60 last:border-0">
+                                <p className="px-4 pt-2.5 pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                                    {group.section}
+                                </p>
+                                {group.items.map((item) => (
+                                    <button
+                                        key={item.id}
+                                        onClick={() => onJump(item.id)}
+                                        className="flex w-full items-center justify-between px-4 py-2 text-left text-sm hover:bg-muted/50"
+                                    >
+                                        <span>{item.label}</span>
+                                        <CornerDownLeft className="size-3.5 text-muted-foreground" />
+                                    </button>
+                                ))}
+                            </div>
+                        ))
+                    )}
+                </div>
+            ) : null}
+        </div>
     )
 }
