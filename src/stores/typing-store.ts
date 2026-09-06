@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 import { TypingEngine } from '@/core/typing-engine/engine'
-import { getLayoutOrThrow } from '@/core/keyboard-layout/registry'
+import { getLayoutOrThrow, layoutForLanguage } from '@/core/keyboard-layout/registry'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
 import { resolveLessonById } from '@/data/curriculum'
 import type { ResolvedLesson } from '@/data/curriculum/generator'
 import { buildTestMaterial, resolveTestLayout } from '@/core/materials/test-material'
+import { buildPracticeMaterial, type PracticeConfig } from '@/core/materials/practice-material'
 import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import type { Modifier, TypingMode } from '@/types'
 import { resolvePressedKey } from '@/core/input/key-resolution'
@@ -48,10 +49,11 @@ export interface FinishedResult {
 }
 
 interface TypingSessionState {
-    kind: 'lesson' | 'test' | 'drill'
+    kind: 'lesson' | 'test' | 'drill' | 'practice'
     lessonId?: string
     test?: TypingTest
     drill?: ReinforcedDrill
+    practice?: PracticeConfig
     resolved: ResolvedLesson
     layout: KeyboardLayout
     mode: TypingMode
@@ -71,10 +73,13 @@ interface TypingState {
     beginLesson: (lessonId: string, mode?: TypingMode) => Promise<void>
     beginTest: (test: TypingTest) => Promise<void>
     beginDrill: (drill: ReinforcedDrill) => Promise<void>
+    beginPractice: (config: PracticeConfig) => Promise<void>
     start: () => void
     togglePause: () => void
+    restart: () => void
+    retry: () => void
     abandon: () => void
-    persistAndFinish: () => Promise<void>
+    persistAndFinish: (guardEngine?: TypingEngine) => Promise<void>
     clear: () => void
     clearError: () => void
     getLiveStats: () => LiveStats
@@ -245,6 +250,26 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         bindKeys()
     },
 
+    beginPractice: async (config) => {
+        // Quick practice is untracked: no student profile, attempts or backend
+        // writes are needed — it exists purely for fluid speed-session runs.
+        const resolved = buildPracticeMaterial(config)
+        const layout = layoutForLanguage(config.language)
+        const session: TypingSessionState = {
+            kind: 'practice',
+            practice: config,
+            resolved,
+            layout,
+            mode: 'quick',
+            durationSeconds: config.unit === 'time' ? config.time ?? null : null,
+            attempt: 1,
+            startedAt: Date.now(),
+        }
+        const engine = createEngine(session)
+        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0 })
+        bindKeys()
+    },
+
     start: () => {
         const { engine } = get()
         if (!engine) return
@@ -260,6 +285,43 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         set({ status: engine.status })
     },
 
+    restart: () => {
+        const { engine } = get()
+        if (!engine) return
+        // A finished run has an async save in flight; only mid-run restart is
+        // allowed to race nothing and stay visibly instant.
+        if (engine.finishReason !== null) return
+        engine.restart()
+        set({ status: 'ready', result: null, error: null, wrongFlash: null, tick: 0 })
+    },
+
+    retry: () => {
+        const st = get()
+        if (st.status !== 'finished' || !st.session) return
+        // Same "Type again" path as the result dialog, useful for R on the
+        // finished screen (Monkeytype parity: one key starts a fresh run).
+        const { clear, beginLesson, beginTest, beginPractice } = st
+        if (st.session.kind === 'lesson') {
+            const id = st.session.lessonId!
+            const mode = st.session.mode
+            clear()
+            void beginLesson(id, mode)
+        } else if (st.session.kind === 'drill') {
+            clear()
+            void buildAdaptiveDrill().then((drill) => {
+                if (drill) void get().beginDrill(drill)
+            })
+        } else if (st.session.kind === 'practice') {
+            const config = st.session.practice!
+            clear()
+            void beginPractice(config)
+        } else {
+            const test = st.session.test!
+            clear()
+            void beginTest(test)
+        }
+    },
+
     abandon: () => {
         const { engine } = get()
         if (engine) engine.finish('stopped')
@@ -267,9 +329,12 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         set({ session: null, engine: null, status: 'idle', result: null, error: null, wrongFlash: null, tick: 0 })
     },
 
-    persistAndFinish: async () => {
+    persistAndFinish: async (guardEngine) => {
         const { engine, session } = get()
         if (!engine || !session) return
+        // If a fresh run (instant restart / type-again) already replaced this
+        // engine, the delayed save must not attribute stale metrics to it.
+        if (guardEngine && (engine !== guardEngine || get().status !== 'finished')) return
         const active = useStudentStore.getState().active
         if (!active) return
         unbindKeys()
@@ -285,6 +350,21 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         // write fails, so the learner never loses their score without feedback.
         let saveError: string | undefined
         try {
+            if (session.kind === 'practice') {
+                // Untracked by design: show the verdict but write nothing.
+                return set({
+                    result: {
+                        mode: session.mode,
+                        metrics,
+                        passed: true,
+                        finishReason: reason,
+                        attempt: session.attempt,
+                        newlyUnlocked: [],
+                    },
+                    status: 'finished',
+                })
+            }
+
             await backend.saveTypingSession({
                 studentId: active.id,
                 lessonId: session.lessonId ?? null,
@@ -460,7 +540,24 @@ export const useTypingStore = create<TypingState>((set, get) => ({
                     status: 'finished',
                 })
             } else {
-                const test = session.test!
+if (session.kind === 'practice') {
+                // Untracked by design: show the verdict but write nothing. The
+                // diagnosis data rides along so the result screen can still
+                // explain recurring Myanmar slips.
+                return set({
+                    result: {
+                        mode: session.mode,
+                        metrics,
+                        passed: true,
+                        finishReason: reason,
+                        attempt: session.attempt,
+                        newlyUnlocked: [],
+                    },
+                    status: 'finished',
+                })
+            }
+
+            const test = session.test!
                 const passedAccuracy = metrics.accuracy >= test.minAccuracy
                 const passedWpm = test.minWpm === null ? null : metrics.grossWpm >= test.minWpm
                 const passed = reason === 'completed' && passedAccuracy && (passedWpm === null || passedWpm)
@@ -512,18 +609,18 @@ function createEngine(session: TypingSessionState): TypingEngine {
         sequence: session.resolved.sequence,
         layout: session.layout,
         mode: session.mode,
-        durationSeconds: session.kind === 'test' ? session.test!.durationSeconds : undefined,
+        durationSeconds: session.kind === 'test' ? session.test!.durationSeconds : session.kind === 'practice' ? (session.durationSeconds ?? undefined) : undefined,
         onEvent: (event) => {
             useTypingStore.setState((state) => ({ tick: state.tick + 1 }))
             if (event.type === 'incorrect' || event.type === 'backspace') {
                 useTypingStore.setState({ wrongFlash: { unitIndex: event.expected?.index ?? 0, at: Date.now() } })
-            } else if (event.type === 'correct') {
+            } else if (event.type === 'correct' || event.type === 'restart') {
                 useTypingStore.setState({ wrongFlash: null })
             }
             if (event.type === 'finish' || event.type === 'time-up') {
                 bindKeys()
                 window.setTimeout(() => {
-                    void useTypingStore.getState().persistAndFinish()
+                    void useTypingStore.getState().persistAndFinish(engine)
                 }, 60)
             }
             const current = useTypingStore.getState().status
@@ -541,6 +638,13 @@ function bindKeys() {
     const onKey = (event: KeyboardEvent) => {
         const { engine, status, session } = useTypingStore.getState()
         if (!engine) return
+        // Tab restarts a run in place the instant it's pressed — same text,
+        // fully reset metrics, no async round-trip (Monkeytype-style).
+        if ((status === 'running' || status === 'paused') && event.code === 'Tab') {
+            event.preventDefault()
+            useTypingStore.getState().restart()
+            return
+        }
         if (status !== 'running' && status !== 'ready') return
         if (status === 'ready') {
             // Lesson exercises follow the trainer's "Press Tab to start" gate: a

@@ -1,0 +1,206 @@
+import { useCallback, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { cn } from '@/lib/utils'
+import { useTypingStore } from '@/stores/typing-store'
+import { Session } from '@/pages/session-page'
+import type { PracticeUnit } from '@/core/materials/practice-material'
+import { Timer, Hash, Type, RotateCcw, Quote } from 'lucide-react'
+
+const TIME_OPTIONS = [15, 30, 60, 120]
+const WORD_OPTIONS = [10, 25, 50, 100]
+
+function ChipGroup<T extends string | number>({
+    options,
+    value,
+    onChange,
+    format,
+}: {
+    options: T[]
+    value: T
+    onChange: (v: T) => void
+    format?: (v: T) => string
+}) {
+    return (
+        <div className="flex gap-1">
+            {options.map((opt) => (
+                <button
+                    key={String(opt)}
+                    onClick={() => onChange(opt)}
+                    className={cn(
+                        'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                        opt === value ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
+                    )}
+                >
+                    {format?.(opt) ?? String(opt)}
+                </button>
+            ))}
+        </div>
+    )
+}
+
+function ToggleChip({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
+    return (
+        <button
+            onClick={() => onChange(!checked)}
+            aria-pressed={checked}
+            className={cn(
+                'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                checked ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
+            )}
+        >
+            <span className={cn('relative h-3.5 w-6 rounded-full transition-colors', checked ? 'bg-accent-foreground/30' : 'bg-line-strong/60')} aria-hidden>
+                <span
+                    className={cn(
+                        'absolute top-0.5 size-2.5 rounded-full transition-transform',
+                        checked ? 'translate-x-3 bg-accent-foreground' : 'translate-x-0.5 bg-muted-foreground/70',
+                    )}
+                />
+            </span>
+            {label}
+        </button>
+    )
+}
+
+export default function PracticePage() {
+    const [lang, setLang] = useState<'english' | 'myanmar'>('english')
+    const [unit, setUnit] = useState<PracticeUnit>('time')
+    const [time, setTime] = useState(30)
+    const [words, setWords] = useState(25)
+    const [text, setText] = useState('')
+    const [punctuation, setPunctuation] = useState(false)
+    const [numbers, setNumbers] = useState(false)
+    const navigate = useNavigate()
+    const session = useTypingStore((s) => s.session)
+    const beginPractice = useTypingStore((s) => s.beginPractice)
+    const inSession = session?.kind === 'practice'
+
+    const start = useCallback(() => {
+        void beginPractice({ language: lang, unit, time, words, text, punctuation, numbers })
+    }, [beginPractice, lang, unit, time, words, text, punctuation, numbers])
+
+    const sourceName =
+        unit === 'time'
+            ? `${time}s practice`
+            : unit === 'words'
+              ? `${words} words`
+              : unit === 'quote'
+                ? 'Quote'
+                : 'Custom text'
+
+    if (inSession) {
+        return (
+            <Session
+                durationSeconds={unit === 'time' ? time : null}
+                sourceName={sourceName}
+                eyebrow="Quick practice"
+                onExit={() => navigate('/practice')}
+            />
+        )
+    }
+
+    return (
+        <div className="mx-auto flex h-full w-full max-w-2xl flex-col items-center px-5 py-10 sm:px-8">
+            <div className="mb-8 text-center">
+                <h1 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">Quick practice</h1>
+                <p className="mt-2 text-sm text-muted-foreground">Set your pace, start instantly — no student profile needed.</p>
+            </div>
+
+            <div className="flex w-full flex-col gap-6 rounded-2xl border border-line bg-card/60 p-6 shadow-sm backdrop-blur">
+                {/* Language */}
+                <div>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Language</p>
+                    <div className="flex gap-1">
+                        <button
+                            onClick={() => setLang('english')}
+                            className={cn(
+                                'rounded-md px-4 py-2 text-sm font-medium transition-colors',
+                                lang === 'english' ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
+                            )}
+                        >
+                            English
+                        </button>
+                        <button
+                            onClick={() => setLang('myanmar')}
+                            className={cn(
+                                'rounded-md px-4 py-2 text-sm font-medium transition-colors',
+                                lang === 'myanmar' ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
+                            )}
+                        >
+                            မြန်မာ
+                        </button>
+                    </div>
+                </div>
+
+                {/* Mode */}
+                <div>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Mode</p>
+                    <div className="flex gap-1">
+                        {([
+                            { key: 'time' as const, label: 'Time', icon: Timer },
+                            { key: 'words' as const, label: 'Words', icon: Hash },
+                            { key: 'quote' as const, label: 'Quote', icon: Quote },
+                            { key: 'text' as const, label: 'Text', icon: Type },
+                        ] as const).map(({ key, label, icon: Icon }) => (
+                            <button
+                                key={key}
+                                onClick={() => setUnit(key)}
+                                className={cn(
+                                    'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                                    unit === key ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
+                                )}
+                            >
+                                <Icon className="size-3.5" />
+                                {label}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Options */}
+                <div>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                        {unit === 'time' ? 'Duration' : unit === 'words' ? 'Word count' : unit === 'quote' ? 'Quotation' : 'Text'}
+                    </p>
+                    {unit === 'time' ? (
+                        <ChipGroup options={TIME_OPTIONS} value={time} onChange={setTime} format={(v) => `${v}s`} />
+                    ) : unit === 'words' ? (
+                        <ChipGroup options={WORD_OPTIONS} value={words} onChange={setWords} />
+                    ) : unit === 'quote' ? (
+                        <p className="text-sm text-muted-foreground">
+                            A short quotation in your chosen language — type it through, then get another one.
+                        </p>
+                    ) : (
+                        <textarea
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
+                            placeholder="Type or paste your text here…"
+                            rows={3}
+                            className="w-full rounded-lg border border-line bg-muted/50 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                        />
+                    )}
+                </div>
+
+                {unit === 'time' || unit === 'words' ? (
+                    <div className="flex flex-wrap items-center gap-3">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Add-ons</p>
+                        <div className="flex gap-1">
+                            <ToggleChip label="Punctuation" checked={punctuation} onChange={setPunctuation} />
+                            <ToggleChip label="Numbers" checked={numbers} onChange={setNumbers} />
+                        </div>
+                        <p className="w-full text-xs text-muted-foreground/80">
+                            English gets .,!?;: and capitalised sentence starts; Myanmar gets ၊ ။ and Myanmar numerals.
+                        </p>
+                    </div>
+                ) : null}
+            </div>
+
+            <button
+                onClick={start}
+                className="mt-8 flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-sm transition-colors hover:bg-accent/90 active:bg-accent/80"
+            >
+                <RotateCcw className="size-4" />
+                Start
+            </button>
+        </div>
+    )
+}

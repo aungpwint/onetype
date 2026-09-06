@@ -1,8 +1,10 @@
 import type { Modifier, TypingMode } from '@/types'
 import { KeyboardLayout } from '@/core/keyboard-layout/layout'
-import { BuiltSequence, TypingUnit, clusterStartForUnit } from './sequence'
+import { BuiltSequence, TypingUnit, clusterStartForUnit, keyboardOrderForCluster } from './sequence'
 import { computeScore, ScoreMetrics } from '@/core/scoring/score'
 import { Stopwatch } from '@/core/timing/stopwatch'
+import { ClusterDiagnosis, diagnoseClusterComparison } from '@/core/unicode/comparison'
+import { containsMyanmar } from '@/core/unicode/myanmar'
 
 export type EngineStatus = 'ready' | 'running' | 'paused' | 'finished'
 export type FinishReason = 'completed' | 'time-up' | 'stopped' | 'failed'
@@ -13,7 +15,7 @@ export interface KeyOutcome {
 }
 
 export interface TypingEngineEvent {
-    type: 'start' | 'pause' | 'resume' | 'correct' | 'incorrect' | 'backspace' | 'finish' | 'time-up'
+    type: 'start' | 'pause' | 'resume' | 'correct' | 'incorrect' | 'backspace' | 'restart' | 'finish' | 'time-up'
     unitIndex: number
     keyCode?: string
     modifier?: Modifier
@@ -53,6 +55,11 @@ export class TypingEngine {
     private readonly unitOutcomes = new Map<number, boolean>()
     private readonly stopwatch: Stopwatch
     private readonly listeners: EngineListener[] = []
+    /** Elapsed-ms timestamp of every correct keystroke, for pacing consistency. */
+    readonly correctTimes: number[] = []
+    /** Per-grapheme Myanmar comparison diagnosis once a cluster is fully typed. */
+    readonly clusterDiagnoses = new Map<number, ClusterDiagnosis>()
+    private readonly clusterTypedChars = new Map<number, string[]>()
 
     constructor(options: TypingEngineOptions) {
         this.sequence = options.sequence
@@ -134,7 +141,34 @@ export class TypingEngine {
             incorrectAttempts: this.incorrectCount,
             backspaceCount: this.backspaceCount,
             elapsedSeconds: this.elapsedSeconds(),
+            language: this.layout.language === 'myanmar' ? 'myanmar' : 'english',
+            clusters: this.completedClusters(),
+            correctTimes: this.correctTimes,
         })
+    }
+
+    /** Number of grapheme clusters fully consumed by the caret. */
+    completedClusters(): number {
+        let count = 0
+        const ranges = this.sequence.graphemeUnitRanges
+        for (const [, end] of ranges) {
+            if (end <= this.unitIndex) count += 1
+        }
+        return count
+    }
+
+    clusterDiagnosisFor(graphemeIndex: number): ClusterDiagnosis | null {
+        return this.clusterDiagnoses.get(graphemeIndex) ?? null
+    }
+
+    /** Diagnoses in display (grapheme) order. */
+    diagnoseClusters(): ClusterDiagnosis[] {
+        const out: ClusterDiagnosis[] = []
+        for (let gi = 0; gi < this.sequence.graphemes.length; gi++) {
+            const d = this.clusterDiagnoses.get(gi)
+            if (d) out.push(d)
+        }
+        return out
     }
 
     processKey(code: string, modifier: Modifier): TypingEngineEvent | null {
@@ -164,6 +198,7 @@ export class TypingEngine {
                 for (let i = newIndex; i < this.unitIndex; i++) {
                     this.unitOutcomes.delete(i)
                 }
+                this.clearClusterStateFromUnit(newIndex)
                 this.unitIndex = newIndex
                 // If we just uncovered an error, a stray backspace should not be
                 // recorded as a new error — it is a correction gesture.
@@ -184,7 +219,12 @@ export class TypingEngine {
             this.keyOutcomes.set(keyKey, outcome)
             this.correctCount += 1
             this.unitOutcomes.set(expected.index, true)
+            this.correctTimes.push(this.stopwatch.elapsedMs())
             this.unitIndex += 1
+            // Recorded after the advance so a fully-consumed cluster can be
+            // classified immediately; wrong presses meanwhile accumulate into
+            // the cluster's typed run without consuming it.
+            this.recordClusterPress(expected.graphemeIndex, code, modifier)
             this.emit({ type: 'correct', unitIndex: expected.index, keyCode: code, modifier, expected })
             if (this.isComplete) {
                 this.finish('completed')
@@ -196,6 +236,7 @@ export class TypingEngine {
             if (!this.unitOutcomes.has(expected.index)) {
                 this.unitOutcomes.set(expected.index, false)
             }
+            this.recordClusterPress(expected.graphemeIndex, code, modifier)
             // Classify the error. A modifier/shift error happens when the learner
             // pressed the correct physical key but with the wrong Shift state
             // (e.g. lowercase when uppercase was expected). This is a distinct,
@@ -227,9 +268,49 @@ export class TypingEngine {
         this.totalKeys = 0
         this.unitOutcomes.clear()
         this.keyOutcomes.clear()
+        this.correctTimes.length = 0
+        this.clusterDiagnoses.clear()
+        this.clusterTypedChars.clear()
         this.stopwatch.reset()
         this.status = 'ready'
         this.finishReason = null
         this.lastEvent = null
+    }
+
+    /** Restart the current run in place: exact same text, fully fresh metrics. */
+    restart() {
+        this.resetMetrics()
+        this.emit({ type: 'restart', unitIndex: 0 })
+    }
+
+    private recordClusterPress(graphemeIndex: number, code: string, modifier: Modifier) {
+        if (this.layout.language !== 'myanmar') return
+        const output = this.layout.outputFor(code, modifier)
+        if (!output) return
+        const chars = this.clusterTypedChars.get(graphemeIndex) ?? []
+        chars.push(output.text)
+        this.clusterTypedChars.set(graphemeIndex, chars)
+        // Once the whole cluster has been consumed, classify what the learner
+        // actually produced for that cluster so the result screen can explain
+        // the recurring slips (missing tone mark, extra medial, swapped order…).
+        const [, end] = this.sequence.graphemeUnitRanges[graphemeIndex]
+        if (this.unitIndex >= end && !this.clusterDiagnoses.has(graphemeIndex)) {
+            const expected = this.sequence.graphemes[graphemeIndex]
+            const typed = chars.join('')
+            const expectedInput = containsMyanmar(expected) ? keyboardOrderForCluster(expected) : expected
+            this.clusterDiagnoses.set(graphemeIndex, diagnoseClusterComparison(expectedInput, typed))
+        }
+    }
+
+    /** Drop per-cluster diagnosis/chars for every grapheme from a unit onward. */
+    private clearClusterStateFromUnit(fromUnit: number) {
+        const ranges = this.sequence.graphemeUnitRanges
+        for (let gi = 0; gi < ranges.length; gi++) {
+            const [start] = ranges[gi]
+            if (start >= fromUnit) {
+                this.clusterDiagnoses.delete(gi)
+                this.clusterTypedChars.delete(gi)
+            }
+        }
     }
 }

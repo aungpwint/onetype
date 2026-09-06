@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 
-export function WpmBars({ values }: { values: number[] }) {
+export function WpmBars({ values, unit = 'wpm', ariaLabel = `Speed over time (${unit})` }: { values: number[]; unit?: string; ariaLabel?: string }) {
     const n = values.length
     const w = 520
     const h = 190
@@ -22,7 +22,7 @@ export function WpmBars({ values }: { values: number[] }) {
     const best = Math.max(...values, 0)
 
     return (
-        <svg viewBox={`0 0 ${w} ${h}`} className="w-full select-none" role="img" aria-label="WPM over recent sessions">
+        <svg viewBox={`0 0 ${w} ${h}`} className="w-full select-none" role="img" aria-label={ariaLabel}>
             <style>
                 {`
                 .wpm-bar-rise {
@@ -133,7 +133,7 @@ export function WpmBars({ values }: { values: number[] }) {
                 const x = leftPad + 6 + i * (barW + 6)
                 return (
                     <g key={i} className="wpm-group" style={{ '--i': i } as CSSProperties}>
-                        <title>{`Session ${i + 1}: ${Math.round(value)} wpm`}</title>
+                        <title>{`Step ${i + 1}: ${Math.round(value)} ${unit}`}</title>
                         <rect
                             className={`wpm-bar wpm-bar-rise${isBest ? ' wpm-bar--best' : ''}`}
                             x={x}

@@ -34,3 +34,9 @@ src-tauri/updater.key.pub
 
 # Dev scratch / reference snapshots
 demo-layout.html
+
+# Reference-only vendor clone (never committed)
+monkeytype
+
+# Local logs
+dev-server.log

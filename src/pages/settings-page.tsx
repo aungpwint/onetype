@@ -13,6 +13,7 @@ import {
     Paintbrush,
     Hand,
     LogOut,
+    Focus,
 } from 'lucide-react'
 import * as backend from '@/services/backend'
 import { useUiStore } from '@/stores/ui-store'
@@ -32,6 +33,8 @@ export default function SettingsPage() {
     const setSound = useUiStore((s) => s.setSoundEnabled)
     const handGuide = useUiStore((s) => s.handGuideVisible)
     const toggleHandGuide = useUiStore((s) => s.toggleHandGuide)
+    const focusMode = useUiStore((s) => s.focusMode)
+    const setFocusMode = useUiStore((s) => s.setFocusMode)
 
     const settings = useSettingsStore()
     const active = useStudentStore((s) => s.active)
@@ -139,6 +142,13 @@ export default function SettingsPage() {
                         checked={handGuide}
                         onChecked={toggleHandGuide}
                         icon={Hand}
+                    />
+                    <SettingRow
+                        title="Focus mode"
+                        description="Hide the header while typing and keep only the text in view."
+                        checked={focusMode}
+                        onChecked={setFocusMode}
+                        icon={Focus}
                     />
                     <SettingRow
                         title="Confirm before abandoning a round"

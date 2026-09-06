@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AlertCircle, ArrowLeft, Check, Keyboard, LayoutDashboard, Loader2 } from 'lucide-react'
+import { AlertCircle, ArrowLeft, Check, Keyboard, LayoutDashboard, Loader2, Pause, Play, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import * as backend from '@/services/backend'
 import { useTypingStore, buildAdaptiveDrill } from '@/stores/typing-store'
+import { useUiStore } from '@/stores/ui-store'
 import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
 import { TargetText } from '@/components/target-text'
 import { StatsBar } from '@/components/stats-bar'
@@ -17,7 +18,7 @@ import { Spinner, EmptyState } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import type { TypingMode } from '@/types'
 
-function Session({
+export function Session({
     durationSeconds,
     sourceName,
     eyebrow,
@@ -34,6 +35,7 @@ function Session({
     const start = useTypingStore((s) => s.start)
     const togglePause = useTypingStore((s) => s.togglePause)
     const abandon = useTypingStore((s) => s.abandon)
+    const focusMode = useUiStore((s) => s.focusMode)
     const exitGuard = useConfirmExit(() => {
         abandon()
         onExit?.()
@@ -43,6 +45,10 @@ function Session({
 
     const toggleAction = status === 'running' || status === 'paused' ? togglePause : start
 
+    // Focus mode keeps only the target text + keyboard on screen while typing,
+    // replacing the header chrome with a tiny floating control row.
+    const minimalChrome = focusMode && (status === 'running' || status === 'ready') && !error
+
     return (
         <motion.div
             className="flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden"
@@ -50,14 +56,40 @@ function Session({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
         >
-            <SessionHeader
-                eyebrow={eyebrow ?? (durationSeconds !== null ? 'Timed practice' : 'Lesson')}
-                title={sourceName}
-                status={status}
-                durationSeconds={durationSeconds}
-                onToggle={toggleAction}
-                onExit={exitGuard.requestExit}
-            />
+            <AnimatePresence initial={false}>
+                {minimalChrome ? (
+                    <motion.div
+                        key="chrome"
+                        className="flex shrink-0 items-center justify-center gap-2 px-5 pt-3"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <div className="flex items-center gap-1.5 rounded-full border border-line/70 bg-background/60 px-2.5 py-1.5 opacity-50 backdrop-blur transition-opacity hover:opacity-100">
+                            <Button variant="ghost" size="sm" onClick={(e) => { e.currentTarget.blur(); exitGuard.requestExit() }}>
+                                <LogOut className="size-3.5" />
+                                Exit
+                            </Button>
+                            <span className="h-4 w-px bg-line/70" aria-hidden />
+                            <Button variant="ghost" size="sm" onClick={(e) => { e.currentTarget.blur(); toggleAction() }}>
+                                {status === 'running' ? <Pause className="size-3.5" /> : <Play className="size-3.5" />}
+                                {status === 'running' ? 'Pause' : 'Start'}
+                            </Button>
+                        </div>
+                    </motion.div>
+                ) : (
+                    <motion.div key="chrome" initial={false} animate={{ opacity: 1 }}>
+                        <SessionHeader
+                            eyebrow={eyebrow ?? (durationSeconds !== null ? 'Timed practice' : 'Lesson')}
+                            title={sourceName}
+                            status={status}
+                            durationSeconds={durationSeconds}
+                            onToggle={toggleAction}
+                            onExit={exitGuard.requestExit}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {error ? (
                 <p

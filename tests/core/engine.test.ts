@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { computeScore, type ScoreMetrics } from '@/core/scoring/score'
+import { computeScore, speedSeries, type ScoreMetrics } from '@/core/scoring/score'
 
 import { buildSequence, graphemeUnitRuns } from '@/core/typing-engine/sequence'
 import { TypingEngine } from '@/core/typing-engine/engine'
@@ -26,6 +26,34 @@ describe('scoring', () => {
         expect(ok.accuracy).toBeGreaterThanOrEqual(90)
         expect(ok.grossWpm).toBeGreaterThan(20)
         expect(ok.grossWpm).toBeCloseTo(30, 5)
+    })
+
+    it('builds a per-second pacing series in WPM for English', () => {
+        const times = [100, 300, 1500, 2200, 4100]
+        const series = speedSeries({ correctAttempts: 5, incorrectAttempts: 0, backspaceCount: 0, elapsedSeconds: 5, language: 'english', correctTimes: times })
+        expect(series).toHaveLength(5)
+        expect(series[0]).toBeCloseTo(24, 5) // 2 correct in the first second → 120 raw wpm / 5
+        expect(series[1]).toBeCloseTo(12, 5) // 1500
+        expect(series[2]).toBeCloseTo(12, 5) // 2200
+        expect(series[3]).toBe(0)
+        expect(series[4]).toBeCloseTo(12, 5) // 4100
+    })
+
+    it('builds a per-second pacing series in typing units for Myanmar', () => {
+        const times = [100, 300, 1500, 2200, 4100]
+        const series = speedSeries({ correctAttempts: 5, incorrectAttempts: 0, backspaceCount: 0, elapsedSeconds: 5, language: 'myanmar', correctTimes: times })
+        expect(series[0]).toBeCloseTo(120, 5) // 2 units in the first second → 120 units/min
+        expect(series[1]).toBeCloseTo(60, 5)
+        expect(series[2]).toBeCloseTo(60, 5)
+        expect(series[3]).toBe(0)
+        expect(series[4]).toBeCloseTo(60, 5)
+    })
+
+    it('keeps a sub-second run to a single populated bucket', () => {
+        const times = [100]
+        const series = speedSeries({ correctAttempts: 1, incorrectAttempts: 0, backspaceCount: 0, elapsedSeconds: 0.4, language: 'english', correctTimes: times })
+        expect(series).toHaveLength(1)
+        expect(series[0]).toBeCloseTo(30, 5)
     })
 })
 
@@ -451,5 +479,147 @@ describe('typing engine', () => {
         expect(engine.status).toBe('finished')
         expect(engine.finishReason).toBe('completed')
         expect(engine.unitIndex).toBe(0)
+    })
+})
+
+describe('engine language-aware metrics', () => {
+    it('reports Myanmar speed in typing units with cluster count', () => {
+        const seq = buildSequence('\u1039\u1000\u103B\u102C\u1019\u103A\u1038', myanmar)
+        const engine = new TypingEngine({ sequence: seq, layout: myanmar })
+        for (const unit of seq.units) {
+            engine.processKey(unit.keyCode, unit.modifier)
+        }
+        const metrics = engine.currentMetrics()
+        expect(metrics.language).toBe('myanmar')
+        expect(metrics.speedUnit).toBe('units/min')
+        expect(metrics.graphemeClusters).toBe(seq.graphemes.length)
+        expect(metrics.correctAttempts).toBe(seq.units.length)
+    })
+
+    it('tracks pacing consistency from correct keystroke times', () => {
+        let clock = 0
+        const now = () => clock
+        const seq = buildSequence('steady typing test', englishQwerty)
+        const engine = new TypingEngine({ sequence: seq, layout: englishQwerty, now })
+        for (const unit of seq.units) {
+            clock += 80
+            engine.processKey(unit.keyCode, unit.modifier)
+        }
+        const metrics = engine.currentMetrics()
+        expect(metrics.consistency).toBeGreaterThanOrEqual(60)
+    })
+})
+
+describe('engine Myanmar cluster diagnosis', () => {
+    it('classifies a correctly typed cluster as ok', () => {
+        // မြ = U+1019 (မ, KeyR) + U+103C (ြ, KeyJ)
+        const seq = buildSequence('\u1019\u103C', myanmar)
+        const engine = new TypingEngine({ sequence: seq, layout: myanmar })
+        engine.processKey('KeyR', 'none')
+        engine.processKey('KeyJ', 'none')
+        const diagnosis = engine.clusterDiagnosisFor(0)
+        expect(diagnosis?.kind).toBe('ok')
+    })
+
+    it('flags a corrected wrong medial press as an extra mark', () => {
+        // Expected မြ, learner first pressed ျ (KeyS) then corrected with ြ (KeyJ).
+        // The stray press is preserved in the cluster's typed run and surfaces
+        // as an extra medial in the diagnosis.
+        const seq = buildSequence('\u1019\u103C', myanmar)
+        const engine = new TypingEngine({ sequence: seq, layout: myanmar })
+        engine.processKey('KeyR', 'none')
+        engine.processKey('KeyS', 'none')
+        expect(engine.clusterDiagnosisFor(0)).toBeNull()
+        engine.processKey('KeyJ', 'none')
+        const diagnosis = engine.clusterDiagnosisFor(0)
+        expect(diagnosis?.kind).toBe('extra-mark')
+        expect(diagnosis?.extra.join('')).toBe('\u103B')
+    })
+
+    it('clears a cluster diagnosis when backspace rewinds it', () => {
+        // Two identical clusters to keep the run alive while we rewind.
+        const seq = buildSequence('\u1019\u103C\u1019\u103C', myanmar)
+        const engine = new TypingEngine({ sequence: seq, layout: myanmar })
+        engine.processKey('KeyR', 'none')
+        engine.processKey('KeyS', 'none')
+        engine.processKey('KeyJ', 'none')
+        expect(engine.clusterDiagnosisFor(0)?.kind).toBe('extra-mark')
+        expect(engine.unitIndex).toBe(2)
+        engine.processKey('Backspace', 'none')
+        expect(engine.clusterDiagnosisFor(0)).toBeNull()
+        expect(engine.unitIndex).toBe(0)
+        engine.processKey('KeyR', 'none')
+        engine.processKey('KeyJ', 'none')
+        expect(engine.clusterDiagnosisFor(0)?.kind).toBe('ok')
+    })
+
+    it('grades a pre-base vowel cluster correctly in keyboard press order', () => {
+        // Stored logical ရေ = U+101B U+1031; press order is U+1031 (KeyA) then U+101B (Shift+Digit7).
+        const seq = buildSequence('\u101B\u1031', myanmar)
+        expect(seq.units.map((u) => u.keyCode)).toEqual(['KeyA', 'Digit7'])
+        expect(seq.units[1].modifier).toBe('shift')
+        const engine = new TypingEngine({ sequence: seq, layout: myanmar })
+        engine.processKey('KeyA', 'none')
+        engine.processKey('Digit7', 'shift')
+        expect(engine.clusterDiagnosisFor(0)?.kind).toBe('ok')
+    })
+
+    it('restart resets every metric and emits a restart event', () => {
+        const seq = buildSequence('cat', englishQwerty)
+        const events: string[] = []
+        const engine = new TypingEngine({
+            sequence: seq,
+            layout: englishQwerty,
+            onEvent: (event) => events.push(event.type),
+        })
+        engine.processKey('KeyX', 'none')
+        engine.processKey('KeyC', 'none')
+        expect(engine.unitIndex).toBe(1)
+        expect(engine.correctCount).toBe(1)
+        expect(engine.incorrectCount).toBe(1)
+
+        engine.restart()
+        expect(events[events.length - 1]).toBe('restart')
+        expect(engine.status).toBe('ready')
+        expect(engine.finishReason).toBeNull()
+        expect(engine.unitIndex).toBe(0)
+        expect(engine.correctCount).toBe(0)
+        expect(engine.incorrectCount).toBe(0)
+        expect(engine.backspaceCount).toBe(0)
+        expect(engine.shiftErrorCount).toBe(0)
+        expect(engine.totalKeys).toBe(0)
+        expect(engine.correctTimes).toHaveLength(0)
+
+        // The same engine is fully usable after restart.
+        engine.processKey('KeyC', 'none')
+        engine.processKey('KeyA', 'none')
+        engine.processKey('KeyT', 'none')
+        expect(engine.status).toBe('finished')
+        expect(engine.correctCount).toBe(3)
+    })
+
+    it('restart snaps the stopwatch back to zero instead of keeping the old run base', () => {
+        let now = 0
+        const clock = () => now
+        const seq = buildSequence('cat', englishQwerty)
+        const engine = new TypingEngine({ sequence: seq, layout: englishQwerty, now: clock })
+        now = 1_000
+        engine.processKey('KeyX', 'none')
+        engine.processKey('KeyC', 'none')
+        expect(engine.correctTimes).toHaveLength(1)
+        expect(engine.correctTimes[0]).toBe(0)
+
+        engine.restart()
+        expect(engine.correctTimes).toHaveLength(0)
+
+        // If the stopwatch were not reset, the correct timing would land at
+        // 10_000 (relative to the first run's start); a fresh base starts at 0.
+        now = 10_000
+        engine.processKey('KeyC', 'none')
+        engine.processKey('KeyA', 'none')
+        engine.processKey('KeyT', 'none')
+        expect(engine.status).toBe('finished')
+        expect(engine.correctTimes).toHaveLength(3)
+        expect(engine.correctTimes[0]).toBeLessThan(100)
     })
 })

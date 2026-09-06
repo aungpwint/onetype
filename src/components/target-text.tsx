@@ -1,9 +1,10 @@
 import { memo, useCallback, useLayoutEffect, useMemo, useRef } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
 import { useTypingStore } from '@/stores/typing-store'
 import { cn } from '@/lib/utils'
 import { containsMyanmar } from '@/core/unicode/myanmar'
-import { graphemeUnitRuns } from '@/core/typing-engine/sequence'
+import { graphemeUnitRuns, type GraphemeRun } from '@/core/typing-engine/sequence'
+import { CHAR_CORRECT, CHAR_INCORRECT, clusterPhaseCode, flashIndexMatches, rangeHasIncorrect } from '@/core/typing-engine/char-state'
 
 const CARET_ANCHOR = 0.45
 const CONTENT_INSET = 24
@@ -11,13 +12,13 @@ const CONTENT_INSET = 24
 export function TargetText() {
     const session = useTypingStore((s) => s.session)
     const engine = useTypingStore((s) => s.engine)
-    const wrongFlash = useTypingStore((s) => s.wrongFlash)
+    const reducedMotion = useReducedMotion()
 
     const viewportRef = useRef<HTMLDivElement | null>(null)
     const contentRef = useRef<HTMLDivElement | null>(null)
     const caretRef = useRef<HTMLSpanElement | null>(null)
 
-    const unitIndex = engine?.unitIndex ?? 0
+    const unitIndex = useTypingStore((s) => s.engine?.unitIndex ?? 0)
     const sequence = engine?.sequence
     const phases = useMemo(() => session?.resolved.phases ?? [], [session])
 
@@ -30,17 +31,20 @@ export function TargetText() {
 
     const activePhaseKey = activePhase ? `${activePhase.label}-${activePhase.startUnit}` : null
 
-    const graphemes = useMemo(() => {
-        const runs = sequence ? graphemeUnitRuns(sequence) : []
-        if (!activePhase) return runs
-        return runs.filter((g) => g.startUnit >= activePhase.startUnit && g.endUnit <= activePhase.endUnit)
+    // The run list is stable across keystrokes within a phase (its memo output is
+    // re-used while `activePhase` keeps its identity), so TextContent can bail out
+    // completely on every caret advance instead of re-creating every char.
+    const runs = useMemo(() => {
+        const all = sequence ? graphemeUnitRuns(sequence) : []
+        if (!activePhase) return all
+        return all.filter((g) => g.startUnit >= activePhase.startUnit && g.endUnit <= activePhase.endUnit)
     }, [sequence, activePhase])
 
     const motionOffset = useMotionValue(0)
     const springOffset = useSpring(motionOffset, {
-        stiffness: 1100,
-        damping: 60,
-        mass: 0.22,
+        stiffness: reducedMotion ? 2000 : 1100,
+        damping: reducedMotion ? 150 : 60,
+        mass: reducedMotion ? 0.01 : 0.22,
     })
 
     const sessionKey = session ? `${session.kind}-${session.lessonId ?? session.test?.id ?? ''}-${session.attempt}` : null
@@ -79,8 +83,6 @@ export function TargetText() {
 
     if (!session || !engine) return null
 
-    const flashAt = wrongFlash?.unitIndex ?? -1
-
     return (
         <motion.div
             className="mx-auto w-full max-w-4xl"
@@ -98,26 +100,7 @@ export function TargetText() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.22, ease: 'easeOut' }}
                         >
-                            {graphemes.map((g) => {
-                                const isCurrent = unitIndex >= g.startUnit && unitIndex < g.endUnit
-                                const isCompleted = g.endUnit <= unitIndex
-                                const spanUnits = g.endUnit - g.startUnit
-                                const typedUnits = Math.max(0, Math.min(spanUnits, unitIndex - g.startUnit))
-                                const progress = spanUnits === 0 ? 1 : typedUnits / spanUnits
-                                return (
-                                    <Char
-                                        key={g.index}
-                                        text={g.text}
-                                        startUnit={g.startUnit}
-                                        endUnit={g.endUnit}
-                                        progress={progress}
-                                        completed={isCompleted}
-                                        current={isCurrent}
-                                        flash={flashAt >= g.startUnit && flashAt < g.endUnit}
-                                        onCaret={isCurrent ? onCaretRef : undefined}
-                                    />
-                                )
-                            })}
+                            <TextContent runs={runs} onCaret={onCaretRef} />
                         </motion.p>
                     </motion.div>
                 </div>
@@ -126,51 +109,76 @@ export function TargetText() {
     )
 }
 
+const TextContent = memo(function TextContent({ runs, onCaret }: { runs: GraphemeRun[]; onCaret: (el: HTMLSpanElement | null) => void }) {
+    return (
+        <>
+            {runs.map((g) => (
+                <Char
+                    key={g.index}
+                    text={g.text}
+                    graphemeIndex={g.index}
+                    startUnit={g.startUnit}
+                    endUnit={g.endUnit}
+                    onCaret={onCaret}
+                />
+            ))}
+        </>
+    )
+})
+
 const Char = memo(function Char({
     text,
+    graphemeIndex,
     startUnit,
     endUnit,
-    progress,
-    completed,
-    current,
-    flash,
     onCaret,
 }: {
     text: string
+    graphemeIndex: number
     startUnit: number
     endUnit: number
-    progress: number
-    completed: boolean
-    current: boolean
-    flash: boolean
-    onCaret?: (el: HTMLSpanElement | null) => void
+    onCaret: (el: HTMLSpanElement | null) => void
 }) {
-    const engine = useTypingStore.getState().engine
-    const font = containsMyanmar(text) ? 'font-myanmar' : 'font-heavy'
-    let status: 'correct' | 'incorrect' | 'current' | 'pending' = 'pending'
-    if (current) {
-        status = 'current'
-    } else if (completed) {
-        let incorrect = false
-        for (let u = startUnit; u < endUnit; u++) {
-            if (engine?.unitOutcomeAt(u) === 'incorrect') {
-                incorrect = true
-                break
-            }
+    // Each component reads its own presentation state straight from the store as
+    // a single primitive. Only the few clusters around the caret change between
+    // keystrokes, so only those components re-render (React compares selector
+    // snapshots by identity).
+    const phase = useTypingStore((s) => {
+        const engine = s.engine
+        const unit = engine?.unitIndex ?? 0
+        if (unit >= endUnit) {
+            if (engine && rangeHasIncorrect(engine, startUnit, endUnit)) return CHAR_INCORRECT
+            return CHAR_CORRECT
         }
-        status = incorrect ? 'incorrect' : 'correct'
-    }
+        return clusterPhaseCode(unit, startUnit, endUnit)
+    })
+    const flashing = useTypingStore((s) => flashIndexMatches(s.wrongFlash?.unitIndex, startUnit, endUnit))
+    const slipKind = useTypingStore((s) => {
+        if (phase === CHAR_INCORRECT && s.engine) {
+            const d = s.engine.clusterDiagnosisFor(graphemeIndex)
+            return d ? d.kind : null
+        }
+        return null
+    })
 
-    if (status === 'current') {
+    const font = containsMyanmar(text) ? 'font-myanmar' : 'font-heavy'
+
+    if (phase >= 1 && phase < 2) {
+        const progress = phase - 1
         return (
-            <span ref={onCaret} className={cn('tt-char tt-char-now char-pop', font, flash ? 'tt-char-flash' : 'tt-char-focus')}>
+            <span ref={onCaret} className={cn('tt-char tt-char-now char-pop', font, flashing ? 'tt-char-flash' : 'tt-char-focus')}>
                 {text}
                 <span aria-hidden className="tt-caret z-10" style={{ left: `clamp(0px, ${progress * 100}%, calc(100% - var(--tt-caret-w)))` }} />
             </span>
         )
     }
 
-    const cls = cn(status === 'correct' ? 'tt-char tt-char-ok' : status === 'incorrect' ? 'tt-char tt-char-miss' : 'tt-char tt-char-typed', font)
+    const visual = phase === CHAR_INCORRECT ? 'incorrect' : phase === CHAR_CORRECT ? 'correct' : 'pending'
+    const cls = cn(
+        'tt-char',
+        visual === 'correct' ? 'tt-char-ok' : visual === 'incorrect' ? cn('tt-char-miss', slipKind ? `tt-cl-slip tt-cl-slip--${slipKind}` : null) : 'tt-char-typed',
+        font,
+    )
 
     return <span className={cls}>{text}</span>
 })

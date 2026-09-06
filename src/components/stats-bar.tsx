@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTypingStore } from '@/stores/typing-store'
 import { formatDuration } from '@/lib/format'
-import { cn } from '@/lib/utils'
 import { Metric } from '@/components/ui'
 
 export function StatsBar() {
@@ -23,21 +22,32 @@ export function StatsBar() {
     const engine = useTypingStore.getState().engine
     const remaining = durationSeconds !== null && engine ? Math.max(0, durationSeconds - engine.elapsedSeconds()) : null
 
-    const wpm = Math.round(stats.wpm)
+    // Myanmar is reported in honest typing units/minute; English keeps WPM.
+    const metrics = engine?.currentMetrics()
+    const speedUnit = metrics?.speedUnit ?? 'wpm'
+    const speedLabel = speedUnit === 'units/min' ? 'UNITS/MIN' : 'WPM'
+    const speed = Math.round(metrics?.speed ?? stats.wpm)
+    const raw = Math.round(metrics?.rawSpeed ?? 0)
+    const consistency = Math.round(metrics?.consistency ?? 100)
     const progress = stats.totalUnits > 0 ? Math.round((stats.unitIndex / stats.totalUnits) * 100) : 0
     const idle = stats.unitIndex === 0
+    const rawLabel = speedUnit === 'units/min' ? 'Raw units/min' : 'Raw WPM'
 
     return (
         <div className="flex w-full flex-col items-center">
             <div className="flex items-end justify-center gap-2.5">
-                <span className={cn('font-heavy text-6xl leading-[0.9] tracking-tight text-ink tabular-nums sm:text-7xl')}>
-                    {idle ? '—' : wpm}
+                <span className="font-heavy text-6xl leading-[0.9] tracking-tight text-ink tabular-nums sm:text-7xl">
+                    {idle ? '—' : speed}
                 </span>
-                <span className="mb-1 text-xs font-semibold tracking-[0.24em] text-muted-foreground uppercase">WPM</span>
+                <span className="mb-1 text-xs font-semibold tracking-[0.24em] text-muted-foreground uppercase">{speedLabel}</span>
             </div>
 
-            <div className="mt-3.5 flex items-center gap-4 sm:gap-5">
+            <div className="mt-3.5 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
                 <Metric label="Accuracy" value={idle ? '—' : `${stats.accuracy.toFixed(1)}%`} />
+                <span className="h-5 w-px bg-line-strong/60" aria-hidden />
+                <Metric label={rawLabel} value={idle ? '—' : String(raw)} />
+                <span className="h-5 w-px bg-line-strong/60" aria-hidden />
+                <Metric label="Consistency" value={idle ? '—' : `${consistency}%`} />
                 <span className="h-5 w-px bg-line-strong/60" aria-hidden />
                 <Metric
                     label={durationSeconds !== null ? 'Time' : 'Progress'}

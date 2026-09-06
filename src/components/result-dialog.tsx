@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { Gauge, Target, AlignLeft, ArrowRight, RotateCcw, ArrowLeft, Trophy, CheckCircle2 } from 'lucide-react'
-import { useTypingStore, buildAdaptiveDrill } from '@/stores/typing-store'
+import { Gauge, Target, AlignLeft, ArrowRight, RotateCcw, ArrowLeft, Trophy, CheckCircle2, AlertTriangle } from 'lucide-react'
+import { useTypingStore } from '@/stores/typing-store'
 import { useLessonStore } from '@/stores/lesson-store'
 import { ACHIEVEMENT_CATALOG } from '@/data/achievements'
 import { Modal } from './ui'
@@ -8,7 +8,10 @@ import { Button } from './ui/button'
 import { Badge } from './ui/badge'
 import { formatDuration } from '@/lib/format'
 import { containsMyanmar } from '@/core/unicode/myanmar'
+import { summarizeClusterDiagnoses, type ClusterSlipSummary } from '@/core/unicode/comparison'
 import { cn, eyebrowClass } from '@/lib/utils'
+import { speedSeries } from '@/core/scoring/score'
+import { WpmBars } from '@/components/wpm-bars'
 import type { MasteryDelta, MasteryLevel } from '@/core/mastery'
 
 const MASTERY_COPY: Record<MasteryLevel, string> = {
@@ -48,9 +51,7 @@ export function ResultDialog() {
     const result = useTypingStore((s) => s.result)
     const session = useTypingStore((s) => s.session)
     const clear = useTypingStore((s) => s.clear)
-    const beginLesson = useTypingStore((s) => s.beginLesson)
-    const beginTest = useTypingStore((s) => s.beginTest)
-    const beginDrill = useTypingStore((s) => s.beginDrill)
+    const retry = useTypingStore((s) => s.retry)
     const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel)
 
     if (!result || !session) return null
@@ -61,10 +62,11 @@ export function ResultDialog() {
     const metrics = result.metrics
     const isLesson = session.kind === 'lesson'
     const isDrill = session.kind === 'drill'
+    const isPractice = session.kind === 'practice'
     // Drills are practice without a pass/fail gate, so they always show as complete.
     const target = isLesson
         ? session.resolved.completion
-        : isDrill
+        : isDrill || isPractice
           ? { minAccuracy: 0, minWpm: null as number | null }
           : { minAccuracy: session.test!.minAccuracy, minWpm: session.test!.minWpm }
 
@@ -80,22 +82,8 @@ export function ResultDialog() {
         clear()
     }
 
-    const retry = () => {
-        if (session.kind === 'lesson') {
-            const id = session.lessonId!
-            const mode = session.mode
-            clear()
-            void beginLesson(id, mode)
-        } else if (session.kind === 'drill') {
-            clear()
-            void buildAdaptiveDrill().then((drill) => {
-                if (drill) void beginDrill(drill)
-            })
-        } else {
-            const test = session.test!
-            clear()
-            void beginTest(test)
-        }
+    const retryNow = () => {
+        retry()
     }
 
     const beforeNavigate = (to: string) => () => {
@@ -117,6 +105,8 @@ export function ResultDialog() {
                                     {session.resolved.title}
                                 </span>
                             </>
+                        ) : isPractice ? (
+                            `Quick practice · attempt ${result.attempt}`
                         ) : (
                             `Test · ${session.test!.code}`
                         )}{' '}
@@ -126,7 +116,7 @@ export function ResultDialog() {
                         {isDrill
                             ? 'Drill complete'
                             : result.passed
-                              ? isLesson
+                              ? isLesson || isPractice
                                   ? 'Lesson passed'
                                   : 'Test passed'
                               : 'Round finished — not yet passed'}
@@ -135,8 +125,10 @@ export function ResultDialog() {
                         {isDrill
                             ? 'Loosened up those weak spots. Practice keeps the finger memory sharp.'
                             : result.passed
-                              ? isLesson
-                                  ? 'Well typed. Move to the next line.'
+                              ? isLesson || isPractice
+                                  ? isPractice
+                                      ? 'Clean run. Repeat to sharpen, or tweak the add-ons and go again.'
+                                      : 'Well typed. Move to the next line.'
                                   : 'You beat the target. Keep the form.'
                               : `Target was ${target.minAccuracy}% accuracy${target.minWpm !== null ? ` and ${target.minWpm} WPM` : ''}. One more round.`}
                     </p>
@@ -144,12 +136,24 @@ export function ResultDialog() {
             </div>
 
             <div className="mt-5 grid grid-cols-3 gap-3">
-                <Metric icon={<Gauge className="size-4" />} label="WPM" value={String(Math.round(metrics.grossWpm))} />
+                <Metric
+                    icon={<Gauge className="size-4" />}
+                    label={metrics.speedUnit === 'units/min' ? 'Units/min' : 'WPM'}
+                    value={String(Math.round(metrics.speed))}
+                />
                 <Metric icon={<Target className="size-4" />} label="Accuracy" value={`${metrics.accuracy.toFixed(1)}%`} />
-                <Metric icon={<AlignLeft className="size-4" />} label="CPM" value={String(Math.round(metrics.cpm))} />
+                <Metric
+                    icon={<AlignLeft className="size-4" />}
+                    label={metrics.speedUnit === 'units/min' ? 'Raw units/min' : 'Raw WPM'}
+                    value={String(Math.round(metrics.rawSpeed))}
+                />
             </div>
 
             <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
+                <div className="flex justify-between">
+                    <dt className="text-muted-foreground">Consistency</dt>
+                    <dd className="tabular-nums">{metrics.consistency.toFixed(0)}%</dd>
+                </div>
                 <div className="flex justify-between">
                     <dt className="text-muted-foreground">Errors</dt>
                     <dd className="tabular-nums">{metrics.incorrectAttempts}</dd>
@@ -158,15 +162,22 @@ export function ResultDialog() {
                     <dt className="text-muted-foreground">Backspaces</dt>
                     <dd className="tabular-nums">{metrics.backspaceCount}</dd>
                 </div>
-                <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Characters typed</dt>
-                    <dd className="tabular-nums">{metrics.correctAttempts}</dd>
-                </div>
+                {metrics.speedUnit === 'units/min' ? (
+                    <div className="flex justify-between">
+                        <dt className="text-muted-foreground">Grapheme clusters</dt>
+                        <dd className="tabular-nums">{metrics.graphemeClusters}</dd>
+                    </div>
+                ) : (
+                    <div className="flex justify-between">
+                        <dt className="text-muted-foreground">Characters typed</dt>
+                        <dd className="tabular-nums">{metrics.correctAttempts}</dd>
+                    </div>
+                )}
                 <div className="flex justify-between">
                     <dt className="text-muted-foreground">Time</dt>
                     <dd className="tabular-nums">{formatDuration(metrics.elapsedSeconds * 1000)}</dd>
                 </div>
-                {!isDrill ? (
+                {!isDrill && !isPractice ? (
                     <div className="flex justify-between">
                         <dt className="text-muted-foreground">Target</dt>
                         <dd className="tabular-nums">
@@ -181,6 +192,10 @@ export function ResultDialog() {
                     </dd>
                 </div>
             </dl>
+
+            {metrics.elapsedSeconds > 1 ? <PacingChart /> : null}
+
+            {metrics.speedUnit === 'units/min' ? <ClusterSlips /> : null}
 
             {isLesson && result.masteryDelta ? <MasteryNotice delta={result.masteryDelta} /> : null}
 
@@ -211,7 +226,7 @@ export function ResultDialog() {
             ) : null}
 
             <div className="mt-6 flex flex-wrap justify-end gap-2">
-                <Button variant="outline" onClick={beforeNavigate(isDrill ? '/' : isLesson ? '/learn' : '/tests')}>
+                <Button variant="outline" onClick={beforeNavigate(isDrill ? '/' : isLesson ? '/learn' : isPractice ? '/practice' : '/tests')}>
                     <ArrowLeft className="size-4" />
                     {isDrill ? 'Dashboard' : 'Back to list'}
                 </Button>
@@ -221,12 +236,48 @@ export function ResultDialog() {
                         <ArrowRight className="size-4" />
                     </Button>
                 ) : null}
-                <Button onClick={retry}>
+                <Button onClick={retryNow}>
                     <RotateCcw className="size-4" />
                     Type again
                 </Button>
             </div>
         </Modal>
+    )
+}
+
+function ClusterSlips() {
+    const engine = useTypingStore((s) => s.engine)
+    const diagnoses = engine?.diagnoseClusters() ?? []
+    const summary = summarizeClusterDiagnoses(diagnoses)
+    if (summary.length === 0) return null
+
+    const copy: Record<ClusterSlipSummary['kind'], { title: string; hint: string }> = {
+        'missing-mark': { title: 'Missing mark', hint: 'A tone mark, medial or vowel was left out' },
+        'extra-mark': { title: 'Extra mark', hint: 'An unneeded mark was typed' },
+        'wrong-order': { title: 'Order slip', hint: 'The marks are right but typed in the wrong order' },
+        'wrong-sequence': { title: 'Mixed marks', hint: 'One or more marks were replaced by the wrong one' },
+        'wrong-character': { title: 'Wrong base', hint: 'The base letter or token was wrong' },
+    }
+
+    return (
+        <div className="mt-4 rounded-xl border border-line bg-muted/40 p-3">
+            <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
+                <AlertTriangle className="size-3.5 text-brass" />
+                Common Myanmar slips
+            </p>
+            <ul className="mt-2 space-y-2">
+                {summary.map((s) => (
+                    <li key={s.kind} className="flex items-start gap-2 text-sm">
+                        <span className="mt-0.5 rounded-md bg-muted px-1.5 py-0.5 font-mono text-xs">{s.count}×</span>
+                        <span>
+                            <span className="font-medium">{copy[s.kind].title}</span>
+                            <span className="text-muted-foreground"> — {copy[s.kind].hint}</span>
+                            <span className="ml-1 font-mono text-xs text-muted-foreground tabular-nums">{s.example}</span>
+                        </span>
+                    </li>
+                ))}
+            </ul>
+        </div>
     )
 }
 
@@ -236,6 +287,32 @@ function Metric({ icon, label, value }: { icon: React.ReactNode; label: string; 
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-background text-muted-foreground shadow-sm">{icon}</span>
             <p className={eyebrowClass}>{label}</p>
             <p className="font-display text-2xl tabular-nums md:text-3xl">{value}</p>
+        </div>
+    )
+}
+
+function PacingChart() {
+    const engine = useTypingStore((s) => s.engine)
+    const metrics = useTypingStore((s) => s.result?.metrics)
+    if (!engine || !metrics) return null
+    const series = speedSeries({
+        correctAttempts: metrics.correctAttempts,
+        incorrectAttempts: metrics.incorrectAttempts,
+        backspaceCount: metrics.backspaceCount,
+        elapsedSeconds: metrics.elapsedSeconds,
+        language: metrics.language,
+        correctTimes: engine.correctTimes,
+    })
+    const unit = metrics.speedUnit === 'units/min' ? 'units/min' : 'wpm'
+    return (
+        <div className="mt-4 rounded-xl border border-line bg-muted/40 p-3">
+            <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
+                <Gauge className="size-3.5 text-accent" />
+                Speed over time
+            </p>
+            <div className="mt-2">
+                <WpmBars values={series} unit={unit} ariaLabel={`Typing speed over time (${unit})`} />
+            </div>
         </div>
     )
 }

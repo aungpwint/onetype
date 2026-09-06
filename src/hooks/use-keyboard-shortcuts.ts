@@ -63,15 +63,20 @@ export function useKeyboardShortcuts() {
                 if (st.status === 'running' || st.status === 'paused') st.togglePause()
                 return
             }
-            // R while paused or ready restarts current session
+            // R restarts from a non-typing state (ready/paused) instantly, in
+            // place, with the same text and a fully reset timer/metrics. While
+            // actively running, R is just a typed key (r is a common target
+            // letter) — mid-run instant restart stays on Tab (see bindKeys). On
+            // the finished screen R starts a fresh run, like the dialog's
+            // "Type again".
             if (!mod && key === 'r' && typingActive) {
                 const st = useTypingStore.getState()
                 if (st.status === 'ready' || st.status === 'paused') {
-                    const { session } = st
-                    if (!session) return
-                    st.abandon()
-                    if (session.kind === 'lesson' && session.lessonId) void useTypingStore.getState().beginLesson(session.lessonId, session.mode)
-                    else if (session.kind === 'test' && session.test) void useTypingStore.getState().beginTest(session.test)
+                    st.restart()
+                    return
+                }
+                if (st.status === 'finished') {
+                    st.retry()
                     return
                 }
             }

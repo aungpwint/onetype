@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import {
     LayoutDashboard,
     BookOpen,
+    Zap,
     Target,
     Timer,
     TrendingUp,
@@ -34,6 +35,7 @@ import { cn, sectionTitleClass, highlightClass } from '@/lib/utils'
 const NAV = [
     { to: '/', label: 'Dashboard', en: 'Dashboard', icon: LayoutDashboard },
     { to: '/learn', label: 'Learn', en: 'Learn', icon: BookOpen },
+    { to: '/practice', label: 'Practice', en: 'Practice', icon: Zap },
     { to: '/drill', label: 'Adaptive drill', en: 'Adaptive drill', icon: Target },
     { to: '/tests', label: 'Timed tests', en: 'Timed tests', icon: Timer },
     { to: '/progress', label: 'Progress', en: 'Progress', icon: TrendingUp },

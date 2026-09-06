@@ -7,11 +7,13 @@ interface UiState {
     sidebarOpen: boolean
     handGuideVisible: boolean
     soundEnabled: boolean
+    focusMode: boolean
     setTheme: (theme: ThemePreference) => void
     toggleSidebar: () => void
     setSidebarOpen: (open: boolean) => void
     toggleHandGuide: () => void
     setSoundEnabled: (enabled: boolean) => void
+    setFocusMode: (enabled: boolean) => void
 }
 
 function readStoredTheme(): ThemePreference {
@@ -29,6 +31,14 @@ function readStoredSound(): boolean {
         return localStorage.getItem('onetype:sound') !== 'off'
     } catch {
         return true
+    }
+}
+
+function readStoredFocusMode(): boolean {
+    try {
+        return localStorage.getItem('onetype:focus-mode') === 'on'
+    } catch {
+        return false
     }
 }
 
@@ -50,6 +60,7 @@ export const useUiStore = create<UiState>((set) => ({
     sidebarOpen: true,
     handGuideVisible: false,
     soundEnabled: readStoredSound(),
+    focusMode: readStoredFocusMode(),
     setTheme: (theme) => {
         localStorage.setItem('onetype:theme', theme)
         applyTheme(theme)
@@ -61,6 +72,10 @@ export const useUiStore = create<UiState>((set) => ({
     setSoundEnabled: (enabled) => {
         localStorage.setItem('onetype:sound', enabled ? 'on' : 'off')
         set({ soundEnabled: enabled })
+    },
+    setFocusMode: (enabled) => {
+        localStorage.setItem('onetype:focus-mode', enabled ? 'on' : 'off')
+        set({ focusMode: enabled })
     },
 }))
 

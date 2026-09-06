@@ -340,6 +340,51 @@
         color: var(--typing-upcoming);
     }
 
+    /* Cluster-slip markers: a short static underscore under a *completed*
+     Myanmar syllable that was classified as a specific slip kind, so the
+     learner sees at a glance what went wrong (missing tone mark, extra
+     medial, swapped pre-base vowel, …). Pure ::after — no width change, no
+     animation, so layout never shifts. */
+    .tt-cl-slip {
+        position: relative;
+    }
+
+    .tt-cl-slip::after {
+        content: '';
+        position: absolute;
+        left: 0.08em;
+        right: 0.08em;
+        bottom: -0.14em;
+        height: 0.14em;
+        border-radius: 999px;
+        background: currentColor;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .tt-cl-slip--wrong-character::after,
+    .tt-cl-slip--wrong-sequence::after {
+        background: var(--destructive);
+        opacity: 0.75;
+    }
+
+    .tt-cl-slip--missing-mark::after {
+        background: var(--warning);
+        opacity: 0.8;
+    }
+
+    .tt-cl-slip--extra-mark::after {
+        background: var(--typing-incorrect);
+        opacity: 0.7;
+        height: 0.26em;
+        border-radius: 0.06em;
+    }
+
+    .tt-cl-slip--wrong-order::after {
+        background: var(--primary);
+        opacity: 0.65;
+    }
+
     .tt-caret {
         --tt-caret-w: 0.25rem;
         position: absolute;

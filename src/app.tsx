@@ -24,6 +24,7 @@ const SettingsPage = lazy(() => import('@/pages/settings-page'))
 const LessonPage = lazy(() => import('@/pages/session-page').then((m) => ({ default: m.LessonPage })))
 const TestSessionPage = lazy(() => import('@/pages/session-page').then((m) => ({ default: m.TestPage })))
 const DrillPage = lazy(() => import('@/pages/session-page').then((m) => ({ default: m.DrillPage })))
+const PracticePage = lazy(() => import('@/pages/practice-page'))
 
 function PageLoader() {
     return <Spinner label="Loading…" />
@@ -76,6 +77,14 @@ function SessionRoutes() {
                         </SessionFocus>
                     }
                 />
+                <Route
+                    path="/practice"
+                    element={
+                        <SessionFocus>
+                            <PracticePage />
+                        </SessionFocus>
+                    }
+                />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </Suspense>
@@ -101,7 +110,7 @@ export default function App() {
 
     const needsOnboarding = students.length === 0 || location.pathname === '/onboarding'
 
-    const inSessionRoute = /^\/(lesson\/|test\/|drill)/.test(location.pathname)
+    const inSessionRoute = /^\/(lesson\/|test\/|drill|practice)/.test(location.pathname)
 
     return (
         <>

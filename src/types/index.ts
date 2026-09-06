@@ -22,7 +22,7 @@ export type FingerState = 'idle' | 'active' | 'correct' | 'incorrect' | 'disable
 
 export type ExerciseType = 'character' | 'random-characters' | 'syllable' | 'word' | 'sentence' | 'paragraph' | 'mixed' | 'timed-test' | 'exam'
 
-export type TypingMode = 'guided' | 'practice' | 'strict' | 'test'
+export type TypingMode = 'guided' | 'practice' | 'strict' | 'test' | 'quick'
 
 export type ThemePreference = 'light' | 'dark' | 'system'
 
