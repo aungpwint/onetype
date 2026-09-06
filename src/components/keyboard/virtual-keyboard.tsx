@@ -186,10 +186,6 @@ const Keycap = memo(function Keycap({ layout, definition, isActive, flashed, isS
     )
 })
 
-/*
- * Legend shown in the keycap's top-left corner, mirroring keyboard-layout.html:
- * the physical ASCII label of the key (e.g. `1`, `Q`, `-`, `[`).
- */
 const ASCII_LEGEND: Record<string, string> = {
     Backquote: '`',
     Minus: '-',

@@ -11,38 +11,9 @@ import {
     type Vec2,
 } from './hand-geometry'
 
-/*
- * Per-finger reach animation (spec: Finger targets, Thumb motion, Rapid
- * retargeting, Simultaneous chords, Reduced motion).
- *
- * The hands themselves stay static. Each finger's highlight path lives in its
- * own `<g class="hand-finger" data-hand=… data-finger=…>` inside the SVG asset.
- * Pressing a key moves only that finger: a small, clamped BEND around the
- * finger's proximal pivot (base) plus a short axial extension/retraction. All
- * motion is expressed in absolute hand-local SVG user units derived from the
- * keyboard's measured key centre, so there is no accumulated drift and the
- * rest posture always returns bit-for-bit to the aligned home position.
- *
- * Target semantics: `FingerAnimator.setTargets(…)` declares the full desired
- * per-finger targets for a frame; the engine releases fingers that are absent,
- * retargets fingers whose target changed (restarting the approach from the
- * current envelope value — never queued), and settles everything through one
- * deterministic envelope (approach → press → held → release → rest). The Web
- * Animations API / CSS transitions are deliberately not used: a single
- * requestAnimationFrame loop drives every finger so the timing, easing and
- * retarget behaviour stay identical on every browser and are unit-testable as
- * pure functions in this module.
- *
- * Respects `prefers-reduced-motion`: with motion reduced the envelope duration
- * collapses to ~0 (instant state change, no travel). The active highlight
- * colour (App.css) keeps working independently as the always-on fallback cue.
- */
-
-/** Degrees↔radians helpers. */
 const RAD2DEG = 180 / Math.PI
 const DEG2RAD = Math.PI / 180
 
-/** Envelope value reached at the end of the approach phase (then settled to 1). */
 export const APPROACH_PEAK = 0.94
 
 function clamp(value: number, min: number, max: number): number {
@@ -53,35 +24,22 @@ function fmt(value: number): string {
     return value.toFixed(2)
 }
 
-/** A zero reach (used as the rest target so interpolation hits the neutral). */
 export const ZERO_TARGET = Object.freeze({ tx: 0, ty: 0, deg: 0 })
 
-/**
- * A resolved reach: how far this finger should move to point at a key.
- * `tx`/`ty` are the axial translate (hand-local SVG units) and `deg` the bend
- * about the base. Both already include the finger's neutral rest posture.
- */
 export interface FingerTarget {
     tx: number
     ty: number
     deg: number
 }
 
-/** Per-finger reach limits and timing. */
 export interface FingerMotionProfile {
-    /** Max bend about the base pivot, degrees. */
     maxBendDeg: number
-    /** Max tip extension along the finger axis, SVG units (toward the key). */
     maxForward: number
-    /** Max tip retraction back toward the palm, SVG units. */
     maxBackward: number
-    /** Rest-posture offset applied even when idle (thumbs cant outward). */
     neutral: { tx: number; ty: number; deg: number }
-    /** Approach / press-settle / release timings, ms. */
     approachMs: number
     pressMs: number
     releaseMs: number
-    /** Deterministic onset jitter, ms — keeps chords from being too perfect. */
     jitterMs: number
 }
 
@@ -101,12 +59,6 @@ function baseProfile(over: Partial<Omit<FingerMotionProfile, 'neutral'>>): Omit<
     }
 }
 
-/**
- * Per-finger motion profiles. Left/right mirrors share the same parameters —
- * the mirrored geometry flips the bend sign automatically (see computeReach).
- * `neutral` keeps the thumbs anatomically apart at rest instead of both
- * crowding the axis; every other finger has a zero neutral.
- */
 export const FINGER_PROFILES: Record<FingerId, FingerMotionProfile> = {
     'left-pinky': {
         ...baseProfile({ maxBendDeg: 7, maxForward: 9, maxBackward: 6, jitterMs: 0 }),
@@ -166,17 +118,10 @@ export const FINGER_PROFILES: Record<FingerId, FingerMotionProfile> = {
     },
 }
 
-/** The hand geometry for a finger id. */
 function geometryFor(finger: FingerId): HandGeometry {
     return finger.startsWith('left') ? LEFT_GEOMETRY : RIGHT_GEOMETRY
 }
 
-/**
- * Convert the keyboard-local delta between the resting fingertip and the
- * pressed key centre into a per-finger reach. The delta is decomposed along
- * the finger's own axis and its perpendicular so the reach always reads as a
- * bend around the finger's base — never as a whole-hand slide.
- */
 export function computeReach(geo: FingerGeometry, prof: FingerMotionProfile, deltaSvg: Vec2): FingerTarget {
     const L = geo.length || 1
     const ux = (geo.tip.x - geo.base.x) / L
@@ -195,11 +140,6 @@ export function computeReach(geo: FingerGeometry, prof: FingerMotionProfile, del
     }
 }
 
-/**
- * Resolve the reach for one finger toward a measured key centre
- * (keyboard-local). Returns null only when the finger has no resting anchor in
- * the geometry config (should not happen for mapped fingers).
- */
 export function targetForKey(
     finger: FingerId,
     place: HandPlacement,
@@ -216,21 +156,15 @@ export function targetForKey(
     return computeReach(fingerGeometry(finger.startsWith('left') ? 'left' : 'right', geom, finger), prof, deltaSvg)
 }
 
-/** Motion envelope phases of one finger. */
 export type FingerPhase = 'approach' | 'press' | 'release' | 'rest'
 
-/** Live animation state of one finger (mutable; owned by FingerAnimator). */
 export interface FingerAnimState {
     phase: FingerPhase
-    /** The reach target being animated (null = returning to neutral rest). */
     target: FingerTarget | null
-    /** Performance-clock timestamp when the current phase started. */
     phaseStart: number
-    /** Envelope value at phase entry (keeps retargets/releases continuous). */
     entryP: number
 }
 
-/** Current per-finger value of the approach→press→release envelope. */
 export function envelopeP(state: FingerAnimState, prof: FingerMotionProfile, now: number, reduced: boolean): number {
     if (!state.target) return 0
     const scale = reduced ? 0 : 1
@@ -252,16 +186,10 @@ export function envelopeP(state: FingerAnimState, prof: FingerMotionProfile, now
     }
 }
 
-/** Approach duration including the deterministic onset jitter. */
 function approachDuration(prof: FingerMotionProfile, reduced: boolean): number {
     return reduced ? 0 : prof.approachMs + prof.jitterMs
 }
 
-/**
- * Advance a finger's state one frame: returns the envelope value `p` and
- * mutates the phase/phaseStart/entryP at stage boundaries. Pure with respect
- * to the state object, so it is directly unit-testable.
- */
 export function advanceState(state: FingerAnimState, prof: FingerMotionProfile, now: number, reduced: boolean): number {
     let p = envelopeP(state, prof, now, reduced)
     if (!state.target) {
@@ -287,7 +215,6 @@ export function advanceState(state: FingerAnimState, prof: FingerMotionProfile, 
     return p
 }
 
-/** True when a state still needs animation frames (i.e. it has not settled). */
 export function needsFrame(state: FingerAnimState, prof: FingerMotionProfile, now: number, reduced: boolean): boolean {
     if (state.target === null || state.phase === 'rest') return false
     if (state.phase === 'release') return now - state.phaseStart < (reduced ? 0 : prof.releaseMs)
@@ -298,7 +225,6 @@ export function needsFrame(state: FingerAnimState, prof: FingerMotionProfile, no
     return now - state.phaseStart < approachDuration(prof, reduced)
 }
 
-/** Blend a target toward the neutral rest posture by envelope value `p`. */
 function interpolate(target: FingerTarget, prof: FingerMotionProfile, p: number): { tx: number; ty: number; deg: number } {
     const n = prof.neutral
     return {
@@ -308,11 +234,6 @@ function interpolate(target: FingerTarget, prof: FingerMotionProfile, p: number)
     }
 }
 
-/**
- * The SVG transform attribute for one finger. The rotate centre follows the
- * translate, so the finger bends around its OWN (moved) base — the palm stays
- * planted and the fingertip arcs toward the key.
- */
 export function toTransformAttribute(geo: FingerGeometry, prof: FingerMotionProfile, target: FingerTarget | null, p: number): string {
     const t = interpolate(target ?? ZERO_TARGET, prof, p)
     const bx = geo.base.x + t.tx
@@ -320,10 +241,6 @@ export function toTransformAttribute(geo: FingerGeometry, prof: FingerMotionProf
     return `rotate(${fmt(t.deg)} ${fmt(bx)} ${fmt(by)}) translate(${fmt(t.tx)} ${fmt(t.ty)})`
 }
 
-/**
- * Current fingertip position (hand-local) given a target and envelope value.
- * Used by the dev overlay to draw live REST/TARGET/CURRENT markers.
- */
 export function fingertipPosition(geo: FingerGeometry, prof: FingerMotionProfile, target: FingerTarget | null, p: number): Vec2 {
     const t = interpolate(target ?? ZERO_TARGET, prof, p)
     const relX = geo.tip.x - geo.base.x
@@ -337,7 +254,6 @@ export function fingertipPosition(geo: FingerGeometry, prof: FingerMotionProfile
     }
 }
 
-/** Live fingertip in keyboard-local coordinates (for dev diagnostics). */
 export function fingertipInKeyboard(
     place: HandPlacement,
     geo: FingerGeometry,
@@ -348,18 +264,11 @@ export function fingertipInKeyboard(
     return handToKeyboard(place, fingertipPosition(geo, prof, target, p))
 }
 
-/** Human-readable single-line diagnostics for one finger. */
 export function describeState(geo: FingerGeometry, prof: FingerMotionProfile, target: FingerTarget | null, p: number): string {
     const t = interpolate(target ?? ZERO_TARGET, prof, p)
     return `tx ${t.tx.toFixed(2)} ty ${t.ty.toFixed(2)} rot ${t.deg.toFixed(2)}deg p ${p.toFixed(2)} L ${geo.length.toFixed(1)}`
 }
 
-/**
- * The imperative finger animator. Owns the finger `<g>` elements (queried as
- * `.hand-finger[data-hand][data-finger]` inside the overlay container), their
- * per-finger targets/state and the rAF loop. No React render per frame — the
- * DOM is touched directly and only when a finger's transform actually changes.
- */
 export class FingerAnimator {
     private readonly els = new Map<FingerId, SVGGElement>()
     private readonly geos = new Map<FingerId, FingerGeometry>()
@@ -371,11 +280,6 @@ export class FingerAnimator {
     private reduced = false
     private readonly onMediaChange: () => void
 
-    /**
-     * Optional dev hook, invoked once per animation frame with the current
-     * timestamp. Used by the ?handdebug overlay to draw live CURRENT markers
-     * without triggering React re-renders.
-     */
     onSample: ((now: number) => void) | null = null
 
     constructor(scope: HTMLElement) {
@@ -398,21 +302,14 @@ export class FingerAnimator {
         }
     }
 
-    /** Number of finger `<g>` elements this animator found in the overlay. */
     get fingerCount(): number {
         return this.els.size
     }
 
-    /** Whether the OS asks for reduced motion (instant snaps, no travel). */
     get reducedMotion(): boolean {
         return this.reduced
     }
 
-    /**
-     * Declare the full desired target set. Fingers absent from the map are
-     * released to neutral; present fingers are reached/retargeted. This is what
-     * HandOverlay calls on every key change — the engine never accumulates.
-     */
     setTargets(next: ReadonlyMap<FingerId, FingerTarget | null>): void {
         const now = performance.now()
         for (const finger of Object.keys(this.states) as FingerId[]) {
@@ -423,7 +320,6 @@ export class FingerAnimator {
         }
     }
 
-    /** Reach one finger toward a target (or back to neutral when null). */
     setTarget(finger: FingerId, target: FingerTarget | null, now = performance.now()): void {
         if (target === null) {
             this.release(finger, now)
@@ -444,7 +340,6 @@ export class FingerAnimator {
         this.ensureLoop()
     }
 
-    /** Release a finger back to its neutral rest posture. */
     release(finger: FingerId, now = performance.now()): void {
         const st = this.states[finger]
         const prof = this.profiles[finger]
@@ -460,7 +355,6 @@ export class FingerAnimator {
         this.ensureLoop()
     }
 
-    /** Release every finger (idle / overlay hidden). */
     releaseAll(): void {
         const now = performance.now()
         for (const finger of Object.keys(this.states) as FingerId[]) {
@@ -468,12 +362,10 @@ export class FingerAnimator {
         }
     }
 
-    /** Live reach target for a finger (null while resting); dev diagnostics. */
     currentTarget(finger: FingerId): FingerTarget | null {
         return this.states[finger]?.target ?? null
     }
 
-    /** Current envelope value for a finger; dev diagnostics. */
     currentP(finger: FingerId): number {
         const st = this.states[finger]
         if (!st) return 0

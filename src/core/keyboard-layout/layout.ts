@@ -29,7 +29,6 @@ export interface KeyLookup {
 }
 
 export interface KeyAlias {
-    /** Legacy text form accepted as one press of `code` with `modifier`. */
     text: string
     code: string
     modifier: Modifier
@@ -44,11 +43,6 @@ export interface KeyboardLayoutSpec {
     rows: KeyDefinition[][]
     space?: KeyDefinition
     note?: string
-    /**
-     * Additional text forms that reverse-map to an existing key/modifier pair.
-     * Used to keep legacy single-codepoint lesson text working when the layout
-     * key emits a multi-codepoint sequence (e.g. ၎င်း on KeyR shift).
-     */
     aliases?: KeyAlias[]
 }
 
@@ -149,10 +143,6 @@ export class KeyboardLayout {
     }
 }
 
-/**
- * Returns the hand that should press Shift when typing with the given key hand.
- * Standard touch-typing rule: left-hand keys use right Shift, right-hand keys use left Shift.
- */
 export function shiftHandFor(hand: Hand): Hand {
     return hand === 'left' ? 'right' : 'left'
 }

@@ -1,16 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { listAllLessons, resolveLessonById } from '@/data/curriculum'
 
-/**
- * Phase 9 — Curriculum Quality Audit.
- *
- * These checks validate the *pedagogical soundness* of the curriculum, beyond
- * the structural invariants covered by curriculum.test.ts: completion rules stay
- * in range, estimated pacing is sane, declared focus material is actually
- * present in the resolved units, and Shift is introduced at the right stage of
- * the progression rather than leaking into early beginner drills.
- */
-
 function resolve(id: string) {
     return resolveLessonById(id)
 }
@@ -70,8 +60,6 @@ describe('curriculum quality audit', () => {
     it('declared target hands and fingers actually appear in the lesson', () => {
         for (const lesson of lessons) {
             const resolved = resolve(lesson.id)
-            // A lesson can train a hand either by typing letters with it or by using
-            // that hand to press Shift (unit.shiftHand). Consider both.
             const letterHands = new Set(resolved.sequence.units.map((u) => u.hand))
             const shiftHands = new Set(resolved.sequence.units.filter((u) => u.shiftHand).map((u) => u.shiftHand))
             const hands = new Set([...letterHands, ...shiftHands])
@@ -91,10 +79,6 @@ describe('curriculum quality audit', () => {
     })
 
     it('Shift is not introduced before the dedicated shift stage of the progression', () => {
-        // The authoritative progression is the source array order in index.ts,
-        // not the per-level restarting `number` field. Shift must not be required
-        // before the curriculum begins teaching it. Once the shift stage begins,
-        // later non-shift lessons (e.g. the unshifted number rows) are legitimate.
         const englishLessons = lessons.filter((l) => l.language === 'english')
         let shiftStart = -1
         for (let i = 0; i < englishLessons.length; i++) {

@@ -20,30 +20,6 @@ import {
 import { FINGER_PROFILES, FingerAnimator, fingertipInKeyboard, targetForKey, type FingerTarget } from './finger-motion'
 import type { FingerId, Hand } from '@/types'
 
-/*
- * HandOverlay renders the pair of hand SVG assets (left-hand.svg /
- * right-hand.svg) over the real keyboard. All positioning runs through the
- * deterministic coordinate hierarchy defined in hand-geometry.ts:
- *
- *   Keyboard ──► Hand ──► Finger ──► Animation
- *
- * 1. KEYBOARD — the keyboard is the source of truth. The overlay measures the
- *    `[data-keyboard-root]` surface and every `[data-key]` rect, expressing them
- *    as KeyAnchors in a keyboard-local coordinate space (X: 0 → width,
- *    Y: 0 → height). No viewport pixels are used for positioning.
- * 2. HAND — computeHandLayout() derives both hand placements relative to the
- *    keyboard axis (F↔J midpoint) from hand geometry: the left hand anchors its
- *    index fingertip on KeyF centre, the right hand mirrors the left window.
- * 3. FINGER — fingertip anchors are hand-local SVG units in the assets, lifted
- *    into keyboard space by handToKeyboard() (see hand-geometry.ts), so every
- *    fingertip rests on its home key centre.
- * 4. ANIMATION — pressing a key bends that finger's .hand-finger group around
- *    its base pivot (FingerAnimator in finger-motion.ts, one rAF loop, absolute
- *    SVG-unit targets). The palm blob stays perfectly static; the active set is
- *    additionally shipped to CSS as `data-active-finger` on this container for
- *    the colour/highlight cue, and reduced-motion users get the colour cue only.
- */
-
 interface HandOverlayProps {
     layout: {
         rows: { code: string; width?: number }[][]
@@ -54,7 +30,6 @@ interface HandOverlayProps {
     children?: ReactNode
 }
 
-/** Dev-only coordinate debug layer, enabled with `?handdebug` on the URL. */
 function isDebugEnabled(): boolean {
     return import.meta.env.DEV && typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('handdebug')
 }
@@ -135,12 +110,6 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
 
     const handLayout = useMemo<HandLayout | null>(() => (geometry ? computeHandLayout(geometry.anchors) : null), [geometry])
 
-    /**
-     * The finger animator lives only while the hand SVGs are mounted. It is
-     * created after render (so the injected .hand-finger groups exist) and
-     * destroyed when the hands unmount — keyed on presence, not on the layout
-     * object, so re-measures never restart an in-flight animation.
-     */
     const animatorRef = useRef<FingerAnimator | null>(null)
     const handsMounted = handLayout !== null
     useEffect(() => {
@@ -306,13 +275,6 @@ interface HandDebugLayerProps {
     anchors: ReadonlyMap<string, KeyAnchor>
 }
 
-/**
- * Dev-only visual verification of the coordinate mapping (see hand-geometry.ts).
- * Renders keyboard bounds, the hand axis, key centres, hand anchors, hand
- * window + solid-art boxes and every finger anchor — all in keyboard-local
- * coordinates. Only produced when `import.meta.env.DEV` and `?handdebug` is set;
- * stripped from production builds.
- */
 function HandDebugLayer({ kb, layout, anchors }: HandDebugLayerProps) {
     const diagnostics = inspectHandLayout(layout, kb)
     const d: HandPlacement[] = HANDS.map((h) => layout[h.placementKey])
@@ -401,9 +363,6 @@ function HandDebugLayer({ kb, layout, anchors }: HandDebugLayerProps) {
                     </g>
                 ))}
 
-                {/* Finger anatomy: base pivot (square), rest tip (dot + label), live
-            current tip (filled dot) and base→current vector — the last two are
-            driven per-frame by the animator's onSample hook. */}
                 {fingerMarkers.map((m) => (
                     <g key={m.finger}>
                         <rect x={m.base.x - 1.5} y={m.base.y - 1.5} width={3} height={3} fill="none" stroke="#f80" strokeWidth={1} />

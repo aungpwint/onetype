@@ -18,11 +18,6 @@ function lessonValidationIssues(issues: ReadonlyArray<ZodIssue>): string[] {
     return issues.map((issue) => `${formatPath(issue.path)}${issue.message}`)
 }
 
-/**
- * Reject exercises whose `kind` the loader cannot play. This is a semantic
- * failure (unsupported content), distinct from a malformed shape, so it gets a
- * dedicated error type rather than a generic validation issue.
- */
 function assertSupportedExerciseKinds(rawExercises: unknown, lessonId?: string): void {
     if (!Array.isArray(rawExercises)) return
     for (const raw of rawExercises) {
@@ -34,15 +29,6 @@ function assertSupportedExerciseKinds(rawExercises: unknown, lessonId?: string):
     }
 }
 
-/**
- * Enforce canonical Myanmar Unicode for every Myanmar-bearing string in a
- * lesson. Lesson JSON must store Myanmar text as valid canonical Unicode (NFC,
- * no stray zero-width/format characters); the typing engine, renderer and
- * keyboard reverse-mapping all assume that invariant. Problems are reported as
- * `LessonValidationError` issues shaped like:
- *
- *   lesson: <id> exercise: <exercise-id> field: <field> problem: <description>
- */
 export function validateMyanmarLessonUnicode(lesson: Lesson): void {
     if (lesson.language !== 'my') return
     const issues: string[] = []
@@ -83,13 +69,6 @@ export function validateMyanmarLessonUnicode(lesson: Lesson): void {
     }
 }
 
-/**
- * Validate an arbitrary parsed-JSON value as a canonical Lesson.
- *
- * Throws `UnsupportedLessonSchemaError`, `UnsupportedExerciseTypeError` or
- * `LessonValidationError` on failure. Returns a fully typed `Lesson` on
- * success.
- */
 export function validateLesson(value: unknown, _source?: string): Lesson {
     if (!isRecord(value)) {
         throw new LessonValidationError(['lesson root must be an object'], undefined)
@@ -124,7 +103,6 @@ export function lessonSchemaInfo(value: unknown): LessonSchemaValidation | null 
     }
 }
 
-/** Parse + validate a JSON string into a typed Lesson. */
 export function parseLesson(json: string, source: string): Lesson {
     let raw: unknown
     try {

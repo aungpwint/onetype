@@ -27,12 +27,6 @@ const IDLE_TARGET: TargetState = {
 
 const NO_LAST_KEY: LastKeyState = { keyCode: null, correct: false }
 
-/**
- * Resolve the current target (the key a learner should press next) from the
- * typing engine. The engine's expected unit already carries the finger and hand
- * for the target, so no layout lookup is required; `layout` is kept for callers
- * that want to reach extra key metadata.
- */
 export function resolveTarget(engine: TypingEngine | null, _layout: KeyboardLayout | null): TargetState {
     const unit = engine?.expectedUnit ?? null
     if (!unit) return IDLE_TARGET
@@ -47,11 +41,6 @@ export function resolveTarget(engine: TypingEngine | null, _layout: KeyboardLayo
     }
 }
 
-/**
- * Resolve the most recent key-press outcome (correct/incorrect) so the UI can
- * tint the corresponding finger. Uses the engine's last event, so it reflects
- * the key actually pressed rather than the newly-advanced target.
- */
 export function resolveLastKey(engine: TypingEngine | null): LastKeyState {
     const event = engine?.lastEvent ?? null
     if (!event) return NO_LAST_KEY

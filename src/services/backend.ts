@@ -119,12 +119,6 @@ export async function weakFingers(studentId: string, layoutId: string, limit = 1
     return reRankWeak(pool, limit).map((row) => ({ ...row, finger: row.key }))
 }
 
-/**
- * Mirror the local backend's adaptive weak-item ranking over a raw pool of
- * { key, accuracy, attempts } rows: rebuild the underlying counts, apply the
- * Wilson lower-bound ranking with the minimum-attempts evidence filter, then
- * return the top `limit`. Used to keep the Tauri path parity with the browser.
- */
 export function reRankWeak(pool: Array<{ key: string; accuracy: number; attempts: number }>, limit: number): WeakKey[] {
     const stats: StatInput[] = pool.map((row) => {
         const accuracy = Math.max(0, Math.min(1, row.accuracy / 100))

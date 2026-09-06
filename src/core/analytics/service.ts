@@ -1,18 +1,5 @@
 import type { PerformanceSummary, SessionPoint, Trend } from './types'
 
-/**
- * Pure performance-analytics functions. These compute statistically correct
- * aggregates (pooled accuracy rather than the biased mean-of-ratios commonly
- * used elsewhere), quantify improvement over time, and measure consistency.
- * They have no side effects and are fully unit-testable.
- */
-
-/**
- * Pooled accuracy over total keystrokes: sum(correct) / sum(correct + error),
- * expressed as a percentage. Unlike a mean of per-session accuracy ratios,
- * this weights larger sessions correctly and is robust to sessions with very
- * few keystrokes. Returns 0 when there are no keystrokes.
- */
 export function pooledAccuracy(points: SessionPoint[]): number {
     let correct = 0
     let total = 0
@@ -24,16 +11,10 @@ export function pooledAccuracy(points: SessionPoint[]): number {
     return (correct / total) * 100
 }
 
-/** Chronologically order a set of sessions by start time. */
 export function orderChronologically(points: SessionPoint[]): SessionPoint[] {
     return [...points].sort((a, b) => a.startedAt - b.startedAt)
 }
 
-/**
- * Least-squares linear trend of `value` over the series, using session index
- * as the x-axis (0..n-1). `slope` is the average change per session step.
- * Returns `valid: false` when fewer than two points are available.
- */
 export function linearTrend(values: number[]): Trend {
     const n = values.length
     if (n < 2) {
@@ -53,13 +34,11 @@ export function linearTrend(values: number[]): Trend {
     return { slope, intercept, valid: true }
 }
 
-/** Trend of a session metric (e.g. "wpm" or "accuracy") over chronological order. */
 export function metricTrend(points: SessionPoint[], metric: 'wpm' | 'accuracy'): Trend {
     const ordered = orderChronologically(points)
     return linearTrend(ordered.map((p) => p[metric]))
 }
 
-/** Standard deviation of a set of values. */
 export function standardDeviation(values: number[]): number {
     const n = values.length
     if (n === 0) return 0
@@ -69,11 +48,6 @@ export function standardDeviation(values: number[]): number {
     return Math.sqrt(variance)
 }
 
-/**
- * Coefficient of variation (stddev / mean) as a fraction of 0..1.
- * Lower values indicate more consistent performance. Returns 0 when the means
- * are not meaningful (no values or zero mean).
- */
 export function coefficientOfVariation(values: number[]): number {
     const n = values.length
     if (n < 2) return 0
@@ -82,10 +56,6 @@ export function coefficientOfVariation(values: number[]): number {
     return standardDeviation(values) / mean
 }
 
-/**
- * Compute the full performance summary: pooled accuracy, average/best WPM,
- * WPM consistency, and both WPM and accuracy trends over time.
- */
 export function summarizePerformance(points: SessionPoint[]): PerformanceSummary {
     const wpmValues = points.map((p) => p.wpm)
     const avgWpm = wpmValues.length > 0 ? wpmValues.reduce((s, v) => s + v, 0) / wpmValues.length : 0

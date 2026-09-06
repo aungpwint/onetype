@@ -25,12 +25,6 @@ import {
 import { fingerForCodeOrNull as resolveFinger, handForFinger } from '@/core/finger-mapping/finger-map'
 import type { FingerId } from '@/types'
 
-/*
- * Standard QWERTY fixture (40px pitch, home row on Y=400), matching the
- * hand-geometry tests. Top row is right-shifted 20px, bottom row likewise.
- * Space is centred under the keyboard below the home row, under/near the left
- * thumb.
- */
 function standardKeyboard(): Map<string, KeyAnchor> {
     const kb: KeyboardGeometry = { x: 0, y: 0, width: 600, height: 260 }
     const w = 40 / kb.width

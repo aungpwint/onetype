@@ -36,12 +36,6 @@ export interface BuiltSequence {
 // `keyboardOrderForCluster` reorders one cluster into press order; `buildSequence`
 // emits units in press order while graphemes/ranges keep logical order.
 
-/**
- * Keyboard press order for a Myanmar syllable cluster: pre-base vowels
- * (U+1031, from the classification core's `isPreBaseVowel`) first, then the
- * remaining code points in logical order. Clusters without a pre-base vowel
- * are unchanged. CLDR models exactly this reordering for Myanmar.
- */
 export function keyboardOrderForCluster(cluster: string): string {
     if (!containsMyanmar(cluster)) return cluster
     const chars = Array.from(cluster)

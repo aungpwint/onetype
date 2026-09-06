@@ -44,11 +44,6 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
     }
 }
 
-/**
- * Decorative atmospheric backdrop — dark-navy base with a few large, static,
- * low-opacity blue glows and a subtle gradient wash. Pure Tailwind, inert,
- * and painted below every surface layer (wrap surfaces in `relative z-10`).
- */
 export function Atmosphere({ className }: { className?: string }) {
     return (
         <div aria-hidden className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)}>

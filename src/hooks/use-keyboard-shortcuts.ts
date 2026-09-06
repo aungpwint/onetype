@@ -2,11 +2,6 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTypingStore } from '@/stores/typing-store'
 
-/**
- * Global keyboard shortcuts for navigation and common actions.
- * Typing-mode keys are handled by the typing engine itself, so these shortcuts
- * avoid intercepting single letters while a session is active.
- */
 export function useKeyboardShortcuts() {
     const navigate = useNavigate()
 

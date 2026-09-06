@@ -4,16 +4,8 @@ import { ENGLISH_FINGER_KEYS } from '@/core/drills/types'
 import { planMuscleMemorySession, type MuscleMemoryGoal, type MuscleMemoryPlan } from '@/core/drills/engine'
 import type { FingerId, ParsedKeyId, ReinforcedDrill, ReinforcementOptions, WeakKeyId } from './types'
 
-/**
- * Adaptive reinforcement. Converts detected weaknesses (Phase 14) into targeted
- * muscle-memory drills (Phase 10): weak keys (`"KeyA:none"`) and weak fingers
- * are mapped to the characters the learner should re-drill, then fed to the
- * drill engine. Pure functions, no side effects.
- */
-
 export const DEFAULT_MAX_KEYS = 8
 
-/** Split an engine key id into its code and modifier. */
 export function parseKeyId(id: string): ParsedKeyId {
     const idx = id.indexOf(':')
     if (idx === -1) return { code: id, modifier: 'none' }
@@ -25,17 +17,11 @@ export function parseKeyId(id: string): ParsedKeyId {
     }
 }
 
-/** Map a weak key id to the character it emits on the layout, if any. */
 export function keyIdToChar(id: string, layout: KeyboardLayout = englishQwerty): string | undefined {
     const { code, modifier } = parseKeyId(id)
     return layout.outputFor(code, modifier)?.text
 }
 
-/**
- * Compute the character focus set for a list of weak keys: sort weakest-first
- * (ascending lower bound), map each to its character, dedupe, and cap at
- * `maxKeys`. Un-mappable ids are skipped.
- */
 export function focusCharsFromWeakKeys(
     weakKeys: WeakKeyId[],
     opts: Pick<ReinforcementOptions, 'maxKeys'> = {},
@@ -52,13 +38,6 @@ export function focusCharsFromWeakKeys(
     return [...seen]
 }
 
-/**
- * Pick a muscle-memory goal that best matches the spread of the detected
- * weakness. When every weak character lives on a single finger, isolate that
- * finger for focused training; when weakness is spread across several fingers,
- * fall back to repetition so every weak key gets drilled rather than the drill
- * narrowing onto just one finger.
- */
 export function decideDrillGoal(focusKeys: string[]): MuscleMemoryGoal {
     const fingers = new Set<FingerId>()
     for (const ch of focusKeys) {
@@ -68,10 +47,6 @@ export function decideDrillGoal(focusKeys: string[]): MuscleMemoryGoal {
     return fingers.size <= 1 ? 'finger-isolation' : 'repetition'
 }
 
-/**
- * Compute the character focus set for a list of weak fingers, using the
- * English finger-key map. Dedupes and caps at `maxKeys`.
- */
 export function focusCharsFromWeakFingers(
     fingers: FingerId[],
     opts: Pick<ReinforcementOptions, 'maxKeys'> = {},
@@ -99,7 +74,6 @@ function makeDrill(
     return { goal, source, targeted, focusKeys, plan }
 }
 
-/** Build an adaptive reinforcement drill targeting the given weak keys. */
 export function reinforcementFromWeakKeys(weakKeys: WeakKeyId[], opts: ReinforcementOptions = {}): ReinforcedDrill {
     const goal = opts.goal ?? decideDrillGoal(focusCharsFromWeakKeys(weakKeys, opts))
     const focusKeys = focusCharsFromWeakKeys(weakKeys, opts)
@@ -115,7 +89,6 @@ export function reinforcementFromWeakKeys(weakKeys: WeakKeyId[], opts: Reinforce
     )
 }
 
-/** Build an adaptive reinforcement drill targeting the given weak fingers. */
 export function reinforcementFromWeakFingers(weakFingers: FingerId[], opts: ReinforcementOptions = {}): ReinforcedDrill {
     const focusKeys = focusCharsFromWeakFingers(weakFingers, opts)
     const goal = opts.goal ?? decideDrillGoal(focusKeys)
@@ -125,14 +98,8 @@ export function reinforcementFromWeakFingers(weakFingers: FingerId[], opts: Rein
     return makeDrill(goal, focusKeys, weakFingers, 'fingers', opts.length)
 }
 
-/**
- * Build an adaptive reinforcement drill from the output of `rankWeakest`
- * (Phase 14): the weakest key (lowest lower bound) is isolated for drilling.
- * See `reinforcementFromWeakKeys` for override options.
- */
 export function planWeakestReinforcement(ranks: { key: string; lowerBound: number }[], opts: ReinforcementOptions = {}): ReinforcedDrill {
     return reinforcementFromWeakKeys(ranks, opts)
 }
 
-/** @internal re-export for convenience/tests. */
 export type { MuscleMemoryPlan }

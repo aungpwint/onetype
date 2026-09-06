@@ -5,15 +5,6 @@ import { toLegacyLanguage } from '@/types/language'
 import { toLayoutId } from '@/types/keyboard'
 import { lessonPhaseFromExercise } from './lesson-phase'
 
-/**
- * Convert a validated canonical `Lesson` into the runtime `NormalizedLesson`
- * shape the application (curriculum resolver, typing engine, stores) consumes.
- *
- * The normalization is deterministic and lossless for the migration contract:
- * every legacy phase `{ instruction, text }` round-trips exactly because the
- * JSON exercises carry the original `instruction` and normalize back to the
- * identical text via `exerciseText`.
- */
 export function normalizeLesson(lesson: Lesson): NormalizedLesson {
     const exercises = lesson.exercises.map((exercise, index): NormalizedExercise => {
         const id = exercise.id ?? `${lesson.id}-ex-${index + 1}`

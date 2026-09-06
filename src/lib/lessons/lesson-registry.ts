@@ -14,14 +14,6 @@ export interface LessonCatalogIndexes {
 
 const languageLevelKey = (language: LessonLanguage, level: Level) => `${language}:${level}`
 
-/**
- * Registry over a loaded lesson collection.
- *
- * Validates catalog-level coherence (no duplicate ids, at most one lesson per
- * `language+level+number`, no unexpected directories) and hands out indexed
- * lookups. The registry is the discovery/catalog layer; the repository sits on
- * top of it to serve normalized lessons to the application.
- */
 export class LessonRegistry {
     readonly lessons: Lesson[]
     readonly indexes: LessonCatalogIndexes
@@ -95,7 +87,6 @@ export class LessonRegistry {
         return (this.getByLevel(level) ?? []).length
     }
 
-    /** Ordered language-level index used by the UI to bucket lessons. */
     languageLevelBuckets(): Record<LessonLanguage, Record<Level, Lesson[]>> {
         const buckets: Record<LessonLanguage, Record<Level, Lesson[]>> = {
             en: { beginner: [], intermediate: [], advanced: [] },

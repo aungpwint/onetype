@@ -1,14 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { reRankWeak } from '@/services/backend'
 
-/**
- * Parity coverage for the Tauri weak-key/finger re-ranking shim (Phase 21).
- * The Rust `weak_keys`/`weak_fingers` commands return raw rows ordered by naive
- * accuracy with no evidence filter; `reRankWeak` re-ranks them with the same
- * Wilson lower-bound logic + minimum-attempts filter the browser backend uses,
- * so desktop and browser rankings stay identical.
- */
-
 describe('reRankWeak', () => {
     it('excludes single-attempt noise (minimum-attempts evidence filter)', () => {
         // 1 attempt at 100% — insufficient evidence under minAttempts=2.

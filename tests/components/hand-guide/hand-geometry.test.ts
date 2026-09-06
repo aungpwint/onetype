@@ -16,7 +16,6 @@ import {
 import { fingerForCodeOrNull as resolveFinger, handForFinger } from '@/core/finger-mapping/finger-map'
 import type { FingerId } from '@/types'
 
-/** Standard QWERTY home row: A..; at 40px pitch, home row centred on Y=400. */
 function standardKeyboard(): { kb: KeyboardGeometry; anchors: Map<string, KeyAnchor> } {
     const kb: KeyboardGeometry = { x: 0, y: 0, width: 600, height: 260 }
     const anchors = new Map<string, KeyAnchor>()
@@ -130,12 +129,6 @@ describe('coordinate conversions', () => {
     })
 })
 
-/**
- * §21 Full-range validation: every key the project maps to a finger must
- * resolve to the owning finger, and that finger must have a resting anchor in
- * the correct hand's geometry config. Uses the authoritative finger-map
- * (resolveFinger) — nothing is hard-coded here.
- */
 describe('every mapped finger has a resting anchor', () => {
     const cases: Record<string, string> = {
         // Left hand.
@@ -184,13 +177,6 @@ describe('every mapped finger has a resting anchor', () => {
     })
 })
 
-/**
- * A§43 Finger anatomy, mirrored. The right-hand asset is the exact mirror of
- * the left, so every right base/tip must derive from the left across the hand
- * axis (mirrorHandLocalX). The finger animation pivots every finger about its
- * base — a misconfigured base (missing, wrong hand, non-positive lever arm)
- * would silently break the reach, so it is asserted for all ten fingers.
- */
 describe('finger pivot geometry (bases)', () => {
     const fingers = Object.keys(LEFT_GEOMETRY.tips) as FingerId[]
 

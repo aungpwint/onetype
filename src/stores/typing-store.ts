@@ -155,11 +155,6 @@ function drillResolvedLesson(drill: ReinforcedDrill): ResolvedLesson {
     }
 }
 
-/**
- * Build an adaptive reinforcement drill from the active student's detected
- * English-layout weaknesses. Returns null when there is no active student or
- * not enough evidence yet. Drills are English-layout only (Phase 15).
- */
 export async function buildAdaptiveDrill(opts: { goal?: MuscleMemoryGoal } = {}): Promise<ReinforcedDrill | null> {
     const active = useStudentStore.getState().active
     if (!active) return null

@@ -12,15 +12,6 @@ const CATALOG = catalog as CatalogJson
 const LANGUAGE_TOTAL: Record<string, number> = { en: 92, my: 58 }
 const LEVEL_TOTAL: Record<string, number> = { beginner: 81, intermediate: 33, advanced: 36 }
 
-/**
- * Source-of-truth contract for the JSON lesson platform.
- *
- * The curriculum is defined exclusively by `src/data/lessons/**` JSON files
- * discovered through the lesson loader — no TypeScript lesson arrays remain.
- * This test guards the dataset against drift: ids must match the generated
- * catalog, per-language/level totals must hold, and every canonical lesson must
- * validate and normalize back to coherent phases.
- */
 describe('lesson JSON source of truth', () => {
     const repository = getLessonRepository()
     const lessons = repository.getLessons()

@@ -3,7 +3,6 @@ import type { LessonLanguage } from './language'
 import type { KeyboardId } from './keyboard'
 import type { Difficulty, FingerId, Hand, Language, Level, LessonFocus } from './index'
 
-/** Current lesson JSON schema version understood by the loader. */
 export const LESSON_SCHEMA_VERSION = 1
 
 export interface LessonCompletionRule {
@@ -11,15 +10,6 @@ export interface LessonCompletionRule {
     minWpm: number | null
 }
 
-/**
- * Canonical, serializable lesson model — the single source of truth for lesson
- * content. Lesson JSON files are instances of this shape.
- *
- * Field meanings deliberately mirror the established runtime domain so the
- * migration is lossless: `language`/`level`/`difficulty` use their long-standing
- * union members, `number` is the deterministic ordering key, and `completion`
- * drives pass/fail scoring.
- */
 export interface Lesson {
     schemaVersion: number
     id: string
@@ -31,7 +21,6 @@ export interface Lesson {
     description: string
     difficulty: Difficulty
     estimatedMinutes: number
-    /** Canonical keyboard reference. See KeyboardId. */
     keyboard: KeyboardId
     completion: LessonCompletionRule
     focusKeys?: string[]
@@ -55,22 +44,11 @@ export interface LessonMetadata {
     updatedAt?: string
 }
 
-/**
- * Legacy-compatible lesson phase. The application's typing engine consumes
- * lessons as an ordered list of `{ instruction, text }` phases, so every
- * exercise normalizes to at least one phase.
- */
 export interface LessonPhase {
     instruction: string
     text: string
 }
 
-/**
- * The runtime domain shape the application already consumes. Normalized lessons
- * are produced by the lesson normalizer and are structurally interchangeable
- * with the legacy `LessonData` interface (every `LessonData` field is present),
- * while also carrying the canonical keyboard reference and resolved exercises.
- */
 export interface NormalizedLesson {
     id: string
     level: Level
@@ -90,7 +68,6 @@ export interface NormalizedLesson {
     requiresShift?: boolean
     prerequisites?: string[]
     phases: LessonPhase[]
-    /** Canonical keyboard reference used by the typing engine. */
     keyboard: KeyboardId
     exercises: NormalizedExercise[]
     options?: ExerciseOptions

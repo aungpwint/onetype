@@ -19,7 +19,7 @@ function readStoredTheme(): ThemePreference {
         const value = localStorage.getItem('onetype:theme')
         if (value === 'light' || value === 'dark' || value === 'system') return value
     } catch {
-        /* ignore */
+        return 'system'
     }
     return 'system'
 }

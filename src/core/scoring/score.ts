@@ -43,9 +43,3 @@ export function computeScore(input: {
         backspaceCount: input.backspaceCount,
     }
 }
-
-export function isPassed(metrics: ScoreMetrics, minAccuracy: number, minWpm: number | null): boolean {
-    if (metrics.accuracy < minAccuracy) return false
-    if (minWpm !== null && metrics.grossWpm < minWpm) return false
-    return true
-}

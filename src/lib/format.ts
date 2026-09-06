@@ -15,7 +15,6 @@ export function formatDateTime(timestamp: number): string {
     })
 }
 
-/** Safe percentage (0-100) of `part` over `total`, or 0 when total is missing. */
 export function pct(part: number, total: number): number {
     return total > 0 ? (part / total) * 100 : 0
 }
@@ -28,12 +27,10 @@ export function formatAccuracy(accuracy: number, digits = 0): string {
     return `${accuracy.toFixed(digits)}%`
 }
 
-/** Human label from a lesson id (strips the curriculum prefix), 'timed test' for tests. */
 export function formatLessonLabel(lessonId?: string | null): string {
     return lessonId?.replace(/^lesson-(en|my)-/, '') ?? 'timed test'
 }
 
-/** Map of testId -> the best (highest WPM) result for that test. */
 export function bestResultByTest<T extends { testId: string; wpm: number }>(results: readonly T[]): Map<string, T> {
     const best = new Map<string, T>()
     for (const r of results) {

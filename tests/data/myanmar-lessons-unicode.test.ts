@@ -4,23 +4,9 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { getLessonRepository, getCanonicalLesson } from '@/data/curriculum'
-import {
-    findSuspiciousInvisibleCharacters,
-    normalizeMyanmarText,
-    splitMyanmarSyllables,
-    validateMyanmarText,
-} from '@/core/unicode/myanmar'
+import { findSuspiciousInvisibleCharacters, normalizeMyanmarText, splitMyanmarSyllables, validateMyanmarText } from '@/core/unicode/myanmar'
 import { myanmar } from '@/core/keyboard-layout/myanmar'
 import type { LessonExercise } from '@/types/exercise'
-
-/**
- * Myanmar lesson-content contract.
- *
- * Guards the "Myanmar Unicode only, Pyidaungsu everywhere" policy at the data
- * boundary so future lessons cannot silently reintroduce the accidental
- * Zero Width Non-Joiner forms (e.g. U+200C before U+1031) that broke the
- * original lesson files. Every check is deterministic and runs in CI.
- */
 
 const MY_ROOT = path.resolve(fileURLToPath(new URL('../../src/data/lessons/my', import.meta.url)))
 
@@ -95,8 +81,6 @@ describe('Canonical Myanmar word corpus', () => {
     })
 
     it('syllable clusters are deterministic for the original problem words', () => {
-        // The preposed vowel U+1031 merges forward into the cluster that starts
-        // with its following base consonant, exactly as the orthography groups it.
         expect(splitMyanmarSyllables('ရေ')).toEqual(['ရေ'])
         expect(splitMyanmarSyllables('အဖေ')).toEqual(['အ', 'ဖေ'])
         expect(splitMyanmarSyllables('အမေ')).toEqual(['အ', 'မေ'])
@@ -129,8 +113,6 @@ describe('Every canonical Myanmar lesson', () => {
             for (const exercise of canonical.exercises) {
                 if (exercise.instruction !== undefined) samples.push(exercise.instruction)
                 for (const line of exerciseContent(exercise)) {
-                    // Content with no Myanmar script (mixed lessons) is fine;
-                    // anything Myanmar must be strictly canonical.
                     if (line.trim().length > 0) samples.push(line)
                 }
             }

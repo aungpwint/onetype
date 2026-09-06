@@ -26,11 +26,6 @@ function compareLessons(a: Lesson, b: Lesson): number {
     return a.number - b.number
 }
 
-/**
- * Read model over normalized lessons. Every entry is structurally a
- * `LessonData`, so the curriculum resolver and existing stores consume it
- * unchanged.
- */
 export interface LessonRepository {
     getLessons(): NormalizedLesson[]
     getLesson(id: string): NormalizedLesson

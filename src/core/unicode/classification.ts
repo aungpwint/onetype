@@ -1,23 +1,5 @@
-/**
- * Myanmar Unicode character classification — single source of truth for what
- * each Myanmar code point is in the typing model. No other module hard-codes
- * membership; components, the keyboard UI and the typing engine consume the
- * predicates below instead of scattering `code === 0x1031` checks.
- *
- * OneType drives Burmese typing with the core Myanmar block (U+1000–U+109F).
- * Extended-A/B/C ranges are declared so "is this a Myanmar code point?" is
- * answered centrally; classify them later by extending `MYANMAR_SCRIPT_RANGES`
- * without touching consumers.
- *
- * Categories: base, independent-vowel, dependent-vowel, pre-base-vowel
- * (U+1031 ေ — stored after its base, typed before it), medial, asat, virama,
- * tone, number, punctuation, other.
- */
-
 export type MyanmarCharacterCategory =
     'base' | 'independent-vowel' | 'dependent-vowel' | 'pre-base-vowel' | 'medial' | 'asat' | 'virama' | 'tone' | 'number' | 'punctuation' | 'other'
-
-// --- Core Myanmar block (the classified set) -------------------------------
 
 export const MYANMAR_BLOCK_MIN = 0x1000
 export const MYANMAR_BLOCK_MAX = 0x109f
@@ -29,20 +11,12 @@ export const MYANMAR_EXT_B_MAX = 0xa9ff
 export const MYANMAR_EXT_C_MIN = 0x116d0
 export const MYANMAR_EXT_C_MAX = 0x116ff
 
-/**
- * The Myanmar blocks recognised by OneType. Every range is inclusive.
- * Extended ranges are not yet driven by the Burmese typing engine but are
- * declared so "is this a Myanmar code point?" is answered centrally and the
- * set can be extended without touching consumers.
- */
 export const MYANMAR_SCRIPT_RANGES: ReadonlyArray<readonly [number, number]> = [
     [MYANMAR_BLOCK_MIN, MYANMAR_BLOCK_MAX],
     [MYANMAR_EXT_A_MIN, MYANMAR_EXT_A_MAX],
     [MYANMAR_EXT_B_MIN, MYANMAR_EXT_B_MAX],
     [MYANMAR_EXT_C_MIN, MYANMAR_EXT_C_MAX],
 ]
-
-// --- Individual named code points ------------------------------------------
 
 export const BASE_LETTER_START = 0x1000 // က
 export const BASE_LETTER_END = 0x1021 // အ
@@ -66,15 +40,10 @@ export const DIGIT_END = 0x1049 // ၉
 export const PUNCTUATION_COMMA = 0x104a // ၊
 export const PUNCTUATION_FULL_STOP = 0x104b // ။
 
-/** True when `code` falls inside any of the declared Myanmar script blocks. */
 export function isMyanmarCodePoint(code: number): boolean {
     return MYANMAR_SCRIPT_RANGES.some(([min, max]) => code >= min && code <= max)
 }
 
-/**
- * Classify a single code point into its Myanmar typing category. Returns
- * `null` for code points outside the Myanmar script blocks.
- */
 export function classifyMyanmarCharacter(code: number): MyanmarCharacterCategory | null {
     if (!isMyanmarCodePoint(code)) return null
     if (code >= BASE_LETTER_START && code <= BASE_LETTER_END) return 'base'
@@ -95,8 +64,6 @@ export function classifyMyanmarCharacter(code: number): MyanmarCharacterCategory
     if (code === PUNCTUATION_COMMA || code === PUNCTUATION_FULL_STOP) return 'punctuation'
     return 'other'
 }
-
-// --- Category predicates ---------------------------------------------------
 
 export function isBaseLetter(code: number): boolean {
     return (code >= BASE_LETTER_START && code <= BASE_LETTER_END) || code === SSA_LETTER
@@ -140,20 +107,10 @@ export function isMyanmarPunctuation(code: number): boolean {
     return code === PUNCTUATION_COMMA || code === PUNCTUATION_FULL_STOP
 }
 
-/**
- * True when `code` can open a Myanmar syllable: a base consonant or an
- * independent vowel letter. These are the code points that "host" attaching
- * marks (including a pending pre-base vowel).
- */
 export function isMyanmarSyllableHead(code: number): boolean {
     return isBaseLetter(code) || isIndependentVowel(code)
 }
 
-/**
- * True when `code` is a combining mark that attaches to the current syllable:
- * vowel signs, medials, tone marks, asat and virama. These never start a new
- * syllable.
- */
 export function isMyanmarAttachingMark(code: number): boolean {
     return (
         (code >= VOWEL_SIGN_START && code <= VOWEL_SIGN_END) ||

@@ -2,17 +2,6 @@ import { z } from 'zod'
 import { LESSON_LANGUAGES } from '@/types/language'
 import { LESSON_KEYBOARD_IDS } from '@/types/keyboard'
 
-/**
- * Canonical runtime validation schemas for the lesson platform.
- *
- * These zod schemas are the single source of truth for *runtime* shape
- * validation. They mirror the pure TypeScript domain types in `src/types` and
- * are used by the lesson validator to parse untrusted JSON (from lesson files
- * or custom lessons). Keeping the schemas separate from the types module
- * preserves a clean split: `types` = compile-time contracts, `schemas` =
- * runtime guards + coercion.
- */
-
 export const lessonSchemaVersionSchema = z.number().int().positive()
 
 export const lessonLanguageSchema = z.enum(LESSON_LANGUAGES)

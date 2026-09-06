@@ -6,17 +6,10 @@ export type Language = 'myanmar' | 'english'
 const LANGUAGE_KEY = 'app.language' as const
 
 interface LanguageToggleProps {
-    /** Optional live value; when omitted, the persisted app.language setting drives it. */
     lang?: Language
-    /** Called on change; when omitted, the change is persisted to app.language. */
     onChange?: (lang: Language) => void
 }
 
-/**
- * Reusable language selector (Myanmar / English). By default it reads and writes
- * the persisted `app.language` setting so the choice survives a reload. Pass
- * `lang` / `onChange` to make it fully controlled.
- */
 export function LanguageToggle({ lang, onChange }: LanguageToggleProps) {
     const stored = useSettingsStore((s) => s.get(LANGUAGE_KEY))
     const setStored = useSettingsStore((s) => s.set)

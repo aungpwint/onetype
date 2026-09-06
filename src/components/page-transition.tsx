@@ -7,15 +7,7 @@ const PAGE_FADE_OUT = 0.1
 
 const PAGE_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
-export function PageTransition({
-    children,
-    scrollRef,
-}: {
-    children: ReactNode
-    /** Scroll container that owns this page (the shell's <main>). Scrolled to
-     *  the top on every route change so pages start from a fresh position. */
-    scrollRef?: RefObject<HTMLElement | null>
-}) {
+export function PageTransition({ children, scrollRef }: { children: ReactNode; scrollRef?: RefObject<HTMLElement | null> }) {
     const location = useLocation()
     const nodeRef = useRef<HTMLDivElement>(null)
 

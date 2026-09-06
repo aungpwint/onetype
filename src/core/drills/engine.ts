@@ -14,35 +14,21 @@ import {
 } from './generator'
 import { DEFAULT_ENGLISH_CONSTRAINTS, type DrillConstraints } from './types'
 
-/**
- * The kinds of muscle-memory practice the engine can build for English,
- * each mapped onto the corresponding drill generator at `src/core/drills`.
- */
 export type MuscleMemoryGoal = 'finger-isolation' | 'hand-alternation' | 'same-hand' | 'shift' | 'row-transition' | 'repetition' | 'pair'
 
 export interface MuscleMemoryOptions {
-    /** Rough number of key presses to generate. Generator-specific. */
     length?: number
-    /** Seeded determinism for generators that accept one. */
     seed?: number
-    /** Overrides applied on top of the default English constraints. */
     constraints?: Partial<DrillConstraints>
 }
 
 export interface MuscleMemoryPlan {
     goal: MuscleMemoryGoal
-    /** The characters actually produced by the drill (focus set).
-     *  For the `pair` goal this is the flattened pair set. */
     keys: string[]
-    /** Fingers trained by the drill. */
     focusesFingers: FingerId[]
-    /** Hands trained by the drill. */
     focusesHands: Hand[]
-    /** Count of space characters in the drill text. */
     spaces: number
-    /** Raw generator output. */
     drill: GeneratedDrill
-    /** Engine-ready typing sequence for the TypingEngine. */
     sequence: BuiltSequence
 }
 
@@ -81,11 +67,6 @@ function buildPlan(goal: MuscleMemoryGoal, drill: GeneratedDrill): MuscleMemoryP
     }
 }
 
-/**
- * Build a single English muscle-memory practice session for the given goal and
- * focus-key set. "Focus keys" are character keys (e.g. `["f", "j"]`); the
- * resulting plan is fully determinable and ready for the TypingEngine.
- */
 export function planMuscleMemorySession(goal: MuscleMemoryGoal, focusKeys: string[], opts: MuscleMemoryOptions = {}): MuscleMemoryPlan {
     const length = opts.length ?? 20
 
@@ -167,10 +148,6 @@ export function planMuscleMemorySession(goal: MuscleMemoryGoal, focusKeys: strin
     }
 }
 
-/**
- * Character -> finger map for the English layout, derived from the Canda layout,
- * used by the finger-sensitive drill generators.
- */
 function charFingerMap(): Record<string, FingerId> {
     const map: Record<string, FingerId> = {}
     for (const row of englishQwerty.rows) {

@@ -9,24 +9,7 @@ import { containsMyanmar } from '@/core/unicode/myanmar'
 import { getLessonRepository, getCanonicalLesson } from '@/data/curriculum'
 import type { LessonExercise } from '@/types/exercise'
 
-/**
- * Rendering-layer contract for Myanmar text.
- *
- * The source lesson strings are canonical Unicode (validated elsewhere); this
- * suite guards the pipeline BETWEEN the stored text and the shaped DOM:
- *   1. grapheme runs must be complete shaping units (never split a syllable),
- *   2. each run maps to exactly one char span carrying font-myanmar/font-heavy,
- *   3. the CSS must actually resolve Pyidaungsu and must not transform the
- *      glyph text (which would rasterize a shaped syllable mid-animation).
- */
-
-const CORPUS_LINES = [
-    'ရေ ဆန် ငါး ကြက်',
-    'အဖေ အမေ ညီ ညီမ',
-    'မျက်စိ နား လက် ခြေ',
-    'အခြေခံ စကားလုံး (၂)',
-    'အိမ် မြို့ ရွာ',
-]
+const CORPUS_LINES = ['ရေ ဆန် ငါး ကြက်', 'အဖေ အမေ ညီ ညီမ', 'မျက်စိ နား လက် ခြေ', 'အခြေခံ စကားလုံး (၂)', 'အိမ် မြို့ ရွာ']
 
 describe('Myanmar grapheme runs are complete shaping units', () => {
     it.each(CORPUS_LINES)('%s yields one run per complete syllable', (line) => {
@@ -41,11 +24,6 @@ describe('Myanmar grapheme runs are complete shaping units', () => {
         for (let i = 1; i < runs.length; i++) {
             expect(runs[i].startUnit).toBe(runs[i - 1].endUnit)
         }
-        // No run may carry a stray trailing space (the algorithm putting a word-final
-        // ေ into a "ေ " run) unless it is exactly a single space, and no run may
-        // mix the preposed vowel U+1031 with whitespace — the exact symptoms of
-        // the reported bug. (A lone-mark drill like " ိ" is authored content:
-        // leading space + a standalone vowel-sign key, which builds losslessly.)
         for (const run of runs) {
             assertCleanRun(run.text)
         }
@@ -139,7 +117,11 @@ describe('Pyidaungsu font + shaping CSS invariants', () => {
         expect(existsSync(fontFile)).toBe(true)
         expect(existsSync(latinFile)).toBe(true)
         // TrueType magic: 00 01 00 00
-        expect(readFileSync(fontFile).subarray(0, 4).equals(Buffer.from([0x00, 0x01, 0x00, 0x00]))).toBe(true)
+        expect(
+            readFileSync(fontFile)
+                .subarray(0, 4)
+                .equals(Buffer.from([0x00, 0x01, 0x00, 0x00])),
+        ).toBe(true)
         // WOFF magic: wOF2/wOFF
         const woff = readFileSync(latinFile)
         expect(woff.subarray(0, 3).toString('ascii')).toBe('wOF')
@@ -171,25 +153,11 @@ function lessonStrings(lesson: { exercises: LessonExercise[] }): string[] {
     return out.filter((line) => containsMyanmar(line))
 }
 
-/**
- * The exact bug symptoms a shaped run may never exhibit:
- *  - a Myanmar run ending on a stray trailing space (an orphaned ေ flushed
- *    into a "ေ " run), or
- *  - a Myanmar run mixing the preposed vowel U+1031 with whitespace.
- * A lone " " run is a legitimate space cluster; " ိ" (drill key content)
- * has its space LEADING, is lossless, and contains no preposed vowel.
- */
 function assertCleanRun(text: string, context = 'run'): void {
     if (text === ' ') return
     if (containsMyanmar(text)) {
-        // A Myanmar run may only carry whitespace as a LEADING char (the
-        // authored lone-mark drill " ိ"); any other space inside the run — a
-        // trailing space in particular — is the orphaned-ေ symptom.
         const body = text.replace(/^[\s\u00A0]+/, '')
-        expect(
-            !/[\s\u00A0]/.test(body),
-            `${context}: run ${JSON.stringify(text)} carries an interior/trailing space`,
-        ).toBe(true)
+        expect(!/[\s\u00A0]/.test(body), `${context}: run ${JSON.stringify(text)} carries an interior/trailing space`).toBe(true)
         expect(
             !body.includes('\u1031') || !/[\s\u00A0]/.test(text),
             `${context}: run ${JSON.stringify(text)} mixes the preposed vowel with whitespace`,

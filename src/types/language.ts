@@ -1,14 +1,5 @@
 import { isLanguage, type Language } from './index'
 
-/**
- * Canonical lesson language identifiers used inside lesson JSON files and the
- * on-disk directory layout (`lessons/en/…`, `lessons/my/…`).
- *
- * These are deliberately separate from the legacy runtime `Language` union
- * ("english" | "myanmar" | "mixed") so the two representations do not get
- * conflated: the JSON schema speaks "en"/"my", while the existing application
- * domain model keeps its established values.
- */
 export type LessonLanguage = 'en' | 'my'
 
 export const LESSON_LANGUAGES: readonly LessonLanguage[] = ['en', 'my'] as const

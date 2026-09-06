@@ -68,12 +68,6 @@ export function fingerForCode(code: string): FingerId {
     return STANDARD[code] ?? 'left-pinky'
 }
 
-/**
- * Resolve the finger responsible for a physical key code, or `null` when the
- * code has no defined finger. Unlike `fingerForCode`, this never falls back to
- * a pinky guess, so the hand overlay cannot highlight the wrong finger for an
- * unknown/synthetic code.
- */
 export function fingerForCodeOrNull(code: string | null | undefined): FingerId | null {
     if (!code) return null
     const finger = STANDARD[code]
@@ -97,10 +91,6 @@ export const FINGER_LABELS: Record<FingerId, string> = {
     'right-pinky': 'Right Pinky',
 }
 
-/**
- * Optional human-readable label for wide keys whose layout `label` is too terse
- * to sit comfortably on a wide keycap (e.g. "Shift", "Enter", "Backspace").
- */
 export const WIDE_KEY_LABEL: Record<string, string> = {
     Tab: 'Tab',
     CapsLock: 'Caps',
@@ -118,10 +108,6 @@ export interface FingerMapping {
     shift: FingerId | null
 }
 
-/**
- * Resolve the primary finger (and, when `withShift`, the opposite-hand pinky
- * used for the Shift chord) responsible for a given key code.
- */
 export function resolveFingerMapping(keyCode: string, withShift: boolean): FingerMapping {
     const primary = keyCode ? fingerForCode(keyCode) : null
     let shift: FingerId | null = null
@@ -133,7 +119,6 @@ export function resolveFingerMapping(keyCode: string, withShift: boolean): Finge
     return { primary, shift }
 }
 
-/** A short uppercase label for a finger ("L-Pinky"), used in tidy chips. */
 export function fingerShort(finger: FingerId | null): string {
     if (!finger) return ''
     const full = FINGER_LABELS[finger]

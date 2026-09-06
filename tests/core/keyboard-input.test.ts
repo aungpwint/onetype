@@ -8,26 +8,35 @@ import { getLessonRepository, getCanonicalLesson } from '@/data/curriculum'
 import type { LessonExercise } from '@/types/exercise'
 import type { Modifier } from '@/types'
 
-/**
- * Keyboard-press contract for Myanmar input.
- *
- * A key press inserts exactly the character its keycap displays (produced by
- * the layout's authoritative `outputFor`), and typing a syllable composes its
- * canonical logical Unicode — "ရေ" is stored AND rendered as U+101B U+1031,
- * never with an invisible U+200C between base and vowel.
- *
- * Keyboard ORDER is the visual mirror of that logical text: the pre-base vowel
- * U+1031 is the first key a Pyidaungsu learner presses for a syllable like
- * "ရေ" (ေ → ရ / KeyA → Digit7:shift), because the base is only spelled once
- * the vowel has been keyed at the left. The engine therefore expects `ေ`
- * first, while stored text, `graphemes` and rendering keep the logical order.
- */
-
 const ZERO_WIDTH = new Set([0x200b, 0x200c, 0x200d, 0x200e, 0x200f, 0x2060, 0xfeff, 0x034f])
 
 const REPORTED_CORPUS = ['ရေ', 'အဖေ', 'အမေ', 'ခြေ', 'အခြေခံ', 'အိမ်', 'မြို့', 'ရွာ', 'မျက်စိ', 'နား', 'လက်', 'ရေ', 'ဆန်', 'ငါး', 'ကြက်']
 const AVOWEL_NO_PREBASE = ['ကု', 'ကူ', 'ကိ', 'ကီ', 'ကာ', 'ကါ', 'ကဲ', 'ကံ', 'က့', 'ကး', 'က္', 'က္က']
-const PREBASE_MATRIX = ['ကေ', 'ခေ', 'ဂေ', 'ငေ', 'စေ', 'ဆေ', 'ဇေ', 'ညေ', 'တေ', 'ထေ', 'ဒေ', 'နေ', 'ပေ', 'ဖေ', 'ဗေ', 'မေ', 'ယေ', 'ရေ', 'လေ', 'ဝေ', 'သေ', 'ဟေ', 'အေ']
+const PREBASE_MATRIX = [
+    'ကေ',
+    'ခေ',
+    'ဂေ',
+    'ငေ',
+    'စေ',
+    'ဆေ',
+    'ဇေ',
+    'ညေ',
+    'တေ',
+    'ထေ',
+    'ဒေ',
+    'နေ',
+    'ပေ',
+    'ဖေ',
+    'ဗေ',
+    'မေ',
+    'ယေ',
+    'ရေ',
+    'လေ',
+    'ဝေ',
+    'သေ',
+    'ဟေ',
+    'အေ',
+]
 const COMBINATIONS = ['ကေ', 'ကု', 'ကူ', 'ကဲ', 'တေ', 'တု', 'တူ', 'မေ', 'မု', 'မူ', 'နေ', 'နု', 'နူ']
 const SENTENCE_LINES = ['ရေ ဆန် ငါး ကြက်', 'အဖေ အမေ ညီ ညီမ', 'အခြေခံ စကားလုံး (၂)']
 
@@ -41,10 +50,6 @@ interface Press {
     inserted: string
 }
 
-/**
- * Simulate the learner pressing the exact keys the engine expects for the
- * target, through the same authoritative output path the keycap labels use.
- */
 function keyboardPresses(text: string): Press[] {
     const seq = buildSequence(text, myanmar)
     const presses: Press[] = []
@@ -58,12 +63,6 @@ function keyboardPresses(text: string): Press[] {
     return presses
 }
 
-/**
- * The text the learner winds up having stored after pressing each syllable's
- * keys: every keyed press maps to a code point of that syllable, and the
- * stored result is the syllable's LOGICAL (canonical) Unicode — the pre-base
- * vowel moves behind its base the moment the cluster is composed.
- */
 function keyboardType(text: string): string {
     return buildSequence(text, myanmar).graphemes.join('')
 }
@@ -71,12 +70,12 @@ function keyboardType(text: string): string {
 function assertExactlyTyped(word: string): void {
     const typed = keyboardType(word)
     expect(typed, `keyboard output for ${JSON.stringify(word)}`).toBe(word)
-    expect([...typed].map((c) => c.codePointAt(0)), `code points for ${JSON.stringify(word)}`).toEqual([...word].map((c) => c.codePointAt(0)))
+    expect(
+        [...typed].map((c) => c.codePointAt(0)),
+        `code points for ${JSON.stringify(word)}`,
+    ).toEqual([...word].map((c) => c.codePointAt(0)))
     for (const c of typed) {
-        expect(
-            !ZERO_WIDTH.has(c.codePointAt(0)!),
-            `zero-width char ${codePoints(c)} in ${JSON.stringify(typed)}`,
-        ).toBe(true)
+        expect(!ZERO_WIDTH.has(c.codePointAt(0)!), `zero-width char ${codePoints(c)} in ${JSON.stringify(typed)}`).toBe(true)
     }
 }
 
@@ -119,9 +118,7 @@ describe('Myanmar keyboard produces the exact canonical Unicode sequence', () =>
                 groups.set(gi, [...(groups.get(gi) ?? []), inserted])
             }
             for (let gi = 0; gi < seq.graphemes.length; gi++) {
-                expect(groups.get(gi)?.join(''), `pressed cluster ${gi} of ${JSON.stringify(word)}`).toBe(
-                    keyboardOrderForCluster(seq.graphemes[gi]),
-                )
+                expect(groups.get(gi)?.join(''), `pressed cluster ${gi} of ${JSON.stringify(word)}`).toBe(keyboardOrderForCluster(seq.graphemes[gi]))
             }
         }
     })
@@ -165,8 +162,6 @@ describe('Typing engine recognizes the keyboard-generated sequence', () => {
     it('does NOT treat "ရ then ေ" as a clean correct input — it records a miss', () => {
         const seq = buildSequence('ရေ', myanmar)
         const engine = new TypingEngine({ sequence: seq, layout: myanmar })
-        // The engine's first expected key is the pre-base vowel key (KeyA/ေ),
-        // so leading with the base (Digit7/ရ) is a miss that is recorded.
         expect(engine.expectedUnit?.keyCode).toBe('KeyA')
         engine.processKey('Digit7', 'shift')
         engine.processKey('KeyA', 'none')

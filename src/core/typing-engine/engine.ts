@@ -218,10 +218,6 @@ export class TypingEngine {
         this.emit({ type: reason === 'time-up' ? 'time-up' : 'finish', unitIndex: this.unitIndex, metrics, reason })
     }
 
-    keyOutcomeFor(code: string, modifier: Modifier): KeyOutcome {
-        return this.keyOutcomes.get(`${code}:${modifier}`) ?? { correct: 0, incorrect: 0 }
-    }
-
     resetMetrics() {
         this.unitIndex = 0
         this.correctCount = 0

@@ -1,13 +1,5 @@
 import { isMyanmarCodePoint, isMyanmarAttachingMark, isMyanmarSyllableHead, isPreBaseVowel, isAsat, isVirama } from './classification'
 
-/**
- * Four layers must not be conflated: code points (canonical Unicode) → Myanmar
- * clusters (one syllable) → visual graphemes (shaped runs) → keyboard input
- * (press order). A pre-base vowel (ေ U+1031) is STORED after its base, typed
- * FIRST (leftmost glyph), and shapes in that position. This module owns the
- * canonical/validation layer; press order lives in the typing-engine sequence.
- */
-
 export function containsMyanmar(text: string): boolean {
     for (const ch of text) {
         if (isMyanmarCodePoint(ch.codePointAt(0) ?? 0)) return true
@@ -15,11 +7,11 @@ export function containsMyanmar(text: string): boolean {
     return false
 }
 
-// --- Zero-width invisible character policy -----------------------------------
-// Lesson text and typing targets must be canonical Unicode. The real-world
-// corruption is a Zero Width Non-Joiner (U+200C) inserted before the preposed
-// vowel U+1031 (ေ) by certain keyboard drivers. It is invisible but breaks
-// shaping and changes the stored bytes, so detection/cleaning lives here.
+// Zero-width invisible character policy: lesson text and typing targets must be
+// canonical Unicode. The real-world corruption is a Zero Width Non-Joiner
+// (U+200C) inserted before the preposed vowel U+1031 (ေ) by certain keyboard
+// drivers. It is invisible but breaks shaping and changes the stored bytes, so
+// detection/cleaning lives here.
 
 const SUSPICIOUS_CODEPOINTS: ReadonlySet<number> = new Set([
     0x200b, 0x200c, 0x200d, 0x200e, 0x200f, 0x202a, 0x202b, 0x202c, 0x202d, 0x202e, 0x2060, 0xfeff, 0x034f,
@@ -49,11 +41,6 @@ function describeSuspicious(codePoint: number, next: number): string {
     return `embedded directional character U+${codePoint.toString(16).toUpperCase().padStart(4, '0')}`
 }
 
-/**
- * Find invisible/format characters that are not semantically required by the
- * scripts this application handles. Returns one entry per offending code point
- * (code-point coordinates, so `index` is safe against surrogate pairs).
- */
 export function findSuspiciousInvisibleCharacters(text: string): SuspiciousCharacter[] {
     const chars = Array.from(text)
     const out: SuspiciousCharacter[] = []
@@ -82,11 +69,6 @@ export interface MyanmarTextProblem {
     message: string
 }
 
-/**
- * Validate Myanmar text without mutating it. Returns a list of problems (empty
- * when the text is canonical). Used by the lesson loader so malformed data
- * fails fast at boot, and by the lesson-content tests.
- */
 export function validateMyanmarText(text: string): MyanmarTextProblem[] {
     const problems: MyanmarTextProblem[] = []
     for (const found of findSuspiciousInvisibleCharacters(text)) {
@@ -98,13 +80,6 @@ export function validateMyanmarText(text: string): MyanmarTextProblem[] {
     return problems
 }
 
-/**
- * Normalize Myanmar text deterministically for use as display / derived typing
- * material: canonical NFC composition plus removal of zero-width characters
- * that this application never semantically uses. Stored lesson data must be
- * canonical already (the validator enforces that); this is a safety net for
- * derived/user-supplied strings.
- */
 export function normalizeMyanmarText(text: string): string {
     const composed = text.normalize('NFC')
     let out = ''
@@ -116,22 +91,13 @@ export function normalizeMyanmarText(text: string): string {
     return out
 }
 
-// --- Myanmar syllable cluster segmentation ---------------------------------
-//
-// A typing system needs to treat a full syllable cluster (base consonant +
-// medials + vowel signs + asat/kinzi/stacking + tone marks) as one deletion
-// unit; Intl.Segmenter leaves the preposed vowel U+1031 standalone, so the
-// canonical syllable-break rules are implemented here. Input must already be
-// canonical (see `validateMyanmarText`). Character membership comes from the
+// Myanamar syllable cluster segmentation: a full syllable cluster (base
+// consonant + medials + vowel signs + asat/kinzi/stacking + tone marks) is one
+// deletion unit; Intl.Segmenter leaves the preposed vowel U+1031 standalone, so
+// the canonical syllable-break rules are implemented here. Input must already
+// be canonical (see `validateMyanmarText`). Character membership comes from the
 // classification core — no code-point tables live here.
 
-/**
- * Split Myanmar text into syllable clusters — one unit the learner perceives
- * (and deletes) as a single entity, and that the browser must shape in one
- * continuous text run. A word-final preposed vowel (ေ U+1031) stays with the
- * consonant it logically follows even before a space/punctuation, so the
- * stored ရ+ေ is never split into a lone ရ and a dotted-circle ေ.
- */
 export function splitMyanmarSyllables(text: string): string[] {
     const chars = Array.from(text)
     const out: string[] = []
@@ -181,10 +147,6 @@ export function splitMyanmarSyllables(text: string): string[] {
     return out
 }
 
-/**
- * Whether the code point `code` begins a new Myanmar syllable, given the
- * preceding (`prev`) and following (`next`) code points.
- */
 function isSyllableStart(code: number, prev: number, next: number): boolean {
     // Base consonants (and vowel-letter bases like ဣ ဤ ဥ ဦ ဧ ဩ ဿ) attach any
     // cluster-internal marks.

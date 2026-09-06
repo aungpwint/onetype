@@ -1,10 +1,3 @@
-/**
- * Typed error taxonomy for the lesson platform.
- *
- * Consumers catch specific failure modes (missing lesson, malformed content,
- * unsupported schema version) without string-matching messages.
- */
-
 export abstract class LessonError extends Error {
     readonly lessonId: string | null
 
@@ -15,7 +8,6 @@ export abstract class LessonError extends Error {
     }
 }
 
-/** Raised when lesson JSON cannot be parsed (malformed JSON or unreadable file). */
 export class LessonParseError extends LessonError {
     readonly source: string
 
@@ -25,7 +17,6 @@ export class LessonParseError extends LessonError {
     }
 }
 
-/** Raised when a lesson exists but violates the canonical Lesson schema. */
 export class LessonValidationError extends LessonError {
     readonly issues: string[]
 
@@ -35,7 +26,6 @@ export class LessonValidationError extends LessonError {
     }
 }
 
-/** Raised when a lesson's schemaVersion is newer than this loader understands. */
 export class UnsupportedLessonSchemaError extends LessonError {
     readonly schemaVersion: number
 
@@ -45,7 +35,6 @@ export class UnsupportedLessonSchemaError extends LessonError {
     }
 }
 
-/** Raised when an exercise references an unknown kind. */
 export class UnsupportedExerciseTypeError extends LessonError {
     readonly kind: string
 
@@ -55,14 +44,12 @@ export class UnsupportedExerciseTypeError extends LessonError {
     }
 }
 
-/** Raised when a requested lesson id does not exist in the repository. */
 export class LessonNotFoundError extends LessonError {
     constructor(id: string) {
         super(`Unknown lesson: "${id}"`, id)
     }
 }
 
-/** Raised when the lesson catalog itself is incoherent (duplicates, drift). */
 export class LessonCatalogError extends LessonError {
     readonly issues: string[]
 
