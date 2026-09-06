@@ -22,7 +22,7 @@ import {
     toTransformAttribute,
     type FingerAnimState,
 } from '@/components/hand-guide/finger-motion'
-import { fingerHand, resolveFinger } from '@/components/hand-guide/hand-key-map'
+import { fingerForCodeOrNull as resolveFinger, handForFinger } from '@/core/finger-mapping/finger-map'
 import type { FingerId } from '@/types'
 
 /*
@@ -88,7 +88,7 @@ function reach(anchors: ReadonlyMap<string, KeyAnchor>, code: string): ReturnTyp
     if (!finger) throw new Error(`no finger for ${code}`)
     const anchor = anchors.get(code)
     if (!anchor) throw new Error(`no anchor for ${code}`)
-    const hand = fingerHand(finger)
+    const hand = handForFinger(finger)
     const geom = hand === 'left' ? LEFT_GEOMETRY : RIGHT_GEOMETRY
     return targetForKey(finger, placeFor(anchors, hand), geom, FINGER_PROFILES[finger], anchor)
 }
@@ -101,7 +101,7 @@ function reachedTip(
     if (!finger) throw new Error(`no finger for ${code}`)
     const anchor = anchors.get(code)
     if (!anchor) throw new Error(`no anchor for ${code}`)
-    const hand = fingerHand(finger)
+    const hand = handForFinger(finger)
     const geom = hand === 'left' ? LEFT_GEOMETRY : RIGHT_GEOMETRY
     const place = placeFor(anchors, hand)
     const geo = fingerGeometry(hand, geom, finger)
@@ -342,7 +342,7 @@ describe('profiles and hand parity', () => {
         expect(native.length).toBe(10)
         for (const f of native as FingerId[]) {
             expect(FINGER_PROFILES[f].approachMs).toBeGreaterThan(0)
-            expect(fingerHand(f)).toBe(f.startsWith('left') ? 'left' : 'right')
+            expect(handForFinger(f)).toBe(f.startsWith('left') ? 'left' : 'right')
         }
     })
 

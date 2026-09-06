@@ -13,7 +13,7 @@ import {
     type KeyAnchor,
     type KeyboardGeometry,
 } from '@/components/hand-guide/hand-geometry'
-import { resolveFinger, fingerHand } from '@/components/hand-guide/hand-key-map'
+import { fingerForCodeOrNull as resolveFinger, handForFinger } from '@/core/finger-mapping/finger-map'
 import type { FingerId } from '@/types'
 
 /** Standard QWERTY home row: A..; at 40px pitch, home row centred on Y=400. */
@@ -177,7 +177,7 @@ describe('every mapped finger has a resting anchor', () => {
         for (const [code, expected] of Object.entries(cases)) {
             const finger = resolveFinger(code)
             expect(finger, code).toBe(expected)
-            const hand = fingerHand(finger as FingerId)
+            const hand = handForFinger(finger as FingerId)
             const geom = hand === 'left' ? LEFT_GEOMETRY : RIGHT_GEOMETRY
             expect(geom.tips[finger as FingerId], code).toBeDefined()
         }

@@ -1,5 +1,5 @@
 import type { FingerId } from '@/types'
-import { FINGER_LABELS, fingerForCode } from '@/core/finger-mapping/finger-map'
+import { FINGER_LABELS, fingerForCode, handForFinger } from '@/core/finger-mapping/finger-map'
 import { shiftHandFor } from '@/core/keyboard-layout/layout'
 
 /**
@@ -31,7 +31,7 @@ export function resolveFingerMapping(keyCode: string, withShift: boolean): Finge
     const primary = keyCode ? fingerForCode(keyCode) : null
     let shift: FingerId | null = null
     if (withShift && primary) {
-        const keyHand = primary.startsWith('left') ? 'left' : 'right'
+        const keyHand = handForFinger(primary)
         const sHand = shiftHandFor(keyHand)
         shift = sHand === 'left' ? 'left-pinky' : 'right-pinky'
     }

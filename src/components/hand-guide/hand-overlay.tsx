@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { leftHandSvg, rightHandSvg } from './hand-assets'
-import { fingerHand, resolveFinger } from './hand-key-map'
+import { handForFinger, fingerForCodeOrNull as resolveFinger } from '@/core/finger-mapping/finger-map'
 import {
     LEFT_GEOMETRY,
     RIGHT_GEOMETRY,
@@ -170,7 +170,7 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
             if (!finger) return
             const anchor = geometry?.anchors.get(code)
             if (!anchor) return
-            const hand = fingerHand(finger)
+            const hand = handForFinger(finger)
             const place = handLayout[hand === 'left' ? 'left' : 'right']
             const geom = hand === 'left' ? LEFT_GEOMETRY : RIGHT_GEOMETRY
             const target = targetForKey(finger, place, geom, FINGER_PROFILES[finger], {

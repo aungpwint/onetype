@@ -67,6 +67,18 @@ export function fingerForCode(code: string): FingerId {
     return STANDARD[code] ?? 'left-pinky'
 }
 
+/**
+ * Resolve the finger responsible for a physical key code, or `null` when the
+ * code has no defined finger. Unlike `fingerForCode`, this never falls back to
+ * a pinky guess, so the hand overlay cannot highlight the wrong finger for an
+ * unknown/synthetic code.
+ */
+export function fingerForCodeOrNull(code: string | null | undefined): FingerId | null {
+    if (!code) return null
+    const finger = STANDARD[code]
+    return finger ?? null
+}
+
 export function handForFinger(finger: FingerId): 'left' | 'right' {
     return finger.startsWith('left') ? 'left' : 'right'
 }
