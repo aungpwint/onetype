@@ -4,6 +4,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { buildSequence, graphemeUnitRuns } from '@/core/typing-engine/sequence'
+import { isCurrentGrapheme } from '@/core/typing-engine/char-state'
+import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
 import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { getLessonRepository, getCanonicalLesson, resolveLessonById } from '@/data/curriculum'
@@ -171,6 +173,77 @@ describe('Pyidaungsu font + shaping CSS invariants', () => {
         const rule = css.match(/\.tt-caret\s*{([^}]*)}/)
         expect(rule).toBeTruthy()
         expect(rule![1]).toContain('background-color: var(--primary)')
+    })
+})
+
+describe('Regression: current word ≠ current grapheme (repeat-char isolation)', () => {
+    it('Myanmar "က က က က": exactly one grapheme is "current" at any caret', () => {
+        const seq = buildSequence('က က က က', myanmar)
+        const runs = graphemeUnitRuns(seq)
+
+        // Four က plus three spaces. Each က maps to its own unit range.
+        expect(runs).toHaveLength(7)
+        const kaRuns = runs.filter((r) => !r.text.includes(' '))
+        expect(kaRuns).toHaveLength(4)
+
+        // At each ka-grapheme's start unit, exactly that grapheme is current.
+        for (const ka of kaRuns) {
+            const active = runs.filter((g) => isCurrentGrapheme(ka.startUnit, g.startUnit, g.endUnit))
+            expect(active).toHaveLength(1)
+            expect(active[0]).toEqual(ka)
+        }
+
+        // Important: having typed the first က (and the space), the NEXT identical
+        // က must NOT be highlighted, and only the second ka is current at its own
+        // start unit.
+        const first = kaRuns[0]!
+        const second = kaRuns[1]!
+        expect(isCurrentGrapheme(first.endUnit, first.startUnit, first.endUnit)).toBe(false)
+        expect(isCurrentGrapheme(second.startUnit, second.startUnit, second.endUnit)).toBe(true)
+    })
+
+    it('English repeated characters "aaaa": only the typed letter is current', () => {
+        const seq = buildSequence('aaaa', englishQwerty)
+        const runs = graphemeUnitRuns(seq)
+        expect(runs).toHaveLength(4)
+
+        for (let i = 0; i < runs.length; i++) {
+            const r = runs[i]!
+            const active = runs.filter((g) => isCurrentGrapheme(r.startUnit, g.startUnit, g.endUnit))
+            expect(active, `caret at index ${i}`).toHaveLength(1)
+            expect(active[0]).toEqual(r)
+        }
+
+        // Typing the second 'a' (unit 1) highlights ONLY the second a, never the
+        // first or the third.
+        expect(isCurrentGrapheme(1, runs[0]!.startUnit, runs[0]!.endUnit)).toBe(false)
+        expect(isCurrentGrapheme(1, runs[1]!.startUnit, runs[1]!.endUnit)).toBe(true)
+        expect(isCurrentGrapheme(1, runs[2]!.startUnit, runs[2]!.endUnit)).toBe(false)
+    })
+
+    it('the highlight never bleeds across a single Myanmar word — 3-grapheme "အခြေခံ"', () => {
+        // အခြေခံ is ONE word made of THREE graphemes: 'အ' [0,1), 'ခြ' [1,3),
+        // 'ေခံ' [3,6). While typing any one of them, ONLY that grapheme is
+        // current — the other two graphemes of the same word are NOT.
+        const seq = buildSequence('အခြေခံ', myanmar)
+        const runs = graphemeUnitRuns(seq)
+        expect(runs.map((r) => r.text).join('')).toBe('အခြေခံ')
+        expect(runs).toHaveLength(3)
+
+        // Caret on the first grapheme (unit 0).
+        expect(isCurrentGrapheme(0, runs[0]!.startUnit, runs[0]!.endUnit)).toBe(true)
+        expect(isCurrentGrapheme(0, runs[1]!.startUnit, runs[1]!.endUnit)).toBe(false)
+        expect(isCurrentGrapheme(0, runs[2]!.startUnit, runs[2]!.endUnit)).toBe(false)
+
+        // Caret on the middle grapheme (unit 1, inside 'ခြ').
+        expect(isCurrentGrapheme(1, runs[0]!.startUnit, runs[0]!.endUnit)).toBe(false)
+        expect(isCurrentGrapheme(1, runs[1]!.startUnit, runs[1]!.endUnit)).toBe(true)
+        expect(isCurrentGrapheme(1, runs[2]!.startUnit, runs[2]!.endUnit)).toBe(false)
+
+        // Caret on the last grapheme (unit 3, inside 'ေခံ').
+        expect(isCurrentGrapheme(3, runs[0]!.startUnit, runs[0]!.endUnit)).toBe(false)
+        expect(isCurrentGrapheme(3, runs[1]!.startUnit, runs[1]!.endUnit)).toBe(false)
+        expect(isCurrentGrapheme(3, runs[2]!.startUnit, runs[2]!.endUnit)).toBe(true)
     })
 })
 

@@ -1,11 +1,12 @@
 import { memo, useCallback, useLayoutEffect, useMemo, useRef } from 'react'
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
+import { useShallow } from 'zustand/react/shallow'
 import { useTypingStore } from '@/stores/typing-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { cn } from '@/lib/utils'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { graphemeUnitRuns, type GraphemeRun } from '@/core/typing-engine/sequence'
-import { CHAR_PENDING, CHAR_CORRECT, CHAR_INCORRECT, clusterPhaseCode, flashIndexMatches, rangeHasIncorrect } from '@/core/typing-engine/char-state'
+import { graphemeCorrectness, graphemeViewState, flashIndexMatches, rangeHasIncorrect } from '@/core/typing-engine/char-state'
 
 const CARET_ANCHOR = 0.45
 const CONTENT_INSET = 24
@@ -294,38 +295,33 @@ const Char = memo(function Char({
     indicateTypos,
     isPaceChar,
 }: CharProps) {
-    // Each component reads its own presentation state straight from the store as
-    // a single primitive. Only the few clusters around the caret change between
-    // keystrokes, so only those components re-render (React compares selector
-    // snapshots by identity).
-    const phase = useTypingStore((s) => {
-        const engine = s.engine
-        const unit = engine?.unitIndex ?? 0
-        if (unit >= endUnit) {
-            if (engine && rangeHasIncorrect(engine, startUnit, endUnit)) return CHAR_INCORRECT
-            return CHAR_CORRECT
-        }
-        return clusterPhaseCode(unit, startUnit, endUnit)
-    })
+    const view = useTypingStore(
+        useShallow((s) => {
+            const unit = s.engine?.unitIndex ?? 0
+            const incorrect = s.engine !== null && rangeHasIncorrect(s.engine, startUnit, endUnit)
+            return graphemeViewState(unit, startUnit, endUnit, incorrect)
+        }),
+    )
     const flashing = useTypingStore((s) => flashIndexMatches(s.wrongFlash?.unitIndex, startUnit, endUnit))
+
     const slipKind = useTypingStore((s) => {
-        if (phase === CHAR_INCORRECT && s.engine) {
-            const d = s.engine.clusterDiagnosisFor(graphemeIndex)
-            return d ? d.kind : null
-        }
-        return null
+        const unit = s.engine?.unitIndex ?? 0
+        const incorrect = s.engine !== null && rangeHasIncorrect(s.engine, startUnit, endUnit)
+        if (graphemeCorrectness(unit, endUnit, incorrect) !== 'incorrect' || !s.engine) return null
+        const d = s.engine.clusterDiagnosisFor(graphemeIndex)
+        return d ? d.kind : null
     })
 
-    // Word membership of the caret for word-highlight, blind and hide-extra.
     const inCurrentWordUpcoming = useTypingStore((s) => {
         const unit = s.engine?.unitIndex ?? 0
         if (unit >= endUnit) return false
         return unit >= wordStart && unit < wordEnd
     })
-    const pending = phase === CHAR_PENDING
+
+    const pending = view.correctness === 'pending' && !view.isCurrent
     const hideBlind = blindMode === 'on' && pending
     const hideExtra = hideExtraLetters === 'on' && pending && !inCurrentWordUpcoming
-    const hidden = (hideBlind || hideExtra) ? 'tt-char-blind' : null
+    const hidden = hideBlind || hideExtra ? 'tt-char-blind' : null
 
     const font = containsMyanmar(text) ? 'font-myanmar' : 'font-heavy'
 
@@ -348,8 +344,7 @@ const Char = memo(function Char({
                 ? 'tt-caret--smooth-medium'
                 : null
 
-    if (phase >= 1 && phase < 2) {
-        const progress = phase - 1
+    if (view.isCurrent) {
         const isCaretAnchoredBar = caretClass !== 'tt-caret--block' && caretClass !== 'tt-caret--underline'
         return (
             <span
@@ -359,7 +354,7 @@ const Char = memo(function Char({
                     'tt-char tt-char-now char-pop',
                     font,
                     flashing ? 'tt-char-flash' : highlightMode === 'none' ? null : 'tt-char-focus',
-                    highlightMode === 'word' && inCurrentWordUpcoming ? 'tt-word-now' : null,
+                    highlightMode === 'word' ? 'tt-word-now' : null,
                     focused ? '' : 'tt-char-dim',
                     hidden ?? undefined,
                 )}
@@ -369,25 +364,28 @@ const Char = memo(function Char({
                     <span
                         aria-hidden
                         className={cn('tt-caret z-10', caretClass, smoothClass)}
-                        style={
-                            isCaretAnchoredBar
-                                ? { left: `clamp(0px, ${progress * 100}%, calc(100% - var(--tt-caret-w)))` }
-                                : undefined
-                        }
+                        style={isCaretAnchoredBar ? { left: `clamp(0px, ${view.progress * 100}%, calc(100% - var(--tt-caret-w)))` } : undefined}
                     />
                 ) : null}
             </span>
         )
     }
 
-    const visual = phase === CHAR_INCORRECT ? 'incorrect' : phase === CHAR_CORRECT ? 'correct' : 'pending'
+    const visual = view.correctness
     const cls = cn(
         'tt-char',
-        visual === 'correct' ? 'tt-char-ok' : visual === 'incorrect' ? cn(missClass, slipKind ? `tt-cl-slip tt-cl-slip--${slipKind}` : null) : 'tt-char-typed',
+        visual === 'correct'
+            ? 'tt-char-ok'
+            : visual === 'incorrect'
+              ? cn(missClass, slipKind ? `tt-cl-slip tt-cl-slip--${slipKind}` : null)
+              : 'tt-char-typed',
         font,
-        highlightMode === 'word' && inCurrentWordUpcoming ? 'tt-word-now' : null,
         hidden ?? undefined,
     )
 
-    return <span data-pace-char={isPaceChar ? '' : undefined} className={cls}>{text}</span>
+    return (
+        <span data-pace-char={isPaceChar ? '' : undefined} className={cls}>
+            {text}
+        </span>
+    )
 })
