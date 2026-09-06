@@ -58,10 +58,15 @@ function fail(message) {
 }
 
 function run(cmd, args, opts = {}) {
-    const result = spawnSync(cmd, args, {
+    const shell = process.platform === 'win32'
+    // On Windows the command is executed via cmd.exe, which needs an
+    // executable with a space-containing path (e.g. a Node install under
+    // "Program Files") to be double-quoted.
+    const command = shell ? `"${cmd}"` : cmd
+    const result = spawnSync(command, args, {
         cwd: root,
         encoding: 'utf8',
-        shell: process.platform === 'win32',
+        shell,
         stdio: opts.silent ? ['ignore', 'pipe', 'pipe'] : 'inherit',
     })
     if (result.error) fail(`Failed to run ${cmd}: ${result.error.message}`)
