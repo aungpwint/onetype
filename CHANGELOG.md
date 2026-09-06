@@ -9,6 +9,28 @@ the curated source maintained alongside `scripts/release-notes.mjs`, which the
 `release` GitHub Actions workflow uses (with per-platform downloads, checksums
 and auto-update notes) to build every GitHub Release page.
 
+## [1.2.0] - 2026-09-06
+
+### Added
+
+- One-click auto-update: "Update Now" downloads, verifies and installs the
+  update in a single click, then restarts OneType into the new version. The
+  dialog stays open (and can't be dismissed) while the download/install runs.
+- OneType now re-checks for updates every 6 hours while it stays open, not only
+  when it launches (throttled by `app.autoUpdate` + `updater.lastChecked`).
+- OS notifications for new versions are gated by the notification preferences —
+  the "ready to install" and "update available" notifications both respect
+  `notification.enabled` and `notification.notifyUpdates`.
+
+### Changed
+
+- The update dialog shows the target version through every stage (available,
+  downloading, installed, restart), with download percentage and total size, a
+  dedicated error state with retry, and a clear completion screen.
+- The update banner now tracks the update live: it shows download progress and
+  a "Restart & Update" prompt once the update is ready, so the action is never
+  lost after dismissing the dialog.
+
 ## [1.1.1] - 2026-09-05
 
 ### Fixed
