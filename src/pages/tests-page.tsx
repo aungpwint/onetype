@@ -5,6 +5,7 @@ import * as backend from '@/services/backend'
 import type { TestResult, TypingTest } from '@/services/types'
 import { useStudentStore } from '@/stores/student-store'
 import { containsMyanmar } from '@/core/unicode/myanmar'
+import { classStanding, type Standing } from '@/core/leaderboard/standing'
 import { Badge } from '@/components/ui/badge'
 import { EmptyState, PageHeader, Spinner } from '@/components/ui'
 import { formatDateTime, formatWpm, formatAccuracy, bestResultByTest } from '@/lib/format'
@@ -52,6 +53,25 @@ export default function TestsPage() {
             setResults(await backend.listTestResults(active.id))
         })()
     }, [active])
+
+    const [standings, setStandings] = useState<Map<string, Standing>>(new Map())
+
+    useEffect(() => {
+        if (!tests || !active) return
+        let cancelled = false
+        void (async () => {
+            const map = new Map<string, Standing>()
+            for (const t of tests) {
+                const board = await backend.classLeaderboard(t.id)
+                const entry = active ? (board.find((e) => e.studentId === active.id) ?? null) : null
+                map.set(t.id, classStanding(entry, board.length))
+            }
+            if (!cancelled) setStandings(map)
+        })()
+        return () => {
+            cancelled = true
+        }
+    }, [tests, active])
 
     const bestByTest = bestResultByTest(results)
 
@@ -169,6 +189,16 @@ export default function TestsPage() {
                                             <p className="text-xs text-muted-foreground">
                                                 Target {test.minAccuracy}% acc{test.minWpm !== null ? ` · ${test.minWpm} wpm` : ''}
                                             </p>
+                                            {(() => {
+                                                const st = standings.get(test.id)
+                                                if (!st?.hasStanding) return null
+                                                return (
+                                                    <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                                                        <Trophy className="size-3 text-brass" />
+                                                        Class rank {st.rank} of {st.total}
+                                                    </p>
+                                                )
+                                            })()}
                                         </div>
 
                                         <div className="relative mt-auto flex items-end justify-between gap-4 pt-5">
