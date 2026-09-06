@@ -3,7 +3,7 @@ import type { KeyboardLayout, KeyDefinition } from '@/core/keyboard-layout/layou
 import { useTypingStore } from '@/stores/typing-store'
 import { resolveLastKey, resolveTarget } from '@/core/target-model'
 import type { Hand } from '@/types'
-import { WIDE_KEY_LABEL } from '@/lib/finger-mapper'
+import { WIDE_KEY_LABEL } from '@/core/finger-mapping/finger-map'
 
 interface VirtualKeyboardProps {
     layout: KeyboardLayout

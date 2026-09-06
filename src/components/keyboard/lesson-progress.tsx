@@ -1,5 +1,5 @@
 import { useTypingStore } from '@/stores/typing-store'
-import { resolveFingerMapping, fingerShort } from '@/lib/finger-mapper'
+import { resolveFingerMapping, fingerShort } from '@/core/finger-mapping/finger-map'
 import { Progress } from '@/components/ui/progress'
 
 export function LessonProgress() {
