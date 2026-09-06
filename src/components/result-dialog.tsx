@@ -8,6 +8,7 @@ import { extractMissedWords } from '@/core/materials/missed-words'
 import { ACHIEVEMENT_CATALOG } from '@/data/achievements'
 import * as backend from '@/services/backend'
 import { computePersonalBest, type PersonalBestInfo } from '@/core/scoring/personal-best'
+import { classStanding, type Standing } from '@/core/leaderboard/standing'
 import { Modal } from './ui'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
@@ -62,6 +63,7 @@ export function ResultDialog() {
     const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel)
 
     const pb = usePersonalBest(result?.metrics.speed ?? 0, result?.metrics.speedUnit ?? 'wpm', session?.startedAt ?? 0, session?.layout.id ?? '')
+    const rank = useClassResultRank(session?.test?.id ?? null)
 
     if (!result || !session) return null
 
@@ -187,6 +189,16 @@ export function ResultDialog() {
                             </span>
                         </span>
                     )}
+                </div>
+            ) : null}
+
+            {rank && rank.hasStanding ? (
+                <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl border border-line bg-muted/40 px-3 py-2 text-sm">
+                    <Trophy className="size-4 shrink-0 text-brass" />
+                    <span>
+                        <span className="font-medium">Class rank {rank.rank}</span>
+                        <span className="text-muted-foreground"> of {rank.total} on this paper</span>
+                    </span>
                 </div>
             ) : null}
 
@@ -363,6 +375,29 @@ function usePersonalBest(speed: number, unit: string, startedAt: number, layoutI
     }, [speed, unit, startedAt, layoutId, studentId])
 
     return info
+}
+
+function useClassResultRank(testId: string | null): Standing | null {
+    const studentId = useStudentStore((s) => s.active?.id ?? null)
+    const [standing, setStanding] = useState<Standing | null>(null)
+
+    useEffect(() => {
+        if (!testId || !studentId) return
+        let alive = true
+        void backend
+            .classLeaderboard(testId)
+            .then((board) => {
+                if (!alive) return
+                const entry = studentId ? (board.find((e) => e.studentId === studentId) ?? null) : null
+                setStanding(classStanding(entry, board.length))
+            })
+            .catch(() => undefined)
+        return () => {
+            alive = false
+        }
+    }, [testId, studentId])
+
+    return standing
 }
 
 function PacingChart() {
