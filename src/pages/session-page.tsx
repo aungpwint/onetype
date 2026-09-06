@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AlertCircle, ArrowLeft, Check, Keyboard, LayoutDashboard, Loader2, Pause, Play, LogOut } from 'lucide-react'
+import { AlertCircle, ArrowLeft, Check, Keyboard, LayoutDashboard, Loader2, Pause, Play, LogOut, ShieldAlert } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import * as backend from '@/services/backend'
 import { useTypingStore, buildAdaptiveDrill } from '@/stores/typing-store'
 import { useUiStore } from '@/stores/ui-store'
+import { useCapsLockState } from '@/hooks/use-caps-lock'
+import { isCapsLockWarningVisible } from '@/core/session/caps-lock'
 import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
 import { TargetText } from '@/components/target-text'
 import { StatsBar } from '@/components/stats-bar'
@@ -37,6 +39,7 @@ export function Session({
     const togglePause = useTypingStore((s) => s.togglePause)
     const abandon = useTypingStore((s) => s.abandon)
     const focusMode = useUiStore((s) => s.focusMode)
+    const capsLockOn = useCapsLockState()
     const exitGuard = useConfirmExit(() => {
         abandon()
         onExit?.()
@@ -111,6 +114,21 @@ export function Session({
                     <div className="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
                         <StatsBar />
                         <TargetText />
+                        <AnimatePresence>
+                            {isCapsLockWarningVisible(capsLockOn, status) ? (
+                                <motion.div
+                                    key="caps-lock"
+                                    role="alert"
+                                    className="flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1.5 text-xs text-foreground"
+                                    initial={{ opacity: 0, y: -4 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -4 }}
+                                >
+                                    <ShieldAlert className="size-3.5 text-amber-500" />
+                                    Caps Lock is on — every letter will type in capitals.
+                                </motion.div>
+                            ) : null}
+                        </AnimatePresence>
                         <QuickRestartHint />
                         <KeyboardContainer layout={layout} />
                         <OutOfFocusWarning />
