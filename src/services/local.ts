@@ -28,6 +28,7 @@ import type {
 } from './types'
 import { rankWeakest, DEFAULT_WEAKNESS_CONFIG } from '@/core/weakness'
 import { isLayoutAvailable } from '@/core/keyboard-layout/registry'
+import { rankClassOnTest, type LeaderboardCandidate, type LeaderboardEntry } from '@/core/leaderboard/ranking'
 
 const PREFIX = 'onetype:local:'
 
@@ -318,6 +319,29 @@ export const localBackend = {
     nextTestAttempt: async (studentId: string, testId: string): Promise<number> => {
         const results = read<TestResult[]>(KEYS.testResults, []).filter((r) => r.testId === testId && r.studentId === studentId)
         return results.reduce((max, r) => Math.max(max, r.attempt), 0) + 1
+    },
+
+    classLeaderboard: async (testId: string): Promise<LeaderboardEntry[]> => {
+        const tests = await localBackend.listTypingTests()
+        if (!tests.some((t) => t.id === testId)) return []
+        const students = read<Student[]>(KEYS.students, [])
+        const candidates: LeaderboardCandidate[] = await Promise.all(
+            students.map(async (student) => {
+                const results = await localBackend.listTestResults(student.id)
+                return {
+                    studentId: student.id,
+                    name: student.displayName,
+                    runs: results.map((r) => ({
+                        testId: r.testId,
+                        wpm: r.wpm,
+                        accuracy: r.accuracy,
+                        passed: r.passed,
+                        scoredOn: r.scoredOn,
+                    })),
+                }
+            }),
+        )
+        return rankClassOnTest(candidates, testId)
     },
 
     teacherOverview: async (): Promise<TeacherOverview> => {

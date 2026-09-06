@@ -751,6 +751,107 @@ pub fn list_test_results(conn: &Connection, student_id: &str) -> Result<Vec<Test
     Ok(out)
 }
 
+/// Best run per learner on one paper, ranked WPM-down with accuracy and
+/// earliest-run tie-breaks, mirroring `rankClassOnTest` in the web bundle.
+pub fn class_leaderboard(conn: &Connection, test_id: &str) -> Result<Vec<LeaderboardEntry>> {
+    let exists: bool = conn.query_row(
+        "SELECT EXISTS(SELECT 1 FROM typing_tests WHERE id = ?1)",
+        params![test_id],
+        |r| r.get::<_, i64>(0),
+    )? != 0;
+    if !exists {
+        return Ok(Vec::new());
+    }
+    let mut stmt = conn.prepare(
+        "SELECT s.id, s.display_name, tr.wpm, tr.accuracy, tr.passed, tr.scored_on
+         FROM test_results tr
+         JOIN students s ON s.id = tr.student_id
+         WHERE tr.test_id = ?1
+         ORDER BY tr.scored_on ASC",
+    )?;
+    let rows = stmt.query_map(params![test_id], |r| {
+        Ok((
+            r.get::<_, String>(0)?,
+            r.get::<_, String>(1)?,
+            r.get::<_, f64>(2)?,
+            r.get::<_, f64>(3)?,
+            r.get::<_, i64>(4)? != 0,
+            r.get::<_, i64>(5)?,
+        ))
+    })?;
+
+    struct Acc {
+        student_id: String,
+        name: String,
+        best_wpm: f64,
+        best_accuracy: f64,
+        passed: bool,
+        scored_on: i64,
+        attempts: i64,
+        passed_attempts: i64,
+    }
+    let mut by_student: std::collections::HashMap<String, Acc> = std::collections::HashMap::new();
+    for row in rows {
+        let (student_id, name, wpm, accuracy, passed, scored_on) = row?;
+        let entry = by_student
+            .entry(student_id.clone())
+            .or_insert(Acc {
+                student_id,
+                name,
+                best_wpm: f64::NEG_INFINITY,
+                best_accuracy: 0.0,
+                passed: false,
+                scored_on: i64::MAX,
+                attempts: 0,
+                passed_attempts: 0,
+            });
+        entry.attempts += 1;
+        if passed {
+            entry.passed_attempts += 1;
+        }
+        let better = wpm > entry.best_wpm
+            || (wpm == entry.best_wpm && accuracy > entry.best_accuracy)
+            || (wpm == entry.best_wpm && accuracy == entry.best_accuracy && scored_on < entry.scored_on);
+        if better {
+            entry.best_wpm = wpm;
+            entry.best_accuracy = accuracy;
+            entry.passed = passed;
+            entry.scored_on = scored_on;
+        }
+    }
+
+    let mut out: Vec<LeaderboardEntry> = by_student
+        .into_values()
+        .map(|a| LeaderboardEntry {
+            rank: 0,
+            student_id: a.student_id,
+            name: a.name,
+            best_wpm: a.best_wpm,
+            best_accuracy: a.best_accuracy,
+            passed: a.passed,
+            scored_on: a.scored_on,
+            attempts: a.attempts,
+            passed_attempts: a.passed_attempts,
+        })
+        .collect();
+    out.sort_by(|a, b| {
+        b.best_wpm
+            .partial_cmp(&a.best_wpm)
+            .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| {
+                b.best_accuracy
+                    .partial_cmp(&a.best_accuracy)
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            })
+            .then_with(|| a.scored_on.cmp(&b.scored_on))
+            .then_with(|| a.name.cmp(&b.name))
+    });
+    for (i, entry) in out.iter_mut().enumerate() {
+        entry.rank = i as i64 + 1;
+    }
+    Ok(out)
+}
+
 // ---------- daily activity / training summary ----------
 
 /// Aggregate session stats in a given millisecond window (or all time when None).
@@ -1380,5 +1481,86 @@ mod tests {
         assert_eq!(overview.student_count, 0);
         assert!(overview.students.is_empty());
         assert_eq!(overview.total_minutes, 0.0);
+    }
+
+    #[test]
+    fn class_leaderboard_ranks_students_by_best_run() {
+        let db = Database::open_in_memory().unwrap();
+        seed_typing_tests(
+            db.conn(),
+            &[TypingTest {
+                id: "t1min".into(),
+                code: "MY-90-1".into(),
+                name: "Paper One".into(),
+                duration_seconds: 90,
+                language: "myanmar".into(),
+                layout_id: "myanmar-pyidaungsu".into(),
+                min_accuracy: 96.0,
+                min_wpm: Some(30.0),
+                content_version: 1,
+            }],
+        )
+        .unwrap();
+
+        let a = seeded_student_id(&db);
+        let b = create_student(
+            db.conn(),
+            &crate::models::CreateStudentRequest {
+                name: "Bee".into(),
+                student_code: None,
+                display_name: None,
+            },
+        )
+        .unwrap()
+        .id;
+        let c = create_student(
+            db.conn(),
+            &crate::models::CreateStudentRequest {
+                name: "Cho".into(),
+                student_code: None,
+                display_name: None,
+            },
+        )
+        .unwrap()
+        .id;
+
+        let req = |student_id: String, attempt: i64, wpm: f64, accuracy: f64, passed: bool| {
+            SaveTestResultRequest {
+                student_id,
+                test_id: "t1min".into(),
+                attempt,
+                wpm,
+                cpm: wpm * 5.0,
+                accuracy,
+                errors: 0,
+                correct_count: 50,
+                duration_seconds: 90,
+                passed,
+                passed_accuracy: accuracy >= 96.0,
+                passed_wpm: Some(passed && accuracy >= 96.0),
+                layout_id: "myanmar-pyidaungsu".into(),
+                content_version: 1,
+            }
+        };
+
+        save_test_result(db.conn(), &req(a.clone(), 1, 40.0, 95.0, false)).unwrap();
+        save_test_result(db.conn(), &req(a.clone(), 2, 55.0, 96.0, true)).unwrap();
+        save_test_result(db.conn(), &req(a.clone(), 3, 48.0, 97.0, true)).unwrap();
+        save_test_result(db.conn(), &req(b.clone(), 1, 44.0, 99.0, true)).unwrap();
+        save_test_result(db.conn(), &req(c.clone(), 1, 52.0, 94.0, false)).unwrap();
+
+        let board = class_leaderboard(db.conn(), "t1min").unwrap();
+        assert_eq!(board.len(), 3);
+        assert_eq!(board[0].student_id, a);
+        assert_eq!(board[0].best_wpm, 55.0);
+        assert_eq!(board[0].attempts, 3);
+        assert_eq!(board[0].passed_attempts, 2);
+        assert_eq!(board[0].rank, 1);
+        assert_eq!(board[1].student_id, c);
+        assert_eq!(board[1].best_wpm, 52.0);
+        assert_eq!(board[2].student_id, b);
+        assert_eq!(board[2].rank, 3);
+
+        assert!(class_leaderboard(db.conn(), "missing").unwrap().is_empty());
     }
 }

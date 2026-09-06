@@ -61,6 +61,7 @@ pub fn run() {
             commands::save_test_result,
             commands::list_test_results,
             commands::next_test_attempt,
+            commands::class_leaderboard,
             commands::teacher_overview,
             commands::student_detail,
             commands::get_settings,

@@ -1,6 +1,7 @@
 import { invokeCommand, isTauriRuntime, pickOpenFile, pickSavePath } from './ipc'
 import { localBackend } from './local'
 import { rankWeakest, DEFAULT_WEAKNESS_CONFIG, type StatInput } from '@/core/weakness'
+import type { LeaderboardEntry } from '@/core/leaderboard/ranking'
 
 import type {
     AchievementRecord,
@@ -151,6 +152,11 @@ export async function listTestResults(studentId: string): Promise<TestResult[]> 
 export async function nextTestAttempt(studentId: string, testId: string): Promise<number> {
     if (!isTauriRuntime()) return localBackend.nextTestAttempt(studentId, testId)
     return invokeCommand('next_test_attempt', { studentId, testId })
+}
+
+export async function classLeaderboard(testId: string): Promise<LeaderboardEntry[]> {
+    if (!isTauriRuntime()) return localBackend.classLeaderboard(testId)
+    return invokeCommand('class_leaderboard', { testId })
 }
 
 export async function teacherOverview(): Promise<TeacherOverview> {

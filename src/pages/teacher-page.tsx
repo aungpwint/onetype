@@ -1,23 +1,62 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { GraduationCap, Users, Clock, Target, Gauge } from 'lucide-react'
+import { GraduationCap, Users, Clock, Target, Gauge, Trophy } from 'lucide-react'
 import * as backend from '@/services/backend'
-import type { StudentDetail, TeacherOverview } from '@/services/types'
+import type { StudentDetail, TeacherOverview, TypingTest } from '@/services/types'
+import type { LeaderboardEntry } from '@/core/leaderboard/ranking'
 import { Stat, Spinner, PageHeader } from '@/components/ui'
 import { Progress } from '@/components/ui/progress'
 import { formatDateTime, formatWpm, formatAccuracy, pct } from '@/lib/format'
 import { cn, cardClass, appPageClass, sectionTitleClass } from '@/lib/utils'
 
+const MEDAL = [
+    'bg-linear-to-b from-amber-200 to-amber-500 text-amber-950',
+    'bg-linear-to-b from-slate-200 to-slate-400 text-slate-800',
+    'bg-linear-to-b from-orange-300 to-orange-600 text-orange-950',
+]
+
 export default function TeacherPage() {
     const { studentId } = useParams<{ studentId: string }>()
     const [overview, setOverview] = useState<TeacherOverview | null>(null)
     const [detail, setDetail] = useState<StudentDetail | null>(null)
+    const [tests, setTests] = useState<TypingTest[]>([])
+    const [boardTestId, setBoardTestId] = useState<string | null>(null)
+    const [board, setBoard] = useState<LeaderboardEntry[] | null>(null)
 
     useEffect(() => {
         void (async () => {
             setOverview(await backend.teacherOverview())
         })()
     }, [])
+
+    useEffect(() => {
+        let alive = true
+        void backend
+            .listTypingTests()
+            .then((all) => {
+                if (!alive) return
+                setTests(all)
+                if (all.length > 0) setBoardTestId((current) => current ?? all[0].id)
+            })
+            .catch(() => undefined)
+        return () => {
+            alive = false
+        }
+    }, [])
+
+    useEffect(() => {
+        if (!boardTestId) return
+        let alive = true
+        void backend
+            .classLeaderboard(boardTestId)
+            .then((entries) => {
+                if (alive) setBoard(entries)
+            })
+            .catch(() => undefined)
+        return () => {
+            alive = false
+        }
+    }, [boardTestId])
 
     useEffect(() => {
         if (!studentId) {
@@ -27,6 +66,8 @@ export default function TeacherPage() {
             setDetail(await backend.studentDetail(studentId))
         })()
     }, [studentId])
+
+    const boardTest = useMemo(() => (boardTestId ? tests.find((t) => t.id === boardTestId) ?? null : null), [tests, boardTestId])
 
     if (!overview)
         return (
@@ -100,6 +141,85 @@ export default function TeacherPage() {
                     </tbody>
                 </table>
             </div>
+
+            <section className={cn(cardClass, 'overflow-hidden')}>
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-paper-2/30 px-5 py-3">
+                    <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
+                        <Trophy className="size-4 text-muted-foreground" />
+                        Class leaderboard
+                    </h2>
+                    <select
+                        value={boardTestId ?? ''}
+                        onChange={(e) => setBoardTestId(e.target.value || null)}
+                        className="rounded-md border border-line bg-background px-2 py-1 text-sm text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                        aria-label="Leaderboard paper"
+                    >
+                        {tests.map((t) => (
+                            <option key={t.id} value={t.id}>
+                                {t.code} · {t.name} ({t.durationSeconds}s)
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {boardTest && (board === null ? (
+                    <div className="px-5 py-10 text-center text-sm text-muted-foreground">
+                        <Spinner label="Ranking the class…" />
+                    </div>
+                ) : board.length === 0 ? (
+                    <p className="px-5 py-10 text-center text-sm text-muted-foreground">
+                        No learner has run <span className="font-medium text-foreground">{boardTest.name}</span> yet — results will
+                        land here ranked by best run.
+                    </p>
+                ) : (
+                    <table className="w-full text-left text-sm">
+                        <thead>
+                            <tr className="text-xs tracking-wider text-muted-foreground uppercase">
+                                <th className="px-5 py-2 font-normal">Rank</th>
+                                <th className="px-5 py-2 font-normal">Learner</th>
+                                <th className="px-5 py-2 text-right font-normal">Best</th>
+                                <th className="px-5 py-2 text-right font-normal">Acc</th>
+                                <th className="px-5 py-2 text-right font-normal">Passed</th>
+                                <th className="hidden px-5 py-2 text-right font-normal sm:table-cell">When</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {board.map((e) => (
+                                <tr key={e.studentId} className="border-t border-border transition-colors hover:bg-muted/40">
+                                    <td className="px-5 py-2.5">
+                                        <span
+                                            className={cn(
+                                                'inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold tabular-nums',
+                                                e.rank <= 3 && e.rank >= 1 ? MEDAL[e.rank - 1] : 'border border-line bg-muted/40 text-muted-foreground',
+                                            )}
+                                        >
+                                            {e.rank}
+                                        </span>
+                                    </td>
+                                    <td className="px-5 py-2.5">
+                                        <a
+                                            className="rounded font-medium text-foreground hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                                            href={`#/teacher/${e.studentId}`}
+                                        >
+                                            {e.name}
+                                        </a>
+                                    </td>
+                                    <td className="px-5 py-2.5 text-right font-display font-semibold tabular-nums">{formatWpm(e.bestWpm)}</td>
+                                    <td className="px-5 py-2.5 text-right tabular-nums">{formatAccuracy(e.bestAccuracy)}</td>
+                                    <td className="px-5 py-2.5 text-right tabular-nums">
+                                        <span className={e.passed ? 'text-success' : 'text-muted-foreground'}>
+                                            {e.passedAttempts}/{e.attempts}
+                                        </span>
+                                    </td>
+                                    <td className="hidden px-5 py-2.5 text-right text-muted-foreground tabular-nums sm:table-cell">
+                                        {formatDateTime(e.scoredOn)}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ))}
+            </section>
 
             {detail ? (
                 <div className={cn(cardClass, 'p-5')}>

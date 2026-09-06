@@ -195,6 +195,15 @@ pub async fn next_test_attempt(
 }
 
 #[tauri::command]
+pub async fn class_leaderboard(
+    state: State<'_, Mutex<Database>>,
+    test_id: String,
+) -> Result<Vec<LeaderboardEntry>> {
+    let db = lock(&state)?;
+    repo::class_leaderboard(db.conn(), &test_id)
+}
+
+#[tauri::command]
 pub async fn teacher_overview(state: State<'_, Mutex<Database>>) -> Result<TeacherOverview> {
     let db = lock(&state)?;
     repo::teacher_overview(db.conn())

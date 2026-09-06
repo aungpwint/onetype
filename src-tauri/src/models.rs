@@ -220,6 +220,20 @@ pub struct TypingTest {
     pub content_version: i64,
 }
 
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LeaderboardEntry {
+    pub rank: i64,
+    pub student_id: String,
+    pub name: String,
+    pub best_wpm: f64,
+    pub best_accuracy: f64,
+    pub passed: bool,
+    pub scored_on: i64,
+    pub attempts: i64,
+    pub passed_attempts: i64,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TestResult {
