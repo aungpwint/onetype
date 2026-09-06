@@ -9,6 +9,44 @@ the curated source maintained alongside `scripts/release-notes.mjs`, which the
 `release` GitHub Actions workflow uses (with per-platform downloads, checksums
 and auto-update notes) to build every GitHub Release page.
 
+## [1.3.0] - 2026-09-07
+
+### Added
+
+- Practice mode and focus mode, with in-run restart (Tab) and quick-restart,
+  plus a focus guard that pauses a round when the window loses focus.
+- Myanmar typing with unit-based speed (units/min) and grapheme-coherent
+  rendering: the caret, wrong/flash marks and backspace always act on complete
+  syllable clusters.
+- Searchable command palette (Ctrl/Cmd+K) with Ctrl+Shift navigation shortcuts;
+  settings can be opened from the palette.
+- Result dialog: characters-typed breakdown, key-tap map, miskey mix-up panel,
+  class rank for timed papers, and jump-from-trouble-keys into adaptive drills.
+- Dashboard: daily practice-goal ring and last-seven-days practice bar chart.
+- Teacher desk: per-paper class leaderboard, per-learner timed-test records,
+  class rank per learner, closest-to-passing focus list, and export/print of
+  the class register.
+- Adaptive weakness drills for English and Myanmar layouts, quick-startable
+  from the progress page.
+- Live completion line and on-pace indicator during timed papers; caps-lock
+  warning during live rounds.
+- Curated theme presets with ambient background effects, extra timer styles,
+  and emphasis/caret appearance options.
+- Missed-words drill and activity heatmap.
+- Settings: quick-search and jump-to; punctuation/numbers and practice-page
+  selections now persist across restarts.
+
+### Changed
+
+- The typing renderer was consolidated onto a single canonical grapheme state
+  with per-unit grapheme rendering and unit-granular backspace; the session
+  page was split into per-mode pages sharing one workspace.
+- Removed dead code and stripped comments across the frontend.
+
+### Fixed
+
+- The weak-keys display now shows the actual characters instead of raw key ids.
+
 ## [1.2.0] - 2026-09-06
 
 ### Added
