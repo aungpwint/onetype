@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
-import { TrendingUp, Target, Gauge, Clock, TrendingDown, Minus, Fingerprint, CalendarDays } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { TrendingUp, Target, Gauge, Clock, TrendingDown, Minus, Fingerprint, CalendarDays, Sparkles } from 'lucide-react'
 import { useStudentStore } from '@/stores/student-store'
 import * as backend from '@/services/backend'
 import type { StudentDetail, TypingSession } from '@/services/types'
 import { Stat, Spinner, PageHeader } from '@/components/ui'
+import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { WpmBars } from '@/components/wpm-bars'
 import { ActivityHeatmap } from '@/components/activity-heatmap'
@@ -11,6 +13,7 @@ import type { ActivityDay } from '@/lib/activity-data'
 import { formatDateTime, formatLessonLabel, formatWpm, formatAccuracy, pct, bestResultByTest } from '@/lib/format'
 import { cn, cardClass, appPageClass, eyebrowClass, sectionTitleClass, chipClass } from '@/lib/utils'
 import { summarizePerformance, type SessionPoint } from '@/core/analytics'
+import { previewWeaknessDrill, drillGoalLabel } from '@/core/reinforcement/preview'
 
 type Range = 'week' | 'month' | 'all'
 
@@ -93,6 +96,7 @@ function TrendRow({ label, slope, valid, unit }: { label: string; slope: number;
 
 export default function ProgressPage() {
     const active = useStudentStore((s) => s.active)
+    const navigate = useNavigate()
     const [detail, setDetail] = useState<StudentDetail | null>(null)
     const [range, setRange] = useState<Range>('all')
 
@@ -111,6 +115,7 @@ export default function ProgressPage() {
             </div>
         )
 
+    const weakPreview = previewWeaknessDrill(detail.weakKeys)
     const sessions = detail.recentSessions.filter((s) => s.correctCount > 0 && inRange(s, range))
     const wpmSeries = sessions.map((s) => s.wpm).slice(0, 24)
     const accSeries = sessions.map((s) => s.accuracy).slice(0, 24)
@@ -289,6 +294,21 @@ export default function ProgressPage() {
                             ))}
                             {detail.weakKeys.length === 0 ? <li className="text-sm text-muted-foreground">No data yet.</li> : null}
                         </ul>
+                        {weakPreview ? (
+                            <div className="mt-3 rounded-lg border border-line bg-paper-2/50 p-3">
+                                <p className="text-xs text-muted-foreground">
+                                    <span className="font-medium text-foreground">{drillGoalLabel(weakPreview.goal)}</span> drill ·
+                                    targets {weakPreview.count} ke{weakPreview.count === 1 ? 'y' : 'ys'}
+                                    {weakPreview.keys.length > 0 ? (
+                                        <span className="font-myanmar"> — {weakPreview.keys.join(' ')}</span>
+                                    ) : null}
+                                </p>
+                                <Button size="sm" variant="default" className="mt-2.5 w-full" onClick={() => navigate('/drill')}>
+                                    <Sparkles className="size-4" />
+                                    Drill your weakest keys
+                                </Button>
+                            </div>
+                        ) : null}
                     </div>
                     <div className={cn(cardClass, 'p-5')}>
                         <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
