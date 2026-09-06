@@ -53,6 +53,7 @@ export default function SettingsPage() {
     const focusGuard = settings.get('practice.focusGuard')
     const indicateTypos = settings.get('practice.indicateTypos')
     const quickRestart = settings.get('practice.quickRestart')
+    const showKeyboard = settings.get('practice.showKeyboard')
     const soundVolume = settings.get('practice.soundVolume')
     const timeWarning = settings.get('practice.timeWarning')
     const highlightMode = settings.get('practice.highlightMode')
@@ -379,6 +380,14 @@ export default function SettingsPage() {
                         onChecked={toggleHandGuide}
                         icon={Hand}
                         id="settings-hand-guide"
+                    />
+                    <SettingRow
+                        title="Virtual keyboard"
+                        description="Show the on-screen keyboard while typing."
+                        checked={showKeyboard !== 'off'}
+                        onChecked={(v) => void settings.set('practice.showKeyboard', v ? 'on' : 'off')}
+                        icon={Keyboard}
+                        id="settings-virtual-keyboard"
                     />
                     <SettingRow
                         title="Focus mode"

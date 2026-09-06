@@ -31,10 +31,10 @@ export function VirtualKeyboard({ layout, hideReadyMessage }: VirtualKeyboardPro
         <section
             aria-label="Virtual keyboard"
             data-keyboard-root
-            className="relative w-full rounded-2xl border border-line bg-card/55 p-2.5 shadow-(--shadow-2) backdrop-blur-xl select-none sm:p-3.5 lg:p-4 2xl:p-5"
+            className="relative w-full rounded-2xl border border-line bg-card/60 p-2.5 shadow-(--shadow-2) backdrop-blur-xl select-none sm:p-3.5 lg:p-4 2xl:p-5"
         >
             <div className="mx-auto w-full min-w-0">
-                <div className="flex w-full flex-col gap-1.5 rounded-xl bg-key-well p-2 sm:gap-2 sm:p-2.5 lg:gap-2.5 lg:p-3 2xl:p-3.5">
+                <div className="keyboard-well flex w-full flex-col gap-1.5 rounded-xl p-2 sm:gap-2 sm:p-2.5 lg:gap-2.5 lg:p-3 2xl:p-3.5">
                     {layout.rows.map((row, rowIndex) => (
                         <KeyboardRow key={rowIndex}>
                             {row.map((definition, definitionIndex) => {
@@ -66,7 +66,7 @@ export function VirtualKeyboard({ layout, hideReadyMessage }: VirtualKeyboardPro
 }
 
 function KeyboardRow({ children }: { children: ReactNode }) {
-    return <div className="flex w-full min-w-0 gap-1 sm:gap-1.5 lg:gap-2 2xl:gap-2.5">{children}</div>
+    return <div className="flex w-full min-w-0 items-stretch gap-1 sm:gap-1.5 lg:gap-2 2xl:gap-2.5">{children}</div>
 }
 
 function KeyboardStatus({ status, hideReadyMessage }: { status: ReturnType<typeof useTypingStore.getState>['status']; hideReadyMessage?: boolean }) {
@@ -86,7 +86,7 @@ function KeyboardStatus({ status, hideReadyMessage }: { status: ReturnType<typeo
     return (
         <p
             key={status}
-            className="keyboard-status-in mt-2.5 text-center font-mono text-[0.6875rem] font-medium tracking-wide text-muted-foreground sm:mt-3 lg:mt-3.5"
+            className="keyboard-status-in mt-3.5 text-center font-mono text-[0.6875rem] font-medium tracking-wide text-muted-foreground sm:mt-4 lg:text-xs"
         >
             {message}
         </p>
@@ -145,24 +145,22 @@ const Keycap = memo(function Keycap({ layout, definition, isActive, flashed, isS
             className={[
                 'keycap',
 
-                // Responsive height
+                // Responsive height — taller so Burmese ascenders/descenders breathe
                 'h-10',
                 'sm:h-11',
                 'lg:h-12',
                 '2xl:h-14',
 
-                // Shape — rounded top, slightly squarer bottom for a keycap feel
-                'rounded-lg',
+                // Shape — rounder top, tighter root, sculpted keycap silhouette
+                'rounded-[11px]',
                 'rounded-b-md',
 
                 // Layout
                 'relative',
                 'min-w-0',
                 'flex',
-                'shrink',
                 'items-center',
                 'justify-center',
-                'overflow-hidden',
                 'leading-none',
 
                 // Interaction look
@@ -179,7 +177,8 @@ const Keycap = memo(function Keycap({ layout, definition, isActive, flashed, isS
             ].join(' ')}
             style={{
                 flexGrow: width,
-                flexBasis: 0,
+                flexShrink: width,
+                flexBasis: `calc(var(--key-unit) * ${width})`,
             }}
         >
             {label}
@@ -232,7 +231,7 @@ function getKeyLabel({
 
     if (isSpace) {
         return (
-            <span className="keycap-mod absolute inset-x-0 bottom-1.5 truncate px-1 text-center text-[0.625rem] font-semibold tracking-[0.12em] text-muted-foreground/70 uppercase sm:text-[0.6875rem] lg:text-xs 2xl:text-[0.8125rem]">
+            <span className="keycap-mod absolute inset-x-0 bottom-2 truncate px-1.5 text-center text-[0.625rem] font-semibold tracking-[0.18em] text-muted-foreground/70 uppercase sm:text-[0.6875rem] lg:text-xs 2xl:text-[0.8125rem]">
                 space
             </span>
         )
@@ -240,30 +239,45 @@ function getKeyLabel({
 
     if (isModifier || wideLabel !== undefined) {
         return (
-            <span className="keycap-mod absolute top-1 left-1.5 max-w-[calc(100%-0.75rem)] truncate text-[0.5rem] font-semibold tracking-tight text-muted-foreground sm:top-1.5 sm:left-2 sm:text-[0.5625rem] lg:text-[0.625rem]">
+            <span className="keycap-mod absolute top-1 left-1.5 max-w-[calc(100%-0.75rem)] truncate text-[0.55rem] font-semibold tracking-[0.08em] text-muted-foreground uppercase sm:top-1.5 sm:left-2 sm:text-[0.625rem] lg:text-[0.6875rem]">
                 {wideLabel ?? definition.label}
             </span>
         )
     }
 
+    // A few keys carry multi-code-point labels (e.g. Myanmar KeyR shift
+    // "၎င်း"). They are always shown in full — never ellipsized or clipped —
+    // by relaxing the top-right slot and shrinking the glyphs a touch.
+    const shiftedLong = shifted !== undefined && shifted.length > 2
+
     // keycap-layout.html shows three layers per key: the ASCII legend (top-left),
     // the shifted character (top-right) and the unshifted character (bottom-center).
     return (
         <>
-            <span className="keycap-sublabel absolute top-1 left-1.5 text-[0.5rem] font-medium tracking-tight sm:top-1.5 sm:left-2 sm:text-[0.5625rem] lg:text-[0.625rem]">
+            <span className="keycap-sublabel absolute top-1 left-1.5 text-[0.5rem] font-medium tracking-tight sm:top-1.5 sm:left-2 sm:text-[0.5625rem] lg:text-[0.6rem]">
                 {asciiLegendFor(definition.code)}
             </span>
 
             {shifted !== undefined && shifted.length > 0 && (
                 <span
-                    className={`keycap-sublabel absolute top-1 right-1.5 max-w-[42%] truncate text-right ${containsMyanmar(shifted) ? 'font-myanmar' : 'font-heavy'} text-[0.625rem] sm:top-1.5 sm:right-2 sm:text-xs lg:text-sm`}
+                    className={[
+                        'keycap-shift absolute top-1 right-1.5 max-w-[62%] text-right whitespace-nowrap sm:top-1.5 sm:right-2',
+                        containsMyanmar(shifted) ? 'font-myanmar' : 'font-heavy',
+                        shiftedLong
+                            ? 'text-[0.55rem] leading-none sm:text-[0.625rem] lg:text-[0.6875rem]'
+                            : 'text-[0.625rem] leading-none sm:text-xs lg:text-sm',
+                    ].join(' ')}
                 >
                     {shifted}
                 </span>
             )}
 
             <span
-                className={`keycap-primary absolute inset-x-0 bottom-1 truncate px-1 text-center ${containsMyanmar(plain) ? 'font-myanmar' : 'font-heavy'} text-sm font-medium sm:text-base lg:text-lg 2xl:text-xl`}
+                className={[
+                    'keycap-primary absolute inset-x-0 bottom-1 whitespace-nowrap text-center',
+                    containsMyanmar(plain) ? 'font-myanmar' : 'font-heavy',
+                    'text-[0.9375rem] font-medium sm:text-base lg:text-lg 2xl:text-xl',
+                ].join(' ')}
             >
                 {plain}
             </span>

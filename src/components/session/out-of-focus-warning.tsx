@@ -21,6 +21,7 @@ export function OutOfFocusWarning() {
     const status = useTypingStore((s) => s.status)
     const togglePause = useTypingStore((s) => s.togglePause)
     const restart = useTypingStore((s) => s.restart)
+    const acknowledgeAway = useTypingStore((s) => s.acknowledgeAway)
     const focusPolicy = useSettingsStore((s) => s.get('practice.focusGuard'))
 
     // Regained focus after an AFK gap — treat the run as stale and surface a
@@ -56,6 +57,12 @@ export function OutOfFocusWarning() {
     // running, so "Continue" just acknowledges and lets the learner proceed.
     const continueAction = () => {
         if (focusPolicy === 'pause') togglePause()
+        acknowledgeAway()
+    }
+
+    const restartAction = () => {
+        restart()
+        acknowledgeAway()
     }
 
     return (
@@ -73,7 +80,7 @@ export function OutOfFocusWarning() {
                         : 'You were away for a moment — pick up where you left off or start a clean run.'}
                 </p>
                 <div className="mt-5 flex justify-end gap-2">
-                    <Button variant="outline" onClick={restart}>
+                    <Button variant="outline" onClick={restartAction}>
                         Restart
                     </Button>
                     <Button onClick={continueAction}>{pausedText ? 'Resume' : 'Continue'}</Button>

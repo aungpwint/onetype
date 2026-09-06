@@ -81,6 +81,8 @@ interface TypingState {
     pendingRestartAt: number | null
     markOutOfFocus: () => void
     markRefocused: (afkGapMs: number) => void
+    /** Dismiss the "welcome back" carry-over after the learner acknowledges it. */
+    acknowledgeAway: () => void
     requestQuickRestart: () => boolean
     /** Start an untracked practice round focused on the words still wrong at the
      * end of a finished session (Monkeytype "practice missed words"). */
@@ -160,7 +162,7 @@ function drillResolvedLesson(drill: ReinforcedDrill, layoutId: string): Resolved
         level: 'beginner',
         number: 0,
         sequence: seq,
-        layoutId: (layoutId === 'english-qwerty' || layoutId === 'myanmar' ? layoutId : 'english-qwerty'),
+        layoutId: layoutId === 'english-qwerty' || layoutId === 'myanmar' ? layoutId : 'english-qwerty',
         totalUnits: seq.units.length,
         totalCharacters: seq.charCount,
         phases: [],
@@ -175,7 +177,9 @@ function drillResolvedLesson(drill: ReinforcedDrill, layoutId: string): Resolved
     }
 }
 
-export async function buildAdaptiveDrill(opts: { goal?: MuscleMemoryGoal; layoutId?: string; troubleKeys?: string[] } = {}): Promise<ReinforcedDrill | null> {
+export async function buildAdaptiveDrill(
+    opts: { goal?: MuscleMemoryGoal; layoutId?: string; troubleKeys?: string[] } = {},
+): Promise<ReinforcedDrill | null> {
     const active = useStudentStore.getState().active
     const layoutId = opts.layoutId ?? ENGLISH_LAYOUT_ID
     const layout = getLayout(layoutId) ?? englishQwerty
@@ -218,8 +222,8 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             // 'soft' policy keeps the timer running but still dims + blocks
             // keystrokes; 'pause' also stops the clock (see onLostFocus).
         })),
-    markRefocused: (afkGapMs) =>
-        set({ windowFocused: true, lostFocusAt: null, afkGapMs }),
+    markRefocused: (afkGapMs) => set({ windowFocused: true, lostFocusAt: null, afkGapMs }),
+    acknowledgeAway: () => set({ windowFocused: true, lostFocusAt: null, afkGapMs: null }),
     requestQuickRestart: () => {
         const st = get()
         if (!st.engine || (st.status !== 'running' && st.status !== 'paused' && st.status !== 'ready')) return false
@@ -273,7 +277,19 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             startedAt: Date.now(),
         }
         const engine = createEngine(session)
-        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
+        set({
+            session,
+            engine,
+            status: 'ready',
+            result: null,
+            error: null,
+            wrongFlash: null,
+            tick: 0,
+            windowFocused: true,
+            lostFocusAt: null,
+            afkGapMs: null,
+            pendingRestartAt: null,
+        })
         bindKeys()
         bindFocusGuard()
     },
@@ -298,7 +314,19 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             startedAt: Date.now(),
         }
         const engine = createEngine(session)
-        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
+        set({
+            session,
+            engine,
+            status: 'ready',
+            result: null,
+            error: null,
+            wrongFlash: null,
+            tick: 0,
+            windowFocused: true,
+            lostFocusAt: null,
+            afkGapMs: null,
+            pendingRestartAt: null,
+        })
         bindKeys()
         bindFocusGuard()
     },
@@ -320,7 +348,19 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             startedAt: Date.now(),
         }
         const engine = createEngine(session)
-        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
+        set({
+            session,
+            engine,
+            status: 'ready',
+            result: null,
+            error: null,
+            wrongFlash: null,
+            tick: 0,
+            windowFocused: true,
+            lostFocusAt: null,
+            afkGapMs: null,
+            pendingRestartAt: null,
+        })
         bindKeys()
         bindFocusGuard()
     },
@@ -336,12 +376,24 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             resolved,
             layout,
             mode: 'quick',
-            durationSeconds: config.unit === 'time' ? config.time ?? null : null,
+            durationSeconds: config.unit === 'time' ? (config.time ?? null) : null,
             attempt: 1,
             startedAt: Date.now(),
         }
         const engine = createEngine(session)
-        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
+        set({
+            session,
+            engine,
+            status: 'ready',
+            result: null,
+            error: null,
+            wrongFlash: null,
+            tick: 0,
+            windowFocused: true,
+            lostFocusAt: null,
+            afkGapMs: null,
+            pendingRestartAt: null,
+        })
         bindKeys()
         bindFocusGuard()
     },
@@ -377,25 +429,34 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         // Same "Type again" path as the result dialog, useful for R on the
         // finished screen (Monkeytype parity: one key starts a fresh run).
         const { clear, beginLesson, beginTest, beginPractice } = st
+        // Rebuilding happens through the gate's "Preparing your run" screen; if
+        // the rebuild fails, surface the reason instead of hanging there.
+        const flagPrepareError = (error: unknown) => {
+            set({ status: 'idle', error: error instanceof Error ? error.message : 'Could not rebuild this run.' })
+        }
+        const prepare = (run: Promise<void>) => void run.catch(flagPrepareError)
         if (st.session.kind === 'lesson') {
             const id = st.session.lessonId!
             const mode = st.session.mode
             clear()
-            void beginLesson(id, mode)
+            prepare(beginLesson(id, mode))
         } else if (st.session.kind === 'drill') {
             const layoutId = st.session.drill?.layoutId
             clear()
-            void buildAdaptiveDrill({ layoutId }).then((drill) => {
-                if (drill) void get().beginDrill(drill)
-            })
+            void buildAdaptiveDrill({ layoutId }).then(
+                (drill) => {
+                    if (drill) prepare(get().beginDrill(drill))
+                },
+                (error: unknown) => flagPrepareError(error),
+            )
         } else if (st.session.kind === 'practice') {
             const config = st.session.practice!
             clear()
-            void beginPractice(config)
+            prepare(beginPractice(config))
         } else {
             const test = st.session.test!
             clear()
-            void beginTest(test)
+            prepare(beginTest(test))
         }
     },
 
@@ -404,7 +465,19 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         if (engine) engine.finish('stopped')
         unbindKeys()
         unbindFocusGuard()
-        set({ session: null, engine: null, status: 'idle', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
+        set({
+            session: null,
+            engine: null,
+            status: 'idle',
+            result: null,
+            error: null,
+            wrongFlash: null,
+            tick: 0,
+            windowFocused: true,
+            lostFocusAt: null,
+            afkGapMs: null,
+            pendingRestartAt: null,
+        })
     },
 
     persistAndFinish: async (guardEngine) => {
@@ -424,25 +497,62 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         const contentVersion = CONTENT_VERSION
         const lesson = session.resolved
 
-        // Persistence is best-effort: the result dialog must always appear even if a
-        // write fails, so the learner never loses their score without feedback.
-        let saveError: string | undefined
-        try {
-            if (session.kind === 'practice') {
-                // Untracked by design: show the verdict but write nothing.
-                return set({
-                    result: {
-                        mode: session.mode,
-                        metrics,
-                        passed: true,
-                        finishReason: reason,
-                        attempt: session.attempt,
-                        newlyUnlocked: [],
-                    },
-                    status: 'finished',
-                })
-            }
+        if (session.kind === 'practice') {
+            // Untracked by design: show the verdict but write nothing. The
+            // diagnosis data rides along so the result screen can still
+            // explain recurring Myanmar slips.
+            return set({
+                result: {
+                    mode: session.mode,
+                    metrics,
+                    passed: true,
+                    finishReason: reason,
+                    attempt: session.attempt,
+                    newlyUnlocked: [],
+                },
+                status: 'finished',
+            })
+        }
 
+        // Show the verdict immediately: the result dialog must appear the moment
+        // the round ends, no matter how slow persistence is. The writes below
+        // upgrade the screen (achievements, mastery, save-error) as they settle.
+        const passed =
+            session.kind === 'lesson'
+                ? reason === 'completed' && passes(metrics, lesson.completion.minAccuracy, lesson.completion.minWpm)
+                : session.kind === 'drill'
+                  ? true
+                  : (() => {
+                        const test = session.test!
+                        const passedAccuracy = metrics.accuracy >= test.minAccuracy
+                        const passedWpm = test.minWpm === null ? null : metrics.grossWpm >= test.minWpm
+                        return reason === 'completed' && passedAccuracy && (passedWpm === null || passedWpm)
+                    })()
+
+        set({
+            result: {
+                ...(session.kind === 'lesson' ? { lessonId: session.lessonId } : {}),
+                ...(session.kind === 'test' ? { testId: session.test!.id } : {}),
+                mode: session.mode,
+                metrics,
+                passed,
+                finishReason: reason,
+                attempt: session.attempt,
+                newlyUnlocked: [],
+            },
+            status: 'finished',
+        })
+
+        // A write may settle after the learner has already left or restarted;
+        // never resurrect a stale round onto a fresh run.
+        const publish = (patch: Partial<FinishedResult>) => {
+            if (get().session !== session) return
+            set((state) => ({ ...state, result: state.result ? { ...state.result, ...patch } : state.result }))
+        }
+
+        // Persistence is best-effort: even when a write fails the verdict stays
+        // on screen, flagged so the learner never loses their score silently.
+        try {
             await backend.saveTypingSession({
                 studentId: active.id,
                 lessonId: session.lessonId ?? null,
@@ -467,7 +577,6 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             })
 
             if (session.kind === 'lesson') {
-                const passed = reason === 'completed' && passes(metrics, lesson.completion.minAccuracy, lesson.completion.minWpm)
                 await backend.saveExerciseResult({
                     studentId: active.id,
                     lessonId: session.lessonId ?? '',
@@ -515,46 +624,19 @@ export const useTypingStore = create<TypingState>((set, get) => ({
                 } catch {
                     masteryDelta = undefined
                 }
-                return recordProgression(metrics, passed, reason).then((newlyUnlocked) =>
-                    set({
-                        result: {
-                            lessonId: session.lessonId,
-                            mode: session.mode,
-                            metrics,
-                            passed,
-                            finishReason: reason,
-                            attempt: session.attempt,
-                            newlyUnlocked,
-                            masteryDelta,
-                        },
-                        status: 'finished',
-                    }),
-                )
+                publish({ masteryDelta, newlyUnlocked: await recordProgression(metrics, passed, reason) })
+                return
             }
 
             if (session.kind === 'drill') {
                 // Drills are practice: they count toward practice/achievement stats and
                 // key/finger weakness tracking, but are never a lesson or a test result.
                 await saveStatistics(active.id, session.layout.id)
-                return recordProgression(metrics, true, reason).then((newlyUnlocked) =>
-                    set({
-                        result: {
-                            mode: session.mode,
-                            metrics,
-                            passed: true,
-                            finishReason: reason,
-                            attempt: session.attempt,
-                            newlyUnlocked,
-                        },
-                        status: 'finished',
-                    }),
-                )
+                publish({ newlyUnlocked: await recordProgression(metrics, true, reason) })
+                return
             }
 
             const test = session.test!
-            const passedAccuracy = metrics.accuracy >= test.minAccuracy
-            const passedWpm = test.minWpm === null ? null : metrics.grossWpm >= test.minWpm
-            const passed = reason === 'completed' && passedAccuracy && (passedWpm === null || passedWpm)
             await backend.saveTestResult({
                 studentId: active.id,
                 testId: test.id,
@@ -566,100 +648,35 @@ export const useTypingStore = create<TypingState>((set, get) => ({
                 correctCount: engine.correctCount,
                 durationSeconds: Math.round(engine.elapsedSeconds()),
                 passed,
-                passedAccuracy,
-                passedWpm,
+                passedAccuracy: metrics.accuracy >= test.minAccuracy,
+                passedWpm: test.minWpm === null ? null : metrics.grossWpm >= test.minWpm,
                 layoutId: session.layout.id,
                 contentVersion,
             })
             await saveStatistics(active.id, session.layout.id)
-            return recordProgression(metrics, passed, reason).then((newlyUnlocked) =>
-                set({
-                    result: {
-                        testId: test.id,
-                        mode: session.mode,
-                        metrics,
-                        passed,
-                        finishReason: reason,
-                        attempt: session.attempt,
-                        newlyUnlocked,
-                    },
-                    status: 'finished',
-                }),
-            )
+            publish({ newlyUnlocked: await recordProgression(metrics, passed, reason) })
         } catch (error) {
             // Show the result anyway, flagging that it could not be saved.
-            saveError = error instanceof Error ? error.message : String(error)
-            if (session.kind === 'lesson') {
-                const passed = reason === 'completed' && passes(metrics, lesson.completion.minAccuracy, lesson.completion.minWpm)
-                set({
-                    result: {
-                        lessonId: session.lessonId,
-                        mode: session.mode,
-                        metrics,
-                        passed,
-                        finishReason: reason,
-                        attempt: session.attempt,
-                        newlyUnlocked: [],
-                        saveError,
-                    },
-                    status: 'finished',
-                })
-            } else if (session.kind === 'drill') {
-                set({
-                    result: {
-                        mode: session.mode,
-                        metrics,
-                        passed: true,
-                        finishReason: reason,
-                        attempt: session.attempt,
-                        newlyUnlocked: [],
-                        saveError,
-                    },
-                    status: 'finished',
-                })
-            } else {
-if (session.kind === 'practice') {
-                // Untracked by design: show the verdict but write nothing. The
-                // diagnosis data rides along so the result screen can still
-                // explain recurring Myanmar slips.
-                return set({
-                    result: {
-                        mode: session.mode,
-                        metrics,
-                        passed: true,
-                        finishReason: reason,
-                        attempt: session.attempt,
-                        newlyUnlocked: [],
-                    },
-                    status: 'finished',
-                })
-            }
-
-            const test = session.test!
-                const passedAccuracy = metrics.accuracy >= test.minAccuracy
-                const passedWpm = test.minWpm === null ? null : metrics.grossWpm >= test.minWpm
-                const passed = reason === 'completed' && passedAccuracy && (passedWpm === null || passedWpm)
-                set({
-                    result: {
-                        testId: test.id,
-                        mode: session.mode,
-                        metrics,
-                        passed,
-                        finishReason: reason,
-                        attempt: session.attempt,
-                        newlyUnlocked: [],
-                        saveError,
-                    },
-                    status: 'finished',
-                })
-            }
+            publish({ saveError: error instanceof Error ? error.message : String(error), newlyUnlocked: [] })
         }
     },
 
     clear: () => {
         unbindKeys()
         unbindFocusGuard()
-        set({ session: null, engine: null, status: 'idle', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
+        set({
+            session: null,
+            engine: null,
+            status: 'idle',
+            result: null,
+            error: null,
+            wrongFlash: null,
+            tick: 0,
+            windowFocused: true,
+            lostFocusAt: null,
+            afkGapMs: null,
+            pendingRestartAt: null,
+        })
     },
 
     clearError: () => set({ error: null }),
@@ -688,7 +705,12 @@ function createEngine(session: TypingSessionState): TypingEngine {
         sequence: session.resolved.sequence,
         layout: session.layout,
         mode: session.mode,
-        durationSeconds: session.kind === 'test' ? session.test!.durationSeconds : session.kind === 'practice' ? (session.durationSeconds ?? undefined) : undefined,
+        durationSeconds:
+            session.kind === 'test'
+                ? session.test!.durationSeconds
+                : session.kind === 'practice'
+                  ? (session.durationSeconds ?? undefined)
+                  : undefined,
         onEvent: (event) => {
             useTypingStore.setState((state) => ({ tick: state.tick + 1 }))
             if (event.type === 'incorrect' || event.type === 'backspace') {

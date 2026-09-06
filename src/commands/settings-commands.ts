@@ -20,6 +20,7 @@ export const SETTING_COMMANDS: SettingCommandDef[] = [
     { id: 'pace-caret', title: 'Pace caret', keywords: 'second caret trail wpm guide', settingKey: 'practice.paceCaret', toggle: true },
     { id: 'confirm-exit', title: 'Confirm before abandoning', keywords: 'exit warn leave round confirm', settingKey: 'practice.confirmExit', toggle: true },
     { id: 'time-warning', title: 'Time warning sound', keywords: 'chime countdown beep timer end', settingKey: 'practice.timeWarning', toggle: true },
+    { id: 'virtual-keyboard', title: 'Virtual keyboard', keywords: 'keys on-screen keycap show hide', settingKey: 'practice.showKeyboard', toggle: true },
     { id: 'timer-style-bar', title: 'Timer style: bar', keywords: 'progress bar time remaining', settingKey: 'practice.timerStyle', value: 'bar' },
     { id: 'timer-style-mini', title: 'Timer style: mini', keywords: 'compact small countdown', settingKey: 'practice.timerStyle', value: 'mini' },
     { id: 'timer-style-text', title: 'Timer style: text', keywords: 'plain time remaining numbers', settingKey: 'practice.timerStyle', value: 'text' },

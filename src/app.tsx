@@ -21,9 +21,9 @@ const StudentsPage = lazy(() => import('@/pages/students-page'))
 const TeacherPage = lazy(() => import('@/pages/teacher-page'))
 const SettingsPage = lazy(() => import('@/pages/settings-page'))
 
-const LessonPage = lazy(() => import('@/pages/session-page').then((m) => ({ default: m.LessonPage })))
-const TestSessionPage = lazy(() => import('@/pages/session-page').then((m) => ({ default: m.TestPage })))
-const DrillPage = lazy(() => import('@/pages/session-page').then((m) => ({ default: m.DrillPage })))
+const LessonPage = lazy(() => import('@/pages/lesson-page'))
+const TestSessionPage = lazy(() => import('@/pages/test-page'))
+const DrillPage = lazy(() => import('@/pages/drill-page'))
 const PracticePage = lazy(() => import('@/pages/practice-page'))
 
 function PageLoader() {

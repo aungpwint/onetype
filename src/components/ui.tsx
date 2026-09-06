@@ -91,6 +91,8 @@ export function Modal({
     width = 'max-w-lg',
     ariaLabel = 'Dialog',
     dismissable = true,
+    className,
+    closeOnBackdrop,
 }: {
     open: boolean
     onClose: () => void
@@ -98,6 +100,8 @@ export function Modal({
     width?: string
     ariaLabel?: string
     dismissable?: boolean
+    className?: string
+    closeOnBackdrop?: boolean
 }) {
     const panelRef = useRef<HTMLDivElement | null>(null)
 
@@ -129,7 +133,11 @@ export function Modal({
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.16 }}
                 >
-                    <div className="absolute inset-0 bg-black/45" onClick={dismissable ? onClose : undefined} aria-hidden />
+                    <div
+                        className="absolute inset-0 bg-black/45"
+                        onClick={closeOnBackdrop !== false && dismissable ? onClose : undefined}
+                        aria-hidden
+                    />
                     <motion.div
                         role="dialog"
                         aria-modal="true"
@@ -139,6 +147,7 @@ export function Modal({
                         className={cn(
                             'relative z-10 w-full rounded-xl border border-line bg-card/85 p-6 shadow-(--shadow-3) backdrop-blur-2xl outline-none',
                             width,
+                            className,
                         )}
                         initial={{ opacity: 0, y: 14, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}

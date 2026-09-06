@@ -37,6 +37,7 @@ export const SETTINGS_ITEMS: SettingsEntry[] = [
 
     { id: 'key-sounds', type: 'item', label: 'Key click sounds', section: 'Practice', keywords: ['click', 'type', 'volume', 'sound'] },
     { id: 'hand-guide', type: 'item', label: 'Hand guide', section: 'Practice', keywords: ['finger', 'next', 'hands', 'guide'] },
+    { id: 'virtual-keyboard', type: 'item', label: 'Virtual keyboard', section: 'Practice', keywords: ['keyboard', 'keys', 'on-screen', 'keycap', 'show', 'hide'] },
     { id: 'focus-mode', type: 'item', label: 'Focus mode', section: 'Practice', keywords: ['minimal', 'hide header', 'zen'] },
     { id: 'confirm-exit', type: 'item', label: 'Confirm before abandoning a round', section: 'Practice', keywords: ['exit', 'abandon', 'confirm', 'leave'] },
     { id: 'focus-guard', type: 'item', label: 'Pause when you leave the window', section: 'Practice', keywords: ['out of focus', 'blur', 'pause', 'window'] },

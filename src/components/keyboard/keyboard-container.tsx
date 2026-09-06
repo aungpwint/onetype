@@ -2,15 +2,19 @@ import { useMemo, type ReactNode } from 'react'
 import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import { useTypingStore } from '@/stores/typing-store'
 import { useUiStore } from '@/stores/ui-store'
+import { useSettingsStore } from '@/stores/settings-store'
 import { VirtualKeyboard } from './virtual-keyboard'
 import { HandOverlay } from '@/components/hand-guide/hand-overlay'
 import { resolveTarget } from '@/core/target-model'
 
 export function KeyboardContainer({ layout, hideReadyMessage }: { layout: KeyboardLayout; hideReadyMessage?: boolean }) {
     const handGuide = useUiStore((s) => s.handGuideVisible)
+    const showKeyboard = useSettingsStore((s) => s.get('practice.showKeyboard'))
+
+    if (showKeyboard === 'off') return null
 
     return (
-        <div className="mx-auto w-full max-w-4xl select-none">
+        <div className="mx-auto w-full max-w-5xl select-none">
             <div className="relative">
                 {handGuide ? (
                     <IntegratedHandGuide layout={layout}>

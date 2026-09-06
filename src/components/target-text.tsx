@@ -166,7 +166,7 @@ export function TargetText() {
 
     return (
         <motion.div
-            className="mx-auto w-full max-w-4xl"
+            className="mx-auto w-full max-w-5xl"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
@@ -239,14 +239,14 @@ const TextContent = memo(function TextContent({
     return (
         <>
             {runs.map((g, i) => (
-<Char
-                        key={g.index}
-                        text={g.text}
-                        graphemeIndex={g.index}
-                        startUnit={g.startUnit}
-                        endUnit={g.endUnit}
-                        slots={g.slots}
-                        wordStart={wordStart[i]}
+                <Char
+                    key={g.index}
+                    text={g.text}
+                    graphemeIndex={g.index}
+                    startUnit={g.startUnit}
+                    endUnit={g.endUnit}
+                    slots={g.slots}
+                    wordStart={wordStart[i]}
                     wordEnd={wordEnd[i]}
                     onCaret={onCaret}
                     focused={focused}
@@ -384,12 +384,12 @@ const Char = memo(function Char({
                 {(view.slots ?? []).map((slot) => {
                     const slotClass = slot.isCurrent
                         ? slot.outcome === 'incorrect'
-                          ? missClass
-                          : highlightMode === 'word'
-                            ? 'tt-word-now'
-                            : highlightMode === 'none'
-                              ? null
-                              : 'tt-char-focus'
+                            ? missClass
+                            : highlightMode === 'word'
+                              ? 'tt-word-now'
+                              : highlightMode === 'none'
+                                ? null
+                                : 'tt-char-focus'
                         : slot.completed
                           ? slot.outcome === 'incorrect'
                               ? missClass

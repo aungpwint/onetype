@@ -1,39 +1,36 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { useEffect, useState, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AlertCircle, ArrowLeft, Check, Keyboard, LayoutDashboard, Loader2, Pause, Play, LogOut, ShieldAlert } from 'lucide-react'
+import { AlertCircle, Check, Keyboard, Loader2, Pause, Play, LogOut, ShieldAlert } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import * as backend from '@/services/backend'
-import { useTypingStore, buildAdaptiveDrill } from '@/stores/typing-store'
-import { useSettingsStore } from '@/stores/settings-store'
+import { useTypingStore } from '@/stores/typing-store'
 import { useUiStore } from '@/stores/ui-store'
 import { useCapsLockState } from '@/hooks/use-caps-lock'
 import { isCapsLockWarningVisible } from '@/core/session/caps-lock'
 import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
 import { TargetText } from '@/components/target-text'
 import { StatsBar } from '@/components/stats-bar'
-import { ProgressLine } from '@/components/progress-line'
 import { PacePill } from '@/components/pace-pill'
 import { SessionHeader } from '@/components/session/session-header'
-import { ExerciseWorkspace, QuickRestartHint } from '@/components/session/exercise-workspace'
+import { QuickRestartHint } from '@/components/session/exercise-workspace'
 import { ConfirmAbandon } from '@/components/session/confirm-abandon'
 import { OutOfFocusWarning } from '@/components/session/out-of-focus-warning'
 import { useConfirmExit } from '@/components/session/use-confirm-exit'
 import { ResultDialog } from '@/components/result-dialog'
-import { Spinner, EmptyState } from '@/components/ui'
+import { Spinner } from '@/components/ui'
 import { Button } from '@/components/ui/button'
-import type { TypingMode } from '@/types'
 
 export function Session({
     durationSeconds,
     sourceName,
     eyebrow,
     onExit,
+    hideKeyboard,
 }: {
     durationSeconds: number | null
     sourceName: string
     eyebrow?: string
     onExit?: () => void
+    hideKeyboard?: boolean
 }) {
     const status = useTypingStore((s) => s.status)
     const engine = useTypingStore((s) => s.engine)
@@ -52,8 +49,6 @@ export function Session({
 
     const toggleAction = status === 'running' || status === 'paused' ? togglePause : start
 
-    // Focus mode keeps only the target text + keyboard on screen while typing,
-    // replacing the header chrome with a tiny floating control row.
     const minimalChrome = focusMode && (status === 'running' || status === 'ready') && !error
 
     return (
@@ -73,12 +68,26 @@ export function Session({
                         exit={{ opacity: 0 }}
                     >
                         <div className="flex items-center gap-1.5 rounded-full border border-line/70 bg-background/60 px-2.5 py-1.5 opacity-50 backdrop-blur transition-opacity hover:opacity-100">
-                            <Button variant="ghost" size="sm" onClick={(e) => { e.currentTarget.blur(); exitGuard.requestExit() }}>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={(e) => {
+                                    e.currentTarget.blur()
+                                    exitGuard.requestExit()
+                                }}
+                            >
                                 <LogOut className="size-3.5" />
                                 Exit
                             </Button>
                             <span className="h-4 w-px bg-line/70" aria-hidden />
-                            <Button variant="ghost" size="sm" onClick={(e) => { e.currentTarget.blur(); toggleAction() }}>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={(e) => {
+                                    e.currentTarget.blur()
+                                    toggleAction()
+                                }}
+                            >
                                 {status === 'running' ? <Pause className="size-3.5" /> : <Play className="size-3.5" />}
                                 {status === 'running' ? 'Pause' : 'Start'}
                             </Button>
@@ -114,10 +123,9 @@ export function Session({
                 </div>
             ) : (
                 <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-5 py-4 sm:px-8">
-                    <div className="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
+                    <div className="relative flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
                         <StatsBar />
                         <TargetText />
-                        <ProgressLine />
                         <PacePill />
                         <AnimatePresence>
                             {isCapsLockWarningVisible(capsLockOn, status) ? (
@@ -135,7 +143,7 @@ export function Session({
                             ) : null}
                         </AnimatePresence>
                         <QuickRestartHint />
-                        <KeyboardContainer layout={layout} />
+                        {hideKeyboard ? null : <KeyboardContainer layout={layout} />}
                         <OutOfFocusWarning />
                     </div>
                 </div>
@@ -201,7 +209,7 @@ function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
                                         <Loader2 className="size-3.5 animate-spin" />
                                     </span>
                                 ) : (
-                                    <span className="ml-2 mr-2 size-2 shrink-0 rounded-full bg-line-strong" />
+                                    <span className="mr-2 ml-2 size-2 shrink-0 rounded-full bg-line-strong" />
                                 )}
                                 <span>{step}</span>
                             </motion.li>
@@ -226,7 +234,7 @@ function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
     )
 }
 
-function SessionGate({
+export function SessionGate({
     ready,
     loadingLabel,
     steps,
@@ -276,139 +284,5 @@ function SessionGate({
                 </motion.div>
             )}
         </AnimatePresence>
-    )
-}
-
-function useBeginSession(id: string | undefined, load: () => Promise<void>) {
-    const status = useTypingStore((s) => s.status)
-    const sessionKind = useTypingStore((s) => s.session?.kind)
-    const startedFor = useRef<string | null>(null)
-
-    useEffect(() => {
-        if (!id) return
-        if (status === 'idle' && startedFor.current !== id) {
-            startedFor.current = id
-            void load()
-        }
-    }, [id, status, sessionKind, load])
-}
-
-export function LessonPage() {
-    const { lessonId } = useParams<{ lessonId: string }>()
-    const navigate = useNavigate()
-    const session = useTypingStore((s) => s.session)
-    const beginLesson = useTypingStore((s) => s.beginLesson)
-
-    const load = useCallback(() => {
-        const mode = (localStorage.getItem('onetype:lesson-mode') as TypingMode | null) ?? 'guided'
-        return lessonId ? beginLesson(lessonId, mode) : Promise.resolve()
-    }, [lessonId, beginLesson])
-
-    useBeginSession(lessonId, load)
-
-    return (
-        <SessionGate
-            ready={session?.kind === 'lesson'}
-            loadingLabel="Loading lesson text, keyboard and attempt…"
-            steps={['Loading lesson text', 'Warming up the keyboard', 'Setting up your attempt']}
-            note="Your progress is saved after every run."
-        >
-            {session?.kind === 'lesson' ? <ExerciseWorkspace onExit={() => navigate('/learn')} /> : null}
-        </SessionGate>
-    )
-}
-
-export function TestPage() {
-    const { testId } = useParams<{ testId: string }>()
-    const navigate = useNavigate()
-    const session = useTypingStore((s) => s.session)
-    const beginTest = useTypingStore((s) => s.beginTest)
-
-    const load = useCallback(async () => {
-        if (!testId) return
-        const tests = await backend.listTypingTests()
-        const test = tests.find((t) => t.id === testId)
-        if (test) await beginTest(test)
-    }, [testId, beginTest])
-
-    useBeginSession(testId, load)
-
-    return (
-        <SessionGate
-            ready={session?.kind === 'test' && !!session?.test}
-            loadingLabel="Preparing test text, keyboard and attempt…"
-            steps={['Preparing test text', 'Warming up the keyboard', 'Setting up your attempt']}
-            note="Every run is timed, scored and saved against the paper's target. Always prepare carefully and write."
-        >
-            {session?.kind === 'test' && session.test ? (
-                <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} onExit={() => navigate('/tests')} />
-            ) : null}
-        </SessionGate>
-    )
-}
-
-export function DrillPage() {
-    const navigate = useNavigate()
-    const session = useTypingStore((s) => s.session)
-    const beginDrill = useTypingStore((s) => s.beginDrill)
-    const practiceLang = useSettingsStore((s) => s.values['practice.lang'])
-    const [searchParams] = useSearchParams()
-    const [error, setError] = useState<string | null>(null)
-
-    const layoutId =
-        searchParams.get('layout') === 'myanmar' || (searchParams.get('layout') === null && practiceLang === 'myanmar')
-            ? 'myanmar'
-            : 'english-qwerty'
-
-    const troubleKeys = searchParams.get('keys')?.split(',').filter(Boolean) ?? undefined
-
-    const load = useCallback(async () => {
-        try {
-            const drill = await buildAdaptiveDrill({ layoutId, troubleKeys })
-            if (drill) await beginDrill(drill)
-            else
-                setError(
-                    troubleKeys
-                        ? 'Could not build a drill from those keys right now.'
-                        : 'Not enough typing data yet to spot weaknesses. Finish a few lessons first.',
-                )
-        } catch {
-            setError('Could not prepare an adaptive drill right now.')
-        }
-    }, [beginDrill, layoutId, troubleKeys])
-
-    useBeginSession('drill', load)
-
-    if (error && session?.kind !== 'drill') {
-        return (
-            <div className="flex h-full min-h-0 w-full flex-1 items-center justify-center px-6">
-                <EmptyState icon={<AlertCircle className="size-8" />} title="Never mind the keys for now">
-                    <p className="text-destructive">{error}</p>
-                    <div className="mt-5 flex justify-center gap-2">
-                        <Button variant="outline" onClick={() => navigate('/learn')}>
-                            <ArrowLeft className="size-4" />
-                            Back to lessons
-                        </Button>
-                        <Button onClick={() => navigate('/')}>
-                            <LayoutDashboard className="size-4" />
-                            Dashboard
-                        </Button>
-                    </div>
-                </EmptyState>
-            </div>
-        )
-    }
-
-    return (
-        <SessionGate
-            ready={session?.kind === 'drill'}
-            loadingLabel="Building drill from your weak keys…"
-            steps={['Building your drill', 'Warming up the keyboard', 'Setting up your attempt']}
-            note="Built from the keys you keep missing."
-        >
-            {session?.kind === 'drill' && session.drill ? (
-                <Session durationSeconds={null} sourceName={session.resolved.title} eyebrow="Adaptive drill" onExit={() => navigate('/')} />
-            ) : null}
-        </SessionGate>
     )
 }
