@@ -434,16 +434,16 @@ describe('unexpected, repeated and out-of-order keys (invalid-input policy)', ()
         }
     })
 
-    it('Zawgyi-ordered text is never silently rewritten at the Unicode layer', () => {
-        // Zawgyi stores the e-vowel before its base (ေရ). OneType is
-        // Unicode-first: the canonical/storage boundary must NOT guess-convert
-        // legacy ordering. If product requirements ever need Zawgyi→Unicode
-        // conversion, that belongs at a dedicated input boundary — never here.
-        const zawgyiOrdered = 'ေရ'
-        expect(normalizeMyanmarText(zawgyiOrdered)).toBe(zawgyiOrdered)
-        expect(validateMyanmarText(zawgyiOrdered)).toEqual([]) // NFC-valid, hidden-free
-        expect(splitMyanmarSyllables(zawgyiOrdered)).toEqual(['ေရ']) // not reordered to ရ+ေ
-        expect(zawgyiOrdered).not.toBe('ရေ')
+    it('legacy-ordered pre-base vowel text is never silently rewritten at the Unicode layer', () => {
+        // Old Burmese word processors stored the e-vowel before its base (ေရ).
+        // OneType is Unicode-first: the canonical/storage boundary must NOT
+        // guess-convert legacy ordering. Content conversion belongs at a
+        // dedicated import boundary — never here.
+        const legacyOrdered = 'ေရ'
+        expect(normalizeMyanmarText(legacyOrdered)).toBe(legacyOrdered)
+        expect(validateMyanmarText(legacyOrdered)).toEqual([]) // NFC-valid, hidden-free
+        expect(splitMyanmarSyllables(legacyOrdered)).toEqual(['ေရ']) // not reordered to ရ+ေ
+        expect(legacyOrdered).not.toBe('ရေ')
     })
 })
 

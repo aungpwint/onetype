@@ -6,8 +6,8 @@ import { fileURLToPath } from 'node:url'
 import { buildSequence, graphemeUnitRuns } from '@/core/typing-engine/sequence'
 import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { containsMyanmar } from '@/core/unicode/myanmar'
-import { getLessonRepository, getCanonicalLesson } from '@/data/curriculum'
-import type { LessonExercise } from '@/types/exercise'
+import { getLessonRepository, getCanonicalLesson, resolveLessonById } from '@/data/curriculum'
+import { exerciseText, type LessonExercise } from '@/types/exercise'
 
 const CORPUS_LINES = ['ရေ ဆန် ငါး ကြက်', 'အဖေ အမေ ညီ ညီမ', 'မျက်စိ နား လက် ခြေ', 'အခြေခံ စကားလုံး (၂)', 'အိမ် မြို့ ရွာ']
 
@@ -87,6 +87,39 @@ describe('Myanmar lesson corpus never yields a shaping-broken run', () => {
                     assertCleanRun(run.text, `${lesson.id}`)
                 }
             }
+        }
+    })
+})
+
+describe('Target text displays the exact lesson data', () => {
+    it('every phase of every lesson resolves to its original exercise text', () => {
+        const repo = getLessonRepository()
+        const lessons = [...repo.listAllByLanguage().my, ...repo.listAllByLanguage().en]
+        for (const lesson of lessons) {
+            const canonical = getCanonicalLesson(lesson.id)
+            const resolved = resolveLessonById(lesson.id)
+            expect(resolved.phases.length, `${lesson.id}: phase/exercise count mismatch`).toBe(canonical.exercises.length)
+            for (let i = 0; i < canonical.exercises.length; i++) {
+                const expected = exerciseText(canonical.exercises[i]!)
+                expect(resolved.phases[i]!.text, `${lesson.id} phase ${i} deviates from original data`).toBe(expected)
+            }
+        }
+    })
+
+    it('English uppercase (Shift) lessons keep their exact letters (case preserved) on screen', () => {
+        const resolved = resolveLessonById('lesson-en-beginner-31')
+        const first = 'aA aA aA aA aA aA aA aA aA aA'
+        expect(resolved.phases[0]!.text).toBe(first)
+        expect(resolved.phases[0]!.text).toMatch(/[a-z]/)
+        expect(resolved.phases[0]!.text).toMatch(/[A-Z]/)
+    })
+
+    it('the resolved sequence text is precisely the phases as shown, joined with a space', () => {
+        const repo = getLessonRepository()
+        const lessons = [...repo.listAllByLanguage().my, ...repo.listAllByLanguage().en]
+        for (const lesson of lessons) {
+            const resolved = resolveLessonById(lesson.id)
+            expect(resolved.sequence.text, lesson.id).toBe(resolved.phases.map((p) => p.text).join(' '))
         }
     })
 })

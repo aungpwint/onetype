@@ -2,6 +2,7 @@ import { memo, type ReactNode } from 'react'
 import type { KeyboardLayout, KeyDefinition } from '@/core/keyboard-layout/layout'
 import { useTypingStore } from '@/stores/typing-store'
 import { resolveLastKey, resolveTarget } from '@/core/target-model'
+import { containsMyanmar } from '@/core/unicode/myanmar'
 import type { Hand } from '@/types'
 import { WIDE_KEY_LABEL } from '@/core/finger-mapping/finger-map'
 
@@ -254,12 +255,16 @@ function getKeyLabel({
             </span>
 
             {shifted !== undefined && shifted.length > 0 && (
-                <span className="keycap-sublabel absolute top-1 right-1.5 max-w-[42%] truncate text-right font-myanmar text-[0.625rem] sm:top-1.5 sm:right-2 sm:text-xs lg:text-sm">
+                <span
+                    className={`keycap-sublabel absolute top-1 right-1.5 max-w-[42%] truncate text-right ${containsMyanmar(shifted) ? 'font-myanmar' : 'font-heavy'} text-[0.625rem] sm:top-1.5 sm:right-2 sm:text-xs lg:text-sm`}
+                >
                     {shifted}
                 </span>
             )}
 
-            <span className="keycap-primary absolute inset-x-0 bottom-1 truncate px-1 text-center font-myanmar text-sm font-medium sm:text-base lg:text-lg 2xl:text-xl">
+            <span
+                className={`keycap-primary absolute inset-x-0 bottom-1 truncate px-1 text-center ${containsMyanmar(plain) ? 'font-myanmar' : 'font-heavy'} text-sm font-medium sm:text-base lg:text-lg 2xl:text-xl`}
+            >
                 {plain}
             </span>
         </>
