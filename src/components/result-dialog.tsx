@@ -21,6 +21,7 @@ import { WpmBars } from '@/components/wpm-bars'
 import { summarizeKeyTaps, worstKeys, keyTapTone } from '@/core/session/key-outcomes'
 import { troubleKeyIds, troubleDrillHref } from '@/core/session/trouble-drill'
 import { summarizeMiskeys, topMiskeys, isShiftSlip } from '@/core/session/miskeys'
+import { characterBreakdown, breakdownUnit } from '@/core/session/character-breakdown'
 import { keyIdLabel } from '@/core/reinforcement'
 import type { MasteryDelta, MasteryLevel } from '@/core/mastery'
 
@@ -78,6 +79,7 @@ export function ResultDialog() {
 
     const metrics = result.metrics
     const unitLabel = metrics.speedUnit === 'units/min' ? 'units/min' : 'wpm'
+    const breakdown = characterBreakdown(metrics.correctAttempts, metrics.incorrectAttempts, metrics.graphemeClusters, metrics.speedUnit)
     const isLesson = session.kind === 'lesson'
     const isDrill = session.kind === 'drill'
     const isPractice = session.kind === 'practice'
@@ -219,17 +221,13 @@ export function ResultDialog() {
                     <dt className="text-muted-foreground">Backspaces</dt>
                     <dd className="tabular-nums">{metrics.backspaceCount}</dd>
                 </div>
-                {metrics.speedUnit === 'units/min' ? (
-                    <div className="flex justify-between">
-                        <dt className="text-muted-foreground">Grapheme clusters</dt>
-                        <dd className="tabular-nums">{metrics.graphemeClusters}</dd>
-                    </div>
-                ) : (
-                    <div className="flex justify-between">
-                        <dt className="text-muted-foreground">Characters typed</dt>
-                        <dd className="tabular-nums">{metrics.correctAttempts}</dd>
-                    </div>
-                )}
+                <div className="flex justify-between">
+                    <dt className="text-muted-foreground">{breakdownUnit(metrics.speedUnit) === 'clusters' ? 'Clusters typed' : 'Characters typed'}</dt>
+                    <dd className="tabular-nums">
+                        {breakdown.correct}
+                        {breakdown.wrong > 0 ? <span className="text-muted-foreground"> + {breakdown.wrong} wrong</span> : null}
+                    </dd>
+                </div>
                 <div className="flex justify-between">
                     <dt className="text-muted-foreground">Time</dt>
                     <dd className="tabular-nums">{formatDuration(metrics.elapsedSeconds * 1000)}</dd>
@@ -249,6 +247,20 @@ export function ResultDialog() {
                     </dd>
                 </div>
             </dl>
+
+            {breakdown.total > 0 ? (
+                <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-line/60">
+                    <div
+                        className="h-full rounded-full bg-accent transition-[width]"
+                        style={{ width: `${(breakdown.correct / breakdown.total) * 100}%` }}
+                        role="progressbar"
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-valuenow={Math.round((breakdown.correct / breakdown.total) * 100)}
+                        aria-label="Correct characters share"
+                    />
+                </div>
+            ) : null}
 
             {metrics.elapsedSeconds > 1 ? <PacingChart /> : null}
 
