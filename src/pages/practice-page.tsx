@@ -5,6 +5,7 @@ import { useTypingStore } from '@/stores/typing-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { Session } from '@/pages/session-page'
 import type { PracticeUnit } from '@/core/materials/practice-material'
+import { resolvedPracticePreferences } from '@/core/practice/preferences'
 import { Timer, Hash, Type, RotateCcw, Quote } from 'lucide-react'
 
 const TIME_OPTIONS = [15, 30, 60, 120]
@@ -67,23 +68,42 @@ export default function PracticePage() {
     const unit = useSettingsStore((s) => s.values['practice.unit']) as PracticeUnit
     const time = Number(useSettingsStore((s) => s.values['practice.time']))
     const words = Number(useSettingsStore((s) => s.values['practice.words']))
-    const lang = useSettingsStore((s) => s.values['practice.lang']) as 'english' | 'myanmar'
+    const langValue = useSettingsStore((s) => s.values['practice.lang']) as 'english' | 'myanmar'
+    const punctuationValue = useSettingsStore((s) => s.values['practice.punctuation']) === 'on'
+    const numbersValue = useSettingsStore((s) => s.values['practice.numbers']) === 'on'
     const [text, setText] = useState('')
-    const [punctuation, setPunctuation] = useState(false)
-    const [numbers, setNumbers] = useState(false)
     const navigate = useNavigate()
     const session = useTypingStore((s) => s.session)
     const beginPractice = useTypingStore((s) => s.beginPractice)
     const inSession = session?.kind === 'practice'
 
+    const prefs = resolvedPracticePreferences({
+        unit,
+        time,
+        words,
+        lang: langValue,
+        punctuation: punctuationValue,
+        numbers: numbersValue,
+    })
+
     const updateUnit = useCallback((v: PracticeUnit) => void setSetting('practice.unit', v), [setSetting])
     const updateTime = useCallback((v: number) => void setSetting('practice.time', String(v)), [setSetting])
     const updateWords = useCallback((v: number) => void setSetting('practice.words', String(v)), [setSetting])
     const updateLang = useCallback((v: 'english' | 'myanmar') => void setSetting('practice.lang', v), [setSetting])
+    const updatePunctuation = useCallback((v: boolean) => void setSetting('practice.punctuation', v ? 'on' : 'off'), [setSetting])
+    const updateNumbers = useCallback((v: boolean) => void setSetting('practice.numbers', v ? 'on' : 'off'), [setSetting])
 
     const start = useCallback(() => {
-        void beginPractice({ language: lang, unit, time, words, text, punctuation, numbers })
-    }, [beginPractice, lang, unit, time, words, text, punctuation, numbers])
+        void beginPractice({
+            language: prefs.lang,
+            unit: prefs.unit,
+            time: prefs.time,
+            words: prefs.words,
+            text,
+            punctuation: prefs.punctuation,
+            numbers: prefs.numbers,
+        })
+    }, [beginPractice, prefs, text])
 
     const sourceName =
         unit === 'time'
@@ -121,7 +141,7 @@ export default function PracticePage() {
                             onClick={() => updateLang('english')}
                             className={cn(
                                 'rounded-md px-4 py-2 text-sm font-medium transition-colors',
-                                lang === 'english' ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
+                                langValue === 'english' ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
                             )}
                         >
                             English
@@ -130,7 +150,7 @@ export default function PracticePage() {
                             onClick={() => updateLang('myanmar')}
                             className={cn(
                                 'rounded-md px-4 py-2 text-sm font-medium transition-colors',
-                                lang === 'myanmar' ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
+                                langValue === 'myanmar' ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
                             )}
                         >
                             မြန်မာ
@@ -191,8 +211,8 @@ export default function PracticePage() {
                     <div className="flex flex-wrap items-center gap-3">
                         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Add-ons</p>
                         <div className="flex gap-1">
-                            <ToggleChip label="Punctuation" checked={punctuation} onChange={setPunctuation} />
-                            <ToggleChip label="Numbers" checked={numbers} onChange={setNumbers} />
+                            <ToggleChip label="Punctuation" checked={punctuationValue} onChange={updatePunctuation} />
+                            <ToggleChip label="Numbers" checked={numbersValue} onChange={updateNumbers} />
                         </div>
                         <p className="w-full text-xs text-muted-foreground/80">
                             English gets .,!?;: and capitalised sentence starts; Myanmar gets ၊ ။ and Myanmar numerals.
