@@ -11,6 +11,7 @@ import { isCapsLockWarningVisible } from '@/core/session/caps-lock'
 import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
 import { TargetText } from '@/components/target-text'
 import { StatsBar } from '@/components/stats-bar'
+import { ProgressLine } from '@/components/progress-line'
 import { SessionHeader } from '@/components/session/session-header'
 import { ExerciseWorkspace, QuickRestartHint } from '@/components/session/exercise-workspace'
 import { ConfirmAbandon } from '@/components/session/confirm-abandon'
@@ -114,6 +115,7 @@ export function Session({
                     <div className="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
                         <StatsBar />
                         <TargetText />
+                        <ProgressLine />
                         <AnimatePresence>
                             {isCapsLockWarningVisible(capsLockOn, status) ? (
                                 <motion.div
