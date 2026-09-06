@@ -1,10 +1,14 @@
-export type CommandGroup = 'Navigate' | 'Manage' | 'Round'
+import type { AppSettingKey } from '@/stores/settings-store'
+
+export type CommandGroup = 'Navigate' | 'Manage' | 'Round' | 'Settings'
 
 export interface CommandContext {
     navigate: (to: string) => void
     openAddStudent: () => void
     openLearnerPicker: () => void
     toggleSidebar: () => void
+    getSetting: (key: AppSettingKey) => string
+    setSetting: (key: AppSettingKey, value: string) => void
 }
 
 export interface Command {
@@ -17,7 +21,7 @@ export interface Command {
     run: (context: CommandContext) => void
 }
 
-export const COMMAND_GROUPS: CommandGroup[] = ['Navigate', 'Manage', 'Round']
+export const COMMAND_GROUPS: CommandGroup[] = ['Navigate', 'Manage', 'Round', 'Settings']
 
 export function searchableText(command: Command): string {
     return `${command.title} ${command.keywords} ${command.hint}`.toLowerCase()

@@ -48,6 +48,8 @@ function makeContext(overrides: Partial<CommandContext> = {}): CommandContext {
         openAddStudent: vi.fn(),
         openLearnerPicker: vi.fn(),
         toggleSidebar: vi.fn(),
+        getSetting: vi.fn(() => 'off'),
+        setSetting: vi.fn(),
         ...overrides,
     }
 }
@@ -154,6 +156,15 @@ describe('palette commands', () => {
         expect(commands.find((c) => c.id === 'restart')?.disabled()).toBe(true)
         expect(commands.find((c) => c.id === 'abandon')?.disabled()).toBe(true)
         expect(() => commands.map((c) => c.run(context))).not.toThrow()
+    })
+
+    it('ships settings commands that write through the context', () => {
+        const context = makeContext()
+        const commands = createCommands(context)
+        expect(commands.find((c) => c.id === 'setting-punctuation')).toBeDefined()
+        expect(commands.find((c) => c.id === 'setting-timer-style-bar')).toBeDefined()
+        commands.find((c) => c.id === 'setting-timer-style-text')?.run(context)
+        expect(context.setSetting).toHaveBeenCalledWith('practice.timerStyle', 'text')
     })
 })
 

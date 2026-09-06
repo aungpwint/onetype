@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Search, CornerDownLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useUiStore } from '@/stores/ui-store'
+import { useSettingsStore } from '@/stores/settings-store'
 import { createCommands } from '@/commands/palette-commands'
 import {
     COMMAND_GROUPS,
@@ -24,6 +25,10 @@ export function CommandPalette({ openAddStudent, openLearnerPicker }: { openAddS
             openAddStudent,
             openLearnerPicker,
             toggleSidebar: () => useUiStore.getState().toggleSidebar(),
+            getSetting: (key) => useSettingsStore.getState().get(key) ?? '',
+            setSetting: (key, value) => {
+                void useSettingsStore.getState().set(key, value)
+            },
         }),
         [navigate, openAddStudent, openLearnerPicker],
     )
@@ -41,6 +46,7 @@ const GROUP_LABEL: Record<Command['group'], string> = {
     Navigate: 'Go to',
     Manage: 'Manage',
     Round: 'Round',
+    Settings: 'Settings',
 }
 
 function PalettePanel({ context, close }: { context: CommandContext; close: (open: false) => void }) {

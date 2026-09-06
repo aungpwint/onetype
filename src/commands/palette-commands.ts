@@ -1,4 +1,5 @@
 import { useTypingStore } from '@/stores/typing-store'
+import { buildSettingCommands } from './settings-commands'
 import type { Command, CommandContext, CommandGroup } from './registry'
 
 const NAV = [
@@ -110,5 +111,5 @@ export function createCommands(context: CommandContext): Command[] {
         },
     ]
 
-    return [...base, ...manage, ...round]
+    return [...base, ...manage, ...round, ...buildSettingCommands(context)]
 }
