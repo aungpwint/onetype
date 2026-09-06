@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { useTypingStore } from '@/stores/typing-store'
+import { useSettingsStore } from '@/stores/settings-store'
 import { Session } from '@/pages/session-page'
 import type { PracticeUnit } from '@/core/materials/practice-material'
 import { Timer, Hash, Type, RotateCcw, Quote } from 'lucide-react'
@@ -62,10 +63,11 @@ function ToggleChip({ label, checked, onChange }: { label: string; checked: bool
 }
 
 export default function PracticePage() {
-    const [lang, setLang] = useState<'english' | 'myanmar'>('english')
-    const [unit, setUnit] = useState<PracticeUnit>('time')
-    const [time, setTime] = useState(30)
-    const [words, setWords] = useState(25)
+    const setSetting = useSettingsStore((s) => s.set)
+    const unit = useSettingsStore((s) => s.values['practice.unit']) as PracticeUnit
+    const time = Number(useSettingsStore((s) => s.values['practice.time']))
+    const words = Number(useSettingsStore((s) => s.values['practice.words']))
+    const lang = useSettingsStore((s) => s.values['practice.lang']) as 'english' | 'myanmar'
     const [text, setText] = useState('')
     const [punctuation, setPunctuation] = useState(false)
     const [numbers, setNumbers] = useState(false)
@@ -73,6 +75,11 @@ export default function PracticePage() {
     const session = useTypingStore((s) => s.session)
     const beginPractice = useTypingStore((s) => s.beginPractice)
     const inSession = session?.kind === 'practice'
+
+    const updateUnit = useCallback((v: PracticeUnit) => void setSetting('practice.unit', v), [setSetting])
+    const updateTime = useCallback((v: number) => void setSetting('practice.time', String(v)), [setSetting])
+    const updateWords = useCallback((v: number) => void setSetting('practice.words', String(v)), [setSetting])
+    const updateLang = useCallback((v: 'english' | 'myanmar') => void setSetting('practice.lang', v), [setSetting])
 
     const start = useCallback(() => {
         void beginPractice({ language: lang, unit, time, words, text, punctuation, numbers })
@@ -111,7 +118,7 @@ export default function PracticePage() {
                     <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Language</p>
                     <div className="flex gap-1">
                         <button
-                            onClick={() => setLang('english')}
+                            onClick={() => updateLang('english')}
                             className={cn(
                                 'rounded-md px-4 py-2 text-sm font-medium transition-colors',
                                 lang === 'english' ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
@@ -120,7 +127,7 @@ export default function PracticePage() {
                             English
                         </button>
                         <button
-                            onClick={() => setLang('myanmar')}
+                            onClick={() => updateLang('myanmar')}
                             className={cn(
                                 'rounded-md px-4 py-2 text-sm font-medium transition-colors',
                                 lang === 'myanmar' ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
@@ -143,7 +150,7 @@ export default function PracticePage() {
                         ] as const).map(({ key, label, icon: Icon }) => (
                             <button
                                 key={key}
-                                onClick={() => setUnit(key)}
+                                onClick={() => updateUnit(key)}
                                 className={cn(
                                     'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
                                     unit === key ? 'bg-accent text-accent-foreground shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/80',
@@ -162,9 +169,9 @@ export default function PracticePage() {
                         {unit === 'time' ? 'Duration' : unit === 'words' ? 'Word count' : unit === 'quote' ? 'Quotation' : 'Text'}
                     </p>
                     {unit === 'time' ? (
-                        <ChipGroup options={TIME_OPTIONS} value={time} onChange={setTime} format={(v) => `${v}s`} />
+                        <ChipGroup options={TIME_OPTIONS} value={time} onChange={updateTime} format={(v) => `${v}s`} />
                     ) : unit === 'words' ? (
-                        <ChipGroup options={WORD_OPTIONS} value={words} onChange={setWords} />
+                        <ChipGroup options={WORD_OPTIONS} value={words} onChange={updateWords} />
                     ) : unit === 'quote' ? (
                         <p className="text-sm text-muted-foreground">
                             A short quotation in your chosen language — type it through, then get another one.
