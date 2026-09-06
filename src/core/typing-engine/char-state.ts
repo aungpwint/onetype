@@ -1,21 +1,44 @@
+import type { GraphemeSlot } from './sequence'
+
 export type GraphemeCorrectness = 'pending' | 'correct' | 'incorrect'
 
-export interface GraphemeViewState {
-    /** True iff the caret is inside this grapheme → active highlight + caret. */
+export interface UnitPresentation {
+    /** Logical display segment of this slot (one code point). */
+    text: string
+    /** Local slot index inside the grapheme (0..slots.length-1). */
+    slot: number
+    /** Global typing-unit index that produces this slot (startUnit + unitLocal). */
+    unit: number
+    /** The caret has passed this unit (it was consumed by a correct press). */
+    completed: boolean
+    /** Per-unit visual state: pending (upcoming/current), correct, or incorrect. */
+    outcome: GraphemeCorrectness
+    /** True for the unit the caret currently points at — the active target. */
+    isCurrent: boolean
+}
+
+export interface GraphemePresentation {
+    /** True iff the caret sits inside this grapheme → active highlight + caret. */
     isCurrent: boolean
     /** Real-time 0..1 caret slide position (only meaningful when isCurrent). */
     progress: number
-    /** Complete-grapheme verdict: 'pending' while composing or untouched. */
+    /** Commit-ready verdict for the whole grapheme; 'pending' while composing. */
     correctness: GraphemeCorrectness
+    /**
+     * Per-unit slots in logical display order. Set only for the CURRENT grapheme
+     * (a fresh object each keystroke); null for passive graphemes so memoized
+     * Chars keep rendering the single shaped span and bail out on re-render.
+     */
+    slots: UnitPresentation[] | null
 }
 
 export interface UnitOutcomeQuery {
     unitOutcomeAt(index: number): 'correct' | 'incorrect' | null
 }
 
-const PENDING: GraphemeViewState = { isCurrent: false, progress: 0, correctness: 'pending' }
-const CORRECT: GraphemeViewState = { isCurrent: false, progress: 1, correctness: 'correct' }
-const INCORRECT: GraphemeViewState = { isCurrent: false, progress: 1, correctness: 'incorrect' }
+const PENDING: GraphemePresentation = { isCurrent: false, progress: 0, correctness: 'pending', slots: null }
+const CORRECT: GraphemePresentation = { isCurrent: false, progress: 1, correctness: 'correct', slots: null }
+const INCORRECT: GraphemePresentation = { isCurrent: false, progress: 1, correctness: 'incorrect', slots: null }
 
 /**
  * True when the caret unit index sits inside this grapheme's [startUnit, endUnit)
@@ -29,8 +52,6 @@ export function isCurrentGrapheme(unitIndex: number, startUnit: number, endUnit:
 /**
  * Real-time fraction of the cluster the caret has consumed.
  * 0 at the leading boundary → rising by one unit per keystroke → 1 once passed.
- * Independent of correctness — a grapheme can be "100% typed" but still pending
- * if a later grapheme triggered the tick.
  */
 export function cursorProgressInCluster(unitIndex: number, startUnit: number, endUnit: number): number {
     if (unitIndex < startUnit) return 0
@@ -40,50 +61,80 @@ export function cursorProgressInCluster(unitIndex: number, startUnit: number, en
 }
 
 /**
- * The correctness verdict for a single grapheme.
+ * Single canonical derivation of a grapheme's visual state, at per-unit
+ * granularity.
  *
- * WAIT state — returns 'pending' whenever the caret is inside or before the
- * grapheme (unitIndex < endUnit), regardless of how many units were typed.
- * This prevents mid-composition green flash: a grapheme turns green or red
- * ONLY after the caret has moved past its final unit.
+ * The logical grapheme remains the primary model — `slots` are a presentation
+ * layer that only front-ends the already-computed `GraphemeRun` unit mapping.
+ * They never re-split the stored text or duplicate engine state: each slot maps
+ * back to a global typing unit, whose outcome is the single source of truth.
+ *
+ * - Passive graphemes return stable constant references (memo bailout) and
+ *   render as ONE shaped span carrying the committed verdict.
+ * - The current grapheme's result is ALSO reference-stable: it is memoized by a
+ *   full content signature and the SAME object is returned whenever the input
+ *   (caret unit, slot texts, per-unit outcomes) is unchanged. This is what lets
+ *   React's `useSyncExternalStore` (through zustand `useShallow`) bail out when
+ *   the engine notification is unrelated to this grapheme; without it, the
+ *   ever-fresh `slots` array breaks shallow-equality by reference and the Char
+ *   re-renders in an infinite loop.
+ * - So consumed units go green/red immediately while the rest stay pending, a
+ *   partial grapheme never looks fully typed, and the whole grapheme turns
+ *   green/red only once every unit is consumed.
  */
-export function graphemeCorrectness(unitIndex: number, endUnit: number, incorrect: boolean): GraphemeCorrectness {
-    if (unitIndex >= endUnit) {
-        return incorrect ? 'incorrect' : 'correct'
+export function graphemePresentation(
+    unitIndex: number,
+    startUnit: number,
+    slots: GraphemeSlot[],
+    query: UnitOutcomeQuery,
+): GraphemePresentation {
+    const endUnit = startUnit + slots.length
+    if (!isCurrentGrapheme(unitIndex, startUnit, endUnit)) {
+        if (unitIndex >= endUnit) {
+            return rangeHasIncorrect(query, startUnit, endUnit) ? INCORRECT : CORRECT
+        }
+        return PENDING
     }
-    return 'pending'
+    const key = activeBranchKey(unitIndex, startUnit, slots, query)
+    if (activeBranchCache !== null && activeBranchCache.key === key) {
+        return activeBranchCache.value
+    }
+    const unitSlots = slots.map((slot, i) => {
+        const unit = startUnit + slot.unitLocal
+        const completed = unit < unitIndex
+        const outcome = unitOutcomeFor(unit, unitIndex, query)
+        return { text: slot.text, slot: i, unit, completed, outcome, isCurrent: unit === unitIndex }
+    })
+    const value: GraphemePresentation = {
+        isCurrent: true,
+        progress: cursorProgressInCluster(unitIndex, startUnit, endUnit),
+        correctness: 'pending',
+        slots: unitSlots,
+    }
+    activeBranchCache = { key, value }
+    return value
+}
+
+/** Per-unit render state, resolved independently of order of preference. */
+function unitOutcomeFor(unit: number, unitIndex: number, query: UnitOutcomeQuery): GraphemeCorrectness {
+    return query.unitOutcomeAt(unit) === 'incorrect' ? 'incorrect' : unit < unitIndex ? 'correct' : 'pending'
 }
 
 /**
- * Single canonical derivation of a grapheme's visual state.
- *
- * Returns stable constant references for pending/correct/incorrect chars
- * (so memoized Char components bail out without re-rendering) and a fresh
- * object only for the active grapheme whose cursor progress is changing.
- *
- * The three concerns are composed but NEVER cross-gate:
- *   isCurrent + progress update on every keystroke (States 1+2).
- *   correctness is decided only when the full grapheme is consumed (State 3).
+ * Full content signature of the active branch: caret unit, grapheme start,
+ * and every slot's text/unit-local pair plus its resolved outcome. Two calls
+ * with equal signatures produce byte-identical `GraphemePresentation` data, so
+ * the cached object is a legitimate aliasing of the fresh computation.
  */
-export function graphemeViewState(unitIndex: number, startUnit: number, endUnit: number, incorrect: boolean): GraphemeViewState {
-    const c = graphemeCorrectness(unitIndex, endUnit, incorrect)
-    if (c !== 'pending') {
-        return c === 'correct' ? CORRECT : INCORRECT
+function activeBranchKey(unitIndex: number, startUnit: number, slots: GraphemeSlot[], query: UnitOutcomeQuery): string {
+    let key = `${unitIndex}|${startUnit}`
+    for (const slot of slots) {
+        key += `|${slot.text}|${slot.unitLocal}|${unitOutcomeFor(startUnit + slot.unitLocal, unitIndex, query)}`
     }
-    if (isCurrentGrapheme(unitIndex, startUnit, endUnit)) {
-        return {
-            isCurrent: true,
-            progress: cursorProgressInCluster(unitIndex, startUnit, endUnit),
-            correctness: c,
-        }
-    }
-    return PENDING
+    return key
 }
 
-/** True when a transient error-flash index falls inside this cluster's range. */
-export function flashIndexMatches(flashIndex: number | undefined, startUnit: number, endUnit: number): boolean {
-    return typeof flashIndex === 'number' && flashIndex >= startUnit && flashIndex < endUnit
-}
+let activeBranchCache: { key: string; value: GraphemePresentation } | null = null
 
 /** True when any typing unit in the cluster range was answered incorrectly. */
 export function rangeHasIncorrect(outcomes: UnitOutcomeQuery, startUnit: number, endUnit: number): boolean {

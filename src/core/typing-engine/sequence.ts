@@ -95,12 +95,6 @@ export function graphemeForUnit(sequence: BuiltSequence, unitIndex: number): num
     return sequence.units[unitIndex].graphemeIndex
 }
 
-export function clusterStartForUnit(sequence: BuiltSequence, unitIndex: number): number {
-    if (unitIndex <= 0) return 0
-    const gi = graphemeForUnit(sequence, unitIndex - 1)
-    return sequence.graphemeUnitRanges[gi][0]
-}
-
 export function remainingText(sequence: BuiltSequence, unitIndex: number): string {
     return sequence.graphemes.slice(graphemeForUnit(sequence, unitIndex)).join('')
 }
@@ -115,11 +109,55 @@ function unitsForGraphemesBefore(sequence: BuiltSequence, unitIndex: number): nu
     return sequence.graphemeUnitRanges[gi][0]
 }
 
+export interface GraphemeSlot {
+    /** Logical display segment (one code point) of a grapheme. */
+    text: string
+    /** Local typing-unit offset within the grapheme's [startUnit, endUnit) that
+        produces this segment in press order. Logical slot i renders the state
+        of global unit `startUnit + unitLocal`. */
+    unitLocal: number
+}
+
+/**
+ * Maps every code point of a grapheme (in logical display order) to the
+ * keyboard-press unit that produces it. The grapheme's press order is a
+ * permutation of its logical code points (pre-base vowels like U+1031 move to
+ * the front), so a greedy match driven by press order recovers the exact
+ * inverse assignment — including repeated code points like the two `မ` in
+ * `မြန်မာ`. The logical slot-to-unit mapping is what lets the renderer color
+ * per typing unit while keeping the grapheme in readable display order.
+ */
+export function logicalSlotsForCluster(logical: string, pressTexts: string[]): GraphemeSlot[] {
+    const unitCps = pressTexts.map((text) => Array.from(text))
+    const slots: GraphemeSlot[] = []
+    for (const cp of Array.from(logical)) {
+        let matched = -1
+        for (let u = 0; u < unitCps.length; u++) {
+            const idx = unitCps[u]!.indexOf(cp)
+            if (idx >= 0) {
+                unitCps[u]!.splice(idx, 1)
+                matched = u
+                break
+            }
+        }
+        if (matched === -1) {
+            // Valid targets never reach here (the press set is a permutation of
+            // the logical code points); fall back to the next unattributed unit
+            // so an unexpected grapheme still renders every code point.
+            matched = slots.length < unitCps.length ? slots.length : unitCps.length - 1
+        }
+        slots.push({ text: cp, unitLocal: matched })
+    }
+    return slots
+}
+
 export interface GraphemeRun {
     index: number
     text: string
     startUnit: number
     endUnit: number
+    /** Logical-display-order per-unit slots; the presentation layer's source. */
+    slots: GraphemeSlot[]
 }
 
 export function graphemeUnitRuns(sequence: BuiltSequence): GraphemeRun[] {
@@ -131,6 +169,10 @@ export function graphemeUnitRuns(sequence: BuiltSequence): GraphemeRun[] {
             text: sequence.graphemes[gi],
             startUnit: start,
             endUnit: end,
+            slots: logicalSlotsForCluster(
+                sequence.graphemes[gi],
+                sequence.units.slice(start, end).map((u) => u.text),
+            ),
         })
     }
     return runs

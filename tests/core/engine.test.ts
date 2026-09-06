@@ -247,7 +247,7 @@ describe('typing engine', () => {
         expect(engine.unitIndex).toBe(1)
     })
 
-    it('backspace is cluster-aware for Myanmar: deletes a whole syllable cluster', () => {
+    it('backspace is unit-granular for Myanmar: deletes one typing unit, not the whole syllable', () => {
         // "ကိျာ" is one syllable cluster (base + medial + vowels) -> 4 units.
         const word = '\u1000\u102D\u103B\u102C'
         const seq = buildSequence(word, myanmar)
@@ -258,20 +258,18 @@ describe('typing engine', () => {
         engine.processKey('KeyD', 'none')
         engine.processKey('KeyS', 'none')
         expect(engine.unitIndex).toBe(3)
-        // A single Backspace removes the entire cluster, not one mark.
+        // A single Backspace removes exactly one mark (unit 2), not the cluster.
         engine.processKey('Backspace', 'none')
-        expect(engine.unitIndex).toBe(0)
-        // Rebuild fully to completion (remaining keys are KeyU, KeyD, KeyS, KeyM)
-        engine.processKey('KeyU', 'none')
-        engine.processKey('KeyD', 'none')
+        expect(engine.unitIndex).toBe(2)
+        // Rebuild the remaining units to completion (KeyS then KeyM).
         engine.processKey('KeyS', 'none')
         engine.processKey('KeyM', 'none')
         expect(engine.unitIndex).toBe(4)
-        expect(engine.correctCount).toBe(7)
+        expect(engine.correctCount).toBe(5)
         expect(engine.status).toBe('finished')
     })
 
-    it('backspace steps back to the previous cluster boundary for multi-cluster Myanmar', () => {
+    it('backspace steps back exactly one unit for multi-cluster Myanmar', () => {
         // "ကာ သုံ" -> three clusters: [ကာ][space][သုံ]
         const two = buildSequence('\u1000\u102C \u101E\u102F\u1036', myanmar)
         expect(two.graphemes).toHaveLength(3) // "ကာ", " ", "သုံ"
@@ -285,9 +283,10 @@ describe('typing engine', () => {
         engine.processKey('KeyO', 'none')
         engine.processKey('KeyK', 'none')
         expect(engine.unitIndex).toBe(5)
-        // Backspace removes the partial/whole second cluster back to the space.
+        // Backspace removes the last typed unit (the second keystroke of the
+        // second cluster), not the whole cluster.
         engine.processKey('Backspace', 'none')
-        expect(engine.unitIndex).toBe(3)
+        expect(engine.unitIndex).toBe(4)
     })
 
     it('supports timed tests that finish when the timer expires', () => {
@@ -553,12 +552,20 @@ describe('engine Myanmar cluster diagnosis', () => {
         engine.processKey('KeyJ', 'none')
         expect(engine.clusterDiagnosisFor(0)?.kind).toBe('extra-mark')
         expect(engine.unitIndex).toBe(2)
+        // First Backspace erases the correct ြ unit, clearing the cluster's
+        // stale diagnosis along with it.
         engine.processKey('Backspace', 'none')
+        expect(engine.unitIndex).toBe(1)
         expect(engine.clusterDiagnosisFor(0)).toBeNull()
+        // Second Backspace unwinds the မ unit too.
+        engine.processKey('Backspace', 'none')
         expect(engine.unitIndex).toBe(0)
+        expect(engine.clusterDiagnosisFor(0)).toBeNull()
+        // Rebuilding the cluster from scratch recomputes a clean diagnosis.
         engine.processKey('KeyR', 'none')
         engine.processKey('KeyJ', 'none')
         expect(engine.clusterDiagnosisFor(0)?.kind).toBe('ok')
+        expect(engine.unitIndex).toBe(2)
     })
 
     it('grades a pre-base vowel cluster correctly in keyboard press order', () => {

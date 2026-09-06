@@ -1,26 +1,44 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildSequence, graphemeUnitRuns, type BuiltSequence } from '@/core/typing-engine/sequence'
+import { buildSequence, graphemeUnitRuns, type BuiltSequence, type GraphemeRun } from '@/core/typing-engine/sequence'
 import { TypingEngine } from '@/core/typing-engine/engine'
 import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
 import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import {
     cursorProgressInCluster,
-    graphemeViewState,
+    graphemePresentation,
     isCurrentGrapheme,
-    rangeHasIncorrect,
-    type GraphemeViewState,
+    type GraphemePresentation,
+    type UnitPresentation,
 } from '@/core/typing-engine/char-state'
 
 /**
- * The renderer's canonical per-grapheme selector (see TargetText `Char`). We
- * replicate it here to assert the exact visual state a learner sees after each
- * keystroke — correctness is decided solely by whether the whole grapheme's unit
- * range has been consumed AND whether an incorrect unit landed inside it.
+ * The renderer's canonical per-grapheme presentation (see TargetText `Char`).
+ * A grapheme is committed (green/red) only once every typing unit is consumed;
+ * while composing, its per-unit slots carry the live state in LOGICAL display
+ * order so exactly the typed units are colored — never the whole grapheme.
  */
-function viewState(engine: TypingEngine, startUnit: number, endUnit: number): GraphemeViewState {
-    return graphemeViewState(engine.unitIndex, startUnit, endUnit, rangeHasIncorrect(engine, startUnit, endUnit))
+function present(engine: TypingEngine, run: GraphemeRun): GraphemePresentation {
+    return graphemePresentation(engine.unitIndex, run.startUnit, run.slots, engine)
+}
+
+function renderClass(v: GraphemePresentation): string {
+    if (v.correctness === 'incorrect') return 'incorrect'
+    if (v.correctness === 'correct') return 'correct'
+    return v.isCurrent ? 'current' : 'pending'
+}
+
+/** Per-slot visual status mirroring the Char component's class decision. */
+function slotStatus(s: UnitPresentation): string {
+    if (s.isCurrent) return s.outcome === 'incorrect' ? 'miss-now' : 'now'
+    if (s.completed) return s.outcome === 'incorrect' ? 'miss' : 'ok'
+    return 'pending'
+}
+
+function slotStates(engine: TypingEngine, run: GraphemeRun): string[] {
+    const v = present(engine, run)
+    return (v.slots ?? []).map(slotStatus)
 }
 
 /** A running engine with the target text's layout, advanced by exact keystrokes. */
@@ -38,73 +56,86 @@ function typeUnits(engine: TypingEngine, seq: BuiltSequence, count: number) {
     }
 }
 
-function renderClass(v: GraphemeViewState): string {
-    if (v.correctness === 'incorrect') return 'incorrect'
-    if (v.correctness === 'correct') return 'correct'
-    return v.isCurrent ? 'current' : 'pending'
-}
-
-describe('Myanmar grapheme correctness waits for the complete grapheme', () => {
-    it('ရေ: typing only the pre-base vowel ေ (first unit) stays composing, not green', () => {
+describe('Myanmar per-unit coloring: never fully green after one unit', () => {
+    it('ရေ: typing only the pre-base vowel ေ (first unit) colors exactly that unit, not the grapheme', () => {
         const { engine, seq } = makeEngine('ရေ', myanmar)
-        const [start, end] = [0, seq.graphemeUnitRanges[0]![1]]
+        const run = graphemeUnitRuns(seq)[0]!
         // Press order for ရေ is [ေ, ရ] (pre-base vowel first, then base).
         expect(seq.units[0]!.text).toBe('ေ')
         typeUnits(engine, seq, 1)
         expect(engine.unitIndex).toBe(1)
-        // Mid-composition: the caret has advanced but the grapheme is NOT green.
-        const mid = viewState(engine, start, end)
-        expect(mid.isCurrent).toBe(true)
-        expect(renderClass(mid)).toBe('current')
-        // Now complete it → green.
+        // Logical display order [ရ,ေ]: only the typed `ေ` is green; the whole
+        // grapheme is still composing (never the committed green verdict).
+        expect(slotStates(engine, run)).toEqual(['now', 'ok'])
+        expect(present(engine, run).correctness).toBe('pending')
+        // Complete it → the WHOLE grapheme turns green as one shaped span.
         typeUnits(engine, seq, 2)
-        expect(viewState(engine, start, end).correctness).toBe('correct')
+        expect(present(engine, run).correctness).toBe('correct')
+        expect(present(engine, run).slots).toBeNull()
     })
 
-    it('wrong Myanmar input flags the unit incorrect and never flips the grapheme green early', () => {
+    it('မြန်မာ: slot colors follow typing progress unit by unit, green only at completion', () => {
+        const { engine, seq } = makeEngine('မြန်မာ', myanmar)
+        const run = graphemeUnitRuns(seq)[0]!
+        expect(run.slots).toHaveLength(6)
+
+        // Fresh: nothing colored yet, first slot current.
+        expect(slotStates(engine, run)).toEqual(['now', 'pending', 'pending', 'pending', 'pending', 'pending'])
+        typeUnits(engine, seq, 1)
+        expect(slotStates(engine, run)).toEqual(['ok', 'now', 'pending', 'pending', 'pending', 'pending'])
+        typeUnits(engine, seq, 3)
+        expect(slotStates(engine, run)).toEqual(['ok', 'ok', 'ok', 'now', 'pending', 'pending'])
+
+        // The final unit delivers the complete grapheme → one green span.
+        typeUnits(engine, seq, 6)
+        expect(present(engine, run).correctness).toBe('correct')
+        expect(present(engine, run).slots).toBeNull()
+    })
+
+    it('wrong Myanmar input flags exactly the current unit incorrect and never the whole grapheme green', () => {
         const { engine, seq } = makeEngine('ရေ', myanmar)
-        const [start, end] = [0, seq.graphemeUnitRanges[0]![1]]
+        const run = graphemeUnitRuns(seq)[0]!
         // Wrong key (KeyQ) when ေ (KeyA) is expected: the unit is recorded
-        // incorrect, the caret does not advance, and the grapheme stays in the
-        // composing state — it is NOT green.
+        // incorrect, the caret does not advance, and only that unit is red.
         engine.processKey('KeyQ', 'none')
         expect(engine.unitIndex).toBe(0)
         expect(engine.unitOutcomeAt(0)).toBe('incorrect')
         expect(engine.incorrectCount).toBe(1)
-        const phase = viewState(engine, start, end)
-        expect(phase.isCurrent).toBe(true)
-        expect(phase.correctness).toBe('pending')
-        expect(renderClass(phase)).not.toBe('correct')
+        expect(slotStates(engine, run)).toEqual(['pending', 'miss-now'])
+        expect(present(engine, run).correctness).toBe('pending')
 
-        // Engine semantics (preserved): once the wrong unit is later typed
-        // correctly, the resurrected grapheme completes to green. The incorrect
-        // verdict is transient and replaced by the correct outcome.
-        typeUnits(engine, seq, end)
-        expect(viewState(engine, start, end).correctness).toBe('correct')
+        // Once the wrong unit is typed correctly, the resurrected grapheme
+        // completes to green (the incorrect verdict was transient).
+        typeUnits(engine, seq, 2)
+        expect(present(engine, run).correctness).toBe('correct')
     })
 
-    it('backspace during an incomplete grapheme resets state correctly', () => {
+    it('backspace during an incomplete grapheme rewinds exactly one unit with no stale state', () => {
         const { engine, seq } = makeEngine('မြန်မာ', myanmar)
-        const [start, end] = [0, seq.graphemeUnitRanges[0]![1]]
+        const run = graphemeUnitRuns(seq)[0]!
         // Type halfway into the six-unit grapheme (3 units).
         typeUnits(engine, seq, 3)
         expect(engine.unitIndex).toBe(3)
-        const mid = viewState(engine, start, end)
-        expect(mid.isCurrent).toBe(true)
+        expect(slotStates(engine, run)).toEqual(['ok', 'ok', 'ok', 'now', 'pending', 'pending'])
 
-        // Backspace is cluster-aware: removes the whole grapheme back to start.
+        // Backspace is unit-granular: removes the third unit, which flips the
+        // `န` slot back to current/pending immediately — everything after stays
+        // pending, the two consumed units keep green.
         engine.processKey('Backspace', 'none')
-        expect(engine.unitIndex).toBe(0)
-        expect(engine.unitOutcomeAt(0)).toBeNull()
-        const reset = viewState(engine, start, end)
-        expect(reset.isCurrent).toBe(true) // caret back at composing start
-        expect(renderClass(reset)).toBe('current')
-        expect(reset.correctness).not.toBe('correct')
-        expect(reset.correctness).not.toBe('incorrect')
+        expect(engine.unitIndex).toBe(2)
+        expect(engine.unitOutcomeAt(2)).toBeNull()
+        expect(slotStates(engine, run)).toEqual(['ok', 'ok', 'now', 'pending', 'pending', 'pending'])
+        expect(present(engine, run).correctness).not.toBe('correct')
+        expect(present(engine, run).correctness).not.toBe('incorrect')
+
+        // A second Backspace unwinds the next unit too.
+        engine.processKey('Backspace', 'none')
+        expect(engine.unitIndex).toBe(1)
+        expect(slotStates(engine, run)).toEqual(['ok', 'now', 'pending', 'pending', 'pending', 'pending'])
 
         // Re-type to completion → correct.
-        typeUnits(engine, seq, end)
-        expect(viewState(engine, start, end).correctness).toBe('correct')
+        typeUnits(engine, seq, 6)
+        expect(present(engine, run).correctness).toBe('correct')
     })
 })
 
@@ -127,20 +158,26 @@ describe('Myanmar grapheme corpus — composing while partial, green only when c
         expect(runs.length).toBeGreaterThan(0)
 
         for (const run of runs) {
-            // Consume every unit but the final one, asserting mid-composition
-            // stays current/pending (never green, caret keeps sliding).
+            // Consume every unit but the final one, asserting that ONLY the
+            // consumed units are colored and the grapheme verdict stays pending.
             for (let u = run.startUnit; u < run.endUnit - 1; u++) {
                 typeUnits(engine, seq, u + 1)
-                const v = viewState(engine, run.startUnit, run.endUnit)
-                const consumed = engine.unitIndex - run.startUnit
-                const span = run.endUnit - run.startUnit
-                expect(v.isCurrent, `${run.text} @${consumed}/${span}`).toBe(true)
-                expect(v.correctness, `${run.text} @${consumed}/${span}`).toBe('pending')
-                expect(v.progress, `${run.text} @${consumed}/${span}`).toBeCloseTo(consumed / span)
+                const v = present(engine, run)
+                expect(v.isCurrent, `${run.text} @${u + 1}/${run.endUnit}`).toBe(true)
+                expect(v.correctness, `${run.text} @${u + 1}/${run.endUnit}`).toBe('pending')
+
+                const states = slotStates(engine, run)
+                const consumed = states.filter((s) => s === 'ok').length
+                const active = states.filter((s) => s === 'now').length
+                expect(consumed, `${run.text} consumed @${u + 1}`).toBe(u + 1 - run.startUnit)
+                expect(active, `${run.text} active @${u + 1}`).toBe(1)
+                expect(states.filter((s) => s === 'miss' || s === 'miss-now'), `${run.text} miss`).toHaveLength(0)
+                expect(v.progress, `${run.text} @${u + 1}/${run.endUnit}`).toBeCloseTo((u + 1 - run.startUnit) / (run.endUnit - run.startUnit))
             }
-            // The final unit delivers the complete grapheme → green.
+            // The final unit delivers the complete grapheme → one green span.
             typeUnits(engine, seq, run.endUnit)
-            expect(viewState(engine, run.startUnit, run.endUnit).correctness, run.text).toBe('correct')
+            expect(present(engine, run).correctness, run.text).toBe('correct')
+            expect(present(engine, run).slots, run.text).toBeNull()
         }
 
         expect(engine.status).toBe('finished')
@@ -154,13 +191,13 @@ describe('English keeps existing character-by-character behavior', () => {
         expect(runs.map((r) => r.text)).toEqual(['h', 'e', 'l', 'l', 'o'])
 
         for (const run of runs) {
-            const [start, end] = [run.startUnit, run.endUnit]
             // While the caret sits ON this character, it is current/pending —
             // not yet green. (For English this is a 1-unit span.)
-            expect(viewState(engine, start, end).isCurrent).toBe(true)
+            expect(present(engine, run).isCurrent).toBe(true)
+            expect(slotStates(engine, run)).toEqual(['now'])
             // One keypress consumes it → green.
-            typeUnits(engine, seq, end)
-            expect(viewState(engine, start, end).correctness).toBe('correct')
+            typeUnits(engine, seq, run.endUnit)
+            expect(present(engine, run).correctness).toBe('correct')
         }
 
         expect(engine.status).toBe('finished')
@@ -170,49 +207,48 @@ describe('English keeps existing character-by-character behavior', () => {
 // ---------------------------------------------------------------------------
 // Cursor moves in real time during composition
 // ---------------------------------------------------------------------------
-// The cursor/progress updates after every keyboard input, providing immediate
-// visual feedback. Correctness (green) is delayed until the full grapheme is
-// entered. These tests verify that cursor progress tracks each unit in real
-// time while correctness stays pending until completion.
 
 describe('Cursor moves in real time during Myanmar composition', () => {
     it('ရေ: cursor progress updates after each input, green only at completion', () => {
         const { engine, seq } = makeEngine('ရေ', myanmar)
-        const [start, end] = [0, seq.graphemeUnitRanges[0]![1]]
-        expect(end - start).toBe(2)
+        const run = graphemeUnitRuns(seq)[0]!
+        expect(run.endUnit - run.startUnit).toBe(2)
 
-        // Fresh start: current, progress 0 — composing, not green.
-        expect(viewState(engine, start, end).progress).toBe(0)
-        expect(viewState(engine, start, end).isCurrent).toBe(true)
-        expect(renderClass(viewState(engine, start, end))).not.toBe('correct')
+        expect(present(engine, run).progress).toBe(0)
+        expect(present(engine, run).isCurrent).toBe(true)
+        expect(renderClass(present(engine, run))).toBe('current')
 
         // After typing ေ (unit 0 → 1): cursor moves (progress 0.5), still composing.
         typeUnits(engine, seq, 1)
         expect(engine.unitIndex).toBe(1)
-        expect(viewState(engine, start, end).progress).toBe(0.5)
-        expect(renderClass(viewState(engine, start, end))).not.toBe('correct')
+        expect(present(engine, run).progress).toBe(0.5)
+        expect(slotStates(engine, run)).toEqual(['now', 'ok'])
 
         // After typing ရ (unit 1 → 2): grapheme complete → green.
         typeUnits(engine, seq, 2)
-        expect(viewState(engine, start, end).correctness).toBe('correct')
+        expect(present(engine, run).correctness).toBe('correct')
     })
 
     it('မြန်မာ: cursor advances through all six intermediate positions', () => {
         const { engine, seq } = makeEngine('မြန်မာ', myanmar)
-        const [start, end] = [0, seq.graphemeUnitRanges[0]![1]]
-        expect(end - start).toBe(6)
+        const run = graphemeUnitRuns(seq)[0]!
+        expect(run.endUnit - run.startUnit).toBe(6)
 
-        for (let i = 0; i < end - 1; i++) {
+        for (let i = 0; i < run.endUnit - 1; i++) {
             typeUnits(engine, seq, i + 1)
-            const v = viewState(engine, start, end)
-            expect(v.progress, `after ${i + 1}/${end}`).toBeCloseTo((i + 1) / end)
+            const v = present(engine, run)
+            expect(v.progress, `after ${i + 1}/${run.endUnit}`).toBeCloseTo((i + 1) / run.endUnit)
             expect(v.isCurrent).toBe(true)
             expect(v.correctness).toBe('pending')
+            // Exactly i+1 consumed slots are green and exactly one is the
+            // current (active) target.
+            expect(slotStates(engine, run).filter((s) => s === 'ok').length, `slots green ${i + 1}`).toBe(i + 1)
+            expect(slotStates(engine, run).filter((s) => s === 'now').length, `slots active ${i + 1}`).toBe(1)
         }
 
         // Final unit → green.
-        typeUnits(engine, seq, end)
-        expect(viewState(engine, start, end).correctness).toBe('correct')
+        typeUnits(engine, seq, run.endUnit)
+        expect(present(engine, run).correctness).toBe('correct')
     })
 
     it('combined Myanmar sequence: cursor tracks each grapheme in real time', () => {
@@ -225,65 +261,104 @@ describe('Cursor moves in real time during Myanmar composition', () => {
             const span = e - s
 
             while (engine.unitIndex < e) {
-                // While composing, the grapheme is current — cursor is moving.
-                const v = viewState(engine, s, e)
+                const v = present(engine, run)
                 expect(v.isCurrent, `${run.text} @unit ${engine.unitIndex} should be composing`).toBe(true)
                 expect(v.correctness, `${run.text} @unit ${engine.unitIndex} should not be correct yet`).toBe('pending')
 
                 const u = seq.units[engine.unitIndex]!
                 engine.processKey(u.keyCode, u.modifier)
                 if (engine.unitIndex < e) {
-                    expect(viewState(engine, s, e).progress, `${run.text} progress`).toBeCloseTo((engine.unitIndex - s) / span)
+                    expect(present(engine, run).progress, `${run.text} progress`).toBeCloseTo((engine.unitIndex - s) / span)
                 }
             }
             // Complete → green.
-            expect(viewState(engine, s, e).correctness).toBe('correct')
+            expect(present(engine, run).correctness).toBe('correct')
         }
     })
 })
 
 describe('Wrong input feedback remains immediate during composition', () => {
-    it('ရေ: wrong key records the error and keeps the caret composing (not green)', () => {
+    it('ရေ: wrong key colors the current unit red and keeps the caret composing', () => {
         const { engine, seq } = makeEngine('ရေ', myanmar)
-        const [start, end] = [0, seq.graphemeUnitRanges[0]![1]]
+        const run = graphemeUnitRuns(seq)[0]!
 
-        // Press wrong key (KeyQ instead of expected KeyA for ေ).
         engine.processKey('KeyQ', 'none')
         expect(engine.unitIndex).toBe(0) // caret doesn't advance on a wrong press
-        // Still composing — not green, not a final incorrect verdict.
-        const v = viewState(engine, start, end)
+        const v = present(engine, run)
         expect(v.isCurrent).toBe(true)
         expect(v.correctness).toBe('pending')
-        expect(renderClass(v)).not.toBe('correct')
+        expect(v.slots?.find((s) => s.isCurrent)?.outcome).toBe('incorrect')
+        expect(slotStates(engine, run)).toEqual(['pending', 'miss-now'])
 
         // Correct the key and complete → green.
-        typeUnits(engine, seq, end)
-        expect(viewState(engine, start, end).correctness).toBe('correct')
+        typeUnits(engine, seq, 2)
+        expect(present(engine, run).correctness).toBe('correct')
     })
 })
 
-describe('Backspace during composition resets the caret immediately', () => {
-    it('မြန်မာ: backspace resets caret from interior of typed content to grapheme start', () => {
+describe('Backspace during composition rewinds the caret one unit immediately', () => {
+    it('မြန်မာ: backspace un-composes the last typed unit, slot flips back to current', () => {
         const { engine, seq } = makeEngine('မြန်မာ', myanmar)
-        const [start, end] = [0, seq.graphemeUnitRanges[0]![1]]
+        const run = graphemeUnitRuns(seq)[0]!
 
-        // Type 3 units into the grapheme.
+        // Type 3 units into the grapheme; cursor advanced to progress 0.5.
         typeUnits(engine, seq, 3)
         expect(engine.unitIndex).toBe(3)
-        // Mid-composition cursor has advanced to progress 0.5 of the cluster.
-        expect(viewState(engine, start, end).progress).toBeCloseTo(0.5)
+        expect(present(engine, run).progress).toBeCloseTo(0.5)
+        expect(slotStates(engine, run)).toEqual(['ok', 'ok', 'ok', 'now', 'pending', 'pending'])
 
-        // Backspace: cluster-aware, resets to grapheme start.
+        // Backspace: exactly one unit rewinds — progress 0.33, the `န` slot is
+        // now current/pending again, unit 1's consume state is untouched.
         engine.processKey('Backspace', 'none')
-        expect(engine.unitIndex).toBe(0)
-        // Caret resets to the composing start of the same grapheme.
-        const reset = viewState(engine, start, end)
+        expect(engine.unitIndex).toBe(2)
+        const reset = present(engine, run)
         expect(reset.isCurrent).toBe(true)
-        expect(reset.progress).toBe(0)
+        expect(reset.progress).toBeCloseTo(2 / 6)
+        expect(slotStates(engine, run)).toEqual(['ok', 'ok', 'now', 'pending', 'pending', 'pending'])
 
         // Re-type to completion.
-        typeUnits(engine, seq, end)
-        expect(viewState(engine, start, end).correctness).toBe('correct')
+        typeUnits(engine, seq, 6)
+        expect(present(engine, run).correctness).toBe('correct')
+    })
+
+    it('backspace while a wrong unit is current erases that attempt and keeps the caret on it', () => {
+        const { engine, seq } = makeEngine('ရေ', myanmar)
+        const run = graphemeUnitRuns(seq)[0]!
+        engine.processKey('KeyQ', 'none') // wrong for ေ
+        expect(slotStates(engine, run)).toEqual(['pending', 'miss-now'])
+
+        // Backspace erases the wrong attempt: the unit is pending again, and
+        // the caret stays on it so the learner can retype the same unit.
+        engine.processKey('Backspace', 'none')
+        expect(engine.unitIndex).toBe(0)
+        expect(engine.unitOutcomeAt(0)).toBeNull()
+        expect(slotStates(engine, run)).toEqual(['pending', 'now'])
+
+        typeUnits(engine, seq, 2)
+        expect(present(engine, run).correctness).toBe('correct')
+    })
+
+    it('exhaustive unit-granular backspace walks every unit back to the start', () => {
+        const { engine, seq } = makeEngine('ထို', myanmar)
+        const total = seq.units.length
+        expect(total).toBeGreaterThan(1)
+        // Type one key short of the end so the run stays in-flight (Backspace
+        // is ignored once the engine finishes).
+        typeUnits(engine, seq, total - 1)
+        expect(engine.unitIndex).toBe(total - 1)
+
+        const visited: number[] = []
+        for (let i = 0; i < total; i++) {
+            engine.processKey('Backspace', 'none')
+            visited.push(engine.unitIndex)
+        }
+        // Each Backspace steps back exactly one unit until 0, then no-ops.
+        expect(visited).toEqual(Array.from({ length: total }, (_, i) => Math.max(0, total - 2 - i)))
+        expect(visited.every((v, i) => i === 0 || v <= visited[i - 1]!), 'never moves forward').toBe(true)
+        expect(engine.unitIndex).toBe(0)
+        // The final backspace at 0 is a no-op that does not crash.
+        engine.processKey('Backspace', 'none')
+        expect(engine.unitIndex).toBe(0)
     })
 })
 
@@ -292,13 +367,10 @@ describe('English remains character-by-character and real-time', () => {
         const { engine, seq } = makeEngine('hello', englishQwerty)
         const runs = graphemeUnitRuns(seq)
         for (const run of runs) {
-            const [start, end] = [run.startUnit, run.endUnit]
-            // Before typing: current with progress 0 (composing start).
-            expect(viewState(engine, start, end).isCurrent).toBe(true)
-            expect(viewState(engine, start, end).progress).toBe(0)
-            // Type the character → green.
-            typeUnits(engine, seq, end)
-            expect(viewState(engine, start, end).correctness).toBe('correct')
+            expect(present(engine, run).isCurrent).toBe(true)
+            expect(present(engine, run).progress).toBe(0)
+            typeUnits(engine, seq, run.endUnit)
+            expect(present(engine, run).correctness).toBe('correct')
         }
     })
 })
@@ -307,18 +379,11 @@ describe('Only one grapheme is current at any caret position (current-character 
     it('က က က က: exactly one grapheme is current at each unit', () => {
         const { engine, seq } = makeEngine('က က က က', myanmar)
         const runs = graphemeUnitRuns(seq)
-        // Runs: က[0,1) space[1,2) က[2,3) space[3,4) က[4,5) space[5,6) က[6,7).
         const kaRuns = runs.filter((r) => r.text === 'က')
         expect(kaRuns).toHaveLength(4)
 
         for (const ka of kaRuns) {
-            // Drive the engine up to the start of this က (typing everything
-            // before it, including the separating spaces).
             typeUnits(engine, seq, ka.startUnit)
-
-            // Exactly one grapheme is current, and it is THIS က — never a
-            // neighbour (each က is an identical 1-unit grapheme, so selection
-            // must come from unit ranges, not from repeated text).
             const liveActive = runs.filter((g) => isCurrentGrapheme(engine.unitIndex, g.startUnit, g.endUnit))
             expect(liveActive, `caret ${engine.unitIndex}`).toHaveLength(1)
             expect(liveActive[0]).toEqual(ka)
@@ -338,24 +403,19 @@ describe('Caret movement: caret advances past completed graphemes immediately', 
         const space = runs[1]!
         const ka = runs[2]!
 
-        // Complete ရေ.
         typeUnits(engine, seq, rye.endUnit)
-        expect(viewState(engine, rye.startUnit, rye.endUnit).correctness).toBe('correct')
+        expect(present(engine, rye).correctness).toBe('correct')
 
-        // Space: current (progress 0), caret at composing start.
-        expect(viewState(engine, space.startUnit, space.endUnit).isCurrent).toBe(true)
-        expect(viewState(engine, space.startUnit, space.endUnit).progress).toBe(0)
+        expect(present(engine, space).isCurrent).toBe(true)
+        expect(present(engine, space).progress).toBe(0)
 
-        // Type the space.
         typeUnits(engine, seq, space.endUnit)
 
-        // က: current (progress 0), caret at composing start.
-        expect(viewState(engine, ka.startUnit, ka.endUnit).isCurrent).toBe(true)
-        expect(viewState(engine, ka.startUnit, ka.endUnit).progress).toBe(0)
+        expect(present(engine, ka).isCurrent).toBe(true)
+        expect(present(engine, ka).progress).toBe(0)
 
-        // Type က.
         typeUnits(engine, seq, ka.endUnit)
-        expect(viewState(engine, ka.startUnit, ka.endUnit).correctness).toBe('correct')
+        expect(present(engine, ka).correctness).toBe('correct')
         expect(engine.status).toBe('finished')
     })
 })
@@ -363,39 +423,35 @@ describe('Caret movement: caret advances past completed graphemes immediately', 
 // ---------------------------------------------------------------------------
 // Three states are independent: cursor progress, active highlight, correctness
 // ---------------------------------------------------------------------------
-// Regression: the highlight and cursor must track the caret in REAL TIME while
-// the green verdict alone waits for the complete grapheme. All three are
-// composed by graphemeViewState but never cross-gate: isCurrent + progress
-// update on every keystroke, correctness is decided only on full consumption.
 
 describe('STATE separation — cursor/highlight are real-time, only green waits', () => {
-    it('ရေ: cursor slides and highlight stays active while correctness stays pending', () => {
+    it('ရေ: cursor slides and per-unit slots tint while correctness stays pending', () => {
         const { engine, seq } = makeEngine('ရေ', myanmar)
-        const [start, end] = [0, seq.graphemeUnitRanges[0]![1]]
-        expect(end - start).toBe(2)
+        const run = graphemeUnitRuns(seq)[0]!
+        expect(run.endUnit - run.startUnit).toBe(2)
 
-        const v = () => viewState(engine, start, end)
+        const v = () => present(engine, run)
 
-        // Before any keystroke: caret at the leading boundary, grapheme active,
-        // composition pending (never green).
         expect(v().progress).toBe(0)
         expect(v().isCurrent).toBe(true)
-        expect(['correct', 'incorrect']).not.toContain(v().correctness)
+        expect(v().slots?.filter((s) => s.completed)).toHaveLength(0)
 
-        // First keystroke (ေ): the cursor advances to 50% of the cluster and the
-        // highlight is still on this grapheme — both instant. Green still waits.
+        // First keystroke (ေ): cursor advances to 50%, EXACTLY one slot greens,
+        // and the highlight is still on this grapheme. Green (whole) still waits.
         typeUnits(engine, seq, 1)
         expect(engine.unitIndex).toBe(1)
         expect(v().progress).toBe(0.5)
         expect(v().isCurrent).toBe(true)
-        expect(['correct', 'incorrect']).not.toContain(v().correctness)
-        expect(renderClass(v())).toBe('current')
+        expect(v().slots?.filter((s) => s.completed)).toHaveLength(1)
+        expect(v().slots?.filter((s) => s.completed)[0]!.text).toBe('ေ')
+        expect(v().correctness).toBe('pending')
 
-        // Second keystroke (ရ): grapheme completes → correct; caret passes it.
+        // Second keystroke (ရ): grapheme completes → green; caret passes it.
         typeUnits(engine, seq, 2)
         expect(v().progress).toBe(1)
         expect(v().isCurrent).toBe(false)
         expect(v().correctness).toBe('correct')
+        expect(v().slots).toBeNull()
     })
 
     it('ရေ က: highlight moves to the next logical grapheme the instant the current one completes', () => {
@@ -405,26 +461,21 @@ describe('STATE separation — cursor/highlight are real-time, only green waits'
         const space = runs[1]!
         const ka = runs[2]!
 
-        const activeOf = (r: { startUnit: number; endUnit: number }) =>
-            isCurrentGrapheme(engine.unitIndex, r.startUnit, r.endUnit)
+        const activeOf = (r: GraphemeRun) => isCurrentGrapheme(engine.unitIndex, r.startUnit, r.endUnit)
 
-        // Mid-composition of ရေ: only ရေ is highlighted, never the neighbour.
         typeUnits(engine, seq, 1)
         expect(activeOf(rye)).toBe(true)
         expect(activeOf(space)).toBe(false)
         expect(activeOf(ka)).toBe(false)
 
-        // The final unit completes ရေ → green AND the highlight immediately
-        // transitions to the following grapheme in the same instant.
         typeUnits(engine, seq, 2)
-        expect(viewState(engine, rye.startUnit, rye.endUnit).correctness).toBe('correct')
+        expect(present(engine, rye).correctness).toBe('correct')
         expect(activeOf(rye)).toBe(false)
         expect(activeOf(space)).toBe(true)
 
-        // Keep typing: the highlight lands on က — never on the finished word.
         typeUnits(engine, seq, 3)
         expect(activeOf(ka)).toBe(true)
-        expect(viewState(engine, space.startUnit, space.endUnit).correctness).toBe('correct')
+        expect(present(engine, space).correctness).toBe('correct')
     })
 
     it('မြန်မာ: progress advances every keystroke while pending graphemes stay at 0', () => {
@@ -440,11 +491,59 @@ describe('STATE separation — cursor/highlight are real-time, only green waits'
             expect(cursorProgressInCluster(engine.unitIndex, manya.startUnit, manya.endUnit)).toBeCloseTo(
                 i / manya.endUnit,
             )
-            // Unreached graphemes always report progress 0 — the caret is never
-            // "somewhere" inside a pending cluster.
             expect(cursorProgressInCluster(engine.unitIndex, space.startUnit, space.endUnit)).toBe(0)
             expect(cursorProgressInCluster(engine.unitIndex, ka.startUnit, ka.endUnit)).toBe(0)
-            expect(viewState(engine, manya.startUnit, manya.endUnit).correctness).toBe('pending')
+            expect(present(engine, manya).correctness).toBe('pending')
+        }
+    })
+})
+
+// ---------------------------------------------------------------------------
+// Current-grapheme highlight vs current-word: full-sequence regression walk
+// ---------------------------------------------------------------------------
+// `.tt-word-now` (the active background wash + ink) is applied ONLY to the
+// grapheme currently under the caret — `isCurrentGrapheme(unit, start, end)`,
+// which is exactly the predicate behind TargetText's `view.isCurrent` gate.
+// Pending characters of the SAME word and already-typed characters must NEVER
+// carry that active state (they render as tt-char-typed/tt-char-ok/tt-char-miss).
+// This walk drives a real engine through complete sequences and asserts the
+// invariant at every caret position, including spaces and mid-composition
+// positions inside multi-unit Myanmar clusters.
+
+describe('Current-grapheme highlight: exactly one active grapheme at every caret', () => {
+    const sequences: Array<{ text: string; layout: KeyboardLayout; label: string }> = [
+        { text: 'က က က က က', layout: myanmar, label: 'Case A — Myanmar repeated characters' },
+        { text: 'မြန်မာ စာ', layout: myanmar, label: 'Case B — Myanmar multi-grapheme word + word' },
+        { text: 'hello world', layout: englishQwerty, label: 'Case C — English two words' },
+    ]
+
+    it.each(sequences)('$label', ({ text, layout }) => {
+        const { engine, seq } = makeEngine(text, layout)
+        const runs = graphemeUnitRuns(seq)
+        const total = seq.units.length
+
+        for (let caret = 0; caret <= total; caret++) {
+            typeUnits(engine, seq, caret)
+            expect(engine.unitIndex).toBe(caret)
+
+            for (const g of runs) {
+                const active = isCurrentGrapheme(engine.unitIndex, g.startUnit, g.endUnit)
+                const typed = engine.unitIndex >= g.endUnit
+                const pending = engine.unitIndex < g.startUnit
+
+                // Typed → committed verdict; upcoming pending graphemes of the
+                // same word → untouched. Neither may carry the active highlight.
+                if (typed || pending) {
+                    expect(active, `${g.text} (typed=${typed}) @caret ${engine.unitIndex}`).toBe(false)
+                }
+            }
+
+            // In-flight carets (before the last unit) always have exactly ONE
+            // active grapheme — the one holding the caret.
+            if (caret < total) {
+                const currents = runs.filter((g) => isCurrentGrapheme(engine.unitIndex, g.startUnit, g.endUnit))
+                expect(currents, `caret ${engine.unitIndex}`).toHaveLength(1)
+            }
         }
     })
 })

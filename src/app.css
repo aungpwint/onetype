@@ -313,6 +313,16 @@
         white-space: pre;
     }
 
+    /* Per-unit coloring INSIDE a shaped grapheme: each slot span is box-less
+     (`display: contents`), so the same font still shapes the whole cluster as
+     one text run. Color/background changes never split a shaping run, so
+     consumed units can go green while the glyphs keep composing exactly as
+     the committed single span does — no stray marks, no width jumps. */
+    .tt-slot {
+        display: contents;
+        transition: color 120ms ease;
+    }
+
     .tt-char-now {
         position: relative;
         border-radius: 0.3rem;
@@ -478,9 +488,10 @@
         transition: left 50ms var(--ease-out);
     }
 
-    /* Whole-word emphasis: the upcoming part of the current word gets the same
-     soft wash + ink as the current cluster, so the learner tracks the word, not
-     just the letter (Monkeytype highlightMode = word). */
+    /* Active-grapheme emphasis: the soft wash + ink fall on the single grapheme
+     currently under the caret — never on the pending characters of the whole
+     word (Monkeytype highlightMode = word). Class applied only where
+     `isCurrentGrapheme(unit, start, end)` is true. */
     .tt-word-now {
         color: var(--typing-current-ink);
         background: var(--typing-current-wash);

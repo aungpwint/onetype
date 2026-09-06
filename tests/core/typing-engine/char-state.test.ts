@@ -1,45 +1,154 @@
 import { describe, expect, it } from 'vitest'
 
+import { logicalSlotsForCluster, type GraphemeSlot } from '@/core/typing-engine/sequence'
 import {
     cursorProgressInCluster,
-    flashIndexMatches,
-    graphemeCorrectness,
-    graphemeViewState,
+    graphemePresentation,
     isCurrentGrapheme,
     rangeHasIncorrect,
+    type GraphemeCorrectness,
+    type UnitOutcomeQuery,
 } from '@/core/typing-engine/char-state'
 
-describe('graphemeViewState (single canonical render state)', () => {
-    it('untouched graphemes → pending, not current, progress 0', () => {
-        // Caret before the grapheme's unit range [4,8).
-        expect(graphemeViewState(0, 4, 8, false)).toEqual({ isCurrent: false, progress: 0, correctness: 'pending' })
-        expect(graphemeViewState(3, 4, 8, false)).toEqual({ isCurrent: false, progress: 0, correctness: 'pending' })
+/** `ကျောင်း`'s logical code points map to press units [ေ,က,ျ,ာ,င,်,း]. */
+function slotsOf(logical: string, press: string): GraphemeSlot[] {
+    return logicalSlotsForCluster(logical, Array.from(press))
+}
+
+function queryOf(outcomes: Array<[number, boolean]>): UnitOutcomeQuery {
+    const map = new Map(outcomes)
+    return { unitOutcomeAt: (i: number) => (map.has(i) ? (map.get(i) ? 'correct' : 'incorrect') : null) }
+}
+
+const EMPTY = queryOf([])
+
+function slotStates(view: ReturnType<typeof graphemePresentation>): Array<{
+    text: string
+    outcome: GraphemeCorrectness
+    completed: boolean
+    isCurrent: boolean
+}> {
+    return (view.slots ?? []).map((s) => ({ text: s.text, outcome: s.outcome, completed: s.completed, isCurrent: s.isCurrent }))
+}
+
+/** `ရေ` — logical [ရ,ေ], press [ေ,ရ] → slot 0 (ရ)=unit 1, slot 1 (ေ)=unit 0. */
+const RYE = slotsOf('ရေ', 'ေရ')
+
+describe('logicalSlotsForCluster', () => {
+    it('maps each logical code point to the press unit that produces it', () => {
+        expect(RYE.map((s) => s.text)).toEqual(['ရ', 'ေ'])
+        expect(RYE.map((s) => s.unitLocal)).toEqual([1, 0]) // pre-base vowel typed first
     })
 
-    it('the grapheme under the caret is current with a real-time progress fraction', () => {
-        // 4-unit grapheme risen from unit 4 to unit 6 → 50% consumed.
-        expect(graphemeViewState(5, 4, 8, false)).toEqual({ isCurrent: true, progress: 0.25, correctness: 'pending' })
-        expect(graphemeViewState(6, 4, 8, false)).toEqual({ isCurrent: true, progress: 0.5, correctness: 'pending' })
-        // Even with an error already inside, mid-composition stays pending.
-        expect(graphemeViewState(6, 4, 8, true)).toEqual({ isCurrent: true, progress: 0.5, correctness: 'pending' })
+    it('is identity for press-order-equal clusters including repeated code points', () => {
+        const manya = slotsOf('မြန်မာ', 'မြန်မာ')
+        expect(manya.map((s) => s.text)).toEqual(['မ', 'ြ', 'န', '်', 'မ', 'ာ'])
+        // The second မ belongs to unit 4 (press order), not the first.
+        expect(manya.map((s) => s.unitLocal)).toEqual([0, 1, 2, 3, 4, 5])
     })
 
-    it('fully consumed graphemes flip to a committed verdict', () => {
-        expect(graphemeViewState(8, 4, 8, false)).toEqual({ isCurrent: false, progress: 1, correctness: 'correct' })
-        expect(graphemeViewState(9, 4, 8, true)).toEqual({ isCurrent: false, progress: 1, correctness: 'incorrect' })
+    it('attributes stacked clusters in logical order', () => {
+        const logical = Array.from('မင်္ဂ')
+        const slots = slotsOf('မင်္ဂ', 'မင်္ဂ')
+        expect(slots.map((s) => s.text)).toEqual(logical)
+        // The kinzi stack's press order matches its logical order 1:1.
+        expect(slots.map((s) => s.unitLocal)).toEqual(logical.map((_, i) => i))
+    })
+
+    it('single-unit graphemes (English/space) map to a single slot', () => {
+        expect(slotsOf('h', 'h')).toEqual([{ text: 'h', unitLocal: 0 }])
+        expect(slotsOf(' ', ' ')).toEqual([{ text: ' ', unitLocal: 0 }])
+    })
+})
+
+describe('graphemePresentation (canonical per-unit render state)', () => {
+    it('untouched graphemes → pending, not current, no unit slots', () => {
+        expect(graphemePresentation(0, 4, RYE, EMPTY)).toEqual({ isCurrent: false, progress: 0, correctness: 'pending', slots: null })
+        expect(graphemePresentation(3, 4, RYE, EMPTY)).toEqual({ isCurrent: false, progress: 0, correctness: 'pending', slots: null })
+    })
+
+    it('the grapheme under the caret is current with per-unit slots in logical order', () => {
+        // Caret at unit 4 == start of ရေ: nothing consumed yet. The current
+        // (active) slot is the unit about to be typed — ေ, whose keystroke
+        // press comes first even though it renders after ရ.
+        const fresh = graphemePresentation(4, 4, RYE, EMPTY)
+        expect(fresh.isCurrent).toBe(true)
+        expect(fresh.progress).toBe(0)
+        expect(fresh.correctness).toBe('pending')
+        expect(slotStates(fresh)).toEqual([
+            { text: 'ရ', outcome: 'pending', completed: false, isCurrent: false },
+            { text: 'ေ', outcome: 'pending', completed: false, isCurrent: true },
+        ])
+    })
+
+    it('typing the FIRST unit makes only its own slot green — never the whole grapheme', () => {
+        // The learner pressed unit 4 = ေ (logical slot 1). Logical slot 0 (ရ)
+        // is still the upcoming/current target.
+        const view = graphemePresentation(5, 4, RYE, queryOf([[4, true]]))
+        expect(view.isCurrent).toBe(true)
+        expect(view.progress).toBe(0.5)
+        expect(view.correctness).toBe('pending')
+        expect(slotStates(view)).toEqual([
+            { text: 'ရ', outcome: 'pending', completed: false, isCurrent: true },
+            { text: 'ေ', outcome: 'correct', completed: true, isCurrent: false },
+        ])
+    })
+
+    it('a wrong press at the first unit marks exactly that unit incorrect with the caret stuck', () => {
+        const view = graphemePresentation(4, 4, RYE, queryOf([[4, false]]))
+        expect(view.isCurrent).toBe(true)
+        expect(view.correctness).toBe('pending')
+        expect(slotStates(view)).toEqual([
+            { text: 'ရ', outcome: 'pending', completed: false, isCurrent: false },
+            { text: 'ေ', outcome: 'incorrect', completed: false, isCurrent: true },
+        ])
+    })
+
+    it('fully consumed graphemes flip to a committed verdict and drop the slot view', () => {
+        const ok = graphemePresentation(6, 4, RYE, queryOf([[4, true], [5, true]]))
+        expect(ok).toEqual({ isCurrent: false, progress: 1, correctness: 'correct', slots: null })
+        const bad = graphemePresentation(6, 4, RYE, queryOf([[4, true], [5, false]]))
+        expect(bad.correctness).toBe('incorrect')
+        expect(bad.slots).toBeNull()
+    })
+
+    it('composing with an earlier error keeps later slots pending and the verdict pending', () => {
+        // Unit 4 (ေ) correct, unit 5 (ရ) attempted wrong → unit 5 stays current.
+        const view = graphemePresentation(5, 4, RYE, queryOf([[4, true], [5, false]]))
+        expect(view.correctness).toBe('pending')
+        expect(slotStates(view)).toEqual([
+            { text: 'ရ', outcome: 'incorrect', completed: false, isCurrent: true },
+            { text: 'ေ', outcome: 'correct', completed: true, isCurrent: false },
+        ])
     })
 
     it('returns stable constant references for non-current chars (memo bailout)', () => {
-        expect(graphemeViewState(0, 4, 8, false)).toBe(graphemeViewState(1, 4, 8, false))
-        expect(graphemeViewState(8, 4, 8, false)).toBe(graphemeViewState(9, 4, 8, false))
-        expect(graphemeViewState(8, 4, 8, true)).toBe(graphemeViewState(9, 4, 8, true))
-        // The active grapheme is always a fresh object (progress is changing).
-        expect(graphemeViewState(5, 4, 8, false)).not.toBe(graphemeViewState(6, 4, 8, false))
+        expect(graphemePresentation(0, 4, RYE, EMPTY)).toBe(graphemePresentation(1, 4, RYE, EMPTY))
+        expect(graphemePresentation(6, 4, RYE, EMPTY)).toBe(graphemePresentation(7, 4, RYE, EMPTY))
+        expect(graphemePresentation(6, 4, RYE, queryOf([[4, false]]))).toBe(graphemePresentation(7, 4, RYE, queryOf([[4, false]])))
+    })
+
+    it('returns the SAME object for the active grapheme while content is unchanged', () => {
+        // React's useSyncExternalStore bails out only when the selector's
+        // snapshot keeps its reference across unrelated store notifications —
+        // the fresh `slots` array would otherwise defeat zustand's shallow
+        // compare and trigger "Maximum update depth exceeded".
+        const state = queryOf([[4, true], [5, false]])
+        const a = graphemePresentation(5, 4, RYE, state)
+        const b = graphemePresentation(5, 4, RYE, state)
+        expect(a).toBe(b)
+        expect(a.slots).toBe(b.slots)
+        expect(a.slots![0]).toBe(b.slots![0])
+        // A different positional outcome – even the same caret – rebuilds.
+        const other = queryOf([[4, true], [5, true]])
+        expect(graphemePresentation(5, 4, RYE, other)).not.toBe(a)
+        // A different caret (same outcomes) is a different snapshot.
+        expect(graphemePresentation(6, 4, RYE, state)).not.toBe(a)
     })
 
     it('handles zero-span clusters without dividing by zero', () => {
-        expect(graphemeViewState(5, 5, 5, false)).toEqual({ isCurrent: false, progress: 1, correctness: 'correct' })
-        expect(graphemeViewState(6, 5, 5, false)).toEqual({ isCurrent: false, progress: 1, correctness: 'correct' })
+        expect(graphemePresentation(5, 5, [], EMPTY).correctness).toBe('correct')
+        expect(graphemePresentation(6, 5, [], EMPTY).correctness).toBe('correct')
     })
 })
 
@@ -67,80 +176,35 @@ describe('cursorProgressInCluster (STATE 1 — input/cursor progress)', () => {
     })
 })
 
-describe('flashIndexMatches', () => {
-    it('matches only the cluster containing the wrong unit', () => {
-        expect(flashIndexMatches(5, 4, 8)).toBe(true)
-        expect(flashIndexMatches(4, 4, 8)).toBe(true)
-        expect(flashIndexMatches(8, 4, 8)).toBe(false)
-        expect(flashIndexMatches(undefined, 4, 8)).toBe(false)
-    })
-})
-
 describe('rangeHasIncorrect', () => {
-    const outcomes = new Map<number, boolean>([
+    const outcomes = queryOf([
         [4, false],
         [5, true],
-        [6, true],
     ])
-    const query = { unitOutcomeAt: (i: number) => (outcomes.has(i) ? (outcomes.get(i) ? 'correct' : 'incorrect') : null) }
 
     it('detects any incorrect unit across the range', () => {
-        expect(rangeHasIncorrect(query, 4, 8)).toBe(true)
-        expect(rangeHasIncorrect(query, 0, 4)).toBe(false)
-        expect(rangeHasIncorrect(query, 4, 5)).toBe(true)
+        expect(rangeHasIncorrect(outcomes, 4, 8)).toBe(true)
+        expect(rangeHasIncorrect(outcomes, 0, 4)).toBe(false)
+        expect(rangeHasIncorrect(outcomes, 4, 5)).toBe(true)
     })
 
     it('ignores unanswered units', () => {
-        expect(rangeHasIncorrect(query, 7, 9)).toBe(false)
-    })
-})
-
-describe('graphemeCorrectness (core rule: keyboard input progress ≠ grapheme correctness)', () => {
-    it('stays pending while the caret is inside the grapheme (not yet fully consumed)', () => {
-        // A 2-unit Myanmar grapheme like ရေ [0,2). After typing only the first
-        // unit (pre-base vowel ေ, reordered by the keyboard), the grapheme is
-        // mid-composition and must remain pending — never green.
-        expect(graphemeCorrectness(0, 2, false)).toBe('pending')
-        expect(graphemeCorrectness(1, 2, false)).toBe('pending')
-    })
-
-    it('becomes correct ONLY after the fully consumed grapheme was typed correctly', () => {
-        expect(graphemeCorrectness(2, 2, false)).toBe('correct')
-        expect(graphemeCorrectness(6, 6, false)).toBe('correct')
-    })
-
-    it('becomes incorrect only once fully consumed and an error was typed inside', () => {
-        expect(graphemeCorrectness(2, 2, true)).toBe('incorrect')
-        // Mid-composition errors are not yet a final verdict: stay pending.
-        expect(graphemeCorrectness(1, 2, true)).toBe('pending')
-    })
-
-    it('English single-unit characters turn correct one keypress later (unchanged feel)', () => {
-        // 'h' [0,1): before typing it is pending; after typing (unit 1) it is
-        // correct — same as the existing character-by-character behavior.
-        expect(graphemeCorrectness(0, 1, false)).toBe('pending')
-        expect(graphemeCorrectness(1, 1, false)).toBe('correct')
-        expect(graphemeCorrectness(1, 1, true)).toBe('incorrect')
+        expect(rangeHasIncorrect(outcomes, 7, 9)).toBe(false)
     })
 })
 
 describe('isCurrentGrapheme (active grapheme ≠ whole word)', () => {
     it('is true only while the caret unit is inside the grapheme range', () => {
-        // A 2-unit grapheme (e.g. a 2-keystroke Myanmar syllable).
         expect(isCurrentGrapheme(4, 4, 6)).toBe(true)
         expect(isCurrentGrapheme(5, 4, 6)).toBe(true)
-        // Before it starts and after it ends → NOT current.
         expect(isCurrentGrapheme(3, 4, 6)).toBe(false)
         expect(isCurrentGrapheme(6, 4, 6)).toBe(false)
     })
 
     it('still flags a single-unit (English) character as current, never its neighbours', () => {
-        // 3 repeated English characters, each a 1-unit grapheme:
-        // units 0..3 → "a a a" each [i, i+1).
-        expect(isCurrentGrapheme(0, 0, 1)).toBe(true) // first 'a' being typed
-        expect(isCurrentGrapheme(1, 1, 2)).toBe(true) // second 'a' being typed
-        expect(isCurrentGrapheme(2, 2, 3)).toBe(true) // third 'a' being typed
-        // Only the one under the caret is current; neighbours are not.
+        expect(isCurrentGrapheme(0, 0, 1)).toBe(true)
+        expect(isCurrentGrapheme(1, 1, 2)).toBe(true)
+        expect(isCurrentGrapheme(2, 2, 3)).toBe(true)
         expect(isCurrentGrapheme(0, 1, 2)).toBe(false)
         expect(isCurrentGrapheme(1, 0, 1)).toBe(false)
     })
@@ -150,10 +214,25 @@ describe('isCurrentGrapheme (active grapheme ≠ whole word)', () => {
     })
 })
 
+describe('English single-unit characters keep one-slot behavior (unchanged feel)', () => {
+    const H = slotsOf('h', 'h')
+
+    it('current while composing, green one keypress later', () => {
+        const fresh = graphemePresentation(0, 0, H, EMPTY)
+        expect(fresh.isCurrent).toBe(true)
+        expect(fresh.correctness).toBe('pending')
+        expect(slotStates(fresh)).toEqual([{ text: 'h', outcome: 'pending', completed: false, isCurrent: true }])
+
+        const done = graphemePresentation(1, 0, H, queryOf([[0, true]]))
+        expect(done.correctness).toBe('correct')
+        expect(done.isCurrent).toBe(false)
+        // One wrong press keeps the unit red until corrected.
+        const wrong = graphemePresentation(0, 0, H, queryOf([[0, false]]))
+        expect(slotStates(wrong)).toEqual([{ text: 'h', outcome: 'incorrect', completed: false, isCurrent: true }])
+    })
+})
+
 describe('repeated graphemes keep per-grapheme isolation (က က က က)', () => {
-    // "က က က က" — four identical 1-unit Myanmar graphemes separated by spaces.
-    // Each grapheme has a distinct [startUnit, endUnit), so the active highlight
-    // must never bleed across identical neighbours.
     const graphemes = [
         { start: 0, end: 1, label: 'first က' },
         { start: 2, end: 3, label: 'second က' },

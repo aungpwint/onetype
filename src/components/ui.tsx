@@ -190,7 +190,19 @@ export function Stat({ label, value, hint, icon }: { label: string; value: React
     )
 }
 
-export function Field({ label, children, hint, className, id }: { label: string; children: ReactNode; hint?: string; className?: string; id?: string }) {
+export function Field({
+    label,
+    children,
+    hint,
+    className,
+    id,
+}: {
+    label: string
+    children: ReactNode
+    hint?: string
+    className?: string
+    id?: string
+}) {
     return (
         <label id={id} className={cn('block', className)}>
             <span className="mb-1.5 block text-sm font-medium text-muted-foreground">{label}</span>

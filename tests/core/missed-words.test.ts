@@ -95,9 +95,13 @@ describe('extractMissedWords', () => {
         const engine = new TypingEngine({ sequence: seq, layout: englishQwerty })
         typePrefix(engine, 'cat ')
         engine.processKey('KeyX', 'none') // wrong "d"
-        engine.processKey('Backspace', 'none') // rewinds the last consumed unit (the space)
-        engine.processKey('Space', 'none') // re-type the space
-        engine.processKey('KeyD', 'none') // correct "d" clears the stray wrong mark
+        // Backspace erases the wrong attempt on the CURRENT unit (unit-granular):
+        // the caret stays on "d", clearing the stray incorrect outcome.
+        expect(engine.unitIndex).toBe(4)
+        engine.processKey('Backspace', 'none')
+        expect(engine.unitIndex).toBe(4)
+        expect(engine.unitOutcomeAt(4)).toBeNull()
+        engine.processKey('KeyD', 'none') // correct "d" — no wrong mark remains
         engine.processKey('KeyO', 'none')
         engine.processKey('KeyG', 'none')
         engine.processKey('Space', 'none')

@@ -1,6 +1,6 @@
 import type { Modifier, TypingMode } from '@/types'
 import { KeyboardLayout } from '@/core/keyboard-layout/layout'
-import { BuiltSequence, TypingUnit, clusterStartForUnit, keyboardOrderForCluster } from './sequence'
+import { BuiltSequence, TypingUnit, keyboardOrderForCluster } from './sequence'
 import { computeScore, ScoreMetrics } from '@/core/scoring/score'
 import { Stopwatch } from '@/core/timing/stopwatch'
 import { ClusterDiagnosis, diagnoseClusterComparison } from '@/core/unicode/comparison'
@@ -191,19 +191,16 @@ export class TypingEngine {
 
         if (code === 'Backspace') {
             this.backspaceCount += 1
-            // Backspace is cluster-aware: it steps back to the start of the previous
-            // grapheme/syllable cluster (not a single combining mark). For English
-            // this is one unit; for Myanmar it removes a whole syllable cluster,
-            // which is how the learner perceives the character.
-            if (this.unitIndex > 0) {
-                const newIndex = clusterStartForUnit(this.sequence, this.unitIndex)
-                for (let i = newIndex; i < this.unitIndex; i++) {
-                    this.unitOutcomes.delete(i)
-                }
-                this.clearClusterStateFromUnit(newIndex)
-                this.unitIndex = newIndex
-                // If we just uncovered an error, a stray backspace should not be
-                // recorded as a new error — it is a correction gesture.
+            // Backspace is unit-granular: it reverses exactly ONE typing unit —
+            // the current unit when it holds a (recoverable) wrong attempt,
+            // otherwise the last consumed unit. A multi-unit Myanmar grapheme
+            // therefore unwinds unit-by-unit: its consumed slots flip back to
+            // current/pending immediately and no stale outcome is left behind.
+            if (this.unitIndex > 0 || this.unitOutcomes.has(this.unitIndex)) {
+                const target = this.unitOutcomes.has(this.unitIndex) ? this.unitIndex : this.unitIndex - 1
+                this.unitOutcomes.delete(target)
+                this.clearClusterStateFromUnit(target)
+                this.unitIndex = target
             }
             this.emit({ type: 'backspace', unitIndex: this.unitIndex, expected })
             return this.lastEvent
@@ -318,12 +315,14 @@ export class TypingEngine {
         }
     }
 
-    /** Drop per-cluster diagnosis/chars for every grapheme from a unit onward. */
+    /** Drop per-cluster diagnosis/chars for every grapheme containing or after
+        a rewritten unit. A partially rewound grapheme must not keep a stale
+        diagnosis or old press run (the unit's erased press is gone for good). */
     private clearClusterStateFromUnit(fromUnit: number) {
         const ranges = this.sequence.graphemeUnitRanges
         for (let gi = 0; gi < ranges.length; gi++) {
-            const [start] = ranges[gi]
-            if (start >= fromUnit) {
+            const [, end] = ranges[gi]
+            if (end > fromUnit) {
                 this.clusterDiagnoses.delete(gi)
                 this.clusterTypedChars.delete(gi)
             }

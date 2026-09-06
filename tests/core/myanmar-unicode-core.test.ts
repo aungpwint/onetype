@@ -1,9 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
-import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
 import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { TypingEngine } from '@/core/typing-engine/engine'
-import { buildSequence, clusterStartForUnit, keyboardOrderForCluster } from '@/core/typing-engine/sequence'
+import { buildSequence, keyboardOrderForCluster } from '@/core/typing-engine/sequence'
 import { splitGraphemes } from '@/core/unicode/graphemes'
 import {
     classifyMyanmarCharacter,
@@ -236,22 +235,24 @@ describe('canonical lesson-target invariants (mission matrix)', () => {
     })
 })
 
-describe('Backspace is cluster-aware (guided engine)', () => {
-    it('removes the whole pre-base syllable ရေ with one Backspace', () => {
+describe('Backspace steps back one unit (guided engine)', () => {
+    it('steps back one typing unit from a partial pre-base syllable ရေ', () => {
         const seq = buildSequence('ရေ', myanmar)
         expect(seq.graphemes).toHaveLength(1)
         const engine = new TypingEngine({ sequence: seq, layout: myanmar })
-        // Type only the first key: the engine must stay running so Backspace
-        // is processed (a finished run ignores stray keys).
+        // Type only the first key (ေ, the pre-base vowel): stays running so
+        // Backspace is processed.
         engine.processKey(seq.units[0]!.keyCode, seq.units[0]!.modifier)
         expect(engine.unitIndex).toBe(1)
         engine.processKey('Backspace', 'none')
-        expect(engine.unitIndex, 'backspace steps to the cluster start').toBe(clusterStartForUnit(seq, 1))
+        // Exactly one unit rewinds (for a single-unit-cluster-ago position this
+        // lands at the same value, but the outcome is cleared, never stale).
         expect(engine.unitIndex).toBe(0)
+        expect(engine.unitOutcomeAt(0)).toBeNull()
         expect(engine.backspaceCount).toBe(1)
     })
 
-    it('removes exactly one final cluster (not one combining mark) from a multi-syllable line', () => {
+    it('removes exactly one unit (not the whole cluster) from a multi-syllable line', () => {
         const word = 'ရေ ဆန်'
         const seq = buildSequence(word, myanmar)
         const engine = new TypingEngine({ sequence: seq, layout: myanmar })
@@ -260,13 +261,18 @@ describe('Backspace is cluster-aware (guided engine)', () => {
             const unit = seq.units[i]!
             engine.processKey(unit.keyCode, unit.modifier)
         }
-        const startOfLastCluster = clusterStartForUnit(seq, seq.units.length - 1)
+        expect(engine.unitIndex).toBe(seq.units.length - 1)
+        // The final cluster "ဆန်" occupies units [3,6) — a Backspace must land
+        // at unit 4 (inside the cluster), proving single-unit granularity.
+        const startOfLastCluster = 3
         expect(startOfLastCluster).toBeGreaterThan(0)
         expect(startOfLastCluster).toBeLessThan(seq.units.length)
         engine.processKey('Backspace', 'none')
-        expect(engine.unitIndex).toBe(startOfLastCluster)
-        // The engine must REPEAT the cluster's keys to finish; unit indices were cleared.
-        for (let i = startOfLastCluster; i < seq.units.length; i++) {
+        // Unit-granular: removes the last keystroke only — the caret lands
+        // INSIDE the final cluster, not back at its start.
+        expect(engine.unitIndex).toBe(seq.units.length - 2)
+        // The engine must REPEAT the final two units to finish.
+        for (let i = seq.units.length - 2; i < seq.units.length; i++) {
             const unit = seq.units[i]!
             engine.processKey(unit.keyCode, unit.modifier)
         }
@@ -274,7 +280,7 @@ describe('Backspace is cluster-aware (guided engine)', () => {
         expect(engine.incorrectCount).toBe(0)
     })
 
-    it('steps backward deterministically one cluster per Backspace until 0', () => {
+    it('steps backward deterministically one unit per Backspace until 0', () => {
         const word = 'ရေ ဆန်'
         const seq = buildSequence(word, myanmar)
         const engine = new TypingEngine({ sequence: seq, layout: myanmar })
@@ -282,17 +288,15 @@ describe('Backspace is cluster-aware (guided engine)', () => {
             const unit = seq.units[i]!
             engine.processKey(unit.keyCode, unit.modifier)
         }
-        const before = engine.unitIndex
-        expect(before).toBe(seq.units.length - 1)
+        expect(engine.unitIndex).toBe(seq.units.length - 1)
         const visited: number[] = []
         for (let i = 0; i < seq.units.length; i++) {
             engine.processKey('Backspace', 'none')
             visited.push(engine.unitIndex)
         }
-        expect(visited[0]!, 'first backspace removes one whole final cluster').toBe(clusterStartForUnit(seq, seq.units.length - 1))
         expect(
-            visited.every((v, i) => i === 0 || v <= visited[i - 1]!),
-            'never moves forward',
+            visited.every((v, i) => i === 0 || v === visited[i - 1]! - 1 || visited[i - 1] === 0),
+            'each backspace moves back exactly one unit then stays',
         ).toBe(true)
         expect(visited[visited.length - 1]!, 'exhaustive backspace reaches the start').toBe(0)
     })
@@ -552,25 +556,6 @@ describe('Myanmar sequence cluster boundaries', () => {
             [2, 3],
             [3, 6],
         ])
-    })
-
-    it('clusterStartForUnit returns the start of the owning cluster', () => {
-        const seq = buildSequence('\u1000\u102C \u101E\u102F\u1036', myanmar)
-        // Mid-way through "သုံ" (start unit 3), the preceding cluster starts at 3.
-        expect(clusterStartForUnit(seq, 5)).toBe(3)
-        // Before the second cluster's final unit.
-        expect(clusterStartForUnit(seq, 4)).toBe(3)
-        // For the first cluster.
-        expect(clusterStartForUnit(seq, 2)).toBe(0)
-        expect(clusterStartForUnit(seq, 1)).toBe(0)
-        expect(clusterStartForUnit(seq, 0)).toBe(0)
-    })
-
-    it('clusterStartForUnit is a no-op stepping one unit for English', () => {
-        const seq = buildSequence('fj', englishQwerty)
-        for (let i = 1; i <= 2; i++) {
-            expect(clusterStartForUnit(seq, i)).toBe(i - 1)
-        }
     })
 })
 

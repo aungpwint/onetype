@@ -5,8 +5,10 @@ import { useTypingStore } from '@/stores/typing-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { cn } from '@/lib/utils'
 import { containsMyanmar } from '@/core/unicode/myanmar'
-import { graphemeUnitRuns, type GraphemeRun } from '@/core/typing-engine/sequence'
-import { graphemeCorrectness, graphemeViewState, flashIndexMatches, rangeHasIncorrect } from '@/core/typing-engine/char-state'
+import { graphemeUnitRuns, type GraphemeRun, type GraphemeSlot } from '@/core/typing-engine/sequence'
+import { graphemePresentation, rangeHasIncorrect, type UnitOutcomeQuery } from '@/core/typing-engine/char-state'
+
+const NO_OUTCOMES: UnitOutcomeQuery = { unitOutcomeAt: () => null }
 
 const CARET_ANCHOR = 0.45
 const CONTENT_INSET = 24
@@ -237,13 +239,14 @@ const TextContent = memo(function TextContent({
     return (
         <>
             {runs.map((g, i) => (
-                <Char
-                    key={g.index}
-                    text={g.text}
-                    graphemeIndex={g.index}
-                    startUnit={g.startUnit}
-                    endUnit={g.endUnit}
-                    wordStart={wordStart[i]}
+<Char
+                        key={g.index}
+                        text={g.text}
+                        graphemeIndex={g.index}
+                        startUnit={g.startUnit}
+                        endUnit={g.endUnit}
+                        slots={g.slots}
+                        wordStart={wordStart[i]}
                     wordEnd={wordEnd[i]}
                     onCaret={onCaret}
                     focused={focused}
@@ -265,6 +268,7 @@ interface CharProps {
     graphemeIndex: number
     startUnit: number
     endUnit: number
+    slots: GraphemeSlot[]
     wordStart: number
     wordEnd: number
     onCaret: (el: HTMLSpanElement | null) => void
@@ -283,6 +287,7 @@ const Char = memo(function Char({
     graphemeIndex,
     startUnit,
     endUnit,
+    slots,
     wordStart,
     wordEnd,
     onCaret,
@@ -297,18 +302,21 @@ const Char = memo(function Char({
 }: CharProps) {
     const view = useTypingStore(
         useShallow((s) => {
-            const unit = s.engine?.unitIndex ?? 0
-            const incorrect = s.engine !== null && rangeHasIncorrect(s.engine, startUnit, endUnit)
-            return graphemeViewState(unit, startUnit, endUnit, incorrect)
+            const engine = s.engine
+            return graphemePresentation(engine?.unitIndex ?? 0, startUnit, slots, engine ?? NO_OUTCOMES)
         }),
     )
-    const flashing = useTypingStore((s) => flashIndexMatches(s.wrongFlash?.unitIndex, startUnit, endUnit))
+    // Error flash is transient and unit-exact: it lands on whichever grapheme is
+    // current when the flash fires (already handled by the store's unitIndex).
+    const flashing = useTypingStore((s) => s.wrongFlash !== null && s.wrongFlash.unitIndex === (s.engine?.unitIndex ?? 0))
 
     const slipKind = useTypingStore((s) => {
-        const unit = s.engine?.unitIndex ?? 0
-        const incorrect = s.engine !== null && rangeHasIncorrect(s.engine, startUnit, endUnit)
-        if (graphemeCorrectness(unit, endUnit, incorrect) !== 'incorrect' || !s.engine) return null
-        const d = s.engine.clusterDiagnosisFor(graphemeIndex)
+        const engine = s.engine
+        if (!engine) return null
+        // Committed slips only: a partial/composing grapheme has no verdict.
+        if (engine.unitIndex < endUnit) return null
+        if (!rangeHasIncorrect(engine, startUnit, endUnit)) return null
+        const d = engine.clusterDiagnosisFor(graphemeIndex)
         return d ? d.kind : null
     })
 
@@ -317,6 +325,10 @@ const Char = memo(function Char({
         if (unit >= endUnit) return false
         return unit >= wordStart && unit < wordEnd
     })
+
+    // The caret unit answers wrong while composing → its slot reads red
+    // (persistent) until the learner re-types it correctly (resolved at slot
+    // level from `view.slots`, no extra selector needed).
 
     const pending = view.correctness === 'pending' && !view.isCurrent
     const hideBlind = blindMode === 'on' && pending
@@ -345,26 +357,64 @@ const Char = memo(function Char({
                 : null
 
     if (view.isCurrent) {
-        const isCaretAnchoredBar = caretClass !== 'tt-caret--block' && caretClass !== 'tt-caret--underline'
+        // Per-unit ink INSIDE the shaped run: each slot is a box-less span
+        // (`display: contents`) so Chromium still shapes the whole grapheme as
+        // ONE text run — no stray/doubled marks, no glyph-width jumps — while
+        // the color per slot follows its typing unit. Consumed units go green
+        // exactly when their key is pressed; the current unit inherits the
+        // composing ink (soft wash on the wrapper box); errors flash the
+        // wrapper and keep the offending slot red until re-typed.
+        const activeInk = highlightMode === 'word' || highlightMode === 'letter' ? 'tt-char-focus' : null
+        const spanCount = Math.max(1, endUnit - startUnit)
+        const slotWidth = `${100 / spanCount}%`
+        const barAnchored = caretClass !== 'tt-caret--block' && caretClass !== 'tt-caret--underline'
         return (
             <span
                 ref={onCaret}
                 data-pace-char={isPaceChar ? '' : undefined}
                 className={cn(
                     'tt-char tt-char-now char-pop',
+                    activeInk,
+                    flashing ? 'tt-char-flash' : null,
                     font,
-                    flashing ? 'tt-char-flash' : highlightMode === 'none' ? null : 'tt-char-focus',
-                    highlightMode === 'word' ? 'tt-word-now' : null,
                     focused ? '' : 'tt-char-dim',
                     hidden ?? undefined,
                 )}
             >
-                {text}
+                {(view.slots ?? []).map((slot) => {
+                    const slotClass = slot.isCurrent
+                        ? slot.outcome === 'incorrect'
+                          ? missClass
+                          : highlightMode === 'word'
+                            ? 'tt-word-now'
+                            : highlightMode === 'none'
+                              ? null
+                              : 'tt-char-focus'
+                        : slot.completed
+                          ? slot.outcome === 'incorrect'
+                              ? missClass
+                              : 'tt-char-ok'
+                          : 'tt-char-typed'
+                    return (
+                        <span key={slot.slot} className={cn('tt-slot', slotClass)}>
+                            {slot.text}
+                        </span>
+                    )
+                })}
                 {focused ? (
                     <span
                         aria-hidden
                         className={cn('tt-caret z-10', caretClass, smoothClass)}
-                        style={isCaretAnchoredBar ? { left: `clamp(0px, ${view.progress * 100}%, calc(100% - var(--tt-caret-w)))` } : undefined}
+                        style={
+                            barAnchored
+                                ? {
+                                      left: `clamp(0px, ${view.progress * 100}%, calc(100% - var(--tt-caret-w)))`,
+                                  }
+                                : {
+                                      left: `clamp(0px, ${view.progress * 100}%, calc(100% - ${slotWidth}))`,
+                                      width: slotWidth,
+                                  }
+                        }
                     />
                 ) : null}
             </span>
