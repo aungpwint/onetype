@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { previewWeaknessDrill, drillGoalLabel } from '@/core/reinforcement/preview'
+import { keyIdLabel } from '@/core/reinforcement/service'
 
 const WEAK = [
     { key: 'KeyA:none', accuracy: 60 },
@@ -33,5 +34,18 @@ describe('previewWeaknessDrill', () => {
         expect(drillGoalLabel('finger-isolation')).toBe('Finger isolation')
         expect(drillGoalLabel('repetition')).toBe('Repetition')
         expect(drillGoalLabel('unknown' as never)).toBe('Strength')
+    })
+})
+
+describe('keyIdLabel', () => {
+    it('resolves a plain key id to its character', () => {
+        expect(keyIdLabel('KeyA:none')).toBe('a')
+        expect(keyIdLabel('KeyA:shift')).toBe('A')
+        expect(keyIdLabel('Space:none')).toBe(' ')
+    })
+
+    it('falls back to the raw id when unresolvable', () => {
+        expect(keyIdLabel('foo:bar')).toBe('foo:bar')
+        expect(keyIdLabel('')).toBe('')
     })
 })

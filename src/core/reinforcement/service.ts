@@ -22,6 +22,11 @@ export function keyIdToChar(id: string, layout: KeyboardLayout = englishQwerty):
     return layout.outputFor(code, modifier)?.text
 }
 
+/** Human-readable label for a weak key id: its character when resolvable, else the raw id. */
+export function keyIdLabel(id: string, layout: KeyboardLayout = englishQwerty): string {
+    return keyIdToChar(id, layout) ?? id
+}
+
 export function focusCharsFromWeakKeys(
     weakKeys: WeakKeyId[],
     opts: Pick<ReinforcementOptions, 'maxKeys'> = {},

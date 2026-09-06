@@ -14,6 +14,7 @@ import { formatDateTime, formatLessonLabel, formatWpm, formatAccuracy, pct, best
 import { cn, cardClass, appPageClass, eyebrowClass, sectionTitleClass, chipClass } from '@/lib/utils'
 import { summarizePerformance, type SessionPoint } from '@/core/analytics'
 import { previewWeaknessDrill, drillGoalLabel } from '@/core/reinforcement/preview'
+import { keyIdLabel } from '@/core/reinforcement/service'
 
 type Range = 'week' | 'month' | 'all'
 
@@ -286,7 +287,7 @@ export default function ProgressPage() {
                         <ul className="mt-3 space-y-2">
                             {detail.weakKeys.slice(0, 6).map((k) => (
                                 <li key={k.key} className="flex items-center justify-between text-sm">
-                                    <span className="rounded border border-border bg-muted px-2 py-0.5 font-myanmar">{k.key}</span>
+                                    <span className="rounded border border-border bg-muted px-2 py-0.5 font-myanmar">{keyIdLabel(k.key)}</span>
                                     <span className="text-muted-foreground tabular-nums">
                                         {k.attempts} tries · {k.accuracy.toFixed(0)}%
                                     </span>

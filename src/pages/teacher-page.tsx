@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { GraduationCap, Users, Clock, Target, Gauge, Trophy, FileText } from 'lucide-react'
+import { GraduationCap, Users, Clock, Target, Gauge, Trophy, FileText, Fingerprint } from 'lucide-react'
 import * as backend from '@/services/backend'
 import type { StudentDetail, TeacherOverview, TypingTest } from '@/services/types'
 import type { LeaderboardEntry } from '@/core/leaderboard/ranking'
 import { buildTestRecord } from '@/core/tests/record'
+import { keyIdLabel } from '@/core/reinforcement/service'
 import { Stat, Spinner, PageHeader } from '@/components/ui'
 import { Progress } from '@/components/ui/progress'
 import { formatDateTime, formatWpm, formatAccuracy, pct } from '@/lib/format'
@@ -282,6 +283,26 @@ export default function TeacherPage() {
                             </div>
                         )
                     })()}
+
+                    {detail.weakKeys.length > 0 ? (
+                        <div className="mt-5">
+                            <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
+                                <Fingerprint className="size-3.5" />
+                                Weakest keys
+                            </p>
+                            <div className="mt-2 flex flex-wrap gap-1.5">
+                                {detail.weakKeys.slice(0, 6).map((k) => (
+                                    <span
+                                        key={k.key}
+                                        className="rounded border border-line bg-muted/40 px-2 py-0.5 font-myanmar text-sm"
+                                        title={`${k.attempts} tries · ${k.accuracy.toFixed(0)}% accuracy`}
+                                    >
+                                        {keyIdLabel(k.key)}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    ) : null}
                 </div>
             ) : (
                 <p className="text-center text-xs text-muted-foreground">Select a learner above to see their detail.</p>

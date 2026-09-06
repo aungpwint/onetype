@@ -5,6 +5,7 @@ export {
     focusCharsFromWeakFingers,
     focusCharsFromWeakKeys,
     keyIdToChar,
+    keyIdLabel,
     parseKeyId,
     planWeakestReinforcement,
     reinforcementFromWeakFingers,
