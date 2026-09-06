@@ -360,15 +360,22 @@ export function DrillPage() {
             ? 'myanmar'
             : 'english-qwerty'
 
+    const troubleKeys = searchParams.get('keys')?.split(',').filter(Boolean) ?? undefined
+
     const load = useCallback(async () => {
         try {
-            const drill = await buildAdaptiveDrill({ layoutId })
+            const drill = await buildAdaptiveDrill({ layoutId, troubleKeys })
             if (drill) await beginDrill(drill)
-            else setError('Not enough typing data yet to spot weaknesses. Finish a few lessons first.')
+            else
+                setError(
+                    troubleKeys
+                        ? 'Could not build a drill from those keys right now.'
+                        : 'Not enough typing data yet to spot weaknesses. Finish a few lessons first.',
+                )
         } catch {
             setError('Could not prepare an adaptive drill right now.')
         }
-    }, [beginDrill, layoutId])
+    }, [beginDrill, layoutId, troubleKeys])
 
     useBeginSession('drill', load)
 

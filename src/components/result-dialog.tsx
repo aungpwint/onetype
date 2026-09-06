@@ -19,6 +19,7 @@ import { cn, eyebrowClass } from '@/lib/utils'
 import { speedSeries } from '@/core/scoring/score'
 import { WpmBars } from '@/components/wpm-bars'
 import { summarizeKeyTaps, worstKeys, keyTapTone } from '@/core/session/key-outcomes'
+import { troubleKeyIds, troubleDrillHref } from '@/core/session/trouble-drill'
 import { keyIdLabel } from '@/core/reinforcement'
 import type { MasteryDelta, MasteryLevel } from '@/core/mastery'
 
@@ -309,13 +310,22 @@ export function ResultDialog() {
 }
 
 function KeyTapMap() {
+    const navigate = useNavigate()
     const engine = useTypingStore((s) => s.engine)
     const session = useTypingStore((s) => s.session)
+    const clear = useTypingStore((s) => s.clear)
     if (!engine || !session) return null
     const summary = summarizeKeyTaps(engine.keyOutcomes)
     if (summary.distinctKeys === 0) return null
     const worst = worstKeys(summary, 5)
     const layout = session.layout
+    const trouble = troubleKeyIds(summary, layout)
+
+    const practiceTrouble = () => {
+        const href = troubleDrillHref(layout.id, trouble)
+        clear()
+        navigate(href)
+    }
 
     return (
         <div className="mt-4 rounded-xl border border-line bg-muted/40 p-3">
@@ -347,10 +357,18 @@ function KeyTapMap() {
                 })}
             </div>
             {worst.length > 0 ? (
-                <p className="mt-2 text-xs text-muted-foreground">
-                    Trouble keys:{' '}
-                    <span className="font-medium text-foreground">{worst.map((t) => keyIdLabel(t.id, layout)).join(', ')}</span>
-                </p>
+                <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-xs text-muted-foreground">
+                        Trouble keys:{' '}
+                        <span className="font-medium text-foreground">{worst.map((t) => keyIdLabel(t.id, layout)).join(', ')}</span>
+                    </p>
+                    {trouble.length > 0 ? (
+                        <Button variant="outline" size="sm" onClick={practiceTrouble}>
+                            <Target className="size-3.5" />
+                            Practice {trouble.length} of them now
+                        </Button>
+                    ) : null}
+                </div>
             ) : null}
         </div>
     )

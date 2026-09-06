@@ -175,18 +175,27 @@ function drillResolvedLesson(drill: ReinforcedDrill, layoutId: string): Resolved
     }
 }
 
-export async function buildAdaptiveDrill(opts: { goal?: MuscleMemoryGoal; layoutId?: string } = {}): Promise<ReinforcedDrill | null> {
+export async function buildAdaptiveDrill(opts: { goal?: MuscleMemoryGoal; layoutId?: string; troubleKeys?: string[] } = {}): Promise<ReinforcedDrill | null> {
     const active = useStudentStore.getState().active
-    if (!active) return null
     const layoutId = opts.layoutId ?? ENGLISH_LAYOUT_ID
     const layout = getLayout(layoutId) ?? englishQwerty
+    // troubleKeys arrive weakest-first (from a just-finished round), so a lower
+    // position index means weaker; the reinforcement layer's ascend-and-cap then
+    // keeps those keys first, matching the backend weakKeys ranking below.
+    if (opts.troubleKeys && opts.troubleKeys.length > 0) {
+        return reinforcementFromWeakKeys(
+            opts.troubleKeys.map((key, i) => ({ key, lowerBound: i })),
+            { goal: opts.goal, layout },
+        )
+    }
+    if (!active) return null
     // weakKeys is already Wilson-ranked weakest-first, so a lower position index
     // means weaker. Encode that as a descending lower bound so the reinforcement
     // layer's ascend-and-cap keeps the weakest keys first.
     const keys = await backend.weakKeys(active.id, layoutId, 8)
     if (keys.length === 0) return null
     const weakIds = keys.map((k, i) => ({ key: k.key, lowerBound: i }))
-    return reinforcementFromWeakKeys(weakIds, { ...opts, layout })
+    return reinforcementFromWeakKeys(weakIds, { goal: opts.goal, layout })
 }
 
 export const useTypingStore = create<TypingState>((set, get) => ({
