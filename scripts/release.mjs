@@ -61,9 +61,11 @@ function run(cmd, args, opts = {}) {
     const shell = process.platform === 'win32'
     // On Windows the command is executed via cmd.exe, which needs an
     // executable with a space-containing path (e.g. a Node install under
-    // "Program Files") to be double-quoted.
+    // "Program Files") to be double-quoted, as well as any argument value
+    // that contains whitespace (otherwise it is split by cmd.exe).
     const command = shell ? `"${cmd}"` : cmd
-    const result = spawnSync(command, args, {
+    const quotedArgs = shell ? args.map((a) => (/\s/.test(a) ? `"${a}"` : a)) : args
+    const result = spawnSync(command, quotedArgs, {
         cwd: root,
         encoding: 'utf8',
         shell,
