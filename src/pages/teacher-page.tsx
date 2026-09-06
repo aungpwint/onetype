@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { GraduationCap, Users, Clock, Target, Gauge, Trophy } from 'lucide-react'
+import { GraduationCap, Users, Clock, Target, Gauge, Trophy, FileText } from 'lucide-react'
 import * as backend from '@/services/backend'
 import type { StudentDetail, TeacherOverview, TypingTest } from '@/services/types'
 import type { LeaderboardEntry } from '@/core/leaderboard/ranking'
+import { buildTestRecord } from '@/core/tests/record'
 import { Stat, Spinner, PageHeader } from '@/components/ui'
 import { Progress } from '@/components/ui/progress'
 import { formatDateTime, formatWpm, formatAccuracy, pct } from '@/lib/format'
-import { cn, cardClass, appPageClass, sectionTitleClass } from '@/lib/utils'
+import { cn, cardClass, appPageClass, sectionTitleClass, eyebrowClass } from '@/lib/utils'
 
 const MEDAL = [
     'bg-linear-to-b from-amber-200 to-amber-500 text-amber-950',
@@ -244,6 +245,43 @@ export default function TeacherPage() {
                             </div>
                         ))}
                     </div>
+
+                    {(() => {
+                        const record = buildTestRecord(detail.testResults, tests)
+                        if (record.length === 0) {
+                            return (
+                                <p className="mt-5 flex items-center gap-2 text-xs text-muted-foreground">
+                                    <FileText className="size-3.5" />
+                                    No timed-test results yet.
+                                </p>
+                            )
+                        }
+                        return (
+                            <div className="mt-5">
+                                <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
+                                    <FileText className="size-3.5" />
+                                    Timed test record
+                                </p>
+                                <ul className="mt-2 space-y-1.5 text-sm">
+                                    {record.map((e) => (
+                                        <li key={e.testId} className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                                            <span className="rounded border border-line bg-muted/40 px-1.5 font-mono text-xs tabular-nums">
+                                                {e.code}
+                                            </span>
+                                            <span className="text-muted-foreground">{e.name}</span>
+                                            <span className="ml-auto text-right tabular-nums">
+                                                <span className="font-display font-semibold">{formatWpm(e.bestWpm)}</span>
+                                                <span className="text-xs text-muted-foreground"> · {formatAccuracy(e.bestAccuracy)}</span>
+                                            </span>
+                                            <span className={e.passed ? 'text-xs font-medium text-success' : 'text-xs text-muted-foreground'}>
+                                                {e.passed ? `passed · ${e.attempts} run${e.attempts === 1 ? '' : 's'}` : `not yet · ${e.attempts} run${e.attempts === 1 ? '' : 's'}`}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )
+                    })()}
                 </div>
             ) : (
                 <p className="text-center text-xs text-muted-foreground">Select a learner above to see their detail.</p>
