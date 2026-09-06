@@ -51,7 +51,6 @@ export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
         >
             <span aria-hidden className={cn('pointer-events-none absolute inset-0 -z-10 h-full bg-linear-to-b', sheenClass)} />
 
-            {/* Top accent band — encodes lesson state */}
             <span aria-hidden className={cn('h-1 w-full', bandClass)} />
 
             <div className="flex grow flex-col gap-3 p-4 lg:p-5">

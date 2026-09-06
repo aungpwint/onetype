@@ -1,7 +1,7 @@
 import { KeyboardLayout, type KeyboardLayoutSpec, type KeyDefinition } from './layout'
 import { fingerForCode, handForFinger } from '@/core/finger-mapping/finger-map'
 
-export const MYANMAR_REVISION = 2
+const MYANMAR_REVISION = 2
 
 const LETTERS: Record<string, { plain: string; shifted: string }> = {
     KeyQ: { plain: '\u1006', shifted: '\u1008' },

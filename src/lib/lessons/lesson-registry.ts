@@ -5,7 +5,7 @@ import type { Lesson } from '@/types/lesson'
 import { LessonCatalogError } from './lesson-errors'
 import type { LessonRecord } from './lesson-loader'
 
-export interface LessonCatalogIndexes {
+interface LessonCatalogIndexes {
     byId: Map<string, Lesson>
     byLanguage: Map<LessonLanguage, Lesson[]>
     byLevel: Map<Level, Lesson[]>
@@ -102,8 +102,4 @@ export class LessonRegistry {
         }
         return buckets
     }
-}
-
-export function getRegisteredSources(registry: LessonRegistry): Map<string, string> {
-    return registry.sources
 }

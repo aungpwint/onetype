@@ -2,17 +2,6 @@ import { useTypingStore } from '@/stores/typing-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { Button } from '@/components/ui/button'
 
-/**
- * Re-entry UX for a lost window focus.
- *
- * While the window is blurred the timer is (depending on the focus policy)
- * already paused, so this component's job is communication: tell the learner
- * the round is on hold because they stepped away, and — when they come back
- * after a meaningful gap — ask whether to pick up where they left off or start
- * a clean run.
- */
-
-/** Gaps longer than this (ms) are treated as AFK rather than a quick tab-out. */
 const AFK_THRESHOLD_MS = 5_000
 
 export function OutOfFocusWarning() {
@@ -24,12 +13,8 @@ export function OutOfFocusWarning() {
     const acknowledgeAway = useTypingStore((s) => s.acknowledgeAway)
     const focusPolicy = useSettingsStore((s) => s.get('practice.focusGuard'))
 
-    // Regained focus after an AFK gap — treat the run as stale and surface a
-    // clear "resume or restart" choice instead of silently continuing.
     const afk = afkGapMs !== null && afkGapMs > AFK_THRESHOLD_MS
 
-    // Only show while a round is actually in flight; a finished/abandoned
-    // session should not keep the dialog around.
     const live = status === 'running' || status === 'ready' || status === 'paused'
 
     if (!windowFocused) {
@@ -53,8 +38,6 @@ export function OutOfFocusWarning() {
 
     const pausedText = focusPolicy === 'pause'
 
-    // Under `pause` the round is stopped: resume it. Under `soft` it kept
-    // running, so "Continue" just acknowledges and lets the learner proceed.
     const continueAction = () => {
         if (focusPolicy === 'pause') togglePause()
         acknowledgeAway()

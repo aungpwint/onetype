@@ -1,4 +1,4 @@
-export interface AchievementDefinition {
+interface AchievementDefinition {
     id: string
     title: string
     description: string
@@ -106,5 +106,3 @@ export const ACHIEVEMENT_CATALOG: Record<string, AchievementDefinition> = {
         color: '#ef4444',
     },
 }
-
-export const ACHIEVEMENT_ORDER = Object.keys(ACHIEVEMENT_CATALOG)

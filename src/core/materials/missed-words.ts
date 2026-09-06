@@ -2,24 +2,14 @@ import type { TypingEngine } from '@/core/typing-engine/engine'
 import { rangeHasIncorrect } from '@/core/typing-engine/char-state'
 
 export interface MissedWordsResult {
-    /** Distinct words that contain at least one currently-wrong unit. */
     words: string[]
-    /** Words joined with a single space, ready for practice material. */
     text: string
     count: number
 }
 
 const MAX_MISSED_WORDS = 40
 
-/**
- * Extract the words the learner is still getting wrong from a finished session.
- *
- * The engine clears a unit's outcome on backspace, so only units that are
- * wrong *at the end* of a round surface here — a transient slip that was fixed
- * is not re-drilled. Words are delimited the same way practice material sees
- * them (space-separated tokens, keeping their original punctuation/typing
- * units), so the result feeds straight back into `buildPracticeMaterial`.
- */
+// Backspace clears a unit's outcome, so only units wrong at round end surface here.
 export function extractMissedWords(engine: TypingEngine): MissedWordsResult {
     const words: string[] = []
     const seen = new Set<string>()

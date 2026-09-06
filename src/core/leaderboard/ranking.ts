@@ -30,7 +30,6 @@ function betterRun(a: BestRun, b: BestRun): BestRun {
     return a.scoredOn <= b.scoredOn ? a : b
 }
 
-/** Rank every learner who has typed a run on the given paper. */
 export function rankClassOnTest(candidates: LeaderboardCandidate[], testId: string): LeaderboardEntry[] {
     const rows: Array<Omit<LeaderboardEntry, 'rank'>> = []
 

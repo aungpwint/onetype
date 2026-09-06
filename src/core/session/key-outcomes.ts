@@ -9,7 +9,7 @@ export interface KeyTap {
     incorrect: number
 }
 
-export type KeyTapTone = 'clean' | 'slip' | 'heavy'
+type KeyTapTone = 'clean' | 'slip' | 'heavy'
 
 export interface KeyTapSummary {
     totalKeystrokes: number

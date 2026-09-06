@@ -1,4 +1,4 @@
-export type SettingsEntryType = 'item' | 'section'
+type SettingsEntryType = 'item' | 'section'
 
 export interface SettingsEntry {
     id: string
@@ -8,7 +8,7 @@ export interface SettingsEntry {
     keywords: string[]
 }
 
-export const SETTINGS_SECTIONS: SettingsEntry[] = [
+const SETTINGS_SECTIONS: SettingsEntry[] = [
     { id: 'appearance', type: 'section', label: 'Appearance', section: 'Appearance', keywords: ['theme', 'colour', 'color', 'desk', 'look'] },
     { id: 'typing-experience', type: 'section', label: 'Typing experience', section: 'Typing experience', keywords: ['caret', 'cursor', 'highlight', 'timer', 'errors'] },
     { id: 'practice', type: 'section', label: 'Practice', section: 'Practice', keywords: ['sound', 'finger', 'focus', 'goal'] },
@@ -18,7 +18,7 @@ export const SETTINGS_SECTIONS: SettingsEntry[] = [
     { id: 'data', type: 'section', label: 'Data', section: 'Data', keywords: ['backup', 'export', 'import', 'database', 'health'] },
 ]
 
-export const SETTINGS_ITEMS: SettingsEntry[] = [
+const SETTINGS_ITEMS: SettingsEntry[] = [
     { id: 'theme', type: 'item', label: 'Theme', section: 'Appearance', keywords: ['dark', 'light', 'night', 'system', 'mode'] },
     { id: 'default-language', type: 'item', label: 'Default language', section: 'Appearance', keywords: ['myanmar', 'english', 'language'] },
     { id: 'palette', type: 'item', label: 'Desk palette', section: 'Appearance', keywords: ['preset', 'swatch', 'colour', 'color', 'default'] },
@@ -57,7 +57,7 @@ export const SETTINGS_ITEMS: SettingsEntry[] = [
 
 export const SETTINGS_CATALOG: SettingsEntry[] = [...SETTINGS_SECTIONS, ...SETTINGS_ITEMS]
 
-export interface SettingsMatch {
+interface SettingsMatch {
     entry: SettingsEntry
     rank: number
 }

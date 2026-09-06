@@ -2,6 +2,7 @@ import { invokeCommand, isTauriRuntime, pickOpenFile, pickSavePath } from './ipc
 import { localBackend } from './local'
 import { rankWeakest, DEFAULT_WEAKNESS_CONFIG, type StatInput } from '@/core/weakness'
 import type { LeaderboardEntry } from '@/core/leaderboard/ranking'
+import { clamp } from '@/lib/utils'
 
 import type {
     AchievementRecord,
@@ -112,9 +113,7 @@ export async function saveStatistics(req: SaveKeyStatsRequest): Promise<void> {
 
 export async function weakKeys(studentId: string, layoutId: string, limit = 10): Promise<WeakKey[]> {
     if (!isTauriRuntime()) return localBackend.weakKeys(studentId, layoutId, limit)
-    // The Rust command ranks by raw accuracy and applies no evidence filter, so
-    // fetch a wider pool and re-rank with the same Wilson logic the local backend
-    // uses to keep desktop/browser rankings identical (see rankWeakest).
+    // Rust ranks by raw accuracy; re-rank with the same Wilson logic as the local backend for identical rankings.
     const pool = await invokeCommand<WeakKey[]>('weak_keys', { studentId, layoutId, limit: 50 })
     return reRankWeak(pool, limit)
 }
@@ -127,7 +126,7 @@ export async function weakFingers(studentId: string, layoutId: string, limit = 1
 
 export function reRankWeak(pool: Array<{ key: string; accuracy: number; attempts: number }>, limit: number): WeakKey[] {
     const stats: StatInput[] = pool.map((row) => {
-        const accuracy = Math.max(0, Math.min(1, row.accuracy / 100))
+        const accuracy = clamp(row.accuracy / 100, 0, 1)
         return {
             key: row.key,
             correct: Math.round(row.attempts * accuracy),

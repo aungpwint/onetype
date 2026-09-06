@@ -1,19 +1,14 @@
-export interface MiskeyPair {
+interface MiskeyPair {
     expectedId: string
     pressedId: string
     count: number
 }
 
-export interface MiskeySummary {
+interface MiskeySummary {
     miskeyCount: number
     pairs: MiskeyPair[]
 }
 
-/**
- * Reduce the engine's expected→pressed tracking into ranked mix-up pairs.
- * Pairs are ordered most-frequent-first; ties break on the pressed key id for
- * deterministic output.
- */
 export function summarizeMiskeys(wrongPresses: ReadonlyMap<string, ReadonlyMap<string, number>>): MiskeySummary {
     const pairs: MiskeyPair[] = []
     let miskeyCount = 0
@@ -31,7 +26,6 @@ export function topMiskeys(summary: MiskeySummary, limit = 5): MiskeyPair[] {
     return summary.pairs.slice(0, limit)
 }
 
-/** The right physical key was pressed, but with the wrong Shift state. */
 export function isShiftSlip(pair: MiskeyPair): boolean {
     const sep = pair.expectedId.lastIndexOf(':')
     const expectedCode = sep >= 0 ? pair.expectedId.slice(0, sep) : pair.expectedId

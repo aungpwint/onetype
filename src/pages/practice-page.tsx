@@ -138,7 +138,6 @@ export default function PracticePage() {
                 </div>
 
                 <div className="flex w-full flex-col gap-6 rounded-2xl border border-line bg-card/60 p-6 shadow-sm backdrop-blur">
-                    {/* Language */}
                     <div>
                         <p className="mb-2 text-xs font-semibold tracking-wider text-muted-foreground uppercase">Language</p>
                         <div className="flex gap-1">
@@ -167,7 +166,6 @@ export default function PracticePage() {
                         </div>
                     </div>
 
-                    {/* Mode */}
                     <div>
                         <p className="mb-2 text-xs font-semibold tracking-wider text-muted-foreground uppercase">Mode</p>
                         <div className="flex gap-1">
@@ -196,7 +194,6 @@ export default function PracticePage() {
                         </div>
                     </div>
 
-                    {/* Options */}
                     <div>
                         <p className="mb-2 text-xs font-semibold tracking-wider text-muted-foreground uppercase">
                             {unit === 'time' ? 'Duration' : unit === 'words' ? 'Word count' : unit === 'quote' ? 'Quotation' : 'Text'}

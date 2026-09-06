@@ -14,7 +14,6 @@ const CARET_ANCHOR = 0.45
 const CONTENT_INSET = 24
 const WORDS_PER_MIN = 5
 
-/** Presentation settings that only change on the settings page. */
 interface TypingLens {
     highlightMode: string
     blindMode: string
@@ -53,9 +52,6 @@ export function TargetText() {
     const phases = useMemo(() => session?.resolved.phases ?? [], [session])
     const windowFocused = useTypingStore((s) => s.windowFocused)
 
-    // Pace caret: only on timed rounds, and only once we have a speed signal.
-    // Target progress = how far the round would have gone at the current
-    // cumulative average speed; the caret trails that position.
     const paceEnabled = lens.paceCaret === 'on'
     const paceUnitIndex = useTypingStore((s) => {
         if (!paceEnabled) return null
@@ -86,8 +82,6 @@ export function TargetText() {
         return all.filter((g) => g.startUnit >= activePhase.startUnit && g.endUnit <= activePhase.endUnit)
     }, [sequence, activePhase])
 
-    // Stable per-phase word geometry (wordStart/wordEnd per run), so character
-    // props don't change on every keystroke and memoized Chars can bail out.
     const wordGeometry = useMemo(() => {
         const starts: number[] = []
         let nextWordStart = 0
@@ -142,9 +136,6 @@ export function TargetText() {
         motionOffset.set(nextOffset)
     }, [sessionKey, activePhaseKey, unitIndex, motionOffset])
 
-    // Park the pace caret at the left edge of the pace character. The character
-    // positions themselves never change on pan, so this only depends on which
-    // character is the pace target.
     useLayoutEffect(() => {
         const content = contentRef.current
         const paceCaret = paceCaretRef.current
@@ -306,8 +297,6 @@ const Char = memo(function Char({
             return graphemePresentation(engine?.unitIndex ?? 0, startUnit, slots, engine ?? NO_OUTCOMES)
         }),
     )
-    // Error flash is transient and unit-exact: it lands on whichever grapheme is
-    // current when the flash fires (already handled by the store's unitIndex).
     const flashing = useTypingStore((s) => s.wrongFlash !== null && s.wrongFlash.unitIndex === (s.engine?.unitIndex ?? 0))
 
     const slipKind = useTypingStore((s) => {
@@ -325,10 +314,6 @@ const Char = memo(function Char({
         if (unit >= endUnit) return false
         return unit >= wordStart && unit < wordEnd
     })
-
-    // The caret unit answers wrong while composing → its slot reads red
-    // (persistent) until the learner re-types it correctly (resolved at slot
-    // level from `view.slots`, no extra selector needed).
 
     const pending = view.correctness === 'pending' && !view.isCurrent
     const hideBlind = blindMode === 'on' && pending
@@ -357,13 +342,7 @@ const Char = memo(function Char({
                 : null
 
     if (view.isCurrent) {
-        // Per-unit ink INSIDE the shaped run: each slot is a box-less span
-        // (`display: contents`) so Chromium still shapes the whole grapheme as
-        // ONE text run — no stray/doubled marks, no glyph-width jumps — while
-        // the color per slot follows its typing unit. Consumed units go green
-        // exactly when their key is pressed; the current unit inherits the
-        // composing ink (soft wash on the wrapper box); errors flash the
-        // wrapper and keep the offending slot red until re-typed.
+        // Slots are `display: contents` so Chromium shapes the whole grapheme as ONE text run.
         const activeInk = highlightMode === 'word' || highlightMode === 'letter' ? 'tt-char-focus' : null
         const spanCount = Math.max(1, endUnit - startUnit)
         const slotWidth = `${100 / spanCount}%`

@@ -5,11 +5,13 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
 
+export function clamp(value: number, min: number, max: number): number {
+    return Math.min(max, Math.max(min, value))
+}
+
 export const cardClass = cn('rounded-xl border border-line bg-surface shadow-[var(--shadow-1)]')
 
 export const highlightClass = cn('rounded-xl border border-blue-500/20 bg-gradient-to-b from-blue-950/30 to-slate-900/40')
-
-export const glassClass = cn('rounded-2xl border border-line bg-card/60 shadow-[var(--shadow-2)] backdrop-blur-2xl')
 
 export const featuredClass = cn(
     'relative overflow-hidden rounded-3xl border border-blue-500/25 bg-card/75 shadow-[var(--shadow-3)] backdrop-blur-2xl',

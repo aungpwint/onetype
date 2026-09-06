@@ -47,15 +47,5 @@ export const ENGLISH_FINGER_KEYS: Record<FingerId, string[]> = {
 }
 
 export const HOME_ROW_KEYS = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';']
-export const HOME_ROW_LEFT = ['a', 's', 'd', 'f', 'g']
-export const HOME_ROW_RIGHT = ['h', 'j', 'k', 'l', ';']
 
 export const TOP_ROW_KEYS = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p']
-export const TOP_ROW_LEFT = ['q', 'w', 'e', 'r', 't']
-export const TOP_ROW_RIGHT = ['y', 'u', 'i', 'o', 'p']
-
-export const BOTTOM_ROW_KEYS = ['z', 'x', 'c', 'v', 'b', 'n', 'm']
-export const BOTTOM_ROW_LEFT = ['z', 'x', 'c', 'v', 'b']
-export const BOTTOM_ROW_RIGHT = ['n', 'm']
-
-export const ALL_LETTER_KEYS = [...TOP_ROW_KEYS, ...HOME_ROW_KEYS, ...BOTTOM_ROW_KEYS]

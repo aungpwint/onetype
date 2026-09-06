@@ -4,14 +4,14 @@ import { resolveLesson, type ResolvedLesson } from './generator'
 import { createLessonRepository, type LessonRepository } from '@/lib/lessons'
 import type { Lesson } from '@/types/lesson'
 
-export interface CurriculumMeta {
+interface CurriculumMeta {
     totalLessons: number
     countsByLevel: Record<Level, number>
 }
 
-export const LESSON_IDS: string[] = []
+const LESSON_IDS: string[] = []
 
-export const RESOLVED_LESSON_CACHE = new Map<string, ResolvedLesson>()
+const RESOLVED_LESSON_CACHE = new Map<string, ResolvedLesson>()
 
 const repository: LessonRepository = createLessonRepository()
 
@@ -31,10 +31,6 @@ export function getLessonData(id: string): LessonData {
 
 export function hasLesson(id: string): boolean {
     return repository.hasLesson(id)
-}
-
-export function listLessons(level: Level): LessonData[] {
-    return repository.listByLevel(level)
 }
 
 export function listLessonsByLevel(): Record<Level, LessonData[]> {
@@ -60,10 +56,6 @@ export function getCurriculumMeta(): CurriculumMeta {
     }
 }
 
-export function totalLessonsInLevel(level: Level): number {
-    return repository.totalInLevel(level)
-}
-
 export function allResolvedLessonIds(): string[] {
     return LESSON_IDS
 }
@@ -75,5 +67,3 @@ export function getLessonRepository(): LessonRepository {
 export function getCanonicalLesson(id: string): Lesson {
     return repository.getCanonicalLesson(id)
 }
-
-export { resolveLesson } from './generator'

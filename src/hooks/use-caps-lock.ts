@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-/** Track the hardware Caps Lock state from key events. */
 export function useCapsLockState(): boolean {
     const [capsLockOn, setCapsLockOn] = useState(false)
 

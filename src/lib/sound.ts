@@ -1,20 +1,18 @@
+import { clamp } from './utils'
+
 let audio: AudioContext | null = null
 let muted = false
 let volume = 0.5
 
-export function setSoundMuted(value: boolean) {
+function setSoundMuted(value: boolean) {
     muted = value
 }
 
-export function setSoundVolume(value: number) {
-    volume = Math.min(1, Math.max(0, value))
+function setSoundVolume(value: number) {
+    volume = clamp(value, 0, 1)
 }
 
-export function isSoundEnabled(): boolean {
-    return !muted
-}
-
-/** Resync the module-level muted/volume from persisted settings. */
+// Resync the module-level muted/volume from persisted settings.
 export function syncSoundFromSettings<K extends string>(settings: { get: (key: K) => string }) {
     const storedVolume = Number(settings.get('practice.soundVolume' as K))
     if (!Number.isFinite(storedVolume)) setSoundVolume(0.5)

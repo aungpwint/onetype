@@ -1,9 +1,6 @@
-// Curated short quotations for practice "quote" mode. Deliberately restricted
-// to characters the keyboard layouts can re-encode: plain sentence punctuation
-// only — no em/en dashes, smart quotes, brackets or diacritics — so a picked
-// quote is always typeable by QWERTY and by the Myanmar layout.
+// Restricted to characters both layouts can re-encode: plain sentence punctuation only.
 
-export interface Quote {
+interface Quote {
     text: string
     source: string
     language: 'english' | 'myanmar'

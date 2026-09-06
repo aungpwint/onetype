@@ -5,7 +5,7 @@ import { buildSequence, type BuiltSequence, type TypingUnit } from '@/core/typin
 
 import type { LessonData, LessonPhase } from './types'
 
-export interface ResolvedPhase {
+interface ResolvedPhase {
     label: string
     instruction: string
     startUnit: number
@@ -32,17 +32,10 @@ export interface ResolvedLesson {
     focusKeys?: string[]
 }
 
-export interface LessonBuildError {
-    lessonId: string
-    message: string
-}
-
-export function validateLessonCharacters(lessonId: string, phase: LessonPhase, layoutId: string): void {
+function validateLessonCharacters(lessonId: string, phase: LessonPhase, layoutId: string): void {
     const layout = getLayoutOrThrow(layoutId)
     for (const grapheme of splitGraphemes(phase.text)) {
-        // Validate through the same greedy reverse-mapping the engine grades
-        // with, so multi-codepoint key emissions (e.g. ၎င်း on KeyR shift) are
-        // accepted as the single key press they represent.
+        // Reverse-map like the engine grades so multi-codepoint emissions (e.g. ၎င်း on KeyR shift) count as one key press.
         try {
             layout.reverseMap([grapheme])
         } catch (error) {
@@ -75,11 +68,7 @@ export function resolveLesson(data: LessonData): ResolvedLesson {
         phaseIndex += 1
     }
 
-    // Assemble a *globally* grapheme-coherent sequence across all phases: the
-    // units, graphemes and graphemeUnitRanges must stay aligned so that helpers
-    // like remainingText/completedText/graphemeUnitRuns behave correctly for
-    // multi-phase lessons. Each unit's graphemeIndex is shifted by a running
-    // per-phase grapheme offset, and ranges are rebased onto the global unit list.
+    // Rebase units, graphemes and ranges onto one global list so multi-phase helpers stay grapheme-coherent.
     const allUnits: TypingUnit[] = []
     const graphemes: string[] = []
     const graphemeUnitRanges: [number, number][] = []
@@ -121,24 +110,4 @@ export function resolveLesson(data: LessonData): ResolvedLesson {
         totalCharacters: allUnits.length,
         phases: allPhases,
     }
-}
-
-export function levelLessonIds(language: 'en' | 'my', level: Level, count: number): string[] {
-    const ids: string[] = []
-    for (let i = 1; i <= count; i++) {
-        ids.push(`lesson-${language}-${level}-${i}`)
-    }
-    return ids
-}
-
-export function nextLessonId(language: 'en' | 'my', level: Level, number: number): string {
-    return `lesson-${language}-${level}-${number + 1}`
-}
-
-export function isLessonComplete(lesson: ResolvedLesson): boolean {
-    return lesson.sequence.units.length > 0
-}
-
-export function lessonCharCount(lesson: LessonData): number {
-    return lesson.phases.reduce((sum, phase) => sum + splitGraphemes(phase.text).length, 0)
 }

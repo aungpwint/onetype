@@ -1,16 +1,13 @@
 import type { SpeedUnit } from '@/core/scoring/score'
 
-export interface CharacterBreakdown {
-    /** Correctly typed, display-appropriate unit (chars vs grapheme clusters). */
+interface CharacterBreakdown {
     correct: number
-    /** Presses that hit the wrong key. */
     wrong: number
-    /** Net progress: the number of target units consumed by the caret. */
     progress: number
     total: number
 }
 
-export type CharacterUnit = 'characters' | 'clusters'
+type CharacterUnit = 'characters' | 'clusters'
 
 export function breakdownUnit(speedUnit: SpeedUnit): CharacterUnit {
     return speedUnit === 'units/min' ? 'clusters' : 'characters'

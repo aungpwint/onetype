@@ -30,7 +30,6 @@ export function StatsBar() {
     const engine = useTypingStore.getState().engine
     const remaining = durationSeconds !== null && engine ? Math.max(0, durationSeconds - engine.elapsedSeconds()) : null
 
-    // Warn once as a timed round passes the 10-second mark (Monkeytype parity).
     const inWarningZone = running && durationSeconds !== null && remaining !== null && remaining <= 10
     useEffect(() => {
         if (!inWarningZone) return
@@ -39,7 +38,6 @@ export function StatsBar() {
         if (timeWarning !== 'off' && useUiStore.getState().soundEnabled) playTimeWarningSound()
     }, [inWarningZone, timeWarning])
 
-    // Myanmar is reported in honest typing units/minute; English keeps WPM.
     const metrics = engine?.currentMetrics()
     const speedUnit = metrics?.speedUnit ?? 'wpm'
     const speedLabel = speedUnit === 'units/min' ? 'UNITS/MIN' : 'WPM'
@@ -50,7 +48,6 @@ export function StatsBar() {
     const idle = stats.unitIndex === 0
     const rawLabel = speedUnit === 'units/min' ? 'Raw units/min' : 'Raw WPM'
 
-    // --- Timer style handling (Monkeytype parity) -----------------------------
     const timed = durationSeconds !== null && remaining !== null
     const timerProportionValue = timed && durationSeconds !== null ? timerProportion(remaining!, durationSeconds) : 0
     const timerLabel = timed ? 'Time' : 'Progress'

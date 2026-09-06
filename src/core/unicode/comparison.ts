@@ -4,15 +4,10 @@ export type ClusterDiffKind = 'ok' | 'wrong-character' | 'missing-mark' | 'extra
 
 export interface ClusterDiagnosis {
     kind: ClusterDiffKind
-    /** Expected cluster text (the order convention passed in by the caller). */
     expected: string
-    /** Actually typed cluster text in the same convention. */
     typed: string
-    /** Code points present in the expectation but missing from the input. */
     missing: string[]
-    /** Code points present in the input but not in the expectation. */
     extra: string[]
-    /** Short bilingual human explanation. */
     message: string
 }
 
@@ -24,7 +19,7 @@ function groupOf(code: number): CpGroup {
     return 'other'
 }
 
-/** Code point multiset difference (A minus B) in source order, deduplicated. */
+// Code point multiset difference (A minus B) in source order, deduplicated.
 function diffChars(a: string, b: string): string[] {
     const counts = new Map<number, number>()
     for (const ch of b) {
@@ -70,17 +65,11 @@ export function diagnosisSortKey(diagnosis: ClusterDiagnosis): number {
     return Math.max(0, KIND_ORDER.indexOf(diagnosis.kind))
 }
 
-/**
- * Compare an expected Myanmar cluster against what the learner actually typed.
- * Both strings must be passed in the SAME order convention (either both logical
- * Unicode order, or both keyboard press order); the caller decides. The engine
- * grades keyboard presses so it compares keyboard-order text; display/cursor
- * logic compares logical order.
- *
- * The comparison is deliberately not a naive code-point equality: it classifies
- * the *kind* of slip (missing tone mark, extra medial, swapped pre-base vowel,
- * wrong base character, …) so OneType can tell the learner exactly what to fix.
- */
+// Compare an expected Myanmar cluster against what the learner actually typed.
+// Both strings must be in the SAME order convention (logical Unicode or press
+// order); the caller decides. Not a naive code-point equality: the slip *kind*
+// (missing tone mark, extra medial, swapped pre-base vowel, …) is classified so
+// the app can tell the learner exactly what to fix.
 export function diagnoseClusterComparison(expectedRaw: string, typedRaw: string): ClusterDiagnosis {
     const expected = expectedRaw.normalize('NFC')
     const typed = typedRaw.normalize('NFC')
@@ -179,10 +168,8 @@ export interface ClusterSlipSummary {
     example: string
 }
 
-/**
- * Roll per-cluster diagnoses into the recurring slip types worth surfacing on
- * the result screen (missing marks, swapped order, wrong characters, …).
- */
+// Roll per-cluster diagnoses into the recurring slip types worth surfacing on
+// the result screen (missing marks, swapped order, wrong characters, …).
 export function summarizeClusterDiagnoses(diagnoses: readonly ClusterDiagnosis[]): ClusterSlipSummary[] {
     const byKind = new Map<Exclude<ClusterDiffKind, 'ok'>, { count: number; example: string }>()
     const priority: Exclude<ClusterDiffKind, 'ok'>[] = ['wrong-character', 'missing-mark', 'extra-mark', 'wrong-order', 'wrong-sequence']

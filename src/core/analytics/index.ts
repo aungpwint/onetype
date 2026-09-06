@@ -1,4 +1,4 @@
-export { type PerformanceSummary, type SessionPoint, type Trend } from './types'
+export { type SessionPoint } from './types'
 export {
     coefficientOfVariation,
     linearTrend,

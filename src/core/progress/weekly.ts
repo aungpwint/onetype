@@ -1,6 +1,6 @@
 const DAY_MS = 86_400_000
 
-export interface WeekBar {
+interface WeekBar {
     offset: number
     minutes: number
     isToday: boolean
@@ -8,11 +8,8 @@ export interface WeekBar {
     fraction: number
 }
 
-export const DAY_MS_MS = DAY_MS
-
 const DEFAULT_WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-/** Minutes per day for the last seven days (`dayMinutes` runs oldest → today) as labelled bars. */
 export function buildWeekBars(
     dayMinutes: readonly number[],
     todayStartMs: number,

@@ -6,7 +6,7 @@ import { containsMyanmar, validateMyanmarText } from '@/core/unicode/myanmar'
 import { lessonSchema } from '@/schemas/lesson'
 import { LessonValidationError, LessonParseError, UnsupportedExerciseTypeError, UnsupportedLessonSchemaError } from './lesson-errors'
 
-export function isRecord(value: unknown): value is Record<string, unknown> {
+function isRecord(value: unknown): value is Record<string, unknown> {
     return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
@@ -29,7 +29,7 @@ function assertSupportedExerciseKinds(rawExercises: unknown, lessonId?: string):
     }
 }
 
-export function validateMyanmarLessonUnicode(lesson: Lesson): void {
+function validateMyanmarLessonUnicode(lesson: Lesson): void {
     if (lesson.language !== 'my') return
     const issues: string[] = []
     const check = (value: string, exerciseId: string | undefined, field: string): void => {
@@ -60,9 +60,6 @@ export function validateMyanmarLessonUnicode(lesson: Lesson): void {
         if ('subtype' in exercise && typeof exercise.subtype === 'string') {
             check(exercise.subtype, exerciseId, 'subtype')
         }
-        // `exerciseText` covers every kind's derived target; validating the raw
-        // fields above already catches each constituent string, so there is no
-        // hidden concatenation to double-check beyond the instruction.
     }
     if (issues.length > 0) {
         throw new LessonValidationError(issues, lesson.id)
@@ -88,19 +85,6 @@ export function validateLesson(value: unknown, _source?: string): Lesson {
     const lesson = result.data as Lesson
     validateMyanmarLessonUnicode(lesson)
     return lesson
-}
-
-export interface LessonSchemaValidation {
-    type: 'lesson-schema'
-    schemaVersion: number
-}
-
-export function lessonSchemaInfo(value: unknown): LessonSchemaValidation | null {
-    if (!isRecord(value)) return null
-    return {
-        type: 'lesson-schema',
-        schemaVersion: typeof value.schemaVersion === 'number' ? value.schemaVersion : LESSON_SCHEMA_VERSION,
-    }
 }
 
 export function parseLesson(json: string, source: string): Lesson {

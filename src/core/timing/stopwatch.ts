@@ -1,14 +1,3 @@
-/**
- * Drift-aware stopwatch.
- *
- * Elapsed time is measured from a monotonic clock. When the containing tab is
- * background-throttled (soft focus policy) or the main thread is briefly
- * blocked, the gap between two reads can jump by seconds. A naive timer would
- * let that frozen wall-clock time silently inflate the round's duration. This
- * stopwatch caps the amount credited per read to `maxBurstMs`: any excess over
- * the burst budget in a single sampled delta is moved into a permanent discard
- * pool, so the run session's honest pacing continues on the next natural read.
- */
 export class Stopwatch {
     private startedAt: number | null = null
     private pausedAccumMs = 0
@@ -59,7 +48,6 @@ export class Stopwatch {
         return this.startedAt !== null
     }
 
-    /** Number of times a sampled burst was clamped by drift detection. */
     correctedJumpsCount(): number {
         return this.correctedJumps
     }

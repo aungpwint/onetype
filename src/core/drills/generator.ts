@@ -160,8 +160,6 @@ export function generateConstrainedDrill(config: DrillConfig): GeneratedDrill {
 
     for (let i = 0; i < length; i++) {
         const excludeSet = new Set(constraints.exclude ?? [])
-        // same-key repetition limit is always satisfiable as long as any other key
-        // exists, so it is applied at every relaxation level.
         const repeatOk = (k: string) => !(k === lastKey && consecCount >= constraints.maxConsecutive)
         const handOk = (k: string) => {
             const h = handOf(k, fingerMap)
@@ -170,10 +168,6 @@ export function generateConstrainedDrill(config: DrillConfig): GeneratedDrill {
             return true
         }
         let candidates = allowedKeys.filter((k) => !excludeSet.has(k) && repeatOk(k) && handOk(k))
-        // If the hand-based constraints are unsatisfiable for this key set (e.g.
-        // every allowed key belongs to one hand while sameHandMax is low), relax
-        // them rather than dropping the same-key safety rule, which would produce
-        // illegal runs.
         if (candidates.length === 0) {
             candidates = allowedKeys.filter((k) => !excludeSet.has(k) && repeatOk(k))
         }

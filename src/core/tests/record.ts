@@ -12,7 +12,6 @@ export interface TestRecordEntry {
     lastAttemptAt: number
 }
 
-/** Best run per attempted paper, along with pass status and attempt count. */
 export function buildTestRecord(results: readonly TestResult[], tests: readonly TypingTest[]): TestRecordEntry[] {
     const byId = new Map(tests.map((t) => [t.id, t]))
     const grouped = new Map<string, TestResult[]>()

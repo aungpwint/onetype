@@ -4,7 +4,7 @@ export interface NotificationOptions {
     tag?: string
 }
 
-export type NotificationPermissionState = 'granted' | 'denied' | 'default' | 'unknown'
+type NotificationPermissionState = 'granted' | 'denied' | 'default' | 'unknown'
 
 export interface NotificationState {
     permission: NotificationPermissionState

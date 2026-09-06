@@ -1,4 +1,5 @@
 import type { FingerId } from '@/types'
+import { clamp } from '@/lib/utils'
 import {
     LEFT_GEOMETRY,
     RIGHT_GEOMETRY,
@@ -15,10 +16,6 @@ const RAD2DEG = 180 / Math.PI
 const DEG2RAD = Math.PI / 180
 
 export const APPROACH_PEAK = 0.94
-
-function clamp(value: number, min: number, max: number): number {
-    return value < min ? min : value > max ? max : value
-}
 
 function fmt(value: number): string {
     return value.toFixed(2)
@@ -203,7 +200,6 @@ export function advanceState(state: FingerAnimState, prof: FingerMotionProfile, 
         p = envelopeP(state, prof, now, reduced)
     }
     if (state.phase === 'press' && now - state.phaseStart >= (reduced ? 0 : prof.pressMs)) {
-        // Settled on the target — the finger holds here until the key releases.
         p = 1
     }
     if (state.phase === 'release' && now - state.phaseStart >= (reduced ? 0 : prof.releaseMs)) {
@@ -219,7 +215,6 @@ export function needsFrame(state: FingerAnimState, prof: FingerMotionProfile, no
     if (state.target === null || state.phase === 'rest') return false
     if (state.phase === 'release') return now - state.phaseStart < (reduced ? 0 : prof.releaseMs)
     if (state.phase === 'press') {
-        // Held on the target: no motion (the loop restarts on the next change).
         return now - state.phaseStart < (reduced ? 0 : prof.pressMs)
     }
     return now - state.phaseStart < approachDuration(prof, reduced)
@@ -262,11 +257,6 @@ export function fingertipInKeyboard(
     p: number,
 ): Vec2 {
     return handToKeyboard(place, fingertipPosition(geo, prof, target, p))
-}
-
-export function describeState(geo: FingerGeometry, prof: FingerMotionProfile, target: FingerTarget | null, p: number): string {
-    const t = interpolate(target ?? ZERO_TARGET, prof, p)
-    return `tx ${t.tx.toFixed(2)} ty ${t.ty.toFixed(2)} rot ${t.deg.toFixed(2)}deg p ${p.toFixed(2)} L ${geo.length.toFixed(1)}`
 }
 
 export class FingerAnimator {

@@ -13,11 +13,11 @@ import {
     generateRowTransitionDrill,
     type GeneratedDrill,
 } from './generator'
-import { DEFAULT_ENGLISH_CONSTRAINTS, type DrillConstraints } from './types'
+import type { DrillConstraints } from './types'
 
 export type MuscleMemoryGoal = 'finger-isolation' | 'hand-alternation' | 'same-hand' | 'shift' | 'row-transition' | 'repetition' | 'pair'
 
-export interface MuscleMemoryOptions {
+interface MuscleMemoryOptions {
     length?: number
     seed?: number
     constraints?: Partial<DrillConstraints>
@@ -170,5 +170,3 @@ export const MUSCLE_MEMORY_GOALS: MuscleMemoryGoal[] = [
     'repetition',
     'pair',
 ]
-
-export { DEFAULT_ENGLISH_CONSTRAINTS }

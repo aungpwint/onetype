@@ -57,7 +57,7 @@ function readStoredFocusMode(): boolean {
     }
 }
 
-export function resolveTheme(preference: ThemePreference): ResolvedTheme {
+function resolveTheme(preference: ThemePreference): ResolvedTheme {
     if (preference !== 'system') return preference
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
@@ -68,7 +68,6 @@ function applyTheme(theme: ThemePreference, presetId = readStoredThemePreset()) 
     syncWindowTheme(resolved)
 }
 
-/** Paint the current tone + stored preset, then sync the window chrome. */
 export function applyCurrentTheme() {
     const state = useUiStore.getState()
     const resolved = resolveTheme(state.theme)

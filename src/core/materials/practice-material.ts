@@ -15,15 +15,10 @@ export type PracticeUnit = 'time' | 'words' | 'text' | 'quote'
 export interface PracticeConfig {
     language: 'english' | 'myanmar'
     unit: PracticeUnit
-    /** Seconds the material should cover when unit === 'time'. */
     time?: number
-    /** Number of words to emit when unit === 'words'. */
     words?: number
-    /** Verbatim target when unit === 'text'. */
     text?: string
-    /** Sprinkle sentence punctuation (.,!?;:) — English; ၊ ။ — Myanmar. */
     punctuation?: boolean
-    /** Sprinkle numeric tokens (digits for English, Myanmar numerals otherwise). */
     numbers?: boolean
 }
 
@@ -71,8 +66,6 @@ function wordPool(layout: KeyboardLayout, language: 'english' | 'myanmar'): stri
     const seen = new Set<string>()
     const words: string[] = []
     for (const line of lines) {
-        // English targets split on whitespace; Myanmar practice treats each
-        // syllable cluster as the natural "word" to drill.
         const tokens = language === 'english' ? line.split(/\s+/) : line.split(' ')
         for (const token of tokens) {
             if (token.length === 0) continue
@@ -99,12 +92,6 @@ function repeatUntil(targetChars: number, pool: string[], sep = ' '): string {
     }
     return parts.join(sep)
 }
-
-// --- Punctuation / numbers decoration (Monkeytype-style) ----------------------
-// English gets sentence punctuation (.,!?;:) with capitalisation of the next
-// word; Myanmar gets native ၊ ။ and Myanmar numerals. Everything emitted here is
-// guaranteed encodable by the active layout, so the decorated run never breaks
-// the target sequence.
 
 const EN_PUNCTUATION = ['.', ',', '!', '?', ';', ':']
 
@@ -170,7 +157,6 @@ function buildDecoratedWords(config: PracticeConfig, layout: KeyboardLayout, cou
     return text
 }
 
-/** Build a fixed-count practice lesson for quick, untracked typing runs. */
 export function buildPracticeMaterial(config: PracticeConfig): ResolvedLesson {
     const layout = layoutForLanguage(config.language)
     const unit = config.unit
@@ -182,8 +168,6 @@ export function buildPracticeMaterial(config: PracticeConfig): ResolvedLesson {
         text = encodableLine(layout, custom)
         if (!text) throw new Error('Practice text contains characters unavailable in the selected layout')
     } else if (unit === 'quote') {
-        // Monkeytype-style quote mode: pick a random quotation for the language,
-        // skipped if this layout cannot re-encode it.
         const candidates = quotePool(config.language).filter((q) => encodableLine(layout, q.text))
         if (candidates.length === 0) throw new Error(`No quotable practice material available for "${config.language}"`)
         const quote = candidates[Math.floor(Math.random() * candidates.length)]
@@ -204,12 +188,9 @@ export function buildPracticeMaterial(config: PracticeConfig): ResolvedLesson {
     } else {
         const seconds = Math.max(15, Math.min(120, config.time ?? 30))
         if (config.punctuation === true || config.numbers === true) {
-            // Decorated runs are word-built (Monkeytype-style): generous headroom
-            // (~3 words/sec ≈ 180 wpm) so a fast typist never runs out of text
-            // before the timer.
             text = buildDecoratedWords(config, layout, Math.max(30, Math.ceil(seconds * 3)))
         } else {
-            // Roughly 40 wpm sustained (≈ 200 chars/min) with comfortable headroom.
+            // Sustained ≈ 200 chars/min with comfortable headroom.
             const targetChars = Math.max(120, seconds * 200)
             const pool = encodablePool(layout, config.language)
             if (pool.length === 0) throw new Error(`No practice material available for "${config.language}"`)

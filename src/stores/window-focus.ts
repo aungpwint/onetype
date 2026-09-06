@@ -1,24 +1,14 @@
-/**
- * Window-focus stewardship for typing rounds.
- *
- * OneType types through a global window keydown handler (not a filled input),
- * so the web platform's own focus semantics don't automatically govern a
- * round — the app must decide what losing the window's focus means. Monkeytype
- * pauses the timer and dims the UI on blur for the same reason.
- *
- * The core guarantee: a lost window/tab focus must NEVER silently inflate a
- * learner's timing, and keystrokes meant for another app must never leak into
- * a running session.
- */
+// Window-focus stewardship for typing rounds. Typing goes through a global
+// window keydown handler (not a filled input), so the app itself must decide
+// what losing window focus means: a lost focus must never silently inflate a
+// learner's timing, and keystrokes meant for another app must never leak into
+// a running session.
 
 export type FocusPolicy = 'off' | 'pause' | 'soft'
 
 export interface FocusInfo {
-    /** Whether the window currently has keyboard focus. */
     focused: boolean
-    /** Timestamp (ms) of the last focus loss while a round was in flight. */
     lostFocusAt: number | null
-    /** Milliseconds the window was away when it regained focus (AFK gap). */
     afkGapMs: number | null
 }
 
@@ -33,19 +23,10 @@ export interface FocusEventTarget {
     removeEventListener: (type: string, listener: FocusEventListener) => void
 }
 
-/**
- * Register the window/document focus + visibility listeners for a typing
- * round. Returns a cleanup function.
- *
- * - `onLostFocus` fires when the window loses keyboard focus OR the tab is
- *   hidden while a round is active. Typically pauses the timer.
- * - `onRegainedFocus(gapMs)` fires when focus comes back after an outstanding
- *   loss. `gapMs` is the time the window was away — used to detect AFK so the
- *   learner can be asked whether to continue.
- *
- * `targets` may be injected for tests (the round trips through an EventTarget
- * rather than the real browser).
- */
+// `onLostFocus` fires when the window loses keyboard focus or the tab is
+// hidden while a round is active. `onRegainedFocus(gapMs)` fires when focus
+// returns after an outstanding loss; the gap detects AFK so the learner can
+// be asked whether to continue. `targets` may be injected for tests.
 export function bindWindowFocusGuard(
     opts: {
         onLostFocus: () => void

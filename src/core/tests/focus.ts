@@ -1,6 +1,6 @@
 import type { TestResult, TypingTest } from '@/services/types'
 
-export interface FocusEntry {
+interface FocusEntry {
     testId: string
     code: string
     name: string
@@ -18,7 +18,6 @@ function bestRun(runs: readonly TestResult[]): TestResult {
     return best
 }
 
-/** Papers attempted but not yet passed, ordered by how close the best run already is to the target. */
 export function focusQueue(results: readonly TestResult[], tests: readonly TypingTest[], limit = 3): FocusEntry[] {
     const byId = new Map(tests.map((t) => [t.id, t]))
     const grouped = new Map<string, TestResult[]>()

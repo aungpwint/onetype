@@ -15,7 +15,3 @@ const BY_LANGUAGE: Record<SpeedLanguage, TypingLanguageProfile> = {
 export function profileFor(language: SpeedLanguage): TypingLanguageProfile {
     return BY_LANGUAGE[language]
 }
-
-export function profileForScript(script: 'english' | 'myanmar'): TypingLanguageProfile {
-    return BY_LANGUAGE[script]
-}

@@ -34,8 +34,6 @@ export default function Learn() {
     const active = useStudentStore((s) => s.active)
     const storedLang = useSettingsStore((s) => s.get('app.language'))
 
-    // Derived from the persisted app.language setting so the toggle and the
-    // curriculum list stay in sync and survive a reload.
     const lang = storedLang === 'myanmar' ? 'myanmar' : 'english'
 
     const [level, setLevel] = useState<Level>(() => ((LEVEL_ORDER as string[]).includes(levelParam ?? '') ? (levelParam as Level) : 'beginner'))

@@ -145,17 +145,15 @@ const Keycap = memo(function Keycap({ layout, definition, isActive, flashed, isS
             className={[
                 'keycap',
 
-                // Responsive height — taller so Burmese ascenders/descenders breathe
+                // Taller so Burmese ascenders/descenders breathe
                 'h-10',
                 'sm:h-11',
                 'lg:h-12',
                 '2xl:h-14',
 
-                // Shape — rounder top, tighter root, sculpted keycap silhouette
                 'rounded-[11px]',
                 'rounded-b-md',
 
-                // Layout
                 'relative',
                 'min-w-0',
                 'flex',
@@ -163,16 +161,13 @@ const Keycap = memo(function Keycap({ layout, definition, isActive, flashed, isS
                 'justify-center',
                 'leading-none',
 
-                // Interaction look
                 'select-none',
                 'transition-[transform,background-color,box-shadow,border-color]',
                 'duration-150',
                 'ease-out',
 
-                // Motion
                 pressClass,
 
-                // State
                 stateClass,
             ].join(' ')}
             style={{
@@ -223,9 +218,7 @@ function getKeyLabel({
     isSpace: boolean
     wideLabel: string | undefined
 }): ReactNode {
-    // Single source of truth: the character displayed on every keycap is the
-    // exact character `layout.outputFor` would produce when that key is pressed,
-    // so the UI label and the keyboard-generated Unicode can never diverge.
+    // Keycap label must equal layout.outputFor so the UI and typed Unicode never diverge.
     const plain = layout.outputFor(definition.code, 'none')?.text ?? definition.plain ?? definition.label
     const shifted = layout.outputFor(definition.code, 'shift')?.text ?? definition.shifted
 
@@ -245,13 +238,8 @@ function getKeyLabel({
         )
     }
 
-    // A few keys carry multi-code-point labels (e.g. Myanmar KeyR shift
-    // "၎င်း"). They are always shown in full — never ellipsized or clipped —
-    // by relaxing the top-right slot and shrinking the glyphs a touch.
     const shiftedLong = shifted !== undefined && shifted.length > 2
 
-    // keycap-layout.html shows three layers per key: the ASCII legend (top-left),
-    // the shifted character (top-right) and the unshifted character (bottom-center).
     return (
         <>
             <span className="keycap-sublabel absolute top-1 left-1.5 text-[0.5rem] font-medium tracking-tight sm:top-1.5 sm:left-2 sm:text-[0.5625rem] lg:text-[0.6rem]">

@@ -19,8 +19,7 @@ export function splitGraphemes(text: string): string[] {
         if (!segmenter) segmenter = new segmenterCtor(undefined, { granularity: 'grapheme' })
         return Array.from(segmenter.segment(text), (seg) => seg.segment)
     }
-    // Fallback for runtimes without Intl.Segmenter: collect combining marks
-    // onto their base code point as a best-effort grapheme.
+    // Fallback without Intl.Segmenter: collect combining marks onto their base.
     const result: string[] = []
     let current = ''
     for (const ch of text) {

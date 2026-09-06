@@ -49,7 +49,6 @@ const KEYS = {
 }
 
 export const CONTENT_VERSION = 1
-export const LAYOUT_VERSION = 1
 
 function read<T>(key: string, fallback: T): T {
     try {
@@ -86,10 +85,6 @@ function nextStudentCode(): string {
         if (match) max = Math.max(max, Number.parseInt(match[1], 10))
     }
     return `STU${String(max + 1).padStart(3, '0')}`
-}
-
-function clampAccuracy(student: Student): Student {
-    return student
 }
 
 function seedTestsIfMissing() {
@@ -156,13 +151,13 @@ export const localBackend = {
         const index = students.findIndex((s) => s.id === req.id)
         if (index < 0) throw new Error(`Student not found: ${req.id}`)
         const student = students[index]
-        students[index] = clampAccuracy({
+        students[index] = {
             ...student,
             name: req.name ?? student.name,
             displayName: req.displayName ?? student.displayName ?? req.name ?? student.name,
             avatar: req.avatar ?? student.avatar,
             updatedAt: now(),
-        })
+        }
         write(KEYS.students, students)
         return students[index]
     },

@@ -12,8 +12,6 @@ export function useKeyboardShortcuts() {
             const key = event.key.toLowerCase()
             const mod = event.ctrlKey || event.metaKey || event.altKey
 
-            // Command palette: Ctrl/Cmd+K opens it; Escape closes it first so it
-            // never also pauses a run behind the palette.
             if (mod && key === 'k') {
                 event.preventDefault()
                 useUiStore.getState().setCommandPaletteOpen(true)
@@ -25,7 +23,6 @@ export function useKeyboardShortcuts() {
                 return
             }
 
-            // Navigation quickly via Ctrl/Cmd + number
             if (mod && event.key === '1') {
                 event.preventDefault()
                 navigate('/')
@@ -51,38 +48,28 @@ export function useKeyboardShortcuts() {
                 navigate('/settings')
                 return
             }
-            // Ctrl+Shift+M or Ctrl+, → settings
             if ((mod && key === ',') || (mod && event.shiftKey && key === 'm')) {
                 event.preventDefault()
                 navigate('/settings')
                 return
             }
-            // Ctrl+Shift+T → timed tests
             if (mod && event.shiftKey && key === 't') {
                 event.preventDefault()
                 navigate('/tests')
                 return
             }
-            // Ctrl+Shift+L → learn
             if (mod && event.shiftKey && key === 'l') {
                 event.preventDefault()
                 navigate('/learn')
                 return
             }
 
-            // Session shortcuts (never trigger on plain typing, only with modifiers handled above
-            // or dedicated keys that typing already routes): Escape pauses a running session.
+            // Escape pauses a running session; R restarts only when typing is not live (see bindKeys).
             if (!mod && key === 'escape' && typingActive) {
                 const st = useTypingStore.getState()
                 if (st.status === 'running' || st.status === 'paused') st.togglePause()
                 return
             }
-            // R restarts from a non-typing state (ready/paused) instantly, in
-            // place, with the same text and a fully reset timer/metrics. While
-            // actively running, R is just a typed key (r is a common target
-            // letter) — mid-run instant restart stays on Tab (see bindKeys). On
-            // the finished screen R starts a fresh run, like the dialog's
-            // "Type again".
             if (!mod && key === 'r' && typingActive) {
                 const st = useTypingStore.getState()
                 if (st.status === 'ready' || st.status === 'paused') {

@@ -1,14 +1,12 @@
 export interface ActivityDay {
     /** UTC midnight epoch ms for the day. */
     date: number
-    /** Number of typing minutes recorded that day (0 if inactive). */
     minutes: number
-    /** Sessions recorded that day. */
     sessions: number
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000
-export const ACTIVITY_CELLS = 26 * 7
+const ACTIVITY_CELLS = 26 * 7
 
 export function toUtcMidnight(ts: number): number {
     const d = new Date(ts)
@@ -25,10 +23,6 @@ export function cellLevel(minutes: number, max: number): 0 | 1 | 2 | 3 | 4 {
     return 1
 }
 
-/**
- * Build a day-indexed activity map keyed by UTC-midnight epoch ms so the map
- * is locale independent, merging multiple sessions that share a day.
- */
 export function aggregateActivity(days: ActivityDay[]): Map<number, ActivityDay> {
     const map = new Map<number, ActivityDay>()
     for (const day of days) {
@@ -39,8 +33,7 @@ export function aggregateActivity(days: ActivityDay[]): Map<number, ActivityDay>
     return map
 }
 
-/** Day cells for the trailing window, oldest first, already bucketed per level. */
-export interface HeatmapLayout {
+interface HeatmapLayout {
     cells: ActivityDay[]
     max: number
 }

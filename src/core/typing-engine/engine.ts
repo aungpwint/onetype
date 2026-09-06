@@ -52,14 +52,11 @@ export class TypingEngine {
     lastEvent: TypingEngineEvent | null = null
     finishReason: FinishReason | null = null
     readonly keyOutcomes = new Map<string, KeyOutcome>()
-    /** Expected key id → (pressed key id → count), for the result screen's miskey pairs. */
     readonly wrongPresses = new Map<string, Map<string, number>>()
     private readonly unitOutcomes = new Map<number, boolean>()
     private readonly stopwatch: Stopwatch
     private readonly listeners: EngineListener[] = []
-    /** Elapsed-ms timestamp of every correct keystroke, for pacing consistency. */
     readonly correctTimes: number[] = []
-    /** Per-grapheme Myanmar comparison diagnosis once a cluster is fully typed. */
     readonly clusterDiagnoses = new Map<number, ClusterDiagnosis>()
     private readonly clusterTypedChars = new Map<number, string[]>()
 
@@ -149,7 +146,6 @@ export class TypingEngine {
         })
     }
 
-    /** Number of grapheme clusters fully consumed by the caret. */
     completedClusters(): number {
         let count = 0
         const ranges = this.sequence.graphemeUnitRanges
@@ -163,7 +159,6 @@ export class TypingEngine {
         return this.clusterDiagnoses.get(graphemeIndex) ?? null
     }
 
-    /** Diagnoses in display (grapheme) order. */
     diagnoseClusters(): ClusterDiagnosis[] {
         const out: ClusterDiagnosis[] = []
         for (let gi = 0; gi < this.sequence.graphemes.length; gi++) {
@@ -191,11 +186,9 @@ export class TypingEngine {
 
         if (code === 'Backspace') {
             this.backspaceCount += 1
-            // Backspace is unit-granular: it reverses exactly ONE typing unit —
-            // the current unit when it holds a (recoverable) wrong attempt,
-            // otherwise the last consumed unit. A multi-unit Myanmar grapheme
-            // therefore unwinds unit-by-unit: its consumed slots flip back to
-            // current/pending immediately and no stale outcome is left behind.
+            // Backspace undoes exactly one typing unit: the current unit when it
+            // holds a wrong attempt, otherwise the last consumed unit — so a
+            // multi-unit Myanmar grapheme unwinds unit-by-unit.
             if (this.unitIndex > 0 || this.unitOutcomes.has(this.unitIndex)) {
                 const target = this.unitOutcomes.has(this.unitIndex) ? this.unitIndex : this.unitIndex - 1
                 this.unitOutcomes.delete(target)
@@ -220,9 +213,8 @@ export class TypingEngine {
             this.unitOutcomes.set(expected.index, true)
             this.correctTimes.push(this.stopwatch.elapsedMs())
             this.unitIndex += 1
-            // Recorded after the advance so a fully-consumed cluster can be
-            // classified immediately; wrong presses meanwhile accumulate into
-            // the cluster's typed run without consuming it.
+            // Record after the advance so a fully-consumed cluster is classified
+            // immediately; wrong presses accumulate without consuming the unit.
             this.recordClusterPress(expected.graphemeIndex, code, modifier)
             this.emit({ type: 'correct', unitIndex: expected.index, keyCode: code, modifier, expected })
             if (this.isComplete) {
@@ -236,10 +228,8 @@ export class TypingEngine {
                 this.unitOutcomes.set(expected.index, false)
             }
             this.recordClusterPress(expected.graphemeIndex, code, modifier)
-            // Classify the error. A modifier/shift error happens when the learner
-            // pressed the correct physical key but with the wrong Shift state
-            // (e.g. lowercase when uppercase was expected). This is a distinct,
-            // trackable weakness.
+            // A modifier/shift error is the right physical key with the wrong
+            // Shift state (e.g. lowercase when uppercase was expected).
             const errorKind: 'key' | 'modifier' = keyMatches && modifier !== expected.modifier ? 'modifier' : 'key'
             if (errorKind === 'modifier') {
                 this.shiftErrorCount += 1
@@ -278,13 +268,11 @@ export class TypingEngine {
         this.lastEvent = null
     }
 
-    /** Restart the current run in place: exact same text, fully fresh metrics. */
     restart() {
         this.resetMetrics()
         this.emit({ type: 'restart', unitIndex: 0 })
     }
 
-    /** Expect-to-pressed pairing for a wrong keystroke. */
     private recordWrongPress(expected: TypingUnit, code: string, modifier: Modifier) {
         const expectedId = `${expected.keyCode}:${expected.modifier}`
         const pressedId = `${code}:${modifier}`
@@ -303,9 +291,8 @@ export class TypingEngine {
         const chars = this.clusterTypedChars.get(graphemeIndex) ?? []
         chars.push(output.text)
         this.clusterTypedChars.set(graphemeIndex, chars)
-        // Once the whole cluster has been consumed, classify what the learner
-        // actually produced for that cluster so the result screen can explain
-        // the recurring slips (missing tone mark, extra medial, swapped order…).
+        // Once the cluster is fully consumed, classify what was actually typed
+        // so the result screen can explain recurring slips.
         const [, end] = this.sequence.graphemeUnitRanges[graphemeIndex]
         if (this.unitIndex >= end && !this.clusterDiagnoses.has(graphemeIndex)) {
             const expected = this.sequence.graphemes[graphemeIndex]
@@ -315,9 +302,8 @@ export class TypingEngine {
         }
     }
 
-    /** Drop per-cluster diagnosis/chars for every grapheme containing or after
-        a rewritten unit. A partially rewound grapheme must not keep a stale
-        diagnosis or old press run (the unit's erased press is gone for good). */
+    // Drop per-cluster diagnosis/chars for every grapheme containing or after
+    // a rewritten unit so a partially rewound grapheme keeps no stale press run.
     private clearClusterStateFromUnit(fromUnit: number) {
         const ranges = this.sequence.graphemeUnitRanges
         for (let gi = 0; gi < ranges.length; gi++) {

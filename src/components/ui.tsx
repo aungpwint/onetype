@@ -53,7 +53,6 @@ export function Atmosphere({ className }: { className?: string }) {
     const quiet = focusMode && hasEffect
     return (
         <div aria-hidden className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)}>
-            {/* Ambient wash follows the active palette so every preset feels whole. */}
             <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-[color-mix(in_srgb,var(--primary)_9%,transparent)] blur-[120px]" />
             <div className="absolute top-16 -right-24 h-80 w-80 rounded-full bg-[color-mix(in_srgb,var(--primary)_6%,transparent)] blur-[110px]" />
             <div className="absolute -bottom-40 left-1/3 h-96 w-96 rounded-full bg-[color-mix(in_srgb,var(--primary)_5%,transparent)] blur-[130px]" />

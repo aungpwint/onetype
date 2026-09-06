@@ -8,11 +8,8 @@ export function containsMyanmar(text: string): boolean {
 }
 
 // Zero-width invisible character policy: lesson text and typing targets must be
-// canonical Unicode. The real-world corruption is a Zero Width Non-Joiner
-// (U+200C) inserted before the preposed vowel U+1031 (ေ) by certain keyboard
-// drivers. It is invisible but breaks shaping and changes the stored bytes, so
-// detection/cleaning lives here.
-
+// canonical Unicode. The common corruption is a Zero Width Non-Joiner (U+200C)
+// inserted before the preposed vowel U+1031 (ေ) by certain keyboard drivers.
 const SUSPICIOUS_CODEPOINTS: ReadonlySet<number> = new Set([
     0x200b, 0x200c, 0x200d, 0x200e, 0x200f, 0x202a, 0x202b, 0x202c, 0x202d, 0x202e, 0x2060, 0xfeff, 0x034f,
 ])
@@ -91,18 +88,16 @@ export function normalizeMyanmarText(text: string): string {
     return out
 }
 
-// Myanamar syllable cluster segmentation: a full syllable cluster (base
-// consonant + medials + vowel signs + asat/kinzi/stacking + tone marks) is one
-// deletion unit; Intl.Segmenter leaves the preposed vowel U+1031 standalone, so
-// the canonical syllable-break rules are implemented here. Input must already
-// be canonical (see `validateMyanmarText`). Character membership comes from the
-// classification core — no code-point tables live here.
+// Myanamar syllable segmentation: one full syllable cluster (base consonant +
+// medials + vowel signs + asat/kinzi/stacking + tone marks) is one deletion
+// unit. Input must already be canonical (see `validateMyanmarText`).
+// Membership comes from the classification core — no code-point tables here.
 
 export function splitMyanmarSyllables(text: string): string[] {
     const chars = Array.from(text)
     const out: string[] = []
     let current = ''
-    let pending = '' // holds a preposed vowel to be merged into the next cluster
+    let pending = '' // preposed vowel held until its host base is known
 
     for (let i = 0; i < chars.length; i++) {
         const code = chars[i].codePointAt(0) ?? 0
@@ -110,20 +105,16 @@ export function splitMyanmarSyllables(text: string): string[] {
         const next = i + 1 < chars.length ? (chars[i + 1].codePointAt(0) ?? 0) : 0
 
         if (isPreBaseVowel(code)) {
-            // U+1031 is stored after its base and rendered before it; hold it
-            // until we know whether a following base consonant claims it or it
-            // completes the current (word-final) syllable.
+            // Stored after its base, rendered before it: hold until a following
+            // base claims it or it completes the current (word-final) syllable.
             pending += chars[i]
             continue
         }
 
         if (isSyllableStart(code, prev, next)) {
-            // A held preposed vowel can only merge into a cluster headed by a
-            // real base that hosts it (consonant / independent vowel letter).
+            // A held preposed vowel merges only into a cluster headed by a real
+            // host base; otherwise re-join it to the syllable it follows.
             if (pending.length > 0 && !isMyanmarSyllableHead(code)) {
-                // The next char is a word space, punctuation, digit, … that
-                // cannot host the vowel: re-join the vowel to the syllable it
-                // logically follows, then open a fresh cluster.
                 current += pending
                 pending = ''
             }
@@ -131,10 +122,8 @@ export function splitMyanmarSyllables(text: string): string[] {
             current = pending + chars[i]
             pending = ''
         } else {
-            // An attaching mark continues the current syllable. Any held
-            // preposed vowel is part of that same syllable and must land
-            // BEFORE the mark (logical order: base, then ေ, then tone marks),
-            // or re-joining the clusters would reorder the source text.
+            // An attaching mark continues the current syllable; any held
+            // preposed vowel belongs to it and lands BEFORE the mark.
             if (pending.length > 0) {
                 current += pending
                 pending = ''
@@ -148,15 +137,12 @@ export function splitMyanmarSyllables(text: string): string[] {
 }
 
 function isSyllableStart(code: number, prev: number, next: number): boolean {
-    // Base consonants (and vowel-letter bases like ဣ ဤ ဥ ဦ ဧ ဩ ဿ) attach any
-    // cluster-internal marks.
+    // Base consonants (and vowel-letter bases) attach any cluster-internal marks.
     if (isMyanmarSyllableHead(code)) {
         // Final consonants (followed by asat U+103A) and stacked consonants
         // (following virama U+1039 / asat U+103A) continue the previous cluster.
         if (isAsat(next)) return false
         if (isAsat(prev) || isVirama(prev)) return false
-        // A consonant directly after a consonant starts a new syllable, unless the
-        // preceding one already carried a vowel (handled by the independent rules).
         return true
     }
     // Medials and vowel signs always attach to the current cluster.

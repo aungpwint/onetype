@@ -1,4 +1,4 @@
-export abstract class LessonError extends Error {
+abstract class LessonError extends Error {
     readonly lessonId: string | null
 
     constructor(message: string, lessonId?: string) {

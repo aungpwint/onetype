@@ -57,9 +57,6 @@ function MasteryNotice({ delta }: { delta: MasteryDelta }) {
     )
 }
 
-// If the dialog crashes, drop straight back to the "Preparing your run" gate
-// (useBeginSession re-runs the current lesson) instead of leaving the learner
-// stuck on an error card.
 class ResultDialogBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
     state = { hasError: false }
 
@@ -101,9 +98,6 @@ function ResultDialogInner() {
     const pb = usePersonalBest(result?.metrics.speed ?? 0, result?.metrics.speedUnit ?? 'wpm', session?.startedAt ?? 0, session?.layout.id ?? '')
     const rank = useClassResultRank(session?.test?.id ?? null)
 
-    // Enter advances straight to the next lesson when there is one. The key is
-    // only claimed when no interactive element is focused, so buttons keep their
-    // click-on-Enter behaviour.
     const nextLessonId =
         result?.passed && session?.kind === 'lesson'
             ? (lessonsByLevel[session.resolved.level]?.find(
@@ -138,7 +132,6 @@ function ResultDialogInner() {
     const isLesson = session.kind === 'lesson'
     const isDrill = session.kind === 'drill'
     const isPractice = session.kind === 'practice'
-    // Drills are practice without a pass/fail gate, so they always show as complete.
     const target = isLesson
         ? session.resolved.completion
         : isDrill || isPractice
@@ -528,8 +521,7 @@ function usePersonalBest(speed: number, unit: string, startedAt: number, layoutI
     const [info, setInfo] = useState<PersonalBestInfo | null>(null)
 
     useEffect(() => {
-        // Session history only ever stores WPM, so units/min rounds (Myanmar)
-        // have no compatible prior speeds to compare against.
+        // Session history only stores WPM, so units/min rounds have no comparable priors.
         if (speed <= 0 || unit !== 'wpm' || !studentId) return
         let alive = true
         void backend

@@ -1,7 +1,7 @@
 import type { StudentSummary } from '@/services/types'
 import { formatDateTime } from '@/lib/format'
 
-export interface RegisterRow {
+interface RegisterRow {
     code: string
     name: string
     level: string
@@ -13,7 +13,7 @@ export interface RegisterRow {
     lastPracticed: string
 }
 
-export const REGISTER_HEADERS: ReadonlyArray<keyof RegisterRow> = [
+const REGISTER_HEADERS: ReadonlyArray<keyof RegisterRow> = [
     'code',
     'name',
     'level',
@@ -25,7 +25,7 @@ export const REGISTER_HEADERS: ReadonlyArray<keyof RegisterRow> = [
     'lastPracticed',
 ]
 
-export const REGISTER_LABELS: Record<keyof RegisterRow, string> = {
+const REGISTER_LABELS: Record<keyof RegisterRow, string> = {
     code: 'Code',
     name: 'Name',
     level: 'Level',
@@ -37,7 +37,7 @@ export const REGISTER_LABELS: Record<keyof RegisterRow, string> = {
     lastPracticed: 'Last practiced',
 }
 
-export function registerRowFromSummary(s: StudentSummary): RegisterRow {
+function registerRowFromSummary(s: StudentSummary): RegisterRow {
     return {
         code: s.student.studentCode,
         name: s.student.displayName,
@@ -71,7 +71,7 @@ export function registerFilename(date: Date = new Date()): string {
     return `register-${iso}.csv`
 }
 
-export function htmlEscape(value: string): string {
+function htmlEscape(value: string): string {
     return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
 }
 

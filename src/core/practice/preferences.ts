@@ -1,6 +1,6 @@
-export type PracticeUnit = 'time' | 'words'
+type PracticeUnit = 'time' | 'words'
 
-export interface PracticePreferences {
+interface PracticePreferences {
     unit: PracticeUnit
     time: number
     words: number
@@ -9,7 +9,7 @@ export interface PracticePreferences {
     numbers: boolean
 }
 
-export const PRACTICE_DEFAULTS: PracticePreferences = {
+const PRACTICE_DEFAULTS: PracticePreferences = {
     unit: 'time',
     time: 30,
     words: 25,

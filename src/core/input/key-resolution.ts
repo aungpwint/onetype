@@ -2,12 +2,12 @@ import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import { normalizeMyanmarText } from '@/core/unicode/myanmar'
 import type { Modifier } from '@/types'
 
-export interface PressedKey {
+interface PressedKey {
     code: string
     modifier: Modifier
 }
 
-export interface KeyEventLike {
+interface KeyEventLike {
     code?: string
     key?: string
     shiftKey?: boolean

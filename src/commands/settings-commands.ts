@@ -6,9 +6,7 @@ export interface SettingCommandDef {
     title: string
     keywords: string
     settingKey: AppSettingKey
-    /** Invert the current on/off value when run. */
     toggle?: boolean
-    /** Fixed value to write when run (used instead of toggle). */
     value?: string
 }
 
@@ -27,7 +25,6 @@ export const SETTING_COMMANDS: SettingCommandDef[] = [
     { id: 'timer-style-off', title: 'Timer style: off', keywords: 'hidden no timer', settingKey: 'practice.timerStyle', value: 'off' },
 ]
 
-/** Wrap the declarative setting commands as palette commands. */
 export function buildSettingCommands(context: CommandContext, defs: SettingCommandDef[] = SETTING_COMMANDS): Command[] {
     return defs.map((def) => ({
         id: `setting-${def.id}`,

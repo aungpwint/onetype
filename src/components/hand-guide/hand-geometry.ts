@@ -90,10 +90,6 @@ export const RIGHT_GEOMETRY: HandGeometry = {
     artBounds: { minX: BAND.x0, maxX: BAND.x1 },
 }
 
-export function handGeometry(hand: Hand): HandGeometry {
-    return hand === 'left' ? LEFT_GEOMETRY : RIGHT_GEOMETRY
-}
-
 export function keyboardToPixel(kb: KeyboardGeometry, point: Vec2): Vec2 {
     return { x: kb.x + point.x, y: kb.y + point.y }
 }

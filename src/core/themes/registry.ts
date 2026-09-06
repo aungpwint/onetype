@@ -1,13 +1,4 @@
-/**
- * Theme presets: curated palettes layered on top of the light/dark base via
- * CSS custom properties, Monkeytype-style. Each preset is a complete "desk"
- * identity rooted in Myanmar materials and landscape — writing paper, black
- * lacquer, slate boards, monsoon rain, temple gold, Pyu bricks, teak, and the
- * night sky — and ships a light and a dark variant so the tone toggle keeps
- * working under any preset.
- */
-
-export type ThemeTone = 'light' | 'dark'
+type ThemeTone = 'light' | 'dark'
 
 export interface ThemePalette {
     bg: string
@@ -42,7 +33,7 @@ export interface ThemePalette {
     thumb: string
 }
 
-export interface ThemePreset {
+interface ThemePreset {
     id: string
     name: string
     description: string
@@ -50,7 +41,6 @@ export interface ThemePreset {
     dark: ThemePalette
 }
 
-/** Maps palette tokens onto the app's live CSS custom properties. */
 export const THEME_VAR_MAP: Record<keyof ThemePalette, string> = {
     bg: '--bg',
     surface: '--surface',
@@ -691,11 +681,6 @@ export function paletteForTheme(preset: ThemePreset | null, tone: ThemeTone): Th
     return preset ? preset[tone] : null
 }
 
-/**
- * Apply (or clear) a preset's palette as inline CSS custom properties on the
- * supplied element. When preset is null every managed variable is removed so
- * the base `:root`/`.dark` styles take over again.
- */
 export function applyThemePalette(root: HTMLElement, preset: ThemePreset | null, tone: ThemeTone): void {
     const palette = paletteForTheme(preset, tone)
     if (!palette) {

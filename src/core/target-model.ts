@@ -2,7 +2,7 @@ import type { FingerId, Hand, Modifier } from '@/types'
 import type { TypingEngine } from './typing-engine/engine'
 import { shiftHandFor, type KeyboardLayout } from './keyboard-layout/layout'
 
-export interface TargetState {
+interface TargetState {
     keyCode: string | null
     modifier: Modifier
     finger: FingerId | null
@@ -11,7 +11,7 @@ export interface TargetState {
     shiftHand: Hand | null
 }
 
-export interface LastKeyState {
+interface LastKeyState {
     keyCode: string | null
     correct: boolean
 }

@@ -37,15 +37,15 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/t
 import { cn, sectionTitleClass, highlightClass } from '@/lib/utils'
 
 const NAV = [
-    { to: '/', label: 'Dashboard', en: 'Dashboard', icon: LayoutDashboard },
-    { to: '/learn', label: 'Learn', en: 'Learn', icon: BookOpen },
-    { to: '/practice', label: 'Practice', en: 'Practice', icon: Zap },
-    { to: '/drill', label: 'Adaptive drill', en: 'Adaptive drill', icon: Target },
-    { to: '/tests', label: 'Timed tests', en: 'Timed tests', icon: Timer },
-    { to: '/progress', label: 'Progress', en: 'Progress', icon: TrendingUp },
-    { to: '/teacher', label: 'Teacher', en: 'Teacher', icon: GraduationCap },
-    { to: '/students', label: 'Students', en: 'Students', icon: Users },
-    { to: '/settings', label: 'Settings', en: 'Settings', icon: Settings },
+    { to: '/', en: 'Dashboard', icon: LayoutDashboard },
+    { to: '/learn', en: 'Learn', icon: BookOpen },
+    { to: '/practice', en: 'Practice', icon: Zap },
+    { to: '/drill', en: 'Adaptive drill', icon: Target },
+    { to: '/tests', en: 'Timed tests', icon: Timer },
+    { to: '/progress', en: 'Progress', icon: TrendingUp },
+    { to: '/teacher', en: 'Teacher', icon: GraduationCap },
+    { to: '/students', en: 'Students', icon: Users },
+    { to: '/settings', en: 'Settings', icon: Settings },
 ]
 
 function IconButton({ label, onClick, icon, active }: { label: string; onClick: () => void; icon: ReactNode; active?: boolean }) {
@@ -90,7 +90,6 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
     useKeyboardShortcuts()
 
     useEffect(() => {
-        // Keep the sound module in sync with persisted sound volume/state.
         syncSoundFromSettings(useSettingsStore.getState())
     })
 

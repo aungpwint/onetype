@@ -127,8 +127,6 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
         }
     }, [handsMounted])
 
-    // Drive the targets from the current key state. Fingers absent from the map
-    // are released by the animator; present ones are reached/retargeted.
     useEffect(() => {
         const animator = animatorRef.current
         if (!animator || !handLayout) return
@@ -158,9 +156,6 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
         animator.setTargets(targets)
     }, [isActive, activeKey, shiftKey, handLayout, geometry])
 
-    // Dev-only live anatomy markers: connect the animator's per-frame sample to
-    // the HandDebugLayer circles so CURRENT follows the real envelope (no React
-    // re-render per frame — the loop writes SVG attributes directly).
     useEffect(() => {
         const animator = animatorRef.current
         const scope = containerRef.current
@@ -201,7 +196,6 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
         }
     }, [debug, handLayout])
 
-    // Active finger(s): the target key's finger plus the shift-chord pinky.
     const activeFingers = useMemo<Set<FingerId>>(() => {
         const fingers = new Set<FingerId>()
         if (!isActive) return fingers
@@ -212,7 +206,6 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
         return fingers
     }, [isActive, activeKey, shiftKey])
 
-    // Collision validation (dev only, logs the geometry to inspect).
     useEffect(() => {
         if (import.meta.env.DEV && handLayout && geometry) {
             validateHandLayout(handLayout, geometry.kb)
@@ -237,10 +230,8 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
 
     return (
         <div ref={containerRef} className="hand-overlay-container" {...containerAttrs}>
-            {/* Keyboard layer (z-10) */}
             <div className="hand-overlay-keyboard">{children}</div>
 
-            {/* Front layer: the two static hand assets above the keys (z-30). */}
             <div
                 className="hand-overlay-hand hand-overlay-left"
                 style={{
@@ -331,24 +322,20 @@ function HandDebugLayer({ kb, layout, anchors }: HandDebugLayerProps) {
             aria-hidden
         >
             <g fontFamily="ui-monospace, monospace" fontSize={10} fill="#d34">
-                {/* Keyboard bounds */}
                 <rect x={0.5} y={0.5} width={kb.width - 1} height={kb.height - 1} fill="none" stroke="#d34" strokeWidth={1} strokeDasharray="4 3" />
                 <text x={4} y={12}>
                     keyboard {kb.width.toFixed(0)}×{kb.height.toFixed(0)}
                 </text>
 
-                {/* Hand axis */}
                 <line x1={layout.axisX} y1={0} x2={layout.axisX} y2={kb.height} stroke="#d34" strokeWidth={1} strokeDasharray="2 3" />
                 <text x={layout.axisX + 3} y={12}>
                     axis {layout.axisX.toFixed(0)}
                 </text>
 
-                {/* Key centres */}
                 {keyMarkers.map((k) => (
                     <circle key={k.code} cx={k.x} cy={k.y} r={2} fill="#4d8" opacity={0.9} />
                 ))}
 
-                {/* Hand anchors (+), windows and solid-art boxes */}
                 {windowBoxes.map((b) => (
                     <rect key={`win-${b.key}`} x={b.x} y={b.y} width={b.w} height={b.hh} fill="none" stroke="#48f" strokeWidth={1} />
                 ))}

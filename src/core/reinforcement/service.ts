@@ -1,10 +1,10 @@
 import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
 import { ENGLISH_FINGER_KEYS } from '@/core/drills/types'
-import { planMuscleMemorySession, type MuscleMemoryGoal, type MuscleMemoryPlan } from '@/core/drills/engine'
+import { planMuscleMemorySession, type MuscleMemoryGoal } from '@/core/drills/engine'
 import type { FingerId, ParsedKeyId, ReinforcedDrill, ReinforcementOptions, WeakKeyId } from './types'
 
-export const DEFAULT_MAX_KEYS = 8
+const DEFAULT_MAX_KEYS = 8
 
 export function parseKeyId(id: string): ParsedKeyId {
     const idx = id.indexOf(':')
@@ -22,7 +22,6 @@ export function keyIdToChar(id: string, layout: KeyboardLayout = englishQwerty):
     return layout.outputFor(code, modifier)?.text
 }
 
-/** Human-readable label for a weak key id: its character when resolvable, else the raw id. */
 export function keyIdLabel(id: string, layout: KeyboardLayout = englishQwerty): string {
     return keyIdToChar(id, layout) ?? id
 }
@@ -110,5 +109,3 @@ export function reinforcementFromWeakFingers(weakFingers: FingerId[], opts: Rein
 export function planWeakestReinforcement(ranks: { key: string; lowerBound: number }[], opts: ReinforcementOptions = {}): ReinforcedDrill {
     return reinforcementFromWeakKeys(ranks, opts)
 }
-
-export type { MuscleMemoryPlan }

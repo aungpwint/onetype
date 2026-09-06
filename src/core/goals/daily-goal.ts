@@ -1,11 +1,10 @@
-export interface DailyGoalInfo {
+interface DailyGoalInfo {
     fraction: number
     percent: number
     completed: boolean
     remainingMinutes: number
 }
 
-/** Track typed minutes against the daily practice goal (0..1 scale). */
 export function dailyGoalState(minutes: number, goalMinutes: number): DailyGoalInfo {
     const goal = Math.max(0, Math.floor(goalMinutes || 0))
     const done = Math.max(0, minutes)

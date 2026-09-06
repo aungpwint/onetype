@@ -1,3 +1,5 @@
+import { clamp } from '@/lib/utils'
+
 export type SpeedLanguage = 'english' | 'myanmar'
 
 export type SpeedUnit = 'wpm' | 'units/min'
@@ -14,30 +16,23 @@ export interface ScoreMetrics {
     cpm: number
     elapsedSeconds: number
     backspaceCount: number
-    /** Raw (accuracy-blind) speed in the language's own speed unit. */
     rawSpeed: number
-    /** 0–100 pacing consistency, derived from per-second typing pace. */
     consistency: number
-    /** The speed value shown to the user (wpm for English, units/min for Myanmar). */
     speed: number
     speedUnit: SpeedUnit
-    /** Grapheme clusters fully typed (Myanmar syllables when applicable). */
     graphemeClusters: number
     language: SpeedLanguage
 }
 
-/** English counting convention: one word = 5 typing units (chars/keystrokes). */
 export const WORD_LENGTH = 5
 
-export interface ScoreInput {
+interface ScoreInput {
     correctAttempts: number
     incorrectAttempts: number
     backspaceCount: number
     elapsedSeconds: number
     language?: SpeedLanguage
-    /** Grapheme clusters completed (Myanmar). */
     clusters?: number
-    /** Elapsed-millisecond timestamp of every correct keystroke. */
     correctTimes?: number[]
 }
 
@@ -53,9 +48,8 @@ export function computeScore(input: ScoreInput): ScoreMetrics {
     const netWpm = minutes > 0 ? netWords / minutes : 0
     const cpm = minutes > 0 ? characters / minutes : 0
 
-    // Myanmar is scored in typing units per minute: a keystroke is the atomic
-    // input event, so its speed is honestly reported as units/min rather than
-    // pretending 5 Myanmar graphemes equal one "word".
+    // Myanmar speed is reported in typing units/min: a keystroke is the atomic
+    // input event, so pretending 5 graphemes equal one "word" would be dishonest.
     const isMyanmar = language === 'myanmar'
     const speed = isMyanmar ? (minutes > 0 ? characters / minutes : 0) : grossWpm
     const rawSpeed = isMyanmar ? (minutes > 0 ? totalAttempts / minutes : 0) : (minutes > 0 ? totalAttempts / WORD_LENGTH / minutes : 0)
@@ -85,8 +79,7 @@ export function computeScore(input: ScoreInput): ScoreMetrics {
 function consistencyFromTimes(correctTimes: number[]): number {
     if (correctTimes.length < 2) return 100
     const gaps: number[] = []
-    // Idle stretches longer than a few seconds are rest pauses, not typist
-    // rhythm, so they are excluded from pacing consistency.
+    // Idle stretches longer than a few seconds are rest pauses, not rhythm.
     const PAUSE_CAP_MS = 3000
     for (let i = 1; i < correctTimes.length; i++) {
         const gap = correctTimes[i] - correctTimes[i - 1]
@@ -98,21 +91,13 @@ function consistencyFromTimes(correctTimes: number[]): number {
     let deviation = 0
     for (const gap of gaps) deviation += Math.abs(gap - average)
     deviation /= gaps.length
-    return clampPct((1 - deviation / average) * 100)
+    if (!Number.isFinite(deviation / average)) return 100
+    return clamp((1 - deviation / average) * 100, 0, 100)
 }
 
-function clampPct(value: number): number {
-    if (!Number.isFinite(value)) return 100
-    return Math.max(0, Math.min(100, value))
-}
-
-/**
- * Per-second speed series for a pacing chart. Each bucket counts the correct
- * keystrokes whose elapsed timestamp lands inside it and converts them to the
- * language's own speed unit (wpm for English, typing units/min for Myanmar).
- * The final bucket is allowed to be partial so a short run still renders a
- * fair curve instead of one deflated trailing bar.
- */
+// Per-second speed series for a pacing chart, in the language's own speed
+// unit (wpm for English, units/min for Myanmar). The final bucket may be
+// partial so a short run still renders a fair trailing bar.
 export function speedSeries(input: ScoreInput & { elapsedSeconds: number }): number[] {
     const language = input.language ?? 'english'
     const times = input.correctTimes ?? []

@@ -8,8 +8,7 @@ const WEEKDAYS = ['Mon', 'Wed', 'Fri']
 const WEEK_COUNT = 26
 
 export function ActivityHeatmap({ days, title = 'Typing activity' }: { days: ActivityDay[]; title?: string }) {
-    // Snapshot "today" once per mount so the trailing-window is stable across
-    // re-renders (stats only refresh when new data arrives, not per keystroke).
+    // Snapshot "today" once so the trailing window stays stable across re-renders.
     const [now] = useState(() => Date.now())
 
     const { cells, max } = layoutActivity(days, now)

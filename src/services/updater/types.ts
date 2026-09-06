@@ -1,5 +1,3 @@
-export type UpdateState = 'idle' | 'checking' | 'not-available' | 'available' | 'downloading' | 'downloaded' | 'installing' | 'completed' | 'error'
-
 export type UpdateStatus =
     | { state: 'idle' }
     | { state: 'checking' }
@@ -11,28 +9,7 @@ export type UpdateStatus =
     | { state: 'completed' }
     | { state: 'error'; message: string }
 
-export interface UpdateMetadata {
-    version: string
-    body?: string
-    currentVersion: string
-    date?: string
-}
-
 export const CHECK_THROTTLE_MS = 6 * 60 * 60 * 1000 // 6 hours
-
-export const UPDATE_EVENTS = {
-    CHECK_STARTED: 'update:check:started',
-    CHECK_COMPLETED: 'update:check:completed',
-    AVAILABLE: 'update:available',
-    NOT_AVAILABLE: 'update:not-available',
-    DOWNLOAD_STARTED: 'update:download:started',
-    DOWNLOAD_PROGRESS: 'update:download:progress',
-    DOWNLOAD_COMPLETED: 'update:download:completed',
-    READY: 'update:ready',
-    INSTALL_STARTED: 'update:install:started',
-    COMPLETED: 'update:completed',
-    FAILED: 'update:failed',
-} as const
 
 export function compareVersions(a: string, b: string): number {
     const pa = a.split('.').map(Number)

@@ -168,7 +168,7 @@ const rows: KeyDefinition[][] = [
     ],
 ]
 
-export const ENGLISH_QWERTY_REVISION = 1
+const ENGLISH_QWERTY_REVISION = 1
 
 export const englishQwerty = new KeyboardLayout({
     id: 'english-qwerty',
@@ -178,10 +178,3 @@ export const englishQwerty = new KeyboardLayout({
     source: 'Standard US QWERTY (ANSI-104). Physical-key touch typing reference.',
     rows,
 } satisfies KeyboardLayoutSpec)
-
-export const ENGLISH_KEYROW_LABELS = [
-    '` 1 2 3 4 5 6 7 8 9 0 - =',
-    'Tab Q W E R T Y U I O P [ ] \\',
-    "Caps A S D F G H J K L ; ' Enter",
-    'Shift Z X C V B N M , . / Shift',
-]
