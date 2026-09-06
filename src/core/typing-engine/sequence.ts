@@ -4,6 +4,7 @@ import type { FingerId } from '@/types'
 import { KeyboardLayout, shiftHandFor } from '@/core/keyboard-layout/layout'
 import { splitGraphemes } from '@/core/unicode/graphemes'
 import { findSuspiciousInvisibleCharacters, splitMyanmarSyllables, containsMyanmar } from '@/core/unicode/myanmar'
+import { isPreBaseVowel } from '@/core/unicode/classification'
 
 export interface TypingUnit {
     index: number
@@ -43,23 +44,25 @@ export interface BuiltSequence {
 // and keyboard hints drive input the way a real Myanmar keyboard does, and the
 // renderer shows untouched logical text.
 
-const PREBASE_VOWEL = 0x1031 // ေ — stored after its base, rendered before it
-
 /**
  * Keyboard press order for a Myanmar syllable cluster.
  *
- * The pre-base vowel U+1031 is stored AFTER the base consonant in logical
+ * The pre-base vowel U+1031 (ေ) is stored AFTER the base consonant in logical
  * Unicode but is the leftmost rendered glyph and the first key a Pyidaungsu
- * learner presses. This returns the cluster's code points reordered into press
- * order: pre-base vowel(s) first, then the remaining code points in their
- * logical order. Clusters without a pre-base vowel are unchanged.
+ * learner presses. This is a first-class keyboard rule, not a word-level hack:
+ * the pre-base character class `isPreBaseVowel` comes from the Unicode
+ * classification core, and this function returns the cluster's code points
+ * reordered into press order — pre-base vowel(s) first, then the remaining
+ * code points in their logical order. Clusters without a pre-base vowel are
+ * unchanged. CLDR models exactly this reordering for Myanmar (U+1031
+ * preposed-vowel, before medial-ya/ra/wa/ha and the base).
  */
 export function keyboardOrderForCluster(cluster: string): string {
     if (!containsMyanmar(cluster)) return cluster
     const chars = Array.from(cluster)
-    const prebase = chars.filter((c) => c.codePointAt(0) === PREBASE_VOWEL)
+    const prebase = chars.filter((c) => isPreBaseVowel(c.codePointAt(0) ?? 0))
     if (prebase.length === 0) return cluster
-    const rest = chars.filter((c) => c.codePointAt(0) !== PREBASE_VOWEL)
+    const rest = chars.filter((c) => !isPreBaseVowel(c.codePointAt(0) ?? 0))
     return [...prebase, ...rest].join('')
 }
 
@@ -67,9 +70,7 @@ export function buildSequence(text: string, layout: KeyboardLayout): BuiltSequen
     if (layout.language === 'myanmar') {
         const found = findSuspiciousInvisibleCharacters(text)
         if (found.length > 0) {
-            throw new Error(
-                `Myanmar typing text contains unexpected invisible character at index ${found[0].index}: ${found[0].description}`,
-            )
+            throw new Error(`Myanmar typing text contains unexpected invisible character at index ${found[0].index}: ${found[0].description}`)
         }
     }
     const graphemes = layout.language === 'myanmar' ? splitMyanmarSyllables(text) : splitGraphemes(text)
