@@ -1,0 +1,710 @@
+/**
+ * Theme presets: curated palettes layered on top of the light/dark base via
+ * CSS custom properties, Monkeytype-style. Each preset is a complete "desk"
+ * identity rooted in Myanmar materials and landscape — writing paper, black
+ * lacquer, slate boards, monsoon rain, temple gold, Pyu bricks, teak, and the
+ * night sky — and ships a light and a dark variant so the tone toggle keeps
+ * working under any preset.
+ */
+
+export type ThemeTone = 'light' | 'dark'
+
+export interface ThemePalette {
+    bg: string
+    surface: string
+    surfaceMuted: string
+    surfaceElevated: string
+    ink: string
+    inkSoft: string
+    inkFaint: string
+    line: string
+    lineStrong: string
+    primary: string
+    primaryHover: string
+    primaryActive: string
+    primaryForeground: string
+    primaryRing: string
+    warning: string
+    warningSoft: string
+    success: string
+    successWeak: string
+    destructive: string
+    destructiveSoft: string
+    typingCorrect: string
+    typingIncorrect: string
+    typingCurrentInk: string
+    typingUpcoming: string
+    typingCurrentWash: string
+    keyTop: string
+    keyBase: string
+    keyInk: string
+    keyWell: string
+    thumb: string
+}
+
+export interface ThemePreset {
+    id: string
+    name: string
+    description: string
+    light: ThemePalette
+    dark: ThemePalette
+}
+
+/** Maps palette tokens onto the app's live CSS custom properties. */
+export const THEME_VAR_MAP: Record<keyof ThemePalette, string> = {
+    bg: '--bg',
+    surface: '--surface',
+    surfaceMuted: '--surface-muted',
+    surfaceElevated: '--surface-elevated',
+    ink: '--ink',
+    inkSoft: '--ink-soft',
+    inkFaint: '--ink-faint',
+    line: '--line',
+    lineStrong: '--line-strong',
+    primary: '--primary',
+    primaryHover: '--primary-hover',
+    primaryActive: '--primary-active',
+    primaryForeground: '--primary-foreground',
+    primaryRing: '--primary-ring',
+    warning: '--warning',
+    warningSoft: '--warning-soft',
+    success: '--success',
+    successWeak: '--success-weak',
+    destructive: '--destructive',
+    destructiveSoft: '--destructive-soft',
+    typingCorrect: '--typing-correct',
+    typingIncorrect: '--typing-incorrect',
+    typingCurrentInk: '--typing-current-ink',
+    typingUpcoming: '--typing-upcoming',
+    typingCurrentWash: '--typing-current-wash',
+    keyTop: '--key-top',
+    keyBase: '--key-base',
+    keyInk: '--key-ink',
+    keyWell: '--key-well',
+    thumb: '--thumb',
+}
+
+const THEME_VARIABLES = Object.values(THEME_VAR_MAP)
+
+const mulberry = {
+    light: {
+        bg: '#f6efe4',
+        surface: '#fffdf7',
+        surfaceMuted: '#f0e7d6',
+        surfaceElevated: '#fffdf7',
+        ink: '#30271a',
+        inkSoft: '#6f5d46',
+        inkFaint: '#a18c71',
+        line: 'rgba(48, 39, 26, 0.10)',
+        lineStrong: 'rgba(48, 39, 26, 0.18)',
+        primary: '#b3542d',
+        primaryHover: '#9e4826',
+        primaryActive: '#873d20',
+        primaryForeground: '#fffaf3',
+        primaryRing: 'rgba(179, 84, 45, 0.28)',
+        warning: '#9c6500',
+        warningSoft: 'rgba(156, 101, 0, 0.10)',
+        success: '#2f7d4f',
+        successWeak: 'rgba(47, 125, 79, 0.10)',
+        destructive: '#c0392b',
+        destructiveSoft: 'rgba(192, 57, 43, 0.10)',
+        typingCorrect: '#2f7d4f',
+        typingIncorrect: '#c0392b',
+        typingCurrentInk: '#30271a',
+        typingUpcoming: '#a18c71',
+        typingCurrentWash: 'rgba(48, 39, 26, 0.07)',
+        keyTop: '#fffdf7',
+        keyBase: '#ede1cc',
+        keyInk: '#45382a',
+        keyWell: 'rgba(48, 39, 26, 0.06)',
+        thumb: 'rgba(48, 39, 26, 0.32)',
+    },
+    dark: {
+        bg: '#221a11',
+        surface: '#2e2418',
+        surfaceMuted: '#382c1d',
+        surfaceElevated: '#3e3526',
+        ink: '#f0e7d3',
+        inkSoft: '#bfae93',
+        inkFaint: '#8f7958',
+        line: 'rgba(240, 231, 211, 0.08)',
+        lineStrong: 'rgba(240, 231, 211, 0.16)',
+        primary: '#e08a4c',
+        primaryHover: '#e9a06a',
+        primaryActive: '#c8723a',
+        primaryForeground: '#2a1f12',
+        primaryRing: 'rgba(224, 138, 76, 0.35)',
+        warning: '#d89a45',
+        warningSoft: 'rgba(216, 154, 69, 0.14)',
+        success: '#8cc98a',
+        successWeak: 'rgba(140, 201, 138, 0.14)',
+        destructive: '#e06b55',
+        destructiveSoft: 'rgba(224, 107, 85, 0.14)',
+        typingCorrect: '#8cc98a',
+        typingIncorrect: '#e06b55',
+        typingCurrentInk: '#f0e7d3',
+        typingUpcoming: '#8f7958',
+        typingCurrentWash: 'rgba(240, 231, 211, 0.10)',
+        keyTop: '#3a2e1f',
+        keyBase: '#291f13',
+        keyInk: '#d3c3a4',
+        keyWell: 'rgba(8, 5, 2, 0.5)',
+        thumb: 'rgba(240, 231, 211, 0.26)',
+    },
+}
+
+const lacquer = {
+    light: {
+        bg: '#efe8df',
+        surface: '#f9f4ec',
+        surfaceMuted: '#e7ded2',
+        surfaceElevated: '#f9f4ec',
+        ink: '#261e17',
+        inkSoft: '#6f6457',
+        inkFaint: '#998b7a',
+        line: 'rgba(38, 30, 23, 0.10)',
+        lineStrong: 'rgba(38, 30, 23, 0.17)',
+        primary: '#a23c27',
+        primaryHover: '#8d3321',
+        primaryActive: '#772a1b',
+        primaryForeground: '#fff8f1',
+        primaryRing: 'rgba(162, 60, 39, 0.28)',
+        warning: '#975f00',
+        warningSoft: 'rgba(151, 95, 0, 0.10)',
+        success: '#2f7649',
+        successWeak: 'rgba(47, 118, 73, 0.10)',
+        destructive: '#bc2f2b',
+        destructiveSoft: 'rgba(188, 47, 43, 0.10)',
+        typingCorrect: '#2f7649',
+        typingIncorrect: '#bc2f2b',
+        typingCurrentInk: '#261e17',
+        typingUpcoming: '#998b7a',
+        typingCurrentWash: 'rgba(38, 30, 23, 0.07)',
+        keyTop: '#f9f4ec',
+        keyBase: '#e0d5c5',
+        keyInk: '#3c322a',
+        keyWell: 'rgba(38, 30, 23, 0.06)',
+        thumb: 'rgba(38, 30, 23, 0.32)',
+    },
+    dark: {
+        bg: '#140f0c',
+        surface: '#201813',
+        surfaceMuted: '#2a1f18',
+        surfaceElevated: '#33291f',
+        ink: '#f3e7da',
+        inkSoft: '#c3af9b',
+        inkFaint: '#8f7558',
+        line: 'rgba(243, 231, 218, 0.08)',
+        lineStrong: 'rgba(243, 231, 218, 0.16)',
+        primary: '#d9a441',
+        primaryHover: '#e3b55c',
+        primaryActive: '#bf8c30',
+        primaryForeground: '#241a10',
+        primaryRing: 'rgba(217, 164, 65, 0.35)',
+        warning: '#d3a04a',
+        warningSoft: 'rgba(211, 160, 74, 0.14)',
+        success: '#8ec98f',
+        successWeak: 'rgba(142, 201, 143, 0.14)',
+        destructive: '#e06552',
+        destructiveSoft: 'rgba(224, 101, 82, 0.14)',
+        typingCorrect: '#8ec98f',
+        typingIncorrect: '#e06552',
+        typingCurrentInk: '#f3e7da',
+        typingUpcoming: '#8f7558',
+        typingCurrentWash: 'rgba(243, 231, 218, 0.10)',
+        keyTop: '#2e241c',
+        keyBase: '#1d1510',
+        keyInk: '#d6c2ac',
+        keyWell: 'rgba(5, 3, 2, 0.5)',
+        thumb: 'rgba(243, 231, 218, 0.26)',
+    },
+}
+
+const chalk = {
+    light: {
+        bg: '#edf0ec',
+        surface: '#f9faf7',
+        surfaceMuted: '#e2e7e1',
+        surfaceElevated: '#f9faf7',
+        ink: '#1f2e25',
+        inkSoft: '#56685d',
+        inkFaint: '#8c9c91',
+        line: 'rgba(31, 46, 37, 0.10)',
+        lineStrong: 'rgba(31, 46, 37, 0.17)',
+        primary: '#2f6f4f',
+        primaryHover: '#285e43',
+        primaryActive: '#214d37',
+        primaryForeground: '#f4faf6',
+        primaryRing: 'rgba(47, 111, 79, 0.28)',
+        warning: '#8a6200',
+        warningSoft: 'rgba(138, 98, 0, 0.10)',
+        success: '#2d7a4c',
+        successWeak: 'rgba(45, 122, 76, 0.10)',
+        destructive: '#b83a2e',
+        destructiveSoft: 'rgba(184, 58, 46, 0.10)',
+        typingCorrect: '#2d7a4c',
+        typingIncorrect: '#b83a2e',
+        typingCurrentInk: '#1f2e25',
+        typingUpcoming: '#8c9c91',
+        typingCurrentWash: 'rgba(31, 46, 37, 0.07)',
+        keyTop: '#f9faf7',
+        keyBase: '#dde4dd',
+        keyInk: '#2e4237',
+        keyWell: 'rgba(36, 51, 43, 0.06)',
+        thumb: 'rgba(36, 51, 43, 0.32)',
+    },
+    dark: {
+        bg: '#1c2721',
+        surface: '#242f29',
+        surfaceMuted: '#2c3831',
+        surfaceElevated: '#32403a',
+        ink: '#e9efe7',
+        inkSoft: '#b4c3b6',
+        inkFaint: '#80928a',
+        line: 'rgba(233, 239, 231, 0.08)',
+        lineStrong: 'rgba(233, 239, 231, 0.16)',
+        primary: '#e0c06a',
+        primaryHover: '#e9d084',
+        primaryActive: '#c8a94f',
+        primaryForeground: '#26200f',
+        primaryRing: 'rgba(224, 192, 106, 0.35)',
+        warning: '#d6b455',
+        warningSoft: 'rgba(214, 180, 85, 0.14)',
+        success: '#b7ddb0',
+        successWeak: 'rgba(183, 221, 176, 0.14)',
+        destructive: '#e5846d',
+        destructiveSoft: 'rgba(229, 132, 109, 0.14)',
+        typingCorrect: '#b7ddb0',
+        typingIncorrect: '#e5846d',
+        typingCurrentInk: '#e9efe7',
+        typingUpcoming: '#80928a',
+        typingCurrentWash: 'rgba(233, 239, 231, 0.10)',
+        keyTop: '#2f3d35',
+        keyBase: '#223028',
+        keyInk: '#cfddd2',
+        keyWell: 'rgba(4, 8, 6, 0.5)',
+        thumb: 'rgba(233, 239, 231, 0.26)',
+    },
+}
+
+const monsoon = {
+    light: {
+        bg: '#edf2f5',
+        surface: '#f8fbfc',
+        surfaceMuted: '#e0e9ee',
+        surfaceElevated: '#f8fbfc',
+        ink: '#1e2a32',
+        inkSoft: '#55646f',
+        inkFaint: '#8b9aa5',
+        line: 'rgba(30, 42, 50, 0.10)',
+        lineStrong: 'rgba(30, 42, 50, 0.17)',
+        primary: '#2f6f8f',
+        primaryHover: '#275f7b',
+        primaryActive: '#204f67',
+        primaryForeground: '#f2f8fb',
+        primaryRing: 'rgba(47, 111, 143, 0.28)',
+        warning: '#8a6500',
+        warningSoft: 'rgba(138, 101, 0, 0.10)',
+        success: '#2c7a5e',
+        successWeak: 'rgba(44, 122, 94, 0.10)',
+        destructive: '#b23a31',
+        destructiveSoft: 'rgba(178, 58, 49, 0.10)',
+        typingCorrect: '#2c7a5e',
+        typingIncorrect: '#b23a31',
+        typingCurrentInk: '#1e2a32',
+        typingUpcoming: '#8b9aa5',
+        typingCurrentWash: 'rgba(30, 42, 50, 0.07)',
+        keyTop: '#f8fbfc',
+        keyBase: '#dbe6ec',
+        keyInk: '#2b3a45',
+        keyWell: 'rgba(36, 48, 57, 0.06)',
+        thumb: 'rgba(36, 48, 57, 0.32)',
+    },
+    dark: {
+        bg: '#121921',
+        surface: '#19232d',
+        surfaceMuted: '#202d39',
+        surfaceElevated: '#283744',
+        ink: '#dfe8ee',
+        inkSoft: '#aebdc7',
+        inkFaint: '#82939f',
+        line: 'rgba(223, 232, 238, 0.08)',
+        lineStrong: 'rgba(223, 232, 238, 0.16)',
+        primary: '#5aa7c7',
+        primaryHover: '#74b8d4',
+        primaryActive: '#4690b0',
+        primaryForeground: '#0f1a21',
+        primaryRing: 'rgba(90, 167, 199, 0.35)',
+        warning: '#ccb45c',
+        warningSoft: 'rgba(204, 180, 92, 0.14)',
+        success: '#6fc5a0',
+        successWeak: 'rgba(111, 197, 160, 0.14)',
+        destructive: '#e0776d',
+        destructiveSoft: 'rgba(224, 119, 109, 0.14)',
+        typingCorrect: '#6fc5a0',
+        typingIncorrect: '#e0776d',
+        typingCurrentInk: '#dfe8ee',
+        typingUpcoming: '#82939f',
+        typingCurrentWash: 'rgba(223, 232, 238, 0.10)',
+        keyTop: '#243443',
+        keyBase: '#1a2732',
+        keyInk: '#c6d6e0',
+        keyWell: 'rgba(3, 7, 10, 0.5)',
+        thumb: 'rgba(223, 232, 238, 0.26)',
+    },
+}
+
+const pagoda = {
+    light: {
+        bg: '#f4efe4',
+        surface: '#fdf9f0',
+        surfaceMuted: '#ece3cf',
+        surfaceElevated: '#fdf9f0',
+        ink: '#2d2a20',
+        inkSoft: '#67614f',
+        inkFaint: '#9a9077',
+        line: 'rgba(45, 42, 32, 0.10)',
+        lineStrong: 'rgba(45, 42, 32, 0.17)',
+        primary: '#b3802e',
+        primaryHover: '#9e6f25',
+        primaryActive: '#885f1e',
+        primaryForeground: '#fffaf0',
+        primaryRing: 'rgba(179, 128, 46, 0.28)',
+        warning: '#976200',
+        warningSoft: 'rgba(151, 98, 0, 0.10)',
+        success: '#3a784b',
+        successWeak: 'rgba(58, 120, 75, 0.10)',
+        destructive: '#bc3a2b',
+        destructiveSoft: 'rgba(188, 58, 43, 0.10)',
+        typingCorrect: '#3a784b',
+        typingIncorrect: '#bc3a2b',
+        typingCurrentInk: '#2d2a20',
+        typingUpcoming: '#9a9077',
+        typingCurrentWash: 'rgba(45, 42, 32, 0.07)',
+        keyTop: '#fdf9f0',
+        keyBase: '#e9dec4',
+        keyInk: '#3d3932',
+        keyWell: 'rgba(51, 48, 38, 0.06)',
+        thumb: 'rgba(51, 48, 38, 0.32)',
+    },
+    dark: {
+        bg: '#191420',
+        surface: '#221c2c',
+        surfaceMuted: '#2c2438',
+        surfaceElevated: '#352b42',
+        ink: '#efe6dd',
+        inkSoft: '#c0b1a1',
+        inkFaint: '#8f7f6d',
+        line: 'rgba(239, 230, 221, 0.08)',
+        lineStrong: 'rgba(239, 230, 221, 0.16)',
+        primary: '#e0b45c',
+        primaryHover: '#eac57a',
+        primaryActive: '#cd9e45',
+        primaryForeground: '#271e10',
+        primaryRing: 'rgba(224, 180, 92, 0.35)',
+        warning: '#d8b25a',
+        warningSoft: 'rgba(216, 178, 90, 0.14)',
+        success: '#a9d39b',
+        successWeak: 'rgba(169, 211, 155, 0.14)',
+        destructive: '#e06a5d',
+        destructiveSoft: 'rgba(224, 106, 93, 0.14)',
+        typingCorrect: '#a9d39b',
+        typingIncorrect: '#e06a5d',
+        typingCurrentInk: '#efe6dd',
+        typingUpcoming: '#8f7f6d',
+        typingCurrentWash: 'rgba(239, 230, 221, 0.10)',
+        keyTop: '#2e2638',
+        keyBase: '#211b2a',
+        keyInk: '#d3c7b8',
+        keyWell: 'rgba(6, 4, 10, 0.5)',
+        thumb: 'rgba(239, 230, 221, 0.26)',
+    },
+}
+
+const pyu = {
+    light: {
+        bg: '#f1ede6',
+        surface: '#faf7f1',
+        surfaceMuted: '#e6dfd4',
+        surfaceElevated: '#faf7f1',
+        ink: '#32271f',
+        inkSoft: '#6c5c52',
+        inkFaint: '#9c8b7e',
+        line: 'rgba(50, 39, 31, 0.10)',
+        lineStrong: 'rgba(50, 39, 31, 0.17)',
+        primary: '#a8502c',
+        primaryHover: '#944626',
+        primaryActive: '#7f3c20',
+        primaryForeground: '#fdf6f0',
+        primaryRing: 'rgba(168, 80, 44, 0.28)',
+        warning: '#945f00',
+        warningSoft: 'rgba(148, 95, 0, 0.10)',
+        success: '#347447',
+        successWeak: 'rgba(52, 116, 71, 0.10)',
+        destructive: '#bc3929',
+        destructiveSoft: 'rgba(188, 57, 41, 0.10)',
+        typingCorrect: '#347447',
+        typingIncorrect: '#bc3929',
+        typingCurrentInk: '#32271f',
+        typingUpcoming: '#9c8b7e',
+        typingCurrentWash: 'rgba(50, 39, 31, 0.07)',
+        keyTop: '#faf7f1',
+        keyBase: '#e3d9ca',
+        keyInk: '#43342b',
+        keyWell: 'rgba(58, 45, 38, 0.06)',
+        thumb: 'rgba(58, 45, 38, 0.32)',
+    },
+    dark: {
+        bg: '#1f1512',
+        surface: '#291c17',
+        surfaceMuted: '#33251e',
+        surfaceElevated: '#3b2d25',
+        ink: '#f0e4dc',
+        inkSoft: '#c1aba0',
+        inkFaint: '#907a70',
+        line: 'rgba(240, 228, 220, 0.08)',
+        lineStrong: 'rgba(240, 228, 220, 0.16)',
+        primary: '#d97a45',
+        primaryHover: '#e29264',
+        primaryActive: '#bd6333',
+        primaryForeground: '#28150c',
+        primaryRing: 'rgba(217, 122, 69, 0.35)',
+        warning: '#d19742',
+        warningSoft: 'rgba(209, 151, 66, 0.14)',
+        success: '#a8cf8d',
+        successWeak: 'rgba(168, 207, 141, 0.14)',
+        destructive: '#e2715f',
+        destructiveSoft: 'rgba(226, 113, 95, 0.14)',
+        typingCorrect: '#a8cf8d',
+        typingIncorrect: '#e2715f',
+        typingCurrentInk: '#f0e4dc',
+        typingUpcoming: '#907a70',
+        typingCurrentWash: 'rgba(240, 228, 220, 0.10)',
+        keyTop: '#37281f',
+        keyBase: '#251a15',
+        keyInk: '#d5c0b2',
+        keyWell: 'rgba(7, 4, 3, 0.5)',
+        thumb: 'rgba(240, 228, 220, 0.26)',
+    },
+}
+
+const teak = {
+    light: {
+        bg: '#f1ece3',
+        surface: '#faf6ee',
+        surfaceMuted: '#e6ddcf',
+        surfaceElevated: '#faf6ee',
+        ink: '#2b241b',
+        inkSoft: '#665c4b',
+        inkFaint: '#97896f',
+        line: 'rgba(43, 36, 27, 0.10)',
+        lineStrong: 'rgba(43, 36, 27, 0.17)',
+        primary: '#6d4c2f',
+        primaryHover: '#5d4027',
+        primaryActive: '#4e3620',
+        primaryForeground: '#fbf4e9',
+        primaryRing: 'rgba(109, 76, 47, 0.28)',
+        warning: '#8d5c00',
+        warningSoft: 'rgba(141, 92, 0, 0.10)',
+        success: '#39704a',
+        successWeak: 'rgba(57, 112, 74, 0.10)',
+        destructive: '#b13c2b',
+        destructiveSoft: 'rgba(177, 60, 43, 0.10)',
+        typingCorrect: '#39704a',
+        typingIncorrect: '#b13c2b',
+        typingCurrentInk: '#2b241b',
+        typingUpcoming: '#97896f',
+        typingCurrentWash: 'rgba(43, 36, 27, 0.07)',
+        keyTop: '#faf6ee',
+        keyBase: '#e0d4c0',
+        keyInk: '#3f3426',
+        keyWell: 'rgba(50, 42, 32, 0.06)',
+        thumb: 'rgba(50, 42, 32, 0.32)',
+    },
+    dark: {
+        bg: '#161108',
+        surface: '#211910',
+        surfaceMuted: '#2a2116',
+        surfaceElevated: '#32281b',
+        ink: '#efe3cd',
+        inkSoft: '#beac8c',
+        inkFaint: '#8d7a59',
+        line: 'rgba(239, 227, 205, 0.08)',
+        lineStrong: 'rgba(239, 227, 205, 0.16)',
+        primary: '#b08a50',
+        primaryHover: '#c09c64',
+        primaryActive: '#9a753e',
+        primaryForeground: '#1e160a',
+        primaryRing: 'rgba(176, 138, 80, 0.35)',
+        warning: '#cfab52',
+        warningSoft: 'rgba(207, 171, 82, 0.14)',
+        success: '#a6c98a',
+        successWeak: 'rgba(166, 201, 138, 0.14)',
+        destructive: '#dd7358',
+        destructiveSoft: 'rgba(221, 115, 88, 0.14)',
+        typingCorrect: '#a6c98a',
+        typingIncorrect: '#dd7358',
+        typingCurrentInk: '#efe3cd',
+        typingUpcoming: '#8d7a59',
+        typingCurrentWash: 'rgba(239, 227, 205, 0.10)',
+        keyTop: '#2d2418',
+        keyBase: '#1d1710',
+        keyInk: '#d0bea0',
+        keyWell: 'rgba(4, 3, 1, 0.5)',
+        thumb: 'rgba(239, 227, 205, 0.26)',
+    },
+}
+
+const nightSky = {
+    light: {
+        bg: '#edf0f8',
+        surface: '#f8fafd',
+        surfaceMuted: '#dfe5f1',
+        surfaceElevated: '#f8fafd',
+        ink: '#232b3d',
+        inkSoft: '#5d6b84',
+        inkFaint: '#8b97ac',
+        line: 'rgba(35, 43, 61, 0.10)',
+        lineStrong: 'rgba(35, 43, 61, 0.17)',
+        primary: '#3f5fbf',
+        primaryHover: '#3652a8',
+        primaryActive: '#2d4590',
+        primaryForeground: '#f3f6fd',
+        primaryRing: 'rgba(63, 95, 191, 0.28)',
+        warning: '#8a6900',
+        warningSoft: 'rgba(138, 105, 0, 0.10)',
+        success: '#2d7a63',
+        successWeak: 'rgba(45, 122, 99, 0.10)',
+        destructive: '#b2383b',
+        destructiveSoft: 'rgba(178, 56, 59, 0.10)',
+        typingCorrect: '#2d7a63',
+        typingIncorrect: '#b2383b',
+        typingCurrentInk: '#232b3d',
+        typingUpcoming: '#8b97ac',
+        typingCurrentWash: 'rgba(35, 43, 61, 0.07)',
+        keyTop: '#f8fafd',
+        keyBase: '#dce3f0',
+        keyInk: '#2f3a52',
+        keyWell: 'rgba(35, 43, 61, 0.06)',
+        thumb: 'rgba(35, 43, 61, 0.32)',
+    },
+    dark: {
+        bg: '#0d1227',
+        surface: '#151c35',
+        surfaceMuted: '#1c2544',
+        surfaceElevated: '#253052',
+        ink: '#e7ecf9',
+        inkSoft: '#b0bcdb',
+        inkFaint: '#828fb0',
+        line: 'rgba(231, 236, 249, 0.08)',
+        lineStrong: 'rgba(231, 236, 249, 0.16)',
+        primary: '#5f7fd6',
+        primaryHover: '#7d97e0',
+        primaryActive: '#4a6ac2',
+        primaryForeground: '#0e1426',
+        primaryRing: 'rgba(125, 151, 224, 0.35)',
+        warning: '#d3b467',
+        warningSoft: 'rgba(211, 180, 103, 0.14)',
+        success: '#79bfa5',
+        successWeak: 'rgba(121, 191, 165, 0.14)',
+        destructive: '#e27576',
+        destructiveSoft: 'rgba(226, 117, 118, 0.14)',
+        typingCorrect: '#79bfa5',
+        typingIncorrect: '#e27576',
+        typingCurrentInk: '#e7ecf9',
+        typingUpcoming: '#828fb0',
+        typingCurrentWash: 'rgba(231, 236, 249, 0.10)',
+        keyTop: '#1e2850',
+        keyBase: '#141b38',
+        keyInk: '#c3cde7',
+        keyWell: 'rgba(8, 10, 26, 0.5)',
+        thumb: 'rgba(231, 236, 249, 0.26)',
+    },
+}
+
+export const THEMES: ThemePreset[] = [
+    {
+        id: 'mulberry',
+        name: 'Mulberry',
+        description: 'Warm writing paper from mulberry bark.',
+        ...mulberry,
+    },
+    {
+        id: 'lacquer',
+        name: 'Lacquer',
+        description: 'Black lacquer with a gold leaf accent.',
+        ...lacquer,
+    },
+    {
+        id: 'chalk',
+        name: 'Slate',
+        description: 'A classroom chalkboard, chalk-white ink.',
+        ...chalk,
+    },
+    {
+        id: 'monsoon',
+        name: 'Monsoon',
+        description: 'Rain-washed slate over Rangoon.',
+        ...monsoon,
+    },
+    {
+        id: 'pagoda',
+        name: 'Pagoda',
+        description: 'Temple gold against the dusk sky.',
+        ...pagoda,
+    },
+    {
+        id: 'pyu',
+        name: 'Pyu',
+        description: 'Terracotta bricks and earth.',
+        ...pyu,
+    },
+    {
+        id: 'teak',
+        name: 'Teak',
+        description: 'Dark polished teak and honey tones.',
+        ...teak,
+    },
+    {
+        id: 'night-sky',
+        name: 'Night sky',
+        description: 'A clear Pyay night, star-lit indigo.',
+        ...nightSky,
+    },
+]
+
+const BY_ID = new Map(THEMES.map((t) => [t.id, t]))
+
+/** Sentinel id that maps to the app's default palette (no overrides). */
+export const DEFAULT_THEME_PRESET_ID = 'default'
+
+export function isThemePresetId(value: string): boolean {
+    return value === DEFAULT_THEME_PRESET_ID || BY_ID.has(value)
+}
+
+export function getThemePreset(id: string): ThemePreset | null {
+    if (id === DEFAULT_THEME_PRESET_ID) return null
+    return BY_ID.get(id) ?? null
+}
+
+export function paletteForTheme(preset: ThemePreset | null, tone: ThemeTone): ThemePalette | null {
+    return preset ? preset[tone] : null
+}
+
+/**
+ * Apply (or clear) a preset's palette as inline CSS custom properties on the
+ * supplied element. When preset is null every managed variable is removed so
+ * the base `:root`/`.dark` styles take over again.
+ */
+export function applyThemePalette(root: HTMLElement, preset: ThemePreset | null, tone: ThemeTone): void {
+    const palette = paletteForTheme(preset, tone)
+    if (!palette) {
+        for (const variable of THEME_VARIABLES) {
+            root.style.removeProperty(variable)
+        }
+        return
+    }
+    for (const [token, variable] of Object.entries(THEME_VAR_MAP) as Array<[keyof ThemePalette, string]>) {
+        root.style.setProperty(variable, palette[token])
+    }
+}

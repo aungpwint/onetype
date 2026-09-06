@@ -755,3 +755,87 @@
     stroke: var(--hand-active);
     stroke-width: 2;
 }
+
+/* --- Ambient theme effects ------------------------------------------------
+   Optional background atmosphere driven by the design.themeEffect setting.
+   Aurora is a slow-drifting wash of the active accent; dots is a faint
+   point-grid. Both sit behind the app (z -1) and are safe under
+   prefers-reduced-motion (the wash freezes but stays visible). */
+
+.tt-aurora {
+    z-index: -1;
+}
+
+.tt-aurora-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    will-change: transform;
+}
+
+.tt-aurora-a {
+    top: -10%;
+    left: -6%;
+    width: 42vw;
+    height: 42vw;
+    background: color-mix(in srgb, var(--primary) 16%, transparent);
+    animation: tt-aurora-drift-a 26s var(--ease-in-out) infinite alternate;
+}
+
+.tt-aurora-b {
+    right: -8%;
+    bottom: 4%;
+    width: 38vw;
+    height: 38vw;
+    background: color-mix(in srgb, var(--typing-correct) 12%, transparent);
+    animation: tt-aurora-drift-b 32s var(--ease-in-out) infinite alternate;
+}
+
+.tt-aurora-c {
+    top: 30%;
+    left: 34%;
+    width: 30vw;
+    height: 30vw;
+    background: color-mix(in srgb, var(--ink) 7%, transparent);
+    animation: tt-aurora-drift-c 38s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes tt-aurora-drift-a {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+        transform: translate3d(12vw, 8vh, 0) scale(1.15);
+    }
+}
+
+@keyframes tt-aurora-drift-b {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+        transform: translate3d(-10vw, -6vh, 0) scale(1.1);
+    }
+}
+
+@keyframes tt-aurora-drift-c {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+        transform: translate3d(-6vw, 10vh, 0) scale(1.2);
+    }
+}
+
+.tt-dots {
+    z-index: -1;
+    background-image: radial-gradient(color-mix(in srgb, var(--ink-faint) 22%, transparent) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent 78%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tt-aurora-blob {
+        animation: none;
+    }
+}

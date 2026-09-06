@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 import { RefreshCw, RotateCcw, X, type LucideIcon } from 'lucide-react'
 import { Button, type ButtonProps } from './ui/button'
+import { useSettingsStore } from '@/stores/settings-store'
+import { useUiStore } from '@/stores/ui-store'
 import { cn, cardClass, eyebrowClass, pageTitleClass, sectionTitleClass } from '@/lib/utils'
 
 export class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
@@ -45,12 +47,26 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
 }
 
 export function Atmosphere({ className }: { className?: string }) {
+    const effect = useSettingsStore((s) => s.get('design.themeEffect') ?? 'none')
+    const focusMode = useUiStore((s) => s.focusMode)
+    const hasEffect = effect === 'aurora' || effect === 'dots'
+    const quiet = focusMode && hasEffect
     return (
         <div aria-hidden className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)}>
-            <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-blue-600/8 blur-[120px]" />
-            <div className="absolute top-16 -right-24 h-80 w-80 rounded-full bg-sky-500/6 blur-[110px]" />
-            <div className="absolute -bottom-40 left-1/3 h-96 w-96 rounded-full bg-indigo-500/5 blur-[130px]" />
-            <div className="absolute inset-0 bg-linear-to-br from-blue-500/4.5 via-transparent to-transparent" />
+            {/* Ambient wash follows the active palette so every preset feels whole. */}
+            <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-[color-mix(in_srgb,var(--primary)_9%,transparent)] blur-[120px]" />
+            <div className="absolute top-16 -right-24 h-80 w-80 rounded-full bg-[color-mix(in_srgb,var(--primary)_6%,transparent)] blur-[110px]" />
+            <div className="absolute -bottom-40 left-1/3 h-96 w-96 rounded-full bg-[color-mix(in_srgb,var(--primary)_5%,transparent)] blur-[130px]" />
+            <div className="absolute inset-0 bg-linear-to-br from-[color-mix(in_srgb,var(--primary)_5%,transparent)] via-transparent to-transparent" />
+
+            {effect === 'aurora' ? (
+                <div className={cn('tt-aurora absolute inset-0', quiet && 'opacity-40')}>
+                    <div className="tt-aurora-blob tt-aurora-a" />
+                    <div className="tt-aurora-blob tt-aurora-b" />
+                    <div className="tt-aurora-blob tt-aurora-c" />
+                </div>
+            ) : null}
+            {effect === 'dots' ? <div className={cn('tt-dots absolute inset-0', quiet && 'opacity-40')} /> : null}
         </div>
     )
 }
@@ -174,9 +190,9 @@ export function Stat({ label, value, hint, icon }: { label: string; value: React
     )
 }
 
-export function Field({ label, children, hint }: { label: string; children: ReactNode; hint?: string }) {
+export function Field({ label, children, hint, className }: { label: string; children: ReactNode; hint?: string; className?: string }) {
     return (
-        <label className="block">
+        <label className={cn('block', className)}>
             <span className="mb-1.5 block text-sm font-medium text-muted-foreground">{label}</span>
             {children}
             {hint ? <span className="mt-1 block text-xs text-muted-foreground">{hint}</span> : null}

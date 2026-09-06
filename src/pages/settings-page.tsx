@@ -18,11 +18,12 @@ import {
     Timer,
 } from 'lucide-react'
 import * as backend from '@/services/backend'
-import { useUiStore } from '@/stores/ui-store'
+import { useUiStore, previewThemePreset, applyCurrentTheme } from '@/stores/ui-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { useStudentStore } from '@/stores/student-store'
 import { useUpdater } from '@/services/updater/use-updater'
 import type { ThemePreference } from '@/types'
+import { THEMES, DEFAULT_THEME_PRESET_ID } from '@/core/themes/registry'
 import { Field, Modal, PageHeader, AsyncButton } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
@@ -31,6 +32,8 @@ import { cn, cardClass, appPageClass, sectionTitleClass } from '@/lib/utils'
 export default function SettingsPage() {
     const theme = useUiStore((s) => s.theme)
     const setTheme = useUiStore((s) => s.setTheme)
+    const themePreset = useUiStore((s) => s.themePreset)
+    const setThemePreset = useUiStore((s) => s.setThemePreset)
     const sound = useUiStore((s) => s.soundEnabled)
     const setSound = useUiStore((s) => s.setSoundEnabled)
     const handGuide = useUiStore((s) => s.handGuideVisible)
@@ -58,6 +61,7 @@ export default function SettingsPage() {
     const timerStyle = settings.get('practice.timerStyle')
     const notificationsEnabled = settings.get('notification.enabled')
     const notifyUpdates = settings.get('notification.notifyUpdates')
+    const themeEffect = settings.get('design.themeEffect')
 
     const [report, setReport] = useState<{ kind: 'export' | 'import'; message: string } | null>(null)
     const [busy, setBusy] = useState<string | null>(null)
@@ -139,6 +143,71 @@ export default function SettingsPage() {
                         </div>
                     </Field>
                 </div>
+
+                <Field label="Desk palette" hint="A curated desk to write on. Live preview as you hover." className="mt-5">
+                    <div className="flex flex-wrap gap-2">
+                        <button
+                            type="button"
+                            title="The default OneType desk"
+                            onClick={() => setThemePreset(DEFAULT_THEME_PRESET_ID)}
+                            className={cn(
+                                'flex h-11 w-20 flex-col items-center justify-center gap-1.5 rounded-lg border bg-background transition-colors',
+                                themePreset === DEFAULT_THEME_PRESET_ID
+                                    ? 'border-accent ring-2 ring-ring/30'
+                                    : 'border-border hover:border-accent/60',
+                            )}
+                        >
+                            <span className="flex h-4 w-10 overflow-hidden rounded-sm border border-border">
+                                <span className="bg-bg" style={{ width: '50%' }} />
+                                <span className="bg-ink" style={{ width: '50%' }} />
+                            </span>
+                            <span className="text-[10px] font-medium text-muted-foreground">Default</span>
+                        </button>
+                        {THEMES.map((preset) => {
+                            const swatch = preset.light
+                            return (
+                                <button
+                                    key={preset.id}
+                                    type="button"
+                                    title={`${preset.name} — ${preset.description}`}
+                                    onClick={() => setThemePreset(preset.id)}
+                                    onPointerEnter={() => previewThemePreset(preset.id)}
+                                    onPointerLeave={() => applyCurrentTheme()}
+                                    className={cn(
+                                        'flex h-11 w-20 flex-col items-center justify-center gap-1.5 rounded-lg border transition-colors',
+                                        themePreset === preset.id
+                                            ? 'border-accent ring-2 ring-ring/30'
+                                            : 'border-border hover:border-accent/60',
+                                    )}
+                                    style={{ background: swatch.bg }}
+                                >
+                                    <span className="flex h-4 w-10 overflow-hidden rounded-sm border border-[var(--line-strong)]">
+                                        <span style={{ background: swatch.bg, width: '40%' }} />
+                                        <span style={{ background: swatch.ink, width: '40%' }} />
+                                        <span style={{ background: swatch.primary, width: '20%' }} />
+                                    </span>
+                                    <span className="text-[10px] font-medium" style={{ color: swatch.inkSoft }}>
+                                        {preset.name}
+                                    </span>
+                                </button>
+                            )
+                        })}
+                    </div>
+                </Field>
+
+                <Field label="Background effect" className="mt-4">
+                    <div className="relative">
+                        <select
+                            className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            value={themeEffect}
+                            onChange={(e) => void settings.set('design.themeEffect', e.currentTarget.value)}
+                        >
+                            <option value="none">None</option>
+                            <option value="aurora">Aurora</option>
+                            <option value="dots">Point grid</option>
+                        </select>
+                    </div>
+                </Field>
             </Section>
 
             <Section icon={<Palette className="size-4" />} title="Typing experience">
