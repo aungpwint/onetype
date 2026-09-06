@@ -12,6 +12,7 @@ import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
 import { TargetText } from '@/components/target-text'
 import { StatsBar } from '@/components/stats-bar'
 import { ProgressLine } from '@/components/progress-line'
+import { PacePill } from '@/components/pace-pill'
 import { SessionHeader } from '@/components/session/session-header'
 import { ExerciseWorkspace, QuickRestartHint } from '@/components/session/exercise-workspace'
 import { ConfirmAbandon } from '@/components/session/confirm-abandon'
@@ -116,6 +117,7 @@ export function Session({
                         <StatsBar />
                         <TargetText />
                         <ProgressLine />
+                        <PacePill />
                         <AnimatePresence>
                             {isCapsLockWarningVisible(capsLockOn, status) ? (
                                 <motion.div
