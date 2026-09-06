@@ -51,6 +51,7 @@ pub fn run() {
             commands::list_lesson_progress,
             commands::save_typing_session,
             commands::list_typing_sessions,
+            commands::minutes_in_window,
             commands::save_exercise_result,
             commands::list_exercise_results,
             commands::next_exercise_attempt,

@@ -9,6 +9,7 @@ import * as backend from '@/services/backend'
 import type { TestResult, TypingSession, TypingTest } from '@/services/types'
 import { ACHIEVEMENT_CATALOG } from '@/data/achievements'
 import { containsMyanmar } from '@/core/unicode/myanmar'
+import { dailyGoalState } from '@/core/goals/daily-goal'
 import { Spinner } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
@@ -41,6 +42,33 @@ function StatCard({ icon, label, value, hint }: { icon: ReactNode; label: string
     )
 }
 
+function GoalRing({ minutes, goalMinutes }: { minutes: number; goalMinutes: number }) {
+    const goal = dailyGoalState(minutes, goalMinutes)
+    const r = 24
+    const c = 2 * Math.PI * r
+    const color = goal.completed ? 'var(--success)' : 'var(--accent)'
+    return (
+        <div className="relative flex h-16 w-16 shrink-0 items-center justify-center">
+            <svg viewBox="0 0 64 64" className="size-16 -rotate-90" role="img" aria-label={`Today's goal: ${goal.percent}% complete`}>
+                <circle cx="32" cy="32" r={r} fill="none" stroke="var(--line)" strokeWidth="5" />
+                <circle
+                    cx="32"
+                    cy="32"
+                    r={r}
+                    fill="none"
+                    stroke={color}
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                    strokeDasharray={c}
+                    strokeDashoffset={c * (1 - goal.fraction)}
+                    style={{ transition: 'stroke-dashoffset 0.4s ease, stroke 0.3s ease' }}
+                />
+            </svg>
+            <span className={cn('absolute text-sm font-semibold tabular-nums', goal.completed && 'text-success')}>{goal.percent}%</span>
+        </div>
+    )
+}
+
 export default function Dashboard() {
     const active = useStudentStore((s) => s.active)
     const progress = useLessonStore((s) => s.progress)
@@ -48,6 +76,10 @@ export default function Dashboard() {
     const loadProgress = useLessonStore((s) => s.loadProgress)
     const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel)
     const defaultLang = useSettingsStore((s) => s.get('app.language'))
+    const dailyGoalMinutes = useSettingsStore((s) => {
+        const parsed = Number.parseInt(s.get('dashboard.dailyGoalMinutes'), 10)
+        return Number.isFinite(parsed) && parsed > 0 ? parsed : 0
+    })
     const streak = useProgressionStore((s) => s.streak)
     const unlocked = useProgressionStore((s) => s.unlocked)
     const summary = useProgressionStore((s) => s.summary)
@@ -56,6 +88,7 @@ export default function Dashboard() {
     const [sessions, setSessions] = useState<TypingSession[] | null>(null)
     const [tests, setTests] = useState<TypingTest[]>([])
     const [testResults, setTestResults] = useState<Map<string, TestResult>>(new Map())
+    const [todayMinutes, setTodayMinutes] = useState<number | null>(null)
 
     useEffect(() => {
         if (!active) return
@@ -68,6 +101,12 @@ export default function Dashboard() {
             const [all, results] = await Promise.all([backend.listTypingTests(), backend.listTestResults(active.id)])
             setTests(all)
             setTestResults(bestResultByTest(results))
+        })()
+        void (async () => {
+            const today = new Date()
+            today.setHours(0, 0, 0, 0)
+            const since = today.getTime()
+            setTodayMinutes(await backend.minutesInWindow(active.id, since, since + 86_400_000))
         })()
     }, [active, loadProgress, loadProgression])
 
@@ -217,22 +256,31 @@ export default function Dashboard() {
                         className="pointer-events-none absolute inset-0 bg-linear-to-b from-warning/[0.07] via-transparent to-transparent"
                     />
                     <div className="relative">
-                        <div className="flex items-center justify-between">
-                            <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
-                                <Flame className="size-3.5 text-warning" />
-                                Streak
-                            </p>
-                            {streak?.longest ? <span className="text-xs text-muted-foreground">Best {streak.longest}</span> : null}
+                        <div className="flex items-center justify-between gap-3">
+                            <div>
+                                <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
+                                    <Flame className="size-3.5 text-warning" />
+                                    Streak
+                                </p>
+                                <div className="mt-3 flex items-baseline gap-2">
+                                    <span className="font-display text-5xl leading-none font-semibold tracking-tight tabular-nums">
+                                        {streak?.current ?? '•'}
+                                    </span>
+                                    <span className="text-sm text-muted-foreground">day{streak?.current === 1 ? '' : 's'}</span>
+                                </div>
+                                <p className="mt-2 text-xs text-muted-foreground">
+                                    {streak && streak.longest > 0 ? `Longest streak: ${streak.longest} days` : 'Type daily to build a streak.'}
+                                </p>
+                            </div>
+                            {dailyGoalMinutes > 0 ? (
+                                <div className="flex flex-col items-center gap-1">
+                                    <GoalRing minutes={todayMinutes ?? 0} goalMinutes={dailyGoalMinutes} />
+                                    <span className="text-[0.6875rem] leading-none text-muted-foreground tabular-nums">
+                                        {todayMinutes === null ? '…' : `${Math.round(todayMinutes)}/${dailyGoalMinutes} min today`}
+                                    </span>
+                                </div>
+                            ) : null}
                         </div>
-                        <div className="mt-3 flex items-baseline gap-2">
-                            <span className="font-display text-5xl leading-none font-semibold tracking-tight tabular-nums">
-                                {streak?.current ?? '•'}
-                            </span>
-                            <span className="text-sm text-muted-foreground">day{streak?.current === 1 ? '' : 's'}</span>
-                        </div>
-                        <p className="mt-2 text-xs text-muted-foreground">
-                            {streak && streak.longest > 0 ? `Longest streak: ${streak.longest} days` : 'Type daily to build a streak.'}
-                        </p>
                     </div>
                 </div>
 

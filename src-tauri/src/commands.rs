@@ -95,10 +95,21 @@ pub async fn save_typing_session(
 pub async fn list_typing_sessions(
     state: State<'_, Mutex<Database>>,
     student_id: String,
-    limit: i64,
+    limit: Option<u32>,
 ) -> Result<Vec<TypingSession>> {
     let db = lock(&state)?;
-    repo::list_typing_sessions(db.conn(), &student_id, limit)
+    repo::list_typing_sessions(db.conn(), &student_id, limit.unwrap_or(30).into())
+}
+
+#[tauri::command]
+pub async fn minutes_in_window(
+    state: State<'_, Mutex<Database>>,
+    student_id: String,
+    since_ms: i64,
+    until_ms: i64,
+) -> Result<f64> {
+    let db = lock(&state)?;
+    repo::minutes_in_window(db.conn(), &student_id, since_ms, until_ms)
 }
 
 #[tauri::command]

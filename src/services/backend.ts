@@ -85,6 +85,11 @@ export async function listTypingSessions(studentId: string, limit = 30): Promise
     return invokeCommand('list_typing_sessions', { studentId, limit })
 }
 
+export async function minutesInWindow(studentId: string, sinceMs: number, untilMs: number): Promise<number> {
+    if (!isTauriRuntime()) return localBackend.minutesInWindow(studentId, sinceMs, untilMs)
+    return invokeCommand('minutes_in_window', { studentId, sinceMs, untilMs })
+}
+
 export async function saveExerciseResult(req: SaveExerciseResultRequest): Promise<void> {
     if (!isTauriRuntime()) return localBackend.saveExerciseResult(req)
     return invokeCommand('save_exercise_result', { req })

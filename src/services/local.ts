@@ -247,6 +247,13 @@ export const localBackend = {
             .slice(0, limit)
     },
 
+    minutesInWindow: async (studentId: string, sinceMs: number, untilMs: number): Promise<number> => {
+        const sessions = read<TypingSession[]>(KEYS.typingSessions, []).filter(
+            (s) => s.studentId === studentId && s.correctCount > 0 && s.startedAt >= sinceMs && s.startedAt < untilMs,
+        )
+        return sessions.reduce((sum, s) => sum + s.durationMs, 0) / 60000
+    },
+
     saveTypingSession: async (req: SaveTypingSessionRequest): Promise<TypingSession> => {
         const session: TypingSession = { ...req, id: newId('ts') }
         const all = read<TypingSession[]>(KEYS.typingSessions, [])

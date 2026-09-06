@@ -59,6 +59,7 @@ export default function SettingsPage() {
     const smoothCaret = settings.get('practice.smoothCaret')
     const paceCaret = settings.get('practice.paceCaret')
     const timerStyle = settings.get('practice.timerStyle')
+    const dailyGoalMinutes = settings.get('dashboard.dailyGoalMinutes')
     const notificationsEnabled = settings.get('notification.enabled')
     const notifyUpdates = settings.get('notification.notifyUpdates')
     const themeEffect = settings.get('design.themeEffect')
@@ -402,6 +403,16 @@ export default function SettingsPage() {
                                 <option value="replace">Replace</option>
                             </select>
                         </div>
+                    </Field>
+                    <Field label="Daily practice goal (minutes)">
+                        <input
+                            type="number"
+                            min={0}
+                            step={5}
+                            value={dailyGoalMinutes}
+                            onChange={(e) => void settings.set('dashboard.dailyGoalMinutes', e.currentTarget.value || '0')}
+                            className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                        />
                     </Field>
                 </div>
             </Section>

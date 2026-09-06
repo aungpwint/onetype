@@ -854,6 +854,23 @@ pub fn class_leaderboard(conn: &Connection, test_id: &str) -> Result<Vec<Leaderb
 
 // ---------- daily activity / training summary ----------
 
+/// Typed minutes (completed sessions) within a millisecond window.
+pub fn minutes_in_window(
+    conn: &Connection,
+    student_id: &str,
+    since_ms: i64,
+    until_ms: i64,
+) -> Result<f64> {
+    let total: f64 = conn.query_row(
+        "SELECT COALESCE(SUM(duration_ms), 0)
+         FROM typing_sessions
+         WHERE student_id = ?1 AND correct_count > 0 AND started_at >= ?2 AND started_at < ?3",
+        params![student_id, since_ms, until_ms],
+        |r| r.get::<_, f64>(0),
+    )?;
+    Ok(total / 60000.0)
+}
+
 /// Aggregate session stats in a given millisecond window (or all time when None).
 pub fn session_stats_in_window(
     conn: &Connection,
@@ -1562,5 +1579,43 @@ mod tests {
         assert_eq!(board[2].rank, 3);
 
         assert!(class_leaderboard(db.conn(), "missing").unwrap().is_empty());
+    }
+
+    #[test]
+    fn minutes_in_window_sums_completed_typing_time() {
+        let db = Database::open_in_memory().unwrap();
+        let id = seeded_student_id(&db);
+        let base = 1_700_000_000_000i64;
+
+        let req = |started_at: i64, wpm: f64| SaveTypingSessionRequest {
+            student_id: id.clone(),
+            lesson_id: Some("l1".into()),
+            exercise_id: None,
+            level: Some("beginner".into()),
+            lesson_number: Some(1),
+            started_at,
+            ended_at: started_at + 30_000,
+            duration_ms: 30_000,
+            target_length: 20,
+            completed_count: 20,
+            correct_count: 18,
+            error_count: 2,
+            backspace_count: 0,
+            wpm,
+            cpm: wpm * 5.0,
+            accuracy: 90.0,
+            layout_id: "english-qwerty".into(),
+            layout_version: 1,
+            content_version: 1,
+            status: "completed".into(),
+        };
+        save_typing_session(db.conn(), &req(base - 60_000, 20.0)).unwrap();
+        save_typing_session(db.conn(), &req(base, 30.0)).unwrap();
+        save_typing_session(db.conn(), &req(base + 60_000, 25.0)).unwrap();
+
+        let in_db = minutes_in_window(db.conn(), &id, base, base + 86_400_000).unwrap();
+        assert_eq!(in_db, 1.0);
+        let out = minutes_in_window(db.conn(), &id, base - 30_000, base - 1).unwrap();
+        assert_eq!(out, 0.0);
     }
 }
