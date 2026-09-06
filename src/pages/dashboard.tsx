@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, BarChart3, BookOpen, Flame, Gauge, Target, Timer, Trophy } from 'lucide-react'
+import { ArrowRight, BarChart3, BookOpen, CalendarDays, Flame, Gauge, Target, Timer, Trophy } from 'lucide-react'
 import { useStudentStore } from '@/stores/student-store'
 import { useLessonStore } from '@/stores/lesson-store'
 import { useSettingsStore } from '@/stores/settings-store'
@@ -10,6 +10,7 @@ import type { TestResult, TypingSession, TypingTest } from '@/services/types'
 import { ACHIEVEMENT_CATALOG } from '@/data/achievements'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { dailyGoalState } from '@/core/goals/daily-goal'
+import { buildWeekBars } from '@/core/progress/weekly'
 import { Spinner } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
@@ -89,6 +90,14 @@ export default function Dashboard() {
     const [tests, setTests] = useState<TypingTest[]>([])
     const [testResults, setTestResults] = useState<Map<string, TestResult>>(new Map())
     const [todayMinutes, setTodayMinutes] = useState<number | null>(null)
+    const [weekMinutes, setWeekMinutes] = useState<number[] | null>(null)
+
+    const todayStart = useMemo(() => {
+        const d = new Date()
+        d.setHours(0, 0, 0, 0)
+        return d.getTime()
+    }, [])
+    const DAY_MS = 86_400_000
 
     useEffect(() => {
         if (!active) return
@@ -103,12 +112,13 @@ export default function Dashboard() {
             setTestResults(bestResultByTest(results))
         })()
         void (async () => {
-            const today = new Date()
-            today.setHours(0, 0, 0, 0)
-            const since = today.getTime()
-            setTodayMinutes(await backend.minutesInWindow(active.id, since, since + 86_400_000))
+            const buckets = await Promise.all(
+                [0, 1, 2, 3, 4, 5, 6].map((o) => backend.minutesInWindow(active.id, todayStart - o * DAY_MS, todayStart - (o - 1) * DAY_MS)),
+            )
+            setTodayMinutes(buckets[0])
+            setWeekMinutes(buckets.slice().reverse())
         })()
-    }, [active, loadProgress, loadProgression])
+    }, [active, loadProgress, loadProgression, todayStart])
 
     const stats = useMemo(() => {
         const rows = sessions ?? []
@@ -210,6 +220,52 @@ export default function Dashboard() {
                     value={tests.length ? stats.passedTests : '…'}
                     hint={tests.length ? `${tests.length} timed tests seeded` : 'No timed tests yet'}
                 />
+            </div>
+
+            <div className={cn(cardClass, 'p-5')}>
+                <div className="flex items-center justify-between">
+                    <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
+                        <CalendarDays className="size-4 text-muted-foreground" />
+                        This week
+                    </h2>
+                    <span className="text-xs text-muted-foreground tabular-nums">
+                        {weekMinutes ? `${Math.round(weekMinutes.reduce((sum, m) => sum + m, 0))} min typed` : '…'}
+                    </span>
+                </div>
+                {weekMinutes ? (
+                    <div
+                        className="mt-4 flex h-24 items-end gap-2"
+                        role="img"
+                        aria-label="Minutes typed per day over the last seven days"
+                    >
+                        {buildWeekBars(weekMinutes, todayStart).map((b) => (
+                            <div key={b.offset} className="group relative flex flex-1 flex-col items-center gap-1">
+                                <span
+                                    className={cn(
+                                        'text-[0.6875rem] leading-none text-muted-foreground tabular-nums opacity-0 transition-opacity duration-150 group-hover:opacity-100',
+                                        b.isToday && 'opacity-100',
+                                    )}
+                                >
+                                    {b.minutes >= 1 ? `${Math.round(b.minutes)}m` : ''}
+                                </span>
+                                <div
+                                    className={cn(
+                                        'w-full rounded-t-md transition-colors',
+                                        b.isToday ? 'bg-accent' : 'bg-accent/25 group-hover:bg-accent/40',
+                                    )}
+                                    style={{ height: `${Math.max(b.fraction * 64, b.minutes > 0 ? 4 : 2)}px` }}
+                                />
+                                <span className={cn('text-[0.6875rem] leading-none text-muted-foreground', b.isToday && 'font-semibold text-accent')}>
+                                    {b.label}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="mt-4 flex h-24 items-center justify-center">
+                        <Spinner label="Loading your week…" />
+                    </div>
+                )}
             </div>
 
             <div className="grid gap-4 lg:grid-cols-3">
