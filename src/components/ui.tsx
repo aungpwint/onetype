@@ -74,12 +74,14 @@ export function Modal({
     children,
     width = 'max-w-lg',
     ariaLabel = 'Dialog',
+    dismissable = true,
 }: {
     open: boolean
     onClose: () => void
     children: ReactNode
     width?: string
     ariaLabel?: string
+    dismissable?: boolean
 }) {
     const panelRef = useRef<HTMLDivElement | null>(null)
 
@@ -89,17 +91,17 @@ export function Modal({
         const onKey = (event: KeyboardEvent) => {
             if (event.key === 'Escape') onClose()
         }
-        window.addEventListener('keydown', onKey)
+        if (dismissable) window.addEventListener('keydown', onKey)
         // Move focus into the panel on open so keyboard users land in the dialog.
         const raf = requestAnimationFrame(() => {
             panelRef.current?.focus()
         })
         return () => {
             cancelAnimationFrame(raf)
-            window.removeEventListener('keydown', onKey)
+            if (dismissable) window.removeEventListener('keydown', onKey)
             previouslyFocused?.focus()
         }
-    }, [open, onClose])
+    }, [open, onClose, dismissable])
 
     return (
         <AnimatePresence>
@@ -111,7 +113,7 @@ export function Modal({
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.16 }}
                 >
-                    <div className="absolute inset-0 bg-black/45" onClick={onClose} aria-hidden />
+                    <div className="absolute inset-0 bg-black/45" onClick={dismissable ? onClose : undefined} aria-hidden />
                     <motion.div
                         role="dialog"
                         aria-modal="true"
@@ -127,14 +129,16 @@ export function Modal({
                         exit={{ opacity: 0, y: 6, scale: 0.98 }}
                         transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            aria-label="Close dialog"
-                            className="absolute top-4 right-4 rounded-md p-1 text-muted-foreground opacity-70 transition-colors hover:bg-muted hover:opacity-100 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-                        >
-                            <X className="size-4" />
-                        </button>
+                        {dismissable && (
+                            <button
+                                type="button"
+                                onClick={onClose}
+                                aria-label="Close dialog"
+                                className="absolute top-4 right-4 rounded-md p-1 text-muted-foreground opacity-70 transition-colors hover:bg-muted hover:opacity-100 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                            >
+                                <X className="size-4" />
+                            </button>
+                        )}
                         {children}
                     </motion.div>
                 </motion.div>

@@ -5,9 +5,9 @@ export type UpdateStatus =
     | { state: 'checking' }
     | { state: 'not-available' }
     | { state: 'available'; version: string; body?: string; date?: string }
-    | { state: 'downloading'; progress: number; contentLength?: number }
-    | { state: 'downloaded' }
-    | { state: 'installing' }
+    | { state: 'downloading'; progress: number; contentLength?: number; version?: string }
+    | { state: 'downloaded'; version?: string }
+    | { state: 'installing'; version?: string }
     | { state: 'completed' }
     | { state: 'error'; message: string }
 

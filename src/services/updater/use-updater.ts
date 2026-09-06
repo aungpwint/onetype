@@ -15,9 +15,11 @@ export function useUpdater() {
 
     const check = useCallback(() => updaterService.check(), [])
     const downloadAndInstall = useCallback(() => updaterService.downloadAndInstall(), [])
+    const updateNow = useCallback(() => updaterService.downloadAndInstall(true), [])
     const install = useCallback(() => updaterService.install(), [])
+    const reset = useCallback(() => updaterService.reset(), [])
 
-    return { status, check, downloadAndInstall, install, autoUpdate }
+    return { status, check, downloadAndInstall, updateNow, install, reset, autoUpdate }
 }
 
 export function useStartupUpdateCheck() {
@@ -27,23 +29,28 @@ export function useStartupUpdateCheck() {
     const checked = useRef(false)
 
     useEffect(() => {
-        if (checked.current) return
-        if (autoUpdate === 'off') return
+        let disposed = false
 
-        const now = Date.now()
-        const last = Number(lastChecked) || 0
-        if (now - last < CHECK_THROTTLE_MS) return
+        const runCheck = async (throttled: boolean) => {
+            if (autoUpdate === 'off') return
+            if (disposed) return
 
-        checked.current = true
-        void updaterService.check().then(async (available) => {
+            const now = Date.now()
+            const last = Number(lastChecked) || 0
+            if (throttled && now - last < CHECK_THROTTLE_MS) return
+
+            const available = await updaterService.check()
+            if (disposed) return
+
             await setSetting('updater.lastChecked', String(now))
 
             if (available) {
                 const status = updaterService.getStatus()
                 if (status.state === 'available') {
-                    const notifyUpdates = useSettingsStore.getState().get('notification.notifyUpdates')
-                    const lastNotified = useSettingsStore.getState().get('notification.lastNotifiedVersion')
-                    if (notifyUpdates !== 'off' && status.version !== lastNotified) {
+                    const settings = useSettingsStore.getState()
+                    const notificationsOn = settings.get('notification.enabled') !== 'off' && settings.get('notification.notifyUpdates') !== 'off'
+                    const lastNotified = settings.get('notification.lastNotifiedVersion')
+                    if (notificationsOn && status.version !== lastNotified) {
                         await notificationService.send({
                             title: 'OneType Update Available',
                             body: `A new version of OneType is available. Click to view the update.`,
@@ -52,6 +59,18 @@ export function useStartupUpdateCheck() {
                     }
                 }
             }
-        })
+        }
+
+        if (!checked.current) {
+            checked.current = true
+            void runCheck(true)
+        }
+
+        const interval = window.setInterval(() => void runCheck(false), CHECK_THROTTLE_MS)
+
+        return () => {
+            disposed = true
+            window.clearInterval(interval)
+        }
     }, [autoUpdate, lastChecked, setSetting])
 }
