@@ -6,6 +6,7 @@ import type { TestResult, TypingTest } from '@/services/types'
 import { useStudentStore } from '@/stores/student-store'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { classStanding, type Standing } from '@/core/leaderboard/standing'
+import { focusQueue } from '@/core/tests/focus'
 import { Badge } from '@/components/ui/badge'
 import { EmptyState, PageHeader, Spinner } from '@/components/ui'
 import { formatDateTime, formatWpm, formatAccuracy, bestResultByTest } from '@/lib/format'
@@ -93,6 +94,8 @@ export default function TestsPage() {
 
     const groups = tests ? groupByLanguage(tests) : []
 
+    const focus = useMemo(() => (tests ? focusQueue(results, tests) : []), [results, tests])
+
     return (
         <div className={appPageClass}>
             <PageHeader
@@ -117,6 +120,35 @@ export default function TestsPage() {
                     hint="Mean accuracy over all runs"
                 />
             </div>
+
+            {focus.length > 0 ? (
+                <div className={cn(cardClass, 'p-5')}>
+                    <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
+                        <Target className="size-4 text-muted-foreground" />
+                        Closest to passing
+                    </h2>
+                    <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                        {focus.map((f) => (
+                            <Link
+                                key={f.testId}
+                                to={`/test/${f.testId}`}
+                                className="group flex flex-col gap-1 rounded-xl border border-line bg-paper-2/40 p-3.5 transition-colors hover:border-accent/40 hover:bg-accent/5 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                            >
+                                <span className="flex items-center gap-2 text-xs">
+                                    <span className="rounded border border-line bg-paper-2/70 px-1.5 font-mono tabular-nums">{f.code}</span>
+                                    <span className="ml-auto text-muted-foreground tabular-nums">
+                                        {f.bestWpm}/{f.bestAccuracy.toFixed(1)}
+                                    </span>
+                                </span>
+                                <span className="truncate text-sm font-medium">{f.name}</span>
+                                <span className="text-xs text-muted-foreground">
+                                    {f.attempts} attempt{f.attempts === 1 ? '' : 's'} · {f.shortfall.toFixed(1)} from target
+                                </span>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            ) : null}
 
             {tests === null ? (
                 <Spinner label="Gathering the papers…" />
