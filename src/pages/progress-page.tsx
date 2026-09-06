@@ -15,6 +15,7 @@ import { cn, cardClass, appPageClass, eyebrowClass, sectionTitleClass, chipClass
 import { summarizePerformance, type SessionPoint } from '@/core/analytics'
 import { previewWeaknessDrill, drillGoalLabel } from '@/core/reinforcement/preview'
 import { keyIdLabel } from '@/core/reinforcement/service'
+import { myanmar } from '@/core/keyboard-layout/myanmar'
 
 type Range = 'week' | 'month' | 'all'
 
@@ -116,7 +117,7 @@ export default function ProgressPage() {
             </div>
         )
 
-    const weakPreview = previewWeaknessDrill(detail.weakKeys)
+    const weakPreview = previewWeaknessDrill(detail.weakKeys, 8, myanmar)
     const sessions = detail.recentSessions.filter((s) => s.correctCount > 0 && inRange(s, range))
     const wpmSeries = sessions.map((s) => s.wpm).slice(0, 24)
     const accSeries = sessions.map((s) => s.accuracy).slice(0, 24)
@@ -304,7 +305,7 @@ export default function ProgressPage() {
                                         <span className="font-myanmar"> — {weakPreview.keys.join(' ')}</span>
                                     ) : null}
                                 </p>
-                                <Button size="sm" variant="default" className="mt-2.5 w-full" onClick={() => navigate('/drill')}>
+                                <Button size="sm" variant="default" className="mt-2.5 w-full" onClick={() => navigate('/drill?layout=myanmar')}>
                                     <Sparkles className="size-4" />
                                     Drill your weakest keys
                                 </Button>

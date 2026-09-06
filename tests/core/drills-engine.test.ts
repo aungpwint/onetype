@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { planMuscleMemorySession, MUSCLE_MEMORY_GOALS } from '@/core/drills/engine'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
+import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { handForFinger } from '@/core/finger-mapping/finger-map'
 
 describe('muscle-memory drill engine', () => {
@@ -80,6 +81,32 @@ describe('muscle-memory drill engine', () => {
 
     it('rejects focus keys that are not on the English layout', () => {
         expect(() => planMuscleMemorySession('repetition', ['က'], { length: 4 })).toThrow(/not supported by the English layout/)
+    })
+})
+
+describe('Myanmar muscle-memory drills', () => {
+    const KEYS = ['\u1000', '\u102C']
+
+    it('builds an engine-ready repetition drill on the Myanmar layout', () => {
+        const plan = planMuscleMemorySession('repetition', KEYS, { length: 6, layout: myanmar })
+        expect(plan.goal).toBe('repetition')
+        for (const k of plan.drill.keys) {
+            expect(myanmar.lookupChar(k)).toBeTruthy()
+        }
+        expect(plan.sequence.text).toContain('\u1000')
+        expect(plan.sequence.units.length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('maps weak Myanmar keys through their finger and builds a finger-isolation drill', () => {
+        const plan = planMuscleMemorySession('finger-isolation', ['\u1000', '\u1004'], { length: 8, layout: myanmar })
+        expect(plan.focusesFingers.length).toBeGreaterThanOrEqual(1)
+        for (const f of plan.focusesFingers) {
+            expect(handForFinger(f)).toBeTruthy()
+        }
+    })
+
+    it('rejects keys that are missing from the Myanmar layout', () => {
+        expect(() => planMuscleMemorySession('repetition', ['a'], { length: 4, layout: myanmar })).toThrow(/not supported by the myanmar layout/)
     })
 })
 

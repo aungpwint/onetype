@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AlertCircle, ArrowLeft, Check, Keyboard, LayoutDashboard, Loader2, Pause, Play, LogOut, ShieldAlert } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import * as backend from '@/services/backend'
 import { useTypingStore, buildAdaptiveDrill } from '@/stores/typing-store'
+import { useSettingsStore } from '@/stores/settings-store'
 import { useUiStore } from '@/stores/ui-store'
 import { useCapsLockState } from '@/hooks/use-caps-lock'
 import { isCapsLockWarningVisible } from '@/core/session/caps-lock'
@@ -350,17 +351,24 @@ export function DrillPage() {
     const navigate = useNavigate()
     const session = useTypingStore((s) => s.session)
     const beginDrill = useTypingStore((s) => s.beginDrill)
+    const practiceLang = useSettingsStore((s) => s.values['practice.lang'])
+    const [searchParams] = useSearchParams()
     const [error, setError] = useState<string | null>(null)
+
+    const layoutId =
+        searchParams.get('layout') === 'myanmar' || (searchParams.get('layout') === null && practiceLang === 'myanmar')
+            ? 'myanmar'
+            : 'english-qwerty'
 
     const load = useCallback(async () => {
         try {
-            const drill = await buildAdaptiveDrill()
+            const drill = await buildAdaptiveDrill({ layoutId })
             if (drill) await beginDrill(drill)
             else setError('Not enough typing data yet to spot weaknesses. Finish a few lessons first.')
         } catch {
             setError('Could not prepare an adaptive drill right now.')
         }
-    }, [beginDrill])
+    }, [beginDrill, layoutId])
 
     useBeginSession('drill', load)
 

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
+import { myanmar } from '@/core/keyboard-layout/myanmar'
 import {
     parseKeyId,
     keyIdToChar,
@@ -185,5 +186,32 @@ describe('real layout mapping', () => {
         for (const ch of chars) {
             expect(englishQwerty.lookupChar(ch)).toBeTruthy()
         }
+    })
+})
+
+describe('Myanmar reinforcement', () => {
+    const weak = [
+        { key: 'KeyU:none', lowerBound: 0.1 },
+        { key: 'KeyM:none', lowerBound: 0.2 },
+    ]
+
+    it('maps Myanmar key ids to their Myanmar characters', () => {
+        expect(keyIdToChar('KeyU:none', myanmar)).toBe('\u1000')
+        expect(keyIdToChar('KeyM:none', myanmar)).toBe('\u102C')
+        expect(focusCharsFromWeakKeys(weak, {}, myanmar)).toEqual(['\u1000', '\u102C'])
+    })
+
+    it('builds a drill tagged with the Myanmar layout', () => {
+        const drill = reinforcementFromWeakKeys(weak, { layout: myanmar })
+        expect(drill.layoutId).toBe('myanmar')
+        expect(drill.focusKeys).toEqual(['\u1000', '\u102C'])
+        expect(drill.plan.keys).toEqual(expect.arrayContaining(['\u1000', '\u102C']))
+        expect(drill.plan.sequence.text).toContain('\u1000')
+    })
+
+    it('prefers the provided layout over the English default', () => {
+        const drill = reinforcementFromWeakKeys(weak, { layout: myanmar, goal: 'repetition' })
+        expect(drill.plan.sequence.text).toContain('\u1000')
+        expect(drill.plan.sequence.text).not.toContain('u')
     })
 })

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { TypingEngine } from '@/core/typing-engine/engine'
-import { getLayoutOrThrow, layoutForLanguage } from '@/core/keyboard-layout/registry'
+import { getLayout, getLayoutOrThrow, layoutForLanguage } from '@/core/keyboard-layout/registry'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
 import { resolveLessonById } from '@/data/curriculum'
 import type { ResolvedLesson } from '@/data/curriculum/generator'
@@ -152,7 +152,7 @@ const IGNORED_CODES = new Set([
 
 const ENGLISH_LAYOUT_ID = 'english-qwerty'
 
-function drillResolvedLesson(drill: ReinforcedDrill): ResolvedLesson {
+function drillResolvedLesson(drill: ReinforcedDrill, layoutId: string): ResolvedLesson {
     const plan = drill.plan
     const seq = plan.sequence
     return {
@@ -160,7 +160,7 @@ function drillResolvedLesson(drill: ReinforcedDrill): ResolvedLesson {
         level: 'beginner',
         number: 0,
         sequence: seq,
-        layoutId: ENGLISH_LAYOUT_ID,
+        layoutId: (layoutId === 'english-qwerty' || layoutId === 'myanmar' ? layoutId : 'english-qwerty'),
         totalUnits: seq.units.length,
         totalCharacters: seq.charCount,
         phases: [],
@@ -170,21 +170,23 @@ function drillResolvedLesson(drill: ReinforcedDrill): ResolvedLesson {
         title: `Weakness drill · ${plan.goal}`,
         titleMy: '',
         description: 'Adaptive drill targeting detected weak keys.',
-        language: 'english',
+        language: layoutId === 'myanmar' ? 'myanmar' : 'english',
         focusKeys: plan.keys,
     }
 }
 
-export async function buildAdaptiveDrill(opts: { goal?: MuscleMemoryGoal } = {}): Promise<ReinforcedDrill | null> {
+export async function buildAdaptiveDrill(opts: { goal?: MuscleMemoryGoal; layoutId?: string } = {}): Promise<ReinforcedDrill | null> {
     const active = useStudentStore.getState().active
     if (!active) return null
+    const layoutId = opts.layoutId ?? ENGLISH_LAYOUT_ID
+    const layout = getLayout(layoutId) ?? englishQwerty
     // weakKeys is already Wilson-ranked weakest-first, so a lower position index
     // means weaker. Encode that as a descending lower bound so the reinforcement
     // layer's ascend-and-cap keeps the weakest keys first.
-    const keys = await backend.weakKeys(active.id, ENGLISH_LAYOUT_ID, 8)
+    const keys = await backend.weakKeys(active.id, layoutId, 8)
     if (keys.length === 0) return null
     const weakIds = keys.map((k, i) => ({ key: k.key, lowerBound: i }))
-    return reinforcementFromWeakKeys(weakIds, opts)
+    return reinforcementFromWeakKeys(weakIds, { ...opts, layout })
 }
 
 export const useTypingStore = create<TypingState>((set, get) => ({
@@ -301,8 +303,8 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         const session: TypingSessionState = {
             kind: 'drill',
             drill,
-            resolved: drillResolvedLesson(drill),
-            layout: englishQwerty,
+            resolved: drillResolvedLesson(drill, drill.layoutId),
+            layout: getLayout(drill.layoutId) ?? englishQwerty,
             mode: 'guided',
             durationSeconds: null,
             attempt: 1,
@@ -372,8 +374,9 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             clear()
             void beginLesson(id, mode)
         } else if (st.session.kind === 'drill') {
+            const layoutId = st.session.drill?.layoutId
             clear()
-            void buildAdaptiveDrill().then((drill) => {
+            void buildAdaptiveDrill({ layoutId }).then((drill) => {
                 if (drill) void get().beginDrill(drill)
             })
         } else if (st.session.kind === 'practice') {

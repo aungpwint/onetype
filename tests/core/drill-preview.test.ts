@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { previewWeaknessDrill, drillGoalLabel } from '@/core/reinforcement/preview'
 import { keyIdLabel } from '@/core/reinforcement/service'
+import { myanmar } from '@/core/keyboard-layout/myanmar'
 
 const WEAK = [
     { key: 'KeyA:none', accuracy: 60 },
@@ -34,6 +35,20 @@ describe('previewWeaknessDrill', () => {
         expect(drillGoalLabel('finger-isolation')).toBe('Finger isolation')
         expect(drillGoalLabel('repetition')).toBe('Repetition')
         expect(drillGoalLabel('unknown' as never)).toBe('Strength')
+    })
+
+    it('previews Myanmar keys against the Myanmar layout', () => {
+        const preview = previewWeaknessDrill(
+            [
+                { key: 'KeyU:none', accuracy: 55 },
+                { key: 'KeyM:none', accuracy: 70 },
+            ],
+            8,
+            myanmar,
+        )
+        expect(preview?.keys).toContain('\u1000')
+        expect(preview?.keys).toContain('\u102C')
+        expect(preview?.keys.join('')).not.toContain('u')
     })
 })
 

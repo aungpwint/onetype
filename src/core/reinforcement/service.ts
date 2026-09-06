@@ -43,10 +43,10 @@ export function focusCharsFromWeakKeys(
     return [...seen]
 }
 
-export function decideDrillGoal(focusKeys: string[]): MuscleMemoryGoal {
+export function decideDrillGoal(focusKeys: string[], layout: KeyboardLayout = englishQwerty): MuscleMemoryGoal {
     const fingers = new Set<FingerId>()
     for (const ch of focusKeys) {
-        const lookup = englishQwerty.lookupChar(ch)
+        const lookup = layout.lookupChar(ch)
         if (lookup) fingers.add(lookup.finger)
     }
     return fingers.size <= 1 ? 'finger-isolation' : 'repetition'
@@ -74,14 +74,16 @@ function makeDrill(
     targeted: string[],
     source: 'keys' | 'fingers',
     length: number | undefined,
+    layout: KeyboardLayout,
 ): ReinforcedDrill {
-    const plan = planMuscleMemorySession(goal, focusKeys, { length })
-    return { goal, source, targeted, focusKeys, plan }
+    const plan = planMuscleMemorySession(goal, focusKeys, { length, layout })
+    return { goal, source, targeted, focusKeys, layoutId: layout.id, plan }
 }
 
 export function reinforcementFromWeakKeys(weakKeys: WeakKeyId[], opts: ReinforcementOptions = {}): ReinforcedDrill {
-    const goal = opts.goal ?? decideDrillGoal(focusCharsFromWeakKeys(weakKeys, opts))
-    const focusKeys = focusCharsFromWeakKeys(weakKeys, opts)
+    const layout = opts.layout ?? englishQwerty
+    const focusKeys = focusCharsFromWeakKeys(weakKeys, opts, layout)
+    const goal = opts.goal ?? decideDrillGoal(focusKeys, layout)
     if (focusKeys.length === 0) {
         throw new Error('reinforcement: no weak keys mapped to a character on the layout')
     }
@@ -91,16 +93,18 @@ export function reinforcementFromWeakKeys(weakKeys: WeakKeyId[], opts: Reinforce
         weakKeys.map((w) => w.key),
         'keys',
         opts.length,
+        layout,
     )
 }
 
 export function reinforcementFromWeakFingers(weakFingers: FingerId[], opts: ReinforcementOptions = {}): ReinforcedDrill {
-    const focusKeys = focusCharsFromWeakFingers(weakFingers, opts)
-    const goal = opts.goal ?? decideDrillGoal(focusKeys)
+    const layout = opts.layout ?? englishQwerty
+    const focusKeys = focusCharsFromWeakFingers(weakFingers, opts, layout)
+    const goal = opts.goal ?? decideDrillGoal(focusKeys, layout)
     if (focusKeys.length === 0) {
         throw new Error('reinforcement: no weak fingers carry a usable key')
     }
-    return makeDrill(goal, focusKeys, weakFingers, 'fingers', opts.length)
+    return makeDrill(goal, focusKeys, weakFingers, 'fingers', opts.length, layout)
 }
 
 export function planWeakestReinforcement(ranks: { key: string; lowerBound: number }[], opts: ReinforcementOptions = {}): ReinforcedDrill {

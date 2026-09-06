@@ -1,4 +1,5 @@
 import type { FingerId, Modifier } from '@/types'
+import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import type { MuscleMemoryGoal, MuscleMemoryPlan } from '@/core/drills/engine'
 
 export interface WeakKeyId {
@@ -10,6 +11,7 @@ export interface ReinforcementOptions {
     goal?: MuscleMemoryGoal
     length?: number
     maxKeys?: number
+    layout?: KeyboardLayout
 }
 
 export interface ReinforcedDrill {
@@ -17,6 +19,7 @@ export interface ReinforcedDrill {
     source: 'keys' | 'fingers'
     targeted: string[]
     focusKeys: string[]
+    layoutId: string
     plan: MuscleMemoryPlan
 }
 
