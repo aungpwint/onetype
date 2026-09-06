@@ -10,6 +10,7 @@ interface UiState {
     handGuideVisible: boolean
     soundEnabled: boolean
     focusMode: boolean
+    commandPaletteOpen: boolean
     setTheme: (theme: ThemePreference) => void
     setThemePreset: (preset: string) => void
     toggleSidebar: () => void
@@ -17,6 +18,7 @@ interface UiState {
     toggleHandGuide: () => void
     setSoundEnabled: (enabled: boolean) => void
     setFocusMode: (enabled: boolean) => void
+    setCommandPaletteOpen: (open: boolean) => void
 }
 
 function readStoredTheme(): ThemePreference {
@@ -94,6 +96,7 @@ export const useUiStore = create<UiState>((set) => ({
     handGuideVisible: false,
     soundEnabled: readStoredSound(),
     focusMode: readStoredFocusMode(),
+    commandPaletteOpen: false,
     setTheme: (theme) => {
         localStorage.setItem('onetype:theme', theme)
         applyTheme(theme)
@@ -117,6 +120,7 @@ export const useUiStore = create<UiState>((set) => ({
         localStorage.setItem('onetype:focus-mode', enabled ? 'on' : 'off')
         set({ focusMode: enabled })
     },
+    setCommandPaletteOpen: (open) => set({ commandPaletteOpen: open }),
 }))
 
 export function initUi() {

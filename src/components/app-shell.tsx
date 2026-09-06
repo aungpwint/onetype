@@ -21,6 +21,7 @@ import {
     Plus,
     ChevronDown,
     UserRound,
+    Search,
 } from 'lucide-react'
 import { useUiStore } from '@/stores/ui-store'
 import { useSettingsStore } from '@/stores/settings-store'
@@ -28,6 +29,7 @@ import { useStudentStore } from '@/stores/student-store'
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts'
 import { syncSoundFromSettings } from '@/lib/sound'
 import { Modal, Atmosphere } from './ui'
+import { CommandPalette } from './command-palette'
 import { StudentForm } from './student-form'
 import { listLayouts } from '@/core/keyboard-layout/registry'
 import { Button } from './ui/button'
@@ -216,6 +218,11 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                             <span className="hidden md:inline">QWERTY + Myanmar</span>
                         </div>
                         <div className="ml-auto flex items-center gap-2">
+                            <IconButton
+                                label="Command palette (Ctrl+K)"
+                                onClick={() => useUiStore.setState({ commandPaletteOpen: true })}
+                                icon={<Search className="size-4" />}
+                            />
                             <Button size="sm" onClick={() => setAddOpen(true)}>
                                 <Plus className="size-4" />
                                 <span className="hidden sm:inline">Add student</span>
@@ -230,6 +237,11 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                         {children}
                     </main>
                 </div>
+
+                <CommandPalette
+                    openAddStudent={() => setAddOpen(true)}
+                    openLearnerPicker={() => setPickerOpen(true)}
+                />
 
                 <Modal open={pickerOpen} onClose={() => setPickerOpen(false)} ariaLabel="Choose a learner">
                     <div className="mb-4 flex items-center justify-between pr-8">

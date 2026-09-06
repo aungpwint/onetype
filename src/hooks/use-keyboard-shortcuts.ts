@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTypingStore } from '@/stores/typing-store'
+import { useUiStore } from '@/stores/ui-store'
 
 export function useKeyboardShortcuts() {
     const navigate = useNavigate()
@@ -10,6 +11,19 @@ export function useKeyboardShortcuts() {
             const typingActive = useTypingStore.getState().status !== 'idle'
             const key = event.key.toLowerCase()
             const mod = event.ctrlKey || event.metaKey || event.altKey
+
+            // Command palette: Ctrl/Cmd+K opens it; Escape closes it first so it
+            // never also pauses a run behind the palette.
+            if (mod && key === 'k') {
+                event.preventDefault()
+                useUiStore.getState().setCommandPaletteOpen(true)
+                return
+            }
+            if (key === 'escape' && useUiStore.getState().commandPaletteOpen) {
+                event.preventDefault()
+                useUiStore.getState().setCommandPaletteOpen(false)
+                return
+            }
 
             // Navigation quickly via Ctrl/Cmd + number
             if (mod && event.key === '1') {
