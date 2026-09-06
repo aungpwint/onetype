@@ -10,8 +10,9 @@ import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
 import { TargetText } from '@/components/target-text'
 import { StatsBar } from '@/components/stats-bar'
 import { SessionHeader } from '@/components/session/session-header'
-import { ExerciseWorkspace } from '@/components/session/exercise-workspace'
+import { ExerciseWorkspace, QuickRestartHint } from '@/components/session/exercise-workspace'
 import { ConfirmAbandon } from '@/components/session/confirm-abandon'
+import { OutOfFocusWarning } from '@/components/session/out-of-focus-warning'
 import { useConfirmExit } from '@/components/session/use-confirm-exit'
 import { ResultDialog } from '@/components/result-dialog'
 import { Spinner, EmptyState } from '@/components/ui'
@@ -107,10 +108,12 @@ export function Session({
                 </div>
             ) : (
                 <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-5 py-4 sm:px-8">
-                    <div className="flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
+                    <div className="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
                         <StatsBar />
                         <TargetText />
+                        <QuickRestartHint />
                         <KeyboardContainer layout={layout} />
+                        <OutOfFocusWarning />
                     </div>
                 </div>
             )}

@@ -299,11 +299,19 @@ describe('typing engine', () => {
         const seq = buildSequence('cat', englishQwerty)
         const engine = new TypingEngine({ sequence: seq, layout: englishQwerty, durationSeconds: 10, now: clock })
         engine.processKey('KeyC', 'none')
+        // Slow-timer resilience: a backgrounded/frozen tab's wall clock cannot
+        // silently inflate a round. A single frozen 60s jump credits only the
+        // burst budget, so the round stays running until honest time accrues.
         now = 60_000
         engine.processKey('KeyA', 'none')
-        expect(engine.status).toBe('finished')
+        expect(engine.status).toBe('running')
+        // Honest time now accrues in normal small steps until the timer expires.
+        while (engine.status !== 'finished') {
+            now += 500
+            engine.processKey('Space', 'none')
+        }
         expect(engine.finishReason).toBe('time-up')
-        expect(engine.unitIndex).toBe(1)
+        expect(engine.unitIndex).toBe(2)
     })
 
     it('classifies a modifier error when pressing the right key with the wrong Shift state', () => {

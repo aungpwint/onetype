@@ -1,5 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTypingStore } from '@/stores/typing-store'
+import { useSettingsStore } from '@/stores/settings-store'
+import { useUiStore } from '@/stores/ui-store'
+import { playTimeWarningSound } from '@/lib/sound'
 import { formatDuration } from '@/lib/format'
 import { Metric } from '@/components/ui'
 
@@ -8,11 +11,14 @@ export function StatsBar() {
     const status = useTypingStore((s) => s.status)
     void tick
     const [, force] = useState(0)
+    const warned = useRef(false)
+    const timeWarning = useSettingsStore((s) => s.get('practice.timeWarning') ?? 'on')
 
     const running = status === 'running'
 
     useEffect(() => {
         if (!running) return
+        warned.current = false
         const id = window.setInterval(() => force((n) => n + 1), 250)
         return () => window.clearInterval(id)
     }, [running])
@@ -21,6 +27,15 @@ export function StatsBar() {
     const durationSeconds = useTypingStore.getState().session?.durationSeconds ?? null
     const engine = useTypingStore.getState().engine
     const remaining = durationSeconds !== null && engine ? Math.max(0, durationSeconds - engine.elapsedSeconds()) : null
+
+    // Warn once as a timed round passes the 10-second mark (Monkeytype parity).
+    const inWarningZone = running && durationSeconds !== null && remaining !== null && remaining <= 10
+    useEffect(() => {
+        if (!inWarningZone) return
+        if (warned.current) return
+        warned.current = true
+        if (timeWarning !== 'off' && useUiStore.getState().soundEnabled) playTimeWarningSound()
+    }, [inWarningZone, timeWarning])
 
     // Myanmar is reported in honest typing units/minute; English keeps WPM.
     const metrics = engine?.currentMetrics()

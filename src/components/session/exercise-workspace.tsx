@@ -1,12 +1,14 @@
 import { motion } from 'framer-motion'
 import { AlertCircle, ArrowLeft, Pause, Play } from 'lucide-react'
 import { useTypingStore } from '@/stores/typing-store'
+import { useSettingsStore } from '@/stores/settings-store'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { cn, eyebrowClass } from '@/lib/utils'
 import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
 import { TargetText } from '@/components/target-text'
 import { ResultDialog } from '@/components/result-dialog'
 import { ConfirmAbandon } from '@/components/session/confirm-abandon'
+import { OutOfFocusWarning } from '@/components/session/out-of-focus-warning'
 import { useConfirmExit } from '@/components/session/use-confirm-exit'
 import { SessionTools } from '@/components/session/session-tools'
 import { Metric, Spinner } from '@/components/ui'
@@ -118,11 +120,13 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
                 </div>
             ) : (
                 <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-4 py-5 sm:px-8">
-                    <div className="flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
+                    <div className="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
                         <TargetText />
                         {status === 'ready' ? <TabStartHint /> : null}
+                        <QuickRestartHint />
                         <KeyboardContainer layout={layout} hideReadyMessage />
                         <ExerciseFooter />
+                        <OutOfFocusWarning />
                     </div>
                 </div>
             )}
@@ -164,6 +168,21 @@ function TabStartHint() {
                 Tab
             </span>
             <span className="text-xs font-medium text-muted-foreground">Press Tab to start</span>
+        </div>
+    )
+}
+
+export function QuickRestartHint() {
+    const pendingRestartAt = useTypingStore((s) => s.pendingRestartAt)
+    const quickRestart = useSettingsStore((s) => s.get('practice.quickRestart') ?? 'tab')
+    if (!pendingRestartAt) return null
+    const label = quickRestart === 'enter' ? 'Enter' : 'Tab'
+    return (
+        <div className="flex items-center justify-center gap-2.5" aria-live="polite">
+            <span className="rounded-lg border border-line bg-card px-2.5 py-1 font-mono text-[0.6875rem] font-bold tracking-[0.15em] text-foreground uppercase shadow-sm">
+                {label}
+            </span>
+            <span className="text-xs font-medium text-muted-foreground">Press {label} again to restart</span>
         </div>
     )
 }

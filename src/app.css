@@ -38,6 +38,7 @@
     --typing-incorrect: #c9362b;
     --typing-current-ink: #171a1f;
     --typing-upcoming: #858c98;
+    --typing-current-wash: rgba(23, 26, 31, 0.07);
 
     --key-top: #ffffff;
     --key-base: #e8ebef;
@@ -90,6 +91,7 @@
     --typing-incorrect: #f4645c;
     --typing-current-ink: #e8eef7;
     --typing-upcoming: #6b7890;
+    --typing-current-wash: rgba(232, 238, 247, 0.1);
 
     --key-top: #1e293b;
     --key-base: #131e30;
@@ -317,6 +319,14 @@
         padding: 0 0.08em;
     }
 
+    /* High-contrast emphasis: a soft cast behind the current cluster makes the
+     active syllable read at a glance (Monkeytype-like current-letter pop). A
+     background wash — never a transform — so shaped Myanmar cluster glyphs are
+     never split or displaced. */
+    .tt-char-now.tt-char-focus {
+        background: var(--typing-current-wash);
+    }
+
     .tt-char-focus {
         color: var(--typing-current-ink);
     }
@@ -324,6 +334,21 @@
     .tt-char-flash {
         background: var(--destructive-soft);
         animation: flash-current 0.18s ease-out;
+    }
+
+    /* Out-of-focus: the whole target dims and the current char softens so the
+     learner can see the round is on hold, but the glyphs stay readable. */
+    .tt-blurred {
+        opacity: 0.55;
+        filter: saturate(0.7);
+    }
+
+    .tt-blurred .tt-char {
+        transition: color 120ms ease;
+    }
+
+    .tt-char-dim {
+        color: var(--typing-upcoming);
     }
 
     .tt-char-ok {
@@ -334,6 +359,12 @@
         color: var(--typing-incorrect);
         text-decoration: line-through;
         text-decoration-color: color-mix(in srgb, var(--typing-incorrect) 55%, transparent);
+    }
+
+    /* indicateTypos = replace: drop the strike-through so the mistaken letter
+     reads cleanly in red — a quieter, more precise error signal. */
+    .tt-char-miss-replace {
+        text-decoration: none;
     }
 
     .tt-char-typed {
@@ -403,6 +434,85 @@
          on the current word boundary without ever splitting a shaped Myanmar
          cluster or bleeding into its neighbours. */
         animation: caret-blink 1s var(--ease-in-out) infinite;
+    }
+
+    /* Caret style variants (Monkeytype parity). The inline `left` computed by
+     the renderer positions the default bar midway through the current cluster;
+     block/underline variants instead hug the cluster box so the glyph stays
+     readable above the translucent wash. */
+    .tt-caret--line {
+        width: 0.135rem;
+        top: -14%;
+        bottom: -14%;
+    }
+
+    .tt-caret--underline {
+        top: auto;
+        bottom: -0.12em;
+        height: 0.22em;
+        width: calc(100% - 0.1em);
+        left: 0.05em;
+        border-radius: 0.09em;
+        background-color: color-mix(in srgb, var(--primary) 80%, transparent);
+    }
+
+    .tt-caret--block {
+        top: 0.03em;
+        bottom: 0.03em;
+        left: 0.05em;
+        width: calc(100% - 0.1em);
+        border-radius: 0.12em;
+        background-color: color-mix(in srgb, var(--primary) 42%, transparent);
+    }
+
+    /* Smooth caret: animate the caret's horizontal slide inside a cluster. */
+    .tt-caret--smooth-slow {
+        transition: left 140ms var(--ease-out);
+    }
+
+    .tt-caret--smooth-medium {
+        transition: left 90ms var(--ease-out);
+    }
+
+    .tt-caret--smooth-fast {
+        transition: left 50ms var(--ease-out);
+    }
+
+    /* Whole-word emphasis: the upcoming part of the current word gets the same
+     soft wash + ink as the current cluster, so the learner tracks the word, not
+     just the letter (Monkeytype highlightMode = word). */
+    .tt-word-now {
+        color: var(--typing-current-ink);
+        background: var(--typing-current-wash);
+    }
+
+    /* Blind mode / hide extra letters: mask far-off upcoming text while keeping
+     its layout box, so no shaped Myanmar cluster is collapsed or shifted. */
+    .tt-char-blind {
+        visibility: hidden;
+    }
+
+    /* Pace caret: a faint secondary caret that trails your cumulative average
+     pace so you can see when you're ahead of or behind your own rhythm. */
+    .tt-pace-caret {
+        position: absolute;
+        top: -10%;
+        bottom: -10%;
+        width: 0.25rem;
+        left: 0;
+        background-color: color-mix(in srgb, var(--primary) 42%, transparent);
+        opacity: 0;
+        pointer-events: none;
+        z-index: 5;
+        transition: opacity 120ms ease;
+    }
+
+    .tt-pace-caret.tt-pace-caret--visible {
+        opacity: 0.7;
+    }
+
+    .tt-flex-spacer {
+        flex: 1;
     }
 
     /* ── Virtual keyboard keycaps ─────────────────────────────────────

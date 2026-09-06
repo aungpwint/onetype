@@ -14,6 +14,8 @@ import {
     Hand,
     LogOut,
     Focus,
+    Eye,
+    Timer,
 } from 'lucide-react'
 import * as backend from '@/services/backend'
 import { useUiStore } from '@/stores/ui-store'
@@ -42,6 +44,17 @@ export default function SettingsPage() {
 
     const defaultLang = settings.get('app.language')
     const confirmExit = settings.get('practice.confirmExit')
+    const focusGuard = settings.get('practice.focusGuard')
+    const indicateTypos = settings.get('practice.indicateTypos')
+    const quickRestart = settings.get('practice.quickRestart')
+    const soundVolume = settings.get('practice.soundVolume')
+    const timeWarning = settings.get('practice.timeWarning')
+    const highlightMode = settings.get('practice.highlightMode')
+    const blindMode = settings.get('practice.blindMode')
+    const hideExtraLetters = settings.get('practice.hideExtraLetters')
+    const caretStyle = settings.get('practice.caretStyle')
+    const smoothCaret = settings.get('practice.smoothCaret')
+    const paceCaret = settings.get('practice.paceCaret')
     const notificationsEnabled = settings.get('notification.enabled')
     const notifyUpdates = settings.get('notification.notifyUpdates')
 
@@ -127,6 +140,124 @@ export default function SettingsPage() {
                 </div>
             </Section>
 
+            <Section icon={<Palette className="size-4" />} title="Typing experience">
+                <div className="mt-4 space-y-3">
+                    <SettingRow
+                        title="Time warning sound"
+                        description="A soft chime when a timed test is almost over."
+                        checked={timeWarning !== 'off'}
+                        onChecked={(v) => void settings.set('practice.timeWarning', v ? 'on' : 'off')}
+                        icon={Bell}
+                    />
+                </div>
+
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                    <Field label="Quick restart key">
+                        <div className="relative">
+                            <select
+                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                                value={quickRestart}
+                                onChange={(e) => void settings.set('practice.quickRestart', e.currentTarget.value)}
+                            >
+                                <option value="tab">Tab</option>
+                                <option value="enter">Enter</option>
+                                <option value="off">Off</option>
+                            </select>
+                        </div>
+                    </Field>
+                    <Field label="Sound volume">
+                        <div className="relative">
+                            <input
+                                type="range"
+                                min={0}
+                                max={1}
+                                step={0.05}
+                                className="w-full accent-[--accent]"
+                                value={soundVolume ?? '0.5'}
+                                onChange={(e) => void settings.set('practice.soundVolume', e.currentTarget.value)}
+                                aria-label="Sound volume"
+                            />
+                        </div>
+                    </Field>
+                </div>
+
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                    <Field label="Highlight">
+                        <div className="relative">
+                            <select
+                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                                value={highlightMode}
+                                onChange={(e) => void settings.set('practice.highlightMode', e.currentTarget.value)}
+                            >
+                                <option value="word">Word</option>
+                                <option value="letter">Letter</option>
+                                <option value="none">Off</option>
+                            </select>
+                        </div>
+                    </Field>
+                    <Field label="Blind mode">
+                        <div className="relative">
+                            <select
+                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                                value={blindMode}
+                                onChange={(e) => void settings.set('practice.blindMode', e.currentTarget.value)}
+                            >
+                                <option value="off">Off</option>
+                                <option value="on">Hide upcoming</option>
+                            </select>
+                        </div>
+                    </Field>
+                </div>
+
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                    <Field label="Caret style">
+                        <div className="relative">
+                            <select
+                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                                value={caretStyle}
+                                onChange={(e) => void settings.set('practice.caretStyle', e.currentTarget.value)}
+                            >
+                                <option value="bar">Bar</option>
+                                <option value="block">Block</option>
+                                <option value="line">Line</option>
+                                <option value="underline">Underline</option>
+                            </select>
+                        </div>
+                    </Field>
+                    <Field label="Smooth caret">
+                        <div className="relative">
+                            <select
+                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                                value={smoothCaret}
+                                onChange={(e) => void settings.set('practice.smoothCaret', e.currentTarget.value)}
+                            >
+                                <option value="off">Instant</option>
+                                <option value="slow">Slow</option>
+                                <option value="medium">Medium</option>
+                                <option value="fast">Fast</option>
+                            </select>
+                        </div>
+                    </Field>
+                </div>
+
+                <div className="mt-4 space-y-3">
+                    <SettingRow
+                        title="Pace caret"
+                        description="A second caret trails your typing pace (needs a timed test)."
+                        checked={paceCaret !== 'off'}
+                        onChecked={(v) => void settings.set('practice.paceCaret', v ? 'on' : 'off')}
+                        icon={Timer}
+                    />
+                    <SettingRow
+                        title="Hide extra letters"
+                        description="Only show the current word as you type it."
+                        checked={hideExtraLetters !== 'off'}
+                        onChecked={(v) => void settings.set('practice.hideExtraLetters', v ? 'on' : 'off')}
+                        icon={Eye}
+                    />
+                </div>
+            </Section>
+
             <Section icon={<Keyboard className="size-4" />} title="Practice">
                 <div className="mt-4 space-y-3">
                     <SettingRow
@@ -157,6 +288,34 @@ export default function SettingsPage() {
                         onChecked={(v) => void settings.set('practice.confirmExit', v ? 'on' : 'off')}
                         icon={LogOut}
                     />
+                </div>
+
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                    <Field label="Pause when you leave the window">
+                        <div className="relative">
+                            <select
+                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                                value={focusGuard}
+                                onChange={(e) => void settings.set('practice.focusGuard', e.currentTarget.value)}
+                            >
+                                <option value="pause">Pause (recommended)</option>
+                                <option value="soft">Keep timing</option>
+                                <option value="off">Off</option>
+                            </select>
+                        </div>
+                    </Field>
+                    <Field label="How mistakes are shown">
+                        <div className="relative">
+                            <select
+                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                                value={indicateTypos}
+                                onChange={(e) => void settings.set('practice.indicateTypos', e.currentTarget.value)}
+                            >
+                                <option value="below">Underline</option>
+                                <option value="replace">Replace</option>
+                            </select>
+                        </div>
+                    </Field>
                 </div>
             </Section>
 

@@ -1,4 +1,4 @@
-import { useState, type ReactNode, type RefObject } from 'react'
+import { useEffect, useState, type ReactNode, type RefObject } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
@@ -23,8 +23,10 @@ import {
     UserRound,
 } from 'lucide-react'
 import { useUiStore } from '@/stores/ui-store'
+import { useSettingsStore } from '@/stores/settings-store'
 import { useStudentStore } from '@/stores/student-store'
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts'
+import { syncSoundFromSettings } from '@/lib/sound'
 import { Modal, Atmosphere } from './ui'
 import { StudentForm } from './student-form'
 import { listLayouts } from '@/core/keyboard-layout/registry'
@@ -84,6 +86,11 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
     const select = useStudentStore((s) => s.select)
     const navigate = useNavigate()
     useKeyboardShortcuts()
+
+    useEffect(() => {
+        // Keep the sound module in sync with persisted sound volume/state.
+        syncSoundFromSettings(useSettingsStore.getState())
+    })
 
     const [pickerOpen, setPickerOpen] = useState(false)
     const [addOpen, setAddOpen] = useState(false)

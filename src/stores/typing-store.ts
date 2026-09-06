@@ -19,9 +19,11 @@ import * as backend from '@/services/backend'
 import { useStudentStore } from './student-store'
 import { useLessonStore } from './lesson-store'
 import { useUiStore } from './ui-store'
+import { useSettingsStore } from './settings-store'
 import { useProgressionStore } from './progression-store'
 import { CONTENT_VERSION } from '@/services/local'
 import { playAchievementSound, playCompletionSound, playErrorSound, playKeySound } from '@/lib/sound'
+import { bindWindowFocusGuard, type FocusPolicy } from './window-focus'
 
 export interface LiveStats {
     unitIndex: number
@@ -70,6 +72,15 @@ interface TypingState {
     wrongFlash: { unitIndex: number; at: number } | null
     tick: number
     result: FinishedResult | null
+    /* Window-focus stewardship for the running round. */
+    windowFocused: boolean
+    lostFocusAt: number | null
+    afkGapMs: number | null
+    /* Armed quick-restart (monkeytype-esque double-press safety). */
+    pendingRestartAt: number | null
+    markOutOfFocus: () => void
+    markRefocused: (afkGapMs: number) => void
+    requestQuickRestart: () => boolean
     beginLesson: (lessonId: string, mode?: TypingMode) => Promise<void>
     beginTest: (test: TypingTest) => Promise<void>
     beginDrill: (drill: ReinforcedDrill) => Promise<void>
@@ -180,6 +191,36 @@ export const useTypingStore = create<TypingState>((set, get) => ({
     wrongFlash: null,
     tick: 0,
     result: null,
+    windowFocused: true,
+    lostFocusAt: null,
+    afkGapMs: null,
+    pendingRestartAt: null,
+
+    markOutOfFocus: () =>
+        set((state) => ({
+            windowFocused: false,
+            lostFocusAt: state.lostFocusAt ?? Date.now(),
+            // 'soft' policy keeps the timer running but still dims + blocks
+            // keystrokes; 'pause' also stops the clock (see onLostFocus).
+        })),
+    markRefocused: (afkGapMs) =>
+        set({ windowFocused: true, lostFocusAt: null, afkGapMs }),
+    requestQuickRestart: () => {
+        const st = get()
+        if (!st.engine || (st.status !== 'running' && st.status !== 'paused' && st.status !== 'ready')) return false
+        // Double-press safety: the first press only arms the restart; a second
+        // press within the window actually restarts, so a stray quick tap can't
+        // destroy an in-flight run.
+        const now = Date.now()
+        const ARMED_WINDOW_MS = 600
+        if (st.pendingRestartAt !== null && now - st.pendingRestartAt <= ARMED_WINDOW_MS) {
+            set({ pendingRestartAt: null })
+            st.restart()
+            return true
+        }
+        set({ pendingRestartAt: now })
+        return false
+    },
 
     beginLesson: async (lessonId, mode = 'guided') => {
         const active = await useStudentStore.getState().ensureActive()
@@ -201,8 +242,9 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             startedAt: Date.now(),
         }
         const engine = createEngine(session)
-        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0 })
+        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
         bindKeys()
+        bindFocusGuard()
     },
 
     beginTest: async (test) => {
@@ -225,8 +267,9 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             startedAt: Date.now(),
         }
         const engine = createEngine(session)
-        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0 })
+        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
         bindKeys()
+        bindFocusGuard()
     },
 
     beginDrill: async (drill) => {
@@ -246,8 +289,9 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             startedAt: Date.now(),
         }
         const engine = createEngine(session)
-        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0 })
+        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
         bindKeys()
+        bindFocusGuard()
     },
 
     beginPractice: async (config) => {
@@ -266,8 +310,9 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             startedAt: Date.now(),
         }
         const engine = createEngine(session)
-        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0 })
+        set({ session, engine, status: 'ready', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
         bindKeys()
+        bindFocusGuard()
     },
 
     start: () => {
@@ -292,7 +337,7 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         // allowed to race nothing and stay visibly instant.
         if (engine.finishReason !== null) return
         engine.restart()
-        set({ status: 'ready', result: null, error: null, wrongFlash: null, tick: 0 })
+        set({ status: 'ready', result: null, error: null, wrongFlash: null, tick: 0, pendingRestartAt: null })
     },
 
     retry: () => {
@@ -326,7 +371,8 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         const { engine } = get()
         if (engine) engine.finish('stopped')
         unbindKeys()
-        set({ session: null, engine: null, status: 'idle', result: null, error: null, wrongFlash: null, tick: 0 })
+        unbindFocusGuard()
+        set({ session: null, engine: null, status: 'idle', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
     },
 
     persistAndFinish: async (guardEngine) => {
@@ -580,7 +626,8 @@ if (session.kind === 'practice') {
 
     clear: () => {
         unbindKeys()
-        set({ session: null, engine: null, status: 'idle', result: null, error: null, wrongFlash: null, tick: 0 })
+        unbindFocusGuard()
+        set({ session: null, engine: null, status: 'idle', result: null, error: null, wrongFlash: null, tick: 0, windowFocused: true, lostFocusAt: null, afkGapMs: null, pendingRestartAt: null })
     },
 
     clearError: () => set({ error: null }),
@@ -636,13 +683,19 @@ function createEngine(session: TypingSessionState): TypingEngine {
 function bindKeys() {
     unbindKeys()
     const onKey = (event: KeyboardEvent) => {
-        const { engine, status, session } = useTypingStore.getState()
+        const { engine, status, session, windowFocused } = useTypingStore.getState()
         if (!engine) return
-        // Tab restarts a run in place the instant it's pressed — same text,
-        // fully reset metrics, no async round-trip (Monkeytype-style).
-        if ((status === 'running' || status === 'paused') && event.code === 'Tab') {
+        // Keystrokes are only credentials while the window actually has focus;
+        // after a blur the learner must click back in (see OutOfFocusWarning).
+        if (!windowFocused) return
+        // Quick restart (Monkeytype parity): the configured key restarts a
+        // running round in place — same text, fully reset metrics, no async
+        // round-trip. Double-press armed (see requestQuickRestart) so a stray
+        // tap can't destroy a run.
+        const quickRestartCode = readQuickRestartCode()
+        if ((status === 'running' || status === 'paused') && quickRestartCode !== null && event.code === quickRestartCode) {
             event.preventDefault()
-            useTypingStore.getState().restart()
+            useTypingStore.getState().requestQuickRestart()
             return
         }
         if (status !== 'running' && status !== 'ready') return
@@ -685,6 +738,62 @@ function unbindKeys() {
         window.removeEventListener('keydown', handler)
         delete (window as unknown as { __otKeyHandler?: EventListener }).__otKeyHandler
     }
+}
+
+let focusPolicy: FocusPolicy = 'off'
+let focusGuardCleanup: (() => void) | null = null
+
+function readFocusPolicy(): FocusPolicy {
+    try {
+        const value = useSettingsStore.getState().get('practice.focusGuard')
+        if (value === 'pause') return 'pause'
+        if (value === 'soft') return 'soft'
+    } catch {
+        /* fall through */
+    }
+    return 'off'
+}
+
+/** Resolve the configured quick-restart key to an event.code, or null if off. */
+function readQuickRestartCode(): string | null {
+    try {
+        const value = useSettingsStore.getState().get('practice.quickRestart')
+        if (value === 'tab') return 'Tab'
+        if (value === 'enter') return 'Enter'
+    } catch {
+        /* fall through */
+    }
+    return null
+}
+
+function bindFocusGuard() {
+    unbindFocusGuard()
+    focusPolicy = readFocusPolicy()
+    focusGuardCleanup = bindWindowFocusGuard({
+        isSessionActive: () => {
+            const s = useTypingStore.getState()
+            return s.status === 'running' || s.status === 'ready' || s.status === 'paused'
+        },
+        onLostFocus: () => {
+            const st = useTypingStore.getState()
+            if (focusPolicy === 'off') return
+            // Pause the clock the moment focus is lost so a quick tab-out never
+            // silently inflates timing. `soft` dims + blocks keys without pausing.
+            if (focusPolicy === 'pause' && st.status === 'running') {
+                st.togglePause()
+            }
+            st.markOutOfFocus()
+        },
+        onRegainedFocus: (afkGapMs) => {
+            const st = useTypingStore.getState()
+            st.markRefocused(afkGapMs)
+        },
+    })
+}
+
+function unbindFocusGuard() {
+    focusGuardCleanup?.()
+    focusGuardCleanup = null
 }
 
 async function saveStatistics(studentId: string, layoutId: string) {
