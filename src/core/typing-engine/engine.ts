@@ -52,6 +52,8 @@ export class TypingEngine {
     lastEvent: TypingEngineEvent | null = null
     finishReason: FinishReason | null = null
     readonly keyOutcomes = new Map<string, KeyOutcome>()
+    /** Expected key id → (pressed key id → count), for the result screen's miskey pairs. */
+    readonly wrongPresses = new Map<string, Map<string, number>>()
     private readonly unitOutcomes = new Map<number, boolean>()
     private readonly stopwatch: Stopwatch
     private readonly listeners: EngineListener[] = []
@@ -245,6 +247,7 @@ export class TypingEngine {
             if (errorKind === 'modifier') {
                 this.shiftErrorCount += 1
             }
+            this.recordWrongPress(expected, code, modifier)
             this.emit({ type: 'incorrect', unitIndex: expected.index, keyCode: code, modifier, expected, errorKind })
         }
         return this.lastEvent
@@ -268,6 +271,7 @@ export class TypingEngine {
         this.totalKeys = 0
         this.unitOutcomes.clear()
         this.keyOutcomes.clear()
+        this.wrongPresses.clear()
         this.correctTimes.length = 0
         this.clusterDiagnoses.clear()
         this.clusterTypedChars.clear()
@@ -281,6 +285,18 @@ export class TypingEngine {
     restart() {
         this.resetMetrics()
         this.emit({ type: 'restart', unitIndex: 0 })
+    }
+
+    /** Expect-to-pressed pairing for a wrong keystroke. */
+    private recordWrongPress(expected: TypingUnit, code: string, modifier: Modifier) {
+        const expectedId = `${expected.keyCode}:${expected.modifier}`
+        const pressedId = `${code}:${modifier}`
+        let perPressed = this.wrongPresses.get(expectedId)
+        if (!perPressed) {
+            perPressed = new Map()
+            this.wrongPresses.set(expectedId, perPressed)
+        }
+        perPressed.set(pressedId, (perPressed.get(pressedId) ?? 0) + 1)
     }
 
     private recordClusterPress(graphemeIndex: number, code: string, modifier: Modifier) {

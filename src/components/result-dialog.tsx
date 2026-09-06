@@ -20,6 +20,7 @@ import { speedSeries } from '@/core/scoring/score'
 import { WpmBars } from '@/components/wpm-bars'
 import { summarizeKeyTaps, worstKeys, keyTapTone } from '@/core/session/key-outcomes'
 import { troubleKeyIds, troubleDrillHref } from '@/core/session/trouble-drill'
+import { summarizeMiskeys, topMiskeys, isShiftSlip } from '@/core/session/miskeys'
 import { keyIdLabel } from '@/core/reinforcement'
 import type { MasteryDelta, MasteryLevel } from '@/core/mastery'
 
@@ -253,6 +254,8 @@ export function ResultDialog() {
 
             <KeyTapMap />
 
+            <MiskeyList />
+
             {metrics.speedUnit === 'units/min' ? <ClusterSlips /> : null}
 
             {isLesson && result.masteryDelta ? <MasteryNotice delta={result.masteryDelta} /> : null}
@@ -369,6 +372,45 @@ function KeyTapMap() {
                         </Button>
                     ) : null}
                 </div>
+            ) : null}
+        </div>
+    )
+}
+
+function MiskeyList() {
+    const engine = useTypingStore((s) => s.engine)
+    const session = useTypingStore((s) => s.session)
+    if (!engine || !session) return null
+    const summary = summarizeMiskeys(engine.wrongPresses)
+    if (summary.miskeyCount === 0) return null
+    const top = topMiskeys(summary, 5)
+    const layout = session.layout
+    const hasShiftSlips = top.some(isShiftSlip)
+
+    return (
+        <div className="mt-4 rounded-xl border border-line bg-muted/40 p-3">
+            <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
+                <ArrowRight className="size-3.5 text-accent" />
+                Miskeys
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+                {summary.miskeyCount} presses landed on the wrong key. The most frequent mix-ups:
+            </p>
+            <ul className="mt-2 space-y-1.5">
+                {top.map((pair) => (
+                    <li key={`${pair.expectedId}-${pair.pressedId}`} className="flex items-center gap-2 text-sm">
+                        <span className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-xs">{keyIdLabel(pair.expectedId, layout)}</span>
+                        <ArrowRight className="size-3.5 text-muted-foreground" />
+                        <span className={cn('rounded-md px-1.5 py-0.5 font-mono text-xs', isShiftSlip(pair) ? 'bg-brass/10 text-brass' : 'bg-destructive/10 text-destructive')}>
+                            {keyIdLabel(pair.pressedId, layout)}
+                        </span>
+                        <span className="text-xs text-muted-foreground tabular-nums">{pair.count}×</span>
+                        {isShiftSlip(pair) ? <Badge variant="outline">shift slip</Badge> : null}
+                    </li>
+                ))}
+            </ul>
+            {hasShiftSlips ? (
+                <p className="mt-2 text-xs text-muted-foreground">Shift slips are the right key pressed with the wrong Shift state.</p>
             ) : null}
         </div>
     )
