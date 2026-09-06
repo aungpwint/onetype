@@ -3,7 +3,8 @@ import { useTypingStore } from '@/stores/typing-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { useUiStore } from '@/stores/ui-store'
 import { playTimeWarningSound } from '@/lib/sound'
-import { formatDuration } from '@/lib/format'
+import { formatDuration, timerProportion } from '@/lib/format'
+import { cn } from '@/lib/utils'
 import { Metric } from '@/components/ui'
 
 export function StatsBar() {
@@ -13,6 +14,7 @@ export function StatsBar() {
     const [, force] = useState(0)
     const warned = useRef(false)
     const timeWarning = useSettingsStore((s) => s.get('practice.timeWarning') ?? 'on')
+    const timerStyle = useSettingsStore((s) => s.get('practice.timerStyle') ?? 'text')
 
     const running = status === 'running'
 
@@ -48,14 +50,46 @@ export function StatsBar() {
     const idle = stats.unitIndex === 0
     const rawLabel = speedUnit === 'units/min' ? 'Raw units/min' : 'Raw WPM'
 
+    // --- Timer style handling (Monkeytype parity) -----------------------------
+    const timed = durationSeconds !== null && remaining !== null
+    const timerProportionValue = timed && durationSeconds !== null ? timerProportion(remaining!, durationSeconds) : 0
+    const timerLabel = timed ? 'Time' : 'Progress'
+    const timerValue = timed ? formatDuration(remaining! * 1000) : `${progress}%`
+
     return (
         <div className="flex w-full flex-col items-center">
             <div className="flex items-end justify-center gap-2.5">
-                <span className="font-heavy text-6xl leading-[0.9] tracking-tight text-ink tabular-nums sm:text-7xl">
+                <span
+                    className={cn(
+                        'leading-[0.9] tracking-tight text-ink tabular-nums',
+                        timerStyle === 'mini' ? 'font-heavy text-4xl sm:text-5xl' : 'font-heavy text-6xl sm:text-7xl',
+                    )}
+                >
                     {idle ? '—' : speed}
                 </span>
-                <span className="mb-1 text-xs font-semibold tracking-[0.24em] text-muted-foreground uppercase">{speedLabel}</span>
+                <span className={cn('text-xs font-semibold tracking-[0.24em] text-muted-foreground uppercase', timerStyle === 'mini' && 'mb-0.5')}>
+                    {speedLabel}
+                </span>
             </div>
+
+            {timerStyle === 'bar' && timed ? (
+                <div
+                    className="mt-3 h-1 w-56 overflow-hidden rounded-full bg-line/70"
+                    role="progressbar"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={Math.round(timerProportionValue * 100)}
+                    aria-label="Time remaining"
+                >
+                    <div
+                        className={cn(
+                            'h-full rounded-full transition-[width] duration-250',
+                            timerProportionValue <= 0.1 ? 'bg-destructive' : timerProportionValue <= 0.3 ? 'bg-brass' : 'bg-accent',
+                        )}
+                        style={{ width: `${Math.round(timerProportionValue * 100)}%` }}
+                    />
+                </div>
+            ) : null}
 
             <div className="mt-3.5 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
                 <Metric label="Accuracy" value={idle ? '—' : `${stats.accuracy.toFixed(1)}%`} />
@@ -63,11 +97,12 @@ export function StatsBar() {
                 <Metric label={rawLabel} value={idle ? '—' : String(raw)} />
                 <span className="h-5 w-px bg-line-strong/60" aria-hidden />
                 <Metric label="Consistency" value={idle ? '—' : `${consistency}%`} />
-                <span className="h-5 w-px bg-line-strong/60" aria-hidden />
-                <Metric
-                    label={durationSeconds !== null ? 'Time' : 'Progress'}
-                    value={durationSeconds !== null && remaining !== null ? formatDuration(remaining * 1000) : `${progress}%`}
-                />
+                {!timed || timerStyle !== 'off' ? (
+                    <>
+                        <span className="h-5 w-px bg-line-strong/60" aria-hidden />
+                        <Metric label={timerLabel} value={idle ? '—' : timerValue} />
+                    </>
+                ) : null}
                 <span className="h-5 w-px bg-line-strong/60" aria-hidden />
                 <Metric label="Errors" value={idle ? '—' : String(stats.incorrectCount)} tone={stats.incorrectCount > 0 ? 'destructive' : 'muted'} />
             </div>

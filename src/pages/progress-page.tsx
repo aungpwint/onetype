@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import { TrendingUp, Target, Gauge, Clock, TrendingDown, Minus, Fingerprint } from 'lucide-react'
+import { TrendingUp, Target, Gauge, Clock, TrendingDown, Minus, Fingerprint, CalendarDays } from 'lucide-react'
 import { useStudentStore } from '@/stores/student-store'
 import * as backend from '@/services/backend'
 import type { StudentDetail, TypingSession } from '@/services/types'
 import { Stat, Spinner, PageHeader } from '@/components/ui'
 import { Progress } from '@/components/ui/progress'
 import { WpmBars } from '@/components/wpm-bars'
+import { ActivityHeatmap } from '@/components/activity-heatmap'
+import type { ActivityDay } from '@/lib/activity-data'
 import { formatDateTime, formatLessonLabel, formatWpm, formatAccuracy, pct, bestResultByTest } from '@/lib/format'
 import { cn, cardClass, appPageClass, eyebrowClass, sectionTitleClass, chipClass } from '@/lib/utils'
 import { summarizePerformance, type SessionPoint } from '@/core/analytics'
@@ -155,6 +157,23 @@ export default function ProgressPage() {
                             {r === 'week' ? 'This week' : r === 'month' ? 'This month' : 'All time'}
                         </button>
                     ))}
+                </div>
+            </div>
+
+            <div className={cn(cardClass, 'p-5')}>
+                <div className="flex items-center gap-2">
+                    <CalendarDays className="size-4 text-muted-foreground" />
+                    <h2 className={sectionTitleClass}>Activity</h2>
+                </div>
+                <div className="mt-4">
+                    <ActivityHeatmap
+                        days={detail.recentSessions.map(
+                            (s): ActivityDay =>
+                                s.correctCount > 0 && s.durationMs > 0
+                                    ? { date: s.startedAt, minutes: s.durationMs / 60000, sessions: 1 }
+                                    : { date: s.startedAt, minutes: 0, sessions: 0 },
+                        )}
+                    />
                 </div>
             </div>
 

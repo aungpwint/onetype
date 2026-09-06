@@ -55,6 +55,7 @@ export default function SettingsPage() {
     const caretStyle = settings.get('practice.caretStyle')
     const smoothCaret = settings.get('practice.smoothCaret')
     const paceCaret = settings.get('practice.paceCaret')
+    const timerStyle = settings.get('practice.timerStyle')
     const notificationsEnabled = settings.get('notification.enabled')
     const notifyUpdates = settings.get('notification.notifyUpdates')
 
@@ -255,6 +256,23 @@ export default function SettingsPage() {
                         onChecked={(v) => void settings.set('practice.hideExtraLetters', v ? 'on' : 'off')}
                         icon={Eye}
                     />
+                </div>
+
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                    <Field label="Timer style">
+                        <div className="relative">
+                            <select
+                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                                value={timerStyle}
+                                onChange={(e) => void settings.set('practice.timerStyle', e.currentTarget.value)}
+                            >
+                                <option value="text">Text</option>
+                                <option value="bar">Progress bar</option>
+                                <option value="mini">Mini</option>
+                                <option value="off">Hidden</option>
+                            </select>
+                        </div>
+                    </Field>
                 </div>
             </Section>
 

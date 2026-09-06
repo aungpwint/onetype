@@ -6,6 +6,7 @@ import { resolveLessonById } from '@/data/curriculum'
 import type { ResolvedLesson } from '@/data/curriculum/generator'
 import { buildTestMaterial, resolveTestLayout } from '@/core/materials/test-material'
 import { buildPracticeMaterial, type PracticeConfig } from '@/core/materials/practice-material'
+import { extractMissedWords } from '@/core/materials/missed-words'
 import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import type { Modifier, TypingMode } from '@/types'
 import { resolvePressedKey } from '@/core/input/key-resolution'
@@ -81,6 +82,9 @@ interface TypingState {
     markOutOfFocus: () => void
     markRefocused: (afkGapMs: number) => void
     requestQuickRestart: () => boolean
+    /** Start an untracked practice round focused on the words still wrong at the
+     * end of a finished session (Monkeytype "practice missed words"). */
+    practiceMissedWords: () => Promise<void>
     beginLesson: (lessonId: string, mode?: TypingMode) => Promise<void>
     beginTest: (test: TypingTest) => Promise<void>
     beginDrill: (drill: ReinforcedDrill) => Promise<void>
@@ -220,6 +224,22 @@ export const useTypingStore = create<TypingState>((set, get) => ({
         }
         set({ pendingRestartAt: now })
         return false
+    },
+    practiceMissedWords: async () => {
+        const st = get()
+        if (st.status !== 'finished' || !st.session || !st.engine) return
+        const { engine, session } = st
+        // The learner typed this text on this layout, so every missed word is
+        // guaranteed encodable by the same layout's practice builder.
+        const language = session.layout.language === 'myanmar' ? ('myanmar' as const) : ('english' as const)
+        const missed = extractMissedWords(engine)
+        if (missed.count === 0) return
+        st.clear()
+        try {
+            await get().beginPractice({ language, unit: 'text', text: missed.text })
+        } catch (error) {
+            set({ error: error instanceof Error ? error.message : 'Could not build the missed-words practice.' })
+        }
     },
 
     beginLesson: async (lessonId, mode = 'guided') => {

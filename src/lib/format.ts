@@ -5,6 +5,13 @@ export function formatDuration(milliseconds: number): string {
     return `${m}:${s.toString().padStart(2, '0')}`
 }
 
+/** Fraction of a timed round still remaining, clamped to [0, 1]. */
+export function timerProportion(remaining: number, total: number): number {
+    if (total <= 0) return 0
+    const ratio = remaining / total
+    return Math.min(1, Math.max(0, ratio))
+}
+
 export function formatDateTime(timestamp: number): string {
     return new Date(timestamp).toLocaleString(undefined, {
         year: 'numeric',

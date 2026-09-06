@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { Gauge, Target, AlignLeft, ArrowRight, RotateCcw, ArrowLeft, Trophy, CheckCircle2, AlertTriangle } from 'lucide-react'
 import { useTypingStore } from '@/stores/typing-store'
 import { useLessonStore } from '@/stores/lesson-store'
+import { extractMissedWords } from '@/core/materials/missed-words'
 import { ACHIEVEMENT_CATALOG } from '@/data/achievements'
 import { Modal } from './ui'
 import { Button } from './ui/button'
@@ -52,9 +53,13 @@ export function ResultDialog() {
     const session = useTypingStore((s) => s.session)
     const clear = useTypingStore((s) => s.clear)
     const retry = useTypingStore((s) => s.retry)
+    const practiceMissed = useTypingStore((s) => s.practiceMissedWords)
+    const engine = useTypingStore((s) => s.engine)
     const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel)
 
     if (!result || !session) return null
+
+    const missedCount = engine ? extractMissedWords(engine).count : 0
 
     const newly = result.newlyUnlocked ?? []
     const achieved = newly.map((id) => ACHIEVEMENT_CATALOG[id]).filter(Boolean)
@@ -234,6 +239,12 @@ export function ResultDialog() {
                     <Button variant="brass" onClick={beforeNavigate(`/lesson/${nextLessonId}`)}>
                         Next lesson
                         <ArrowRight className="size-4" />
+                    </Button>
+                ) : null}
+                {missedCount > 0 ? (
+                    <Button variant="outline" onClick={() => void practiceMissed()}>
+                        <Target className="size-4" />
+                        Practice {missedCount} missed
                     </Button>
                 ) : null}
                 <Button onClick={retryNow}>
