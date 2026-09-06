@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Gauge, Target, AlignLeft, ArrowRight, RotateCcw, ArrowLeft, Trophy, CheckCircle2, AlertTriangle, Crown } from 'lucide-react'
+import { Gauge, Target, AlignLeft, ArrowRight, RotateCcw, ArrowLeft, Trophy, CheckCircle2, AlertTriangle, Crown, Keyboard } from 'lucide-react'
 import { useTypingStore } from '@/stores/typing-store'
 import { useLessonStore } from '@/stores/lesson-store'
 import { useStudentStore } from '@/stores/student-store'
@@ -18,6 +18,8 @@ import { summarizeClusterDiagnoses, type ClusterSlipSummary } from '@/core/unico
 import { cn, eyebrowClass } from '@/lib/utils'
 import { speedSeries } from '@/core/scoring/score'
 import { WpmBars } from '@/components/wpm-bars'
+import { summarizeKeyTaps, worstKeys, keyTapTone } from '@/core/session/key-outcomes'
+import { keyIdLabel } from '@/core/reinforcement'
 import type { MasteryDelta, MasteryLevel } from '@/core/mastery'
 
 const MASTERY_COPY: Record<MasteryLevel, string> = {
@@ -248,6 +250,8 @@ export function ResultDialog() {
 
             {metrics.elapsedSeconds > 1 ? <PacingChart /> : null}
 
+            <KeyTapMap />
+
             {metrics.speedUnit === 'units/min' ? <ClusterSlips /> : null}
 
             {isLesson && result.masteryDelta ? <MasteryNotice delta={result.masteryDelta} /> : null}
@@ -301,6 +305,54 @@ export function ResultDialog() {
                 </Button>
             </div>
         </Modal>
+    )
+}
+
+function KeyTapMap() {
+    const engine = useTypingStore((s) => s.engine)
+    const session = useTypingStore((s) => s.session)
+    if (!engine || !session) return null
+    const summary = summarizeKeyTaps(engine.keyOutcomes)
+    if (summary.distinctKeys === 0) return null
+    const worst = worstKeys(summary, 5)
+    const layout = session.layout
+
+    return (
+        <div className="mt-4 rounded-xl border border-line bg-muted/40 p-3">
+            <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
+                <Keyboard className="size-3.5 text-accent" />
+                Key taps
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+                {Math.round(summary.keystrokeAccuracy)}% of {summary.totalKeystrokes} keystrokes hit the right key.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+                {summary.keys.map((tap) => {
+                    const label = keyIdLabel(tap.id, layout)
+                    const tone = keyTapTone(tap)
+                    return (
+                        <span
+                            key={tap.id}
+                            title={`${label} · ${tap.correct} correct · ${tap.incorrect} wrong`}
+                            className={cn(
+                                'flex h-8 min-w-8 items-center justify-center rounded-md border px-1.5 font-mono text-sm tabular-nums',
+                                tone === 'clean' && 'border-success/50 bg-success/10 text-success',
+                                tone === 'slip' && 'border-brass/50 bg-brass/10 text-brass',
+                                tone === 'heavy' && 'border-destructive/50 bg-destructive/10 text-destructive',
+                            )}
+                        >
+                            {label}
+                        </span>
+                    )
+                })}
+            </div>
+            {worst.length > 0 ? (
+                <p className="mt-2 text-xs text-muted-foreground">
+                    Trouble keys:{' '}
+                    <span className="font-medium text-foreground">{worst.map((t) => keyIdLabel(t.id, layout)).join(', ')}</span>
+                </p>
+            ) : null}
+        </div>
     )
 }
 
