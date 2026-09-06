@@ -9,7 +9,7 @@
     "description": "Conversational sentences for everyday use.",
     "difficulty": "hard",
     "estimatedMinutes": 12,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
         "minWpm": 15

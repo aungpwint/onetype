@@ -9,7 +9,7 @@
     "description": "Left hand top row: တ(KeyW) န(KeyE) မ(KeyR) အ(KeyT)",
     "difficulty": "basic",
     "estimatedMinutes": 6,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
         "minWpm": null

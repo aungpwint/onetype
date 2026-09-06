@@ -9,7 +9,7 @@
     "description": "Simple declarative sentences.",
     "difficulty": "medium",
     "estimatedMinutes": 10,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
         "minWpm": null

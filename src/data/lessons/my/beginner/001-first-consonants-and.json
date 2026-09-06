@@ -9,7 +9,7 @@
     "description": "Typing Myanmar consonants on the top row. က (KeyU) with right index, င (KeyI) with right middle.",
     "difficulty": "basic",
     "estimatedMinutes": 5,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
         "minWpm": null

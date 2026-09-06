@@ -9,7 +9,7 @@
     "description": "Body parts with action verbs.",
     "difficulty": "medium",
     "estimatedMinutes": 10,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
         "minWpm": null

@@ -40,15 +40,14 @@ export interface LessonBuildError {
 export function validateLessonCharacters(lessonId: string, phase: LessonPhase, layoutId: string): void {
     const layout = getLayoutOrThrow(layoutId)
     for (const grapheme of splitGraphemes(phase.text)) {
-        for (const ch of grapheme) {
-            if (!layout.lookupChar(ch)) {
-                throw new Error(
-                    `Lesson "${lessonId}": layout "${layoutId}" has no key for character U+${(ch.codePointAt(0) ?? 0)
-                        .toString(16)
-                        .toUpperCase()
-                        .padStart(4, '0')} (in phase "${phase.instruction}")`,
-                )
-            }
+        // Validate through the same greedy reverse-mapping the engine grades
+        // with, so multi-codepoint key emissions (e.g. ၎င်း on KeyR shift) are
+        // accepted as the single key press they represent.
+        try {
+            layout.reverseMap([grapheme])
+        } catch (error) {
+            const message = error instanceof Error ? error.message : String(error)
+            throw new Error(`Lesson "${lessonId}": ${message} (in phase "${phase.instruction}")`, { cause: error })
         }
     }
 }

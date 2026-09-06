@@ -9,7 +9,7 @@ import { ResultDialog } from '@/components/result-dialog'
 import { ConfirmAbandon } from '@/components/session/confirm-abandon'
 import { useConfirmExit } from '@/components/session/use-confirm-exit'
 import { SessionTools } from '@/components/session/session-tools'
-import { Metric } from '@/components/ui'
+import { Metric, Spinner } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 
 const LEVEL_LABEL: Record<string, string> = {
@@ -114,7 +114,7 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
 
             {!layout || !engine ? (
                 <div className="flex min-h-0 flex-1 items-center justify-center">
-                    <p className="text-sm text-muted-foreground">Loading the keys…</p>
+                    <Spinner label="Loading the keys…" />
                 </div>
             ) : (
                 <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-4 py-5 sm:px-8">

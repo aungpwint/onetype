@@ -9,7 +9,7 @@
     "description": "Type a paragraph about daily routine.",
     "difficulty": "hard",
     "estimatedMinutes": 12,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 93,
         "minWpm": 18

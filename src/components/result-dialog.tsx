@@ -7,6 +7,7 @@ import { Modal } from './ui'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
 import { formatDuration } from '@/lib/format'
+import { containsMyanmar } from '@/core/unicode/myanmar'
 import { cn, eyebrowClass } from '@/lib/utils'
 import type { MasteryDelta, MasteryLevel } from '@/core/mastery'
 
@@ -107,11 +108,18 @@ export function ResultDialog() {
             <div className="flex items-start justify-between pr-10">
                 <div>
                     <p className={eyebrowClass}>
-                        {isDrill
-                            ? `Adaptive drill · ${session.resolved.focusKeys?.join('') ?? 'weak keys'} · attempt ${result.attempt}`
-                            : isLesson
-                              ? `Exercise · ${session.resolved.title}`
-                              : `Test · ${session.test!.code}`}{' '}
+                        {isDrill ? (
+                            `Adaptive drill · ${session.resolved.focusKeys?.join('') ?? 'weak keys'} · attempt ${result.attempt}`
+                        ) : isLesson ? (
+                            <>
+                                Exercise ·
+                                <span className={containsMyanmar(session.resolved.title) ? 'font-myanmar tracking-normal' : undefined}>
+                                    {session.resolved.title}
+                                </span>
+                            </>
+                        ) : (
+                            `Test · ${session.test!.code}`
+                        )}{' '}
                         · attempt {result.attempt}
                     </p>
                     <h2 className="mt-1 font-display text-2xl">

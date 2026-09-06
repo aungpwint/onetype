@@ -9,7 +9,7 @@
     "description": "News and reporting style sentences.",
     "difficulty": "hard",
     "estimatedMinutes": 15,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
         "minWpm": 25

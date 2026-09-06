@@ -9,7 +9,7 @@
     "description": "Practice with formal Myanmar punctuation marks.",
     "difficulty": "easy",
     "estimatedMinutes": 10,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
         "minWpm": 18

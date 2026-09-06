@@ -81,7 +81,7 @@ export function Onboarding() {
                                     )}
                                 >
                                     <span className="font-myanmar text-2xl leading-none">မြန်မာ</span>
-                                    <span className="mt-1 block font-myanmar text-xs text-muted-foreground">Myanmar3 layout</span>
+                                    <span className="mt-1 block font-myanmar text-xs text-muted-foreground">Pyidaungsu layout</span>
                                 </button>
                                 <button
                                     type="button"

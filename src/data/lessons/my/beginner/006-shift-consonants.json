@@ -9,7 +9,7 @@
     "description": "Shift consonants: ဖ (KeyZ) ဂ (Semicolon+Shift) ဋ္ဌ (Digit3+Shift + virama + KeyX+Shift)",
     "difficulty": "easy",
     "estimatedMinutes": 6,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
         "minWpm": null

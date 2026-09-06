@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { buildSequence } from '@/core/typing-engine/sequence'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
-import { myanmar3 } from '@/core/keyboard-layout/myanmar3'
+import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { splitGraphemes } from '@/core/unicode/graphemes'
 import { shiftHandFor } from '@/core/keyboard-layout/layout'
 
@@ -37,7 +37,7 @@ describe('typing unit model', () => {
 
     it('maps Myanmar combining sequences onto one typing unit per code point', () => {
         const word = '\u1031\u1000\u103B\u102C\u1004\u103A\u1038'
-        const seq = buildSequence(word, myanmar3)
+        const seq = buildSequence(word, myanmar)
         expect(seq.units.map((u) => u.keyCode)).toEqual(['KeyA', 'KeyU', 'KeyS', 'KeyM', 'KeyI', 'KeyF', 'Semicolon'])
         expect(seq.units.map((u) => u.text).join('')).toBe(word)
     })
@@ -46,7 +46,7 @@ describe('typing unit model', () => {
         const word = '\u1031\u1000\u103B\u102C' as const
         const graphemes = splitGraphemes(word)
         expect(graphemes.join('')).toBe(word)
-        const seq = buildSequence(word, myanmar3)
+        const seq = buildSequence(word, myanmar)
         const expectedKeyCodes = ['KeyA', 'KeyU', 'KeyS', 'KeyM']
         expect(seq.graphemes.join('')).toBe(word)
         expect(seq.units.map((u) => u.keyCode)).toEqual(expectedKeyCodes)
@@ -59,7 +59,7 @@ describe('typing unit model', () => {
 
     it('handles stacked Myanmar consonants as separate units', () => {
         const stacked = '\u1018\u1039\u1018\u102C' as const
-        const seq = buildSequence(stacked, myanmar3)
+        const seq = buildSequence(stacked, myanmar)
         expect(seq.units.length).toBeGreaterThanOrEqual(4)
         for (const unit of seq.units) {
             expect(unit.keyCode).toBeTruthy()

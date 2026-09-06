@@ -9,7 +9,7 @@
     "description": "Common two-syllable words using learned keys.",
     "difficulty": "medium",
     "estimatedMinutes": 10,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
         "minWpm": null

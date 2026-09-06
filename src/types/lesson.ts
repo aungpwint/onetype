@@ -81,7 +81,7 @@ export interface NormalizedLesson {
     difficulty: Difficulty
     estimatedMinutes: number
     language: Language
-    layoutId: 'english-qwerty' | 'myanmar3'
+    layoutId: 'english-qwerty' | 'myanmar'
     completion: LessonCompletionRule
     focusKeys?: string[]
     focus?: LessonFocus[]

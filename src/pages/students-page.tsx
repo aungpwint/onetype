@@ -50,7 +50,7 @@ export default function StudentsPage() {
                                 <span aria-hidden>{student.avatar ?? '🐘'}</span>
                             </span>
                             <div className="min-w-0 flex-1">
-                                <p className="truncate font-myanmar font-medium">{student.displayName}</p>
+                                <p className="font-myanmar leading-relaxed font-medium">{student.displayName}</p>
                                 <p className="font-myanmar text-xs text-muted-foreground">
                                     {student.studentCode} · {student.name}
                                 </p>

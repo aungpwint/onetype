@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Flame, Trophy, Timer, Target, Gauge, BookOpen, BarChart3 } from 'lucide-react'
+import { ArrowRight, BarChart3, BookOpen, Flame, Gauge, Target, Timer, Trophy } from 'lucide-react'
 import { useStudentStore } from '@/stores/student-store'
 import { useLessonStore } from '@/stores/lesson-store'
 import { useSettingsStore } from '@/stores/settings-store'
@@ -8,12 +8,13 @@ import { useProgressionStore } from '@/stores/progression-store'
 import * as backend from '@/services/backend'
 import type { TestResult, TypingSession, TypingTest } from '@/services/types'
 import { ACHIEVEMENT_CATALOG } from '@/data/achievements'
-import { Spinner, Stat, PageHeader } from '@/components/ui'
+import { containsMyanmar } from '@/core/unicode/myanmar'
+import { Spinner } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { WpmBars } from '@/components/wpm-bars'
 import { formatDuration, formatWpm, formatAccuracy, formatLessonLabel, pct, bestResultByTest } from '@/lib/format'
-import { cn, cardClass, appPageClass, eyebrowClass, kbdClass, chipClass, sectionTitleClass, featuredClass } from '@/lib/utils'
+import { cn, cardClass, appPageClass, eyebrowClass, kbdClass, chipClass, sectionTitleClass, pageTitleClass, featuredClass } from '@/lib/utils'
 
 function hourGreeting(): string {
     const h = new Date().getHours()
@@ -22,6 +23,22 @@ function hourGreeting(): string {
     if (h < 17) return 'Good afternoon'
     if (h < 21) return 'Good evening'
     return 'Night practice'
+}
+
+function StatCard({ icon, label, value, hint }: { icon: ReactNode; label: string; value: ReactNode; hint?: string }) {
+    return (
+        <div className="group relative overflow-hidden rounded-2xl border border-line bg-card p-5 shadow-(--shadow-1) transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-line-strong hover:shadow-(--shadow-3)">
+            <span aria-hidden className="pointer-events-none absolute inset-0 bg-linear-to-b from-surface-elevated/60 to-transparent opacity-80" />
+            <div className="relative flex items-center justify-between gap-2">
+                <p className={eyebrowClass}>{label}</p>
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-line bg-paper-2/70 text-accent transition-[border-color,background-color,color] duration-200 group-hover:border-accent/30 group-hover:bg-accent/10 group-hover:text-accent">
+                    {icon}
+                </span>
+            </div>
+            <p className="relative mt-2.5 font-display text-3xl leading-none font-semibold tracking-tight tabular-nums">{value}</p>
+            {hint ? <p className="relative mt-2 text-xs text-muted-foreground">{hint}</p> : null}
+        </div>
+    )
 }
 
 export default function Dashboard() {
@@ -62,7 +79,8 @@ export default function Dashboard() {
         const completed = progress ? Object.values(progress).filter((p) => p.completed).length : 0
         const passedTests = testResults.size
         const bestWpm = withKeys.length ? Math.max(...withKeys.map((s) => s.wpm)) : 0
-        return { avgWpm, avgAcc, completed, passedTests, totalSessions: rows.length, bestWpm }
+        const bestAcc = withKeys.length ? Math.max(...withKeys.map((s) => s.accuracy)) : 0
+        return { avgWpm, avgAcc, completed, passedTests, totalSessions: rows.length, bestWpm, bestAcc }
     }, [sessions, progress, testResults])
 
     const languageStats = useMemo(() => {
@@ -99,36 +117,60 @@ export default function Dashboard() {
 
     if (!active) return null
     const progressLoaded = progressStudentId === active.id && (progress ?? false)
+    const continueTitle = nextLesson ? nextLesson.title : 'Curriculum finished'
 
     return (
         <div className={appPageClass}>
-            <PageHeader
-                eyebrow={hourGreeting()}
-                title={
-                    <>
-                        {active.displayName} <span className="font-myanmar text-muted-foreground">မင်္ဂလာပါ</span>
-                    </>
-                }
-                subtitle={
-                    <>
-                        Keep your hands on home row — <span className={kbdClass}>F</span> and <span className={kbdClass}>J</span> are your anchor
-                        nubs.
-                    </>
-                }
-            >
-                <Button variant="outline" asChild>
-                    <Link to="/progress">
-                        View full progress
-                        <ArrowRight className="size-4" />
-                    </Link>
-                </Button>
-            </PageHeader>
+            <section className="relative isolate overflow-hidden sm:px-8 sm:py-8">
+                <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                    <div className="min-w-0">
+                        <p className={eyebrowClass}>{hourGreeting()}</p>
+                        <h1 className={cn(pageTitleClass, 'mt-1.5')}>
+                            {active.displayName}{' '}
+                            <span className="align-middle font-myanmar text-xl leading-none text-muted-foreground">မင်္ဂလာပါ</span>
+                        </h1>
+                        <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                            Keep your hands on home row — <span className={kbdClass}>F</span> and <span className={kbdClass}>J</span> are your anchor
+                            nubs.
+                        </p>
+                    </div>
+                    <div className="flex shrink-0 items-center gap-3">
+                        <Button variant="outline" asChild>
+                            <Link to="/progress">
+                                <BarChart3 className="size-4" />
+                                View full progress
+                                <ArrowRight className="size-4" />
+                            </Link>
+                        </Button>
+                    </div>
+                </div>
+            </section>
 
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-                <Stat icon={<Gauge className="size-4" />} label="Avg WPM" value={stats.avgWpm ? Math.round(stats.avgWpm) : '—'} />
-                <Stat icon={<Target className="size-4" />} label="Avg accuracy" value={stats.avgAcc ? `${stats.avgAcc.toFixed(1)}%` : '—'} />
-                <Stat icon={<BookOpen className="size-4" />} label="Lessons passed" value={progressLoaded ? stats.completed : '…'} />
-                <Stat icon={<Timer className="size-4" />} label="Tests passed" value={tests.length ? stats.passedTests : '…'} />
+            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+                <StatCard
+                    icon={<Gauge className="size-4" />}
+                    label="Avg WPM"
+                    value={stats.avgWpm ? Math.round(stats.avgWpm) : '—'}
+                    hint={stats.bestWpm ? `Best ${Math.round(stats.bestWpm)} wpm` : 'No speed data yet'}
+                />
+                <StatCard
+                    icon={<Target className="size-4" />}
+                    label="Avg accuracy"
+                    value={stats.avgAcc ? `${stats.avgAcc.toFixed(1)}%` : '—'}
+                    hint={stats.bestAcc ? `Best ${stats.bestAcc.toFixed(0)}%` : 'Accuracy tracks every run'}
+                />
+                <StatCard
+                    icon={<BookOpen className="size-4" />}
+                    label="Lessons passed"
+                    value={progressLoaded ? stats.completed : '…'}
+                    hint="Across the whole curriculum"
+                />
+                <StatCard
+                    icon={<Trophy className="size-4" />}
+                    label="Tests passed"
+                    value={tests.length ? stats.passedTests : '…'}
+                    hint={tests.length ? `${tests.length} timed tests seeded` : 'No timed tests yet'}
+                />
             </div>
 
             <div className="grid gap-4 lg:grid-cols-3">
@@ -136,20 +178,27 @@ export default function Dashboard() {
                     to={nextLesson ? `/lesson/${nextLesson.id}` : '/learn'}
                     className={cn(
                         featuredClass,
-                        'group p-6 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-950/20 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+                        'group p-6 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-(--shadow-3) focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
                     )}
                 >
                     <div aria-hidden className="pointer-events-none absolute inset-0">
-                        <div className="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-blue-500/[0.08] blur-[100px]" />
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.06] via-transparent to-transparent" />
+                        <div className="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-blue-500/8 blur-[100px]" />
+                        <div className="absolute inset-0 bg-linear-to-br from-blue-500/6 via-transparent to-transparent" />
                     </div>
-                    <div className="relative z-10">
-                        <p className={eyebrowClass}>Continue learning</p>
-                        <div className="mt-3 flex items-center justify-between">
-                            <span className="font-display font-myanmar text-xl leading-tight">
-                                {nextLesson ? nextLesson.title : 'Curriculum finished'}
+                    <div className="relative z-10 flex h-full flex-col">
+                        <p className={eyebrowClass}>Next lesson</p>
+                        <div className="mt-3 flex items-center justify-between gap-4">
+                            <span
+                                className={cn(
+                                    'font-display text-xl leading-tight font-semibold tracking-[-0.01em] text-ink',
+                                    containsMyanmar(continueTitle) ? 'font-myanmar' : '',
+                                )}
+                            >
+                                {continueTitle}
                             </span>
-                            <ArrowRight className="size-5 text-accent transition-transform group-hover:translate-x-0.5" />
+                            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line-strong bg-card text-ink-soft transition-[transform,background-color,color] duration-300 group-hover:translate-x-0.5 group-hover:bg-primary group-hover:text-white">
+                                <ArrowRight className="size-4" />
+                            </span>
                         </div>
                         <p className="mt-1 text-sm text-muted-foreground">
                             {nextLesson ? `Level ${nextLesson.level} · line ${nextLesson.number}` : 'Every line passed. Try a timed test.'}
@@ -157,37 +206,64 @@ export default function Dashboard() {
                     </div>
                 </Link>
 
-                <div className={cn(cardClass, 'p-5')}>
-                    <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
-                        <Flame className="size-3.5 text-brass" />
-                        Streak
-                    </p>
-                    <div className="mt-3 flex items-baseline gap-2">
-                        <span className="font-display text-4xl tabular-nums">{streak?.current ?? '•'}</span>
-                        <span className="text-sm text-muted-foreground">days{streak?.current === 1 ? '' : 's'}</span>
+                <div
+                    className={cn(
+                        cardClass,
+                        'group relative overflow-hidden p-5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-line-strong hover:shadow-(--shadow-3)',
+                    )}
+                >
+                    <span
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0 bg-linear-to-b from-warning/[0.07] via-transparent to-transparent"
+                    />
+                    <div className="relative">
+                        <div className="flex items-center justify-between">
+                            <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
+                                <Flame className="size-3.5 text-warning" />
+                                Streak
+                            </p>
+                            {streak?.longest ? <span className="text-xs text-muted-foreground">Best {streak.longest}</span> : null}
+                        </div>
+                        <div className="mt-3 flex items-baseline gap-2">
+                            <span className="font-display text-5xl leading-none font-semibold tracking-tight tabular-nums">
+                                {streak?.current ?? '•'}
+                            </span>
+                            <span className="text-sm text-muted-foreground">day{streak?.current === 1 ? '' : 's'}</span>
+                        </div>
+                        <p className="mt-2 text-xs text-muted-foreground">
+                            {streak && streak.longest > 0 ? `Longest streak: ${streak.longest} days` : 'Type daily to build a streak.'}
+                        </p>
                     </div>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                        {streak && streak.longest > 0 ? `Longest streak: ${streak.longest} days` : 'Type daily to build a streak.'}
-                    </p>
                 </div>
 
-                <div className={cn(cardClass, 'p-5')}>
-                    <p className={cn(eyebrowClass, 'flex items-center gap-1.5')}>
-                        <Trophy className="size-3.5 text-brass" />
+                <div
+                    className={cn(
+                        cardClass,
+                        'group relative overflow-hidden p-5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-line-strong hover:shadow-(--shadow-3)',
+                    )}
+                >
+                    <span
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0 bg-linear-to-b from-surface-elevated/60 to-transparent opacity-80"
+                    />
+                    <p className={cn(eyebrowClass, 'relative flex items-center gap-1.5')}>
+                        <Trophy className="size-3.5 text-warning" />
                         Personal bests
                     </p>
-                    <dl className="mt-3 space-y-1.5 text-sm">
-                        <div className="flex justify-between">
+                    <dl className="relative mt-3">
+                        <div className="flex items-center justify-between border-b border-line/60 py-2 text-sm">
                             <dt className="text-muted-foreground">Fastest WPM</dt>
-                            <dd className="tabular-nums">{stats.bestWpm ? Math.round(stats.bestWpm) : '—'}</dd>
+                            <dd className="font-display font-semibold tabular-nums">{stats.bestWpm ? Math.round(stats.bestWpm) : '—'}</dd>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="flex items-center justify-between border-b border-line/60 py-2 text-sm">
                             <dt className="text-muted-foreground">Typing time</dt>
-                            <dd className="tabular-nums">{summary ? formatDuration(summary.totalMinutes * 60000) : '—'}</dd>
+                            <dd className="font-display font-semibold tabular-nums">
+                                {summary ? formatDuration(summary.totalMinutes * 60000) : '—'}
+                            </dd>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="flex items-center justify-between py-2 text-sm">
                             <dt className="text-muted-foreground">Sessions</dt>
-                            <dd className="tabular-nums">{summary?.sessions ?? '—'}</dd>
+                            <dd className="font-display font-semibold tabular-nums">{summary?.sessions ?? '—'}</dd>
                         </div>
                     </dl>
                 </div>
@@ -195,8 +271,11 @@ export default function Dashboard() {
 
             <div className="grid gap-4 lg:grid-cols-2">
                 <div className={cn(cardClass, 'overflow-hidden')}>
-                    <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                        <h2 className={sectionTitleClass}>Speed, recent sessions</h2>
+                    <div className="flex items-center justify-between border-b border-border bg-paper-2/30 px-5 py-3">
+                        <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
+                            <BarChart3 className="size-4 text-muted-foreground" />
+                            Speed, recent sessions
+                        </h2>
                         <Link to="/progress" className="text-sm font-medium text-accent hover:underline">
                             Chart
                             <ArrowRight className="ml-1 inline size-3.5" />
@@ -213,7 +292,15 @@ export default function Dashboard() {
                 </div>
 
                 <div className={cn(cardClass, 'p-5')}>
-                    <h2 className={sectionTitleClass}>Achievements</h2>
+                    <div className="flex items-center justify-between">
+                        <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
+                            <Trophy className="size-4 text-muted-foreground" />
+                            Achievements
+                        </h2>
+                        <span className="text-xs text-muted-foreground tabular-nums">
+                            {unlocked.length}/{Object.keys(ACHIEVEMENT_CATALOG).length}
+                        </span>
+                    </div>
                     <div className="mt-3 flex flex-wrap gap-2">
                         {Object.entries(ACHIEVEMENT_CATALOG).map(([id, def]) => {
                             const earned = unlockedById.has(id)
@@ -222,8 +309,8 @@ export default function Dashboard() {
                                     key={id}
                                     title={earned ? `${def.title} — ${def.description}` : `Locked — ${def.description}`}
                                     className={cn(
-                                        'flex h-10 w-10 items-center justify-center rounded-lg border text-lg transition-all',
-                                        earned ? 'border-transparent' : 'opacity-35 grayscale',
+                                        'flex h-10 w-10 items-center justify-center rounded-xl border text-lg shadow-[0_1px_0_var(--line-strong)] transition-all duration-200',
+                                        earned ? 'hover:-translate-y-0.5' : 'opacity-35 grayscale',
                                     )}
                                     style={earned ? { background: `${def.color}22`, borderColor: `${def.color}66` } : undefined}
                                 >
@@ -304,9 +391,9 @@ export default function Dashboard() {
             </div>
 
             <div className={cn(cardClass, 'overflow-hidden')}>
-                <div className="flex items-center justify-between border-b border-border px-5 py-3">
+                <div className="flex items-center justify-between border-b border-border bg-paper-2/30 px-5 py-3">
                     <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
-                        <BarChart3 className="size-4 text-muted-foreground" />
+                        <Timer className="size-4 text-muted-foreground" />
                         Recent sessions
                     </h2>
                     <Link to="/progress" className="text-sm font-medium text-accent hover:underline">
@@ -327,11 +414,11 @@ export default function Dashboard() {
                         <table className="w-full text-left text-sm">
                             <thead>
                                 <tr className="text-xs tracking-wider text-muted-foreground uppercase">
-                                    <th className="px-5 py-2 font-normal">When</th>
-                                    <th className="px-5 py-2 font-normal">Lesson</th>
-                                    <th className="px-5 py-2 text-right font-normal">WPM</th>
-                                    <th className="px-5 py-2 text-right font-normal">Acc</th>
-                                    <th className="hidden px-5 py-2 text-right font-normal sm:table-cell">Time</th>
+                                    <th className="px-5 py-2.5 font-normal">When</th>
+                                    <th className="px-5 py-2.5 font-normal">Lesson</th>
+                                    <th className="px-5 py-2.5 text-right font-normal">WPM</th>
+                                    <th className="px-5 py-2.5 text-right font-normal">Acc</th>
+                                    <th className="hidden px-5 py-2.5 text-right font-normal sm:table-cell">Time</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -341,7 +428,7 @@ export default function Dashboard() {
                                             {new Date(s.startedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
                                         </td>
                                         <td className="px-5 py-2 font-myanmar">{formatLessonLabel(s.lessonId)}</td>
-                                        <td className="px-5 py-2 text-right tabular-nums">{formatWpm(s.wpm)}</td>
+                                        <td className="px-5 py-2 text-right font-display font-semibold tabular-nums">{formatWpm(s.wpm)}</td>
                                         <td className="px-5 py-2 text-right tabular-nums">{formatAccuracy(s.accuracy)}</td>
                                         <td className="hidden px-5 py-2 text-right text-muted-foreground tabular-nums sm:table-cell">
                                             {formatDuration(s.durationMs)}

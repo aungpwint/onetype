@@ -159,7 +159,7 @@
     --font-sans: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
     --font-display: 'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', sans-serif;
     --font-mono: ui-monospace, 'Cascadia Mono', 'Cascadia Code', 'SF Mono', Consolas, 'Liberation Mono', monospace;
-    --font-myanmar: 'Pyidaungsu', 'Myanmar Text', 'Padauk', 'Noto Sans Myanmar', 'Myanmar Sans Pro', 'system-ui', sans-serif;
+    --font-myanmar: 'Pyidaungsu', 'Myanmar Text', 'Padauk', 'Noto Sans Myanmar', 'Myanmar Sans Pro', system-ui, sans-serif;
     --font-heavy: 'Heavitas Regular', var(--font-myanmar);
 }
 
@@ -169,12 +169,14 @@
     font-weight: normal;
     font-style: normal;
     font-display: swap;
+    unicode-range: U+0020-007E, U+00A0-00FF, U+2000-206F, U+20A0-20BF;
 }
 
 @font-face {
     font-family: 'Pyidaungsu';
     src: url('/fonts/Pyidaungsu-Regular.ttf') format('truetype');
-    font-weight: 400 700;
+    font-weight: normal;
+    font-style: normal;
     font-display: swap;
     unicode-range: U+1000-109F;
 }
@@ -239,21 +241,22 @@
         min-width: 0;
     }
 
-    .char-pop {
-        animation: char-pop 180ms var(--ease-out);
+.char-pop {
+    animation: char-pop 180ms var(--ease-out);
+}
+
+/* The "pop" must never transform Myanmar glyphs: a scale/translate on the text
+ run rasterizes the shaped syllable as a bitmap mid-animation. Opacity alone
+ keeps the pop feel while the cluster is always shaped live in one run. */
+@keyframes char-pop {
+    0% {
+        opacity: 0.35;
     }
 
-    @keyframes char-pop {
-        0% {
-            transform: scale(0.94);
-            opacity: 0.35;
-        }
-
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
+    100% {
+        opacity: 1;
     }
+}
 
     /* Caret blink + current-char error flash (consumed by .tt-caret and
      .tt-char-flash). */
@@ -338,10 +341,22 @@
     }
 
     .tt-caret {
+        --tt-caret-w: 0.25rem;
         position: absolute;
         top: 0;
         bottom: 0;
         left: 0;
+        right: auto;
+        width: var(--tt-caret-w);
+        background-color: var(--primary);
+        /* Solid primary bar: the app's design tokens are plain :root vars, so
+         Tailwind v4 never generates bg-primary (only text-primary). The colour
+         and width live here instead. The current cluster anchors the caret
+         horizontally via an inline `left` (see target-text.tsx): it slides from
+         *before* the untyped syllable at progress 0 to *after* it at progress 1
+         and is clamped to the cluster box, so the insertion point always sits
+         on the current word boundary without ever splitting a shaped Myanmar
+         cluster or bleeding into its neighbours. */
         animation: caret-blink 1s var(--ease-in-out) infinite;
     }
 
@@ -484,6 +499,28 @@
             transform: translateY(0);
         }
     }
+}
+
+/* ── Burmese glyph safety net ───────────────────────────────────────────────
+   Burmese stacks medials and vowels above and below the line box, so the
+   script gets cropped wherever a tight leading (leading-none / leading-tight)
+   meets overflow hidden (truncate, keycaps, card headers). This rule is
+   deliberately unlayered so it beats the Tailwind leading-* utilities and
+   keeps every .font-myanmar element on a floor line-height. The font is a
+   single Regular weight face, so font-synthesis is disabled to stop the
+   browser fake-bolding stacked clusters on any font-medium/600/700 element —
+   synthetic strokes smear the medials and stacked consonants. */
+.font-myanmar {
+    /* Pyidaungsu is the canonical Myanmar face. The family is re-declared here
+     (not left to Tailwind's auto-generated utility): the token keeps quoted
+     multi-word fallback names, so the resolved chain is always correct even if
+     utility generation ever changes. */
+    font-family: var(--font-myanmar);
+    line-height: 1.4;
+    font-synthesis: none;
+    font-synthesis-weight: none;
+    font-synthesis-style: none;
+    font-synthesis-small-caps: none;
 }
 
 /* ── Hand overlay (physical keyboard typing hands) ───────────────────────────

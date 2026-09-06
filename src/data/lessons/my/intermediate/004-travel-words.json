@@ -9,7 +9,7 @@
     "description": "Travel vocabulary: bus, train, car.",
     "difficulty": "easy",
     "estimatedMinutes": 8,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 88,
         "minWpm": null

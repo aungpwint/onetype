@@ -9,7 +9,7 @@
     "description": "Review all beginner Myanmar skills.",
     "difficulty": "hard",
     "estimatedMinutes": 12,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
         "minWpm": 15

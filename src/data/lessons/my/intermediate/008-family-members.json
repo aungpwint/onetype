@@ -9,7 +9,7 @@
     "description": "Family vocabulary: father, mother, brother, sister.",
     "difficulty": "medium",
     "estimatedMinutes": 10,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
         "minWpm": null

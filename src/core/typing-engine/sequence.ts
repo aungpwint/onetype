@@ -3,7 +3,7 @@ import type { Hand } from '@/types'
 import type { FingerId } from '@/types'
 import { KeyboardLayout, shiftHandFor } from '@/core/keyboard-layout/layout'
 import { splitGraphemes } from '@/core/unicode/graphemes'
-import { splitMyanmarSyllables } from '@/core/unicode/myanmar'
+import { findSuspiciousInvisibleCharacters, splitMyanmarSyllables, containsMyanmar } from '@/core/unicode/myanmar'
 
 export interface TypingUnit {
     index: number
@@ -25,13 +25,63 @@ export interface BuiltSequence {
     charCount: number
 }
 
+// --- Myanmar input-order model -------------------------------------------------
+//
+// Three distinct, deliberately separate ideas:
+//
+//   1. STORED / LOGICAL Unicode   – "ရေ" = U+101B (ရ) then U+1031 (ေ). The
+//      lesson data, `graphemes`, `text` and the renderer all live here.
+//   2. KEYBOARD INPUT SEQUENCE    – the order a learner presses keys on the
+//      Pyidaungsu-mapped keyboard. The pre-base vowel ေ is entered FIRST (it is
+//      the leftmost glyph), so "ရေ" is pressed as: ေ → ရ.
+//   3. VISUAL RESULT              – the shaped glyph run, produced by Pyidaungsu
+//      from the logical sequence; also "ရေ".
+//
+// `splitMyanmarSyllables` produces logical clusters; `keyboardOrderForCluster`
+// reorders one cluster into its press order. `buildSequence` emits units in
+// press order (2) while graphemes/ranges keep logical order (1), so the engine
+// and keyboard hints drive input the way a real Myanmar keyboard does, and the
+// renderer shows untouched logical text.
+
+const PREBASE_VOWEL = 0x1031 // ေ — stored after its base, rendered before it
+
+/**
+ * Keyboard press order for a Myanmar syllable cluster.
+ *
+ * The pre-base vowel U+1031 is stored AFTER the base consonant in logical
+ * Unicode but is the leftmost rendered glyph and the first key a Pyidaungsu
+ * learner presses. This returns the cluster's code points reordered into press
+ * order: pre-base vowel(s) first, then the remaining code points in their
+ * logical order. Clusters without a pre-base vowel are unchanged.
+ */
+export function keyboardOrderForCluster(cluster: string): string {
+    if (!containsMyanmar(cluster)) return cluster
+    const chars = Array.from(cluster)
+    const prebase = chars.filter((c) => c.codePointAt(0) === PREBASE_VOWEL)
+    if (prebase.length === 0) return cluster
+    const rest = chars.filter((c) => c.codePointAt(0) !== PREBASE_VOWEL)
+    return [...prebase, ...rest].join('')
+}
+
 export function buildSequence(text: string, layout: KeyboardLayout): BuiltSequence {
+    if (layout.language === 'myanmar') {
+        const found = findSuspiciousInvisibleCharacters(text)
+        if (found.length > 0) {
+            throw new Error(
+                `Myanmar typing text contains unexpected invisible character at index ${found[0].index}: ${found[0].description}`,
+            )
+        }
+    }
     const graphemes = layout.language === 'myanmar' ? splitMyanmarSyllables(text) : splitGraphemes(text)
     const graphemeUnitRanges: [number, number][] = []
     const units: TypingUnit[] = []
     for (let gi = 0; gi < graphemes.length; gi++) {
         const token = graphemes[gi]
-        const pairs = layout.reverseMap([token])
+        // Units are emitted in KEYBOARD press order, not Unicode order. The
+        // cluster's press order is a permutation of its logical code points, so
+        // the press set always composes the cluster's logical (canonical) text.
+        const inputToken = layout.language === 'myanmar' ? keyboardOrderForCluster(token) : token
+        const pairs = layout.reverseMap([inputToken])
         const start = units.length
         for (const pair of pairs) {
             const index = units.length

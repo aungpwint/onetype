@@ -9,7 +9,7 @@
     "description": "School vocabulary: classroom, exam, teacher, student.",
     "difficulty": "easy",
     "estimatedMinutes": 8,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 88,
         "minWpm": null

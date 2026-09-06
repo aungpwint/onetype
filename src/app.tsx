@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, type ReactNode } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { initUi, useUiStore } from '@/stores/ui-store'
+import { useUiStore } from '@/stores/ui-store'
 import { useStudentStore } from '@/stores/student-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { useStartupUpdateCheck } from '@/services/updater/use-updater'
@@ -85,7 +85,6 @@ function SessionRoutes() {
 function Boot() {
     useStartupUpdateCheck()
     useEffect(() => {
-        initUi()
         void useUiStore.getState().setTheme(useUiStore.getState().theme)
         void useSettingsStore.getState().load()
         void useStudentStore.getState().load()

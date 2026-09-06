@@ -10,7 +10,7 @@ function makeTest(overrides: Partial<TypingTest> = {}): TypingTest {
         name: 'Sandbox test',
         durationSeconds: 60,
         language: 'myanmar',
-        layoutId: 'myanmar3',
+        layoutId: 'myanmar',
         minAccuracy: 80,
         minWpm: 20,
         contentVersion: 1,
@@ -21,7 +21,7 @@ function makeTest(overrides: Partial<TypingTest> = {}): TypingTest {
 describe('buildTestMaterial', () => {
     it('builds a resolved lesson whose every unit maps to a key in the layout', () => {
         for (const language of ['myanmar', 'english', 'mixed'] as const) {
-            const layoutId = language === 'english' ? 'english-qwerty' : 'myanmar3'
+            const layoutId = language === 'english' ? 'english-qwerty' : 'myanmar'
             const material = buildTestMaterial(makeTest({ language, layoutId }))
             const layout = getLayoutOrThrow(layoutId)
             expect(material.totalUnits).toBeGreaterThan(0)

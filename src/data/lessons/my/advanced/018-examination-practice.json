@@ -9,7 +9,7 @@
     "description": "Final examination passage for Myanmar.",
     "difficulty": "hard",
     "estimatedMinutes": 20,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 95,
         "minWpm": 32

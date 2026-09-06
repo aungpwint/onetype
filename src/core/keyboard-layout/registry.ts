@@ -1,6 +1,6 @@
 import { KeyboardLayout } from './layout'
 import { englishQwerty } from './english-qwerty'
-import { myanmar3 } from './myanmar3'
+import { myanmar } from './myanmar'
 
 export const LAYOUT_REVISION = 1
 export const LAYOUT_VERSION = 1
@@ -13,7 +13,7 @@ export function registerLayout(layout: KeyboardLayout) {
     registry.set(layout.id, layout)
 }
 
-const DEFAULT_LAYOUTS = [englishQwerty, myanmar3]
+const DEFAULT_LAYOUTS = [englishQwerty, myanmar]
 
 for (const layout of DEFAULT_LAYOUTS) {
     registerLayout(layout)
@@ -40,11 +40,11 @@ export function isLayoutAvailable(id: string): boolean {
 }
 
 export function layoutForLanguage(language: 'english' | 'myanmar'): KeyboardLayout {
-    if (language === 'myanmar') return myanmar3
+    if (language === 'myanmar') return myanmar
     return englishQwerty
 }
 
-export const RESERVED_LAYOUT_IDS = new Set(['english-qwerty', 'myanmar3'])
+export const RESERVED_LAYOUT_IDS = new Set(['english-qwerty', 'myanmar'])
 
-export { KeyboardLayout, englishQwerty, myanmar3 }
+export { KeyboardLayout, englishQwerty, myanmar }
 export default registry

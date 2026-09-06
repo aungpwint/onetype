@@ -9,7 +9,7 @@
     "description": "Visabella း(Semicolon) and Atthin ့(KeyH).",
     "difficulty": "easy",
     "estimatedMinutes": 8,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
         "minWpm": null

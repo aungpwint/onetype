@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { ThemePreference } from '@/types'
+import { syncWindowTheme, type ResolvedTheme } from '@/services/window-theme'
 
 interface UiState {
     theme: ThemePreference
@@ -31,11 +32,17 @@ function readStoredSound(): boolean {
     }
 }
 
+export function resolveTheme(preference: ThemePreference): ResolvedTheme {
+    if (preference !== 'system') return preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 function applyTheme(theme: ThemePreference) {
+    const resolved = resolveTheme(theme)
     const root = document.documentElement
-    const resolved = theme === 'system' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme
     root.dataset.theme = resolved
     root.classList.toggle('dark', resolved === 'dark')
+    syncWindowTheme(resolved)
 }
 
 export const useUiStore = create<UiState>((set) => ({

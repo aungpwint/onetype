@@ -9,7 +9,7 @@
     "description": "Review all consonants learned so far, both hands.",
     "difficulty": "basic",
     "estimatedMinutes": 8,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
         "minWpm": null

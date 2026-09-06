@@ -9,7 +9,7 @@
     "description": "Time words: morning, noon, evening, tomorrow.",
     "difficulty": "medium",
     "estimatedMinutes": 10,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
         "minWpm": null

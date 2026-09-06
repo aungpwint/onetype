@@ -9,7 +9,7 @@
     "description": "Build syllables with consonant + vowel combinations.",
     "difficulty": "easy",
     "estimatedMinutes": 8,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
         "minWpm": null

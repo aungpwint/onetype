@@ -1,8 +1,10 @@
 import type { TypingTest } from '@/services/types'
-import { getLayoutOrThrow } from '@/core/keyboard-layout/registry'
+import { getLayout, getLayoutOrThrow, layoutForLanguage } from '@/core/keyboard-layout/registry'
+import type { KeyboardLayout } from '@/core/keyboard-layout/registry'
 import { resolveLesson, type ResolvedLesson } from '@/data/curriculum/generator'
 import type { LessonData } from '@/data/curriculum/types'
 import { getLessonRepository } from '@/data/curriculum'
+import { normalizeMyanmarText } from '@/core/unicode/myanmar'
 
 import type { Difficulty, Language } from '@/types'
 
@@ -15,10 +17,17 @@ const MYANMAR_POOL = [
 
 const ENGLISH_POOL = repository.listByLanguageAndLevel('en', 'advanced').reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), [])
 
+export function resolveTestLayout(test: TypingTest): KeyboardLayout {
+    return getLayout(test.layoutId) ?? layoutForLanguage(test.language === 'english' ? 'english' : 'myanmar')
+}
+
 export function buildTestMaterial(test: TypingTest): ResolvedLesson {
-    const layout = getLayoutOrThrow(test.layoutId)
+    const layout = resolveTestLayout(test)
     const poolBase = test.language === 'english' ? ENGLISH_POOL : test.language === 'mixed' ? [...MYANMAR_POOL, ...ENGLISH_POOL] : MYANMAR_POOL
-    const pool = poolBase.filter((line) => {
+    // Derived test material is normalized at this boundary (canonical NFC, no
+    // stray zero-width characters) so display text and the typing target never
+    // diverge, even for user-supplied test content.
+    const pool = poolBase.map((raw) => (layout.language === 'myanmar' ? normalizeMyanmarText(raw) : raw)).filter((line) => {
         for (const ch of line) if (!layout.lookupChar(ch)) return false
         return true
     })
@@ -50,7 +59,7 @@ export function buildTestMaterial(test: TypingTest): ResolvedLesson {
         difficulty: 'hard' as Difficulty,
         estimatedMinutes: Math.max(1, Math.round(test.durationSeconds / 60)),
         language,
-        layoutId: test.layoutId as 'english-qwerty' | 'myanmar3',
+        layoutId: layout.id as 'english-qwerty' | 'myanmar',
         completion: { minAccuracy: test.minAccuracy, minWpm: test.minWpm },
         phases: lines.map((text, i) => ({ instruction: `Line ${i + 1}`, text })),
     }

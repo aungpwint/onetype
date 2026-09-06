@@ -9,7 +9,7 @@
     "description": "Right hand top row: စ(KeyP) သ(KeyO) ပ(KeyY)",
     "difficulty": "basic",
     "estimatedMinutes": 6,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
         "minWpm": null

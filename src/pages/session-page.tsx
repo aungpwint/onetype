@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AlertCircle, ArrowLeft, LayoutDashboard } from 'lucide-react'
+import { AlertCircle, ArrowLeft, Check, Keyboard, LayoutDashboard, Loader2 } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import * as backend from '@/services/backend'
 import { useTypingStore, buildAdaptiveDrill } from '@/stores/typing-store'
 import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
@@ -89,7 +90,97 @@ function Session({
     )
 }
 
-function SessionGate({ ready, loadingLabel, children }: { ready: boolean; loadingLabel: string; children: ReactNode }) {
+const PREP_STEP_MS = 420
+
+function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
+    const [active, setActive] = useState(0)
+
+    useEffect(() => {
+        const id = window.setInterval(() => setActive((a) => (a + 1) % steps.length), PREP_STEP_MS)
+        return () => window.clearInterval(id)
+    }, [steps.length])
+
+    return (
+        <motion.div
+            role="status"
+            aria-live="polite"
+            className="relative isolate my-auto w-full max-w-sm overflow-hidden rounded-3xl border border-line bg-card/75 p-8 shadow-(--shadow-3) backdrop-blur-2xl sm:p-10"
+            initial={{ opacity: 0, y: 14, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+        >
+            <span aria-hidden className="pointer-events-none absolute inset-0">
+                <span className="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-blue-600/10 blur-[100px]" />
+                <span className="absolute -bottom-28 -left-16 h-56 w-56 rounded-full bg-indigo-500/10 blur-[100px]" />
+                <span className="absolute inset-0 bg-linear-to-br from-blue-500/5 via-transparent to-transparent" />
+            </span>
+
+            <div className="relative flex flex-col items-center text-center">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary font-mono text-sm font-bold text-primary-foreground shadow-(--shadow-2)">
+                    <Keyboard className="size-5" />
+                </span>
+
+                <p className="mt-5 font-display text-xl font-semibold tracking-[-0.01em]">Preparing your run</p>
+
+                <ol className="mt-6 flex flex-col gap-3 text-sm">
+                    {steps.map((step, i) => {
+                        const done = i < active
+                        const current = i === active
+                        return (
+                            <motion.li
+                                key={step}
+                                initial={{ opacity: 0, x: -6 }}
+                                animate={{ opacity: current || done ? 1 : 0.45, x: 0 }}
+                                transition={{ duration: 0.25 }}
+                                className={cn('flex items-center gap-3', current ? 'text-foreground' : done ? 'text-ink-soft' : 'text-ink-faint')}
+                            >
+                                {done ? (
+                                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-success/15 text-success">
+                                        <Check className="size-3.5" strokeWidth={3} />
+                                    </span>
+                                ) : current ? (
+                                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line-strong bg-paper-2/70 text-accent">
+                                        <Loader2 className="size-3.5 animate-spin" />
+                                    </span>
+                                ) : (
+                                    <span className="ml-2 mr-2 size-2 shrink-0 rounded-full bg-line-strong" />
+                                )}
+                                <span>{step}</span>
+                            </motion.li>
+                        )
+                    })}
+                </ol>
+
+                <div className="mt-6 h-1 w-44 overflow-hidden rounded-full bg-muted" aria-hidden>
+                    <motion.span
+                        key={active}
+                        className="block h-full rounded-full bg-accent"
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: PREP_STEP_MS / 1000, ease: 'easeInOut' }}
+                        style={{ transformOrigin: 'left' }}
+                    />
+                </div>
+
+                {note ? <p className="mt-4 max-w-xs text-xs leading-relaxed text-muted-foreground">{note}</p> : null}
+            </div>
+        </motion.div>
+    )
+}
+
+function SessionGate({
+    ready,
+    loadingLabel,
+    steps,
+    note,
+    children,
+}: {
+    ready: boolean
+    loadingLabel: string
+    steps?: string[]
+    note?: string
+    children: ReactNode
+}) {
     useEffect(() => {
         const html = document.documentElement
         const body = document.body
@@ -117,13 +208,13 @@ function SessionGate({ ready, loadingLabel, children }: { ready: boolean; loadin
             ) : (
                 <motion.div
                     key="loading"
-                    className="flex h-full min-h-0 flex-1 items-center justify-center"
+                    className="flex h-full min-h-0 flex-1 items-center justify-center overflow-y-auto px-6 py-6"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.15 }}
                 >
-                    <Spinner label={loadingLabel} />
+                    {steps ? <PreparingCard steps={steps} note={note} /> : <Spinner label={loadingLabel} />}
                 </motion.div>
             )}
         </AnimatePresence>
@@ -158,7 +249,12 @@ export function LessonPage() {
     useBeginSession(lessonId, load)
 
     return (
-        <SessionGate ready={session?.kind === 'lesson'} loadingLabel="Loading lesson text, keyboard and attempt…">
+        <SessionGate
+            ready={session?.kind === 'lesson'}
+            loadingLabel="Loading lesson text, keyboard and attempt…"
+            steps={['Loading lesson text', 'Warming up the keyboard', 'Setting up your attempt']}
+            note="Your progress is saved after every run."
+        >
             {session?.kind === 'lesson' ? <ExerciseWorkspace onExit={() => navigate('/learn')} /> : null}
         </SessionGate>
     )
@@ -180,7 +276,12 @@ export function TestPage() {
     useBeginSession(testId, load)
 
     return (
-        <SessionGate ready={session?.kind === 'test' && !!session?.test} loadingLabel="Preparing test text, keyboard and attempt…">
+        <SessionGate
+            ready={session?.kind === 'test' && !!session?.test}
+            loadingLabel="Preparing test text, keyboard and attempt…"
+            steps={['Preparing test text', 'Warming up the keyboard', 'Setting up your attempt']}
+            note="Every run is timed, scored and saved against the paper's target. Always prepare carefully and write."
+        >
             {session?.kind === 'test' && session.test ? (
                 <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} onExit={() => navigate('/tests')} />
             ) : null}
@@ -227,7 +328,12 @@ export function DrillPage() {
     }
 
     return (
-        <SessionGate ready={session?.kind === 'drill'} loadingLabel="Building drill from your weak keys…">
+        <SessionGate
+            ready={session?.kind === 'drill'}
+            loadingLabel="Building drill from your weak keys…"
+            steps={['Building your drill', 'Warming up the keyboard', 'Setting up your attempt']}
+            note="Built from the keys you keep missing."
+        >
             {session?.kind === 'drill' && session.drill ? (
                 <Session durationSeconds={null} sourceName={session.resolved.title} eyebrow="Adaptive drill" onExit={() => navigate('/')} />
             ) : null}

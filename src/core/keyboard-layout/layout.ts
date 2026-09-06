@@ -28,6 +28,13 @@ export interface KeyLookup {
     hand: Hand
 }
 
+export interface KeyAlias {
+    /** Legacy text form accepted as one press of `code` with `modifier`. */
+    text: string
+    code: string
+    modifier: Modifier
+}
+
 export interface KeyboardLayoutSpec {
     id: string
     name: string
@@ -37,6 +44,12 @@ export interface KeyboardLayoutSpec {
     rows: KeyDefinition[][]
     space?: KeyDefinition
     note?: string
+    /**
+     * Additional text forms that reverse-map to an existing key/modifier pair.
+     * Used to keep legacy single-codepoint lesson text working when the layout
+     * key emits a multi-codepoint sequence (e.g. ၎င်း on KeyR shift).
+     */
+    aliases?: KeyAlias[]
 }
 
 export class KeyboardLayout {
@@ -50,6 +63,7 @@ export class KeyboardLayout {
     readonly byCode = new Map<string, KeyDefinition>()
     readonly charMap = new Map<string, KeyLookup>()
     readonly note?: string
+    private readonly charKeys: string[] = []
 
     constructor(spec: KeyboardLayoutSpec) {
         this.id = spec.id
@@ -78,6 +92,11 @@ export class KeyboardLayout {
             }
         }
         this.registerChar('\u0020', 'Space', 'none', this.space.finger, this.space.hand)
+        for (const alias of spec.aliases ?? []) {
+            const key = this.byCode.get(alias.code)
+            if (key) this.registerChar(alias.text, alias.code, alias.modifier, key.finger, key.hand)
+        }
+        this.charKeys = [...this.charMap.keys()].sort((a, b) => b.length - a.length)
     }
 
     private registerChar(text: string, code: string, modifier: Modifier, finger: FingerId, hand: Hand) {
@@ -105,15 +124,28 @@ export class KeyboardLayout {
     reverseMap(tokens: string[]): { lookup: KeyLookup; token: string }[] {
         const out: { lookup: KeyLookup; token: string }[] = []
         for (const token of tokens) {
-            for (const ch of token) {
-                const lookup = this.lookupChar(ch)
-                if (!lookup) {
+            let i = 0
+            while (i < token.length) {
+                const matched = this.matchLongest(token, i)
+                if (!matched) {
+                    const ch = token[i]
                     throw new Error(`Layout "${this.id}" has no key for character "${ch}" (${ch.codePointAt(0)?.toString(16)})`)
                 }
-                out.push({ lookup, token })
+                out.push({ lookup: matched.lookup, token })
+                i += matched.text.length
             }
         }
         return out
+    }
+
+    private matchLongest(text: string, start: number): { lookup: KeyLookup; text: string } | undefined {
+        for (const key of this.charKeys) {
+            if (key.length === 0) continue
+            if (text.startsWith(key, start)) {
+                return { lookup: this.charMap.get(key)!, text: key }
+            }
+        }
+        return undefined
     }
 }
 

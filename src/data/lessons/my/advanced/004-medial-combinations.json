@@ -9,7 +9,7 @@
     "description": "Complex medial combinations in words.",
     "difficulty": "medium",
     "estimatedMinutes": 12,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
         "minWpm": 20

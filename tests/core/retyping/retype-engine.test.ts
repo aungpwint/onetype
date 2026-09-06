@@ -5,7 +5,7 @@ import { splitMyanmarSyllables } from '@/core/unicode/myanmar'
 
 describe('RetypeEngine (text retyping)', () => {
     const qwerty = getLayoutOrThrow('english-qwerty')
-    const myanmar3 = getLayoutOrThrow('myanmar3')
+    const myanmar = getLayoutOrThrow('myanmar')
 
     describe('English retyping', () => {
         it('retypes a simple exercise to completion', () => {
@@ -83,7 +83,7 @@ describe('RetypeEngine (text retyping)', () => {
         })
 
         it('matches a full stacked syllable as one cluster', () => {
-            const engine = new RetypeEngine({ text: 'ကက္က', options: {} }, myanmar3, { now: () => 6000 })
+            const engine = new RetypeEngine({ text: 'ကက္က', options: {} }, myanmar, { now: () => 6000 })
             const first = engine.currentGrapheme()
             expect(first).toBe('က')
             expect(engine.typeChar('က')).toBe(true)
@@ -94,7 +94,7 @@ describe('RetypeEngine (text retyping)', () => {
         })
 
         it('does not advance the cluster on a partial match', () => {
-            const engine = new RetypeEngine({ text: 'က္က', options: {} }, myanmar3, { now: () => 7000 })
+            const engine = new RetypeEngine({ text: 'က္က', options: {} }, myanmar, { now: () => 7000 })
             expect(engine.typeChar('က')).toBe(false)
             expect(engine.currentGrapheme()).toBe('က္က')
             expect(engine.unitIndex).toBe(0)

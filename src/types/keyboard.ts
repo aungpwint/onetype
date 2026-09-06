@@ -9,28 +9,28 @@ import type { KeyboardRow } from '@/core/keyboard-layout/layout'
  * transportable while the runtime keyboard registry remains authoritative for
  * geometry/behaviour.
  */
-export type KeyboardId = 'qwerty' | 'myanmar3'
+export type KeyboardId = 'qwerty' | 'myanmar'
 
-export const LESSON_KEYBOARD_IDS: readonly KeyboardId[] = ['qwerty', 'myanmar3'] as const
+export const LESSON_KEYBOARD_IDS: readonly KeyboardId[] = ['qwerty', 'myanmar'] as const
 
 export function isKeyboardId(value: unknown): value is KeyboardId {
     return typeof value === 'string' && (LESSON_KEYBOARD_IDS as readonly string[]).includes(value)
 }
 
-export type RuntimeLayoutId = 'english-qwerty' | 'myanmar3'
+export type RuntimeLayoutId = 'english-qwerty' | 'myanmar'
 
 export function toLayoutId(keyboard: KeyboardId): RuntimeLayoutId {
     switch (keyboard) {
         case 'qwerty':
             return 'english-qwerty'
-        case 'myanmar3':
-            return 'myanmar3'
+        case 'myanmar':
+            return 'myanmar'
     }
 }
 
 export function fromLayoutId(layoutId: string): KeyboardId {
     if (layoutId === 'english-qwerty') return 'qwerty'
-    if (layoutId === 'myanmar3') return 'myanmar3'
+    if (layoutId === 'myanmar') return 'myanmar'
     throw new Error(`Layout "${layoutId}" has no canonical lesson keyboard identifier`)
 }
 

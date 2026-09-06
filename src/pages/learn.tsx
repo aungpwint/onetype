@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import type { Level } from '@/types'
 import { useLessonStore } from '@/stores/lesson-store'
 import { useStudentStore } from '@/stores/student-store'
@@ -21,6 +22,8 @@ const LEVEL_COPY: Record<Level, { en: string; ms: string }> = {
     intermediate: { en: 'Intermediate — words and phrases', ms: 'အလယ်အလတ်' },
     advanced: { en: 'Advanced — full sentences', ms: 'အဆင့်မြင့်' },
 }
+
+const CARD_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export default function Learn() {
     const { level: levelParam } = useParams<{ level: string }>()
@@ -121,14 +124,21 @@ export default function Learn() {
                 <Spinner label="Loading progress…" />
             )}
 
-            <div className={list.length ? 'grid gap-3 sm:grid-cols-2 lg:grid-cols-3' : ''}>
-                {list.map((lesson) => (
-                    <LessonCard
+            <div className={list.length ? 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3' : ''}>
+                {list.map((lesson, i) => (
+                    <motion.div
                         key={lesson.id}
-                        lesson={lesson}
-                        mastery={masteryByLesson.get(lesson.id) ?? 'not-started'}
-                        progress={progress?.[lesson.id]}
-                    />
+                        className="h-full"
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.32, delay: i * 0.04, ease: CARD_EASE }}
+                    >
+                        <LessonCard
+                            lesson={lesson}
+                            mastery={masteryByLesson.get(lesson.id) ?? 'not-started'}
+                            progress={progress?.[lesson.id]}
+                        />
+                    </motion.div>
                 ))}
             </div>
             {list.length === 0 ? <p className="text-center text-sm text-muted-foreground">No lessons here yet.</p> : null}

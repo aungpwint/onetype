@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { splitMyanmarSyllables } from '@/core/unicode/myanmar'
+import { splitMyanmarSyllables, containsMyanmar } from '@/core/unicode/myanmar'
 import { buildSequence, clusterStartForUnit } from '@/core/typing-engine/sequence'
-import { myanmar3 } from '@/core/keyboard-layout/myanmar3'
+import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
 
 describe('Myanmar syllable cluster segmentation', () => {
@@ -17,6 +17,16 @@ describe('Myanmar syllable cluster segmentation', () => {
         const clusters = splitMyanmarSyllables(preposed)
         expect(clusters).toHaveLength(1)
         expect(clusters[0]).toBe(preposed)
+    })
+
+    it('rejects the accidental ZWNJ-preposed-vowel sequence instead of folding it', () => {
+        // Regression: KeyA used to emit U+200C + U+1031 and lesson text stored
+        // that exact byte form. The invisible U+200C is not canonical Unicode
+        // for this app, so sequence building must refuse it loudly.
+        const corrupted = '\u200C\u1031\u1000'
+        expect(() => buildSequence(corrupted, myanmar)).toThrow(/invisible character/)
+        // And it must never fold back into a valid-looking cluster.
+        expect(splitMyanmarSyllables(corrupted)).toEqual(['\u200C', '\u1031\u1000'])
     })
 
     it('keeps a final consonant (followed by asat) inside its syllable', () => {
@@ -47,10 +57,58 @@ describe('Myanmar syllable cluster segmentation', () => {
     })
 })
 
+describe('Myanmar word-final preposed vowel (rendering regression)', () => {
+    it('keeps a word-final preposed vowel U+1031 with its base when followed by a space', () => {
+        // Reported broken case: "ရေ" followed by a space must stay one cluster.
+        // Before the fix it split as ['ရ', 'ေ '], so the browser shaped ရ and ေ
+        // in separate DOM runs and the orphaned ေ rendered with a dotted circle.
+        expect(splitMyanmarSyllables('ရေ ဆန် ငါး ကြက်')).toEqual(['ရေ', ' ', 'ဆန်', ' ', 'ငါး', ' ', 'ကြက်'])
+        expect(splitMyanmarSyllables('အဖေ အမေ ညီ ညီမ')).toEqual(['အ', 'ဖေ', ' ', 'အ', 'မေ', ' ', 'ညီ', ' ', 'ညီ', 'မ'])
+        expect(splitMyanmarSyllables('မျက်စိ နား လက် ခြေ')).toEqual(['မျက်စိ', ' ', 'နား', ' ', 'လက်', ' ', 'ခြေ'])
+    })
+
+    it('keeps a word-final preposed vowel with its base before punctuation', () => {
+        expect(splitMyanmarSyllables('ရေ။')).toEqual(['ရေ', '။'])
+        expect(splitMyanmarSyllables('ရေ၊')).toEqual(['ရေ', '၊'])
+        expect(splitMyanmarSyllables('ရေ ၂။')).toEqual(['ရေ', ' ', '၂', '။'])
+    })
+
+    it('never produces a cluster that mixes Myanmar glyphs with whitespace', () => {
+        const lines = [
+            'အခြေခံ စကားလုံး (၂)',
+            'အိမ် မြို့ ရွာ',
+            'အဖေ အမေ ညီ ညီမ',
+            'မျက်စိ နား လက် ခြေ',
+            'ရေ ဆန် ငါး ကြက်',
+        ]
+        for (const line of lines) {
+            const clusters = splitMyanmarSyllables(line)
+            expect(clusters.join('')).toBe(line)
+            for (const cluster of clusters) {
+                // A cluster may be a pure space run, but never a Myanmar run
+                // carrying a stray space (the symptom of an orphaned ေ).
+                const isCouldSpace = cluster === ' '
+                expect(
+                    !isCouldSpace && (containsMyanmar(cluster) && (cluster.includes(' ') || cluster.includes('\u00A0'))),
+                    JSON.stringify(cluster),
+                ).toBe(false)
+            }
+        }
+    })
+
+    it('merges a preposed vowel forward only into a following base consonant', () => {
+        // Internal preposed vowel still belongs to the syllable headed by the
+        // next base consonant ("ေခံ" inside အခြေခံ), while a word-final one
+        // stays with the preceding base.
+        expect(splitMyanmarSyllables('အခြေခံ')).toEqual(['အ', 'ခြ', 'ေခံ'])
+        expect(splitMyanmarSyllables('အခြေခံ စကားလုံး')).toEqual(['အ', 'ခြ', 'ေခံ', ' ', 'စ', 'ကား', 'လုံး'])
+    })
+})
+
 describe('Myanmar sequence cluster boundaries', () => {
     it('maps each Myanmar syllable cluster to one grapheme range', () => {
         // "ကာ" (1 unit) + " " (1 unit) + "သုံ" (3 units) -> 6 units across 3 graphemes
-        const seq = buildSequence('\u1000\u102C \u101E\u102F\u1036', myanmar3)
+        const seq = buildSequence('\u1000\u102C \u101E\u102F\u1036', myanmar)
         expect(seq.graphemes).toHaveLength(3)
         expect(seq.graphemeUnitRanges).toEqual([
             [0, 2],
@@ -60,7 +118,7 @@ describe('Myanmar sequence cluster boundaries', () => {
     })
 
     it('clusterStartForUnit returns the start of the owning cluster', () => {
-        const seq = buildSequence('\u1000\u102C \u101E\u102F\u1036', myanmar3)
+        const seq = buildSequence('\u1000\u102C \u101E\u102F\u1036', myanmar)
         // Mid-way through "သုံ" (start unit 3), the preceding cluster starts at 3.
         expect(clusterStartForUnit(seq, 5)).toBe(3)
         // Before the second cluster's final unit.

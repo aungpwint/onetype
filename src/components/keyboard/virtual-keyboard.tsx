@@ -46,6 +46,7 @@ export function VirtualKeyboard({ layout, hideReadyMessage }: VirtualKeyboardPro
                                 return (
                                     <Keycap
                                         key={`${rowIndex}-${definition.code || `pad-${definitionIndex}`}`}
+                                        layout={layout}
                                         definition={definition}
                                         isActive={isActive}
                                         flashed={flashed}
@@ -104,13 +105,14 @@ function shiftCodeFor(hand: Hand | null): string | null {
 }
 
 interface KeycapProps {
+    layout: KeyboardLayout
     definition: KeyDefinition
     isActive: boolean
     flashed: 'correct' | 'incorrect' | null
     isShiftHint: boolean
 }
 
-const Keycap = memo(function Keycap({ definition, isActive, flashed, isShiftHint }: KeycapProps) {
+const Keycap = memo(function Keycap({ layout, definition, isActive, flashed, isShiftHint }: KeycapProps) {
     const width = definition.width ?? 1
 
     const isModifier = definition.kind === 'modifier' || definition.plain === undefined
@@ -119,18 +121,12 @@ const Keycap = memo(function Keycap({ definition, isActive, flashed, isShiftHint
 
     const wideLabel = WIDE_KEY_LABEL[definition.code]
 
-    const subLabel = definition.code
-        .replace(/^Key/, '')
-        .replace(/^Digit/, '')
-        .replace(/^Bracket/, '')
-        .toLowerCase()
-
     const label = getKeyLabel({
+        layout,
         definition,
         isModifier,
         isSpace,
         wideLabel,
-        subLabel,
     })
 
     const stateClass = getKeyStateClass({
@@ -185,31 +181,61 @@ const Keycap = memo(function Keycap({ definition, isActive, flashed, isShiftHint
                 flexBasis: 0,
             }}
         >
-            <KeycapContent>{label}</KeycapContent>
+            {label}
         </span>
     )
 })
 
-function KeycapContent({ children }: { children: ReactNode }) {
-    return <span className="flex max-w-full min-w-0 items-center justify-center">{children}</span>
+/*
+ * Legend shown in the keycap's top-left corner, mirroring keyboard-layout.html:
+ * the physical ASCII label of the key (e.g. `1`, `Q`, `-`, `[`).
+ */
+const ASCII_LEGEND: Record<string, string> = {
+    Backquote: '`',
+    Minus: '-',
+    Equal: '=',
+    BracketLeft: '[',
+    BracketRight: ']',
+    Backslash: '\\',
+    Semicolon: ';',
+    Quote: "'",
+    Comma: ',',
+    Period: '.',
+    Slash: '/',
+}
+
+function asciiLegendFor(code: string): string {
+    const literal = ASCII_LEGEND[code]
+    if (literal !== undefined) return literal
+
+    if (code.startsWith('Key')) return code.slice(3)
+    if (code.startsWith('Digit')) return code.slice(5)
+
+    return code
 }
 
 function getKeyLabel({
+    layout,
     definition,
     isModifier,
     isSpace,
     wideLabel,
-    subLabel,
 }: {
+    layout: KeyboardLayout
     definition: KeyDefinition
     isModifier: boolean
     isSpace: boolean
     wideLabel: string | undefined
-    subLabel: string
 }): ReactNode {
+    // Single source of truth: the character displayed on every keycap is the
+    // exact character `layout.outputFor` would produce when that key is pressed,
+    // so the UI label and the keyboard-generated Unicode can never diverge.
+    const plain = layout.outputFor(definition.code, 'none')?.text ?? definition.plain ?? definition.label
+    const shifted = layout.outputFor(definition.code, 'shift')?.text ?? definition.shifted
+
     if (isSpace) {
         return (
-            <span className="keycap-mod truncate px-1 text-[0.625rem] font-semibold tracking-[0.12em] text-muted-foreground/70 uppercase sm:text-[0.6875rem] lg:text-xs 2xl:text-[0.8125rem]">
+            <span className="keycap-mod absolute inset-x-0 bottom-1.5 truncate px-1 text-center text-[0.625rem] font-semibold tracking-[0.12em] text-muted-foreground/70 uppercase sm:text-[0.6875rem] lg:text-xs 2xl:text-[0.8125rem]">
                 space
             </span>
         )
@@ -217,30 +243,30 @@ function getKeyLabel({
 
     if (isModifier || wideLabel !== undefined) {
         return (
-            <span className="keycap-mod max-w-full truncate px-1 text-[0.625rem] font-semibold tracking-tight text-muted-foreground sm:text-[0.6875rem] lg:text-xs 2xl:text-[0.8125rem]">
+            <span className="keycap-mod absolute top-1 left-1.5 max-w-[calc(100%-0.75rem)] truncate text-[0.5rem] font-semibold tracking-tight text-muted-foreground sm:top-1.5 sm:left-2 sm:text-[0.5625rem] lg:text-[0.625rem]">
                 {wideLabel ?? definition.label}
             </span>
         )
     }
 
-    const primary = definition.plain ?? definition.label
-
-    // Physical keyboards use uppercase alphabetic legends as the dominant label.
-    const isAlphaKey = /^[A-Za-z]$/.test(primary)
-    const primaryDisplay = isAlphaKey ? primary.toUpperCase() : primary
-
-    const showSublabel = primary.toLowerCase() !== subLabel && subLabel.length <= 2
-
+    // keycap-layout.html shows three layers per key: the ASCII legend (top-left),
+    // the shifted character (top-right) and the unshifted character (bottom-center).
     return (
-        <span className="flex min-w-0 flex-col items-center justify-center leading-none">
-            <span className="keycap-primary font-myanmar text-sm leading-none font-medium sm:text-base lg:text-lg 2xl:text-xl">{primaryDisplay}</span>
+        <>
+            <span className="keycap-sublabel absolute top-1 left-1.5 text-[0.5rem] font-medium tracking-tight sm:top-1.5 sm:left-2 sm:text-[0.5625rem] lg:text-[0.625rem]">
+                {asciiLegendFor(definition.code)}
+            </span>
 
-            {showSublabel && (
-                <span className="keycap-sublabel mt-0.5 font-mono text-[0.5rem] leading-none font-medium tracking-tight uppercase sm:text-[0.5625rem] lg:text-[0.625rem] 2xl:text-[0.6875rem]">
-                    {subLabel}
+            {shifted !== undefined && shifted.length > 0 && (
+                <span className="keycap-sublabel absolute top-1 right-1.5 max-w-[42%] truncate text-right font-myanmar text-[0.625rem] sm:top-1.5 sm:right-2 sm:text-xs lg:text-sm">
+                    {shifted}
                 </span>
             )}
-        </span>
+
+            <span className="keycap-primary absolute inset-x-0 bottom-1 truncate px-1 text-center font-myanmar text-sm font-medium sm:text-base lg:text-lg 2xl:text-xl">
+                {plain}
+            </span>
+        </>
     )
 }
 

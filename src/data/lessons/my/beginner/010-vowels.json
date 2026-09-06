@@ -9,7 +9,7 @@
     "description": "More vowels: ေ(KeyA) ု(KeyK) ူ(KeyL) ဲ(KeyJ+Shift)",
     "difficulty": "easy",
     "estimatedMinutes": 8,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
         "minWpm": null

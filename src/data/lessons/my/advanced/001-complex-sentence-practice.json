@@ -9,7 +9,7 @@
     "description": "Type complex sentences accurately.",
     "difficulty": "easy",
     "estimatedMinutes": 10,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
         "minWpm": 18

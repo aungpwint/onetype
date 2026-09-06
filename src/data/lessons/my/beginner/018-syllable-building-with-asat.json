@@ -9,7 +9,7 @@
     "description": "Syllables ending with asat (closed syllables).",
     "difficulty": "medium",
     "estimatedMinutes": 10,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
         "minWpm": null

@@ -9,7 +9,7 @@
     "description": "Sentences that ask questions.",
     "difficulty": "medium",
     "estimatedMinutes": 10,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
         "minWpm": null

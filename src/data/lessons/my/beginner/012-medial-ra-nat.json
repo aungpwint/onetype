@@ -9,7 +9,7 @@
     "description": "The ြ medial (KeyJ). Consonant + ြ + vowel.",
     "difficulty": "easy",
     "estimatedMinutes": 8,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
         "minWpm": null

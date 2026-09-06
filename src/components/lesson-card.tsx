@@ -31,12 +31,6 @@ function MasteryBadge({ level }: { level: MasteryLevel }) {
     return <Badge variant={m.variant}>{m.text}</Badge>
 }
 
-/**
- * A curriculum lesson rendered as a typewriter-flavoured index card: a tab-like
- * lesson-number plate, a display-serif title, focus keys drawn as keycaps
- * (echoing the on-screen keyboard), and a quiet meta footer. The top accent band
- * and the mastery seal signal where the lesson sits in the learner's progress.
- */
 export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
     const passed = mastery === 'passed' || mastery === 'mastered'
     const attempted = mastery === 'attempted'
@@ -44,17 +38,25 @@ export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
 
     const bandClass = passed ? 'bg-success' : attempted ? 'bg-brass' : 'bg-line-strong'
 
+    const sheenClass = passed
+        ? 'from-success/12 to-transparent'
+        : attempted
+          ? 'from-brass/10 to-transparent'
+          : 'from-surface-elevated/60 to-transparent'
+
     return (
         <Link
             to={`/lesson/${lesson.id}`}
-            className="group relative flex flex-col overflow-hidden rounded-xl border border-line bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-(--shadow-2) focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="group relative isolate flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-(--shadow-1) transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-line-strong hover:shadow-(--shadow-3) focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
+            <span aria-hidden className={cn('pointer-events-none absolute inset-0 -z-10 h-full bg-linear-to-b', sheenClass)} />
+
             {/* Top accent band — encodes lesson state */}
             <span aria-hidden className={cn('h-1 w-full', bandClass)} />
 
             <div className="flex grow flex-col gap-3 p-4 lg:p-5">
                 <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1.5 rounded border border-line bg-paper-2/60 px-2 py-0.5 font-mono text-[0.6875rem] font-semibold tracking-wider text-ink-soft tabular-nums">
+                    <span className="inline-flex items-center gap-1.5 rounded-lg border border-line-strong/70 bg-linear-to-b from-key-top to-key-base px-2 py-1 font-mono text-[0.6875rem] font-semibold tracking-wider text-ink-soft tabular-nums shadow-[0_1px_0_var(--line-strong)]">
                         <span className="text-ink-faint">L</span>
                         <span>{String(lesson.number).padStart(2, '0')}</span>
                     </span>
@@ -68,8 +70,8 @@ export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
                 </div>
 
                 <div className="min-w-0">
-                    <h3 className="font-display text-xl leading-tight text-ink">{lesson.title}</h3>
-                    <p className="mt-0.5 truncate font-myanmar text-xs text-ink-faint">{lesson.titleMy}</p>
+                    <h3 className="font-display text-xl leading-tight font-semibold tracking-[-0.01em] text-ink">{lesson.title}</h3>
+                    <p className="mt-2 font-myanmar text-xs leading-relaxed text-ink-faint">{lesson.titleMy}</p>
                 </div>
 
                 {lesson.focusKeys && lesson.focusKeys.length > 0 ? (
@@ -85,7 +87,7 @@ export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
                     </div>
                 ) : null}
 
-                <div className="mt-auto flex items-center gap-3 pt-1 text-xs text-ink-faint">
+                <div className="mt-auto flex items-center gap-3 border-t border-line/60 pt-2.5 text-xs text-ink-faint">
                     <span className="inline-flex items-center gap-1">
                         <Clock className="size-3.5" />
                         {lesson.estimatedMinutes} min
@@ -112,7 +114,7 @@ export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
 
             <span
                 aria-hidden
-                className="absolute top-1/2 right-3 -translate-y-1/2 text-ink-faint opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                className="absolute top-1/2 right-3.5 -translate-y-1/2 text-ink-soft opacity-0 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:opacity-100"
             >
                 <ArrowRight className="size-4" />
             </span>

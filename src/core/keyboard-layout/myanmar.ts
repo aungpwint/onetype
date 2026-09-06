@@ -1,13 +1,13 @@
 import { KeyboardLayout, type KeyboardLayoutSpec, type KeyDefinition } from './layout'
 import { fingerForCode, handForFinger } from '@/core/finger-mapping/finger-map'
 
-export const MYANMAR3_REVISION = 1
+export const MYANMAR_REVISION = 2
 
 const LETTERS: Record<string, { plain: string; shifted: string }> = {
     KeyQ: { plain: '\u1006', shifted: '\u1008' },
     KeyW: { plain: '\u1010', shifted: '\u101D' },
     KeyE: { plain: '\u1014', shifted: '\u1023' },
-    KeyR: { plain: '\u1019', shifted: '\u104E' },
+    KeyR: { plain: '\u1019', shifted: '\u104E\u1004\u103A\u1038' },
     KeyT: { plain: '\u1021', shifted: '\u1024' },
     KeyY: { plain: '\u1015', shifted: '\u104C' },
     KeyU: { plain: '\u1000', shifted: '\u1025' },
@@ -53,6 +53,9 @@ const DIGIT_SHIFTED: Record<string, string> = {
     Digit5: '\u1054',
     Digit6: '\u1055',
     Digit7: '\u101B',
+    Digit8: '*',
+    Digit9: '(',
+    Digit0: ')',
 }
 
 function key(code: string, label: string, plain: string, shifted: string): KeyDefinition {
@@ -60,25 +63,15 @@ function key(code: string, label: string, plain: string, shifted: string): KeyDe
     return { code, label, finger, hand: handForFinger(finger), row: 'number', plain, shifted }
 }
 
-function plainKey(code: string, label: string, plain: string): KeyDefinition {
-    const finger = fingerForCode(code)
-    return { code, label, finger, hand: handForFinger(finger), row: 'number', plain }
-}
-
-function noOutputKey(code: string, label: string): KeyDefinition {
-    const finger = fingerForCode(code)
-    return { code, label, finger, hand: handForFinger(finger), row: 'number' }
-}
-
 function modifierKey(code: string, label: string): KeyDefinition {
     const finger = fingerForCode(code)
     return { code, label, finger, hand: handForFinger(finger), row: 'home', kind: 'modifier', legend: label }
 }
 
-function letterKey(code: string, row: 'top' | 'home' | 'bottom'): KeyDefinition {
+function letterKey(code: string, row: 'top' | 'home' | 'bottom', label?: string): KeyDefinition {
     const { plain, shifted } = LETTERS[code]
     const finger = fingerForCode(code)
-    return { code, label: plain, finger, hand: handForFinger(finger), row, plain, shifted }
+    return { code, label: label ?? plain, finger, hand: handForFinger(finger), row, plain, shifted }
 }
 
 function padding(width: number): KeyDefinition {
@@ -87,7 +80,7 @@ function padding(width: number): KeyDefinition {
 
 const rows: KeyDefinition[][] = [
     [
-        plainKey('Backquote', '\u1050', '\u1050'),
+        key('Backquote', '\u1050', '\u1050', '\u100E'),
         {
             code: 'Digit1',
             label: '\u1041',
@@ -178,8 +171,8 @@ const rows: KeyDefinition[][] = [
             plain: DIGIT_PLAIN.Digit0,
             shifted: DIGIT_SHIFTED.Digit0,
         },
-        noOutputKey('Minus', '-'),
-        noOutputKey('Equal', '='),
+        key('Minus', '-', '-', '_'),
+        key('Equal', '=', '=', '+'),
         { ...modifierKey('Backspace', 'Backspace'), row: 'number' as const, width: 2 },
     ],
     [
@@ -194,13 +187,13 @@ const rows: KeyDefinition[][] = [
         letterKey('KeyI', 'top'),
         letterKey('KeyO', 'top'),
         letterKey('KeyP', 'top'),
-        key('BracketLeft', '\u101F', '\u101F', '\u1027'),
-        key('BracketRight', '\u1029', '\u1029', '\u102A'),
-        { ...modifierKey('Backslash', '\\'), row: 'top' as const, width: 1.5 },
+        { ...key('BracketLeft', '\u101F', '\u101F', '\u1027'), row: 'top' as const },
+        { ...key('BracketRight', '\u1029', '\u1029', '\u102A'), row: 'top' as const },
+        { ...key('Backslash', '\u104F', '\u104F', '\u1051'), row: 'top' as const, width: 1.5 },
     ],
     [
         { ...modifierKey('CapsLock', 'Caps'), row: 'home' as const, width: 1.75 },
-        letterKey('KeyA', 'home'),
+        letterKey('KeyA', 'home', '\u1031'),
         letterKey('KeyS', 'home'),
         letterKey('KeyD', 'home'),
         letterKey('KeyF', 'home'),
@@ -209,8 +202,8 @@ const rows: KeyDefinition[][] = [
         letterKey('KeyJ', 'home'),
         letterKey('KeyK', 'home'),
         letterKey('KeyL', 'home'),
-        key('Semicolon', '\u1038', '\u1038', '\u1002'),
-        noOutputKey('Quote', '`'),
+        { ...key('Semicolon', '\u1038', '\u1038', '\u1002'), row: 'home' as const },
+        { ...key('Quote', "'", "'", '"'), row: 'home' as const },
         { ...modifierKey('Enter', 'Enter'), row: 'home' as const, width: 2.25 },
     ],
     [
@@ -222,9 +215,9 @@ const rows: KeyDefinition[][] = [
         letterKey('KeyB', 'bottom'),
         letterKey('KeyN', 'bottom'),
         letterKey('KeyM', 'bottom'),
-        plainKey('Comma', '\u104A', '\u104A'),
-        plainKey('Period', '\u104B', '\u104B'),
-        noOutputKey('Slash', '/'),
+        { ...key('Comma', ',', ',', '\u104A'), row: 'bottom' as const },
+        { ...key('Period', '.', '.', '\u104B'), row: 'bottom' as const },
+        { ...key('Slash', '/', '/', '?'), row: 'bottom' as const },
         { ...modifierKey('ShiftRight', 'Shift'), row: 'bottom' as const, width: 2.75 },
     ],
     [
@@ -247,12 +240,15 @@ const rows: KeyDefinition[][] = [
     ],
 ]
 
-export const myanmar3 = new KeyboardLayout({
-    id: 'myanmar3',
-    name: 'Myanmar3',
+export const myanmar = new KeyboardLayout({
+    id: 'myanmar',
+    name: 'Myanmar',
     language: 'myanmar',
-    version: MYANMAR3_REVISION,
-    source: 'SIL Myanmar3 (sil_myanmar_my3) v1.7.5, verified against the Keyman source files. Physical keys are the same positions as US QWERTY; the stored byte sequence of every lesson text matches the canonical Myanmar3 typing order, so each character reverse-maps to exactly one keypress.',
+    version: MYANMAR_REVISION,
+    source: 'Pyidaungsu (Pyidaungsu MM), based on the keymap in keyboard-layout.html. Physical keys are the standard US QWERTY positions; the preposed vowel U+1031 (ေ) is emitted by the KeyA press as the bare code point so that stored lesson text stays clean canonical Myanmar Unicode (no Zero Width Non-Joiner).',
     rows,
-    note: 'Punctuation: Comma = ၊ (U+104A), Period = ။ (U+104B), Shift+F = virama ္ for stacked consonants, H = asat ့, Shift+7 = ရ, digits 1..0 = ၁..၀.',
+    aliases: [
+        { text: '\u104E', code: 'KeyR', modifier: 'shift' },
+    ],
+    note: 'KeyR shift = ၎င်း (U+104E U+1004 U+103A U+1038); KeyA plain emits U+1031 (ေ). The legacy ZWNJ-prefixed U+1031 form that the raw Pyidaungsu font keymap sometimes carries is deliberately NOT emitted, so lesson data and rendered text remain valid Myanmar Unicode. Bare U+104E lesson forms are accepted as a legacy alias of the same key. Punctuation: , = , / ၊, . = . / ။, / = / ?, Shift+8/9/0 = * ( ), Backquote shift = ဎ, Backslash = ၏ / ၑ.',
 } satisfies KeyboardLayoutSpec)

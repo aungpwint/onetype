@@ -2,6 +2,7 @@ import type { ZodIssue } from 'zod'
 import { LESSON_SCHEMA_VERSION, type Lesson } from '@/types/lesson'
 
 import { isLessonExerciseKind } from '@/types/exercise'
+import { isMyanmarText, validateMyanmarText } from '@/core/unicode/myanmar'
 import { lessonSchema } from '@/schemas/lesson'
 import { LessonValidationError, LessonParseError, UnsupportedExerciseTypeError, UnsupportedLessonSchemaError } from './lesson-errors'
 
@@ -34,6 +35,55 @@ function assertSupportedExerciseKinds(rawExercises: unknown, lessonId?: string):
 }
 
 /**
+ * Enforce canonical Myanmar Unicode for every Myanmar-bearing string in a
+ * lesson. Lesson JSON must store Myanmar text as valid canonical Unicode (NFC,
+ * no stray zero-width/format characters); the typing engine, renderer and
+ * keyboard reverse-mapping all assume that invariant. Problems are reported as
+ * `LessonValidationError` issues shaped like:
+ *
+ *   lesson: <id> exercise: <exercise-id> field: <field> problem: <description>
+ */
+export function validateMyanmarLessonUnicode(lesson: Lesson): void {
+    if (lesson.language !== 'my') return
+    const issues: string[] = []
+    const check = (value: string, exerciseId: string | undefined, field: string): void => {
+        if (!isMyanmarText(value)) return
+        for (const problem of validateMyanmarText(value)) {
+            const where = exerciseId !== undefined ? `lesson: ${lesson.id} exercise: ${exerciseId}` : `lesson: ${lesson.id}`
+            const code = problem.codePoint === 0 ? '' : ` (U+${problem.codePoint.toString(16).toUpperCase().padStart(4, '0')})`
+            issues.push(`${where} field: ${field} problem: ${problem.message}${code}`)
+        }
+    }
+    check(lesson.titleMy ?? '', undefined, 'titleMy')
+    check(lesson.description, undefined, 'description')
+    for (const exercise of lesson.exercises) {
+        const exerciseId = exercise.id
+        check(exercise.instruction ?? '', exerciseId, 'instruction')
+        if ('text' in exercise && typeof exercise.text === 'string') {
+            check(exercise.text, exerciseId, 'text')
+        }
+        if ('keys' in exercise) {
+            for (const key of exercise.keys) check(key, exerciseId, 'keys')
+        }
+        if ('words' in exercise) {
+            for (const word of exercise.words) check(word, exerciseId, 'words')
+        }
+        if ('sentences' in exercise) {
+            for (const sentence of exercise.sentences) check(sentence, exerciseId, 'sentences')
+        }
+        if ('subtype' in exercise && typeof exercise.subtype === 'string') {
+            check(exercise.subtype, exerciseId, 'subtype')
+        }
+        // `exerciseText` covers every kind's derived target; validating the raw
+        // fields above already catches each constituent string, so there is no
+        // hidden concatenation to double-check beyond the instruction.
+    }
+    if (issues.length > 0) {
+        throw new LessonValidationError(issues, lesson.id)
+    }
+}
+
+/**
  * Validate an arbitrary parsed-JSON value as a canonical Lesson.
  *
  * Throws `UnsupportedLessonSchemaError`, `UnsupportedExerciseTypeError` or
@@ -56,7 +106,9 @@ export function validateLesson(value: unknown, _source?: string): Lesson {
     if (!result.success) {
         throw new LessonValidationError(lessonValidationIssues(result.error.issues), lessonId)
     }
-    return result.data as Lesson
+    const lesson = result.data as Lesson
+    validateMyanmarLessonUnicode(lesson)
+    return lesson
 }
 
 export interface LessonSchemaValidation {

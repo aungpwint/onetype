@@ -9,7 +9,7 @@
     "description": "Type news text quickly and accurately.",
     "difficulty": "hard",
     "estimatedMinutes": 20,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 94,
         "minWpm": 30

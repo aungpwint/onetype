@@ -9,7 +9,7 @@
     "description": "Another formal letter template.",
     "difficulty": "hard",
     "estimatedMinutes": 18,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 94,
         "minWpm": 30

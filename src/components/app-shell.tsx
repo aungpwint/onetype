@@ -204,7 +204,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                             <span className="hidden md:inline">OneType keyboard lab</span>
                             <span aria-hidden>·</span>
-                            <span className="hidden md:inline">QWERTY + Myanmar3</span>
+                            <span className="hidden md:inline">QWERTY + Myanmar</span>
                         </div>
                         <div className="ml-auto flex items-center gap-2">
                             <Button size="sm" onClick={() => setAddOpen(true)}>

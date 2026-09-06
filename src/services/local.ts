@@ -27,6 +27,7 @@ import type {
     WeakKey,
 } from './types'
 import { rankWeakest, DEFAULT_WEAKNESS_CONFIG } from '@/core/weakness'
+import { isLayoutAvailable } from '@/core/keyboard-layout/registry'
 
 const PREFIX = 'onetype:local:'
 
@@ -100,6 +101,12 @@ function seedTestsIfMissing() {
     ])
 }
 
+function migrateTypingTestLayout(test: TypingTest): TypingTest {
+    if (isLayoutAvailable(test.layoutId)) return test
+    const fallback = test.language === 'english' ? 'english-qwerty' : 'myanmar'
+    return { ...test, layoutId: fallback }
+}
+
 function heroTest(
     id: string,
     code: string,
@@ -109,7 +116,7 @@ function heroTest(
     minAccuracy: number,
     minWpm: number | null,
 ): TypingTest {
-    return { id, code, name, durationSeconds, language, layoutId: 'myanmar3', minAccuracy, minWpm, contentVersion: CONTENT_VERSION }
+    return { id, code, name, durationSeconds, language, layoutId: 'myanmar', minAccuracy, minWpm, contentVersion: CONTENT_VERSION }
 }
 
 function ensureSeeded() {
@@ -286,7 +293,12 @@ export const localBackend = {
 
     listTypingTests: async (): Promise<TypingTest[]> => {
         ensureSeeded()
-        return read<TypingTest[]>(KEYS.typingTests, [])
+        const tests = read<TypingTest[]>(KEYS.typingTests, [])
+        const migrated = tests.map(migrateTypingTestLayout)
+        if (migrated.some((t, i) => t.layoutId !== tests[i].layoutId)) {
+            write(KEYS.typingTests, migrated)
+        }
+        return migrated
     },
 
     listTestResults: async (studentId: string): Promise<TestResult[]> => {
@@ -604,8 +616,8 @@ async function detailFor(student: Student): Promise<StudentDetail> {
         totalMinutes,
         totalSessions,
         lessonCounts,
-        weakKeys: await localBackend.weakKeys(student.id, 'myanmar3', 5),
-        weakFingers: await localBackend.weakFingers(student.id, 'myanmar3', 5),
+        weakKeys: await localBackend.weakKeys(student.id, 'myanmar', 5),
+        weakFingers: await localBackend.weakFingers(student.id, 'myanmar', 5),
         recentSessions: sessions,
         testResults,
     }

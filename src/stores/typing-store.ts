@@ -4,9 +4,10 @@ import { getLayoutOrThrow } from '@/core/keyboard-layout/registry'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
 import { resolveLessonById } from '@/data/curriculum'
 import type { ResolvedLesson } from '@/data/curriculum/generator'
-import { buildTestMaterial } from '@/core/materials/test-material'
+import { buildTestMaterial, resolveTestLayout } from '@/core/materials/test-material'
 import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import type { Modifier, TypingMode } from '@/types'
+import { resolvePressedKey } from '@/core/input/key-resolution'
 import type { ScoreMetrics } from '@/core/scoring/score'
 import type { AchievementRecord, TypingStatRecord, TypingTest } from '@/services/types'
 import { reinforcementFromWeakKeys, type ReinforcedDrill, type MuscleMemoryGoal } from '@/core/reinforcement'
@@ -96,10 +97,6 @@ function liveStats(engine: TypingEngine | null, totalUnits: number): LiveStats {
         cpm: metrics.cpm,
         elapsedMs: engine.elapsedMs(),
     }
-}
-
-function modifierFromEvent(event: KeyboardEvent): Modifier {
-    return event.shiftKey ? 'shift' : 'none'
 }
 
 const IGNORED_CODES = new Set([
@@ -215,7 +212,7 @@ export const useTypingStore = create<TypingState>((set, get) => ({
             return
         }
         const resolved = buildTestMaterial(test)
-        const layout = getLayoutOrThrow(test.layoutId)
+        const layout = resolveTestLayout(test)
         const attempt = await backend.nextTestAttempt(active.id, test.id)
         const session: TypingSessionState = {
             kind: 'test',
@@ -565,10 +562,11 @@ function bindKeys() {
             return
         }
         event.preventDefault()
-        const modifier = modifierFromEvent(event)
+        const pressed = resolvePressedKey(event, engine.layout)
+        if (!pressed) return
         const expected = engine.expectedUnit
-        const correct = expected ? expected.keyCode === event.code && expected.modifier === modifier : event.code === 'Space'
-        engine.processKey(event.code, modifier)
+        const correct = expected ? pressed.code === expected.keyCode && pressed.modifier === expected.modifier : pressed.code === 'Space'
+        engine.processKey(pressed.code, pressed.modifier)
         if (useUiStore.getState().soundEnabled) {
             if (correct) playKeySound(true)
             else playErrorSound()

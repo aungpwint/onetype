@@ -4,7 +4,7 @@ import { computeScore, type ScoreMetrics } from '@/core/scoring/score'
 import { buildSequence, graphemeUnitRuns } from '@/core/typing-engine/sequence'
 import { TypingEngine } from '@/core/typing-engine/engine'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
-import { myanmar3 } from '@/core/keyboard-layout/myanmar3'
+import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { resolveLessonById } from '@/data/curriculum'
 
 describe('scoring', () => {
@@ -37,7 +37,7 @@ describe('sequence building', () => {
 
     it('builds units for a Myanmar word', () => {
         const word = '\u1031\u1000\u103B\u102C\u1004\u103A\u1038'
-        const seq = buildSequence(word, myanmar3)
+        const seq = buildSequence(word, myanmar)
         expect(seq.units.map((u) => u.keyCode)).toEqual(['KeyA', 'KeyU', 'KeyS', 'KeyM', 'KeyI', 'KeyF', 'Semicolon'])
         expect(seq.units.map((u) => u.text).join('')).toBe(word)
     })
@@ -60,7 +60,7 @@ describe('grapheme unit runs', () => {
 
     it('groups Myanmar composite graphemes so each unit maps to exactly one run', () => {
         const word = '\u1031\u1000\u103B\u102C\u1004\u103A\u1038'
-        const seq = buildSequence(word, myanmar3)
+        const seq = buildSequence(word, myanmar)
         const runs = graphemeUnitRuns(seq)
         expect(runs.length).toBe(seq.graphemes.length)
         expect(runs[0].startUnit).toBe(0)
@@ -168,10 +168,10 @@ describe('typing engine', () => {
     it('backspace is cluster-aware for Myanmar: deletes a whole syllable cluster', () => {
         // "ကိျာ" is one syllable cluster (base + medial + vowels) -> 4 units.
         const word = '\u1000\u102D\u103B\u102C'
-        const seq = buildSequence(word, myanmar3)
+        const seq = buildSequence(word, myanmar)
         expect(seq.units.length).toBe(4)
         expect(seq.graphemes).toHaveLength(1) // one cluster
-        const engine = new TypingEngine({ sequence: seq, layout: myanmar3 })
+        const engine = new TypingEngine({ sequence: seq, layout: myanmar })
         engine.processKey('KeyU', 'none')
         engine.processKey('KeyD', 'none')
         engine.processKey('KeyS', 'none')
@@ -191,9 +191,9 @@ describe('typing engine', () => {
 
     it('backspace steps back to the previous cluster boundary for multi-cluster Myanmar', () => {
         // "ကာ သုံ" -> three clusters: [ကာ][space][သုံ]
-        const two = buildSequence('\u1000\u102C \u101E\u102F\u1036', myanmar3)
+        const two = buildSequence('\u1000\u102C \u101E\u102F\u1036', myanmar)
         expect(two.graphemes).toHaveLength(3) // "ကာ", " ", "သုံ"
-        const engine = new TypingEngine({ sequence: two, layout: myanmar3 })
+        const engine = new TypingEngine({ sequence: two, layout: myanmar })
         // Type the first cluster: ကာ (KeyU, KeyM)
         engine.processKey('KeyU', 'none')
         engine.processKey('KeyM', 'none')

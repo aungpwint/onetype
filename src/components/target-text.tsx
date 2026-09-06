@@ -30,8 +30,6 @@ export function TargetText() {
 
     const activePhaseKey = activePhase ? `${activePhase.label}-${activePhase.startUnit}` : null
 
-    const hasMyanmar = activePhase ? containsMyanmar(activePhase.text) : sequence ? containsMyanmar(sequence.text) : false
-
     const graphemes = useMemo(() => {
         const runs = sequence ? graphemeUnitRuns(sequence) : []
         if (!activePhase) return runs
@@ -95,11 +93,7 @@ export function TargetText() {
                     <motion.div ref={contentRef} className="tt-content" style={{ x: springOffset }}>
                         <motion.p
                             key={activePhaseKey ?? 'all'}
-                            className={cn(
-                                hasMyanmar ? 'font-myanmar leading-[normal]' : 'font-heavy leading-tight',
-                                'mx-auto text-4xl tracking-normal whitespace-nowrap md:text-5xl',
-                            )}
-                            style={{ wordSpacing: '0.16em' }}
+                            className="mx-auto text-4xl leading-tight tracking-normal whitespace-nowrap md:text-5xl"
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.22, ease: 'easeOut' }}
@@ -107,12 +101,16 @@ export function TargetText() {
                             {graphemes.map((g) => {
                                 const isCurrent = unitIndex >= g.startUnit && unitIndex < g.endUnit
                                 const isCompleted = g.endUnit <= unitIndex
+                                const spanUnits = g.endUnit - g.startUnit
+                                const typedUnits = Math.max(0, Math.min(spanUnits, unitIndex - g.startUnit))
+                                const progress = spanUnits === 0 ? 1 : typedUnits / spanUnits
                                 return (
                                     <Char
                                         key={g.index}
                                         text={g.text}
                                         startUnit={g.startUnit}
                                         endUnit={g.endUnit}
+                                        progress={progress}
                                         completed={isCompleted}
                                         current={isCurrent}
                                         flash={flashAt >= g.startUnit && flashAt < g.endUnit}
@@ -132,6 +130,7 @@ const Char = memo(function Char({
     text,
     startUnit,
     endUnit,
+    progress,
     completed,
     current,
     flash,
@@ -140,12 +139,14 @@ const Char = memo(function Char({
     text: string
     startUnit: number
     endUnit: number
+    progress: number
     completed: boolean
     current: boolean
     flash: boolean
     onCaret?: (el: HTMLSpanElement | null) => void
 }) {
     const engine = useTypingStore.getState().engine
+    const font = containsMyanmar(text) ? 'font-myanmar' : 'font-heavy'
     let status: 'correct' | 'incorrect' | 'current' | 'pending' = 'pending'
     if (current) {
         status = 'current'
@@ -162,14 +163,14 @@ const Char = memo(function Char({
 
     if (status === 'current') {
         return (
-            <span ref={onCaret} className={cn('tt-char tt-char-now', flash ? 'tt-char-flash' : 'tt-char-focus')}>
-                <span className="char-pop">{text}</span>
-                <span aria-hidden className="tt-caret z-10 mr-3 w-1 bg-primary" />
+            <span ref={onCaret} className={cn('tt-char tt-char-now char-pop', font, flash ? 'tt-char-flash' : 'tt-char-focus')}>
+                {text}
+                <span aria-hidden className="tt-caret z-10" style={{ left: `clamp(0px, ${progress * 100}%, calc(100% - var(--tt-caret-w)))` }} />
             </span>
         )
     }
 
-    const cls = status === 'correct' ? 'tt-char tt-char-ok' : status === 'incorrect' ? 'tt-char tt-char-miss' : 'tt-char tt-char-typed'
+    const cls = cn(status === 'correct' ? 'tt-char tt-char-ok' : status === 'incorrect' ? 'tt-char tt-char-miss' : 'tt-char tt-char-typed', font)
 
     return <span className={cls}>{text}</span>
 })

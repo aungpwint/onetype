@@ -9,7 +9,7 @@
     "description": "ခ (KeyC) with left middle. ဃ is the same key with Shift (KeyC+Shift).",
     "difficulty": "easy",
     "estimatedMinutes": 6,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
         "minWpm": null

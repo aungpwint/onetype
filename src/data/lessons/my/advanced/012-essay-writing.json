@@ -9,7 +9,7 @@
     "description": "Type an essay paragraph about education.",
     "difficulty": "hard",
     "estimatedMinutes": 18,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 93,
         "minWpm": 28

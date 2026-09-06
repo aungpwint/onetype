@@ -9,7 +9,7 @@
     "description": "Myanmar digits ၀-၉ on the number row.",
     "difficulty": "easy",
     "estimatedMinutes": 8,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
         "minWpm": null

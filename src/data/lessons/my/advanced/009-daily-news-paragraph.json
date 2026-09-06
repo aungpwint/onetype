@@ -9,7 +9,7 @@
     "description": "Type a news-style paragraph.",
     "difficulty": "hard",
     "estimatedMinutes": 15,
-    "keyboard": "myanmar3",
+    "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
         "minWpm": 25

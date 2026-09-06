@@ -86,6 +86,87 @@ describe('validateLesson', () => {
     })
 })
 
+describe('Myanmar Unicode lesson validation', () => {
+    function myanLesson(overrides: Partial<Lesson> = {}): Lesson {
+        return canonicalLesson({
+            id: 'lesson-my-beginner-23',
+            language: 'my',
+            keyboard: 'myanmar',
+            title: 'Basic Words',
+            titleMy: 'အခြေခံ စကားလုံး',
+            description: 'Everyday words: water, rice, fish.',
+            exercises: [{ id: 'lesson-my-beginner-23-ex-1', kind: 'words', words: ['ရေ', 'ဆန်', 'ငါး', 'ကြက်'] }],
+            ...overrides,
+        })
+    }
+
+    it('accepts a clean canonical Myanmar lesson', () => {
+        expect(() => validateLesson(myanLesson())).not.toThrow()
+    })
+
+    it('rejects an accidental ZWNJ inside exercise word text', () => {
+        const lesson = myanLesson({
+            exercises: [{ id: 'lesson-my-beginner-23-ex-1', kind: 'words', words: ['ရ\u200Cေ', 'ဆန်'] }],
+        })
+        expect(() => validateLesson(lesson)).toThrow(LessonValidationError)
+        let message = ''
+        try {
+            validateLesson(lesson)
+        } catch (error) {
+            message = (error as LessonValidationError).issues.join('\n')
+        }
+        expect(message).toContain('lesson: lesson-my-beginner-23')
+        expect(message).toContain('exercise: lesson-my-beginner-23-ex-1')
+        expect(message).toContain('field: words')
+        expect(message).toContain('problem: zero width non-joiner (U+200C)')
+    })
+
+    it('rejects a ZWNJ in the Myanmar title', () => {
+        const lesson = myanLesson({ titleMy: 'အခြ\u200Cေခံ စကားလုံး' })
+        let message = ''
+        try {
+            validateLesson(lesson)
+        } catch (error) {
+            message = (error as LessonValidationError).issues.join('\n')
+        }
+        expect(message).toContain('field: titleMy')
+        expect(message).toContain('U+200C')
+    })
+
+    it('rejects a ZWNJ in exercise instruction and free-text exercises', () => {
+        expect(() =>
+            validateLesson(myanLesson({ exercises: [{ id: 'ex-i', kind: 'text', text: 'ကြက်', instruction: 'ရ\u200Cေ' }] })),
+        ).toThrow(LessonValidationError)
+        expect(() =>
+            validateLesson(myanLesson({ exercises: [{ id: 'ex-t', kind: 'custom', text: 'ရ\u200Cေ', subtype: 'probe' }] })),
+        ).toThrow(LessonValidationError)
+    })
+
+    it('collects multiple problems across fields into one error', () => {
+        const lesson = myanLesson({
+            titleMy: 'ရ\u200Cေ',
+            exercises: [
+                { id: 'ex-1', kind: 'words', words: ['ဆန်\u200C', 'ကြက်'] },
+                { id: 'ex-2', kind: 'words', words: ['ငါး'] },
+            ],
+        })
+        let issues: string[] = []
+        try {
+            validateLesson(lesson)
+        } catch (error) {
+            issues = (error as LessonValidationError).issues
+        }
+        expect(issues.length).toBeGreaterThanOrEqual(2)
+        expect(issues.some((issue) => issue.includes('field: titleMy'))).toBe(true)
+        expect(issues.some((issue) => issue.includes('ex-1'))).toBe(true)
+    })
+
+    it('does not flag English lessons that carry a Myanmar title', () => {
+        const lesson = canonicalLesson({ language: 'en', keyboard: 'qwerty', titleMy: 'မြန်မာ' })
+        expect(() => validateLesson(lesson)).not.toThrow()
+    })
+})
+
 describe('parseLesson', () => {
     it('returns a typed lesson from JSON text', () => {
         const parsed = parseLesson(JSON.stringify(canonicalLesson()), 'sample.json')
@@ -103,9 +184,9 @@ describe('normalizeLesson', () => {
         expect(en.language).toBe('english')
         expect(en.layoutId).toBe('english-qwerty')
 
-        const my = normalizeLesson(canonicalLesson({ id: 'lesson-my-beginner-1', language: 'my', keyboard: 'myanmar3' }))
+        const my = normalizeLesson(canonicalLesson({ id: 'lesson-my-beginner-1', language: 'my', keyboard: 'myanmar' }))
         expect(my.language).toBe('myanmar')
-        expect(my.layoutId).toBe('myanmar3')
+        expect(my.layoutId).toBe('myanmar')
     })
 
     it('derives phases and falls back instruction to text', () => {
