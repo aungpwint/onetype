@@ -1,9 +1,13 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Gauge, Target, AlignLeft, ArrowRight, RotateCcw, ArrowLeft, Trophy, CheckCircle2, AlertTriangle } from 'lucide-react'
+import { Gauge, Target, AlignLeft, ArrowRight, RotateCcw, ArrowLeft, Trophy, CheckCircle2, AlertTriangle, Crown } from 'lucide-react'
 import { useTypingStore } from '@/stores/typing-store'
 import { useLessonStore } from '@/stores/lesson-store'
+import { useStudentStore } from '@/stores/student-store'
 import { extractMissedWords } from '@/core/materials/missed-words'
 import { ACHIEVEMENT_CATALOG } from '@/data/achievements'
+import * as backend from '@/services/backend'
+import { computePersonalBest, type PersonalBestInfo } from '@/core/scoring/personal-best'
 import { Modal } from './ui'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
@@ -57,6 +61,8 @@ export function ResultDialog() {
     const engine = useTypingStore((s) => s.engine)
     const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel)
 
+    const pb = usePersonalBest(result?.metrics.speed ?? 0, result?.metrics.speedUnit ?? 'wpm', session?.startedAt ?? 0, session?.layout.id ?? '')
+
     if (!result || !session) return null
 
     const missedCount = engine ? extractMissedWords(engine).count : 0
@@ -65,6 +71,7 @@ export function ResultDialog() {
     const achieved = newly.map((id) => ACHIEVEMENT_CATALOG[id]).filter(Boolean)
 
     const metrics = result.metrics
+    const unitLabel = metrics.speedUnit === 'units/min' ? 'units/min' : 'wpm'
     const isLesson = session.kind === 'lesson'
     const isDrill = session.kind === 'drill'
     const isPractice = session.kind === 'practice'
@@ -153,6 +160,35 @@ export function ResultDialog() {
                     value={String(Math.round(metrics.rawSpeed))}
                 />
             </div>
+
+            {pb && pb.total > 0 ? (
+                <div
+                    className={
+                        'mt-3 flex flex-wrap items-center gap-2 rounded-xl border px-3 py-2 text-sm ' +
+                        (pb.isNewBest ? 'border-brass/40 bg-brass/10' : 'border-line bg-muted/40')
+                    }
+                >
+                    {pb.isNewBest ? <Crown className="size-4 shrink-0 text-brass" /> : <Trophy className="size-4 shrink-0 text-ink-faint" />}
+                    {pb.isNewBest ? (
+                        <span>
+                            <span className="font-semibold text-brass">New personal best</span>
+                            <span className="text-muted-foreground">
+                                {' '}
+                                — {Math.round(metrics.speed)} {unitLabel}
+                                {pb.previousBest !== null ? ` · was ${Math.round(pb.previousBest)}` : ' · first round on this desk'}
+                            </span>
+                        </span>
+                    ) : (
+                        <span>
+                            <span className="font-medium">Personal best</span>
+                            <span className="text-muted-foreground">
+                                {' '}
+                                {Math.round(pb.previousBest ?? 0)} {unitLabel} · {Math.round(metrics.speed)} today
+                            </span>
+                        </span>
+                    )}
+                </div>
+            ) : null}
 
             <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
                 <div className="flex justify-between">
@@ -300,6 +336,33 @@ function Metric({ icon, label, value }: { icon: React.ReactNode; label: string; 
             <p className="font-display text-2xl tabular-nums md:text-3xl">{value}</p>
         </div>
     )
+}
+
+function usePersonalBest(speed: number, unit: string, startedAt: number, layoutId: string): PersonalBestInfo | null {
+    const studentId = useStudentStore((s) => s.active?.id ?? null)
+    const [info, setInfo] = useState<PersonalBestInfo | null>(null)
+
+    useEffect(() => {
+        // Session history only ever stores WPM, so units/min rounds (Myanmar)
+        // have no compatible prior speeds to compare against.
+        if (speed <= 0 || unit !== 'wpm' || !studentId) return
+        let alive = true
+        void backend
+            .listTypingSessions(studentId, 500)
+            .then((sessions) => {
+                if (!alive) return
+                const prior = sessions
+                    .filter((session) => session.startedAt !== startedAt && session.layoutId === layoutId)
+                    .map((session) => session.wpm)
+                setInfo(computePersonalBest(prior, speed))
+            })
+            .catch(() => undefined)
+        return () => {
+            alive = false
+        }
+    }, [speed, unit, startedAt, layoutId, studentId])
+
+    return info
 }
 
 function PacingChart() {
