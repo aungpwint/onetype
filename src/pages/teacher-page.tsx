@@ -1,12 +1,14 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { GraduationCap, Users, Clock, Target, Gauge, Trophy, FileText, Fingerprint } from 'lucide-react'
+import { GraduationCap, Users, Clock, Target, Gauge, Trophy, FileText, Fingerprint, Download, Printer } from 'lucide-react'
 import * as backend from '@/services/backend'
 import type { StudentDetail, TeacherOverview, TypingTest } from '@/services/types'
 import type { LeaderboardEntry } from '@/core/leaderboard/ranking'
 import { buildTestRecord } from '@/core/tests/record'
 import { keyIdLabel } from '@/core/reinforcement/service'
+import { buildRegisterRows, registerFilename, registerToCsv, registerToHtml } from '@/core/register/export'
 import { Stat, Spinner, PageHeader } from '@/components/ui'
+import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { formatDateTime, formatWpm, formatAccuracy, pct } from '@/lib/format'
 import { cn, cardClass, appPageClass, sectionTitleClass, eyebrowClass } from '@/lib/utils'
@@ -71,6 +73,31 @@ export default function TeacherPage() {
 
     const boardTest = useMemo(() => (boardTestId ? tests.find((t) => t.id === boardTestId) ?? null : null), [tests, boardTestId])
 
+    const downloadRegister = useCallback(() => {
+        const rows = buildRegisterRows(overview?.students ?? [])
+        const blob = new Blob([registerToCsv(rows)], { type: 'text/csv;charset=utf-8;' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = registerFilename()
+        a.click()
+        URL.revokeObjectURL(url)
+    }, [overview])
+
+    const printRegister = useCallback(() => {
+        const rows = buildRegisterRows(overview?.students ?? [])
+        const doc = registerToHtml(rows, {
+            title: 'Class register',
+            generatedAt: formatDateTime(Date.now()),
+        })
+        const win = window.open('', '_blank')
+        if (!win) return
+        win.document.write(doc)
+        win.document.close()
+        win.focus()
+        win.setTimeout(() => win.print(), 200)
+    }, [overview])
+
     if (!overview)
         return (
             <div className="flex min-h-0 flex-1 items-center justify-center">
@@ -84,7 +111,18 @@ export default function TeacherPage() {
                 eyebrow="Teacher's desk"
                 title="Overview"
                 subtitle="A roll of every learner on this machine. Accuracy and WPM are rolling averages across their saved sessions."
-            />
+            >
+                <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="sm" onClick={printRegister}>
+                        <Printer className="size-3.5" />
+                        Print
+                    </Button>
+                    <Button variant="secondary" size="sm" onClick={downloadRegister}>
+                        <Download className="size-3.5" />
+                        Export CSV
+                    </Button>
+                </div>
+            </PageHeader>
 
             <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
                 <Stat icon={<Users className="size-4" />} label="Learners" value={overview.studentCount} />
