@@ -1,32 +1,17 @@
 /**
- * Myanmar Unicode character classification.
- *
- * Single source of truth for what each Myanmar code point IS in the typing
- * model. No other module should hard-code Myanmar code-point membership —
- * React components, the keyboard UI and the typing engine all consume the
+ * Myanmar Unicode character classification — single source of truth for what
+ * each Myanmar code point is in the typing model. No other module hard-codes
+ * membership; components, the keyboard UI and the typing engine consume the
  * predicates below instead of scattering `code === 0x1031` checks.
  *
- * The Myanmar script spans several Unicode blocks; OneType currently drives
- * Burmese typing with the core Myanmar block (U+1000–U+109F). The extended
- * blocks (Myanmar Extended-A U+AA60–U+AA7F, Extended-B U+A9E0–U+A9FF,
- * Extended-C U+116D0–U+116FF) are outside the classified set today, but the
- * architecture supports extending the ranges without rewriting callers:
- * add the range to `MYANMAR_BLOCK_RANGES` and adjust the classifier — the
- * predicates are derived from the ranges, not duplicated per consumer.
+ * OneType drives Burmese typing with the core Myanmar block (U+1000–U+109F).
+ * Extended-A/B/C ranges are declared so "is this a Myanmar code point?" is
+ * answered centrally; classify them later by extending `MYANMAR_SCRIPT_RANGES`
+ * without touching consumers.
  *
- * Categories are deliberately explicit so behaviour is stated, not implied:
- *
- *   base              – consonants (က..အ, ဿ) that head a syllable
- *   independent-vowel – vowel letters (ဣ ဤ ဥ ဦ ဧ ဩ) that head a syllable
- *   dependent-vowel   – vowel signs that attach to a base (ာ ိ ီ ု ူ ဲ …)
- *   pre-base-vowel    – U+1031 ေ, stored after its base, typed before it
- *   medial            – U+103B–U+103E (ျ ြ ွ ှ)
- *   asat              – U+103A (း-like kill stroke, ယသ်ဳ)
- *   virama            – U+1039 (stack-marker, ၹ)
- *   tone              – U+1036 U+1037 U+1038 (ံ ့ း)
- *   number            – U+1040–U+1049 (၀–၉)
- *   punctuation       – U+104A ၊, U+104B ။
- *   other             – any other code point in the Myanmar blocks
+ * Categories: base, independent-vowel, dependent-vowel, pre-base-vowel
+ * (U+1031 ေ — stored after its base, typed before it), medial, asat, virama,
+ * tone, number, punctuation, other.
  */
 
 export type MyanmarCharacterCategory =

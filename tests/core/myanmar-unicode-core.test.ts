@@ -24,13 +24,7 @@ import {
     PRE_BASE_VOWEL,
     VIRAMA,
 } from '@/core/unicode/classification'
-import {
-    containsUnexpectedInvisibleCharacters,
-    detectLanguage,
-    normalizeMyanmarText,
-    splitMyanmarSyllables,
-    validateMyanmarText,
-} from '@/core/unicode/myanmar'
+import { containsUnexpectedInvisibleCharacters, normalizeMyanmarText, splitMyanmarSyllables, validateMyanmarText } from '@/core/unicode/myanmar'
 
 /**
  * Myanmar Unicode core regression suite.
@@ -239,7 +233,6 @@ describe('canonical lesson-target invariants (mission matrix)', () => {
         expect([...'မ္မ'].map((c) => c.codePointAt(0))).toEqual([0x1019, VIRAMA, 0x1019])
         expect([...'သင်္ဘော'].some((c) => c.codePointAt(0) === ASAT)).toBe(true)
         expect('သင်္ဘော'.includes('\u200c')).toBe(false)
-        expect(detectLanguage('သင်္ဘော')).toBe('myanmar')
     })
 
     it('syllable segmentation rejoins to the exact input (no reorder, no loss)', () => {

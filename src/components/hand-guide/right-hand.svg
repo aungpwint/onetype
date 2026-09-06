@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="305 136 185 250" aria-hidden="true" focusable="false">
   <!--
-    Right hand artwork extracted verbatim from hands.svg (neutral-right). The hand
+    Right hand artwork (neutral-right). The hand
     is drawn as one fused organic blob (palm + fingers + wrist), matching the
     typing-club reference exactly. Active-finger feedback is applied as a
     highlight stroke (hand-highlight) toggled via CSS using the ancestor's

@@ -2,7 +2,7 @@ import type { ZodIssue } from 'zod'
 import { LESSON_SCHEMA_VERSION, type Lesson } from '@/types/lesson'
 
 import { isLessonExerciseKind } from '@/types/exercise'
-import { isMyanmarText, validateMyanmarText } from '@/core/unicode/myanmar'
+import { containsMyanmar, validateMyanmarText } from '@/core/unicode/myanmar'
 import { lessonSchema } from '@/schemas/lesson'
 import { LessonValidationError, LessonParseError, UnsupportedExerciseTypeError, UnsupportedLessonSchemaError } from './lesson-errors'
 
@@ -47,7 +47,7 @@ export function validateMyanmarLessonUnicode(lesson: Lesson): void {
     if (lesson.language !== 'my') return
     const issues: string[] = []
     const check = (value: string, exerciseId: string | undefined, field: string): void => {
-        if (!isMyanmarText(value)) return
+        if (!containsMyanmar(value)) return
         for (const problem of validateMyanmarText(value)) {
             const where = exerciseId !== undefined ? `lesson: ${lesson.id} exercise: ${exerciseId}` : `lesson: ${lesson.id}`
             const code = problem.codePoint === 0 ? '' : ` (U+${problem.codePoint.toString(16).toUpperCase().padStart(4, '0')})`

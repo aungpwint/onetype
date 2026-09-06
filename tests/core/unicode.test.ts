@@ -1,14 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { splitGraphemes, graphemeCount } from '@/core/unicode/graphemes'
+import { splitGraphemes } from '@/core/unicode/graphemes'
 import {
     containsMyanmar,
-    detectLanguage,
-    isMyanmarText,
     findSuspiciousInvisibleCharacters,
     containsUnexpectedInvisibleCharacters,
     validateMyanmarText,
     normalizeMyanmarText,
-    segmentMyanmarText,
 } from '@/core/unicode/myanmar'
 
 describe('grapheme segmentation', () => {
@@ -21,26 +18,12 @@ describe('grapheme segmentation', () => {
         expect(clusters.length).toBe(1)
         expect(clusters[0]).toBe('\u1000\u102D\u102F\u1037')
     })
-
-    it('counts graphemes correctly for English', () => {
-        expect(graphemeCount('hello world')).toBe(11)
-    })
 })
 
 describe('myanmar helpers', () => {
     it('detects Myanmar text', () => {
         expect(containsMyanmar('မြန်မာ english')).toBe(true)
         expect(containsMyanmar('hello')).toBe(false)
-    })
-
-    it('detects language of a sample', () => {
-        expect(detectLanguage('မင်္ဂလာပါ')).toBe('myanmar')
-        expect(detectLanguage('Hello')).toBe('english')
-    })
-
-    it('isMyanmarText distinguishes script-bearing strings from ASCII', () => {
-        expect(isMyanmarText('ရေ ဆန်')).toBe(true)
-        expect(isMyanmarText('Lesson 23')).toBe(false)
     })
 })
 
@@ -81,10 +64,5 @@ describe('Myanmar invisible/format character policy', () => {
         expect(normalizeMyanmarText('\u200C\u1031\u1000')).toBe('\u1031\u1000')
         expect(normalizeMyanmarText('e\u0301')).toBe('\u00E9')
         expect(normalizeMyanmarText('ရေ')).toBe('ရေ')
-    })
-
-    it('segmentMyanmarText delegates to the syllable clusterer', () => {
-        expect(segmentMyanmarText('ရေ')).toEqual(['ရေ'])
-        expect(segmentMyanmarText('အ \u1000\u102C').join('')).toBe('အ \u1000\u102C')
     })
 })

@@ -26,36 +26,21 @@ export interface BuiltSequence {
     charCount: number
 }
 
-// --- Myanmar input-order model -------------------------------------------------
+// --- Myanmar input-order model ---------------------------------------------
 //
-// Three distinct, deliberately separate ideas:
-//
-//   1. STORED / LOGICAL Unicode   – "ရေ" = U+101B (ရ) then U+1031 (ေ). The
-//      lesson data, `graphemes`, `text` and the renderer all live here.
-//   2. KEYBOARD INPUT SEQUENCE    – the order a learner presses keys on the
-//      Pyidaungsu-mapped keyboard. The pre-base vowel ေ is entered FIRST (it is
-//      the leftmost glyph), so "ရေ" is pressed as: ေ → ရ.
-//   3. VISUAL RESULT              – the shaped glyph run, produced by Pyidaungsu
-//      from the logical sequence; also "ရေ".
-//
-// `splitMyanmarSyllables` produces logical clusters; `keyboardOrderForCluster`
-// reorders one cluster into its press order. `buildSequence` emits units in
-// press order (2) while graphemes/ranges keep logical order (1), so the engine
-// and keyboard hints drive input the way a real Myanmar keyboard does, and the
-// renderer shows untouched logical text.
+// STORED/logical Unicode "ရေ" = U+101B then U+1031 — lesson data, `graphemes`,
+// `text` and the renderer all live here. KEYBOARD press order reorders the
+// pre-base vowel U+1031 to the front (ေ → ရ) because it is the leftmost glyph
+// on the Pyidaungsu-mapped keyboard. VISUAL result is the shaped glyph run from
+// the logical sequence. `splitMyanmarSyllables` produces logical clusters;
+// `keyboardOrderForCluster` reorders one cluster into press order; `buildSequence`
+// emits units in press order while graphemes/ranges keep logical order.
 
 /**
- * Keyboard press order for a Myanmar syllable cluster.
- *
- * The pre-base vowel U+1031 (ေ) is stored AFTER the base consonant in logical
- * Unicode but is the leftmost rendered glyph and the first key a Pyidaungsu
- * learner presses. This is a first-class keyboard rule, not a word-level hack:
- * the pre-base character class `isPreBaseVowel` comes from the Unicode
- * classification core, and this function returns the cluster's code points
- * reordered into press order — pre-base vowel(s) first, then the remaining
- * code points in their logical order. Clusters without a pre-base vowel are
- * unchanged. CLDR models exactly this reordering for Myanmar (U+1031
- * preposed-vowel, before medial-ya/ra/wa/ha and the base).
+ * Keyboard press order for a Myanmar syllable cluster: pre-base vowels
+ * (U+1031, from the classification core's `isPreBaseVowel`) first, then the
+ * remaining code points in logical order. Clusters without a pre-base vowel
+ * are unchanged. CLDR models exactly this reordering for Myanmar.
  */
 export function keyboardOrderForCluster(cluster: string): string {
     if (!containsMyanmar(cluster)) return cluster

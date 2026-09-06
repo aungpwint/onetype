@@ -1,20 +1,11 @@
 import { isMyanmarCodePoint, isMyanmarAttachingMark, isMyanmarSyllableHead, isPreBaseVowel, isAsat, isVirama } from './classification'
 
-export { isMyanmarCodePoint } from './classification'
-
 /**
- * The Myanmar typing model has four deliberately distinct layers that must not
- * be conflated:
- *
- *   Code Points      → the canonical Unicode code-point sequence of a string.
- *   Myanmar Cluster  → one syllable: base + medials + vowel signs + tone/asat.
- *   Visual Grapheme  → the shaped text run the font renders from that cluster.
- *   Keyboard Input   → the physical-key press order the learner types.
- *
- * A pre-base vowel (ေ U+1031) is STORED after its base in the canonical
- * sequence, is typed FIRST (it is the leftmost glyph), and shapes in that
- * visual position. This module owns the canonical/validation layer; keyboard
- * press order lives in the typing-engine sequence model.
+ * Four layers must not be conflated: code points (canonical Unicode) → Myanmar
+ * clusters (one syllable) → visual graphemes (shaped runs) → keyboard input
+ * (press order). A pre-base vowel (ေ U+1031) is STORED after its base, typed
+ * FIRST (leftmost glyph), and shapes in that position. This module owns the
+ * canonical/validation layer; press order lives in the typing-engine sequence.
  */
 
 export function containsMyanmar(text: string): boolean {
@@ -24,24 +15,11 @@ export function containsMyanmar(text: string): boolean {
     return false
 }
 
-/** Whether `text` is (at least partially) Myanmar script text. */
-export function isMyanmarText(text: string): boolean {
-    return containsMyanmar(text)
-}
-
-export function detectLanguage(text: string): 'myanmar' | 'english' {
-    return isMyanmarText(text) ? 'myanmar' : 'english'
-}
-
 // --- Zero-width invisible character policy -----------------------------------
-//
-// Myanmar lesson text and typing targets must be canonical Unicode. The
-// corruption seen in the wild is a Zero Width Non-Joiner (U+200C) inserted
-// before the preposed vowel U+1031 (ေ) by certain keyboard drivers / keymaps.
-// The character is completely invisible but breaks font shaping and makes the
-// stored text a different byte sequence than the visible glyphs suggest.
-// These helpers keep the detection / cleaning policy in one small, reusable,
-// deterministic place instead of scattering string surgery through the app.
+// Lesson text and typing targets must be canonical Unicode. The real-world
+// corruption is a Zero Width Non-Joiner (U+200C) inserted before the preposed
+// vowel U+1031 (ေ) by certain keyboard drivers. It is invisible but breaks
+// shaping and changes the stored bytes, so detection/cleaning lives here.
 
 const SUSPICIOUS_CODEPOINTS: ReadonlySet<number> = new Set([
     0x200b, 0x200c, 0x200d, 0x200e, 0x200f, 0x202a, 0x202b, 0x202c, 0x202d, 0x202e, 0x2060, 0xfeff, 0x034f,
@@ -140,28 +118,19 @@ export function normalizeMyanmarText(text: string): string {
 
 // --- Myanmar syllable cluster segmentation ---------------------------------
 //
-// A typing system for Myanmar needs to treat a full syllable cluster (base
-// consonant + medials + vowel signs + asat/kinzi/stacking + tone marks) as a
-// single deletion unit, otherwise Backspace would erase one combining mark at
-// a time. The generic Intl.Segmenter does not always group this correctly
-// (e.g. the preposed vowel U+1031 is left standalone), so we implement the
-// canonical Myanmar syllable-break rules here. Input to this function is
-// expected to be canonical (see `validateMyanmarText`).
-//
-// Character membership is supplied by the classification core
-// (`@/core/unicode/classification`): syllable heads are base consonants and
-// independent vowels, and attaching marks are vowel signs, medials, asat,
-// virama and tone marks. No code-point tables live here.
+// A typing system needs to treat a full syllable cluster (base consonant +
+// medials + vowel signs + asat/kinzi/stacking + tone marks) as one deletion
+// unit; Intl.Segmenter leaves the preposed vowel U+1031 standalone, so the
+// canonical syllable-break rules are implemented here. Input must already be
+// canonical (see `validateMyanmarText`). Character membership comes from the
+// classification core — no code-point tables live here.
 
 /**
- * Split Myanmar text into syllable clusters. Each returned cluster is a string
- * that the learner should perceive (and delete) as a single unit, and — equally
- * important for the renderer — that the browser must shape in one continuous
- * text run. A word-final preposed vowel (ေ U+1031) is kept with the consonant
- * it logically follows even when the syllable is followed by a space or
- * punctuation, so the stored canonical sequence ရ+ေ is never split into a
- * lone ရ and an orphaned ေ (which the font would render with a dotted-circle
- * placeholder instead of preposing to the left of ရ).
+ * Split Myanmar text into syllable clusters — one unit the learner perceives
+ * (and deletes) as a single entity, and that the browser must shape in one
+ * continuous text run. A word-final preposed vowel (ေ U+1031) stays with the
+ * consonant it logically follows even before a space/punctuation, so the
+ * stored ရ+ေ is never split into a lone ရ and a dotted-circle ေ.
  */
 export function splitMyanmarSyllables(text: string): string[] {
     const chars = Array.from(text)
@@ -210,11 +179,6 @@ export function splitMyanmarSyllables(text: string): string[] {
     if (pending.length > 0) current += pending
     if (current.length > 0) out.push(current)
     return out
-}
-
-/** Alias for callers that want the segmentation semantics spelled out. */
-export function segmentMyanmarText(text: string): string[] {
-    return splitMyanmarSyllables(text)
 }
 
 /**

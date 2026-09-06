@@ -1,11 +1,7 @@
 const COMBINING_MARK = /\p{Mark}/u
 
-export function isCombiningMark(ch: string): boolean {
+function isCombiningMark(ch: string): boolean {
     return COMBINING_MARK.test(ch)
-}
-
-function splitIntoCodePoints(text: string): string[] {
-    return Array.from(text)
 }
 
 interface SegmenterInstance {
@@ -16,14 +12,18 @@ type SegmenterConstructor = new (locale?: string, options?: { granularity?: stri
 
 const segmenterCtor = (Intl as unknown as { Segmenter?: SegmenterConstructor }).Segmenter
 
+let segmenter: SegmenterInstance | null = null
+
 export function splitGraphemes(text: string): string[] {
     if (typeof segmenterCtor === 'function') {
-        const segmenter = new segmenterCtor(undefined, { granularity: 'grapheme' })
+        if (!segmenter) segmenter = new segmenterCtor(undefined, { granularity: 'grapheme' })
         return Array.from(segmenter.segment(text), (seg) => seg.segment)
     }
+    // Fallback for runtimes without Intl.Segmenter: collect combining marks
+    // onto their base code point as a best-effort grapheme.
     const result: string[] = []
     let current = ''
-    for (const ch of splitIntoCodePoints(text)) {
+    for (const ch of text) {
         if (current.length > 0 && isCombiningMark(ch)) {
             current += ch
             continue
@@ -35,9 +35,4 @@ export function splitGraphemes(text: string): string[] {
     }
     if (current.length > 0) result.push(current)
     return result
-}
-
-export function graphemeCount(text: string): number {
-    if (text.length === 0) return 0
-    return splitGraphemes(text).length
 }
