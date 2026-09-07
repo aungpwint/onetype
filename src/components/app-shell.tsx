@@ -199,9 +199,14 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                         active={handGuide}
                                     />
                                 </div>
-                                <p className="px-1 text-[0.6875rem] leading-snug text-muted-foreground">
-                                    {layoutCount} layouts · {activeCount > 0 ? 'solo learner' : 'no learner selected'}
-                                </p>
+                                <div className="flex items-center justify-between rounded-lg border border-line bg-muted/40 px-2.5 py-1.5">
+                                    <span className="font-mono text-[0.6875rem] font-medium tracking-[0.16em] text-ink-faint uppercase">
+                                        Setup
+                                    </span>
+                                    <span className="text-[0.6875rem] leading-snug text-muted-foreground tabular-nums">
+                                        {layoutCount} layouts · {activeCount > 0 ? '1 learner' : 'no learner'}
+                                    </span>
+                                </div>
                             </div>
                         </motion.aside>
                     ) : null}

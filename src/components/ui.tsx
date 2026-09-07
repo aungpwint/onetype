@@ -194,7 +194,7 @@ export function Stat({ label, value, hint, icon }: { label: string; value: React
                 {icon ? <span className="text-accent">{icon}</span> : null}
                 <p className={eyebrowClass}>{label}</p>
             </div>
-            <p className="mt-1.5 font-display text-2xl leading-tight font-semibold tracking-tight tabular-nums">{value}</p>
+            <p className="mt-1.5 font-mono text-2xl leading-tight font-semibold tracking-tight tabular-nums">{value}</p>
             {hint ? <p className="mt-1 text-xs text-muted-foreground">{hint}</p> : null}
         </div>
     )
@@ -237,7 +237,9 @@ export function StatCard({
                     </span>
                 ) : null}
             </div>
-            <p className={cn('relative font-display leading-none font-semibold tracking-tight tabular-nums', lg ? 'mt-2.5 text-3xl' : 'mt-2 text-2xl')}>{value}</p>
+            <p className={cn('relative font-mono leading-none font-semibold tracking-tight tabular-nums', lg ? 'mt-2.5 text-3xl' : 'mt-2 text-2xl')}>
+                {value}
+            </p>
             {hint ? (
                 <p className={cn('relative text-muted-foreground', lg ? 'mt-2 text-xs' : 'mt-1.5 text-[0.6875rem]')}>{hint}</p>
             ) : null}
@@ -316,8 +318,8 @@ export function Metric({
                 : 'text-foreground'
     const valueClass =
         size === 'sm'
-            ? 'text-sm leading-none font-semibold tabular-nums text-foreground md:text-base'
-            : `text-lg leading-none font-semibold tabular-nums md:text-xl ${toneClass}`
+            ? 'font-mono text-sm leading-none font-semibold tabular-nums text-foreground md:text-base'
+            : `font-mono text-lg leading-none font-semibold tabular-nums md:text-xl ${toneClass}`
     return (
         <div className={cn('flex flex-col gap-0.5', align === 'end' ? 'items-end' : 'items-center')}>
             <span className={valueClass}>{value}</span>

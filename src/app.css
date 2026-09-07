@@ -8,11 +8,12 @@
 
     --ui-scale: clamp(1, calc(0.68 + 0.00025 * 100vw), 1.2);
 
-    --bg: #f7f8fa;
+    --bg: #f5f6f8;
 
     --surface: #ffffff;
     --surface-muted: #f1f3f6;
     --surface-elevated: #ffffff;
+    --card-hi: rgba(255, 255, 255, 0.72);
 
     --ink: #171a1f;
     --ink-soft: #596170;
@@ -66,6 +67,7 @@
     --surface: #0f172a;
     --surface-muted: #152136;
     --surface-elevated: #1b2944;
+    --card-hi: rgba(255, 255, 255, 0.045);
 
     --ink: #e8eef7;
     --ink-soft: #a6b4c8;
@@ -268,6 +270,35 @@
     .page-transition {
         width: 100%;
         min-width: 0;
+    }
+
+    /* Signature divider: a printer's scale strip — a ticked measurement
+     hairline that fades out at both ends. Used with restraint as the
+     "instrument baseline" between content sections. Inherits theme tokens,
+     so it reads native in every preset and is safe under reduced motion. */
+    .scale-rule {
+        position: relative;
+        height: 0.625rem;
+        mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+
+    .scale-rule::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 1px;
+        background-image: repeating-linear-gradient(to right, var(--ink-faint) 0 1px, transparent 1px 5px);
+        opacity: 0.5;
+    }
+
+    .scale-rule::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 1px;
+        background: var(--line);
     }
 
     .char-pop {

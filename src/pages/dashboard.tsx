@@ -176,6 +176,8 @@ export default function Dashboard() {
                 </div>
             </section>
 
+            <div className="scale-rule" aria-hidden />
+
             <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
                 <StatCard
                     size="lg"
@@ -217,9 +219,10 @@ export default function Dashboard() {
                         {weekMinutes ? `${Math.round(weekMinutes.reduce((sum, m) => sum + m, 0))} min typed` : '…'}
                     </span>
                 </div>
+                <div className="mt-3 scale-rule" aria-hidden />
                 {weekMinutes ? (
                     <div
-                        className="mt-4 flex h-24 items-end gap-2"
+                        className="mt-2 flex h-24 items-end gap-2"
                         role="img"
                         aria-label="Minutes typed per day over the last seven days"
                     >
@@ -258,12 +261,12 @@ export default function Dashboard() {
                     to={nextLesson ? `/lesson/${nextLesson.id}` : '/learn'}
                     className={cn(
                         featuredClass,
-                        'group p-6 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-(--shadow-3) focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+                        'group p-6 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-[color-mix(in_srgb,var(--primary)_40%,transparent)] hover:shadow-(--shadow-3) focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
                     )}
                 >
                     <div aria-hidden className="pointer-events-none absolute inset-0">
-                        <div className="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-blue-500/8 blur-[100px]" />
-                        <div className="absolute inset-0 bg-linear-to-br from-blue-500/6 via-transparent to-transparent" />
+                        <div className="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-[color-mix(in_srgb,var(--primary)_9%,transparent)] blur-[100px]" />
+                        <div className="absolute inset-0 bg-linear-to-br from-[color-mix(in_srgb,var(--primary)_7%,transparent)] via-transparent to-transparent" />
                     </div>
                     <div className="relative z-10 flex h-full flex-col">
                         <p className={eyebrowClass}>Next lesson</p>
@@ -304,7 +307,7 @@ export default function Dashboard() {
                                     Streak
                                 </p>
                                 <div className="mt-3 flex items-baseline gap-2">
-                                    <span className="font-display text-5xl leading-none font-semibold tracking-tight tabular-nums">
+                                    <span className="font-mono text-5xl leading-none font-semibold tracking-tight tabular-nums">
                                         {streak?.current ?? '•'}
                                     </span>
                                     <span className="text-sm text-muted-foreground">day{streak?.current === 1 ? '' : 's'}</span>
@@ -342,17 +345,17 @@ export default function Dashboard() {
                     <dl className="relative mt-3">
                         <div className="flex items-center justify-between border-b border-line/60 py-2 text-sm">
                             <dt className="text-muted-foreground">Fastest WPM</dt>
-                            <dd className="font-display font-semibold tabular-nums">{stats.bestWpm ? Math.round(stats.bestWpm) : '—'}</dd>
+                            <dd className="font-mono font-semibold tabular-nums">{stats.bestWpm ? Math.round(stats.bestWpm) : '—'}</dd>
                         </div>
                         <div className="flex items-center justify-between border-b border-line/60 py-2 text-sm">
                             <dt className="text-muted-foreground">Typing time</dt>
-                            <dd className="font-display font-semibold tabular-nums">
+                            <dd className="font-mono font-semibold tabular-nums">
                                 {summary ? formatDuration(summary.totalMinutes * 60000) : '—'}
                             </dd>
                         </div>
                         <div className="flex items-center justify-between py-2 text-sm">
                             <dt className="text-muted-foreground">Sessions</dt>
-                            <dd className="font-display font-semibold tabular-nums">{summary?.sessions ?? '—'}</dd>
+                            <dd className="font-mono font-semibold tabular-nums">{summary?.sessions ?? '—'}</dd>
                         </div>
                     </dl>
                 </div>
@@ -517,7 +520,7 @@ export default function Dashboard() {
                                             {new Date(s.startedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
                                         </td>
                                         <td className="px-5 py-2 font-myanmar">{formatLessonLabel(s.lessonId)}</td>
-                                        <td className="px-5 py-2 text-right font-display font-semibold tabular-nums">{formatWpm(s.wpm)}</td>
+                                        <td className="px-5 py-2 text-right font-mono font-semibold tabular-nums">{formatWpm(s.wpm)}</td>
                                         <td className="px-5 py-2 text-right tabular-nums">{formatAccuracy(s.accuracy)}</td>
                                         <td className="hidden px-5 py-2 text-right text-muted-foreground tabular-nums sm:table-cell">
                                             {formatDuration(s.durationMs)}
