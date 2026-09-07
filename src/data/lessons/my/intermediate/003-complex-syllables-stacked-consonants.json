@@ -14,20 +14,94 @@
         "minAccuracy": 90,
         "minWpm": null
     },
+    "focus": [
+        "syllable"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-2"
+    ],
+    "focusKeys": [
+        "KeyU",
+        "KeyF",
+        "ShiftRight",
+        "KeyC",
+        "KeyY",
+        "KeyR",
+        "KeyJ",
+        "KeyE",
+        "KeyI",
+        "Semicolon",
+        "KeyN",
+        "KeyS",
+        "KeyD",
+        "KeyM",
+        "KeyK"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-index",
+        "right-pinky",
+        "left-middle",
+        "right-middle",
+        "left-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-3-ex-1",
-            "kind": "text",
-            "instruction": "ခုနှစ် သုံးလုံး မင်္ဂလာပါ အင်္ဂါ",
-            "text": "ခုနှစ် သုံးလုံး မင်္ဂလာပါ အင်္ဂါ"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "က္က",
+                    "က္ခ",
+                    "ပ္ပ"
+                ],
+                "count": 24,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-3-ex-2",
-            "kind": "text",
-            "instruction": "ကြက်သွန်း စားသောက် ဥက္ကဋ္ဌ",
-            "text": "ကြက်သွန်း စားသောက် ဥက္ကဋ္ဌ"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "မြန်",
+                    "မင်း",
+                    "ညင်"
+                ],
+                "count": 22,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-3-ex-3",
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကျိ",
+                    "ကြာ",
+                    "မျာ",
+                    "ပြု"
+                ],
+                "count": 22,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["unicode", "syllable"],
-    "prerequisites": ["lesson-my-intermediate-2"]
+    ]
 }

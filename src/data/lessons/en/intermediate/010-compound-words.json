@@ -14,32 +14,97 @@
         "minAccuracy": 92,
         "minWpm": 22
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-9"
+    ],
+    "focusKeys": [
+        "KeyS",
+        "KeyU",
+        "KeyN",
+        "KeyL",
+        "KeyI",
+        "KeyG",
+        "KeyH",
+        "KeyT",
+        "KeyR",
+        "KeyA",
+        "KeyB",
+        "KeyO",
+        "KeyW",
+        "KeyF",
+        "KeyE",
+        "KeyY",
+        "KeyK",
+        "KeyD",
+        "KeyV",
+        "KeyM",
+        "KeyP"
+    ],
+    "targetFingers": [
+        "left-ring",
+        "right-index",
+        "right-ring",
+        "right-middle",
+        "left-index",
+        "left-pinky",
+        "left-middle",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-10-ex-1",
-            "kind": "text",
-            "instruction": "sunshine rainbow moonlight fireplace",
-            "text": "sunshine rainbow moonlight fireplace"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "sunlight",
+                    "rainbow",
+                    "firefly",
+                    "bookstore"
+                ],
+                "count": 18,
+                "maxWordLength": 9
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-10-ex-2",
-            "kind": "text",
-            "instruction": "notebook keyboard laptop bookstore",
-            "text": "notebook keyboard laptop bookstore"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "handbook",
+                    "lighthouse",
+                    "forgive",
+                    "oversee"
+                ],
+                "count": 18,
+                "maxWordLength": 9
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-10-ex-3",
-            "kind": "text",
-            "instruction": "football basketball breakfast homework",
-            "text": "football basketball breakfast homework"
-        },
-        {
-            "id": "lesson-en-intermediate-10-ex-4",
-            "kind": "text",
-            "instruction": "outside inside anything someone",
-            "text": "outside inside anything someone"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "snowman",
+                    "homeland",
+                    "typewriter",
+                    "weekend"
+                ],
+                "count": 18,
+                "maxWordLength": 10
+            }
         }
-    ],
-    "focus": ["words", "same-hand", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-9"]
+    ]
 }

@@ -14,26 +14,82 @@
         "minAccuracy": 92,
         "minWpm": 15
     },
+    "focus": [
+        "sentences"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-12"
+    ],
+    "focusKeys": [
+        "KeyK",
+        "ShiftLeft",
+        "KeyD",
+        "ShiftRight",
+        "KeyE",
+        "KeyA",
+        "KeyH",
+        "KeyV",
+        "KeyJ",
+        "KeyU",
+        "KeyM",
+        "KeyI",
+        "KeyF",
+        "Semicolon",
+        "KeyW",
+        "KeyB",
+        "Period",
+        "KeyR",
+        "KeyG",
+        "KeyN",
+        "KeyP",
+        "KeyZ",
+        "KeyY",
+        "KeyT",
+        "KeyQ",
+        "KeyC",
+        "KeyS"
+    ],
+    "targetFingers": [
+        "right-middle",
+        "left-pinky",
+        "left-middle",
+        "right-pinky",
+        "right-index",
+        "left-index",
+        "left-ring",
+        "right-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-13-ex-1",
-            "kind": "text",
-            "instruction": "ဒီနေ့ရာသီဥတုက သာယာတယ်။",
-            "text": "ဒီနေ့ရာသီဥတုက သာယာတယ်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ဒီနေ့ လဲ ကောင်း တယ် ။",
+                    "မနက် ကြက် ငါး က ကောင်း ။"
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-13-ex-2",
-            "kind": "text",
-            "instruction": "ညနေကျရင်တော့ မိုးရွာနိုင်တယ်။",
-            "text": "ညနေကျရင်တော့ မိုးရွာနိုင်တယ်။"
-        },
-        {
-            "id": "lesson-my-intermediate-13-ex-3",
-            "kind": "text",
-            "instruction": "ငါတို့စောင့်ကြည့်ကြရအောင်။",
-            "text": "ငါတို့စောင့်ကြည့်ကြရအောင်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ညီ က ဒီ စာ ကို ဖတ် ပါ တယ် ။",
+                    "အမေ က ဆန် နဲ့ ငါး ကို ချက်တယ် ။"
+                ],
+                "count": 3
+            }
         }
-    ],
-    "focus": ["sentences", "unicode", "punctuation"],
-    "prerequisites": ["lesson-my-intermediate-12"]
+    ]
 }

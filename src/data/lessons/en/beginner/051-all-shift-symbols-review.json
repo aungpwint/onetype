@@ -14,32 +14,123 @@
         "minAccuracy": 88,
         "minWpm": null
     },
+    "focus": [
+        "shift"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-50"
+    ],
+    "focusKeys": [
+        "Digit1",
+        "ShiftRight",
+        "Digit2",
+        "Digit3",
+        "Digit4",
+        "Digit5",
+        "Digit6",
+        "ShiftLeft",
+        "Digit7",
+        "Digit8",
+        "Digit9",
+        "Digit0",
+        "Minus",
+        "Equal",
+        "BracketLeft",
+        "BracketRight",
+        "Comma",
+        "Period",
+        "Slash",
+        "Quote"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "right-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-51-ex-1",
-            "kind": "text",
-            "instruction": "!@#$%^&*()",
-            "text": "!@#$%^&*()"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "!",
+                    "@",
+                    "#",
+                    "$"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-51-ex-2",
-            "kind": "text",
-            "instruction": "!@#$%^&*() !@#$%^&*()",
-            "text": "!@#$%^&*() !@#$%^&*()"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "%",
+                    "^",
+                    "&",
+                    "*"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-51-ex-3",
-            "kind": "text",
-            "instruction": "())(*&%$#@!",
-            "text": "())(*&%$#@!"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "(",
+                    ")",
+                    "_",
+                    "+"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-51-ex-4",
-            "kind": "text",
-            "instruction": "2+2=4 3*3=9 10-5=5",
-            "text": "2+2=4 3*3=9 10-5=5"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "{",
+                    "}",
+                    "<",
+                    ">",
+                    "?",
+                    "\""
+                ],
+                "count": 20,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["shift", "symbols", "accuracy"],
-    "prerequisites": ["lesson-en-beginner-50"]
+    ]
 }

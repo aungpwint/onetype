@@ -14,20 +14,79 @@
         "minAccuracy": 90,
         "minWpm": 18
     },
+    "focus": [
+        "punctuation"
+    ],
+    "prerequisites": [
+        "lesson-my-advanced-1"
+    ],
+    "focusKeys": [
+        "Digit7",
+        "ShiftLeft",
+        "KeyA",
+        "Comma",
+        "KeyE",
+        "KeyV",
+        "KeyU",
+        "KeyO",
+        "KeyK",
+        "KeyH",
+        "Semicolon",
+        "KeyR",
+        "KeyS",
+        "KeyD",
+        "Period",
+        "KeyJ",
+        "KeyF",
+        "KeyI",
+        "KeyG",
+        "KeyQ",
+        "KeyT",
+        "ShiftRight",
+        "KeyM",
+        "KeyN"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-pinky",
+        "right-middle",
+        "left-middle",
+        "left-index",
+        "right-ring",
+        "right-pinky",
+        "left-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-2-ex-1",
-            "kind": "text",
-            "instruction": "ငါစား၍ အိပ်ပါတယ်။",
-            "text": "ငါစား၍ အိပ်ပါတယ်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ရေ ၊ နေ ၊ လေ က သုံး မျိုး ။",
+                    "ကြက် ၊ ငါး ၊ ဆန် ။"
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-2-ex-2",
-            "kind": "text",
-            "instruction": "ဟုတ်တယ်၊ မှန်တယ်၊ ကောင်းတယ်။",
-            "text": "ဟုတ်တယ်၊ မှန်တယ်၊ ကောင်းတယ်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "အိမ် က ရွာ မှာ ရှိ သည် ။",
+                    "ညီ က မြို့ က လာ သည် ။"
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["punctuation", "unicode", "sentences"],
-    "prerequisites": ["lesson-my-advanced-1"]
+    ]
 }

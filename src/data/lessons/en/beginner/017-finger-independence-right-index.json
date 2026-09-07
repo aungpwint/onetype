@@ -14,53 +14,96 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyJ",
+        "KeyU",
+        "KeyH",
+        "KeyY",
+        "KeyN",
+        "KeyM"
+    ],
+    "focus": [
+        "finger-independence",
+        "finger-control"
+    ],
+    "targetFingers": [
+        "right-index"
+    ],
+    "targetHands": [
+        "right"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-13"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-17-ex-1",
-            "kind": "text",
-            "instruction": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy",
-            "text": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "j",
+                    "u"
+                ],
+                "count": 14,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-17-ex-2",
-            "kind": "text",
-            "instruction": "juju juju juju juju juju juju juju juju",
-            "text": "juju juju juju juju juju juju juju juju"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "j",
+                    "h"
+                ],
+                "count": 14,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-17-ex-3",
-            "kind": "text",
-            "instruction": "jnjn jnjn jnjn jnjn jnjn jnjn jnjn jnjn",
-            "text": "jnjn jnjn jnjn jnjn jnjn jnjn jnjn jnjn"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "y",
+                    "n",
+                    "m"
+                ],
+                "count": 18,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-17-ex-4",
-            "kind": "text",
-            "instruction": "jmjm jmjm jmjm jmjm jmjm jmjm jmjm jmjm",
-            "text": "jmjm jmjm jmjm jmjm jmjm jmjm jmjm jmjm"
-        },
-        {
-            "id": "lesson-en-beginner-17-ex-5",
-            "kind": "text",
-            "instruction": "jhjh jhjh jhjh jhjh jhjh jhjh jhjh jhjh",
-            "text": "jhjh jhjh jhjh jhjh jhjh jhjh jhjh jhjh"
-        },
-        {
-            "id": "lesson-en-beginner-17-ex-6",
-            "kind": "text",
-            "instruction": "jf jf jf jf jf jf jf jf jf jf",
-            "text": "jf jf jf jf jf jf jf jf jf jf"
-        },
-        {
-            "id": "lesson-en-beginner-17-ex-7",
-            "kind": "text",
-            "instruction": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy",
-            "text": "jyjy jyjy jyjy jyjy jyjy jyjy jyjy jyjy"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "j",
+                    "y",
+                    "u",
+                    "h",
+                    "n",
+                    "m"
+                ],
+                "count": 26,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyJ", "KeyY", "KeyU", "KeyH", "KeyN", "KeyM"],
-    "focus": ["finger-independence", "finger-control"],
-    "targetFingers": ["right-index"],
-    "targetHands": ["right"],
-    "prerequisites": ["lesson-en-beginner-13"]
+    ]
 }

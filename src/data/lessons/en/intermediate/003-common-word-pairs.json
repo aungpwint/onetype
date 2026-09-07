@@ -14,26 +14,92 @@
         "minAccuracy": 90,
         "minWpm": 20
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-2"
+    ],
+    "focusKeys": [
+        "KeyO",
+        "KeyF",
+        "KeyT",
+        "KeyH",
+        "KeyE",
+        "KeyI",
+        "KeyN",
+        "KeyB",
+        "KeyR",
+        "KeyA",
+        "KeyD",
+        "KeyS",
+        "KeyW",
+        "KeyL",
+        "KeyY",
+        "KeyM",
+        "KeyC"
+    ],
+    "targetFingers": [
+        "right-ring",
+        "left-index",
+        "right-index",
+        "left-middle",
+        "right-middle",
+        "left-pinky",
+        "left-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-3-ex-1",
-            "kind": "text",
-            "instruction": "of the in the to the at the from the",
-            "text": "of the in the to the at the from the"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "of the",
+                    "in the",
+                    "to be",
+                    "on the",
+                    "for the"
+                ],
+                "count": 20
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-3-ex-2",
-            "kind": "text",
-            "instruction": "for the and the with the on the in the",
-            "text": "for the and the with the on the in the"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "and then",
+                    "as well",
+                    "at his",
+                    "by her",
+                    "from a"
+                ],
+                "count": 20
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-3-ex-3",
-            "kind": "text",
-            "instruction": "it is he is she is we are they are",
-            "text": "it is he is she is we are they are"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "is it",
+                    "one of",
+                    "was in",
+                    "we are",
+                    "they can"
+                ],
+                "count": 20
+            }
         }
-    ],
-    "focus": ["words", "hand-alternation", "speed"],
-    "prerequisites": ["lesson-en-intermediate-2"]
+    ]
 }

@@ -321,7 +321,7 @@ function HandDebugLayer({ kb, layout, anchors }: HandDebugLayerProps) {
             viewBox={`0 0 ${kb.width} ${kb.height}`}
             aria-hidden
         >
-            <g fontFamily="ui-monospace, monospace" fontSize={10} fill="#d34">
+            <g fontFamily="var(--font-mono)" fontSize={10} fill="#d34">
                 <rect x={0.5} y={0.5} width={kb.width - 1} height={kb.height - 1} fill="none" stroke="#d34" strokeWidth={1} strokeDasharray="4 3" />
                 <text x={4} y={12}>
                     keyboard {kb.width.toFixed(0)}×{kb.height.toFixed(0)}

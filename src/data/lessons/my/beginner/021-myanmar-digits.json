@@ -14,33 +14,115 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "Digit1",
+        "Digit2",
+        "Digit3",
+        "Digit4",
+        "Digit5",
+        "Digit6",
+        "Digit7",
+        "Digit8",
+        "Digit9",
+        "Digit0"
+    ],
+    "focus": [
+        "numbers"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-4"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-21-ex-1",
-            "kind": "text",
-            "instruction": "၁ ၂ ၃ ၄ ၅ ၆ ၇ ၈ ၉ ၀",
-            "text": "၁ ၂ ၃ ၄ ၅ ၆ ၇ ၈ ၉ ၀"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "၁",
+                    "၂",
+                    "၃"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-21-ex-2",
-            "kind": "text",
-            "instruction": "၁ ၃ ၅ ၇ ၉ ၂ ၄ ၆ ၈ ၀",
-            "text": "၁ ၃ ၅ ၇ ၉ ၂ ၄ ၆ ၈ ၀"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "၄",
+                    "၅",
+                    "၆"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-21-ex-3",
-            "kind": "text",
-            "instruction": "၁၂ ၂၃ ၃၄ ၄၅ ၅၆ ၆၇ ၇၈ ၈၉ ၉၀",
-            "text": "၁၂ ၂၃ ၃၄ ၄၅ ၅၆ ၆၇ ၇၈ ၈၉ ၉၀"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "၇",
+                    "၈",
+                    "၉",
+                    "၀"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-21-ex-4",
-            "kind": "text",
-            "instruction": "၁၂၃၄၅ ၆၇၈၉၀ ၁၂၃၄၅ ၆၇၈၉၀",
-            "text": "၁၂၃၄၅ ၆၇၈၉၀ ၁၂၃၄၅ ၆၇၈၉၀"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "၁",
+                    "၂",
+                    "၃",
+                    "၄",
+                    "၅",
+                    "၆",
+                    "၇",
+                    "၈",
+                    "၉",
+                    "၀"
+                ],
+                "count": 24,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
+            }
         }
-    ],
-    "focusKeys": ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0"],
-    "focus": ["numbers", "unicode", "key-memory"],
-    "prerequisites": ["lesson-my-beginner-4"]
+    ]
 }

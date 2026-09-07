@@ -14,33 +14,100 @@
         "minAccuracy": 88,
         "minWpm": 14
     },
+    "focus": [
+        "shift"
+    ],
+    "requiresShift": true,
+    "prerequisites": [
+        "lesson-en-beginner-37"
+    ],
+    "focusKeys": [
+        "KeyA",
+        "ShiftRight",
+        "KeyP",
+        "KeyL",
+        "KeyE",
+        "KeyB",
+        "KeyN",
+        "KeyC",
+        "KeyH",
+        "KeyR",
+        "KeyY",
+        "KeyD",
+        "KeyG",
+        "KeyO",
+        "KeyT",
+        "KeyF",
+        "KeyS",
+        "ShiftLeft",
+        "KeyM",
+        "KeyI",
+        "KeyJ",
+        "KeyU",
+        "KeyK"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "right-pinky",
+        "right-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "left-ring",
+        "right-middle"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-38-ex-1",
-            "kind": "text",
-            "instruction": "Apple Banana Cherry Dog Elephant",
-            "text": "Apple Banana Cherry Dog Elephant"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "Apple",
+                    "Banana",
+                    "Cherry",
+                    "Dragon"
+                ],
+                "count": 14,
+                "maxWordLength": 6
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-38-ex-2",
-            "kind": "text",
-            "instruction": "Green House Island Jellyfish Kite",
-            "text": "Green House Island Jellyfish Kite"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "Elephant",
+                    "Forest",
+                    "Garden",
+                    "Hammer"
+                ],
+                "count": 14,
+                "maxWordLength": 8
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-38-ex-3",
-            "kind": "text",
-            "instruction": "Lemon Mango Orange Paper Queen",
-            "text": "Lemon Mango Orange Paper Queen"
-        },
-        {
-            "id": "lesson-en-beginner-38-ex-4",
-            "kind": "text",
-            "instruction": "River Sun Tree Umbrella Van Water",
-            "text": "River Sun Tree Umbrella Van Water"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "Island",
+                    "Jungle",
+                    "Kitchen",
+                    "Ladder"
+                ],
+                "count": 14,
+                "maxWordLength": 7
+            }
         }
-    ],
-    "focus": ["shift", "words"],
-    "requiresShift": true,
-    "prerequisites": ["lesson-en-beginner-37"]
+    ]
 }

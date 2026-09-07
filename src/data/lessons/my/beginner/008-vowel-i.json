@@ -14,47 +14,80 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyU",
+        "KeyD",
+        "KeyI",
+        "KeyR",
+        "KeyW"
+    ],
+    "focus": [
+        "syllable"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-middle",
+        "right-middle",
+        "left-index",
+        "left-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-4"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-8-ex-1",
-            "kind": "text",
-            "instruction": "ိ ိ ိ ိ ိ ိ ိ ိ ိ ိ",
-            "text": "ိ ိ ိ ိ ိ ိ ိ ိ ိ ိ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကိ",
+                    "ငိ"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-8-ex-2",
-            "kind": "text",
-            "instruction": "ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ",
-            "text": "ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ ကိ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "မိ",
+                    "တိ"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-8-ex-3",
-            "kind": "text",
-            "instruction": "တိ တိ တိ တိ တိ တိ တိ တိ တိ တိ",
-            "text": "တိ တိ တိ တိ တိ တိ တိ တိ တိ တိ"
-        },
-        {
-            "id": "lesson-my-beginner-8-ex-4",
-            "kind": "text",
-            "instruction": "နိ နိ နိ နိ နိ နိ နိ နိ နိ နိ",
-            "text": "နိ နိ နိ နိ နိ နိ နိ နိ နိ နိ"
-        },
-        {
-            "id": "lesson-my-beginner-8-ex-5",
-            "kind": "text",
-            "instruction": "မိ မိ မိ မိ မိ မိ မိ မိ မိ မိ",
-            "text": "မိ မိ မိ မိ မိ မိ မိ မိ မိ မိ"
-        },
-        {
-            "id": "lesson-my-beginner-8-ex-6",
-            "kind": "text",
-            "instruction": "ကိ တိ နိ မိ ငိ ကိ တိ နိ မိ ငိ",
-            "text": "ကိ တိ နိ မိ ငိ ကိ တိ နိ မိ ငိ"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကိ",
+                    "ငိ",
+                    "မိ",
+                    "တိ"
+                ],
+                "count": 26,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyD"],
-    "focus": ["unicode", "syllable", "key-memory"],
-    "targetFingers": ["left-middle"],
-    "targetHands": ["left"],
-    "prerequisites": ["lesson-my-beginner-4"]
+    ]
 }

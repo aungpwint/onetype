@@ -14,32 +14,91 @@
         "minAccuracy": 87,
         "minWpm": 12
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-22"
+    ],
+    "focusKeys": [
+        "KeyR",
+        "KeyJ",
+        "KeyD",
+        "KeyK",
+        "KeyH",
+        "Digit7",
+        "ShiftLeft",
+        "KeyG",
+        "ShiftRight",
+        "KeyM",
+        "KeyN",
+        "KeyV",
+        "KeyU",
+        "KeyF",
+        "KeyE",
+        "Semicolon",
+        "KeyS",
+        "KeyP",
+        "KeyQ",
+        "KeyI"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-index",
+        "left-middle",
+        "right-middle",
+        "left-pinky",
+        "right-pinky",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-23-ex-1",
-            "kind": "text",
-            "instruction": "အိမ် မြို့ ရွာ",
-            "text": "အိမ် မြို့ ရွာ"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "မြို့",
+                    "ရွာ"
+                ],
+                "count": 16
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-23-ex-2",
-            "kind": "text",
-            "instruction": "အဖေ အမေ ညီ ညီမ",
-            "text": "အဖေ အမေ ညီ ညီမ"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ညီ",
+                    "ညီမ",
+                    "လက်",
+                    "နား"
+                ],
+                "count": 18
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-23-ex-3",
-            "kind": "text",
-            "instruction": "မျက်စိ နား လက် ခြေ",
-            "text": "မျက်စိ နား လက် ခြေ"
-        },
-        {
-            "id": "lesson-my-beginner-23-ex-4",
-            "kind": "text",
-            "instruction": "ရေ ဆန် ငါး ကြက်",
-            "text": "ရေ ဆန် ငါး ကြက်"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "မျက်စိ",
+                    "ဆန်",
+                    "ငါး",
+                    "ကြက်"
+                ],
+                "count": 18
+            }
         }
-    ],
-    "focus": ["words", "unicode", "syllable"],
-    "prerequisites": ["lesson-my-beginner-22"]
+    ]
 }

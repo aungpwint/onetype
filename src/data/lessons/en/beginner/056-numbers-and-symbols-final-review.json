@@ -14,38 +14,121 @@
         "minAccuracy": 90,
         "minWpm": 16
     },
+    "focus": [
+        "numbers",
+        "punctuation"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-55"
+    ],
+    "focusKeys": [
+        "Digit1",
+        "Digit2",
+        "Digit3",
+        "Digit4",
+        "Digit5",
+        "Digit6",
+        "Digit7",
+        "Digit8",
+        "Digit9",
+        "Digit0",
+        "ShiftRight",
+        "ShiftLeft",
+        "KeyP",
+        "KeyE",
+        "KeyN",
+        "Comma",
+        "KeyB",
+        "KeyO",
+        "KeyX",
+        "Period",
+        "KeyR",
+        "KeyU",
+        "Equal"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-56-ex-1",
-            "kind": "text",
-            "instruction": "1+2=3 4+5=9 6+7=13 8+9=17",
-            "text": "1+2=3 4+5=9 6+7=13 8+9=17"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "0"
+                ],
+                "count": 20,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-56-ex-2",
-            "kind": "text",
-            "instruction": "I have 3 cats and 2 dogs!",
-            "text": "I have 3 cats and 2 dogs!"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "!",
+                    "@",
+                    "#",
+                    "$",
+                    "%",
+                    "^",
+                    "&",
+                    "*",
+                    "(",
+                    ")"
+                ],
+                "count": 20,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-56-ex-3",
-            "kind": "text",
-            "instruction": "Call me at (555) 123-4567.",
-            "text": "Call me at (555) 123-4567."
-        },
-        {
-            "id": "lesson-en-beginner-56-ex-4",
-            "kind": "text",
-            "instruction": "Email: test@example.com",
-            "text": "Email: test@example.com"
-        },
-        {
-            "id": "lesson-en-beginner-56-ex-5",
-            "kind": "text",
-            "instruction": "Price: $19.99 (10% off)",
-            "text": "Price: $19.99 (10% off)"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "pen,",
+                    "box.",
+                    "7.",
+                    "25",
+                    "run!",
+                    "2+2"
+                ],
+                "count": 16,
+                "maxWordLength": 4
+            }
         }
-    ],
-    "focus": ["numbers", "symbols", "punctuation", "accuracy"],
-    "prerequisites": ["lesson-en-beginner-55"]
+    ]
 }

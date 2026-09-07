@@ -83,9 +83,10 @@ export function WpmBars({ values, unit = 'wpm', ariaLabel = `Speed over time (${
                             x={leftPad - 8}
                             y={y + 3}
                             textAnchor="end"
-                            fontSize="8"
+                            fontSize="9"
                             fill="var(--ink-faint)"
-                            fontFamily="var(--font-mono)"
+                            fontFamily="var(--font-statistics)"
+                            style={{ fontFeatureSettings: "'tnum' 1" }}
                         >
                             {Math.round(v)}
                         </text>
@@ -117,9 +118,10 @@ export function WpmBars({ values, unit = 'wpm', ariaLabel = `Speed over time (${
                         x={w - rightPad - 30}
                         y={yOf(avg) + 1}
                         textAnchor="middle"
-                        fontSize="8"
+                        fontSize="9"
                         fill="var(--success)"
-                        fontFamily="var(--font-mono)"
+                        fontFamily="var(--font-statistics)"
+                        style={{ fontFeatureSettings: "'tnum' 1" }}
                     >
                         avg {Math.round(avg)}
                     </text>
@@ -147,9 +149,10 @@ export function WpmBars({ values, unit = 'wpm', ariaLabel = `Speed over time (${
                             x={x + barW / 2}
                             y={y - 5}
                             textAnchor="middle"
-                            fontSize="8.5"
+                            fontSize="9"
                             fill={isBest ? 'var(--ink-soft)' : 'var(--ink-faint)'}
-                            fontFamily="var(--font-mono)"
+                            fontFamily="var(--font-statistics)"
+                            style={{ fontFeatureSettings: "'tnum' 1" }}
                             pointerEvents="none"
                         >
                             {Math.round(value)}

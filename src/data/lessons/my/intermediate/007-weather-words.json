@@ -14,14 +14,86 @@
         "minAccuracy": 90,
         "minWpm": null
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-6"
+    ],
+    "focusKeys": [
+        "KeyR",
+        "KeyD",
+        "KeyK",
+        "Semicolon",
+        "KeyE",
+        "KeyA",
+        "KeyV",
+        "KeyQ",
+        "ShiftRight",
+        "KeyS",
+        "KeyI",
+        "KeyF",
+        "KeyJ",
+        "ShiftLeft",
+        "BracketLeft",
+        "KeyM"
+    ],
+    "targetFingers": [
+        "left-index",
+        "left-middle",
+        "right-middle",
+        "right-pinky",
+        "left-pinky",
+        "left-ring",
+        "right-index"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-7-ex-1",
-            "kind": "text",
-            "instruction": "မိုး နေရောင် လေတိုက် နေသာတယ်",
-            "text": "မိုး နေရောင် လေတိုက် နေသာတယ်"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "မိုး",
+                    "နေ",
+                    "လေ"
+                ],
+                "count": 18
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-7-ex-2",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ဆီ",
+                    "နှင်း",
+                    "မြေ"
+                ],
+                "count": 18
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-7-ex-3",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ဒီ",
+                    "ဟို",
+                    "ဟာ"
+                ],
+                "count": 16
+            }
         }
-    ],
-    "focus": ["words", "unicode"],
-    "prerequisites": ["lesson-my-intermediate-6"]
+    ]
 }

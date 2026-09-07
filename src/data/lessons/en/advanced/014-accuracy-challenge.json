@@ -14,20 +14,104 @@
         "minAccuracy": 95,
         "minWpm": 34
     },
+    "focus": [
+        "accuracy"
+    ],
+    "prerequisites": [
+        "lesson-en-advanced-13"
+    ],
+    "focusKeys": [
+        "KeyA",
+        "KeyC",
+        "KeyU",
+        "KeyR",
+        "KeyY",
+        "KeyP",
+        "KeyE",
+        "KeyI",
+        "KeyS",
+        "KeyO",
+        "KeyN",
+        "KeyH",
+        "KeyT",
+        "KeyM",
+        "KeyD",
+        "KeyF",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "Semicolon",
+        "KeyG",
+        "KeyW"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-middle",
+        "right-index",
+        "left-index",
+        "right-pinky",
+        "right-middle",
+        "left-ring",
+        "right-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-advanced-14-ex-1",
-            "kind": "text",
-            "instruction": "The equilibrium between progress and preservation requires careful judgment. Administrative procedures demand attention to extraordinary details that many people frequently overlook.",
-            "text": "The equilibrium between progress and preservation requires careful judgment. Administrative procedures demand attention to extraordinary details that many people frequently overlook."
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "accuracy",
+                    "precision",
+                    "rhythm",
+                    "cadence"
+                ],
+                "count": 20,
+                "maxWordLength": 9
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-advanced-14-ex-2",
-            "kind": "text",
-            "instruction": "Manufacturing processes must comply with environmental regulations. Pharmaceutical companies conduct thorough investigation before commercializing revolutionary treatment methodologies.",
-            "text": "Manufacturing processes must comply with environmental regulations. Pharmaceutical companies conduct thorough investigation before commercializing revolutionary treatment methodologies."
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "s",
+                    "d",
+                    "f",
+                    "j",
+                    "k",
+                    "l",
+                    ";"
+                ],
+                "count": 22,
+                "chunkMin": 3,
+                "chunkMax": 6,
+                "style": "variable"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-en-advanced-14-ex-3",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "steady",
+                    "timing",
+                    "control",
+                    "flow"
+                ],
+                "count": 20,
+                "maxWordLength": 7
+            }
         }
-    ],
-    "focus": ["accuracy", "sentences"],
-    "prerequisites": ["lesson-en-advanced-13"]
+    ]
 }

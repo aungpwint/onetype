@@ -14,14 +14,93 @@
         "minAccuracy": 88,
         "minWpm": null
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-3"
+    ],
+    "focusKeys": [
+        "KeyR",
+        "KeyJ",
+        "KeyD",
+        "KeyK",
+        "KeyH",
+        "Digit7",
+        "ShiftLeft",
+        "KeyG",
+        "ShiftRight",
+        "KeyM",
+        "KeyV",
+        "KeyF",
+        "Semicolon",
+        "KeyT",
+        "KeyE",
+        "KeyS",
+        "KeyP",
+        "KeyC",
+        "KeyI",
+        "KeyA",
+        "KeyU",
+        "KeyY"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-index",
+        "left-middle",
+        "right-middle",
+        "left-pinky",
+        "right-pinky",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-4-ex-1",
-            "kind": "text",
-            "instruction": "ဘူတာ လေယာဉ် ကားမှတ်တိုင် ရေယာဉ်",
-            "text": "ဘူတာ လေယာဉ် ကားမှတ်တိုင် ရေယာဉ်"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "မြို့",
+                    "ရွာ",
+                    "လမ်း"
+                ],
+                "count": 20
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-4-ex-2",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "အိမ်",
+                    "နှစ်",
+                    "ချင်း"
+                ],
+                "count": 18
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-4-ex-3",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "အရှေ့",
+                    "အနောက်",
+                    "အောက်",
+                    "အပေါ်"
+                ],
+                "count": 18
+            }
         }
-    ],
-    "focus": ["words", "unicode"],
-    "prerequisites": ["lesson-my-intermediate-3"]
+    ]
 }

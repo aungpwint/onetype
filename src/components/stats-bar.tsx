@@ -62,13 +62,13 @@ export function StatsBar() {
             <div className="flex items-end justify-center gap-2.5">
                 <span
                     className={cn(
-                        'leading-[0.9] tracking-tight text-ink tabular-nums',
-                        timerStyle === 'mini' ? 'font-heavy text-4xl sm:text-5xl' : 'font-heavy text-6xl sm:text-7xl',
+                        'leading-[0.9] font-display font-semibold tracking-tight text-ink tabular-nums',
+                        timerStyle === 'mini' ? 'text-4xl sm:text-5xl' : 'text-6xl sm:text-7xl',
                     )}
                 >
                     {idle ? '—' : speed}
                 </span>
-                <span className={cn('text-xs font-semibold tracking-[0.24em] text-muted-foreground uppercase', timerStyle === 'mini' && 'mb-0.5')}>
+                <span className={cn('text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase', timerStyle === 'mini' && 'mb-0.5')}>
                     {speedLabel}
                 </span>
             </div>

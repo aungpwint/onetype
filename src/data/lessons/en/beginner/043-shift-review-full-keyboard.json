@@ -14,33 +14,123 @@
         "minAccuracy": 90,
         "minWpm": 16
     },
+    "focus": [
+        "shift"
+    ],
+    "requiresShift": true,
+    "prerequisites": [
+        "lesson-en-beginner-42"
+    ],
+    "focusKeys": [
+        "KeyA",
+        "ShiftRight",
+        "KeyB",
+        "KeyC",
+        "KeyD",
+        "Digit1",
+        "Digit2",
+        "BracketLeft",
+        "ShiftLeft",
+        "BracketRight",
+        "KeyQ",
+        "KeyW",
+        "KeyE",
+        "KeyR",
+        "KeyT",
+        "KeyY",
+        "KeyU",
+        "KeyI"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "right-pinky",
+        "left-index",
+        "left-middle",
+        "left-ring",
+        "right-index",
+        "right-middle"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-43-ex-1",
-            "kind": "text",
-            "instruction": "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm",
-            "text": "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "A",
+                    "B",
+                    "C",
+                    "D"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-43-ex-2",
-            "kind": "text",
-            "instruction": "Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz",
-            "text": "Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "1",
+                    "!",
+                    "2",
+                    "@"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-43-ex-3",
-            "kind": "text",
-            "instruction": "!@#$%^&*()Hello World 12345",
-            "text": "!@#$%^&*()Hello World 12345"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "{",
+                    "}",
+                    "[",
+                    "]"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-43-ex-4",
-            "kind": "text",
-            "instruction": "The Quick Brown Fox Jumps Over The Lazy Dog",
-            "text": "The Quick Brown Fox Jumps Over The Lazy Dog"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "Q",
+                    "W",
+                    "E",
+                    "R",
+                    "T",
+                    "Y",
+                    "U",
+                    "I"
+                ],
+                "count": 20,
+                "chunkMin": 2,
+                "chunkMax": 5,
+                "style": "variable",
+                "mixed": true
+            }
         }
-    ],
-    "focus": ["shift", "accuracy", "speed"],
-    "requiresShift": true,
-    "prerequisites": ["lesson-en-beginner-42"]
+    ]
 }

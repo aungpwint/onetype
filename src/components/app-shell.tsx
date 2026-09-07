@@ -34,7 +34,7 @@ import { StudentForm } from './student-form'
 import { listLayouts } from '@/core/keyboard-layout/registry'
 import { Button } from './ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip'
-import { cn, sectionTitleClass, highlightClass } from '@/lib/utils'
+import { cn, sectionTitleClass, highlightClass, eyebrowClass } from '@/lib/utils'
 
 const NAV = [
     { to: '/', en: 'Dashboard', icon: LayoutDashboard },
@@ -126,7 +126,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                     onClick={() => navigate('/')}
                                     aria-label="Back to dashboard"
                                 >
-                                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary font-mono text-sm font-bold text-primary-foreground">
+                                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                                         <span className="relative flex h-full w-full items-center justify-center">
                                             <svg viewBox="0 0 32 32" className="absolute inset-0 h-full w-full" aria-hidden>
                                                 <path
@@ -141,7 +141,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                         </span>
                                     </span>
                                     <span className="leading-none">
-                                        <span className="font-heavy text-lg text-ink">OneType</span>
+                                        <span className="text-lg font-bold text-ink">OneType</span>
                                         <span className="block font-myanmar text-xs text-muted-foreground">ဝမ်းတိုက်</span>
                                     </span>
                                 </button>
@@ -175,7 +175,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                         className="flex w-full items-center gap-3 rounded-lg border border-transparent px-2 py-2 text-left transition-colors hover:border-line hover:bg-muted/70"
                                         onClick={() => setPickerOpen(true)}
                                     >
-                                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-bold text-accent">
+<span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/15 text-xs font-semibold text-accent">
                                             {active.displayName.slice(0, 1).toUpperCase()}
                                         </span>
                                         <span className="min-w-0">
@@ -200,9 +200,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                     />
                                 </div>
                                 <div className="flex items-center justify-between rounded-lg border border-line bg-muted/40 px-2.5 py-1.5">
-                                    <span className="font-mono text-[0.6875rem] font-medium tracking-[0.16em] text-ink-faint uppercase">
-                                        Setup
-                                    </span>
+                                    <span className={eyebrowClass}>Setup</span>
                                     <span className="text-[0.6875rem] leading-snug text-muted-foreground tabular-nums">
                                         {layoutCount} layouts · {activeCount > 0 ? '1 learner' : 'no learner'}
                                     </span>
@@ -271,7 +269,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                         setPickerOpen(false)
                                     }}
                                 >
-                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-bold text-accent">
+                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-semibold text-accent">
                                         {student.displayName.slice(0, 1).toUpperCase()}
                                     </span>
                                     <span className="min-w-0">

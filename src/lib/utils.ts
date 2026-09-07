@@ -23,9 +23,11 @@ export const featuredClass = cn(
 
 export const appPageClass = cn('mx-auto w-full min-w-0 max-w-[84rem] space-y-6 px-[clamp(1.5rem,2.5vw,2.5rem)] pt-8 pb-14')
 
-export const eyebrowClass = cn('font-mono text-[0.6875rem] font-medium tracking-[0.16em] text-ink-faint uppercase')
+export const eyebrowClass = cn('text-[0.6875rem] font-medium tracking-[0.16em] text-ink-faint uppercase')
 
-export const pageTitleClass = cn('font-display text-[clamp(1.5rem,1.15rem+0.9vw,2rem)] leading-[1.15] font-bold tracking-[-0.02em]')
+export const microLabelClass = cn('text-[0.625rem] font-medium tracking-[0.12em] text-muted-foreground uppercase')
+
+export const pageTitleClass = cn('font-display text-[clamp(1.5rem,1.15rem+0.9vw,2rem)] leading-[1.15] font-semibold tracking-[-0.02em]')
 
 export const sectionTitleClass = cn('font-display text-lg leading-snug font-semibold tracking-[-0.012em]')
 

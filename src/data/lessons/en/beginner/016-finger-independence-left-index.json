@@ -14,53 +14,96 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyF",
+        "KeyR",
+        "KeyG",
+        "KeyT",
+        "KeyB",
+        "KeyV"
+    ],
+    "focus": [
+        "finger-independence",
+        "finger-control"
+    ],
+    "targetFingers": [
+        "left-index"
+    ],
+    "targetHands": [
+        "left"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-12"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-16-ex-1",
-            "kind": "text",
-            "instruction": "frfr frfr frfr frfr frfr frfr frfr frfr",
-            "text": "frfr frfr frfr frfr frfr frfr frfr frfr"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "r"
+                ],
+                "count": 14,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-16-ex-2",
-            "kind": "text",
-            "instruction": "ftft ftft ftft ftft ftft ftft ftft ftft",
-            "text": "ftft ftft ftft ftft ftft ftft ftft ftft"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "g"
+                ],
+                "count": 14,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-16-ex-3",
-            "kind": "text",
-            "instruction": "fvfv fvfv fvfv fvfv fvfv fvfv fvfv fvfv",
-            "text": "fvfv fvfv fvfv fvfv fvfv fvfv fvfv fvfv"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "g",
+                    "t",
+                    "b"
+                ],
+                "count": 14,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-16-ex-4",
-            "kind": "text",
-            "instruction": "fbfb fbfb fbfb fbfb fbfb fbfb fbfb fbfb",
-            "text": "fbfb fbfb fbfb fbfb fbfb fbfb fbfb fbfb"
-        },
-        {
-            "id": "lesson-en-beginner-16-ex-5",
-            "kind": "text",
-            "instruction": "fgfg fgfg fgfg fgfg fgfg fgfg fgfg fgfg",
-            "text": "fgfg fgfg fgfg fgfg fgfg fgfg fgfg fgfg"
-        },
-        {
-            "id": "lesson-en-beginner-16-ex-6",
-            "kind": "text",
-            "instruction": "fj fj fj fj fj fj fj fj fj fj",
-            "text": "fj fj fj fj fj fj fj fj fj fj"
-        },
-        {
-            "id": "lesson-en-beginner-16-ex-7",
-            "kind": "text",
-            "instruction": "frfr frfr frfr frfr frfr frfr frfr frfr",
-            "text": "frfr frfr frfr frfr frfr frfr frfr frfr"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "r",
+                    "g",
+                    "t",
+                    "v",
+                    "b"
+                ],
+                "count": 26,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyF", "KeyR", "KeyT", "KeyV", "KeyB", "KeyG"],
-    "focus": ["finger-independence", "finger-control"],
-    "targetFingers": ["left-index"],
-    "targetHands": ["left"],
-    "prerequisites": ["lesson-en-beginner-12"]
+    ]
 }

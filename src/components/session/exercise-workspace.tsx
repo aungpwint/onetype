@@ -63,14 +63,9 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
                             <ArrowLeft className="size-4" />
                             <span>Back</span>
                         </Button>
+
                         <span className="h-5 w-px shrink-0 bg-line/70" aria-hidden />
-                        <div className="hidden min-w-0 items-center gap-2 md:flex">
-                            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-accent font-mono text-sm font-bold text-accent-ink shadow-sm">
-                                Ot
-                            </span>
-                            <span className="font-display text-sm leading-none">OneType</span>
-                            <span className="h-5 w-px bg-line/70" aria-hidden />
-                        </div>
+
                         <div className="min-w-0">
                             <p className={eyebrowClass}>{label}</p>
                             <h1
@@ -156,7 +151,7 @@ function RoundProgress() {
 function TabStartHint() {
     return (
         <div className="flex items-center justify-center gap-2.5" aria-live="polite">
-            <span className="rounded-lg border border-line bg-card px-2.5 py-1 font-mono text-[0.6875rem] font-bold tracking-[0.15em] text-foreground uppercase shadow-sm">
+            <span className="rounded-lg border border-line bg-card px-2.5 py-1 font-mono text-[0.6875rem] font-semibold tracking-[0.15em] text-foreground uppercase shadow-sm">
                 Tab
             </span>
             <span className="text-xs font-medium text-muted-foreground">Press Tab to start</span>
@@ -171,7 +166,7 @@ export function QuickRestartHint() {
     const label = quickRestart === 'enter' ? 'Enter' : 'Tab'
     return (
         <div className="flex items-center justify-center gap-2.5" aria-live="polite">
-            <span className="rounded-lg border border-line bg-card px-2.5 py-1 font-mono text-[0.6875rem] font-bold tracking-[0.15em] text-foreground uppercase shadow-sm">
+            <span className="rounded-lg border border-line bg-card px-2.5 py-1 font-mono text-[0.6875rem] font-semibold tracking-[0.15em] text-foreground uppercase shadow-sm">
                 {label}
             </span>
             <span className="text-xs font-medium text-muted-foreground">Press {label} again to restart</span>
@@ -182,7 +177,7 @@ export function QuickRestartHint() {
 function ExerciseFooter() {
     return (
         <div className="flex flex-col items-center gap-1 pb-1">
-            <p className="font-mono text-[0.6875rem] tracking-wide text-muted-foreground">Click to focus · Backspace to fix</p>
+            <p className="text-xs text-muted-foreground">Click to focus · Backspace to fix</p>
             <p className="max-w-xl text-center text-xs text-muted-foreground/80">
                 The keyboard helps you type more accurately with your fingers and keys.
             </p>

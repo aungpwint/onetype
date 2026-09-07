@@ -14,41 +14,80 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyU",
+        "KeyM",
+        "KeyI",
+        "KeyR",
+        "KeyW"
+    ],
+    "focus": [
+        "syllable",
+        "tone"
+    ],
+    "targetFingers": [
+        "right-index",
+        "right-middle",
+        "left-index",
+        "left-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-8"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-9-ex-1",
-            "kind": "text",
-            "instruction": "ာ ာ ာ ာ ာ ာ ာ ာ ာ ာ",
-            "text": "ာ ာ ာ ာ ာ ာ ာ ာ ာ ာ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကာ",
+                    "ငာ"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-9-ex-2",
-            "kind": "text",
-            "instruction": "ကာ ကာ ကာ ကာ ကာ ကာ ကာ ကာ ကာ ကာ",
-            "text": "ကာ ကာ ကာ ကာ ကာ ကာ ကာ ကာ ကာ ကာ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "မာ",
+                    "တာ"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-9-ex-3",
-            "kind": "text",
-            "instruction": "တာ တာ တာ တာ တာ တာ တာ တာ တာ တာ",
-            "text": "တာ တာ တာ တာ တာ တာ တာ တာ တာ တာ"
-        },
-        {
-            "id": "lesson-my-beginner-9-ex-4",
-            "kind": "text",
-            "instruction": "မာ မာ မာ မာ မာ မာ မာ မာ မာ မာ",
-            "text": "မာ မာ မာ မာ မာ မာ မာ မာ မာ မာ"
-        },
-        {
-            "id": "lesson-my-beginner-9-ex-5",
-            "kind": "text",
-            "instruction": "ကာ တာ မာ နာ ငာ ကာ တာ မာ နာ ငာ",
-            "text": "ကာ တာ မာ နာ ငာ ကာ တာ မာ နာ ငာ"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကာ",
+                    "ငာ",
+                    "မာ",
+                    "တာ"
+                ],
+                "count": 26,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyM"],
-    "focus": ["unicode", "syllable", "key-memory"],
-    "targetFingers": ["left-index"],
-    "targetHands": ["left"],
-    "prerequisites": ["lesson-my-beginner-8"]
+    ]
 }

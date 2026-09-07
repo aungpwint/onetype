@@ -1,6 +1,6 @@
 import { memo, useCallback, useLayoutEffect, useMemo, useRef } from 'react'
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
-import { useShallow } from 'zustand/react/shallow'
+import { useShallow } from 'zustand/shallow'
 import { useTypingStore } from '@/stores/typing-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { cn } from '@/lib/utils'
@@ -157,7 +157,7 @@ export function TargetText() {
 
     return (
         <motion.div
-            className="mx-auto w-full max-w-5xl"
+            className="mx-auto w-full max-w-5xl pt-4"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
@@ -167,10 +167,7 @@ export function TargetText() {
                     <motion.div ref={contentRef} className="tt-content" style={{ x: springOffset }}>
                         <motion.p
                             key={activePhaseKey ?? 'all'}
-                            className={cn(
-                                'mx-auto text-4xl leading-tight tracking-normal whitespace-nowrap md:text-5xl',
-                                windowFocused ? '' : 'tt-blurred',
-                            )}
+                            className={cn('tt-target mx-auto whitespace-nowrap', windowFocused ? '' : 'tt-blurred')}
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.22, ease: 'easeOut' }}
@@ -320,7 +317,7 @@ const Char = memo(function Char({
     const hideExtra = hideExtraLetters === 'on' && pending && !inCurrentWordUpcoming
     const hidden = hideBlind || hideExtra ? 'tt-char-blind' : null
 
-    const font = containsMyanmar(text) ? 'font-myanmar' : 'font-heavy'
+    const font = containsMyanmar(text) ? 'font-myanmar' : undefined
 
     const missClass = indicateTypos === 'replace' ? 'tt-char-miss tt-char-miss-replace' : 'tt-char-miss'
 

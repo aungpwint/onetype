@@ -1,4 +1,4 @@
-import { exerciseText, type NormalizedExercise } from '@/types/exercise'
+import { exerciseText, isGeneratedExercise, type ExerciseTextContext, type NormalizedExercise } from '@/types/exercise'
 
 import type { Lesson, LessonPhase, NormalizedLesson } from '@/types/lesson'
 import { toLegacyLanguage } from '@/types/language'
@@ -6,18 +6,23 @@ import { toLayoutId } from '@/types/keyboard'
 import { lessonPhaseFromExercise } from './lesson-phase'
 
 export function normalizeLesson(lesson: Lesson): NormalizedLesson {
+    const textCtx: ExerciseTextContext = {
+        lessonId: lesson.id,
+        languageId: lesson.language === 'my' ? 'myanmar' : 'english',
+    }
     const exercises = lesson.exercises.map((exercise, index): NormalizedExercise => {
         const id = exercise.id ?? `${lesson.id}-ex-${index + 1}`
         return {
             id,
             kind: exercise.kind,
-            text: exerciseText(exercise),
+            text: exerciseText(exercise, textCtx),
             instruction: exercise.instruction,
             options: exercise.options,
+            generator: isGeneratedExercise(exercise) ? exercise.generator : undefined,
         }
     })
 
-    const phases: LessonPhase[] = lesson.exercises.map(lessonPhaseFromExercise)
+    const phases: LessonPhase[] = lesson.exercises.map((exercise) => lessonPhaseFromExercise(exercise, textCtx))
 
     const normalized: NormalizedLesson = {
         id: lesson.id,

@@ -14,41 +14,109 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyU",
+        "KeyD",
+        "ShiftRight",
+        "KeyK",
+        "KeyL",
+        "KeyJ",
+        "ShiftLeft",
+        "KeyH",
+        "KeyA",
+        "KeyM"
+    ],
+    "focus": [
+        "syllable",
+        "tone"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-middle",
+        "right-pinky",
+        "right-middle",
+        "right-ring",
+        "left-pinky"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-9"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-10-ex-1",
-            "kind": "text",
-            "instruction": "ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ",
-            "text": "ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ ကေ"
+            "instruction": "Alternate between both fingers and hands",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကိ",
+                    "ကီ"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-10-ex-2",
-            "kind": "text",
-            "instruction": "ကု ကု ကု ကု ကု ကု ကု ကု ကု ကု",
-            "text": "ကု ကု ကု ကု ကု ကု ကု ကု ကု ကု"
+            "instruction": "Alternate between both fingers and hands",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကု",
+                    "ကူ"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-10-ex-3",
-            "kind": "text",
-            "instruction": "ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ",
-            "text": "ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ ကူ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကဲ",
+                    "ကံ"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-10-ex-4",
-            "kind": "text",
-            "instruction": "ကေ ကု ကူ ကဲ ကေ ကု ကူ ကဲ",
-            "text": "ကေ ကု ကူ ကဲ ကေ ကု ကူ ကဲ"
-        },
-        {
-            "id": "lesson-my-beginner-10-ex-5",
-            "kind": "text",
-            "instruction": "တေ တု တူ မေ မု မူ နေ နု နူ",
-            "text": "တေ တု တူ မေ မု မူ နေ နု နူ"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကိ",
+                    "ကီ",
+                    "ကု",
+                    "ကူ",
+                    "ကဲ",
+                    "ကံ",
+                    "ကေ",
+                    "ကာ"
+                ],
+                "count": 28,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable",
+                "mixed": true
+            }
         }
-    ],
-    "focusKeys": ["KeyA", "KeyK", "KeyL"],
-    "focus": ["unicode", "syllable", "key-memory"],
-    "targetFingers": ["left-pinky", "right-middle", "right-ring"],
-    "targetHands": ["left", "right"],
-    "prerequisites": ["lesson-my-beginner-9"]
+    ]
 }

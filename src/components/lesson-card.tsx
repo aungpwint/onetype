@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Clock, Crosshair, Gauge } from 'lucide-react'
+import { ArrowRight, Clock, Crosshair, Gauge, Lock } from 'lucide-react'
 import type { LessonData } from '@/data/curriculum/types'
 import type { MasteryLevel } from '@/core/mastery'
 import type { LessonProgress } from '@/services/types'
@@ -10,6 +10,7 @@ interface LessonCardProps {
     lesson: LessonData
     mastery: MasteryLevel
     progress?: LessonProgress | null
+    locked?: boolean
 }
 
 const MASTERY_LABEL: Record<MasteryLevel, { text: string; variant: 'secondary' | 'success' | 'warning' }> = {
@@ -31,24 +32,28 @@ function MasteryBadge({ level }: { level: MasteryLevel }) {
     return <Badge variant={m.variant}>{m.text}</Badge>
 }
 
-export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
+export function LessonCard({ lesson, mastery, progress, locked = false }: LessonCardProps) {
     const passed = mastery === 'passed' || mastery === 'mastered'
     const attempted = mastery === 'attempted'
     const showAccuracy = attempted && progress && progress.attempts > 0
 
-    const bandClass = passed ? 'bg-success' : attempted ? 'bg-brass' : 'bg-line-strong'
+    const bandClass = locked ? 'bg-line-strong' : passed ? 'bg-success' : attempted ? 'bg-brass' : 'bg-line-strong'
 
-    const sheenClass = passed
-        ? 'from-success/12 to-transparent'
-        : attempted
-          ? 'from-brass/10 to-transparent'
-          : 'from-surface-elevated/60 to-transparent'
+    const sheenClass = locked
+        ? 'from-surface-elevated/60 to-transparent'
+        : passed
+          ? 'from-success/12 to-transparent'
+          : attempted
+            ? 'from-brass/10 to-transparent'
+            : 'from-surface-elevated/60 to-transparent'
 
-    return (
-        <Link
-            to={`/lesson/${lesson.id}`}
-            className="group relative isolate flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-(--shadow-1) transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-line-strong hover:shadow-(--shadow-3) focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-        >
+    const outerClass = cn(
+        'group relative isolate flex h-full flex-col overflow-hidden rounded-2xl border bg-card transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+        locked ? 'border-line opacity-70' : 'border-line shadow-(--shadow-1) hover:-translate-y-1 hover:border-line-strong hover:shadow-(--shadow-3)',
+    )
+
+    const body = (
+        <>
             <span aria-hidden className={cn('pointer-events-none absolute inset-0 -z-10 h-full bg-linear-to-b', sheenClass)} />
 
             <span aria-hidden className={cn('h-1 w-full', bandClass)} />
@@ -111,12 +116,28 @@ export function LessonCard({ lesson, mastery, progress }: LessonCardProps) {
                 </div>
             </div>
 
-            <span
-                aria-hidden
-                className="absolute top-1/2 right-3.5 -translate-y-1/2 text-ink-soft opacity-0 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:opacity-100"
-            >
-                <ArrowRight className="size-4" />
-            </span>
+            {!locked ? (
+                <span
+                    aria-hidden
+                    className="absolute top-1/2 right-3.5 -translate-y-1/2 text-ink-soft opacity-0 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:opacity-100"
+                >
+                    <ArrowRight className="size-4" />
+                </span>
+            ) : (
+                <span aria-hidden className="absolute top-1/2 right-3.5 -translate-y-1/2 text-ink-faint">
+                    <Lock className="size-4" />
+                </span>
+            )}
+        </>
+    )
+
+    return locked ? (
+        <div className={outerClass} aria-disabled="true">
+            {body}
+        </div>
+    ) : (
+        <Link to={`/lesson/${lesson.id}`} className={outerClass}>
+            {body}
         </Link>
     )
 }

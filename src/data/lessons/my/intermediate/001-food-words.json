@@ -14,14 +14,97 @@
         "minAccuracy": 88,
         "minWpm": null
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-25"
+    ],
+    "focusKeys": [
+        "KeyQ",
+        "KeyE",
+        "KeyF",
+        "KeyI",
+        "KeyG",
+        "Semicolon",
+        "KeyU",
+        "KeyJ",
+        "ShiftRight",
+        "KeyM",
+        "KeyC",
+        "KeyA",
+        "KeyV",
+        "KeyW",
+        "ShiftLeft",
+        "KeyR",
+        "KeyS",
+        "KeyN",
+        "KeyD",
+        "Digit7",
+        "KeyT",
+        "KeyZ"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-middle",
+        "left-index",
+        "right-middle",
+        "right-pinky",
+        "right-index",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-1-ex-1",
-            "kind": "text",
-            "instruction": "ရေ ဆန် ငါး ကြက် ဝက် နို့ လက်ဖက်ရည် ကော်ဖီ ပေါင်မုန့် သစ်သီး",
-            "text": "ရေ ဆန် ငါး ကြက် ဝက် နို့ လက်ဖက်ရည် ကော်ဖီ ပေါင်မုန့် သစ်သီး"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ဆန်",
+                    "ငါး",
+                    "ကြက်",
+                    "နွား",
+                    "ခွေး"
+                ],
+                "count": 26
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-1-ex-2",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "လက်တွဲ",
+                    "များ",
+                    "ညီညီ",
+                    "မြေး"
+                ],
+                "count": 24
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-1-ex-3",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ရေ",
+                    "နေ",
+                    "အဖေ",
+                    "အမေ",
+                    "ခြေ"
+                ],
+                "count": 24
+            }
         }
-    ],
-    "focus": ["words", "unicode", "syllable"],
-    "prerequisites": ["lesson-my-beginner-25"]
+    ]
 }

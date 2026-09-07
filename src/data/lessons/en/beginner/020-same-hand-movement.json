@@ -14,70 +14,113 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyA",
+        "KeyS",
+        "KeyD",
+        "KeyF",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyW",
+        "KeyE",
+        "KeyR",
+        "KeyU",
+        "KeyI",
+        "KeyO",
+        "KeyP"
+    ],
+    "focus": [
+        "same-hand",
+        "finger-control"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-19"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring",
+        "right-pinky"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-20-ex-1",
-            "kind": "text",
-            "instruction": "asd asd asd asd asd asd asd asd asd asd",
-            "text": "asd asd asd asd asd asd asd asd asd asd"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "s",
+                    "d",
+                    "f"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "runs"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-20-ex-2",
-            "kind": "text",
-            "instruction": "sdf sdf sdf sdf sdf sdf sdf sdf sdf sdf",
-            "text": "sdf sdf sdf sdf sdf sdf sdf sdf sdf sdf"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "j",
+                    "k",
+                    "l"
+                ],
+                "count": 14,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "runs"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-20-ex-3",
-            "kind": "text",
-            "instruction": "dfg dfg dfg dfg dfg dfg dfg dfg dfg dfg",
-            "text": "dfg dfg dfg dfg dfg dfg dfg dfg dfg dfg"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "w",
+                    "e",
+                    "r"
+                ],
+                "count": 14,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "runs"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-20-ex-4",
-            "kind": "text",
-            "instruction": "jkl jkl jkl jkl jkl jkl jkl jkl jkl jkl",
-            "text": "jkl jkl jkl jkl jkl jkl jkl jkl jkl jkl"
-        },
-        {
-            "id": "lesson-en-beginner-20-ex-5",
-            "kind": "text",
-            "instruction": "kl; kl; kl; kl; kl; kl; kl; kl; kl; kl;",
-            "text": "kl; kl; kl; kl; kl; kl; kl; kl; kl; kl;"
-        },
-        {
-            "id": "lesson-en-beginner-20-ex-6",
-            "kind": "text",
-            "instruction": "hjk hjk hjk hjk hjk hjk hjk hjk hjk hjk",
-            "text": "hjk hjk hjk hjk hjk hjk hjk hjk hjk hjk"
-        },
-        {
-            "id": "lesson-en-beginner-20-ex-7",
-            "kind": "text",
-            "instruction": "fdsa fdsa fdsa fdsa fdsa fdsa fdsa fdsa fdsa fdsa",
-            "text": "fdsa fdsa fdsa fdsa fdsa fdsa fdsa fdsa fdsa fdsa"
-        },
-        {
-            "id": "lesson-en-beginner-20-ex-8",
-            "kind": "text",
-            "instruction": ";lkj ;lkj ;lkj ;lkj ;lkj ;lkj ;lkj ;lkj ;lkj ;lkj",
-            "text": ";lkj ;lkj ;lkj ;lkj ;lkj ;lkj ;lkj ;lkj ;lkj ;lkj"
-        },
-        {
-            "id": "lesson-en-beginner-20-ex-9",
-            "kind": "text",
-            "instruction": "gfdsa gfdsa gfdsa gfdsa gfdsa gfdsa gfdsa gfdsa",
-            "text": "gfdsa gfdsa gfdsa gfdsa gfdsa gfdsa gfdsa gfdsa"
-        },
-        {
-            "id": "lesson-en-beginner-20-ex-10",
-            "kind": "text",
-            "instruction": "hjkl; hjkl; hjkl; hjkl; hjkl; hjkl; hjkl; hjkl;",
-            "text": "hjkl; hjkl; hjkl; hjkl; hjkl; hjkl; hjkl; hjkl;"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "u",
+                    "i",
+                    "o",
+                    "p"
+                ],
+                "count": 18,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "runs"
+            }
         }
-    ],
-    "focusKeys": ["KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyJ", "KeyK", "KeyL", "KeyH"],
-    "focus": ["same-hand", "finger-control"],
-    "targetHands": ["left", "right"],
-    "prerequisites": ["lesson-en-beginner-19"]
+    ]
 }

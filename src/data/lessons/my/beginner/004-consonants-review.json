@@ -14,28 +14,102 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyQ",
+        "KeyW",
+        "KeyE",
+        "KeyR",
+        "KeyT",
+        "KeyU",
+        "KeyI",
+        "KeyO",
+        "KeyP",
+        "BracketLeft"
+    ],
+    "focus": [
+        "top-row"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-2",
+        "lesson-my-beginner-3"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring",
+        "right-pinky"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-4-ex-1",
-            "kind": "text",
-            "instruction": "က တ အ န မ င စ သ ပ က တ အ န မ င",
-            "text": "က တ အ န မ င စ သ ပ က တ အ န မ င"
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ဆ",
+                    "တ",
+                    "န",
+                    "မ",
+                    "အ"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-4-ex-2",
-            "kind": "text",
-            "instruction": "ပ သ စ င မ န အ တ က ပ သ စ င",
-            "text": "ပ သ စ င မ န အ တ က ပ သ စ င"
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "က",
+                    "င",
+                    "သ",
+                    "စ",
+                    "ဟ"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-4-ex-3",
-            "kind": "text",
-            "instruction": "က စ တ သ န မ ပ င အ က စ တ သ န မ ပ င အ",
-            "text": "က စ တ သ န မ ပ င အ က စ တ သ န မ ပ င အ"
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ဆ",
+                    "တ",
+                    "န",
+                    "မ",
+                    "အ",
+                    "က",
+                    "င",
+                    "သ",
+                    "စ",
+                    "ဟ"
+                ],
+                "count": 26,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable",
+                "mixed": true
+            }
         }
-    ],
-    "focusKeys": ["KeyU", "KeyI", "KeyW", "KeyE", "KeyR", "KeyT", "KeyP", "KeyO", "KeyY"],
-    "focus": ["hand-alternation", "key-memory"],
-    "targetHands": ["left", "right"],
-    "prerequisites": ["lesson-my-beginner-2", "lesson-my-beginner-3"]
+    ]
 }

@@ -14,38 +14,105 @@
         "minAccuracy": 93,
         "minWpm": 25
     },
+    "focus": [
+        "speed"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-17"
+    ],
+    "focusKeys": [
+        "KeyT",
+        "KeyH",
+        "KeyE",
+        "KeyA",
+        "KeyN",
+        "KeyD",
+        "KeyY",
+        "KeyO",
+        "KeyU",
+        "KeyW",
+        "KeyI",
+        "KeyS",
+        "KeyF",
+        "KeyR",
+        "KeyM",
+        "KeyV",
+        "KeyP",
+        "KeyC",
+        "KeyB",
+        "KeyL",
+        "Period",
+        "KeyK",
+        "KeyX",
+        "KeyG",
+        "KeyJ"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-index",
+        "left-middle",
+        "left-pinky",
+        "right-ring",
+        "left-ring",
+        "right-middle",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-18-ex-1",
-            "kind": "text",
-            "instruction": "the quick brown fox jumps over the lazy dog",
-            "text": "the quick brown fox jumps over the lazy dog"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 24,
+                "maxWordLength": 7
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-18-ex-2",
-            "kind": "text",
-            "instruction": "Pack my box with five dozen liquor jugs.",
-            "text": "Pack my box with five dozen liquor jugs."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "practice builds speed and accuracy.",
+                    "every lesson adds new confidence.",
+                    "keep your eyes on the text."
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-18-ex-3",
-            "kind": "text",
-            "instruction": "She sells seashells by the seashore.",
-            "text": "She sells seashells by the seashore."
-        },
-        {
-            "id": "lesson-en-intermediate-18-ex-4",
-            "kind": "text",
-            "instruction": "How much wood would a woodchuck chuck?",
-            "text": "How much wood would a woodchuck chuck?"
-        },
-        {
-            "id": "lesson-en-intermediate-18-ex-5",
-            "kind": "text",
-            "instruction": "A good typist can type without looking at the keyboard.",
-            "text": "A good typist can type without looking at the keyboard."
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "g",
+                    "h",
+                    "j",
+                    "r",
+                    "t",
+                    "y",
+                    "u",
+                    "v",
+                    "b",
+                    "n",
+                    "m"
+                ],
+                "count": 24,
+                "chunkMin": 4,
+                "chunkMax": 7,
+                "style": "variable",
+                "mixed": true
+            }
         }
-    ],
-    "focus": ["speed", "accuracy", "words", "sentences"],
-    "prerequisites": ["lesson-en-intermediate-17"]
+    ]
 }

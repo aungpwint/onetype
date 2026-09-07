@@ -14,20 +14,95 @@
         "minAccuracy": 92,
         "minWpm": 20
     },
+    "focus": [
+        "tone"
+    ],
+    "prerequisites": [
+        "lesson-my-advanced-2"
+    ],
+    "focusKeys": [
+        "KeyU",
+        "KeyM",
+        "Semicolon",
+        "KeyD",
+        "ShiftRight",
+        "KeyB",
+        "KeyF",
+        "KeyH",
+        "ShiftLeft",
+        "KeyK",
+        "KeyW",
+        "KeyR",
+        "KeyS",
+        "KeyQ",
+        "KeyN",
+        "Digit7"
+    ],
+    "targetFingers": [
+        "right-index",
+        "right-pinky",
+        "left-middle",
+        "left-index",
+        "left-pinky",
+        "right-middle",
+        "left-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-3-ex-1",
-            "kind": "text",
-            "instruction": "သား သဲ သလဲ သာဓု သာဓု",
-            "text": "သား သဲ သလဲ သာဓု သာဓု"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကား",
+                    "ကီး",
+                    "ကယ်"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-3-ex-2",
-            "kind": "text",
-            "instruction": "ဖြေး ဖြို့ ဖြောက် ဖြေး ဖြို့",
-            "text": "ဖြေး ဖြို့ ဖြောက် ဖြေး ဖြို့"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကံ",
+                    "ကို",
+                    "တို့"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-advanced-3-ex-3",
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "များ",
+                    "ဆည်း",
+                    "ရည်း"
+                ],
+                "count": 20,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["unicode", "tone", "syllable", "accuracy"],
-    "prerequisites": ["lesson-my-advanced-2"]
+    ]
 }

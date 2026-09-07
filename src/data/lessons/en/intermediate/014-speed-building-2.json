@@ -14,26 +14,86 @@
         "minAccuracy": 93,
         "minWpm": 25
     },
+    "focus": [
+        "speed"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-13"
+    ],
+    "focusKeys": [
+        "KeyT",
+        "KeyH",
+        "KeyE",
+        "KeyA",
+        "KeyN",
+        "KeyD",
+        "KeyY",
+        "KeyO",
+        "KeyU",
+        "KeyW",
+        "KeyI",
+        "KeyS",
+        "KeyF",
+        "KeyR",
+        "KeyM",
+        "KeyV",
+        "KeyG",
+        "KeyQ",
+        "KeyL",
+        "Period",
+        "KeyC",
+        "KeyK",
+        "KeyB"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-index",
+        "left-middle",
+        "left-pinky",
+        "right-ring",
+        "left-ring",
+        "right-middle"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-14-ex-1",
-            "kind": "text",
-            "instruction": "Every morning the sun rises in the east and makes the sky bright with soft golden light.",
-            "text": "Every morning the sun rises in the east and makes the sky bright with soft golden light."
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 34,
+                "maxWordLength": 8
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-14-ex-2",
-            "kind": "text",
-            "instruction": "We should drink water, eat healthy food, and sleep well to stay strong every day.",
-            "text": "We should drink water, eat healthy food, and sleep well to stay strong every day."
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 36,
+                "maxWordLength": 9
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-14-ex-3",
-            "kind": "text",
-            "instruction": "The children played in the garden until the sun went down behind the hills.",
-            "text": "The children played in the garden until the sun went down behind the hills."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "the morning sun rose over the quiet field.",
+                    "a flock of birds flew across the sky.",
+                    "the old bridge crosses the wide river."
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["speed", "accuracy", "sentences"],
-    "prerequisites": ["lesson-en-intermediate-13"]
+    ]
 }

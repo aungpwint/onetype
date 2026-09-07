@@ -14,38 +14,95 @@
         "minAccuracy": 94,
         "minWpm": 34
     },
+    "focus": [
+        "speed"
+    ],
+    "prerequisites": [
+        "lesson-en-advanced-12"
+    ],
+    "focusKeys": [
+        "KeyE",
+        "KeyR",
+        "KeyT",
+        "KeyY",
+        "KeyU",
+        "KeyI",
+        "KeyH",
+        "KeyA",
+        "KeyN",
+        "KeyD",
+        "KeyO",
+        "KeyW",
+        "KeyS",
+        "KeyF",
+        "KeyM",
+        "KeyV",
+        "KeyP",
+        "KeyG",
+        "KeyL",
+        "Period",
+        "KeyC",
+        "KeyB"
+    ],
+    "targetFingers": [
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "left-pinky",
+        "right-ring",
+        "left-ring",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-advanced-13-ex-1",
-            "kind": "text",
-            "instruction": "the the the and and and that that that",
-            "text": "the the the and and and that that that"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "e",
+                    "r",
+                    "t",
+                    "y",
+                    "u",
+                    "i"
+                ],
+                "count": 24,
+                "chunkMin": 4,
+                "chunkMax": 7,
+                "style": "runs"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-advanced-13-ex-2",
-            "kind": "text",
-            "instruction": "ing ing ing tion tion tion ed ed ed",
-            "text": "ing ing ing tion tion tion ed ed ed"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 28,
+                "maxWordLength": 8
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-advanced-13-ex-3",
-            "kind": "text",
-            "instruction": "the and that have with from this they",
-            "text": "the and that have with from this they"
-        },
-        {
-            "id": "lesson-en-advanced-13-ex-4",
-            "kind": "text",
-            "instruction": "will can would could should may might",
-            "text": "will can would could should may might"
-        },
-        {
-            "id": "lesson-en-advanced-13-ex-5",
-            "kind": "text",
-            "instruction": "very much many such just also each every",
-            "text": "very much many such just also each every"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "the rapid river runs through the green valley.",
+                    "great ships sail across the wide ocean.",
+                    "strong bamboo bends before the heavy wind."
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["speed", "finger-control"],
-    "prerequisites": ["lesson-en-advanced-12"]
+    ]
 }

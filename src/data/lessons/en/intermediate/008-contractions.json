@@ -14,32 +14,99 @@
         "minAccuracy": 92,
         "minWpm": 20
     },
+    "focus": [
+        "sentences",
+        "punctuation"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-7"
+    ],
+    "focusKeys": [
+        "KeyD",
+        "KeyO",
+        "KeyN",
+        "Quote",
+        "KeyT",
+        "KeyS",
+        "KeyP",
+        "KeyW",
+        "Digit1",
+        "ShiftRight",
+        "KeyI",
+        "KeyC",
+        "KeyA",
+        "KeyF",
+        "Period",
+        "KeyE",
+        "KeyR",
+        "KeyY",
+        "KeyH",
+        "KeyL",
+        "KeyM",
+        "KeyV",
+        "KeyG",
+        "KeyB",
+        "KeyK",
+        "ShiftLeft",
+        "KeyU"
+    ],
+    "targetFingers": [
+        "left-middle",
+        "right-ring",
+        "right-index",
+        "right-pinky",
+        "left-index",
+        "left-ring",
+        "left-pinky",
+        "right-middle"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-8-ex-1",
-            "kind": "text",
-            "instruction": "do not don't cannot can't will not won't",
-            "text": "do not don't cannot can't will not won't"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "don't stop now!",
+                    "i can't find it.",
+                    "we aren't ready yet."
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-8-ex-2",
-            "kind": "text",
-            "instruction": "I am I'm you are you're it is it's",
-            "text": "I am I'm you are you're it is it's"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "she'll come at noon.",
+                    "they've left the room.",
+                    "he's reading a book."
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-8-ex-3",
-            "kind": "text",
-            "instruction": "he is he's she has she's we will we'll",
-            "text": "he is he's she has she's we will we'll"
-        },
-        {
-            "id": "lesson-en-intermediate-8-ex-4",
-            "kind": "text",
-            "instruction": "I will I'll you have you've they have they've",
-            "text": "I will I'll you have you've they have they've"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "it won't work this way.",
+                    "I'd like some tea.",
+                    "you're doing great!"
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["words", "punctuation", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-7"]
+    ]
 }

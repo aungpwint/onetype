@@ -14,26 +14,80 @@
         "minAccuracy": 92,
         "minWpm": null
     },
+    "focus": [
+        "sentences",
+        "punctuation"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-11"
+    ],
+    "focusKeys": [
+        "KeyB",
+        "ShiftRight",
+        "KeyF",
+        "KeyO",
+        "KeyL",
+        "KeyU",
+        "KeyK",
+        "ShiftLeft",
+        "KeyD",
+        "KeyP",
+        "KeyM",
+        "Digit7",
+        "KeyA",
+        "Semicolon",
+        "KeyV",
+        "KeyJ",
+        "Period",
+        "KeyE",
+        "KeyR",
+        "KeyH",
+        "KeyS",
+        "KeyW",
+        "KeyG",
+        "KeyI"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-pinky",
+        "right-ring",
+        "right-index",
+        "right-middle",
+        "left-pinky",
+        "left-middle",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-12-ex-1",
-            "kind": "text",
-            "instruction": "ဒါဘာလဲ။",
-            "text": "ဒါဘာလဲ။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ဘယ် သူ က ဒီ စာ ကို ရေး လဲ ။",
+                    "ဘယ် နေ က လာ လဲ ။"
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-12-ex-2",
-            "kind": "text",
-            "instruction": "ဒီစာအုပ်က ဘယ်သူ့စာအုပ်လဲ။",
-            "text": "ဒီစာအုပ်က ဘယ်သူ့စာအုပ်လဲ။"
-        },
-        {
-            "id": "lesson-my-intermediate-12-ex-3",
-            "kind": "text",
-            "instruction": "ဘယ်နှယောက်ရှိလဲ။",
-            "text": "ဘယ်နှယောက်ရှိလဲ။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ဒီ မြို့ မှာ ဘာ တွေ ရှိ သလဲ ။",
+                    "နေ့ တိုင်း ဘာ စား လဲ ။"
+                ],
+                "count": 3
+            }
         }
-    ],
-    "focus": ["sentences", "unicode", "punctuation"],
-    "prerequisites": ["lesson-my-intermediate-11"]
+    ]
 }

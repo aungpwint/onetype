@@ -14,38 +14,105 @@
         "minAccuracy": 88,
         "minWpm": 14
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-24"
+    ],
+    "focusKeys": [
+        "KeyF",
+        "KeyI",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyA",
+        "KeyE",
+        "KeyG",
+        "KeyN",
+        "KeyU",
+        "KeyD",
+        "KeyV",
+        "KeyQ",
+        "KeyC",
+        "KeyK",
+        "KeyW",
+        "KeyH",
+        "KeyP",
+        "KeyY",
+        "KeyO",
+        "KeyM",
+        "KeyL"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-middle",
+        "left-ring",
+        "left-pinky",
+        "left-middle",
+        "right-index",
+        "right-pinky",
+        "right-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-25-ex-1",
-            "kind": "text",
-            "instruction": "which there their about these",
-            "text": "which there their about these"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "first",
+                    "after",
+                    "again",
+                    "under",
+                    "never",
+                    "always"
+                ],
+                "count": 18,
+                "maxWordLength": 5
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-25-ex-2",
-            "kind": "text",
-            "instruction": "other would could about",
-            "text": "other would could about"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "quick",
+                    "white",
+                    "three",
+                    "green",
+                    "happy",
+                    "house"
+                ],
+                "count": 18,
+                "maxWordLength": 5
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-25-ex-3",
-            "kind": "text",
-            "instruction": "years still state right world",
-            "text": "years still state right world"
-        },
-        {
-            "id": "lesson-en-beginner-25-ex-4",
-            "kind": "text",
-            "instruction": "house money piece table small",
-            "text": "house money piece table small"
-        },
-        {
-            "id": "lesson-en-beginner-25-ex-5",
-            "kind": "text",
-            "instruction": "light kind found place every",
-            "text": "light kind found place every"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "small",
+                    "point",
+                    "think",
+                    "world",
+                    "water",
+                    "large",
+                    "where"
+                ],
+                "count": 20,
+                "maxWordLength": 5
+            }
         }
-    ],
-    "focus": ["words", "speed"],
-    "prerequisites": ["lesson-en-beginner-24"]
+    ]
 }

@@ -14,38 +14,104 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focus": [
+        "syllable"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-17"
+    ],
+    "focusKeys": [
+        "KeyU",
+        "KeyD",
+        "KeyK",
+        "KeyI",
+        "KeyF",
+        "KeyY",
+        "KeyN",
+        "KeyR",
+        "KeyJ",
+        "KeyE",
+        "Semicolon"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-middle",
+        "right-middle",
+        "left-index",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-18-ex-1",
-            "kind": "text",
-            "instruction": "က် တ် မ် န် င် စ် ဆ်",
-            "text": "က် တ် မ် န် င် စ် ဆ်"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကိုင်"
+                ],
+                "count": 14,
+                "chunkMin": 4,
+                "chunkMax": 5,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-18-ex-2",
-            "kind": "text",
-            "instruction": "ကန် တမ် မန် နက် ငံ",
-            "text": "ကန် တမ် မန် နက် ငံ"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ပင်",
+                    "ညင်"
+                ],
+                "count": 16,
+                "chunkMin": 4,
+                "chunkMax": 5,
+                "style": "variable",
+                "mixed": true
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-18-ex-3",
-            "kind": "text",
-            "instruction": "ကျောင်း ကျောင်း ကျောင်း ကျောင်း ကျောင်း",
-            "text": "ကျောင်း ကျောင်း ကျောင်း ကျောင်း ကျောင်း"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "မြန်",
+                    "မင်း"
+                ],
+                "count": 16,
+                "chunkMin": 4,
+                "chunkMax": 5,
+                "style": "variable",
+                "mixed": true
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-18-ex-4",
-            "kind": "text",
-            "instruction": "ပညာ ပညာ ပညာ ပညာ ပညာ",
-            "text": "ပညာ ပညာ ပညာ ပညာ ပညာ"
-        },
-        {
-            "id": "lesson-my-beginner-18-ex-5",
-            "kind": "text",
-            "instruction": "ဆရာ ဆရာ ဆရာ ဆရာ ဆရာ",
-            "text": "ဆရာ ဆရာ ဆရာ ဆရာ ဆရာ"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကိုင်",
+                    "ပင်",
+                    "ညင်",
+                    "မြန်",
+                    "မင်း"
+                ],
+                "count": 24,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["unicode", "syllable"],
-    "prerequisites": ["lesson-my-beginner-17"]
+    ]
 }

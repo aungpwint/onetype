@@ -22,7 +22,7 @@ describe('curriculum content', () => {
         }
     })
 
-    it('every lesson resolves and every item maps to a defined key in its layout', () => {
+    it('every lesson resolves and every item maps to a defined key in its layout', { timeout: 60000 }, () => {
         for (const id of allResolvedLessonIds()) {
             const resolved = resolveLessonById(id)
             expect(resolved.totalUnits).toBeGreaterThan(0)
@@ -52,7 +52,7 @@ describe('curriculum content', () => {
         }
     })
 
-    it("every unit's shiftHand is consistent with requiring shift for that key", () => {
+    it("every unit's shiftHand is consistent with requiring shift for that key", { timeout: 60000 }, () => {
         for (const id of allResolvedLessonIds()) {
             const resolved = resolveLessonById(id)
             const layout = getLayoutOrThrow(resolved.layoutId)

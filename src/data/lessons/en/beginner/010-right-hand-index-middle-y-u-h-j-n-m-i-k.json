@@ -14,65 +14,104 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyY",
+        "KeyU",
+        "KeyH",
+        "KeyJ",
+        "KeyN",
+        "KeyM",
+        "KeyI",
+        "KeyK"
+    ],
+    "focus": [
+        "top-row",
+        "bottom-row",
+        "row-transition",
+        "key-memory"
+    ],
+    "targetFingers": [
+        "right-index",
+        "right-middle"
+    ],
+    "targetHands": [
+        "right"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-7"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-10-ex-1",
-            "kind": "text",
-            "instruction": "y y y y y u u u u u",
-            "text": "y y y y y u u u u u"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "y",
+                    "u",
+                    "h",
+                    "j"
+                ],
+                "count": 14,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-10-ex-2",
-            "kind": "text",
-            "instruction": "h y h y h y h y h y",
-            "text": "h y h y h y h y h y"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "n",
+                    "m"
+                ],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-10-ex-3",
-            "kind": "text",
-            "instruction": "j u j u j u j u j u",
-            "text": "j u j u j u j u j u"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "i",
+                    "k"
+                ],
+                "count": 12,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-10-ex-4",
-            "kind": "text",
-            "instruction": "k i k i k i k i k i",
-            "text": "k i k i k i k i k i"
-        },
-        {
-            "id": "lesson-en-beginner-10-ex-5",
-            "kind": "text",
-            "instruction": "n h n h n h n h n h",
-            "text": "n h n h n h n h n h"
-        },
-        {
-            "id": "lesson-en-beginner-10-ex-6",
-            "kind": "text",
-            "instruction": "m j m j m j m j m j",
-            "text": "m j m j m j m j m j"
-        },
-        {
-            "id": "lesson-en-beginner-10-ex-7",
-            "kind": "text",
-            "instruction": ", k , k , k , k , k",
-            "text": ", k , k , k , k , k"
-        },
-        {
-            "id": "lesson-en-beginner-10-ex-8",
-            "kind": "text",
-            "instruction": "hy hy hy hy hy hy hy hy hy hy",
-            "text": "hy hy hy hy hy hy hy hy hy hy"
-        },
-        {
-            "id": "lesson-en-beginner-10-ex-9",
-            "kind": "text",
-            "instruction": "ju ju ju ju ju ju ju ju ju ju",
-            "text": "ju ju ju ju ju ju ju ju ju ju"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "y",
+                    "u",
+                    "h",
+                    "j",
+                    "n",
+                    "m",
+                    "i",
+                    "k"
+                ],
+                "count": 34,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyY", "KeyU", "KeyH", "KeyJ", "KeyN", "KeyM", "KeyI", "KeyK"],
-    "focus": ["top-row", "bottom-row", "row-transition", "key-memory"],
-    "targetFingers": ["right-index", "right-middle"],
-    "targetHands": ["right"],
-    "prerequisites": ["lesson-en-beginner-7"]
+    ]
 }

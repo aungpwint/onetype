@@ -14,14 +14,80 @@
         "minAccuracy": 93,
         "minWpm": 18
     },
+    "focus": [
+        "sentences",
+        "punctuation"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-14"
+    ],
+    "focusKeys": [
+        "KeyI",
+        "KeyG",
+        "Semicolon",
+        "KeyE",
+        "KeyS",
+        "ShiftRight",
+        "KeyP",
+        "KeyF",
+        "KeyU",
+        "KeyA",
+        "KeyM",
+        "KeyR",
+        "KeyJ",
+        "KeyD",
+        "KeyK",
+        "KeyH",
+        "Digit7",
+        "ShiftLeft",
+        "KeyW",
+        "KeyB",
+        "Period",
+        "KeyV",
+        "KeyC",
+        "KeyY"
+    ],
+    "targetFingers": [
+        "right-middle",
+        "left-index",
+        "right-pinky",
+        "left-middle",
+        "left-ring",
+        "right-index",
+        "left-pinky",
+        "right-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-15-ex-1",
-            "kind": "text",
-            "instruction": "နံနက် ခြောက်နာရီမှာ အိပ်ရာကထတယ်။ မျက်နှာသစ်ပြီး လက်ဖက်ရည်သောက်တယ်။ ပြီးတော့ အလုပ်သွားတယ်။",
-            "text": "နံနက် ခြောက်နာရီမှာ အိပ်ရာကထတယ်။ မျက်နှာသစ်ပြီး လက်ဖက်ရည်သောက်တယ်။ ပြီးတော့ အလုပ်သွားတယ်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ငါး နှစ် ကောင် က မြို့ မှာ ရှိ တယ် ။",
+                    "နွား တစ် ကောင် က ရွာ က လာ တယ် ။"
+                ],
+                "count": 3
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-15-ex-2",
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "လက် နှစ် ချောင်း နဲ့ ရေးပါ ။",
+                    "မျက်စိ က နှစ် လုံး ရှိ တယ် ။"
+                ],
+                "count": 3
+            }
         }
-    ],
-    "focus": ["sentences", "unicode", "punctuation", "speed"],
-    "prerequisites": ["lesson-my-intermediate-14"]
+    ]
 }

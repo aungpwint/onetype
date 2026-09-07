@@ -14,41 +14,102 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyA",
+        "KeyS",
+        "KeyD",
+        "KeyF"
+    ],
+    "focus": [
+        "home-row",
+        "finger-control",
+        "key-memory"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index"
+    ],
+    "targetHands": [
+        "left"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-1"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-2-ex-1",
-            "kind": "text",
-            "instruction": "a a a a a s s s s s d d d d d f f f f f",
-            "text": "a a a a a s s s s s d d d d d f f f f f"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "s",
+                    "d",
+                    "f"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-2-ex-2",
-            "kind": "text",
-            "instruction": "a s a s a s a s a s",
-            "text": "a s a s a s a s a s"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "s",
+                    "d",
+                    "f"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "runs"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-2-ex-3",
-            "kind": "text",
-            "instruction": "a s d a s d a s d a s d",
-            "text": "a s d a s d a s d a s d"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "s",
+                    "d",
+                    "f"
+                ],
+                "count": 22,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-2-ex-4",
-            "kind": "text",
-            "instruction": "a s d f a s d f a s d f a s d f",
-            "text": "a s d f a s d f a s d f a s d f"
-        },
-        {
-            "id": "lesson-en-beginner-2-ex-5",
-            "kind": "text",
-            "instruction": "f d s a f d s a f d s a f d s a",
-            "text": "f d s a f d s a f d s a f d s a"
+            "instruction": "Alternate between both fingers and hands",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "d",
+                    "f",
+                    "s"
+                ],
+                "count": 20,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable",
+                "mixed": true
+            }
         }
-    ],
-    "focusKeys": ["KeyA", "KeyS", "KeyD", "KeyF"],
-    "focus": ["home-row", "finger-control", "key-memory"],
-    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index"],
-    "targetHands": ["left"],
-    "prerequisites": ["lesson-en-beginner-1"]
+    ]
 }

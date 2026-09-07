@@ -14,26 +14,92 @@
         "minAccuracy": 93,
         "minWpm": 25
     },
+    "focus": [
+        "speed"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-12"
+    ],
+    "focusKeys": [
+        "KeyT",
+        "KeyH",
+        "KeyE",
+        "KeyA",
+        "KeyN",
+        "KeyD",
+        "KeyY",
+        "KeyO",
+        "KeyU",
+        "KeyW",
+        "KeyI",
+        "KeyS",
+        "KeyF",
+        "KeyR",
+        "KeyM",
+        "KeyV",
+        "KeyG",
+        "KeyJ",
+        "KeyK",
+        "KeyL"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-index",
+        "left-middle",
+        "left-pinky",
+        "right-ring",
+        "left-ring",
+        "right-middle"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-13-ex-1",
-            "kind": "text",
-            "instruction": "the quick brown fox jumps over the lazy dog",
-            "text": "the quick brown fox jumps over the lazy dog"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 30,
+                "maxWordLength": 6
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-13-ex-2",
-            "kind": "text",
-            "instruction": "pack my box with five dozen liquor jugs",
-            "text": "pack my box with five dozen liquor jugs"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 32,
+                "maxWordLength": 7
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-13-ex-3",
-            "kind": "text",
-            "instruction": "the quick brown fox jumps over the lazy dog again",
-            "text": "the quick brown fox jumps over the lazy dog again"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "s",
+                    "d",
+                    "f",
+                    "g",
+                    "h",
+                    "j",
+                    "k",
+                    "l"
+                ],
+                "count": 26,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["speed", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-12"]
+    ]
 }

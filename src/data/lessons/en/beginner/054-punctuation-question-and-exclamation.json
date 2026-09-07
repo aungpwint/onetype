@@ -14,45 +14,96 @@
         "minAccuracy": 90,
         "minWpm": null
     },
+    "focusKeys": [
+        "Slash",
+        "ShiftLeft",
+        "Digit1",
+        "ShiftRight",
+        "KeyW",
+        "KeyH",
+        "KeyA",
+        "KeyT",
+        "KeyI",
+        "KeyS",
+        "KeyE",
+        "KeyR",
+        "KeyY",
+        "KeyO",
+        "KeyU",
+        "KeyG",
+        "KeyN",
+        "KeyL",
+        "KeyK",
+        "KeyP",
+        "KeyM"
+    ],
+    "focus": [
+        "punctuation"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-53"
+    ],
+    "targetFingers": [
+        "right-pinky",
+        "left-pinky",
+        "left-ring",
+        "right-index",
+        "left-index",
+        "right-middle",
+        "left-middle",
+        "right-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-54-ex-1",
-            "kind": "text",
-            "instruction": "? ? ? ? ? ? ? ? ? ?",
-            "text": "? ? ? ? ? ? ? ? ? ?"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "?",
+                    "?",
+                    "!",
+                    "!"
+                ],
+                "count": 18,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-54-ex-2",
-            "kind": "text",
-            "instruction": "! ! ! ! ! ! ! ! ! !",
-            "text": "! ! ! ! ! ! ! ! ! !"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "what is this?",
+                    "where are you?",
+                    "who is he?"
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-54-ex-3",
-            "kind": "text",
-            "instruction": "yes? no? why? how?",
-            "text": "yes? no? why? how?"
-        },
-        {
-            "id": "lesson-en-beginner-54-ex-4",
-            "kind": "text",
-            "instruction": "wow! great! nice! good!",
-            "text": "wow! great! nice! good!"
-        },
-        {
-            "id": "lesson-en-beginner-54-ex-5",
-            "kind": "text",
-            "instruction": "can you? I can! do it?",
-            "text": "can you? I can! do it?"
-        },
-        {
-            "id": "lesson-en-beginner-54-ex-6",
-            "kind": "text",
-            "instruction": "hello? yes! thank you.",
-            "text": "hello? yes! thank you."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "go now!",
+                    "look out!",
+                    "help me!"
+                ],
+                "count": 3
+            }
         }
-    ],
-    "focusKeys": ["Slash"],
-    "focus": ["punctuation", "shift", "sentences"],
-    "prerequisites": ["lesson-en-beginner-53"]
+    ]
 }

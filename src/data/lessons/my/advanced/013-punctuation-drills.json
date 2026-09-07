@@ -14,20 +14,79 @@
         "minAccuracy": 93,
         "minWpm": 25
     },
+    "focus": [
+        "punctuation"
+    ],
+    "prerequisites": [
+        "lesson-my-advanced-12"
+    ],
+    "focusKeys": [
+        "KeyC",
+        "KeyJ",
+        "KeyA",
+        "Comma",
+        "ShiftLeft",
+        "KeyV",
+        "KeyU",
+        "KeyF",
+        "KeyG",
+        "KeyI",
+        "Semicolon",
+        "Period",
+        "KeyE",
+        "KeyM",
+        "KeyR",
+        "KeyS",
+        "KeyP",
+        "KeyD",
+        "ShiftRight",
+        "Digit7",
+        "KeyK",
+        "KeyO",
+        "KeyH",
+        "KeyN"
+    ],
+    "targetFingers": [
+        "left-middle",
+        "right-index",
+        "left-pinky",
+        "right-middle",
+        "left-index",
+        "right-pinky",
+        "right-ring",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-13-ex-1",
-            "kind": "text",
-            "instruction": "ဟုတ်တယ်၊ မှန်တယ်၊ ကောင်းတယ်။",
-            "text": "ဟုတ်တယ်၊ မှန်တယ်၊ ကောင်းတယ်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ခြေ ၊ လက် ၊ ခေါင်း ။",
+                    "နား ၊ မျက်စိ ၊ နှာခေါင်း ။"
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-13-ex-2",
-            "kind": "text",
-            "instruction": "ရက်၊ လ၊ ခုနှစ်တွေကို သတိမှတ်ပါ။",
-            "text": "ရက်၊ လ၊ ခုနှစ်တွေကို သတိမှတ်ပါ။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ရေ ကို သုံး ၊ နေ ကို ကြည့် ။",
+                    "ညီ က လာ ၊ ညီမ က သွား ။"
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["punctuation", "unicode", "sentences"],
-    "prerequisites": ["lesson-my-advanced-12"]
+    ]
 }

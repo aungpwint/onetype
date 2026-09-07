@@ -14,20 +14,74 @@
         "minAccuracy": 92,
         "minWpm": 20
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-advanced-4"
+    ],
+    "focusKeys": [
+        "Digit7",
+        "ShiftLeft",
+        "KeyA",
+        "KeyT",
+        "KeyZ",
+        "KeyR",
+        "KeyC",
+        "KeyJ",
+        "KeyG",
+        "ShiftRight",
+        "Semicolon",
+        "KeyE",
+        "KeyM",
+        "KeyV",
+        "KeyU",
+        "KeyF",
+        "KeyW",
+        "KeyS",
+        "KeyD",
+        "KeyK",
+        "KeyH",
+        "KeyI",
+        "KeyN",
+        "KeyB",
+        "KeyY",
+        "KeyP"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-pinky",
+        "left-index",
+        "left-middle",
+        "right-pinky",
+        "left-ring",
+        "right-middle"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-5-ex-1",
-            "kind": "text",
-            "instruction": "လုပ်ငန်း စီးပွားရေး အကောင့်",
-            "text": "လုပ်ငန်း စီးပွားရေး အကောင့်"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "bank": "words",
+                "count": 22
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-5-ex-2",
-            "kind": "text",
-            "instruction": "သငယ် စာတွေ ဖုန်း",
-            "text": "သငယ် စာတွေ ဖုန်း"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "words",
+                "count": 24
+            }
         }
-    ],
-    "focus": ["words", "unicode", "syllable"],
-    "prerequisites": ["lesson-my-advanced-4"]
+    ]
 }

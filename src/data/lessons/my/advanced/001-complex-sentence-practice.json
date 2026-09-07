@@ -14,26 +14,80 @@
         "minAccuracy": 90,
         "minWpm": 18
     },
+    "focus": [
+        "sentences"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-15"
+    ],
+    "focusKeys": [
+        "KeyT",
+        "KeyZ",
+        "KeyA",
+        "KeyU",
+        "Digit7",
+        "ShiftLeft",
+        "KeyD",
+        "KeyK",
+        "KeyV",
+        "KeyW",
+        "KeyB",
+        "ShiftRight",
+        "KeyF",
+        "Period",
+        "KeyR",
+        "KeyQ",
+        "KeyE",
+        "KeyJ",
+        "KeyH",
+        "Semicolon",
+        "KeyP",
+        "KeyO",
+        "KeyN",
+        "KeyG",
+        "KeyM"
+    ],
+    "targetFingers": [
+        "left-index",
+        "left-pinky",
+        "right-index",
+        "left-middle",
+        "right-middle",
+        "left-ring",
+        "right-pinky",
+        "right-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-1-ex-1",
-            "kind": "text",
-            "instruction": "စကားကို ဖြေးဖြေးပြောပြီး ကြိုးစားပါ။",
-            "text": "စကားကို ဖြေးဖြေးပြောပြီး ကြိုးစားပါ။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "အဖေ က ရေ ကို လို တယ် ။",
+                    "အမေ က ဆန် ကို လို တယ် ။"
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-1-ex-2",
-            "kind": "text",
-            "instruction": "လူတိုင်း အမှားလုပ်တတ်တယ်။",
-            "text": "လူတိုင်း အမှားလုပ်တတ်တယ်။"
-        },
-        {
-            "id": "lesson-my-advanced-1-ex-3",
-            "kind": "text",
-            "instruction": "ကျောင်းသားတွေ အချိန်မှန်လာကြတယ်။",
-            "text": "ကျောင်းသားတွေ အချိန်မှန်လာကြတယ်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "မြို့ က အ ကြီး ဆုံး မြို့ ဖြစ် သည် ။",
+                    "ရွာ က သေး သော ရွာ ။"
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["sentences", "unicode", "accuracy"],
-    "prerequisites": ["lesson-my-intermediate-15"]
+    ]
 }

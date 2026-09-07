@@ -14,41 +14,100 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyQ",
+        "ShiftRight",
+        "KeyZ",
+        "KeyK",
+        "ShiftLeft",
+        "KeyL",
+        "KeyP",
+        "KeyX",
+        "KeyO",
+        "KeyA"
+    ],
+    "focus": [
+        "shift"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "right-pinky",
+        "right-middle",
+        "right-ring",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-5"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-6-ex-1",
-            "kind": "text",
-            "instruction": "ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ",
-            "text": "ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ ဖ"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ဈ",
+                    "ဇ"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-6-ex-2",
-            "kind": "text",
-            "instruction": "ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ",
-            "text": "ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ ဂ"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ဒ",
+                    "ဓ"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-6-ex-3",
-            "kind": "text",
-            "instruction": "ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ",
-            "text": "ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ ဋ္ဌ"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ဏ",
+                    "ဌ"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-6-ex-4",
-            "kind": "text",
-            "instruction": "ဖ ဂ ဋ္ဌ ဖ ဂ ဋ္ဌ ဖ ဂ ဋ္ဌ",
-            "text": "ဖ ဂ ဋ္ဌ ဖ ဂ ဋ္ဌ ဖ ဂ ဋ္ဌ"
-        },
-        {
-            "id": "lesson-my-beginner-6-ex-5",
-            "kind": "text",
-            "instruction": "ခ ဖ ဃ ဂ ဋ္ဌ ခ ဖ ဃ ဂ ဋ္ဌ",
-            "text": "ခ ဖ ဃ ဂ ဋ္ဌ ခ ဖ ဃ ဂ ဋ္ဌ"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ဿ",
+                    "ဗ"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         }
-    ],
-    "focusKeys": ["KeyZ", "Semicolon", "Digit3", "KeyX"],
-    "focus": ["shift", "key-memory", "row-transition"],
-    "targetFingers": ["left-pinky", "right-pinky", "left-middle", "left-ring"],
-    "targetHands": ["left", "right"],
-    "prerequisites": ["lesson-my-beginner-5"]
+    ]
 }

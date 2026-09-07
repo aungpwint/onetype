@@ -14,33 +14,99 @@
         "minAccuracy": 88,
         "minWpm": 14
     },
+    "focus": [
+        "shift"
+    ],
+    "requiresShift": true,
+    "prerequisites": [
+        "lesson-en-beginner-39"
+    ],
+    "focusKeys": [
+        "KeyJ",
+        "ShiftLeft",
+        "KeyO",
+        "KeyH",
+        "KeyN",
+        "KeyM",
+        "KeyA",
+        "KeyR",
+        "KeyY",
+        "KeyE",
+        "KeyS",
+        "ShiftRight",
+        "KeyL",
+        "KeyI",
+        "KeyC",
+        "KeyD",
+        "KeyP",
+        "KeyT",
+        "KeyK",
+        "KeyF",
+        "KeyU"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-pinky",
+        "right-ring",
+        "left-index",
+        "left-middle",
+        "left-ring",
+        "right-pinky",
+        "right-middle"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-40-ex-1",
-            "kind": "text",
-            "instruction": "Monday Tuesday Wednesday Thursday Friday",
-            "text": "Monday Tuesday Wednesday Thursday Friday"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "John",
+                    "Mary",
+                    "James",
+                    "Alice"
+                ],
+                "count": 12,
+                "maxWordLength": 5
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-40-ex-2",
-            "kind": "text",
-            "instruction": "January February March April May June",
-            "text": "January February March April May June"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "London",
+                    "Paris",
+                    "Tokyo",
+                    "Cairo"
+                ],
+                "count": 12,
+                "maxWordLength": 6
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-40-ex-3",
-            "kind": "text",
-            "instruction": "London Paris Tokyo Beijing Yangon",
-            "text": "London Paris Tokyo Beijing Yangon"
-        },
-        {
-            "id": "lesson-en-beginner-40-ex-4",
-            "kind": "text",
-            "instruction": "Tom Mary Jack Kate Sam Lucy",
-            "text": "Tom Mary Jack Kate Sam Lucy"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "Monday",
+                    "Friday",
+                    "Sunday",
+                    "March",
+                    "April"
+                ],
+                "count": 12,
+                "maxWordLength": 6
+            }
         }
-    ],
-    "focus": ["shift", "words", "sentences"],
-    "requiresShift": true,
-    "prerequisites": ["lesson-en-beginner-39"]
+    ]
 }

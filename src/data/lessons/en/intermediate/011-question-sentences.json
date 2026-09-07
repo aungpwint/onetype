@@ -14,44 +14,98 @@
         "minAccuracy": 92,
         "minWpm": 22
     },
+    "focus": [
+        "sentences",
+        "punctuation"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-10"
+    ],
+    "focusKeys": [
+        "KeyW",
+        "KeyH",
+        "KeyA",
+        "KeyT",
+        "KeyR",
+        "KeyE",
+        "KeyY",
+        "KeyO",
+        "KeyU",
+        "KeyD",
+        "KeyI",
+        "KeyN",
+        "KeyG",
+        "Slash",
+        "ShiftLeft",
+        "KeyS",
+        "KeyL",
+        "KeyV",
+        "KeyK",
+        "KeyB",
+        "KeyM",
+        "KeyC",
+        "KeyP",
+        "KeyF",
+        "Comma",
+        "KeyQ"
+    ],
+    "targetFingers": [
+        "left-ring",
+        "right-index",
+        "left-pinky",
+        "left-index",
+        "left-middle",
+        "right-ring",
+        "right-middle",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-11-ex-1",
-            "kind": "text",
-            "instruction": "What is your name?",
-            "text": "What is your name?"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "what are you reading?",
+                    "where did she go?",
+                    "when will they arrive?"
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-11-ex-2",
-            "kind": "text",
-            "instruction": "Where do you live?",
-            "text": "Where do you live?"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "why is the sky blue today?",
+                    "how do you make bread?",
+                    "which one do you prefer?"
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-11-ex-3",
-            "kind": "text",
-            "instruction": "How old are you?",
-            "text": "How old are you?"
-        },
-        {
-            "id": "lesson-en-intermediate-11-ex-4",
-            "kind": "text",
-            "instruction": "Do you have a brother?",
-            "text": "Do you have a brother?"
-        },
-        {
-            "id": "lesson-en-intermediate-11-ex-5",
-            "kind": "text",
-            "instruction": "Why is the sky blue?",
-            "text": "Why is the sky blue?"
-        },
-        {
-            "id": "lesson-en-intermediate-11-ex-6",
-            "kind": "text",
-            "instruction": "Who made the light?",
-            "text": "Who made the light?"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "can you help me, please?",
+                    "may I ask a question?",
+                    "did you see that movie?"
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["sentences", "punctuation", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-10"]
+    ]
 }

@@ -14,32 +14,95 @@
         "minAccuracy": 92,
         "minWpm": 20
     },
+    "focus": [
+        "sentences",
+        "punctuation"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-8"
+    ],
+    "focusKeys": [
+        "KeyA",
+        "KeyL",
+        "KeyI",
+        "KeyC",
+        "KeyE",
+        "Quote",
+        "KeyS",
+        "KeyT",
+        "KeyP",
+        "KeyN",
+        "KeyG",
+        "Period",
+        "KeyH",
+        "KeyB",
+        "KeyO",
+        "KeyY",
+        "KeyR",
+        "KeyM",
+        "KeyD",
+        "KeyJ",
+        "KeyK",
+        "KeyW",
+        "KeyV",
+        "Comma",
+        "KeyU"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "right-ring",
+        "right-middle",
+        "left-middle",
+        "right-pinky",
+        "left-ring",
+        "left-index",
+        "right-index"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-9-ex-1",
-            "kind": "text",
-            "instruction": "Sam's book Mary's bag the cat's tail",
-            "text": "Sam's book Mary's bag the cat's tail"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "alice's cat is sleeping.",
+                    "the boys' room is tidy.",
+                    "james's phone rang"
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-9-ex-2",
-            "kind": "text",
-            "instruction": "the children's toys my mother's house",
-            "text": "the children's toys my mother's house"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "the teacher's desk is clean.",
+                    "his sister's bike is new.",
+                    "my mother's cooking smells good."
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-9-ex-3",
-            "kind": "text",
-            "instruction": "It's raining and the sky's very dark",
-            "text": "It's raining and the sky's very dark"
-        },
-        {
-            "id": "lesson-en-intermediate-9-ex-4",
-            "kind": "text",
-            "instruction": "Tom's dog ran to Kate's garden.",
-            "text": "Tom's dog ran to Kate's garden."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "it's a lovely morning.",
+                    "whether it's hot or cold, run outside."
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["words", "punctuation", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-8"]
+    ]
 }

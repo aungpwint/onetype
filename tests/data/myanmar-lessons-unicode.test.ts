@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url'
 import { getLessonRepository, getCanonicalLesson } from '@/data/curriculum'
 import { findSuspiciousInvisibleCharacters, normalizeMyanmarText, splitMyanmarSyllables, validateMyanmarText } from '@/core/unicode/myanmar'
 import { myanmar } from '@/core/keyboard-layout/myanmar'
+import { languageDefinitionFor } from '@/core/pedagogy'
+import type { ExerciseGeneratorSpec } from '@/core/pedagogy'
 import type { LessonExercise } from '@/types/exercise'
 
 const MY_ROOT = path.resolve(fileURLToPath(new URL('../../src/data/lessons/my', import.meta.url)))
@@ -138,5 +140,13 @@ function exerciseContent(exercise: LessonExercise): string[] {
     if (exercise.kind === 'keys') return exercise.keys
     if (exercise.kind === 'words') return exercise.words
     if (exercise.kind === 'sentences') return exercise.sentences
+    if (exercise.kind === 'generated') return generatedContent(exercise.generator)
+    return []
+}
+
+function generatedContent(generator: ExerciseGeneratorSpec): string[] {
+    if (generator.type === 'chunks') return generator.keys
+    if (generator.type === 'words') return generator.words ?? languageDefinitionFor('myanmar').banks[generator.bank ?? ''] ?? []
+    if (generator.type === 'sentences') return generator.sentences ?? languageDefinitionFor('myanmar').banks[generator.bank ?? ''] ?? []
     return []
 }

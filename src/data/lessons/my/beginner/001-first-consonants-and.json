@@ -14,34 +14,70 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyU",
+        "KeyI"
+    ],
+    "focus": [
+        "top-row",
+        "finger-control",
+        "key-memory"
+    ],
+    "targetFingers": [
+        "right-index",
+        "right-middle"
+    ],
+    "targetHands": [
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-1-ex-1",
-            "kind": "text",
-            "instruction": "က က က က က က က က က က",
-            "text": "က က က က က က က က က က"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "က",
+                    "င"
+                ],
+                "count": 18,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-1-ex-2",
-            "kind": "text",
-            "instruction": "င င င င င င င င င င",
-            "text": "င င င င င င င င င င"
+            "instruction": "Alternate between both fingers and hands",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "က",
+                    "င"
+                ],
+                "count": 18,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-1-ex-3",
-            "kind": "text",
-            "instruction": "က င က င က င က င က င",
-            "text": "က င က င က င က င က င"
-        },
-        {
-            "id": "lesson-my-beginner-1-ex-4",
-            "kind": "text",
-            "instruction": "က င က င က င က င က င က င က င",
-            "text": "က င က င က င က င က င က င က င"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "က",
+                    "င"
+                ],
+                "count": 22,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyU", "KeyI"],
-    "focus": ["top-row", "finger-control", "key-memory"],
-    "targetFingers": ["right-index", "right-middle"],
-    "targetHands": ["right"]
+    ]
 }

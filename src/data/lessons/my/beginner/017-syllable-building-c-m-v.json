@@ -14,38 +14,100 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focus": [
+        "syllable",
+        "medial"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-16"
+    ],
+    "focusKeys": [
+        "KeyU",
+        "KeyS",
+        "KeyD",
+        "KeyJ",
+        "KeyM",
+        "KeyR",
+        "KeyY",
+        "KeyK"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-middle"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-17-ex-1",
-            "kind": "text",
-            "instruction": "ကျိ ကြိ ကျာ ကြာ",
-            "text": "ကျိ ကြိ ကျာ ကြာ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကျိ"
+                ],
+                "count": 14,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-17-ex-2",
-            "kind": "text",
-            "instruction": "တျိ တြိ တျာ တြာ",
-            "text": "တျိ တြိ တျာ တြာ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကြာ",
+                    "ကျာ"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-17-ex-3",
-            "kind": "text",
-            "instruction": "မျိ မြိ မျာ မြာ",
-            "text": "မျိ မြိ မျာ မြာ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "မျာ",
+                    "ပြု"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-17-ex-4",
-            "kind": "text",
-            "instruction": "ကျေ ကြေ ကျွ ကြွ",
-            "text": "ကျေ ကြေ ကျွ ကြွ"
-        },
-        {
-            "id": "lesson-my-beginner-17-ex-5",
-            "kind": "text",
-            "instruction": "ကျို ကြို တျို တြို",
-            "text": "ကျို ကြို တျို တြို"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကျိ",
+                    "ကြာ",
+                    "ကျာ",
+                    "မျာ",
+                    "ပြု"
+                ],
+                "count": 26,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["unicode", "syllable", "medial"],
-    "prerequisites": ["lesson-my-beginner-16"]
+    ]
 }

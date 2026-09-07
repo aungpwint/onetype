@@ -14,20 +14,79 @@
         "minAccuracy": 92,
         "minWpm": 25
     },
+    "focus": [
+        "sentences"
+    ],
+    "prerequisites": [
+        "lesson-my-advanced-7"
+    ],
+    "focusKeys": [
+        "KeyK",
+        "ShiftLeft",
+        "KeyD",
+        "ShiftRight",
+        "KeyE",
+        "KeyA",
+        "KeyH",
+        "Digit7",
+        "KeyU",
+        "KeyP",
+        "KeyR",
+        "KeyF",
+        "Semicolon",
+        "KeyW",
+        "KeyB",
+        "Period",
+        "KeyV",
+        "KeyI",
+        "KeyT",
+        "KeyZ",
+        "KeyO",
+        "KeyM",
+        "KeyY",
+        "KeyG"
+    ],
+    "targetFingers": [
+        "right-middle",
+        "left-pinky",
+        "left-middle",
+        "right-pinky",
+        "right-index",
+        "left-index",
+        "left-ring",
+        "right-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-8-ex-1",
-            "kind": "text",
-            "instruction": "ယခုနှစ်တွင် စားသောက်ကုန် ဈေးနှုန်းများ မြင့်တက်လာသည်။",
-            "text": "ယခုနှစ်တွင် စားသောက်ကုန် ဈေးနှုန်းများ မြင့်တက်လာသည်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ဒီနေ့ ရေ က စိမ်း တယ် ။",
+                    "မနက် က နေ လင်း တယ် ။"
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-8-ex-2",
-            "kind": "text",
-            "instruction": "အစိုးရက ကျောင်းအသစ်များ ဆောက်လုပ်ပေးနေသည်။",
-            "text": "အစိုးရက ကျောင်းအသစ်များ ဆောက်လုပ်ပေးနေသည်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "အဖေ က သတင်း စာ ကို ဖတ် ပါ တယ် ။",
+                    "အမေ က စာ ကို ရေး ပါ တယ် ။"
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["sentences", "unicode", "accuracy"],
-    "prerequisites": ["lesson-my-advanced-7"]
+    ]
 }

@@ -14,32 +14,93 @@
         "minAccuracy": 92,
         "minWpm": 20
     },
+    "focus": [
+        "sentences"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-5"
+    ],
+    "focusKeys": [
+        "KeyI",
+        "KeyW",
+        "KeyL",
+        "KeyM",
+        "KeyE",
+        "KeyT",
+        "KeyH",
+        "KeyA",
+        "KeyS",
+        "KeyO",
+        "KeyN",
+        "Period",
+        "KeyY",
+        "KeyR",
+        "KeyG",
+        "KeyK",
+        "KeyB",
+        "KeyV",
+        "KeyD",
+        "KeyU",
+        "KeyF",
+        "KeyC",
+        "KeyP"
+    ],
+    "targetFingers": [
+        "right-middle",
+        "left-ring",
+        "right-ring",
+        "right-index",
+        "left-middle",
+        "left-index",
+        "left-pinky",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-6-ex-1",
-            "kind": "text",
-            "instruction": "This is my pen and that is your book.",
-            "text": "This is my pen and that is your book."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "i will meet him at the station.",
+                    "they are going to the market.",
+                    "she has a small yellow bag."
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-6-ex-2",
-            "kind": "text",
-            "instruction": "We go to school every morning by bus.",
-            "text": "We go to school every morning by bus."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "we saw a long river today.",
+                    "the train leaves in ten minutes.",
+                    "he wrote a letter to his friend."
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-6-ex-3",
-            "kind": "text",
-            "instruction": "She has a small dog named Lucky.",
-            "text": "She has a small dog named Lucky."
-        },
-        {
-            "id": "lesson-en-intermediate-6-ex-4",
-            "kind": "text",
-            "instruction": "The sun rises in the east every day.",
-            "text": "The sun rises in the east every day."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "the children play in the green park.",
+                    "my brother reads the morning news.",
+                    "you can bring your book tomorrow."
+                ],
+                "count": 3
+            }
         }
-    ],
-    "focus": ["sentences", "words", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-5"]
+    ]
 }

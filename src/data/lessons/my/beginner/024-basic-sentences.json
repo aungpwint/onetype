@@ -14,32 +14,82 @@
         "minAccuracy": 88,
         "minWpm": 15
     },
+    "focus": [
+        "sentences"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-23"
+    ],
+    "focusKeys": [
+        "Digit7",
+        "ShiftLeft",
+        "KeyA",
+        "KeyE",
+        "KeyJ",
+        "KeyH",
+        "KeyI",
+        "KeyG",
+        "Semicolon",
+        "KeyU",
+        "KeyR",
+        "KeyS",
+        "KeyM",
+        "Period",
+        "KeyT",
+        "KeyZ",
+        "KeyD",
+        "KeyF",
+        "KeyC",
+        "KeyV",
+        "KeyK",
+        "KeyL",
+        "KeyN",
+        "ShiftRight",
+        "KeyP"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-pinky",
+        "left-middle",
+        "right-middle",
+        "left-index",
+        "right-pinky",
+        "left-ring",
+        "right-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-24-ex-1",
-            "kind": "text",
-            "instruction": "ငါကျောင်းသွားတယ်။",
-            "text": "ငါကျောင်းသွားတယ်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ရေ နဲ့ ငါး က များ ။",
+                    "အဖေ နဲ့ အမေ က အိမ် ။",
+                    "ခြေ နဲ့ လက် က များ ။"
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-24-ex-2",
-            "kind": "text",
-            "instruction": "အမေအိမ်မှာလား။",
-            "text": "အမေအိမ်မှာလား။"
-        },
-        {
-            "id": "lesson-my-beginner-24-ex-3",
-            "kind": "text",
-            "instruction": "ဆရာကခွေးကိုခေါ်တယ်။",
-            "text": "ဆရာကခွေးကိုခေါ်တယ်။"
-        },
-        {
-            "id": "lesson-my-beginner-24-ex-4",
-            "kind": "text",
-            "instruction": "မင်္ဂလာပါ။",
-            "text": "မင်္ဂလာပါ။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "နေ က မြို့ ကို ကူ ။",
+                    "ကြက် နဲ့ ငါး က ညီ ။",
+                    "မျက်စိ နဲ့ နား က လက် ။"
+                ],
+                "count": 3
+            }
         }
-    ],
-    "focus": ["sentences", "unicode", "punctuation"],
-    "prerequisites": ["lesson-my-beginner-23"]
+    ]
 }

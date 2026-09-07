@@ -194,7 +194,7 @@ export function Stat({ label, value, hint, icon }: { label: string; value: React
                 {icon ? <span className="text-accent">{icon}</span> : null}
                 <p className={eyebrowClass}>{label}</p>
             </div>
-            <p className="mt-1.5 font-mono text-2xl leading-tight font-semibold tracking-tight tabular-nums">{value}</p>
+            <p className="mt-1.5 text-2xl leading-tight font-semibold tracking-tight tabular-nums">{value}</p>
             {hint ? <p className="mt-1 text-xs text-muted-foreground">{hint}</p> : null}
         </div>
     )
@@ -237,7 +237,7 @@ export function StatCard({
                     </span>
                 ) : null}
             </div>
-            <p className={cn('relative font-mono leading-none font-semibold tracking-tight tabular-nums', lg ? 'mt-2.5 text-3xl' : 'mt-2 text-2xl')}>
+            <p className={cn('relative leading-none font-semibold tracking-tight tabular-nums', lg ? 'mt-2.5 text-3xl' : 'mt-2 text-2xl')}>
                 {value}
             </p>
             {hint ? (
@@ -318,17 +318,12 @@ export function Metric({
                 : 'text-foreground'
     const valueClass =
         size === 'sm'
-            ? 'font-mono text-sm leading-none font-semibold tabular-nums text-foreground md:text-base'
-            : `font-mono text-lg leading-none font-semibold tabular-nums md:text-xl ${toneClass}`
+            ? 'text-sm leading-none font-semibold tabular-nums text-foreground md:text-base'
+            : `text-lg leading-none font-semibold tabular-nums md:text-xl ${toneClass}`
     return (
         <div className={cn('flex flex-col gap-0.5', align === 'end' ? 'items-end' : 'items-center')}>
             <span className={valueClass}>{value}</span>
-            <span
-                className={cn(
-                    size === 'sm' ? 'text-[0.625rem]' : 'text-[0.6875rem]',
-                    'font-medium tracking-[0.12em] text-muted-foreground uppercase',
-                )}
-            >
+            <span className={cn(size === 'sm' ? 'text-[0.625rem]' : 'text-[0.6875rem]', 'font-medium tracking-[0.12em] text-muted-foreground uppercase')}>
                 {label}
             </span>
         </div>

@@ -14,32 +14,94 @@
         "minAccuracy": 92,
         "minWpm": 22
     },
+    "focus": [
+        "sentences"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-6"
+    ],
+    "focusKeys": [
+        "KeyW",
+        "KeyH",
+        "KeyE",
+        "KeyN",
+        "KeyT",
+        "KeyR",
+        "KeyA",
+        "KeyI",
+        "KeyS",
+        "KeyO",
+        "KeyP",
+        "Comma",
+        "KeyL",
+        "KeyK",
+        "Period",
+        "KeyF",
+        "KeyY",
+        "KeyU",
+        "KeyC",
+        "KeyV",
+        "KeyD",
+        "KeyM",
+        "KeyB",
+        "KeyG"
+    ],
+    "targetFingers": [
+        "left-ring",
+        "right-index",
+        "left-middle",
+        "left-index",
+        "left-pinky",
+        "right-middle",
+        "right-ring",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-7-ex-1",
-            "kind": "text",
-            "instruction": "They play football in the park after school.",
-            "text": "They play football in the park after school."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "when the rain stops, we will walk.",
+                    "if you practice every day, you will improve.",
+                    "because the road is wet, they walk slowly."
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-7-ex-2",
-            "kind": "text",
-            "instruction": "I like to read a story before I sleep.",
-            "text": "I like to read a story before I sleep."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "she stays late whenever she has homework.",
+                    "although it was warm, he wore a coat.",
+                    "the more you read, the more you know."
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-7-ex-3",
-            "kind": "text",
-            "instruction": "The teacher tells us to keep quiet in class.",
-            "text": "The teacher tells us to keep quiet in class."
-        },
-        {
-            "id": "lesson-en-intermediate-7-ex-4",
-            "kind": "text",
-            "instruction": "We should drink water and eat fruit every day.",
-            "text": "We should drink water and eat fruit every day."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "after the meal, they wash the dishes.",
+                    "before you sleep, turn off the light.",
+                    "since it is late, we should hurry."
+                ],
+                "count": 3
+            }
         }
-    ],
-    "focus": ["sentences", "words", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-6"]
+    ]
 }

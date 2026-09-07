@@ -14,38 +14,91 @@
         "minAccuracy": 90,
         "minWpm": 14
     },
+    "focus": [
+        "sentences"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-25"
+    ],
+    "focusKeys": [
+        "KeyT",
+        "KeyH",
+        "KeyE",
+        "KeyC",
+        "KeyA",
+        "KeyI",
+        "KeyS",
+        "KeyO",
+        "KeyN",
+        "KeyM",
+        "Period",
+        "KeyU",
+        "KeyW",
+        "KeyR",
+        "KeyP",
+        "KeyK",
+        "KeyD",
+        "KeyY",
+        "KeyB",
+        "KeyG",
+        "KeyL"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-index",
+        "left-middle",
+        "left-pinky",
+        "right-middle",
+        "left-ring",
+        "right-ring",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-26-ex-1",
-            "kind": "text",
-            "instruction": "i am a man.",
-            "text": "i am a man."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "the cat is on the mat.",
+                    "she can see the sun.",
+                    "we run to the park."
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-26-ex-2",
-            "kind": "text",
-            "instruction": "he is old.",
-            "text": "he is old."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "he has a red car.",
+                    "they are in the house.",
+                    "this is a big dog."
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-26-ex-3",
-            "kind": "text",
-            "instruction": "the dog had fun.",
-            "text": "the dog had fun."
-        },
-        {
-            "id": "lesson-en-beginner-26-ex-4",
-            "kind": "text",
-            "instruction": "she has a red hat.",
-            "text": "she has a red hat."
-        },
-        {
-            "id": "lesson-en-beginner-26-ex-5",
-            "kind": "text",
-            "instruction": "we will make more.",
-            "text": "we will make more."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "i like to read a book.",
+                    "the man sat by the gate.",
+                    "we go home at noon."
+                ],
+                "count": 3
+            }
         }
-    ],
-    "focus": ["sentences", "words", "accuracy"],
-    "prerequisites": ["lesson-en-beginner-25"]
+    ]
 }

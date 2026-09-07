@@ -119,6 +119,53 @@ export const customExerciseSchema = z
     })
     .strict()
 
+export const generatorChunkSchema = z
+    .object({
+        type: z.literal('chunks'),
+        keys: z.array(nonEmptyString).min(1),
+        count: z.number().int().positive(),
+        chunkMin: z.number().int().positive(),
+        chunkMax: z.number().int().positive(),
+        style: z.enum(['repetition', 'alternation', 'runs', 'variable', 'transition', 'controlled']).optional(),
+        mixed: z.boolean().optional(),
+        seed: z.number().int().optional(),
+    })
+    .strict()
+
+export const generatorWordsSchema = z
+    .object({
+        type: z.literal('words'),
+        bank: z.string().optional(),
+        words: z.array(nonEmptyString).min(1).optional(),
+        count: z.number().int().positive(),
+        maxWordLength: z.number().int().positive().optional(),
+        keys: z.array(nonEmptyString).optional(),
+        seed: z.number().int().optional(),
+    })
+    .strict()
+    .refine((spec) => spec.bank !== undefined || spec.words !== undefined, { message: 'word generator needs a bank or inline words' })
+
+export const generatorSentencesSchema = z
+    .object({
+        type: z.literal('sentences'),
+        bank: z.string().optional(),
+        sentences: z.array(nonEmptyString).min(1).optional(),
+        count: z.number().int().positive(),
+        seed: z.number().int().optional(),
+    })
+    .strict()
+    .refine((spec) => spec.bank !== undefined || spec.sentences !== undefined, { message: 'sentence generator needs a bank or inline sentences' })
+
+export const generatorSpecSchema = z.discriminatedUnion('type', [generatorChunkSchema, generatorWordsSchema, generatorSentencesSchema])
+
+export const generatedExerciseSchema = z
+    .object({
+        ...exerciseBaseSchema,
+        kind: z.literal('generated'),
+        generator: generatorSpecSchema,
+    })
+    .strict()
+
 export const lessonExerciseSchema = z.discriminatedUnion('kind', [
     keyExerciseSchema,
     wordExerciseSchema,
@@ -126,6 +173,7 @@ export const lessonExerciseSchema = z.discriminatedUnion('kind', [
     textExerciseSchema,
     paragraphExerciseSchema,
     customExerciseSchema,
+    generatedExerciseSchema,
 ])
 
 export const lessonCompletionSchema = z.object({

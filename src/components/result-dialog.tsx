@@ -487,11 +487,11 @@ function ClusterSlips() {
             <ul className="mt-2 space-y-2">
                 {summary.map((s) => (
                     <li key={s.kind} className="flex items-start gap-2 text-sm">
-                        <span className="mt-0.5 rounded-md bg-muted px-1.5 py-0.5 font-mono text-xs">{s.count}×</span>
+                        <span className="mt-0.5 rounded-md bg-muted px-1.5 py-0.5 text-xs tabular-nums">{s.count}×</span>
                         <span>
                             <span className="font-medium">{copy[s.kind].title}</span>
                             <span className="text-muted-foreground"> — {copy[s.kind].hint}</span>
-                            <span className="ml-1 font-mono text-xs text-muted-foreground tabular-nums">{s.example}</span>
+                            <span className="ml-1 font-myanmar text-xs text-muted-foreground tabular-nums">{s.example}</span>
                         </span>
                     </li>
                 ))}
@@ -505,13 +505,13 @@ function HeroMetric({ label, value, unit, primary }: { label: string; value: str
         <div className={cn('flex flex-col items-center gap-1.5 px-2 py-4 text-center md:py-5', primary && 'bg-brass/5')}>
             <p
                 className={cn(
-                    'font-display leading-none font-bold tracking-[-0.02em] tabular-nums',
+                    'font-display leading-none font-semibold tracking-[-0.02em] tabular-nums',
                     primary ? 'text-4xl text-brass md:text-5xl' : 'text-3xl md:text-4xl',
                 )}
             >
                 {value}
                 {unit ? (
-                    <span className="ml-1 font-mono text-sm font-medium tracking-normal text-ink-faint tabular-nums md:text-base">{unit}</span>
+                    <span className="ml-1 text-sm font-medium tracking-normal text-ink-faint tabular-nums md:text-base">{unit}</span>
                 ) : null}
             </p>
             <p className={eyebrowClass}>{label}</p>

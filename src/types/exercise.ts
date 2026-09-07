@@ -1,4 +1,7 @@
-export type LessonExercise = KeyExercise | WordExercise | SentenceExercise | TextExercise | ParagraphExercise | CustomExercise
+import type { ExerciseGeneratorSpec } from '@/core/pedagogy/types'
+import { generateLessonExerciseText } from '@/core/pedagogy/index'
+
+export type LessonExercise = KeyExercise | WordExercise | SentenceExercise | TextExercise | ParagraphExercise | CustomExercise | GeneratedExercise
 
 export interface ExerciseOptions {
     allowBackspace?: boolean
@@ -44,7 +47,19 @@ export interface CustomExercise extends ExerciseBase {
     subtype: string
 }
 
-export const EXERCISE_KINDS = ['keys', 'words', 'sentences', 'text', 'paragraph', 'custom'] as const
+// Deterministic, seeded generator spec. The actual typed text is produced at
+// normalization time so the content stays fresh per exercise without bloating
+// the lesson data, and identical on every reload.
+export interface GeneratedExercise extends ExerciseBase {
+    kind: 'generated'
+    generator: ExerciseGeneratorSpec
+}
+
+export function isGeneratedExercise(exercise: LessonExercise): exercise is GeneratedExercise {
+    return exercise.kind === 'generated'
+}
+
+export const EXERCISE_KINDS = ['keys', 'words', 'sentences', 'text', 'paragraph', 'custom', 'generated'] as const
 
 export type LessonExerciseKind = (typeof EXERCISE_KINDS)[number]
 
@@ -52,7 +67,12 @@ export function isLessonExerciseKind(value: unknown): value is LessonExerciseKin
     return typeof value === 'string' && (EXERCISE_KINDS as readonly string[]).includes(value)
 }
 
-export function exerciseText(exercise: LessonExercise): string {
+export interface ExerciseTextContext {
+    lessonId: string
+    languageId: string
+}
+
+export function exerciseText(exercise: LessonExercise, ctx?: ExerciseTextContext): string {
     switch (exercise.kind) {
         case 'keys':
             return expandKeyExercise(exercise)
@@ -64,6 +84,11 @@ export function exerciseText(exercise: LessonExercise): string {
         case 'paragraph':
         case 'custom':
             return exercise.text
+        case 'generated':
+            if (!ctx) {
+                throw new Error(`Generated exercise "${exercise.id}" requires a normalization context (lessonId + languageId)`)
+            }
+            return generateLessonExerciseText(exercise.generator, { lessonId: ctx.lessonId, exerciseId: exercise.id }, ctx.languageId)
     }
 }
 
@@ -82,4 +107,5 @@ export interface NormalizedExercise {
     text: string
     instruction?: string
     options?: ExerciseOptions
+    generator?: ExerciseGeneratorSpec
 }

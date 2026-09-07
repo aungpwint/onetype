@@ -14,39 +14,92 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyU",
+        "KeyF",
+        "ShiftRight",
+        "KeyC",
+        "KeyY"
+    ],
+    "focus": [
+        "syllable"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-18"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-index",
+        "right-pinky",
+        "left-middle"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-19-ex-1",
-            "kind": "text",
-            "instruction": "မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ",
-            "text": "မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ မင်္ဂလာ"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "က္က"
+                ],
+                "count": 12,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-19-ex-2",
-            "kind": "text",
-            "instruction": "အင်္ဂါ အင်္ဂါ အင်္ဂါ အင်္ဂါ အင်္ဂါ",
-            "text": "အင်္ဂါ အင်္ဂါ အင်္ဂါ အင်္ဂါ အင်္ဂါ"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "က္ခ"
+                ],
+                "count": 12,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-19-ex-3",
-            "kind": "text",
-            "instruction": "သုံးလုံး သုံးလုံး သုံးလုံး သုံးလုံး",
-            "text": "သုံးလုံး သုံးလုံး သုံးလုံး သုံးလုံး"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ပ္ပ"
+                ],
+                "count": 12,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-19-ex-4",
-            "kind": "text",
-            "instruction": "ကြက်သွန်း ကြက်သွန်း ကြက်သွန်း",
-            "text": "ကြက်သွန်း ကြက်သွန်း ကြက်သွန်း"
-        },
-        {
-            "id": "lesson-my-beginner-19-ex-5",
-            "kind": "text",
-            "instruction": "ဥက္ကဋ္ဌ ဥက္ကဋ္ဌ ဥက္ကဋ္ဌ",
-            "text": "ဥက္ကဋ္ဌ ဥက္ကဋ္ဌ ဥက္ကဋ္ဌ"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "က္က",
+                    "က္ခ",
+                    "ပ္ပ"
+                ],
+                "count": 22,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyF"],
-    "focus": ["unicode", "syllable"],
-    "prerequisites": ["lesson-my-beginner-18"]
+    ]
 }

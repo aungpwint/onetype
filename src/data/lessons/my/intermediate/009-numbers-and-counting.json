@@ -14,20 +14,98 @@
         "minAccuracy": 90,
         "minWpm": null
     },
+    "focus": [
+        "numbers",
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-8"
+    ],
+    "focusKeys": [
+        "Digit1",
+        "Digit2",
+        "Digit3",
+        "Digit4",
+        "Digit5",
+        "Digit6",
+        "Digit7",
+        "Digit8",
+        "Digit9",
+        "Digit0"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-9-ex-1",
-            "kind": "text",
-            "instruction": "၁၀ ၂၀ ၃၀ ၄၀ ၅၀ ၆၀ ၇၀ ၈၀ ၉၀ ၁၀၀",
-            "text": "၁၀ ၂၀ ၃၀ ၄၀ ၅၀ ၆၀ ၇၀ ၈၀ ၉၀ ၁၀၀"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "၁",
+                    "၂",
+                    "၃",
+                    "၄",
+                    "၅"
+                ],
+                "count": 18,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-9-ex-2",
-            "kind": "text",
-            "instruction": "၅ ၁၀ ၁၅ ၂၀ ၂၅ ၃၀ ၃၅ ၄၀ ၄၅ ၅၀",
-            "text": "၅ ၁၀ ၁၅ ၂၀ ၂၅ ၃၀ ၃၅ ၄၀ ၄၅ ၅၀"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "၆",
+                    "၇",
+                    "၈",
+                    "၉",
+                    "၀"
+                ],
+                "count": 18,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-9-ex-3",
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "၁",
+                    "၂",
+                    "၃",
+                    "၄",
+                    "၅",
+                    "၆",
+                    "၇",
+                    "၈",
+                    "၉",
+                    "၀"
+                ],
+                "count": 20
+            }
         }
-    ],
-    "focus": ["numbers", "unicode"],
-    "prerequisites": ["lesson-my-intermediate-8"]
+    ]
 }

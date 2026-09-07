@@ -14,41 +14,94 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyA",
+        "ShiftRight",
+        "KeyS",
+        "KeyD",
+        "KeyF",
+        "KeyJ",
+        "ShiftLeft",
+        "KeyK",
+        "KeyL"
+    ],
+    "focus": [
+        "shift"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
+    "prerequisites": [
+        "lesson-en-beginner-32"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "right-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-33-ex-1",
-            "kind": "text",
-            "instruction": "aA sS dD fF jJ kK lL",
-            "text": "aA sS dD fF jJ kK lL"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "A",
+                    "S",
+                    "D",
+                    "F"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-33-ex-2",
-            "kind": "text",
-            "instruction": "As Sd Df Fj Jk Kl",
-            "text": "As Sd Df Fj Jk Kl"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "J",
+                    "K",
+                    "L"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-33-ex-3",
-            "kind": "text",
-            "instruction": "aS dF jK lA sD fJ kL",
-            "text": "aS dF jK lA sD fJ kL"
-        },
-        {
-            "id": "lesson-en-beginner-33-ex-4",
-            "kind": "text",
-            "instruction": "Aa Ss Dd Ff Jj Kk Ll",
-            "text": "Aa Ss Dd Ff Jj Kk Ll"
-        },
-        {
-            "id": "lesson-en-beginner-33-ex-5",
-            "kind": "text",
-            "instruction": "aA sS dD fF jJ kK lL aA sS dD fF jJ kK lL",
-            "text": "aA sS dD fF jJ kK lL aA sS dD fF jJ kK lL"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "A",
+                    "F",
+                    "J",
+                    "L",
+                    "S",
+                    "K"
+                ],
+                "count": 22,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable",
+                "mixed": true
+            }
         }
-    ],
-    "focusKeys": ["KeyA", "KeyS", "KeyD", "KeyF", "KeyJ", "KeyK", "KeyL", "ShiftLeft", "ShiftRight"],
-    "focus": ["shift", "hand-alternation"],
-    "targetHands": ["left", "right"],
-    "requiresShift": true,
-    "prerequisites": ["lesson-en-beginner-32"]
+    ]
 }

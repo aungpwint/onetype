@@ -176,7 +176,7 @@ function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
             </span>
 
             <div className="relative flex flex-col items-center text-center">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary font-mono text-sm font-bold text-primary-foreground shadow-(--shadow-2)">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-(--shadow-2)">
                     <Keyboard className="size-5" />
                 </span>
 

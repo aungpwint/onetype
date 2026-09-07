@@ -14,26 +14,117 @@
         "minAccuracy": 90,
         "minWpm": 15
     },
+    "focus": [
+        "syllable",
+        "tone"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-24"
+    ],
+    "focusKeys": [
+        "KeyU",
+        "KeyI",
+        "KeyW",
+        "KeyE",
+        "KeyD",
+        "KeyK",
+        "KeyA",
+        "KeyM",
+        "Semicolon",
+        "KeyS",
+        "KeyJ",
+        "KeyR",
+        "Digit7",
+        "ShiftLeft",
+        "KeyH",
+        "KeyQ",
+        "KeyF",
+        "KeyG"
+    ],
+    "targetFingers": [
+        "right-index",
+        "right-middle",
+        "left-ring",
+        "left-middle",
+        "left-pinky",
+        "right-pinky",
+        "left-index"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-25-ex-1",
-            "kind": "text",
-            "instruction": "မင်္ဂလာပါ။ မင်းနေကောင်းလား။",
-            "text": "မင်္ဂလာပါ။ မင်းနေကောင်းလား။"
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "က",
+                    "င",
+                    "တ",
+                    "န"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-25-ex-2",
-            "kind": "text",
-            "instruction": "ကျွန်တော်က ကျောင်းသားပါ။",
-            "text": "ကျွန်တော်က ကျောင်းသားပါ။"
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကိ",
+                    "ကု",
+                    "ကေ",
+                    "ကာ",
+                    "ကား"
+                ],
+                "count": 24,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-25-ex-3",
-            "kind": "text",
-            "instruction": "ငါဆရာ့ကို မေးခွန်းမေးတယ်။",
-            "text": "ငါဆရာ့ကို မေးခွန်းမေးတယ်။"
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကျ",
+                    "ကြ",
+                    "မျာ"
+                ],
+                "count": 18,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-beginner-25-ex-4",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ရေ",
+                    "မြို့",
+                    "ဆန်",
+                    "ငါး",
+                    "ကြက်"
+                ],
+                "count": 18
+            }
         }
-    ],
-    "focus": ["accuracy", "speed", "unicode", "syllable"],
-    "prerequisites": ["lesson-my-beginner-24"]
+    ]
 }

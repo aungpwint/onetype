@@ -14,14 +14,90 @@
         "minAccuracy": 88,
         "minWpm": null
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-4"
+    ],
+    "focusKeys": [
+        "KeyP",
+        "KeyM",
+        "KeyQ",
+        "Digit7",
+        "ShiftLeft",
+        "KeyU",
+        "KeyS",
+        "KeyA",
+        "KeyI",
+        "KeyF",
+        "Semicolon",
+        "KeyT",
+        "KeyD",
+        "KeyR",
+        "KeyO",
+        "KeyC",
+        "KeyV"
+    ],
+    "targetFingers": [
+        "right-pinky",
+        "right-index",
+        "left-pinky",
+        "left-ring",
+        "right-middle",
+        "left-index",
+        "left-middle",
+        "right-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-5-ex-1",
-            "kind": "text",
-            "instruction": "စာသင်ခန်း စာမေးပွဲ ဆရာ ကျောင်းသား",
-            "text": "စာသင်ခန်း စာမေးပွဲ ဆရာ ကျောင်းသား"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "စာ",
+                    "ဆရာ",
+                    "ကျောင်း"
+                ],
+                "count": 18
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-5-ex-2",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "အိမ်",
+                    "ကျောင်း",
+                    "စာသား"
+                ],
+                "count": 20,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-5-ex-3",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ချစ်",
+                    "လေး"
+                ],
+                "count": 16
+            }
         }
-    ],
-    "focus": ["words", "unicode"],
-    "prerequisites": ["lesson-my-intermediate-4"]
+    ]
 }

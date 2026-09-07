@@ -14,38 +14,76 @@
         "minAccuracy": 93,
         "minWpm": 30
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-18"
+    ],
+    "focusKeys": [
+        "KeyT",
+        "KeyH",
+        "KeyE",
+        "KeyA",
+        "KeyN",
+        "KeyD",
+        "KeyY",
+        "KeyO",
+        "KeyU",
+        "KeyW",
+        "KeyI",
+        "KeyS",
+        "KeyF",
+        "KeyR",
+        "KeyM",
+        "KeyV"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-index",
+        "left-middle",
+        "left-pinky",
+        "right-ring",
+        "left-ring",
+        "right-middle"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-advanced-1-ex-1",
-            "kind": "text",
-            "instruction": "edc rfv tgb edc rfv tgb edc rfv tgb",
-            "text": "edc rfv tgb edc rfv tgb edc rfv tgb"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 26,
+                "maxWordLength": 7
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-advanced-1-ex-2",
-            "kind": "text",
-            "instruction": "ki lo ju ki lo ju ki lo ju ki lo ju",
-            "text": "ki lo ju ki lo ju ki lo ju ki lo ju"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 30,
+                "maxWordLength": 8
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-advanced-1-ex-3",
-            "kind": "text",
-            "instruction": "pq wx vb pq wx vb pq wx vb pq wx vb",
-            "text": "pq wx vb pq wx vb pq wx vb pq wx vb"
-        },
-        {
-            "id": "lesson-en-advanced-1-ex-4",
-            "kind": "text",
-            "instruction": "freedom evaluate privilege judgment",
-            "text": "freedom evaluate privilege judgment"
-        },
-        {
-            "id": "lesson-en-advanced-1-ex-5",
-            "kind": "text",
-            "instruction": "knowledge irregular questionnaire",
-            "text": "knowledge irregular questionnaire"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 32,
+                "maxWordLength": 9
+            }
         }
-    ],
-    "focus": ["finger-control", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-18"]
+    ]
 }

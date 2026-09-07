@@ -14,64 +14,139 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyA",
+        "KeyS",
+        "KeyD",
+        "KeyF",
+        "KeyZ",
+        "KeyX",
+        "KeyC",
+        "KeyV",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyN",
+        "KeyM",
+        "KeyG",
+        "KeyH",
+        "KeyB"
+    ],
+    "focus": [
+        "row-transition",
+        "finger-control",
+        "key-memory"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-14"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-15-ex-1",
-            "kind": "text",
-            "instruction": "az az az az az az az az az az",
-            "text": "az az az az az az az az az az"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "s",
+                    "d",
+                    "f"
+                ],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-15-ex-2",
-            "kind": "text",
-            "instruction": "sx sx sx sx sx sx sx sx sx sx",
-            "text": "sx sx sx sx sx sx sx sx sx sx"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "z",
+                    "x",
+                    "c",
+                    "v"
+                ],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-15-ex-3",
-            "kind": "text",
-            "instruction": "dc dc dc dc dc dc dc dc dc dc",
-            "text": "dc dc dc dc dc dc dc dc dc dc"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "j",
+                    "k",
+                    "l"
+                ],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-15-ex-4",
-            "kind": "text",
-            "instruction": "fv fv fv fv fv fv fv fv fv fv",
-            "text": "fv fv fv fv fv fv fv fv fv fv"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "n",
+                    "m"
+                ],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-15-ex-5",
-            "kind": "text",
-            "instruction": "gb gb gb gb gb gb gb gb gb gb",
-            "text": "gb gb gb gb gb gb gb gb gb gb"
-        },
-        {
-            "id": "lesson-en-beginner-15-ex-6",
-            "kind": "text",
-            "instruction": "hn hn hn hn hn hn hn hn hn hn",
-            "text": "hn hn hn hn hn hn hn hn hn hn"
-        },
-        {
-            "id": "lesson-en-beginner-15-ex-7",
-            "kind": "text",
-            "instruction": "jm jm jm jm jm jm jm jm jm jm",
-            "text": "jm jm jm jm jm jm jm jm jm jm"
-        },
-        {
-            "id": "lesson-en-beginner-15-ex-8",
-            "kind": "text",
-            "instruction": "k, k, k, k, k, k, k, k, k, k",
-            "text": "k, k, k, k, k, k, k, k, k, k"
-        },
-        {
-            "id": "lesson-en-beginner-15-ex-9",
-            "kind": "text",
-            "instruction": "l. l. l. l. l. l. l. l. l. l.",
-            "text": "l. l. l. l. l. l. l. l. l. l."
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "g",
+                    "h",
+                    "j",
+                    "z",
+                    "x",
+                    "c",
+                    "v",
+                    "b",
+                    "n",
+                    "m"
+                ],
+                "count": 28,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM"],
-    "focus": ["row-transition", "finger-control", "key-memory"],
-    "targetHands": ["left", "right"],
-    "prerequisites": ["lesson-en-beginner-14"]
+    ]
 }

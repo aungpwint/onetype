@@ -14,44 +14,104 @@
         "minAccuracy": 93,
         "minWpm": 24
     },
+    "focus": [
+        "finger-independence"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-16"
+    ],
+    "focusKeys": [
+        "KeyQ",
+        "KeyA",
+        "KeyZ",
+        "KeyW",
+        "KeyS",
+        "KeyX",
+        "KeyO",
+        "KeyL",
+        "Period",
+        "KeyP",
+        "Semicolon",
+        "Slash"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "right-ring",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-17-ex-1",
-            "kind": "text",
-            "instruction": "ed ed ed rf rf rf tg tg tg",
-            "text": "ed ed ed rf rf rf tg tg tg"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "q",
+                    "a",
+                    "z"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-17-ex-2",
-            "kind": "text",
-            "instruction": "ki ki ki lo lo lo ju ju ju",
-            "text": "ki ki ki lo lo lo ju ju ju"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "w",
+                    "s",
+                    "x"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-17-ex-3",
-            "kind": "text",
-            "instruction": "pq pq pq wx wx wx vb vb vb",
-            "text": "pq pq pq wx wx wx vb vb vb"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "o",
+                    "l",
+                    "."
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-17-ex-4",
-            "kind": "text",
-            "instruction": "edc rfv tgb ki lo ju pq wx",
-            "text": "edc rfv tgb ki lo ju pq wx"
-        },
-        {
-            "id": "lesson-en-intermediate-17-ex-5",
-            "kind": "text",
-            "instruction": "freedom evaluate privilege irregular",
-            "text": "freedom evaluate privilege irregular"
-        },
-        {
-            "id": "lesson-en-intermediate-17-ex-6",
-            "kind": "text",
-            "instruction": "judgment knowledge questionnaire",
-            "text": "judgment knowledge questionnaire"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "p",
+                    ";",
+                    "/"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["finger-control", "accuracy", "same-hand"],
-    "prerequisites": ["lesson-en-intermediate-16"]
+    ]
 }

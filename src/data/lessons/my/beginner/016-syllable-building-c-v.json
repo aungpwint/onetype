@@ -14,38 +14,107 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focus": [
+        "syllable"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-14"
+    ],
+    "focusKeys": [
+        "KeyU",
+        "KeyD",
+        "KeyK",
+        "KeyL",
+        "KeyJ",
+        "ShiftLeft",
+        "KeyA",
+        "KeyM",
+        "ShiftRight"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-middle",
+        "right-middle",
+        "right-ring",
+        "left-pinky",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-16-ex-1",
-            "kind": "text",
-            "instruction": "ကိ ကီ ကု ကူ ကေ ကဲ",
-            "text": "ကိ ကီ ကု ကူ ကေ ကဲ"
+            "instruction": "Alternate between both fingers and hands",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကိ",
+                    "ကု"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-16-ex-2",
-            "kind": "text",
-            "instruction": "တိ တီ တု တူ တေ တဲ",
-            "text": "တိ တီ တု တူ တေ တဲ"
+            "instruction": "Alternate between both fingers and hands",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကူ",
+                    "ကဲ"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-16-ex-3",
-            "kind": "text",
-            "instruction": "မိ မီ မု မူ မေ မဲ",
-            "text": "မိ မီ မု မူ မေ မဲ"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကေ",
+                    "ကာ",
+                    "ကီ"
+                ],
+                "count": 18,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-16-ex-4",
-            "kind": "text",
-            "instruction": "နိ နီ နု နူ နေ နဲ",
-            "text": "နိ နီ နု နူ နေ နဲ"
-        },
-        {
-            "id": "lesson-my-beginner-16-ex-5",
-            "kind": "text",
-            "instruction": "ကာ တာ မာ နာ ကိ တိ မိ နိ",
-            "text": "ကာ တာ မာ နာ ကိ တိ မိ နိ"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကိ",
+                    "ကု",
+                    "ကူ",
+                    "ကဲ",
+                    "ကေ",
+                    "ကာ",
+                    "ကီ"
+                ],
+                "count": 26,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable",
+                "mixed": true
+            }
         }
-    ],
-    "focus": ["unicode", "syllable"],
-    "prerequisites": ["lesson-my-beginner-14"]
+    ]
 }

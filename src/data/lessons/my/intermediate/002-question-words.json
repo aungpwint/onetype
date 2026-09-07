@@ -14,14 +14,90 @@
         "minAccuracy": 88,
         "minWpm": null
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-1"
+    ],
+    "focusKeys": [
+        "KeyB",
+        "ShiftRight",
+        "KeyF",
+        "KeyK",
+        "ShiftLeft",
+        "KeyD",
+        "BracketLeft",
+        "KeyU",
+        "KeyJ",
+        "KeyM",
+        "KeyR",
+        "KeyS",
+        "KeyC",
+        "KeyW",
+        "KeyL",
+        "KeyV"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-pinky",
+        "right-middle",
+        "left-pinky",
+        "left-middle",
+        "right-index",
+        "left-ring",
+        "right-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-2-ex-1",
-            "kind": "text",
-            "instruction": "ဘာ ဘယ် ဘယ်လို ဘာကြောင့် ဘယ်အချိန် ဘယ်သူ ဘယ်နှ ဘယ်လောက်",
-            "text": "ဘာ ဘယ် ဘယ်လို ဘာကြောင့် ဘယ်အချိန် ဘယ်သူ ဘယ်နှ ဘယ်လောက်"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ဘယ်",
+                    "ဒီ",
+                    "ဟို"
+                ],
+                "count": 18
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-2-ex-2",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကြာ",
+                    "မျာ",
+                    "ကျိ",
+                    "ချု"
+                ],
+                "count": 22,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-2-ex-3",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "တူ",
+                    "လိုက်"
+                ],
+                "count": 16
+            }
         }
-    ],
-    "focus": ["words", "unicode", "syllable"],
-    "prerequisites": ["lesson-my-intermediate-1"]
+    ]
 }

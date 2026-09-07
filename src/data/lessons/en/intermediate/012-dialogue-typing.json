@@ -14,32 +14,84 @@
         "minAccuracy": 93,
         "minWpm": 24
     },
+    "focus": [
+        "sentences",
+        "punctuation"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-11"
+    ],
+    "focusKeys": [
+        "Quote",
+        "ShiftLeft",
+        "KeyG",
+        "KeyO",
+        "KeyD",
+        "KeyM",
+        "KeyR",
+        "KeyN",
+        "KeyI",
+        "Comma",
+        "KeyS",
+        "KeyH",
+        "KeyE",
+        "KeyA",
+        "Period",
+        "KeyY",
+        "KeyU",
+        "KeyL",
+        "KeyT",
+        "KeyP",
+        "KeyW",
+        "Slash",
+        "KeyK",
+        "KeyB",
+        "KeyC",
+        "KeyV"
+    ],
+    "targetFingers": [
+        "right-pinky",
+        "left-pinky",
+        "left-index",
+        "right-ring",
+        "left-middle",
+        "right-index",
+        "right-middle",
+        "left-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-12-ex-1",
-            "kind": "text",
-            "instruction": "\"Hello, how are you?\" \"I am fine.\"",
-            "text": "\"Hello, how are you?\" \"I am fine.\""
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "\"good morning,\" she said.",
+                    "\"see you later,\" he replied.",
+                    "\"where are you going?\" asked mia."
+                ],
+                "count": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-12-ex-2",
-            "kind": "text",
-            "instruction": "\"What did you do yesterday?\" \"I played with friends.\"",
-            "text": "\"What did you do yesterday?\" \"I played with friends.\""
-        },
-        {
-            "id": "lesson-en-intermediate-12-ex-3",
-            "kind": "text",
-            "instruction": "\"Where are you going?\" \"I am going to school.\"",
-            "text": "\"Where are you going?\" \"I am going to school.\""
-        },
-        {
-            "id": "lesson-en-intermediate-12-ex-4",
-            "kind": "text",
-            "instruction": "\"Can I come?\" \"Yes, let us go together.\"",
-            "text": "\"Can I come?\" \"Yes, let us go together.\""
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "\"let's begin,\" said the teacher.",
+                    "\"it is very cold,\" she whispered.",
+                    "\"call me soon,\" he told them."
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["sentences", "punctuation", "shift", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-11"]
+    ]
 }

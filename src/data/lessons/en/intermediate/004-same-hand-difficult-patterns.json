@@ -14,44 +14,132 @@
         "minAccuracy": 90,
         "minWpm": 20
     },
+    "focus": [
+        "finger-independence"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-3"
+    ],
+    "focusKeys": [
+        "KeyQ",
+        "KeyW",
+        "KeyE",
+        "KeyR",
+        "KeyT",
+        "KeyY",
+        "KeyU",
+        "KeyI",
+        "KeyO",
+        "KeyP",
+        "KeyZ",
+        "KeyX",
+        "KeyC",
+        "KeyV",
+        "KeyB",
+        "KeyN",
+        "KeyM",
+        "KeyA",
+        "KeyS",
+        "KeyD",
+        "KeyF",
+        "KeyJ",
+        "KeyK",
+        "KeyL"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-4-ex-1",
-            "kind": "text",
-            "instruction": "asd asd sdf sdf dfg dfg",
-            "text": "asd asd sdf sdf dfg dfg"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "q",
+                    "w",
+                    "e",
+                    "r",
+                    "t"
+                ],
+                "count": 22,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "runs"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-4-ex-2",
-            "kind": "text",
-            "instruction": "jkl jkl kl; kl; hjk hjk",
-            "text": "jkl jkl kl; kl; hjk hjk"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "y",
+                    "u",
+                    "i",
+                    "o",
+                    "p"
+                ],
+                "count": 22,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "runs"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-4-ex-3",
-            "kind": "text",
-            "instruction": "qwe qwe wer ert wert erty",
-            "text": "qwe qwe wer ert wert erty"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "z",
+                    "x",
+                    "c",
+                    "v",
+                    "b",
+                    "n",
+                    "m"
+                ],
+                "count": 26,
+                "chunkMin": 4,
+                "chunkMax": 7,
+                "style": "runs"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-4-ex-4",
-            "kind": "text",
-            "instruction": "yui yui iop uio iopiop",
-            "text": "yui yui iop uio iopiop"
-        },
-        {
-            "id": "lesson-en-intermediate-4-ex-5",
-            "kind": "text",
-            "instruction": "zxc zxc xcv cvb xcvbxcv",
-            "text": "zxc zxc xcv cvb xcvbxcv"
-        },
-        {
-            "id": "lesson-en-intermediate-4-ex-6",
-            "kind": "text",
-            "instruction": "nm nm nm nm nm nm nm nm nm nm",
-            "text": "nm nm nm nm nm nm nm nm nm nm"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "s",
+                    "d",
+                    "f",
+                    "j",
+                    "k",
+                    "l"
+                ],
+                "count": 24,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["same-hand", "finger-control", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-3"]
+    ]
 }

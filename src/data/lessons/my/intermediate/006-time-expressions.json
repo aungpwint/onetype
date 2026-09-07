@@ -14,14 +14,92 @@
         "minAccuracy": 90,
         "minWpm": null
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-5"
+    ],
+    "focusKeys": [
+        "KeyE",
+        "KeyA",
+        "KeyH",
+        "KeyN",
+        "KeyB",
+        "KeyU",
+        "KeyF",
+        "KeyR",
+        "ShiftRight",
+        "KeyC",
+        "KeyK",
+        "ShiftLeft",
+        "KeyD",
+        "KeyS",
+        "KeyI",
+        "Semicolon",
+        "KeyT",
+        "KeyM",
+        "KeyY",
+        "KeyG"
+    ],
+    "targetFingers": [
+        "left-middle",
+        "left-pinky",
+        "right-index",
+        "left-index",
+        "right-pinky",
+        "right-middle",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-6-ex-1",
-            "kind": "text",
-            "instruction": "နံနက် နေ့လယ် ညနေ မနက်ဖြန်",
-            "text": "နံနက် နေ့လယ် ညနေ မနက်ဖြန်"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "နေ့",
+                    "ညဘက်",
+                    "မနက်"
+                ],
+                "count": 18
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-6-ex-2",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ယခု",
+                    "ဒီနေ့"
+                ],
+                "count": 16
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-6-ex-3",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ချင်း",
+                    "အောက်",
+                    "အပေါ်"
+                ],
+                "count": 22,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["words", "unicode"],
-    "prerequisites": ["lesson-my-intermediate-5"]
+    ]
 }

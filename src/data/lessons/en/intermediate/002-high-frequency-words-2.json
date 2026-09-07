@@ -14,26 +14,76 @@
         "minAccuracy": 90,
         "minWpm": 18
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-1"
+    ],
+    "focusKeys": [
+        "KeyT",
+        "KeyH",
+        "KeyE",
+        "KeyA",
+        "KeyN",
+        "KeyD",
+        "KeyY",
+        "KeyO",
+        "KeyU",
+        "KeyW",
+        "KeyI",
+        "KeyS",
+        "KeyF",
+        "KeyR",
+        "KeyM",
+        "KeyV"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-index",
+        "left-middle",
+        "left-pinky",
+        "right-ring",
+        "left-ring",
+        "right-middle"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-2-ex-1",
-            "kind": "text",
-            "instruction": "this but his by from they we say her she or",
-            "text": "this but his by from they we say her she or"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 26,
+                "maxWordLength": 7
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-2-ex-2",
-            "kind": "text",
-            "instruction": "an will my one all would there their what so",
-            "text": "an will my one all would there their what so"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 28,
+                "maxWordLength": 8
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-2-ex-3",
-            "kind": "text",
-            "instruction": "this but his by from they we say her she or an will my",
-            "text": "this but his by from they we say her she or an will my"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "bank": "commonWords",
+                "count": 30,
+                "maxWordLength": 9
+            }
         }
-    ],
-    "focus": ["words", "speed"],
-    "prerequisites": ["lesson-en-intermediate-1"]
+    ]
 }

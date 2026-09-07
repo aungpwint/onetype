@@ -14,39 +14,95 @@
         "minAccuracy": 88,
         "minWpm": 14
     },
+    "focus": [
+        "shift"
+    ],
+    "requiresShift": true,
+    "prerequisites": [
+        "lesson-en-beginner-38"
+    ],
+    "focusKeys": [
+        "KeyT",
+        "ShiftRight",
+        "KeyH",
+        "KeyE",
+        "KeyQ",
+        "KeyU",
+        "KeyI",
+        "KeyC",
+        "KeyK",
+        "KeyF",
+        "KeyO",
+        "KeyX",
+        "KeyJ",
+        "KeyM",
+        "KeyP",
+        "KeyS",
+        "Period",
+        "KeyA",
+        "KeyL",
+        "KeyB",
+        "KeyY",
+        "KeyR",
+        "KeyN",
+        "KeyW",
+        "KeyD",
+        "KeyG",
+        "ShiftLeft"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-pinky",
+        "right-index",
+        "left-middle",
+        "left-pinky",
+        "right-middle",
+        "right-ring",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-39-ex-1",
-            "kind": "text",
-            "instruction": "I am a student.",
-            "text": "I am a student."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "The quick fox jumps.",
+                    "A small boy ran home."
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-39-ex-2",
-            "kind": "text",
-            "instruction": "He has a big dog.",
-            "text": "He has a big dog."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "She will keep the box.",
+                    "We found a red ball."
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-39-ex-3",
-            "kind": "text",
-            "instruction": "We go to school.",
-            "text": "We go to school."
-        },
-        {
-            "id": "lesson-en-beginner-39-ex-4",
-            "kind": "text",
-            "instruction": "She likes red roses.",
-            "text": "She likes red roses."
-        },
-        {
-            "id": "lesson-en-beginner-39-ex-5",
-            "kind": "text",
-            "instruction": "They play football.",
-            "text": "They play football."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "They are walking to town.",
+                    "My friend knows the way."
+                ],
+                "count": 3
+            }
         }
-    ],
-    "focus": ["shift", "sentences", "words"],
-    "requiresShift": true,
-    "prerequisites": ["lesson-en-beginner-38"]
+    ]
 }

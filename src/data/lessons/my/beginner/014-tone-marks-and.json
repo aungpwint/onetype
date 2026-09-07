@@ -14,41 +14,103 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyU",
+        "KeyM",
+        "Semicolon",
+        "KeyD",
+        "ShiftRight",
+        "KeyH",
+        "ShiftLeft",
+        "KeyJ",
+        "KeyW",
+        "KeyK"
+    ],
+    "focus": [
+        "tone"
+    ],
+    "targetFingers": [
+        "right-index",
+        "right-pinky",
+        "left-middle",
+        "left-pinky",
+        "left-ring",
+        "right-middle"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-10"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-14-ex-1",
-            "kind": "text",
-            "instruction": "ကား ကား ကား ကား ကား ကား ကား ကား ကား ကား",
-            "text": "ကား ကား ကား ကား ကား ကား ကား ကား ကား ကား"
+            "instruction": "Alternate between both fingers and hands",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကား",
+                    "ကီး"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-14-ex-2",
-            "kind": "text",
-            "instruction": "တား တား တား တား တား တား တား တား တား တား",
-            "text": "တား တား တား တား တား တား တား တား တား တား"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကံ",
+                    "ကဲ့"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-14-ex-3",
-            "kind": "text",
-            "instruction": "မား မား မား မား မား မား မား မား မား မား",
-            "text": "မား မား မား မား မား မား မား မား မား မား"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "တို့"
+                ],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-14-ex-4",
-            "kind": "text",
-            "instruction": "ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့",
-            "text": "ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့ ကေ့"
-        },
-        {
-            "id": "lesson-my-beginner-14-ex-5",
-            "kind": "text",
-            "instruction": "ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့",
-            "text": "ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့ ကု့"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကား",
+                    "ကီး",
+                    "ကံ",
+                    "ကဲ့",
+                    "တို့"
+                ],
+                "count": 26,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["Semicolon", "KeyH"],
-    "focus": ["unicode", "tone", "syllable", "key-memory"],
-    "targetFingers": ["right-pinky", "right-index"],
-    "targetHands": ["right"],
-    "prerequisites": ["lesson-my-beginner-10"]
+    ]
 }

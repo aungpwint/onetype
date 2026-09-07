@@ -14,47 +14,98 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyU",
+        "KeyJ",
+        "KeyM",
+        "KeyR",
+        "KeyS",
+        "KeyD",
+        "KeyC",
+        "KeyK"
+    ],
+    "focus": [
+        "medial"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-index",
+        "left-ring",
+        "left-middle",
+        "right-middle"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-12"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-15-ex-1",
-            "kind": "text",
-            "instruction": "ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ",
-            "text": "ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ ကွ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကြာ"
+                ],
+                "count": 14,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-15-ex-2",
-            "kind": "text",
-            "instruction": "ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ",
-            "text": "ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ ကှ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "မျာ",
+                    "ကျိ"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-15-ex-3",
-            "kind": "text",
-            "instruction": "ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ",
-            "text": "ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ ကွာ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ချု"
+                ],
+                "count": 12,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-15-ex-4",
-            "kind": "text",
-            "instruction": "ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ",
-            "text": "ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ ကွေ"
-        },
-        {
-            "id": "lesson-my-beginner-15-ex-5",
-            "kind": "text",
-            "instruction": "ကွု ကွု ကွု ကွု ကွု ကွု ကွု ကွု",
-            "text": "ကွု ကွု ကွု ကွု ကွု ကွု ကွု ကွု"
-        },
-        {
-            "id": "lesson-my-beginner-15-ex-6",
-            "kind": "text",
-            "instruction": "ကျွ ကြွ ကျှ ကြှ",
-            "text": "ကျွ ကြွ ကျှ ကြှ"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ကြာ",
+                    "မျာ",
+                    "ကျိ",
+                    "ချု"
+                ],
+                "count": 26,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyG", "KeyS"],
-    "focus": ["unicode", "medial", "syllable", "key-memory"],
-    "targetFingers": ["left-index", "left-ring"],
-    "targetHands": ["left"],
-    "prerequisites": ["lesson-my-beginner-12"]
+    ]
 }

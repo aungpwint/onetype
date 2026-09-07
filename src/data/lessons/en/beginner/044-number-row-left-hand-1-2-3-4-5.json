@@ -14,47 +14,80 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focusKeys": [
+        "Digit1",
+        "Digit2",
+        "Digit3",
+        "Digit4",
+        "Digit5"
+    ],
+    "focus": [
+        "numbers"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index"
+    ],
+    "targetHands": [
+        "left"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-27"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-44-ex-1",
-            "kind": "text",
-            "instruction": "1 1 1 1 1 2 2 2 2 2 3 3 3 3 3 4 4 4 4 4 5 5 5 5 5",
-            "text": "1 1 1 1 1 2 2 2 2 2 3 3 3 3 3 4 4 4 4 4 5 5 5 5 5"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "1",
+                    "2",
+                    "3"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-44-ex-2",
-            "kind": "text",
-            "instruction": "1 2 3 4 5 1 2 3 4 5 1 2 3 4 5",
-            "text": "1 2 3 4 5 1 2 3 4 5 1 2 3 4 5"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "4",
+                    "5"
+                ],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-44-ex-3",
-            "kind": "text",
-            "instruction": "1 3 5 1 3 5 1 3 5 1 3 5 1 3 5",
-            "text": "1 3 5 1 3 5 1 3 5 1 3 5 1 3 5"
-        },
-        {
-            "id": "lesson-en-beginner-44-ex-4",
-            "kind": "text",
-            "instruction": "5 4 3 2 1 5 4 3 2 1 5 4 3 2 1",
-            "text": "5 4 3 2 1 5 4 3 2 1 5 4 3 2 1"
-        },
-        {
-            "id": "lesson-en-beginner-44-ex-5",
-            "kind": "text",
-            "instruction": "12 34 5 12 34 5 12 34 5 12 34 5",
-            "text": "12 34 5 12 34 5 12 34 5 12 34 5"
-        },
-        {
-            "id": "lesson-en-beginner-44-ex-6",
-            "kind": "text",
-            "instruction": "12345 12345 12345 12345 12345",
-            "text": "12345 12345 12345 12345 12345"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5"
+                ],
+                "count": 24,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5"],
-    "focus": ["numbers", "key-memory", "finger-control"],
-    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index"],
-    "targetHands": ["left"],
-    "prerequisites": ["lesson-en-beginner-27"]
+    ]
 }

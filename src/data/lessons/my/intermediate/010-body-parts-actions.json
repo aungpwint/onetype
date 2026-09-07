@@ -14,26 +14,93 @@
         "minAccuracy": 90,
         "minWpm": null
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-9"
+    ],
+    "focusKeys": [
+        "KeyR",
+        "KeyS",
+        "KeyU",
+        "KeyF",
+        "KeyP",
+        "KeyD",
+        "KeyE",
+        "KeyM",
+        "Semicolon",
+        "KeyV",
+        "KeyC",
+        "KeyJ",
+        "KeyA",
+        "KeyG",
+        "KeyI",
+        "KeyK",
+        "KeyB",
+        "ShiftRight",
+        "KeyY",
+        "KeyO",
+        "Digit7",
+        "ShiftLeft"
+    ],
+    "targetFingers": [
+        "left-index",
+        "left-ring",
+        "right-index",
+        "right-pinky",
+        "left-middle",
+        "left-pinky",
+        "right-middle",
+        "right-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-10-ex-1",
-            "kind": "text",
-            "instruction": "မျက်စိကို ပိတ်ပါ",
-            "text": "မျက်စိကို ပိတ်ပါ"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "မျက်စိ",
+                    "နား",
+                    "လက်"
+                ],
+                "count": 18
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-10-ex-2",
-            "kind": "text",
-            "instruction": "နားထောင်ပါ",
-            "text": "နားထောင်ပါ"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ခြေ",
+                    "ခေါင်း",
+                    "ကိုယ်"
+                ],
+                "count": 18
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-10-ex-3",
-            "kind": "text",
-            "instruction": "ထိုင်ပါ",
-            "text": "ထိုင်ပါ"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ပြေး",
+                    "သွား",
+                    "ရပ်"
+                ],
+                "count": 18
+            }
         }
-    ],
-    "focus": ["words", "sentences", "unicode"],
-    "prerequisites": ["lesson-my-intermediate-9"]
+    ]
 }

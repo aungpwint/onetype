@@ -14,46 +14,108 @@
         "minAccuracy": 88,
         "minWpm": null
     },
+    "focusKeys": [
+        "BracketLeft",
+        "ShiftLeft",
+        "BracketRight",
+        "Comma",
+        "Period",
+        "Slash",
+        "Equal",
+        "Minus"
+    ],
+    "focus": [
+        "shift"
+    ],
+    "requiresShift": true,
+    "prerequisites": [
+        "lesson-en-beginner-41"
+    ],
+    "targetFingers": [
+        "right-pinky",
+        "left-pinky",
+        "right-middle",
+        "right-ring"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-42-ex-1",
-            "kind": "text",
-            "instruction": "{ } { } { } { } { } { }",
-            "text": "{ } { } { } { } { } { }"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "[",
+                    "{",
+                    "]",
+                    "}"
+                ],
+                "count": 18,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-42-ex-2",
-            "kind": "text",
-            "instruction": "[ ] [ ] [ ] [ ] [ ] [ ]",
-            "text": "[ ] [ ] [ ] [ ] [ ] [ ]"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "<",
+                    ">",
+                    "?",
+                    "/"
+                ],
+                "count": 18,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-42-ex-3",
-            "kind": "text",
-            "instruction": "< > < > < > < > < > < >",
-            "text": "< > < > < > < > < > < >"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "+",
+                    "=",
+                    "_",
+                    "-"
+                ],
+                "count": 18,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-42-ex-4",
-            "kind": "text",
-            "instruction": "? ? ? ? ? ? ? ? ? ?",
-            "text": "? ? ? ? ? ? ? ? ? ?"
-        },
-        {
-            "id": "lesson-en-beginner-42-ex-5",
-            "kind": "text",
-            "instruction": ": : : : : : : : : :",
-            "text": ": : : : : : : : : :"
-        },
-        {
-            "id": "lesson-en-beginner-42-ex-6",
-            "kind": "text",
-            "instruction": "\" \" \" \" \" \" \" \" \" \"",
-            "text": "\" \" \" \" \" \" \" \" \" \""
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "{",
+                    "}",
+                    "<",
+                    ">",
+                    "?",
+                    "+",
+                    "_"
+                ],
+                "count": 24,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["BracketLeft", "BracketRight", "Quote", "Comma", "Period", "Slash"],
-    "focus": ["shift", "symbols", "punctuation"],
-    "requiresShift": true,
-    "prerequisites": ["lesson-en-beginner-41"]
+    ]
 }

@@ -14,72 +14,84 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyY",
+        "ShiftLeft",
+        "KeyU",
+        "KeyI",
+        "KeyO",
+        "KeyP"
+    ],
+    "focus": [
+        "shift"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-pinky",
+        "right-middle",
+        "right-ring",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
+    "prerequisites": [
+        "lesson-en-beginner-34"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-35-ex-1",
-            "kind": "text",
-            "instruction": "yY yY yY yY yY yY yY yY yY yY",
-            "text": "yY yY yY yY yY yY yY yY yY yY"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "Y",
+                    "U"
+                ],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-35-ex-2",
-            "kind": "text",
-            "instruction": "uU uU uU uU uU uU uU uU uU uU",
-            "text": "uU uU uU uU uU uU uU uU uU uU"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "I",
+                    "O",
+                    "P"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-35-ex-3",
-            "kind": "text",
-            "instruction": "iI iI iI iI iI iI iI iI iI iI",
-            "text": "iI iI iI iI iI iI iI iI iI iI"
-        },
-        {
-            "id": "lesson-en-beginner-35-ex-4",
-            "kind": "text",
-            "instruction": "oO oO oO oO oO oO oO oO oO oO",
-            "text": "oO oO oO oO oO oO oO oO oO oO"
-        },
-        {
-            "id": "lesson-en-beginner-35-ex-5",
-            "kind": "text",
-            "instruction": "pP pP pP pP pP pP pP pP pP pP",
-            "text": "pP pP pP pP pP pP pP pP pP pP"
-        },
-        {
-            "id": "lesson-en-beginner-35-ex-6",
-            "kind": "text",
-            "instruction": "Yy Yy Yy Yy Yy Yy Yy Yy Yy Yy",
-            "text": "Yy Yy Yy Yy Yy Yy Yy Yy Yy Yy"
-        },
-        {
-            "id": "lesson-en-beginner-35-ex-7",
-            "kind": "text",
-            "instruction": "Uu Uu Uu Uu Uu Uu Uu Uu Uu Uu",
-            "text": "Uu Uu Uu Uu Uu Uu Uu Uu Uu Uu"
-        },
-        {
-            "id": "lesson-en-beginner-35-ex-8",
-            "kind": "text",
-            "instruction": "Ii Ii Ii Ii Ii Ii Ii Ii Ii Ii",
-            "text": "Ii Ii Ii Ii Ii Ii Ii Ii Ii Ii"
-        },
-        {
-            "id": "lesson-en-beginner-35-ex-9",
-            "kind": "text",
-            "instruction": "Oo Oo Oo Oo Oo Oo Oo Oo Oo Oo",
-            "text": "Oo Oo Oo Oo Oo Oo Oo Oo Oo Oo"
-        },
-        {
-            "id": "lesson-en-beginner-35-ex-10",
-            "kind": "text",
-            "instruction": "Pp Pp Pp Pp Pp Pp Pp Pp Pp Pp",
-            "text": "Pp Pp Pp Pp Pp Pp Pp Pp Pp Pp"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "P",
+                    "O",
+                    "I",
+                    "U",
+                    "Y"
+                ],
+                "count": 22,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "ShiftLeft"],
-    "focus": ["shift", "top-row"],
-    "targetFingers": ["right-index", "right-middle", "right-ring", "right-pinky", "left-pinky"],
-    "targetHands": ["right", "left"],
-    "requiresShift": true,
-    "prerequisites": ["lesson-en-beginner-34"]
+    ]
 }

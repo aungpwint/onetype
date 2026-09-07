@@ -14,38 +14,120 @@
         "minAccuracy": 88,
         "minWpm": null
     },
+    "focus": [
+        "numbers"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-47"
+    ],
+    "focusKeys": [
+        "KeyA",
+        "Digit1",
+        "KeyD",
+        "Digit4",
+        "KeyJ",
+        "Digit7",
+        "KeyK",
+        "Digit9",
+        "KeyF",
+        "KeyG",
+        "Digit5",
+        "Digit6",
+        "KeyH",
+        "KeyS",
+        "Digit2",
+        "KeyE",
+        "Digit3",
+        "KeyR"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-48-ex-1",
-            "kind": "text",
-            "instruction": "1a 2b 3c 4d 5e 6f 7g 8h 9i 0j",
-            "text": "1a 2b 3c 4d 5e 6f 7g 8h 9i 0j"
+            "instruction": "Alternate between both fingers and hands",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "1",
+                    "d",
+                    "4"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-48-ex-2",
-            "kind": "text",
-            "instruction": "a1 b2 c3 d4 e5 f6 g7 h8 i9 j0",
-            "text": "a1 b2 c3 d4 e5 f6 g7 h8 i9 j0"
+            "instruction": "Alternate between both fingers and hands",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "j",
+                    "7",
+                    "k",
+                    "9"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-48-ex-3",
-            "kind": "text",
-            "instruction": "1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th",
-            "text": "1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "g",
+                    "5",
+                    "6",
+                    "h"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-48-ex-4",
-            "kind": "text",
-            "instruction": "page 1 chapter 2 line 3 word 4",
-            "text": "page 1 chapter 2 line 3 word 4"
-        },
-        {
-            "id": "lesson-en-beginner-48-ex-5",
-            "kind": "text",
-            "instruction": "2024 1990 2025 1985 2000 2016 2030",
-            "text": "2024 1990 2025 1985 2000 2016 2030"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "s",
+                    "2",
+                    "e",
+                    "3",
+                    "r",
+                    "5"
+                ],
+                "count": 22,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["numbers", "words", "row-transition"],
-    "prerequisites": ["lesson-en-beginner-47"]
+    ]
 }

@@ -14,26 +14,97 @@
         "minAccuracy": 92,
         "minWpm": null
     },
+    "focus": [
+        "sentences"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-10"
+    ],
+    "focusKeys": [
+        "KeyT",
+        "KeyZ",
+        "KeyA",
+        "KeyU",
+        "Digit7",
+        "ShiftLeft",
+        "KeyD",
+        "KeyK",
+        "KeyV",
+        "KeyW",
+        "KeyB",
+        "ShiftRight",
+        "KeyF",
+        "Period",
+        "KeyR",
+        "KeyQ",
+        "KeyE",
+        "KeyN",
+        "KeyI",
+        "KeyG",
+        "Semicolon",
+        "KeyJ",
+        "KeyH",
+        "Comma",
+        "KeyS",
+        "KeyM",
+        "KeyP",
+        "KeyC"
+    ],
+    "targetFingers": [
+        "left-index",
+        "left-pinky",
+        "right-index",
+        "left-middle",
+        "right-middle",
+        "left-ring",
+        "right-pinky",
+        "right-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-11-ex-1",
-            "kind": "text",
-            "instruction": "ငါကျောင်းသွားတယ်။",
-            "text": "ငါကျောင်းသွားတယ်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "အဖေ က ရေ ကို လို တယ် ။",
+                    "အမေ က ဆန် ကို လို တယ် ။",
+                    "ညီ က ငါး ကို လို တယ် ။"
+                ],
+                "count": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-11-ex-2",
-            "kind": "text",
-            "instruction": "အမေအိမ်မှာလား။",
-            "text": "အမေအိမ်မှာလား။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ကြက် နဲ့ ငါး က အိမ် ၊ မျိုး ။",
+                    "မြို့ ရဲ့ ဘက် မှာ ရွာ ရှိ တယ် ။"
+                ],
+                "count": 2
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-11-ex-3",
-            "kind": "text",
-            "instruction": "ဆရာကခွေးကိုခေါ်တယ်။",
-            "text": "ဆရာကခွေးကိုခေါ်တယ်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "နွား က မြက် ကို စား တယ် ။",
+                    "ခြေ နဲ့ လက် က များ တယ် ။"
+                ],
+                "count": 2
+            }
         }
-    ],
-    "focus": ["sentences", "unicode", "punctuation"],
-    "prerequisites": ["lesson-my-intermediate-10"]
+    ]
 }

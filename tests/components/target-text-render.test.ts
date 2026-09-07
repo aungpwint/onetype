@@ -53,25 +53,27 @@ describe('Per-run font classification (Char contract)', () => {
     it.each(CORPUS_LINES)('%s marks every Myanmar run as font-myanmar', (line) => {
         const seq = buildSequence(line, myanmar)
         for (const run of graphemeUnitRuns(seq)) {
-            const font = containsMyanmar(run.text) ? 'font-myanmar' : 'font-heavy'
+            const font = containsMyanmar(run.text) ? 'font-myanmar' : undefined
             if (containsMyanmar(run.text)) {
                 expect(font).toBe('font-myanmar')
             } else {
-                expect(font).toBe('font-heavy')
+                // Non-Myanmar runs carry no font class: they inherit the
+                // Inter typing face from the .tt-target paragraph.
+                expect(font).toBeUndefined()
             }
         }
     })
 
     it('mixed English + Myanmar + numbers + punctuation classify per token', () => {
         const tokens = ['Lesson', ' ', '23', '—', 'အခြေခံ', ' ', 'စကားလုံး']
-        const fonts = tokens.map((t) => (containsMyanmar(t) ? 'font-myanmar' : 'font-heavy'))
+        const fonts = tokens.map((t) => (containsMyanmar(t) ? 'font-myanmar' : undefined))
         expect(fonts).toEqual([
-            'font-heavy', // Lesson
-            'font-heavy', // space
-            'font-heavy', // 23
-            'font-heavy', // —
+            undefined, // Lesson — inherits Inter typing face
+            undefined, // space
+            undefined, // 23
+            undefined, // —
             'font-myanmar', // အခြေခံ
-            'font-heavy', // space
+            undefined, // space
             'font-myanmar', // စကားလုံး
         ])
     })
@@ -104,18 +106,21 @@ describe('Target text displays the exact lesson data', () => {
             const canonical = getCanonicalLesson(lesson.id)
             const resolved = resolveLessonById(lesson.id)
             expect(resolved.phases.length, `${lesson.id}: phase/exercise count mismatch`).toBe(canonical.exercises.length)
+            const ctx = { lessonId: canonical.id, languageId: canonical.language === 'my' ? 'myanmar' : 'english' }
             for (let i = 0; i < canonical.exercises.length; i++) {
-                const expected = exerciseText(canonical.exercises[i]!)
+                const expected = exerciseText(canonical.exercises[i]!, ctx)
                 expect(resolved.phases[i]!.text, `${lesson.id} phase ${i} deviates from original data`).toBe(expected)
             }
         }
     })
 
     it('English uppercase (Shift) lessons keep their exact letters (case preserved) on screen', () => {
+        const canonical = getCanonicalLesson('lesson-en-beginner-31')
         const resolved = resolveLessonById('lesson-en-beginner-31')
-        const first = 'aA aA aA aA aA aA aA aA aA aA'
-        expect(resolved.phases[0]!.text).toBe(first)
-        expect(resolved.phases[0]!.text).toMatch(/[a-z]/)
+        const ctx = { lessonId: canonical.id, languageId: 'english' }
+        const expected = exerciseText(canonical.exercises[0]!, ctx)
+        expect(resolved.phases[0]!.text).toBe(expected)
+        // Shift-stage lessons preserve the generated uppercase letters.
         expect(resolved.phases[0]!.text).toMatch(/[A-Z]/)
     })
 
@@ -133,36 +138,41 @@ describe('Pyidaungsu font + shaping CSS invariants', () => {
     const cssPath = path.resolve(fileURLToPath(new URL('../../src/app.css', import.meta.url)))
     const css = readFileSync(cssPath, 'utf8')
 
-    it('.font-myanmar explicitly resolves the Pyidaungsu-first family chain', () => {
+    it('.font-myanmar explicitly resolves the Noto Sans Myanmar-first family chain', () => {
         const root = css.match(/--font-myanmar:\s*([^;]+);/)
         expect(root).toBeTruthy()
-        expect(root![1].trim().startsWith("'Pyidaungsu'")).toBe(true)
+        expect(root![1].trim().startsWith("'Noto Sans Myanmar'")).toBe(true)
+        expect(root![1]).toContain("'Pyidaungsu'")
 
-        const rule = css.match(/\.font-myanmar\s*{([^}]*)}/)
+        const rule = css.match(/^\s*\.font-myanmar\s*{([^}]*)}/m)
         expect(rule).toBeTruthy()
         expect(rule![1]).toContain('font-family: var(--font-myanmar)')
     })
 
-    it('bundles a real Pyidaungsu @font-face pointing at an existing asset', () => {
+    it('bundles Noto Sans Myanmar + Pyidaungsu @font-face rules pointing at real assets', () => {
         const faces = [...css.matchAll(/@font-face\s*{([^}]*)}/g)].map((m) => m[1])
+
+        const noto = faces.filter((f) => f.includes("'Noto Sans Myanmar'"))
+        expect(noto.length).toBeGreaterThanOrEqual(2) // myanmar + latin subsets
+        expect(noto.join(' ')).toContain('font-weight: 100 900')
+        expect(noto.join(' ')).toContain('/fonts/NotoSansMyanmar-Variable.woff2')
+        expect(noto.join(' ')).toContain('/fonts/NotoSansMyanmar-Latin.woff2')
+
         const pyidaungsu = faces.find((f) => f.includes("'Pyidaungsu'"))
         expect(pyidaungsu, JSON.stringify(faces)).toBeTruthy()
-        expect(pyidaungsu).toContain('/fonts/Pyidaungsu-Regular.ttf')
-        expect(pyidaungsu).toContain("format('truetype')")
+        expect(pyidaungsu).toContain('/fonts/Pyidaungsu-Regular.woff2')
+        expect(pyidaungsu).toContain("format('woff2')")
 
-        const fontFile = path.resolve(fileURLToPath(new URL('../../public/fonts/Pyidaungsu-Regular.ttf', import.meta.url)))
-        const latinFile = path.resolve(fileURLToPath(new URL('../../public/fonts/Heavitas.woff', import.meta.url)))
-        expect(existsSync(fontFile)).toBe(true)
-        expect(existsSync(latinFile)).toBe(true)
-        // TrueType magic: 00 01 00 00
-        expect(
-            readFileSync(fontFile)
-                .subarray(0, 4)
-                .equals(Buffer.from([0x00, 0x01, 0x00, 0x00])),
-        ).toBe(true)
-        // WOFF magic: wOF2/wOFF
-        const woff = readFileSync(latinFile)
-        expect(woff.subarray(0, 3).toString('ascii')).toBe('wOF')
+        const notoFile = path.resolve(fileURLToPath(new URL('../../public/fonts/NotoSansMyanmar-Variable.woff2', import.meta.url)))
+        const notoLatin = path.resolve(fileURLToPath(new URL('../../public/fonts/NotoSansMyanmar-Latin.woff2', import.meta.url)))
+        const fontFile = path.resolve(fileURLToPath(new URL('../../public/fonts/Pyidaungsu-Regular.woff2', import.meta.url)))
+        for (const f of [notoFile, notoLatin, fontFile]) {
+            expect(existsSync(f), f).toBe(true)
+        }
+        // WOFF2 magic: wOF2
+        for (const f of [notoFile, notoLatin, fontFile]) {
+            expect(readFileSync(f).subarray(0, 3).toString('ascii')).toBe('wOF')
+        }
     })
 
     it('char-pop never transforms the glyph text (no scale/translate on runs)', () => {

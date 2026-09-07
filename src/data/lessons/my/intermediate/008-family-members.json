@@ -14,14 +14,90 @@
         "minAccuracy": 90,
         "minWpm": null
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-7"
+    ],
+    "focusKeys": [
+        "KeyZ",
+        "KeyC",
+        "KeyI",
+        "KeyF",
+        "KeyR",
+        "KeyD",
+        "KeyO",
+        "KeyM",
+        "Semicolon",
+        "ShiftRight",
+        "KeyT",
+        "KeyP",
+        "KeyU",
+        "KeyK",
+        "KeyN",
+        "KeyS"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-middle",
+        "right-middle",
+        "left-index",
+        "right-ring",
+        "right-index",
+        "right-pinky",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-8-ex-1",
-            "kind": "text",
-            "instruction": "အဖေ အမေ အစ်ကို အစ်မ ညီငယ် ညီမငယ်",
-            "text": "အဖေ အမေ အစ်ကို အစ်မ ညီငယ် ညီမငယ်"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ဖခင်",
+                    "မိခင်",
+                    "သား"
+                ],
+                "count": 18
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-8-ex-2",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "သမီး",
+                    "အစ်ကို",
+                    "ညီမ"
+                ],
+                "count": 18
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-8-ex-3",
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ညီ",
+                    "ညီမ",
+                    "များ"
+                ],
+                "count": 20,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["words", "unicode"],
-    "prerequisites": ["lesson-my-intermediate-7"]
+    ]
 }

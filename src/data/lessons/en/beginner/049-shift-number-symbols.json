@@ -14,52 +14,118 @@
         "minAccuracy": 88,
         "minWpm": null
     },
+    "focusKeys": [
+        "Digit1",
+        "ShiftRight",
+        "Digit2",
+        "Digit3",
+        "Digit4",
+        "Digit5",
+        "Digit6",
+        "ShiftLeft",
+        "Digit7",
+        "Digit8",
+        "Digit9",
+        "Digit0"
+    ],
+    "focus": [
+        "shift",
+        "numbers"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-41"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "right-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-49-ex-1",
-            "kind": "text",
-            "instruction": "! ! ! ! ! ! ! ! ! !",
-            "text": "! ! ! ! ! ! ! ! ! !"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "!",
+                    "@",
+                    "#"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-49-ex-2",
-            "kind": "text",
-            "instruction": "@ @ @ @ @ @ @ @ @ @",
-            "text": "@ @ @ @ @ @ @ @ @ @"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "$",
+                    "%",
+                    "^"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-49-ex-3",
-            "kind": "text",
-            "instruction": "# # # # # # # # # #",
-            "text": "# # # # # # # # # #"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "&",
+                    "*",
+                    "(",
+                    ")"
+                ],
+                "count": 18,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-49-ex-4",
-            "kind": "text",
-            "instruction": "$ $ $ $ $ $ $ $ $ $",
-            "text": "$ $ $ $ $ $ $ $ $ $"
-        },
-        {
-            "id": "lesson-en-beginner-49-ex-5",
-            "kind": "text",
-            "instruction": "% % % % % % % % % %",
-            "text": "% % % % % % % % % %"
-        },
-        {
-            "id": "lesson-en-beginner-49-ex-6",
-            "kind": "text",
-            "instruction": "!@! @#@ #$# $%$",
-            "text": "!@! @#@ #$# $%$"
-        },
-        {
-            "id": "lesson-en-beginner-49-ex-7",
-            "kind": "text",
-            "instruction": "!@#$% !@#$% !@#$% !@#$%",
-            "text": "!@#$% !@#$% !@#$% !@#$%"
+            "instruction": "Reach the shifted symbols cleanly",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "!",
+                    "@",
+                    "#",
+                    "$",
+                    "%",
+                    "^",
+                    "&",
+                    "*",
+                    "(",
+                    ")"
+                ],
+                "count": 22,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "ShiftRight"],
-    "focus": ["shift", "numbers", "symbols"],
-    "targetHands": ["right", "left"],
-    "prerequisites": ["lesson-en-beginner-41"]
+    ]
 }

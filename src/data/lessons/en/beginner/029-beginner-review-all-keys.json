@@ -14,32 +14,155 @@
         "minAccuracy": 90,
         "minWpm": 15
     },
+    "focus": [
+        "key-memory",
+        "accuracy",
+        "speed"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-28"
+    ],
+    "focusKeys": [
+        "KeyA",
+        "KeyS",
+        "KeyD",
+        "KeyF",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyQ",
+        "KeyW",
+        "KeyE",
+        "KeyR",
+        "KeyT",
+        "KeyY",
+        "KeyU",
+        "KeyI",
+        "KeyO",
+        "KeyP",
+        "KeyZ",
+        "KeyX",
+        "KeyC",
+        "KeyV",
+        "KeyB",
+        "KeyN",
+        "KeyM",
+        "Digit1",
+        "Digit2",
+        "Digit3",
+        "Digit4",
+        "Digit5",
+        "Digit6",
+        "Digit7",
+        "Digit8",
+        "Digit9",
+        "Digit0"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-middle",
+        "right-ring",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-29-ex-1",
-            "kind": "text",
-            "instruction": "qwert yuiop asdfgh jkl;nm zxcvbn",
-            "text": "qwert yuiop asdfgh jkl;nm zxcvbn"
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "s",
+                    "d",
+                    "f",
+                    "j",
+                    "k",
+                    "l"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-29-ex-2",
-            "kind": "text",
-            "instruction": "the quick brown fox jumps over the lazy dog",
-            "text": "the quick brown fox jumps over the lazy dog"
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "q",
+                    "w",
+                    "e",
+                    "r",
+                    "t",
+                    "y",
+                    "u",
+                    "i",
+                    "o",
+                    "p"
+                ],
+                "count": 22,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-29-ex-3",
-            "kind": "text",
-            "instruction": "pack my box with five dozen liquor jugs",
-            "text": "pack my box with five dozen liquor jugs"
+            "instruction": "Review everything you have learned",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "z",
+                    "x",
+                    "c",
+                    "v",
+                    "b",
+                    "n",
+                    "m"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-29-ex-4",
-            "kind": "text",
-            "instruction": "I can type letters numbers and punctuation",
-            "text": "I can type letters numbers and punctuation"
+            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "0"
+                ],
+                "count": 20,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
+            }
         }
-    ],
-    "focus": ["key-memory", "accuracy", "speed"],
-    "prerequisites": ["lesson-en-beginner-28"]
+    ]
 }

@@ -14,35 +14,95 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyQ",
+        "KeyW",
+        "KeyE",
+        "KeyR",
+        "KeyT"
+    ],
+    "focus": [
+        "top-row"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index"
+    ],
+    "targetHands": [
+        "left"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-1"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-2-ex-1",
-            "kind": "text",
-            "instruction": "တ တ တ တ တ န န န န န မ မ မ မ မ",
-            "text": "တ တ တ တ တ န န န န န မ မ မ မ မ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ဆ",
+                    "တ"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-2-ex-2",
-            "kind": "text",
-            "instruction": "တ န မ တ န မ တ န မ တ န မ",
-            "text": "တ န မ တ န မ တ န မ တ န မ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "န",
+                    "မ"
+                ],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-2-ex-3",
-            "kind": "text",
-            "instruction": "တ န မ အ တ န မ အ",
-            "text": "တ န မ အ တ န မ အ"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "အ"
+                ],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-2-ex-4",
-            "kind": "text",
-            "instruction": "တ န မ တ န မ တ န မ တ န မ",
-            "text": "တ န မ တ န မ တ န မ တ န မ"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "ဆ",
+                    "တ",
+                    "န",
+                    "မ",
+                    "အ"
+                ],
+                "count": 26,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyW", "KeyE", "KeyR", "KeyT"],
-    "focus": ["top-row", "key-memory", "finger-control"],
-    "targetFingers": ["left-ring", "left-middle", "left-index"],
-    "targetHands": ["left"],
-    "prerequisites": ["lesson-my-beginner-1"]
+    ]
 }

@@ -14,50 +14,107 @@
         "minAccuracy": 88,
         "minWpm": 12
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-23"
+    ],
+    "focusKeys": [
+        "KeyW",
+        "KeyI",
+        "KeyT",
+        "KeyH",
+        "KeyA",
+        "KeyF",
+        "KeyR",
+        "KeyO",
+        "KeyM",
+        "KeyV",
+        "KeyE",
+        "KeyY",
+        "KeyU",
+        "KeyS",
+        "KeyN",
+        "KeyD",
+        "KeyL",
+        "KeyC",
+        "KeyK"
+    ],
+    "targetFingers": [
+        "left-ring",
+        "right-middle",
+        "left-index",
+        "right-index",
+        "left-pinky",
+        "right-ring",
+        "left-middle"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-24-ex-1",
-            "kind": "text",
-            "instruction": "that that that with with with",
-            "text": "that that that with with with"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "with",
+                    "that",
+                    "from",
+                    "have",
+                    "your",
+                    "they",
+                    "this",
+                    "what"
+                ],
+                "count": 18,
+                "maxWordLength": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-24-ex-2",
-            "kind": "text",
-            "instruction": "have have have from from from",
-            "text": "have have have from from from"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "more",
+                    "time",
+                    "than",
+                    "said",
+                    "will",
+                    "each",
+                    "about",
+                    "says"
+                ],
+                "count": 20,
+                "maxWordLength": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-24-ex-3",
-            "kind": "text",
-            "instruction": "this this this they they they",
-            "text": "this this this they they they"
-        },
-        {
-            "id": "lesson-en-beginner-24-ex-4",
-            "kind": "text",
-            "instruction": "will will will more more more",
-            "text": "will will will more more more"
-        },
-        {
-            "id": "lesson-en-beginner-24-ex-5",
-            "kind": "text",
-            "instruction": "look look look hand hand hand",
-            "text": "look look look hand hand hand"
-        },
-        {
-            "id": "lesson-en-beginner-24-ex-6",
-            "kind": "text",
-            "instruction": "word word word make make make",
-            "text": "word word word make make make"
-        },
-        {
-            "id": "lesson-en-beginner-24-ex-7",
-            "kind": "text",
-            "instruction": "come come come time time time",
-            "text": "come come come time time time"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "take",
+                    "them",
+                    "then",
+                    "into",
+                    "great",
+                    "much",
+                    "know",
+                    "where",
+                    "right"
+                ],
+                "count": 22,
+                "maxWordLength": 4
+            }
         }
-    ],
-    "focus": ["words", "key-memory"],
-    "prerequisites": ["lesson-en-beginner-23"]
+    ]
 }

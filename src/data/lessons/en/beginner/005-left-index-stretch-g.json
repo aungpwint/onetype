@@ -14,47 +14,73 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyF",
+        "KeyG"
+    ],
+    "focus": [
+        "home-row",
+        "finger-control",
+        "key-memory"
+    ],
+    "targetFingers": [
+        "left-index"
+    ],
+    "targetHands": [
+        "left"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-4"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-5-ex-1",
-            "kind": "text",
-            "instruction": "g g g g g g g g g g",
-            "text": "g g g g g g g g g g"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "g"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-5-ex-2",
-            "kind": "text",
-            "instruction": "f g f g f g f g f g",
-            "text": "f g f g f g f g f g"
+            "instruction": "Reach to the new keys and return",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "g",
+                    "f"
+                ],
+                "count": 18,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "runs"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-5-ex-3",
-            "kind": "text",
-            "instruction": "fg fg fg fg fg fg fg fg fg fg",
-            "text": "fg fg fg fg fg fg fg fg fg fg"
-        },
-        {
-            "id": "lesson-en-beginner-5-ex-4",
-            "kind": "text",
-            "instruction": "gf gf gf gf gf gf gf gf gf gf",
-            "text": "gf gf gf gf gf gf gf gf gf gf"
-        },
-        {
-            "id": "lesson-en-beginner-5-ex-5",
-            "kind": "text",
-            "instruction": "fgf fgf fgf fgf fgf fgf fgf fgf",
-            "text": "fgf fgf fgf fgf fgf fgf fgf fgf"
-        },
-        {
-            "id": "lesson-en-beginner-5-ex-6",
-            "kind": "text",
-            "instruction": "asdfg asdfg asdfg asdfg asdfg",
-            "text": "asdfg asdfg asdfg asdfg asdfg"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "g"
+                ],
+                "count": 24,
+                "chunkMin": 3,
+                "chunkMax": 6,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyF", "KeyG"],
-    "focus": ["home-row", "finger-control", "key-memory"],
-    "targetFingers": ["left-index"],
-    "targetHands": ["left"],
-    "prerequisites": ["lesson-en-beginner-4"]
+    ]
 }

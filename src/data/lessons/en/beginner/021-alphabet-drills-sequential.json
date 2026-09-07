@@ -14,32 +14,151 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focus": [
+        "alphabet",
+        "key-memory"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-20"
+    ],
+    "focusKeys": [
+        "KeyA",
+        "KeyB",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyQ",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "KeyX",
+        "KeyY",
+        "KeyZ"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-index",
+        "left-middle",
+        "right-index",
+        "right-middle",
+        "right-ring",
+        "right-pinky",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-21-ex-1",
-            "kind": "text",
-            "instruction": "abcdefghijklmnopqrstuvwxyz",
-            "text": "abcdefghijklmnopqrstuvwxyz"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "a",
+                    "b",
+                    "c"
+                ],
+                "count": 12,
+                "chunkMin": 3,
+                "chunkMax": 4,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-21-ex-2",
-            "kind": "text",
-            "instruction": "zyxwvutsrqponmlkjihgfedcba",
-            "text": "zyxwvutsrqponmlkjihgfedcba"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "d",
+                    "e",
+                    "f",
+                    "g",
+                    "h"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-21-ex-3",
-            "kind": "text",
-            "instruction": "abcdefghijklmnopqrstuvwxy",
-            "text": "abcdefghijklmnopqrstuvwxy"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "i",
+                    "j",
+                    "k",
+                    "l",
+                    "m",
+                    "n"
+                ],
+                "count": 18,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-21-ex-4",
-            "kind": "text",
-            "instruction": "yxwvutsrqponmlkjihgfedcb",
-            "text": "yxwvutsrqponmlkjihgfedcb"
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "o",
+                    "p",
+                    "q",
+                    "r",
+                    "s"
+                ],
+                "count": 16,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-en-beginner-21-ex-5",
+            "instruction": "Type larger clusters fluently",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "t",
+                    "u",
+                    "v",
+                    "w",
+                    "x",
+                    "y",
+                    "z"
+                ],
+                "count": 22,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focus": ["alphabet", "key-memory"],
-    "prerequisites": ["lesson-en-beginner-20"]
+    ]
 }

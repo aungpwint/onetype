@@ -14,32 +14,94 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-beginner-19"
+    ],
+    "focusKeys": [
+        "Digit7",
+        "ShiftLeft",
+        "KeyA",
+        "KeyE",
+        "KeyU",
+        "KeyK",
+        "KeyL",
+        "KeyJ",
+        "KeyW",
+        "KeyR",
+        "KeyT",
+        "KeyZ",
+        "KeyC",
+        "KeyS",
+        "KeyM",
+        "Semicolon"
+    ],
+    "targetFingers": [
+        "right-index",
+        "left-pinky",
+        "left-middle",
+        "right-middle",
+        "right-ring",
+        "left-ring",
+        "left-index",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-22-ex-1",
-            "kind": "text",
-            "instruction": "ကျောင်း ကျောင်း ပညာ ပညာ",
-            "text": "ကျောင်း ကျောင်း ပညာ ပညာ"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ရေ",
+                    "နေ",
+                    "ကေ",
+                    "ကု",
+                    "ကူ",
+                    "ကဲ"
+                ],
+                "count": 24
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-22-ex-2",
-            "kind": "text",
-            "instruction": "ဆရာ ဆရာ မြန်မာ မြန်မာ",
-            "text": "ဆရာ ဆရာ မြန်မာ မြန်မာ"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "တု",
+                    "တူ",
+                    "မု",
+                    "မူ",
+                    "နု",
+                    "နူ"
+                ],
+                "count": 24
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-beginner-22-ex-3",
-            "kind": "text",
-            "instruction": "စာသင်ခန်း စာသင်ခန်း",
-            "text": "စာသင်ခန်း စာသင်ခန်း"
-        },
-        {
-            "id": "lesson-my-beginner-22-ex-4",
-            "kind": "text",
-            "instruction": "ကျောင်းသား ကျောင်းသား",
-            "text": "ကျောင်းသား ကျောင်းသား"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "အဖေ",
+                    "အမေ",
+                    "ခြေ",
+                    "များ"
+                ],
+                "count": 18
+            }
         }
-    ],
-    "focus": ["words", "unicode", "syllable"],
-    "prerequisites": ["lesson-my-beginner-19"]
+    ]
 }

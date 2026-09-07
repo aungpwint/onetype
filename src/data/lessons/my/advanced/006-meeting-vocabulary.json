@@ -14,26 +14,76 @@
         "minAccuracy": 92,
         "minWpm": 22
     },
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-my-advanced-5"
+    ],
+    "focusKeys": [
+        "KeyT",
+        "KeyP",
+        "KeyN",
+        "KeyF",
+        "Semicolon",
+        "KeyW",
+        "ShiftRight",
+        "KeyA",
+        "KeyD",
+        "ShiftLeft",
+        "KeyY",
+        "KeyJ",
+        "KeyM",
+        "Digit7",
+        "KeyQ",
+        "KeyK",
+        "KeyO",
+        "KeyC",
+        "KeyS"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-pinky",
+        "right-index",
+        "left-ring",
+        "left-pinky",
+        "left-middle",
+        "right-middle",
+        "right-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-6-ex-1",
-            "kind": "text",
-            "instruction": "မနက်ဖြန် အစည်းအဝေးက သုံးနာရီပါ။",
-            "text": "မနက်ဖြန် အစည်းအဝေးက သုံးနာရီပါ။"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "အစည်း",
+                    "အဝေး",
+                    "အစီအစဉ်"
+                ],
+                "count": 20
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-my-advanced-6-ex-2",
-            "kind": "text",
-            "instruction": "အစီရင်ခံစာ အဆင်သင့်ရှိပါတယ်။",
-            "text": "အစီရင်ခံစာ အဆင်သင့်ရှိပါတယ်။"
-        },
-        {
-            "id": "lesson-my-advanced-6-ex-3",
-            "kind": "text",
-            "instruction": "ကျေးဇူးပြု၍ အချက်အလက်များ ပေးပါခင်ဗျာ။",
-            "text": "ကျေးဇူးပြု၍ အချက်အလက်များ ပေးပါခင်ဗျာ။"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "ပြောရေး",
+                    "ဆိုရေး",
+                    "သေချာ"
+                ],
+                "count": 20
+            }
         }
-    ],
-    "focus": ["words", "sentences", "unicode"],
-    "prerequisites": ["lesson-my-advanced-5"]
+    ]
 }

@@ -224,7 +224,7 @@ function getKeyLabel({
 
     if (isSpace) {
         return (
-            <span className="keycap-mod absolute inset-x-0 bottom-2 truncate px-1.5 text-center text-[0.625rem] font-semibold tracking-[0.18em] text-muted-foreground/70 uppercase sm:text-[0.6875rem] lg:text-xs 2xl:text-[0.8125rem]">
+            <span className="keycap-mod absolute inset-x-0 bottom-2 truncate px-1.5 text-center text-[0.625rem] font-semibold tracking-[0.14em] text-muted-foreground/70 uppercase sm:text-[0.6875rem] lg:text-xs 2xl:text-[0.8125rem]">
                 space
             </span>
         )
@@ -250,10 +250,10 @@ function getKeyLabel({
                 <span
                     className={[
                         'keycap-shift absolute top-1 right-1.5 max-w-[62%] text-right whitespace-nowrap sm:top-1.5 sm:right-2',
-                        containsMyanmar(shifted) ? 'font-myanmar' : 'font-heavy',
+                        containsMyanmar(shifted) ? 'font-myanmar' : 'font-keyboard',
                         shiftedLong
-                            ? 'text-[0.55rem] leading-none sm:text-[0.625rem] lg:text-[0.6875rem]'
-                            : 'text-[0.625rem] leading-none sm:text-xs lg:text-sm',
+                            ? 'text-[0.55rem] leading-none font-semibold sm:text-[0.625rem] lg:text-[0.6875rem]'
+                            : 'text-[0.625rem] leading-none font-semibold sm:text-xs lg:text-sm',
                     ].join(' ')}
                 >
                     {shifted}
@@ -263,7 +263,7 @@ function getKeyLabel({
             <span
                 className={[
                     'keycap-primary absolute inset-x-0 bottom-1 whitespace-nowrap text-center',
-                    containsMyanmar(plain) ? 'font-myanmar' : 'font-heavy',
+                    containsMyanmar(plain) ? 'font-myanmar' : 'font-keyboard',
                     'text-[0.9375rem] font-medium sm:text-base lg:text-lg 2xl:text-xl',
                 ].join(' ')}
             >

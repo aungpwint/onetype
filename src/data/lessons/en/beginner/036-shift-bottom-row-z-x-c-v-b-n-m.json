@@ -14,71 +14,106 @@
         "minAccuracy": 87,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyZ",
+        "ShiftRight",
+        "KeyX",
+        "KeyC",
+        "KeyV",
+        "KeyB",
+        "KeyN",
+        "ShiftLeft",
+        "KeyM"
+    ],
+    "focus": [
+        "shift"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
+    "prerequisites": [
+        "lesson-en-beginner-35"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "right-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "right-index"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-36-ex-1",
-            "kind": "text",
-            "instruction": "zZ zZ zZ zZ zZ zZ zZ zZ zZ zZ",
-            "text": "zZ zZ zZ zZ zZ zZ zZ zZ zZ zZ"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "Z",
+                    "X"
+                ],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-36-ex-2",
-            "kind": "text",
-            "instruction": "xX xX xX xX xX xX xX xX xX xX",
-            "text": "xX xX xX xX xX xX xX xX xX xX"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "C",
+                    "V"
+                ],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 3,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-36-ex-3",
-            "kind": "text",
-            "instruction": "cC cC cC cC cC cC cC cC cC cC",
-            "text": "cC cC cC cC cC cC cC cC cC cC"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "B",
+                    "N",
+                    "M"
+                ],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-36-ex-4",
-            "kind": "text",
-            "instruction": "vV vV vV vV vV vV vV vV vV vV",
-            "text": "vV vV vV vV vV vV vV vV vV vV"
-        },
-        {
-            "id": "lesson-en-beginner-36-ex-5",
-            "kind": "text",
-            "instruction": "bB bB bB bB bB bB bB bB bB bB",
-            "text": "bB bB bB bB bB bB bB bB bB bB"
-        },
-        {
-            "id": "lesson-en-beginner-36-ex-6",
-            "kind": "text",
-            "instruction": "nN nN nN nN nN nN nN nN nN nN",
-            "text": "nN nN nN nN nN nN nN nN nN nN"
-        },
-        {
-            "id": "lesson-en-beginner-36-ex-7",
-            "kind": "text",
-            "instruction": "mM mM mM mM mM mM mM mM mM mM",
-            "text": "mM mM mM mM mM mM mM mM mM mM"
-        },
-        {
-            "id": "lesson-en-beginner-36-ex-8",
-            "kind": "text",
-            "instruction": "Zz Zz Zz Zz Zz Zz Zz Zz Zz Zz",
-            "text": "Zz Zz Zz Zz Zz Zz Zz Zz Zz Zz"
-        },
-        {
-            "id": "lesson-en-beginner-36-ex-9",
-            "kind": "text",
-            "instruction": "Xx Xx Xx Xx Xx Xx Xx Xx Xx Xx",
-            "text": "Xx Xx Xx Xx Xx Xx Xx Xx Xx Xx"
-        },
-        {
-            "id": "lesson-en-beginner-36-ex-10",
-            "kind": "text",
-            "instruction": "Cc Cc Cc Cc Cc Cc Cc Cc Cc Cc",
-            "text": "Cc Cc Cc Cc Cc Cc Cc Cc Cc Cc"
+            "instruction": "Hold the correct Shift key",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "Z",
+                    "X",
+                    "C",
+                    "V",
+                    "B",
+                    "N",
+                    "M"
+                ],
+                "count": 24,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable"
+            }
         }
-    ],
-    "focusKeys": ["KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "ShiftLeft", "ShiftRight"],
-    "focus": ["shift", "bottom-row"],
-    "targetHands": ["left", "right"],
-    "requiresShift": true,
-    "prerequisites": ["lesson-en-beginner-35"]
+    ]
 }

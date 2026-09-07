@@ -34,7 +34,7 @@ export function UpdateBanner() {
                 <div className="flex min-w-0 flex-1 items-center gap-3">
                     <span className="shrink-0 text-muted-foreground">Downloading {status.version ? `v${status.version}` : 'update'}…</span>
                     <Progress value={percent} className="max-w-44" />
-                    <span className="shrink-0 font-mono text-xs text-muted-foreground tabular-nums">
+                    <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
                         {status.contentLength ? `${Math.round(percent)}%` : '…'}
                     </span>
                 </div>

@@ -14,14 +14,80 @@
         "minAccuracy": 92,
         "minWpm": 18
     },
+    "focus": [
+        "sentences"
+    ],
+    "prerequisites": [
+        "lesson-my-intermediate-13"
+    ],
+    "focusKeys": [
+        "KeyR",
+        "KeyE",
+        "KeyU",
+        "KeyF",
+        "KeyA",
+        "KeyX",
+        "KeyG",
+        "ShiftRight",
+        "KeyW",
+        "KeyB",
+        "Period",
+        "ShiftLeft",
+        "Digit7",
+        "KeyM",
+        "KeyT",
+        "KeyS",
+        "KeyI",
+        "KeyD",
+        "KeyN",
+        "KeyK",
+        "Semicolon",
+        "KeyV",
+        "KeyJ",
+        "KeyP",
+        "KeyH"
+    ],
+    "targetFingers": [
+        "left-index",
+        "left-middle",
+        "right-index",
+        "left-pinky",
+        "left-ring",
+        "right-pinky",
+        "right-ring",
+        "right-middle"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
+    "requiresShift": true,
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-my-intermediate-14-ex-1",
-            "kind": "text",
-            "instruction": "ကျွန်တော်မွန်မြို့ကလာတယ်။ မန္တလေးမှာကျောင်းတက်တယ်။ အခုတော့ ရန်ကုန်မှာအလုပ်လုပ်တယ်။",
-            "text": "ကျွန်တော်မွန်မြို့ကလာတယ်။ မန္တလေးမှာကျောင်းတက်တယ်။ အခုတော့ ရန်ကုန်မှာအလုပ်လုပ်တယ်။"
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "မနက် က နေ က ထွက် တယ် ။",
+                    "ရွာ က အ နောက် မှာ တောင် ရှိ တယ် ။"
+                ],
+                "count": 3
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-intermediate-14-ex-2",
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ညဘက် က မိုး က ရွာ လဲ ။",
+                    "မျက်စိ နဲ့ မြင်ရ တယ် ။"
+                ],
+                "count": 3
+            }
         }
-    ],
-    "focus": ["sentences", "unicode", "punctuation", "speed"],
-    "prerequisites": ["lesson-my-intermediate-13"]
+    ]
 }

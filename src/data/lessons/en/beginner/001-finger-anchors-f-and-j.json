@@ -14,34 +14,89 @@
         "minAccuracy": 85,
         "minWpm": null
     },
+    "focusKeys": [
+        "KeyF",
+        "KeyJ"
+    ],
+    "focus": [
+        "home-row",
+        "finger-control",
+        "key-memory"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-index"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-1-ex-1",
-            "kind": "text",
-            "instruction": "f f f f f f f f f f",
-            "text": "f f f f f f f f f f"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "j"
+                ],
+                "count": 18,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-1-ex-2",
-            "kind": "text",
-            "instruction": "j j j j j j j j j j",
-            "text": "j j j j j j j j j j"
+            "instruction": "Alternate between both fingers and hands",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "j"
+                ],
+                "count": 18,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "alternation"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-1-ex-3",
-            "kind": "text",
-            "instruction": "f j f j f j f j f j",
-            "text": "f j f j f j f j f j"
+            "instruction": "Keep your fingers on the home row",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "j"
+                ],
+                "count": 22,
+                "chunkMin": 4,
+                "chunkMax": 6,
+                "style": "variable"
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-1-ex-4",
-            "kind": "text",
-            "instruction": "f j f j f j f j f j f j f j",
-            "text": "f j f j f j f j f j f j f j"
+            "instruction": "Warm up with short clusters",
+            "generator": {
+                "type": "chunks",
+                "keys": [
+                    "f",
+                    "j",
+                    "f"
+                ],
+                "count": 20,
+                "chunkMin": 3,
+                "chunkMax": 5,
+                "style": "variable",
+                "mixed": true
+            }
         }
-    ],
-    "focusKeys": ["KeyF", "KeyJ"],
-    "focus": ["home-row", "finger-control", "key-memory"],
-    "targetFingers": ["left-index", "right-index"],
-    "targetHands": ["left", "right"]
+    ]
 }

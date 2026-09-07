@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { Sparkles } from 'lucide-react'
 import type { Level } from '@/types'
 import { useLessonStore } from '@/stores/lesson-store'
 import { useStudentStore } from '@/stores/student-store'
@@ -9,13 +10,20 @@ import { Spinner, PageHeader } from '@/components/ui'
 import { Progress } from '@/components/ui/progress'
 import { LanguageToggle } from '@/components/language-toggle'
 import { LessonCard } from '@/components/lesson-card'
-import { computeMasteryForLessons } from '@/core/mastery'
+import { computeMasteryForLessons, type AttemptRecord } from '@/core/mastery'
+import { recommendNextLesson } from '@/core/practice'
 import { pct } from '@/lib/format'
 import { cn, appPageClass } from '@/lib/utils'
 import type { ExerciseResult } from '@/services/types'
 import * as backend from '@/services/backend'
 
 const LEVEL_ORDER: Level[] = ['beginner', 'intermediate', 'advanced']
+
+const RECOMMENDATION_COPY: Record<string, { label: string; heading: string }> = {
+    unfinished: { label: 'Up next', heading: 'Continue your path' },
+    'weak-key-boost': { label: 'Weak-key boost', heading: 'Sharpen your weakest keys' },
+    review: { label: 'Review', heading: 'Lock in mastery' },
+}
 
 const LEVEL_COPY: Record<Level, { en: string; ms: string }> = {
     beginner: { en: 'Beginner — home row & its neighbours', ms: 'အခြေခံ' },
@@ -68,6 +76,35 @@ export default function Learn() {
     }, [lessonsByLevel, level, lang])
 
     const progressReady = progressStudentId === active?.id
+
+    const recommendation = useMemo(() => {
+        if (!progressReady) return null
+        const attemptsByLesson: Record<string, AttemptRecord[]> = {}
+        const chronological = [...exerciseResults].sort((a, b) => a.startedAt - b.startedAt)
+        for (const result of chronological) {
+            const bucket = attemptsByLesson[result.lessonId] ?? []
+            bucket.push({ passed: result.passed, accuracy: result.accuracy })
+            attemptsByLesson[result.lessonId] = bucket
+        }
+        const minAccuracyByLesson: Partial<Record<string, number>> = {}
+        for (const lesson of list) minAccuracyByLesson[lesson.id] = lesson.completion.minAccuracy
+        return recommendNextLesson({ lessons: list, attemptsByLesson, minAccuracyByLesson })
+    }, [progressReady, exerciseResults, list])
+
+    const unlockedById = useMemo(() => {
+        const unlocked = new Set<string>()
+        for (const lesson of list) {
+            const prereqs = lesson.prerequisites ?? []
+            const isRoot = prereqs.length === 0 && lesson.number === 1
+            const ok = isRoot || prereqs.every((id) => {
+                const mastered = masteryByLesson.get(id)
+                return mastered === 'passed' || mastered === 'mastered'
+            })
+            if (ok) unlocked.add(lesson.id)
+        }
+        return unlocked
+    }, [list, masteryByLesson])
+
     const doneCount = list.filter((l) => progress?.[l.id]?.completed).length
 
     return (
@@ -122,6 +159,28 @@ export default function Learn() {
                 <Spinner label="Loading progress…" />
             )}
 
+            {recommendation?.lesson ? (
+                <Link
+                    to={`/lesson/${recommendation.lesson.id}`}
+                    className="group flex items-center gap-3 rounded-2xl border border-accent/30 bg-accent/5 p-4 transition-colors hover:border-accent/50 hover:bg-accent/10"
+                >
+                    <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-accent/30 bg-accent/10 text-accent">
+                        <Sparkles className="size-4" />
+                    </span>
+                    <span className="min-w-0">
+                        <span className="block text-[0.6875rem] font-semibold tracking-wider text-accent uppercase">
+                            {RECOMMENDATION_COPY[recommendation.reason]?.label ?? 'Recommended'}
+                        </span>
+                        <span className="block truncate font-display text-base font-semibold text-ink">
+                            {recommendation.lesson.title}
+                        </span>
+                        <span className="block truncate text-xs text-muted-foreground">
+                            L{String(recommendation.lesson.number).padStart(2, '0')} · {RECOMMENDATION_COPY[recommendation.reason]?.heading ?? 'Recommended for you'}
+                        </span>
+                    </span>
+                </Link>
+            ) : null}
+
             <div className={list.length ? 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3' : ''}>
                 {list.map((lesson, i) => (
                     <motion.div
@@ -135,6 +194,7 @@ export default function Learn() {
                             lesson={lesson}
                             mastery={masteryByLesson.get(lesson.id) ?? 'not-started'}
                             progress={progress?.[lesson.id]}
+                            locked={progressReady && !unlockedById.has(lesson.id)}
                         />
                     </motion.div>
                 ))}

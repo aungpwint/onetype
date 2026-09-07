@@ -14,51 +14,102 @@
         "minAccuracy": 88,
         "minWpm": 10
     },
+    "focusKeys": [
+        "KeyT",
+        "KeyH",
+        "KeyE",
+        "KeyA",
+        "KeyN",
+        "KeyD",
+        "KeyF",
+        "KeyO",
+        "KeyR",
+        "KeyY",
+        "KeyU",
+        "KeyW",
+        "KeyS",
+        "KeyI",
+        "KeyC",
+        "KeyM"
+    ],
+    "focus": [
+        "words"
+    ],
+    "prerequisites": [
+        "lesson-en-beginner-22"
+    ],
+    "targetFingers": [
+        "left-index",
+        "right-index",
+        "left-middle",
+        "left-pinky",
+        "right-ring",
+        "left-ring",
+        "right-middle"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-23-ex-1",
-            "kind": "text",
-            "instruction": "and and and the the the",
-            "text": "and and and the the the"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "the",
+                    "and",
+                    "for",
+                    "you",
+                    "are"
+                ],
+                "count": 14,
+                "maxWordLength": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-23-ex-2",
-            "kind": "text",
-            "instruction": "had had had has has has",
-            "text": "had had had has has has"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "was",
+                    "his",
+                    "her",
+                    "can",
+                    "may",
+                    "new",
+                    "now",
+                    "one"
+                ],
+                "count": 18,
+                "maxWordLength": 3
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-beginner-23-ex-3",
-            "kind": "text",
-            "instruction": "old old old man man man",
-            "text": "old old old man man man"
-        },
-        {
-            "id": "lesson-en-beginner-23-ex-4",
-            "kind": "text",
-            "instruction": "his his his let let let",
-            "text": "his his his let let let"
-        },
-        {
-            "id": "lesson-en-beginner-23-ex-5",
-            "kind": "text",
-            "instruction": "dog dog dog cat cat cat",
-            "text": "dog dog dog cat cat cat"
-        },
-        {
-            "id": "lesson-en-beginner-23-ex-6",
-            "kind": "text",
-            "instruction": "sun sun sun fun fun fun",
-            "text": "sun sun sun fun fun fun"
-        },
-        {
-            "id": "lesson-en-beginner-23-ex-7",
-            "kind": "text",
-            "instruction": "red red red big big big",
-            "text": "red red red big big big"
+            "instruction": "Type whole words for rhythm",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "out",
+                    "run",
+                    "she",
+                    "sit",
+                    "the",
+                    "two",
+                    "use",
+                    "way",
+                    "why",
+                    "yes"
+                ],
+                "count": 22,
+                "maxWordLength": 3
+            }
         }
-    ],
-    "focusKeys": ["KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyL", "KeyM", "KeyN"],
-    "focus": ["words", "key-memory"],
-    "prerequisites": ["lesson-en-beginner-22"]
+    ]
 }

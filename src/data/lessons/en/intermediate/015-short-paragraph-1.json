@@ -14,14 +14,79 @@
         "minAccuracy": 92,
         "minWpm": 24
     },
+    "focus": [
+        "sentences"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-14"
+    ],
+    "focusKeys": [
+        "KeyI",
+        "KeyW",
+        "KeyA",
+        "KeyL",
+        "KeyK",
+        "KeyE",
+        "KeyD",
+        "KeyT",
+        "KeyO",
+        "KeyH",
+        "KeyS",
+        "KeyP",
+        "KeyN",
+        "KeyB",
+        "KeyU",
+        "KeyG",
+        "KeyM",
+        "KeyR",
+        "Period",
+        "KeyC",
+        "KeyY",
+        "KeyV",
+        "KeyF"
+    ],
+    "targetFingers": [
+        "right-middle",
+        "left-ring",
+        "left-pinky",
+        "right-ring",
+        "left-middle",
+        "left-index",
+        "right-index",
+        "right-pinky"
+    ],
+    "targetHands": [
+        "right",
+        "left"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-15-ex-1",
-            "kind": "text",
-            "instruction": "It is a warm sunny day. The birds sing in the trees. We sit under a big tree and eat lunch.",
-            "text": "It is a warm sunny day. The birds sing in the trees. We sit under a big tree and eat lunch."
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "i walked to the shop and bought some bread.",
+                    "the cat sat on the warm windowsill.",
+                    "my uncle lives in a small town."
+                ],
+                "count": 4
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-en-intermediate-15-ex-2",
+            "instruction": "Type the full phrases with correct spacing",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "they planted flowers beside the front door.",
+                    "she found a shiny coin on the path.",
+                    "the water in the lake looks clear."
+                ],
+                "count": 4
+            }
         }
-    ],
-    "focus": ["sentences", "speed", "accuracy"],
-    "prerequisites": ["lesson-en-intermediate-14"]
+    ]
 }

@@ -14,32 +14,93 @@
         "minAccuracy": 90,
         "minWpm": 22
     },
+    "focus": [
+        "hand-alternation"
+    ],
+    "prerequisites": [
+        "lesson-en-intermediate-4"
+    ],
+    "focusKeys": [
+        "KeyA",
+        "KeyR",
+        "KeyM",
+        "KeyF",
+        "KeyU",
+        "KeyN",
+        "KeyD",
+        "KeyG",
+        "KeyI",
+        "KeyB",
+        "KeyO",
+        "KeyK",
+        "KeyE",
+        "KeyT",
+        "KeyH",
+        "KeyP",
+        "KeyW"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-index",
+        "right-index",
+        "left-middle",
+        "right-middle",
+        "right-ring",
+        "right-pinky",
+        "left-ring"
+    ],
+    "targetHands": [
+        "left",
+        "right"
+    ],
     "exercises": [
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-5-ex-1",
-            "kind": "text",
-            "instruction": "alternating quick jumpy fix band",
-            "text": "alternating quick jumpy fix band"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "arm",
+                    "fun",
+                    "drum"
+                ],
+                "count": 30,
+                "maxWordLength": 4
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-5-ex-2",
-            "kind": "text",
-            "instruction": "kingdom label jump theme common",
-            "text": "kingdom label jump theme common"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "again",
+                    "born",
+                    "dark"
+                ],
+                "count": 28,
+                "maxWordLength": 5
+            }
         },
         {
+            "kind": "generated",
             "id": "lesson-en-intermediate-5-ex-3",
-            "kind": "text",
-            "instruction": "figured burned paper novel video",
-            "text": "figured burned paper novel video"
-        },
-        {
-            "id": "lesson-en-intermediate-5-ex-4",
-            "kind": "text",
-            "instruction": "noticed lambda applied changes global",
-            "text": "noticed lambda applied changes global"
+            "instruction": "Build speed across full words",
+            "generator": {
+                "type": "words",
+                "words": [
+                    "earth",
+                    "grab",
+                    "hard",
+                    "pad",
+                    "tag",
+                    "drawn"
+                ],
+                "count": 28,
+                "maxWordLength": 6
+            }
         }
-    ],
-    "focus": ["hand-alternation", "words", "speed"],
-    "prerequisites": ["lesson-en-intermediate-4"]
+    ]
 }

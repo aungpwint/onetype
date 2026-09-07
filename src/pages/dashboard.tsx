@@ -307,7 +307,7 @@ export default function Dashboard() {
                                     Streak
                                 </p>
                                 <div className="mt-3 flex items-baseline gap-2">
-                                    <span className="font-mono text-5xl leading-none font-semibold tracking-tight tabular-nums">
+                                    <span className="text-5xl leading-none font-semibold tracking-tight tabular-nums">
                                         {streak?.current ?? '•'}
                                     </span>
                                     <span className="text-sm text-muted-foreground">day{streak?.current === 1 ? '' : 's'}</span>
@@ -345,17 +345,17 @@ export default function Dashboard() {
                     <dl className="relative mt-3">
                         <div className="flex items-center justify-between border-b border-line/60 py-2 text-sm">
                             <dt className="text-muted-foreground">Fastest WPM</dt>
-                            <dd className="font-mono font-semibold tabular-nums">{stats.bestWpm ? Math.round(stats.bestWpm) : '—'}</dd>
+                            <dd className="font-semibold tabular-nums">{stats.bestWpm ? Math.round(stats.bestWpm) : '—'}</dd>
                         </div>
                         <div className="flex items-center justify-between border-b border-line/60 py-2 text-sm">
                             <dt className="text-muted-foreground">Typing time</dt>
-                            <dd className="font-mono font-semibold tabular-nums">
+                            <dd className="font-semibold tabular-nums">
                                 {summary ? formatDuration(summary.totalMinutes * 60000) : '—'}
                             </dd>
                         </div>
                         <div className="flex items-center justify-between py-2 text-sm">
                             <dt className="text-muted-foreground">Sessions</dt>
-                            <dd className="font-mono font-semibold tabular-nums">{summary?.sessions ?? '—'}</dd>
+                            <dd className="font-semibold tabular-nums">{summary?.sessions ?? '—'}</dd>
                         </div>
                     </dl>
                 </div>
@@ -521,7 +521,7 @@ export default function Dashboard() {
                                             {new Date(s.startedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
                                         </td>
                                         <td className="px-5 py-2 font-myanmar">{formatLessonLabel(s.lessonId)}</td>
-                                        <td className="px-5 py-2 text-right font-mono font-semibold tabular-nums">{formatWpm(s.wpm)}</td>
+                                        <td className="px-5 py-2 text-right font-semibold tabular-nums">{formatWpm(s.wpm)}</td>
                                         <td className="px-5 py-2 text-right tabular-nums">{formatAccuracy(s.accuracy)}</td>
                                         <td className="hidden px-5 py-2 text-right text-muted-foreground tabular-nums sm:table-cell">
                                             {formatDuration(s.durationMs)}
