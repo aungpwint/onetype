@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
 import { myanmar } from '@/core/keyboard-layout/myanmar'
+import { getLayoutOrThrow } from '@/core/keyboard-layout/registry'
+import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
+import { toLayoutId } from '@/types/keyboard'
 import { TypingEngine } from '@/core/typing-engine/engine'
 import { buildSequence, keyboardOrderForCluster } from '@/core/typing-engine/sequence'
 import { containsMyanmar } from '@/core/unicode/myanmar'
@@ -63,12 +66,12 @@ function keyboardPresses(text: string): Press[] {
     return presses
 }
 
-function keyboardType(text: string): string {
-    return buildSequence(text, myanmar).graphemes.join('')
+function keyboardType(text: string, layout: KeyboardLayout = myanmar): string {
+    return buildSequence(text, layout).graphemes.join('')
 }
 
-function assertExactlyTyped(word: string): void {
-    const typed = keyboardType(word)
+function assertExactlyTyped(word: string, layout: KeyboardLayout = myanmar): void {
+    const typed = keyboardType(word, layout)
     expect(typed, `keyboard output for ${JSON.stringify(word)}`).toBe(word)
     expect(
         [...typed].map((c) => c.codePointAt(0)),
@@ -123,13 +126,13 @@ describe('Myanmar keyboard produces the exact canonical Unicode sequence', () =>
         }
     })
 
-    it.each(REPORTED_CORPUS)('%s is typed back exactly (string + code points, no zero-width)', assertExactlyTyped)
+    it.each(REPORTED_CORPUS)('%s is typed back exactly (string + code points, no zero-width)', (line) => assertExactlyTyped(line))
 
-    it.each([...COMBINATIONS, ...AVOWEL_NO_PREBASE])('%s is typed back exactly (string + code points, no zero-width)', assertExactlyTyped)
+    it.each([...COMBINATIONS, ...AVOWEL_NO_PREBASE])('%s is typed back exactly (string + code points, no zero-width)', (line) => assertExactlyTyped(line))
 
-    it.each(PREBASE_MATRIX)('%s is typed back exactly (string + code points, no zero-width)', assertExactlyTyped)
+    it.each(PREBASE_MATRIX)('%s is typed back exactly (string + code points, no zero-width)', (line) => assertExactlyTyped(line))
 
-    it.each(SENTENCE_LINES)('%s is typed back exactly (multibase syllables + spaces)', assertExactlyTyped)
+    it.each(SENTENCE_LINES)('%s is typed back exactly (multibase syllables + spaces)', (line) => assertExactlyTyped(line))
 
     it('the preposed vowel key emits the bare U+1031 with no leading/inflected ZWNJ', () => {
         const output = myanmar.outputFor('KeyA', 'none')
@@ -194,8 +197,11 @@ describe('Myanmar curriculum is keyboard-typeable end to end', () => {
         expect(lessons.length).toBeGreaterThan(0)
         for (const lesson of lessons) {
             const canonical = getCanonicalLesson(lesson.id)
+            // Mixed-script lessons type through the mixed layout; pure Myanmar
+            // lessons through the Myanmar layout.
+            const layout = getLayoutOrThrow(toLayoutId(canonical.keyboard))
             for (const line of lessonStrings(canonical)) {
-                assertExactlyTyped(line)
+                assertExactlyTyped(line, layout)
             }
         }
     })

@@ -3,6 +3,7 @@ import { resolveLesson, type ResolvedLesson } from '@/data/curriculum/generator'
 import { getLessonRepository } from '@/data/curriculum'
 import { layoutForLanguage } from '@/core/keyboard-layout/registry'
 import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
+import type { RuntimeLayoutId } from '@/types/keyboard'
 import { normalizeMyanmarText } from '@/core/unicode/myanmar'
 import { splitGraphemes } from '@/core/unicode/graphemes'
 import type { Difficulty, Language } from '@/types'
@@ -13,7 +14,7 @@ const repository = getLessonRepository()
 export type PracticeUnit = 'time' | 'words' | 'text' | 'quote'
 
 export interface PracticeConfig {
-    language: 'english' | 'myanmar'
+    language: 'english' | 'myanmar' | 'mixed'
     unit: PracticeUnit
     time?: number
     words?: number
@@ -45,8 +46,8 @@ function encodableLine(layout: KeyboardLayout, raw: string): string {
     return line
 }
 
-function encodablePool(layout: KeyboardLayout, language: 'english' | 'myanmar'): string[] {
-    const lessons = language === 'english' ? ALL_EN_LESSONS : ALL_MY_LESSONS
+function encodablePool(layout: KeyboardLayout, language: 'english' | 'myanmar' | 'mixed'): string[] {
+    const lessons = language === 'english' ? ALL_EN_LESSONS : language === 'myanmar' ? ALL_MY_LESSONS : [...ALL_MY_LESSONS, ...ALL_EN_LESSONS]
     const seen = new Set<string>()
     const pool: string[] = []
     for (const lesson of lessons) {
@@ -61,12 +62,12 @@ function encodablePool(layout: KeyboardLayout, language: 'english' | 'myanmar'):
     return pool
 }
 
-function wordPool(layout: KeyboardLayout, language: 'english' | 'myanmar'): string[] {
-    const lines = encodablePool(layout, language)
+function wordPool(layout: KeyboardLayout, language: 'english' | 'myanmar' | 'mixed'): string[] {
+    const lines = language === 'english' ? encodablePool(layout, 'english') : language === 'myanmar' ? encodablePool(layout, 'myanmar') : encodablePool(layout, 'mixed')
     const seen = new Set<string>()
     const words: string[] = []
     for (const line of lines) {
-        const tokens = language === 'english' ? line.split(/\s+/) : line.split(' ')
+        const tokens = line.split(/\s+/)
         for (const token of tokens) {
             if (token.length === 0) continue
             const stripped = token.replace(/^[^\p{L}\p{N}]+$/u, '').replace(/[.,!?;:"'“”‘’()-]+$/g, '')
@@ -107,8 +108,8 @@ function capitalize(word: string): string {
     return word.length > 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
 }
 
-function randomToken(language: 'english' | 'myanmar', length: number): string {
-    if (language === 'myanmar') {
+function randomToken(language: 'english' | 'myanmar' | 'mixed', length: number): string {
+    if (language === 'myanmar' || (language === 'mixed' && Math.random() < 0.5)) {
         const raw: string[] = []
         for (let i = 0; i < length; i += 1) raw.push(EN_DIGITS[Math.floor(Math.random() * EN_DIGITS.length)])
         return myanmarDigits(raw.join(''))
@@ -118,8 +119,14 @@ function randomToken(language: 'english' | 'myanmar', length: number): string {
     return raw.join('')
 }
 
-function decoratePracticeTokens(words: string[], opts: { language: 'english' | 'myanmar'; punctuation: boolean; numbers: boolean }): string[] {
-    const punctuation = opts.punctuation ? (opts.language === 'english' ? EN_PUNCTUATION : MY_PUNCTUATION) : []
+function decoratePracticeTokens(words: string[], opts: { language: 'english' | 'myanmar' | 'mixed'; punctuation: boolean; numbers: boolean }): string[] {
+    const punctuation = opts.punctuation
+        ? opts.language === 'english'
+            ? EN_PUNCTUATION
+            : opts.language === 'myanmar'
+              ? MY_PUNCTUATION
+              : [...EN_PUNCTUATION, ...MY_PUNCTUATION]
+        : []
     const tokens: string[] = []
     for (let i = 0; i < words.length; i += 1) {
         let word = words[i]
@@ -168,7 +175,8 @@ export function buildPracticeMaterial(config: PracticeConfig): ResolvedLesson {
         text = encodableLine(layout, custom)
         if (!text) throw new Error('Practice text contains characters unavailable in the selected layout')
     } else if (unit === 'quote') {
-        const candidates = quotePool(config.language).filter((q) => encodableLine(layout, q.text))
+        const pool = config.language === 'mixed' ? [...quotePool('english'), ...quotePool('myanmar')] : quotePool(config.language)
+        const candidates = pool.filter((q) => encodableLine(layout, q.text))
         if (candidates.length === 0) throw new Error(`No quotable practice material available for "${config.language}"`)
         const quote = candidates[Math.floor(Math.random() * candidates.length)]
         text = quote.text
@@ -225,7 +233,7 @@ export function buildPracticeMaterial(config: PracticeConfig): ResolvedLesson {
         difficulty: 'easy' as Difficulty,
         estimatedMinutes: 1,
         language,
-        layoutId: layout.id as 'english-qwerty' | 'myanmar',
+        layoutId: layout.id as RuntimeLayoutId,
         completion: { minAccuracy: 0, minWpm: null },
         phases,
     }

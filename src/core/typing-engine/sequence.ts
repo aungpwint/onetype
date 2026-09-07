@@ -3,7 +3,7 @@ import type { Hand } from '@/types'
 import type { FingerId } from '@/types'
 import { KeyboardLayout, shiftHandFor } from '@/core/keyboard-layout/layout'
 import { splitGraphemes } from '@/core/unicode/graphemes'
-import { findSuspiciousInvisibleCharacters, splitMyanmarSyllables, containsMyanmar } from '@/core/unicode/myanmar'
+import { findSuspiciousInvisibleCharacters, splitMyanmarSyllables, splitMixedClusters, containsMyanmar } from '@/core/unicode/myanmar'
 import { isPreBaseVowel } from '@/core/unicode/classification'
 
 export interface TypingUnit {
@@ -41,19 +41,23 @@ export function keyboardOrderForCluster(cluster: string): string {
 }
 
 export function buildSequence(text: string, layout: KeyboardLayout): BuiltSequence {
-    if (layout.language === 'myanmar') {
+    // Any suspicious invisible characters must not reach the typing target,
+    // including inside a mixed English + Myanmar text.
+    if (layout.language !== 'english') {
         const found = findSuspiciousInvisibleCharacters(text)
         if (found.length > 0) {
             throw new Error(`Myanmar typing text contains unexpected invisible character at index ${found[0].index}: ${found[0].description}`)
         }
     }
-    const graphemes = layout.language === 'myanmar' ? splitMyanmarSyllables(text) : splitGraphemes(text)
+    const graphemes =
+        layout.language === 'myanmar' ? splitMyanmarSyllables(text) : layout.language === 'mixed' ? splitMixedClusters(text) : splitGraphemes(text)
     const graphemeUnitRanges: [number, number][] = []
     const units: TypingUnit[] = []
     for (let gi = 0; gi < graphemes.length; gi++) {
         const token = graphemes[gi]
         // The cluster's press order is a permutation of its logical code points.
-        const inputToken = layout.language === 'myanmar' ? keyboardOrderForCluster(token) : token
+        // For mixed text, only Myanmar clusters get the pre-base vowel reorder.
+        const inputToken = layout.language === 'myanmar' || containsMyanmar(token) ? keyboardOrderForCluster(token) : token
         const pairs = layout.reverseMap([inputToken])
         const start = units.length
         for (const pair of pairs) {

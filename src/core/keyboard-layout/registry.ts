@@ -1,10 +1,11 @@
 import { KeyboardLayout } from './layout'
 import { englishQwerty } from './english-qwerty'
 import { myanmar } from './myanmar'
+import { mixedEnglishMyanmar } from './mixed'
 
 const byId: Record<string, KeyboardLayout> = {}
 
-const DEFAULT_LAYOUTS = [englishQwerty, myanmar]
+const DEFAULT_LAYOUTS = [englishQwerty, myanmar, mixedEnglishMyanmar]
 
 for (const layout of DEFAULT_LAYOUTS) {
     byId[layout.id] = layout
@@ -30,9 +31,10 @@ export function isLayoutAvailable(id: string): boolean {
     return Boolean(byId[id])
 }
 
-export function layoutForLanguage(language: 'english' | 'myanmar'): KeyboardLayout {
+export function layoutForLanguage(language: 'english' | 'myanmar' | 'mixed'): KeyboardLayout {
     if (language === 'myanmar') return myanmar
+    if (language === 'mixed') return mixedEnglishMyanmar
     return englishQwerty
 }
 
-export { KeyboardLayout, englishQwerty, myanmar }
+export { KeyboardLayout, englishQwerty, myanmar, mixedEnglishMyanmar }

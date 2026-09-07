@@ -1,6 +1,6 @@
 import { clamp } from '@/lib/utils'
 
-export type SpeedLanguage = 'english' | 'myanmar'
+export type SpeedLanguage = 'english' | 'myanmar' | 'mixed'
 
 export type SpeedUnit = 'wpm' | 'units/min'
 
@@ -48,9 +48,10 @@ export function computeScore(input: ScoreInput): ScoreMetrics {
     const netWpm = minutes > 0 ? netWords / minutes : 0
     const cpm = minutes > 0 ? characters / minutes : 0
 
-    // Myanmar speed is reported in typing units/min: a keystroke is the atomic
-    // input event, so pretending 5 graphemes equal one "word" would be dishonest.
-    const isMyanmar = language === 'myanmar'
+    // Myanmar (and mixed English+Myanmar) speed is reported in typing units/min:
+    // a keystroke is the atomic input event, so pretending 5 graphemes equal one
+    // "word" would be dishonest.
+    const isMyanmar = language === 'myanmar' || language === 'mixed'
     const speed = isMyanmar ? (minutes > 0 ? characters / minutes : 0) : grossWpm
     const rawSpeed = isMyanmar ? (minutes > 0 ? totalAttempts / minutes : 0) : (minutes > 0 ? totalAttempts / WORD_LENGTH / minutes : 0)
     const speedUnit: SpeedUnit = isMyanmar ? 'units/min' : 'wpm'
@@ -113,7 +114,7 @@ export function speedSeries(input: ScoreInput & { elapsedSeconds: number }): num
             if (t >= from && t < to) count += 1
         }
         const wpm = count / (widthMs / 1000 / 60)
-        out.push(language === 'myanmar' ? wpm : wpm / WORD_LENGTH)
+        out.push(language === 'myanmar' || language === 'mixed' ? wpm : wpm / WORD_LENGTH)
     }
     return out
 }

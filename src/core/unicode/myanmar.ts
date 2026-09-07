@@ -1,4 +1,5 @@
 import { isMyanmarCodePoint, isMyanmarAttachingMark, isMyanmarSyllableHead, isPreBaseVowel, isAsat, isVirama } from './classification'
+import { splitGraphemes } from './graphemes'
 
 export function containsMyanmar(text: string): boolean {
     for (const ch of text) {
@@ -149,4 +150,42 @@ function isSyllableStart(code: number, prev: number, next: number): boolean {
     if (isMyanmarAttachingMark(code)) return false
     // Anything else (punctuation, whitespace, digits) starts a new group.
     return true
+}
+
+// Mixed English + Myanmar segmentation: Myanmar syllables are split as complete
+// deletion/typing units, while any non-Myanmar run (Latin, digits, spaces,
+// punctuation between scripts) is split into grapheme clusters. This lets one
+// typing target naturally mix scripts, e.g. `Hello မင်္ဂလာပါ`.
+export function splitMixedClusters(text: string): string[] {
+    const chars = Array.from(text)
+    const out: string[] = []
+    let myanmarBuffer = ''
+    let otherBuffer = ''
+
+    const flushMyanmar = () => {
+        if (myanmarBuffer) {
+            out.push(...splitMyanmarSyllables(myanmarBuffer))
+            myanmarBuffer = ''
+        }
+    }
+    const flushOther = () => {
+        if (otherBuffer) {
+            out.push(...splitGraphemes(otherBuffer))
+            otherBuffer = ''
+        }
+    }
+
+    for (const ch of chars) {
+        const code = ch.codePointAt(0) ?? 0
+        if (isMyanmarCodePoint(code) || isMyanmarAttachingMark(code)) {
+            flushOther()
+            myanmarBuffer += ch
+        } else {
+            flushMyanmar()
+            otherBuffer += ch
+        }
+    }
+    flushMyanmar()
+    flushOther()
+    return out
 }

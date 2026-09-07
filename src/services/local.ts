@@ -28,6 +28,7 @@ import type {
 } from './types'
 import { rankWeakest, DEFAULT_WEAKNESS_CONFIG } from '@/core/weakness'
 import { isLayoutAvailable } from '@/core/keyboard-layout/registry'
+import type { Language } from '@/types'
 import { rankClassOnTest, type LeaderboardCandidate, type LeaderboardEntry } from '@/core/leaderboard/ranking'
 
 const PREFIX = 'onetype:local:'
@@ -98,6 +99,9 @@ function seedTestsIfMissing() {
 }
 
 function migrateTypingTestLayout(test: TypingTest): TypingTest {
+    if (test.language === 'mixed' && test.layoutId !== 'english-myanmar-mixed') {
+        return { ...test, layoutId: 'english-myanmar-mixed' }
+    }
     if (isLayoutAvailable(test.layoutId)) return test
     const fallback = test.language === 'english' ? 'english-qwerty' : 'myanmar'
     return { ...test, layoutId: fallback }
@@ -108,11 +112,12 @@ function heroTest(
     code: string,
     name: string,
     durationSeconds: number,
-    language: string,
+    language: Language,
     minAccuracy: number,
     minWpm: number | null,
 ): TypingTest {
-    return { id, code, name, durationSeconds, language, layoutId: 'myanmar', minAccuracy, minWpm, contentVersion: CONTENT_VERSION }
+    const layoutId = language === 'english' ? 'english-qwerty' : language === 'mixed' ? 'english-myanmar-mixed' : 'myanmar'
+    return { id, code, name, durationSeconds, language, layoutId, minAccuracy, minWpm, contentVersion: CONTENT_VERSION }
 }
 
 function ensureSeeded() {

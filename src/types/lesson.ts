@@ -1,6 +1,6 @@
 import type { LessonExercise, ExerciseOptions, NormalizedExercise } from './exercise'
 import type { LessonLanguage } from './language'
-import type { KeyboardId } from './keyboard'
+import type { KeyboardId, RuntimeLayoutId } from './keyboard'
 import type { Difficulty, FingerId, Hand, Language, Level, LessonFocus } from './index'
 
 export const LESSON_SCHEMA_VERSION = 1
@@ -59,7 +59,7 @@ export interface NormalizedLesson {
     difficulty: Difficulty
     estimatedMinutes: number
     language: Language
-    layoutId: 'english-qwerty' | 'myanmar'
+    layoutId: RuntimeLayoutId
     completion: LessonCompletionRule
     focusKeys?: string[]
     focus?: LessonFocus[]

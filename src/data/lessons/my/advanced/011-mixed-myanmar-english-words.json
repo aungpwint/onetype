@@ -4,34 +4,52 @@
     "level": "advanced",
     "language": "my",
     "number": 11,
-    "title": "Mixed Myanmar + English Words",
-    "titleMy": "မြန်မာ + အင်္ဂလိပ် ရောနှော",
-    "description": "Real-world text mixing Myanmar and English words.",
+    "title": "Mixed Myanmar + English Text",
+    "titleMy": "မြန်မာ + အင်္ဂလိပ် ရောနှော စာသား",
+    "description": "One workshop typing natural text that mixes Myanmar Unicode and English words on the same line.",
     "difficulty": "hard",
     "estimatedMinutes": 15,
-    "keyboard": "myanmar",
+    "keyboard": "mixed",
     "completion": {
         "minAccuracy": 93,
-        "minWpm": 25
+        "minWpm": 22
     },
     "exercises": [
         {
             "id": "lesson-my-advanced-11-ex-1",
             "kind": "text",
-            "instruction": "စက်ကိရိယာတွေကို ဆော့ဖ်ဝဲနဲ့ စီမံနိုင်ပါတယ်။",
-            "text": "စက်ကိရိယာတွေကို ဆော့ဖ်ဝဲနဲ့ စီမံနိုင်ပါတယ်။"
+            "instruction": "Hello မင်္ဂလာပါ။",
+            "text": "Hello မင်္ဂလာပါ။"
         },
         {
             "id": "lesson-my-advanced-11-ex-2",
             "kind": "text",
-            "instruction": "စာတွေကို ကွန်ပျူတာနဲ့ ရိုက်နိုင်ပါတယ်။",
-            "text": "စာတွေကို ကွန်ပျူတာနဲ့ ရိုက်နိုင်ပါတယ်။"
+            "instruction": "Myanmar နဲ့ English ကို ရောနှောပြီး ရိုက်နိုင်ပါတယ်။",
+            "text": "Myanmar နဲ့ English ကို ရောနှောပြီး ရိုက်နိုင်ပါတယ်။"
         },
         {
             "id": "lesson-my-advanced-11-ex-3",
             "kind": "text",
-            "instruction": "ဖိုင်တွေ သိမ်းတဲ့နေရာကို သတိရပါ။",
-            "text": "ဖိုင်တွေ သိမ်းတဲ့နေရာကို သတိရပါ။"
+            "instruction": "OneType ဟာ typing trainer တစ်ခုဖြစ်ပါတယ်။",
+            "text": "OneType ဟာ typing trainer တစ်ခုဖြစ်ပါတယ်။"
+        },
+        {
+            "id": "lesson-my-advanced-11-ex-4",
+            "kind": "text",
+            "instruction": "Python က programming language တစ်ခုပါ။",
+            "text": "Python က programming language တစ်ခုပါ။"
+        },
+        {
+            "id": "lesson-my-advanced-11-ex-5",
+            "kind": "text",
+            "instruction": "This computer ကို သုံးတာ ကောင်းပါတယ်။",
+            "text": "This computer ကို သုံးတာ ကောင်းပါတယ်။"
+        },
+        {
+            "id": "lesson-my-advanced-11-ex-6",
+            "kind": "text",
+            "instruction": "Windows နဲ့ MacOS တွေဟာ operating systems တွေပါ။",
+            "text": "Windows နဲ့ MacOS တွေဟာ operating systems တွေပါ။"
         }
     ],
     "focus": ["bilingual", "unicode", "sentences"],

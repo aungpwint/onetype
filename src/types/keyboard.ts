@@ -1,15 +1,15 @@
 import type { FingerId, Hand } from './index'
 import type { KeyboardRow } from '@/core/keyboard-layout/layout'
 
-export type KeyboardId = 'qwerty' | 'myanmar'
+export type KeyboardId = 'qwerty' | 'myanmar' | 'mixed'
 
-export const LESSON_KEYBOARD_IDS: readonly KeyboardId[] = ['qwerty', 'myanmar'] as const
+export const LESSON_KEYBOARD_IDS: readonly KeyboardId[] = ['qwerty', 'myanmar', 'mixed'] as const
 
 export function isKeyboardId(value: unknown): value is KeyboardId {
     return typeof value === 'string' && (LESSON_KEYBOARD_IDS as readonly string[]).includes(value)
 }
 
-export type RuntimeLayoutId = 'english-qwerty' | 'myanmar'
+export type RuntimeLayoutId = 'english-qwerty' | 'myanmar' | 'english-myanmar-mixed'
 
 export function toLayoutId(keyboard: KeyboardId): RuntimeLayoutId {
     switch (keyboard) {
@@ -17,12 +17,15 @@ export function toLayoutId(keyboard: KeyboardId): RuntimeLayoutId {
             return 'english-qwerty'
         case 'myanmar':
             return 'myanmar'
+        case 'mixed':
+            return 'english-myanmar-mixed'
     }
 }
 
 export function fromLayoutId(layoutId: string): KeyboardId {
     if (layoutId === 'english-qwerty') return 'qwerty'
     if (layoutId === 'myanmar') return 'myanmar'
+    if (layoutId === 'english-myanmar-mixed') return 'mixed'
     throw new Error(`Layout "${layoutId}" has no canonical lesson keyboard identifier`)
 }
 

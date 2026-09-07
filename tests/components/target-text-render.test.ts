@@ -7,8 +7,10 @@ import { buildSequence, graphemeUnitRuns } from '@/core/typing-engine/sequence'
 import { isCurrentGrapheme } from '@/core/typing-engine/char-state'
 import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
 import { myanmar } from '@/core/keyboard-layout/myanmar'
+import { getLayoutOrThrow } from '@/core/keyboard-layout/registry'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { getLessonRepository, getCanonicalLesson, resolveLessonById } from '@/data/curriculum'
+import { toLayoutId } from '@/types/keyboard'
 import { exerciseText, type LessonExercise } from '@/types/exercise'
 
 const CORPUS_LINES = ['ရေ ဆန် ငါး ကြက်', 'အဖေ အမေ ညီ ညီမ', 'မျက်စိ နား လက် ခြေ', 'အခြေခံ စကားလုံး (၂)', 'အိမ် မြို့ ရွာ']
@@ -81,8 +83,9 @@ describe('Myanmar lesson corpus never yields a shaping-broken run', () => {
         expect(lessons.length).toBeGreaterThan(0)
         for (const lesson of lessons) {
             const canonical = getCanonicalLesson(lesson.id)
+            const layout = getLayoutOrThrow(toLayoutId(canonical.keyboard))
             for (const line of lessonStrings(canonical)) {
-                const seq = buildSequence(line, myanmar)
+                const seq = buildSequence(line, layout)
                 const runs = graphemeUnitRuns(seq)
                 expect(runs.map((r) => r.text).join(''), `${lesson.id}: ${JSON.stringify(line)}`).toBe(line)
                 for (const run of runs) {

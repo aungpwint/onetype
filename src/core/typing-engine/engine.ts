@@ -140,7 +140,7 @@ export class TypingEngine {
             incorrectAttempts: this.incorrectCount,
             backspaceCount: this.backspaceCount,
             elapsedSeconds: this.elapsedSeconds(),
-            language: this.layout.language === 'myanmar' ? 'myanmar' : 'english',
+            language: this.layout.language === 'english' ? 'english' : this.layout.language,
             clusters: this.completedClusters(),
             correctTimes: this.correctTimes,
         })
@@ -168,7 +168,7 @@ export class TypingEngine {
         return out
     }
 
-    processKey(code: string, modifier: Modifier): TypingEngineEvent | null {
+    processKey(code: string, modifier: Modifier, character?: string | null): TypingEngineEvent | null {
         if (this.status === 'ready') {
             this.start()
         }
@@ -203,8 +203,16 @@ export class TypingEngine {
         const outcome = this.keyOutcomes.get(keyKey) ?? { correct: 0, incorrect: 0 }
         this.totalKeys += 1
 
-        const keyMatches = code === expected.keyCode
-        const isCorrect = keyMatches && modifier === expected.modifier
+        // Primarily grade by the ACTUAL typed character when one is supplied
+        // (required so a mixed English+Myanmar exercise can tell `u` from `က`
+        // even though both ride the same physical KeyU). When no character is
+        // given (e.g. older direct callers/tests) fall back to physical key.
+        const normalizedChar = character != null && character.length > 0 ? character.normalize('NFC') : null
+        const expectedChar = expected.text.normalize('NFC')
+        const charMatches = normalizedChar === expectedChar
+        const codeMatches = code === expected.keyCode
+        const correctInput = normalizedChar != null ? charMatches : codeMatches
+        const isCorrect = correctInput && modifier === expected.modifier
 
         if (isCorrect) {
             outcome.correct += 1
@@ -215,7 +223,7 @@ export class TypingEngine {
             this.unitIndex += 1
             // Record after the advance so a fully-consumed cluster is classified
             // immediately; wrong presses accumulate without consuming the unit.
-            this.recordClusterPress(expected.graphemeIndex, code, modifier)
+            this.recordClusterPress(expected.graphemeIndex, code, modifier, normalizedChar)
             this.emit({ type: 'correct', unitIndex: expected.index, keyCode: code, modifier, expected })
             if (this.isComplete) {
                 this.finish('completed')
@@ -227,10 +235,11 @@ export class TypingEngine {
             if (!this.unitOutcomes.has(expected.index)) {
                 this.unitOutcomes.set(expected.index, false)
             }
-            this.recordClusterPress(expected.graphemeIndex, code, modifier)
+            this.recordClusterPress(expected.graphemeIndex, code, modifier, normalizedChar)
             // A modifier/shift error is the right physical key with the wrong
-            // Shift state (e.g. lowercase when uppercase was expected).
-            const errorKind: 'key' | 'modifier' = keyMatches && modifier !== expected.modifier ? 'modifier' : 'key'
+            // Shift state (e.g. lowercase when uppercase was expected). A same-key
+            // wrong-script press (typed `u` for expected `က`) is a content error.
+            const errorKind: 'key' | 'modifier' = codeMatches && modifier !== expected.modifier ? 'modifier' : 'key'
             if (errorKind === 'modifier') {
                 this.shiftErrorCount += 1
             }
@@ -284,18 +293,22 @@ export class TypingEngine {
         perPressed.set(pressedId, (perPressed.get(pressedId) ?? 0) + 1)
     }
 
-    private recordClusterPress(graphemeIndex: number, code: string, modifier: Modifier) {
-        if (this.layout.language !== 'myanmar') return
-        const output = this.layout.outputFor(code, modifier)
-        if (!output) return
+    private recordClusterPress(graphemeIndex: number, code: string, modifier: Modifier, character?: string | null) {
+        if (this.layout.language === 'english') return
+        const expectedGrapheme = this.sequence.graphemes[graphemeIndex]
+        if (!containsMyanmar(expectedGrapheme)) return
+        // Use the actually-typed character when available (the only reliable
+        // signal for mixed-script work), otherwise fall back to layout output.
+        const text = character != null && character.length > 0 ? character : this.layout.outputFor(code, modifier)?.text
+        if (text == null || text.length === 0) return
         const chars = this.clusterTypedChars.get(graphemeIndex) ?? []
-        chars.push(output.text)
+        chars.push(text)
         this.clusterTypedChars.set(graphemeIndex, chars)
         // Once the cluster is fully consumed, classify what was actually typed
         // so the result screen can explain recurring slips.
         const [, end] = this.sequence.graphemeUnitRanges[graphemeIndex]
         if (this.unitIndex >= end && !this.clusterDiagnoses.has(graphemeIndex)) {
-            const expected = this.sequence.graphemes[graphemeIndex]
+            const expected = expectedGrapheme
             const typed = chars.join('')
             const expectedInput = containsMyanmar(expected) ? keyboardOrderForCluster(expected) : expected
             this.clusterDiagnoses.set(graphemeIndex, diagnoseClusterComparison(expectedInput, typed))

@@ -168,7 +168,7 @@ function drillResolvedLesson(drill: ReinforcedDrill, layoutId: string): Resolved
         level: 'beginner',
         number: 0,
         sequence: seq,
-        layoutId: layoutId === 'english-qwerty' || layoutId === 'myanmar' ? layoutId : 'english-qwerty',
+        layoutId: layoutId === 'english-qwerty' || layoutId === 'myanmar' || layoutId === 'english-myanmar-mixed' ? layoutId : 'english-qwerty',
         totalUnits: seq.units.length,
         totalCharacters: seq.charCount,
         phases: [],
@@ -178,7 +178,7 @@ function drillResolvedLesson(drill: ReinforcedDrill, layoutId: string): Resolved
         title: `Weakness drill · ${plan.goal}`,
         titleMy: '',
         description: 'Adaptive drill targeting detected weak keys.',
-        language: layoutId === 'myanmar' ? 'myanmar' : 'english',
+        language: layoutId === 'myanmar' ? 'myanmar' : layoutId === 'english-myanmar-mixed' ? 'mixed' : 'english',
         focusKeys: plan.keys,
     }
 }
@@ -269,7 +269,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
             const { engine, session } = st
             // The learner typed this text on this layout, so every missed word
             // is encodable by the same layout's practice builder.
-            const language = session.layout.language === 'myanmar' ? ('myanmar' as const) : ('english' as const)
+            const language = session.layout.language === 'myanmar' ? 'myanmar' : session.layout.language === 'mixed' ? 'mixed' : 'english'
             const missed = extractMissedWords(engine)
             if (missed.count === 0) return
             st.clear()
@@ -683,8 +683,11 @@ function bindKeys() {
         const pressed = resolvePressedKey(event, engine.layout)
         if (!pressed) return
         const expected = engine.expectedUnit
-        const correct = expected ? pressed.code === expected.keyCode && pressed.modifier === expected.modifier : pressed.code === 'Space'
-        engine.processKey(pressed.code, pressed.modifier)
+        const correct = expected
+            ? pressed.modifier === expected.modifier &&
+              (pressed.character != null ? pressed.character.normalize('NFC') === expected.text.normalize('NFC') : pressed.code === expected.keyCode)
+            : pressed.code === 'Space'
+        engine.processKey(pressed.code, pressed.modifier, pressed.character)
         if (useUiStore.getState().soundEnabled) {
             if (correct) playKeySound(true)
             else playErrorSound()
