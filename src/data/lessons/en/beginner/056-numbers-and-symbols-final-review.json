@@ -14,13 +14,8 @@
         "minAccuracy": 90,
         "minWpm": 16
     },
-    "focus": [
-        "numbers",
-        "punctuation"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-55"
-    ],
+    "focus": ["numbers", "punctuation"],
+    "prerequisites": ["lesson-en-beginner-55"],
     "focusKeys": [
         "Digit1",
         "Digit2",
@@ -46,20 +41,8 @@
         "KeyU",
         "Equal"
     ],
-    "targetFingers": [
-        "left-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index",
-        "right-index",
-        "right-middle",
-        "right-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -68,18 +51,7 @@
             "instruction": "Cover the number row with your index-to-pinky fingers",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "0"
-                ],
+                "keys": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
                 "count": 20,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -93,18 +65,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "!",
-                    "@",
-                    "#",
-                    "$",
-                    "%",
-                    "^",
-                    "&",
-                    "*",
-                    "(",
-                    ")"
-                ],
+                "keys": ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"],
                 "count": 20,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -118,14 +79,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "pen,",
-                    "box.",
-                    "7.",
-                    "25",
-                    "run!",
-                    "2+2"
-                ],
+                "words": ["pen,", "box.", "7.", "25", "run!", "2+2"],
                 "count": 16,
                 "maxWordLength": 4
             }

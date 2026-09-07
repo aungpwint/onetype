@@ -234,13 +234,9 @@ export default function Dashboard() {
                         {weekMinutes ? `${Math.round(weekMinutes.reduce((sum, m) => sum + m, 0))} min typed` : '…'}
                     </span>
                 </div>
-                <div className="mt-3 scale-rule" aria-hidden />
+                <div className="scale-rule mt-3" aria-hidden />
                 {weekMinutes ? (
-                    <div
-                        className="mt-2 flex h-24 items-end gap-2"
-                        role="img"
-                        aria-label="Minutes typed per day over the last seven days"
-                    >
+                    <div className="mt-2 flex h-24 items-end gap-2" role="img" aria-label="Minutes typed per day over the last seven days">
                         {buildWeekBars(weekMinutes, todayStart).map((b) => (
                             <div key={b.offset} className="group relative flex flex-1 flex-col items-center gap-1">
                                 <span
@@ -322,9 +318,7 @@ export default function Dashboard() {
                                     Streak
                                 </p>
                                 <div className="mt-3 flex items-baseline gap-2">
-                                    <span className="text-5xl leading-none font-semibold tracking-tight tabular-nums">
-                                        {streak?.current ?? '•'}
-                                    </span>
+                                    <span className="text-5xl leading-none font-semibold tracking-tight tabular-nums">{streak?.current ?? '•'}</span>
                                     <span className="text-sm text-muted-foreground">day{streak?.current === 1 ? '' : 's'}</span>
                                 </div>
                                 <p className="mt-2 text-xs text-muted-foreground">
@@ -364,9 +358,7 @@ export default function Dashboard() {
                         </div>
                         <div className="flex items-center justify-between border-b border-line/60 py-2 text-sm">
                             <dt className="text-muted-foreground">Typing time</dt>
-                            <dd className="font-semibold tabular-nums">
-                                {summary ? formatDuration(summary.totalMinutes * 60000) : '—'}
-                            </dd>
+                            <dd className="font-semibold tabular-nums">{summary ? formatDuration(summary.totalMinutes * 60000) : '—'}</dd>
                         </div>
                         <div className="flex items-center justify-between py-2 text-sm">
                             <dt className="text-muted-foreground">Sessions</dt>

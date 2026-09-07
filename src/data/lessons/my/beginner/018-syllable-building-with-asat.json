@@ -14,36 +14,11 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focus": [
-        "syllable"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-17"
-    ],
-    "focusKeys": [
-        "KeyU",
-        "KeyD",
-        "KeyK",
-        "KeyI",
-        "KeyF",
-        "KeyY",
-        "KeyN",
-        "KeyR",
-        "KeyJ",
-        "KeyE",
-        "Semicolon"
-    ],
-    "targetFingers": [
-        "right-index",
-        "left-middle",
-        "right-middle",
-        "left-index",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focus": ["syllable"],
+    "prerequisites": ["lesson-my-beginner-17"],
+    "focusKeys": ["KeyU", "KeyD", "KeyK", "KeyI", "KeyF", "KeyY", "KeyN", "KeyR", "KeyJ", "KeyE", "Semicolon"],
+    "targetFingers": ["right-index", "left-middle", "right-middle", "left-index", "right-pinky"],
+    "targetHands": ["right", "left"],
     "exercises": [
         {
             "kind": "generated",
@@ -51,9 +26,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကိုင်"
-                ],
+                "keys": ["ကိုင်"],
                 "count": 14,
                 "chunkMin": 4,
                 "chunkMax": 5,
@@ -66,10 +39,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ပင်",
-                    "ညင်"
-                ],
+                "keys": ["ပင်", "ညင်"],
                 "count": 16,
                 "chunkMin": 4,
                 "chunkMax": 5,
@@ -83,10 +53,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "မြန်",
-                    "မင်း"
-                ],
+                "keys": ["မြန်", "မင်း"],
                 "count": 16,
                 "chunkMin": 4,
                 "chunkMax": 5,
@@ -100,13 +67,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကိုင်",
-                    "ပင်",
-                    "ညင်",
-                    "မြန်",
-                    "မင်း"
-                ],
+                "keys": ["ကိုင်", "ပင်", "ညင်", "မြန်", "မင်း"],
                 "count": 24,
                 "chunkMin": 4,
                 "chunkMax": 6,

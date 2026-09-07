@@ -5,7 +5,7 @@
     "language": "en",
     "number": 53,
     "title": "Punctuation: Semicolon and Colon",
-    "titleMy": "နားသတ်: semicolon (;) နှင့် colon (:)",
+    "titleMy": "ပုဒ်ဖြတ်ပုဒ်ရပ်: semicolon (;) နှင့် colon (:)",
     "description": "Semicolon and colon in practice.",
     "difficulty": "medium",
     "estimatedMinutes": 8,
@@ -36,26 +36,10 @@
         "KeyA",
         "KeyI"
     ],
-    "focus": [
-        "punctuation"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-52"
-    ],
-    "targetFingers": [
-        "right-pinky",
-        "left-pinky",
-        "left-index",
-        "left-middle",
-        "right-ring",
-        "right-index",
-        "left-ring",
-        "right-middle"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focus": ["punctuation"],
+    "prerequisites": ["lesson-en-beginner-52"],
+    "targetFingers": ["right-pinky", "left-pinky", "left-index", "left-middle", "right-ring", "right-index", "left-ring", "right-middle"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -64,12 +48,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    ";",
-                    ":",
-                    ";",
-                    ":"
-                ],
+                "keys": [";", ":", ";", ":"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -82,11 +61,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "red; blue;",
-                    "one; two;",
-                    "go; stop."
-                ],
+                "words": ["red; blue;", "one; two;", "go; stop."],
                 "count": 12,
                 "maxWordLength": 10
             }
@@ -97,10 +72,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "Stop here; go there.",
-                    "Read this; write that."
-                ],
+                "sentences": ["Stop here; go there.", "Read this; write that."],
                 "count": 3
             }
         }

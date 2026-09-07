@@ -1,11 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import {
-    summarizeKeyTaps,
-    keyTapTone,
-    worstKeys,
-    type KeyTap,
-} from '@/core/session/key-outcomes'
+import { summarizeKeyTaps, keyTapTone, worstKeys, type KeyTap } from '@/core/session/key-outcomes'
 
 function outcomeMap(entries: Record<string, { correct: number; incorrect: number }>): Map<string, { correct: number; incorrect: number }> {
     return new Map(Object.entries(entries))

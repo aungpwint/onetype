@@ -6,7 +6,7 @@
     "number": 50,
     "title": "Shift Number Symbols: ^ & * ( )",
     "titleMy": "Shift + ဂဏန်းသင်္ကေတများ: ^ & * ( )",
-    "description": "Right hand Shift symbols: ^ & * ( )",
+    "description": "Shift symbols on the right hand number row: ^ & * ( ). Hold left Shift.",
     "difficulty": "medium",
     "estimatedMinutes": 10,
     "keyboard": "qwerty",
@@ -14,41 +14,11 @@
         "minAccuracy": 88,
         "minWpm": null
     },
-    "focusKeys": [
-        "Digit1",
-        "ShiftRight",
-        "Digit2",
-        "Digit3",
-        "Digit4",
-        "Digit5",
-        "Digit6",
-        "ShiftLeft",
-        "Digit7",
-        "Digit8",
-        "Digit9",
-        "Digit0"
-    ],
-    "focus": [
-        "shift",
-        "numbers"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-49"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "right-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index",
-        "right-index",
-        "right-middle",
-        "right-ring"
-    ],
+    "focusKeys": ["Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "ShiftLeft"],
+    "focus": ["shift", "numbers"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-en-beginner-49"],
+    "targetFingers": ["right-index", "right-middle", "right-ring", "right-pinky", "left-pinky"],
     "requiresShift": true,
     "exercises": [
         {
@@ -57,14 +27,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "1",
-                    "!",
-                    "2",
-                    "@",
-                    "3",
-                    "#"
-                ],
+                "keys": ["6", "^", "7", "&"],
                 "count": 18,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -77,14 +40,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "4",
-                    "$",
-                    "5",
-                    "%",
-                    "6",
-                    "^"
-                ],
+                "keys": ["8", "*", "9", "("],
                 "count": 18,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -97,20 +53,11 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "7",
-                    "&",
-                    "8",
-                    "*",
-                    "9",
-                    "(",
-                    "0",
-                    ")"
-                ],
-                "count": 20,
+                "keys": ["0", ")", "^", "&"],
+                "count": 16,
                 "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "alternation"
+                "chunkMax": 3,
+                "style": "repetition"
             }
         },
         {
@@ -119,30 +66,9 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "!",
-                    "1",
-                    "@",
-                    "2",
-                    "#",
-                    "3",
-                    "$",
-                    "4",
-                    "%",
-                    "5",
-                    "^",
-                    "6",
-                    "&",
-                    "7",
-                    "*",
-                    "8",
-                    "(",
-                    "9",
-                    ")",
-                    "0"
-                ],
-                "count": 20,
-                "chunkMin": 2,
+                "keys": ["^", "&", "*", "(", ")"],
+                "count": 24,
+                "chunkMin": 3,
                 "chunkMax": 5,
                 "style": "variable"
             }

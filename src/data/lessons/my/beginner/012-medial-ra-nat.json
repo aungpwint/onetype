@@ -5,7 +5,7 @@
     "language": "my",
     "number": 12,
     "title": "Medial: ြ (ra-nat)",
-    "titleMy": "စာလုံးကြို - ြ",
+    "titleMy": "ရရစ် (ra-nat) - ြ",
     "description": "The ြ medial (KeyJ). Consonant + ြ + vowel.",
     "difficulty": "easy",
     "estimatedMinutes": 8,
@@ -14,24 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyU",
-        "KeyJ",
-        "KeyY",
-        "KeyM"
-    ],
-    "focus": [
-        "medial"
-    ],
-    "targetFingers": [
-        "right-index"
-    ],
-    "targetHands": [
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-11"
-    ],
+    "focusKeys": ["KeyU", "KeyJ", "KeyY", "KeyM"],
+    "focus": ["medial"],
+    "targetFingers": ["right-index"],
+    "targetHands": ["right"],
+    "prerequisites": ["lesson-my-beginner-11"],
     "exercises": [
         {
             "kind": "generated",
@@ -39,9 +26,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကြ"
-                ],
+                "keys": ["ကြ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -54,9 +39,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ပြ"
-                ],
+                "keys": ["ပြ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -69,9 +52,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကြာ"
-                ],
+                "keys": ["ကြာ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -84,11 +65,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကြ",
-                    "ပြ",
-                    "ကြာ"
-                ],
+                "keys": ["ကြ", "ပြ", "ကြာ"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

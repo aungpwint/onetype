@@ -14,27 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyO",
-        "KeyP",
-        "KeyL"
-    ],
-    "focus": [
-        "top-row",
-        "bottom-row",
-        "row-transition",
-        "key-memory"
-    ],
-    "targetFingers": [
-        "right-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-10"
-    ],
+    "focusKeys": ["KeyO", "KeyP", "KeyL"],
+    "focus": ["top-row", "bottom-row", "row-transition", "key-memory"],
+    "targetFingers": ["right-ring", "right-pinky"],
+    "targetHands": ["right"],
+    "prerequisites": ["lesson-en-beginner-10"],
     "exercises": [
         {
             "kind": "generated",
@@ -42,10 +26,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "o",
-                    "p"
-                ],
+                "keys": ["o", "p"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 3,
@@ -58,10 +39,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "l",
-                    "p"
-                ],
+                "keys": ["l", "p"],
                 "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -74,11 +52,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "o",
-                    "l",
-                    "p"
-                ],
+                "keys": ["o", "l", "p"],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -91,11 +65,7 @@
             "instruction": "Alternate between both fingers and hands",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "p",
-                    "o",
-                    "l"
-                ],
+                "keys": ["p", "o", "l"],
                 "count": 20,
                 "chunkMin": 4,
                 "chunkMax": 5,

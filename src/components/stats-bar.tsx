@@ -62,7 +62,7 @@ export function StatsBar() {
             <div className="flex items-end justify-center gap-2.5">
                 <span
                     className={cn(
-                        'leading-[0.9] font-display font-semibold tracking-tight text-ink tabular-nums',
+                        'font-display leading-[0.9] font-semibold tracking-tight text-ink tabular-nums',
                         timerStyle === 'mini' ? 'text-4xl sm:text-5xl' : 'text-6xl sm:text-7xl',
                     )}
                 >

@@ -4,9 +4,9 @@
     "level": "beginner",
     "language": "my",
     "number": 14,
-    "title": "Tone Marks: း and ့",
-    "titleMy": "သံသင်္ကေတ - း နှင့် ့",
-    "description": "Visabella း(Semicolon) and Atthin ့(KeyH).",
+    "title": "Tone Marks: း ့ ံ ဲ",
+    "titleMy": "သံသင်္ကေတ - း ့ ံ ဲ",
+    "description": "Tone-carrying signs: း (Semicolon), ့ (KeyH), ံ (KeyH+Shift), ဲ (KeyJ+Shift).",
     "difficulty": "easy",
     "estimatedMinutes": 8,
     "keyboard": "myanmar",
@@ -14,36 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyU",
-        "KeyM",
-        "Semicolon",
-        "KeyD",
-        "ShiftRight",
-        "KeyH",
-        "ShiftLeft",
-        "KeyJ",
-        "KeyW",
-        "KeyK"
-    ],
-    "focus": [
-        "tone"
-    ],
-    "targetFingers": [
-        "right-index",
-        "right-pinky",
-        "left-middle",
-        "left-pinky",
-        "left-ring",
-        "right-middle"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-10"
-    ],
+    "focusKeys": ["KeyU", "KeyM", "Semicolon", "KeyD", "ShiftRight", "KeyH", "ShiftLeft", "KeyJ", "KeyW", "KeyK"],
+    "focus": ["tone"],
+    "targetFingers": ["right-index", "right-pinky", "left-middle", "left-pinky", "left-ring", "right-middle"],
+    "targetHands": ["right", "left"],
+    "prerequisites": ["lesson-my-beginner-10"],
     "requiresShift": true,
     "exercises": [
         {
@@ -52,10 +27,7 @@
             "instruction": "Alternate between both fingers and hands",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကား",
-                    "ကီး"
-                ],
+                "keys": ["ကား", "ကီး"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -68,10 +40,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကံ",
-                    "ကဲ့"
-                ],
+                "keys": ["ကံ", "ကဲ့"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -84,9 +53,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "တို့"
-                ],
+                "keys": ["တို့"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -99,13 +66,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကား",
-                    "ကီး",
-                    "ကံ",
-                    "ကဲ့",
-                    "တို့"
-                ],
+                "keys": ["ကား", "ကီး", "ကံ", "ကဲ့", "တို့"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

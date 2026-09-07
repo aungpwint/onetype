@@ -4,9 +4,9 @@
     "level": "beginner",
     "language": "my",
     "number": 13,
-    "title": "Asat: ် and Virama: ္",
-    "titleMy": "အသတ် ် နှင့် ဗီရာမ ္",
-    "description": "Asat ်(KeyF) kills the inherent vowel. Virama ္(KeyF+Shift) stacks consonants.",
+    "title": "Asat: ်",
+    "titleMy": "အသတ် သင်္ကေတ - ်",
+    "description": "The asat ် (KeyF) marks a consonant as final, as in က် (KeyU + KeyF) and င် (KeyI + KeyF).",
     "difficulty": "easy",
     "estimatedMinutes": 8,
     "keyboard": "myanmar",
@@ -14,29 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyU",
-        "KeyF",
-        "KeyI",
-        "KeyW",
-        "KeyN"
-    ],
-    "focus": [
-        "syllable"
-    ],
-    "targetFingers": [
-        "right-index",
-        "left-index",
-        "right-middle",
-        "left-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-10"
-    ],
+    "focusKeys": ["KeyU", "KeyF", "KeyI", "KeyW", "KeyN"],
+    "focus": ["syllable"],
+    "targetFingers": ["right-index", "left-index", "right-middle", "left-ring"],
+    "targetHands": ["right", "left"],
+    "prerequisites": ["lesson-my-beginner-10"],
     "exercises": [
         {
             "kind": "generated",
@@ -44,9 +26,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "က်"
-                ],
+                "keys": ["က်"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -59,9 +39,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "င်"
-                ],
+                "keys": ["င်"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -74,10 +52,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "တ်",
-                    "ည်"
-                ],
+                "keys": ["တ်", "ည်"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -90,12 +65,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "က်",
-                    "င်",
-                    "တ်",
-                    "ည်"
-                ],
+                "keys": ["က်", "င်", "တ်", "ည်"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

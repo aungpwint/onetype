@@ -133,11 +133,7 @@ export default function SettingsPage() {
                 <div className="mt-4 flex flex-wrap items-end gap-4">
                     <Field label="Theme" id="settings-theme">
                         <div className="relative">
-                            <SelectField
-                                className="w-44"
-                                value={theme}
-                                onChange={(e) => setTheme(e.currentTarget.value as ThemePreference)}
-                            >
+                            <SelectField className="w-44" value={theme} onChange={(e) => setTheme(e.currentTarget.value as ThemePreference)}>
                                 <option value="system">Follow system</option>
                                 <option value="light">Light desk</option>
                                 <option value="dark">Night desk</option>
@@ -189,9 +185,7 @@ export default function SettingsPage() {
                                     onPointerLeave={() => applyCurrentTheme()}
                                     className={cn(
                                         'flex h-11 w-20 flex-col items-center justify-center gap-1.5 rounded-lg border transition-colors',
-                                        themePreset === preset.id
-                                            ? 'border-accent ring-2 ring-ring/30'
-                                            : 'border-border hover:border-accent/60',
+                                        themePreset === preset.id ? 'border-accent ring-2 ring-ring/30' : 'border-border hover:border-accent/60',
                                     )}
                                     style={{ background: swatch.bg }}
                                 >
@@ -532,7 +526,13 @@ export default function SettingsPage() {
                     Everything lives in an on-device database. Back it up or move it between machines by exporting.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                    <AsyncButton disabled={busy !== null} loading={busy === 'Export all…'} icon={DownloadCloud} onClick={() => void doExport('all')} id="settings-export-all">
+                    <AsyncButton
+                        disabled={busy !== null}
+                        loading={busy === 'Export all…'}
+                        icon={DownloadCloud}
+                        onClick={() => void doExport('all')}
+                        id="settings-export-all"
+                    >
                         Back up everything
                     </AsyncButton>
                     <AsyncButton
@@ -597,19 +597,19 @@ function SettingsSearch({
     return (
         <div className="sticky top-3 z-30">
             <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
                 <input
                     value={query}
                     onChange={(e) => onQuery(e.target.value)}
                     placeholder="Search settings… e.g. caret, sound, backup"
                     aria-label="Search settings"
-                    className={cn(inputClass, 'pl-9 pr-20')}
+                    className={cn(inputClass, 'pr-20 pl-9')}
                 />
                 {query !== '' ? (
                     <button
                         onClick={() => onQuery('')}
                         aria-label="Clear search"
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-muted-foreground hover:text-foreground"
+                        className="absolute top-1/2 right-3 -translate-y-1/2 text-xs font-medium text-muted-foreground hover:text-foreground"
                     >
                         Clear
                     </button>
@@ -622,7 +622,7 @@ function SettingsSearch({
                     ) : (
                         results.map((group) => (
                             <div key={group.section} className="border-b border-border/60 last:border-0">
-                                <p className="px-4 pt-2.5 pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                                <p className="px-4 pt-2.5 pb-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
                                     {group.section}
                                 </p>
                                 {group.items.map((item) => (

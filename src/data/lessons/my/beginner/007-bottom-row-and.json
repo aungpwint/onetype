@@ -4,9 +4,9 @@
     "level": "beginner",
     "language": "my",
     "number": 7,
-    "title": "Bottom Row: ဠ and ဘ",
-    "titleMy": "အောက်တန်း ဗျည်းများ - ဠ ဘ",
-    "description": "Bottom row consonants practice: ဖ (KeyZ), ထ (KeyX), ခ (KeyC), လ (KeyV), ဘ (KeyB), ည (KeyN)",
+    "title": "Bottom Row: လ ဘ ည",
+    "titleMy": "အောက်တန်း ဗျည်းများ - လ ဘ ည",
+    "description": "လ (KeyV) and ဘ (KeyB) with the left index, ည (KeyN) with the right index.",
     "difficulty": "easy",
     "estimatedMinutes": 6,
     "keyboard": "myanmar",
@@ -14,9 +14,9 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": ["KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN"],
+    "focusKeys": ["KeyV", "KeyB", "KeyN"],
     "focus": ["bottom-row"],
-    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index"],
+    "targetFingers": ["left-index", "right-index"],
     "targetHands": ["left", "right"],
     "prerequisites": ["lesson-my-beginner-4"],
     "exercises": [
@@ -26,8 +26,8 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": ["ဖ", "ထ"],
-                "count": 14,
+                "keys": ["လ"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -39,8 +39,8 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": ["ခ", "လ"],
-                "count": 14,
+                "keys": ["ဘ"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -52,8 +52,8 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": ["ဘ", "ည"],
-                "count": 14,
+                "keys": ["ည"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -65,7 +65,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": ["ဖ", "ထ", "ခ", "လ", "ဘ", "ည"],
+                "keys": ["လ", "ဘ", "ည"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

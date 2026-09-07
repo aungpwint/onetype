@@ -14,43 +14,11 @@
         "minAccuracy": 88,
         "minWpm": 10
     },
-    "focusKeys": [
-        "KeyT",
-        "KeyH",
-        "KeyE",
-        "KeyA",
-        "KeyN",
-        "KeyD",
-        "KeyF",
-        "KeyO",
-        "KeyR",
-        "KeyY",
-        "KeyU",
-        "KeyW",
-        "KeyS",
-        "KeyI",
-        "KeyC",
-        "KeyM"
-    ],
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-22"
-    ],
-    "targetFingers": [
-        "left-index",
-        "right-index",
-        "left-middle",
-        "left-pinky",
-        "right-ring",
-        "left-ring",
-        "right-middle"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focusKeys": ["KeyT", "KeyH", "KeyE", "KeyA", "KeyN", "KeyD", "KeyF", "KeyO", "KeyR", "KeyY", "KeyU", "KeyW", "KeyS", "KeyI", "KeyC", "KeyM"],
+    "focus": ["words"],
+    "prerequisites": ["lesson-en-beginner-22"],
+    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -58,13 +26,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "the",
-                    "and",
-                    "for",
-                    "you",
-                    "are"
-                ],
+                "words": ["the", "and", "for", "you", "are"],
                 "count": 14,
                 "maxWordLength": 3
             }
@@ -75,16 +37,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "was",
-                    "his",
-                    "her",
-                    "can",
-                    "may",
-                    "new",
-                    "now",
-                    "one"
-                ],
+                "words": ["was", "his", "her", "can", "may", "new", "now", "one"],
                 "count": 18,
                 "maxWordLength": 3
             }
@@ -95,18 +48,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "out",
-                    "run",
-                    "she",
-                    "sit",
-                    "the",
-                    "two",
-                    "use",
-                    "way",
-                    "why",
-                    "yes"
-                ],
+                "words": ["out", "run", "she", "sit", "the", "two", "use", "way", "why", "yes"],
                 "count": 22,
                 "maxWordLength": 3
             }

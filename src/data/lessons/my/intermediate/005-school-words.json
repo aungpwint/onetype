@@ -14,12 +14,8 @@
         "minAccuracy": 88,
         "minWpm": null
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-my-intermediate-4"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-my-intermediate-4"],
     "focusKeys": [
         "KeyP",
         "KeyM",
@@ -39,20 +35,8 @@
         "KeyC",
         "KeyV"
     ],
-    "targetFingers": [
-        "right-pinky",
-        "right-index",
-        "left-pinky",
-        "left-ring",
-        "right-middle",
-        "left-index",
-        "left-middle",
-        "right-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "targetFingers": ["right-pinky", "right-index", "left-pinky", "left-ring", "right-middle", "left-index", "left-middle", "right-ring"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -61,11 +45,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "စာ",
-                    "ဆရာ",
-                    "ကျောင်း"
-                ],
+                "words": ["စာ", "ဆရာ", "ကျောင်း"],
                 "count": 18
             }
         },
@@ -75,11 +55,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "အိမ်",
-                    "ကျောင်း",
-                    "စာသား"
-                ],
+                "keys": ["အိမ်", "ကျောင်း", "စာသား"],
                 "count": 20,
                 "chunkMin": 4,
                 "chunkMax": 6,
@@ -92,10 +68,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ချစ်",
-                    "လေး"
-                ],
+                "words": ["ချစ်", "လေး"],
                 "count": 16
             }
         }

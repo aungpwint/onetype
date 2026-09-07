@@ -8,9 +8,17 @@ import { normalizeMyanmarText } from '@/core/unicode/myanmar'
 describe('resolvePressedKey — positional code path', () => {
     it('prefers event.code when the layout knows the key', () => {
         expect(resolvePressedKey({ code: 'KeyZ', key: 'z', shiftKey: false }, myanmar)).toEqual({ code: 'KeyZ', modifier: 'none', character: 'z' })
-        expect(resolvePressedKey({ code: 'Digit7', key: 'ရ', shiftKey: true }, myanmar)).toEqual({ code: 'Digit7', modifier: 'shift', character: 'ရ' })
+        expect(resolvePressedKey({ code: 'Digit7', key: 'ရ', shiftKey: true }, myanmar)).toEqual({
+            code: 'Digit7',
+            modifier: 'shift',
+            character: 'ရ',
+        })
         expect(resolvePressedKey({ code: 'Space', key: ' ', shiftKey: false }, myanmar)).toEqual({ code: 'Space', modifier: 'none', character: ' ' })
-        expect(resolvePressedKey({ code: 'KeyA', key: 'a', shiftKey: false }, englishQwerty)).toEqual({ code: 'KeyA', modifier: 'none', character: 'a' })
+        expect(resolvePressedKey({ code: 'KeyA', key: 'a', shiftKey: false }, englishQwerty)).toEqual({
+            code: 'KeyA',
+            modifier: 'none',
+            character: 'a',
+        })
     })
 })
 
@@ -37,7 +45,11 @@ describe('resolvePressedKey — OS keyboard layout fallback', () => {
     })
 
     it('keeps the code path for plain keys whose character maps nowhere (e.g. dead keys)', () => {
-        expect(resolvePressedKey({ code: 'KeyQ', key: 'Dead', shiftKey: false }, myanmar)).toEqual({ code: 'KeyQ', modifier: 'none', character: 'Dead' })
+        expect(resolvePressedKey({ code: 'KeyQ', key: 'Dead', shiftKey: false }, myanmar)).toEqual({
+            code: 'KeyQ',
+            modifier: 'none',
+            character: 'Dead',
+        })
     })
 
     it('returns null when neither code nor key is usable', () => {

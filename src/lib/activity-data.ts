@@ -28,7 +28,10 @@ export function aggregateActivity(days: ActivityDay[]): Map<number, ActivityDay>
     for (const day of days) {
         const key = toUtcMidnight(day.date)
         const existing = map.get(key)
-        map.set(key, existing ? { ...existing, minutes: existing.minutes + day.minutes, sessions: existing.sessions + day.sessions } : { ...day, date: key })
+        map.set(
+            key,
+            existing ? { ...existing, minutes: existing.minutes + day.minutes, sessions: existing.sessions + day.sessions } : { ...day, date: key },
+        )
     }
     return map
 }

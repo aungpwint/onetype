@@ -17,7 +17,14 @@ describe('resolvedPracticePreferences', () => {
     })
 
     it('accepts valid word presets', () => {
-        expect(resolvedPracticePreferences({ unit: 'words', words: 50 })).toEqual({ unit: 'words', time: 30, words: 50, lang: 'english', punctuation: false, numbers: false })
+        expect(resolvedPracticePreferences({ unit: 'words', words: 50 })).toEqual({
+            unit: 'words',
+            time: 30,
+            words: 50,
+            lang: 'english',
+            punctuation: false,
+            numbers: false,
+        })
     })
 
     it('rejects invalid words back to 25', () => {
@@ -25,7 +32,14 @@ describe('resolvedPracticePreferences', () => {
     })
 
     it('normalises any unknown unit back to time', () => {
-        expect(resolvedPracticePreferences({ unit: 'characters' })).toEqual({ unit: 'time', time: 30, words: 25, lang: 'english', punctuation: false, numbers: false })
+        expect(resolvedPracticePreferences({ unit: 'characters' })).toEqual({
+            unit: 'time',
+            time: 30,
+            words: 25,
+            lang: 'english',
+            punctuation: false,
+            numbers: false,
+        })
     })
 
     it('resolves punctuation and numbers from on/off and boolean inputs', () => {

@@ -14,35 +14,11 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focus": [
-        "syllable"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-14"
-    ],
-    "focusKeys": [
-        "KeyU",
-        "KeyD",
-        "KeyK",
-        "KeyL",
-        "KeyJ",
-        "ShiftLeft",
-        "KeyA",
-        "KeyM",
-        "ShiftRight"
-    ],
-    "targetFingers": [
-        "right-index",
-        "left-middle",
-        "right-middle",
-        "right-ring",
-        "left-pinky",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focus": ["syllable"],
+    "prerequisites": ["lesson-my-beginner-14"],
+    "focusKeys": ["KeyU", "KeyD", "KeyK", "KeyL", "KeyJ", "ShiftLeft", "KeyA", "KeyM", "ShiftRight"],
+    "targetFingers": ["right-index", "left-middle", "right-middle", "right-ring", "left-pinky", "right-pinky"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -51,10 +27,7 @@
             "instruction": "Alternate between both fingers and hands",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကိ",
-                    "ကု"
-                ],
+                "keys": ["ကိ", "ကု"],
                 "count": 16,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -67,10 +40,7 @@
             "instruction": "Alternate between both fingers and hands",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကူ",
-                    "ကဲ"
-                ],
+                "keys": ["ကူ", "ကဲ"],
                 "count": 16,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -83,11 +53,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကေ",
-                    "ကာ",
-                    "ကီ"
-                ],
+                "keys": ["ကေ", "ကာ", "ကီ"],
                 "count": 18,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -100,15 +66,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကိ",
-                    "ကု",
-                    "ကူ",
-                    "ကဲ",
-                    "ကေ",
-                    "ကာ",
-                    "ကီ"
-                ],
+                "keys": ["ကိ", "ကု", "ကူ", "ကဲ", "ကေ", "ကာ", "ကီ"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

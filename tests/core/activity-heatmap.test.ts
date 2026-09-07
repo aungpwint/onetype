@@ -43,11 +43,11 @@ describe('activity-heatmap cell level', () => {
     })
 
     it('buckets steadily by ratio', () => {
-        expect(cellLevel(10, 50)).toBe(1)  // ratio 0.2
-        expect(cellLevel(15, 50)).toBe(2)  // ratio 0.3
-        expect(cellLevel(20, 50)).toBe(2)  // ratio 0.4
-        expect(cellLevel(25, 50)).toBe(2)  // ratio 0.5
-        expect(cellLevel(30, 50)).toBe(3)  // ratio 0.6
-        expect(cellLevel(40, 50)).toBe(4)  // ratio 0.8
+        expect(cellLevel(10, 50)).toBe(1) // ratio 0.2
+        expect(cellLevel(15, 50)).toBe(2) // ratio 0.3
+        expect(cellLevel(20, 50)).toBe(2) // ratio 0.4
+        expect(cellLevel(25, 50)).toBe(2) // ratio 0.5
+        expect(cellLevel(30, 50)).toBe(3) // ratio 0.6
+        expect(cellLevel(40, 50)).toBe(4) // ratio 0.8
     })
 })

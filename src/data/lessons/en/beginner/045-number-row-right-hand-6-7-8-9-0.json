@@ -14,28 +14,11 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focusKeys": [
-        "Digit6",
-        "Digit7",
-        "Digit8",
-        "Digit9",
-        "Digit0"
-    ],
-    "focus": [
-        "numbers"
-    ],
-    "targetFingers": [
-        "right-index",
-        "right-middle",
-        "right-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-27"
-    ],
+    "focusKeys": ["Digit6", "Digit7", "Digit8", "Digit9", "Digit0"],
+    "focus": ["numbers"],
+    "targetFingers": ["right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["right"],
+    "prerequisites": ["lesson-en-beginner-27"],
     "exercises": [
         {
             "kind": "generated",
@@ -43,10 +26,7 @@
             "instruction": "Cover the number row with your index-to-pinky fingers",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "6",
-                    "7"
-                ],
+                "keys": ["6", "7"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 3,
@@ -59,11 +39,7 @@
             "instruction": "Cover the number row with your index-to-pinky fingers",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "8",
-                    "9",
-                    "0"
-                ],
+                "keys": ["8", "9", "0"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 3,
@@ -76,13 +52,7 @@
             "instruction": "Cover the number row with your index-to-pinky fingers",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "0"
-                ],
+                "keys": ["6", "7", "8", "9", "0"],
                 "count": 24,
                 "chunkMin": 2,
                 "chunkMax": 4,

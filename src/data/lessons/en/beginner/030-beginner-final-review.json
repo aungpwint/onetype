@@ -14,15 +14,8 @@
         "minAccuracy": 92,
         "minWpm": 16
     },
-    "focus": [
-        "accuracy",
-        "speed",
-        "words",
-        "sentences"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-29"
-    ],
+    "focus": ["accuracy", "speed", "words", "sentences"],
+    "prerequisites": ["lesson-en-beginner-29"],
     "focusKeys": [
         "KeyF",
         "KeyG",
@@ -53,20 +46,8 @@
         "KeyM",
         "Period"
     ],
-    "targetFingers": [
-        "left-index",
-        "right-index",
-        "left-pinky",
-        "left-ring",
-        "left-middle",
-        "right-middle",
-        "right-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "right-index", "left-pinky", "left-ring", "left-middle", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -74,12 +55,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "f",
-                    "g",
-                    "h",
-                    "j"
-                ],
+                "keys": ["f", "g", "h", "j"],
                 "count": 18,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -92,16 +68,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "a",
-                    "s",
-                    "d",
-                    "f",
-                    "j",
-                    "k",
-                    "l",
-                    ";"
-                ],
+                "keys": ["a", "s", "d", "f", "j", "k", "l", ";"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -114,18 +81,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "q",
-                    "w",
-                    "e",
-                    "r",
-                    "t",
-                    "y",
-                    "u",
-                    "i",
-                    "o",
-                    "p"
-                ],
+                "keys": ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 6,
@@ -138,15 +94,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "z",
-                    "x",
-                    "c",
-                    "v",
-                    "b",
-                    "n",
-                    "m"
-                ],
+                "keys": ["z", "x", "c", "v", "b", "n", "m"],
                 "count": 18,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -159,10 +107,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "the fox ran by the barn.",
-                    "six girls read a long book."
-                ],
+                "sentences": ["the fox ran by the barn.", "six girls read a long book."],
                 "count": 3
             }
         }

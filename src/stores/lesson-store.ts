@@ -70,7 +70,8 @@ export const useLessonStore = create<LessonState>((set, get) => ({
         }
     },
     clearProgress: () => set({ progress: null, progressStudentId: null }),
-    saveProgress: async (req) => {        const saved = await backend.saveLessonProgress(req)
+    saveProgress: async (req) => {
+        const saved = await backend.saveLessonProgress(req)
         set((state) => {
             if (state.progressStudentId !== req.studentId) return { progress: state.progress }
             const map = { ...(state.progress ?? {}) }

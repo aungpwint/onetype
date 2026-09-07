@@ -83,7 +83,7 @@ describe('migrated generated content', () => {
                 const gen = ex.generator
                 const lang = lesson.language === 'myanmar' ? 'myanmar' : 'english'
                 const layout = languageDefinitionFor(lang)
-                const sources = gen.type === 'chunks' ? gen.keys : gen.type === 'words' ? gen.words ?? [] : gen.sentences ?? []
+                const sources = gen.type === 'chunks' ? gen.keys : gen.type === 'words' ? (gen.words ?? []) : (gen.sentences ?? [])
                 for (const source of sources) {
                     expect(() => layout.splitUnits(source), `${lesson.id}: ${JSON.stringify(source)}`).not.toThrow()
                 }

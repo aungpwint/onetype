@@ -10,11 +10,7 @@ interface WeekBar {
 
 const DEFAULT_WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-export function buildWeekBars(
-    dayMinutes: readonly number[],
-    todayStartMs: number,
-    weekdayNames: readonly string[] = DEFAULT_WEEKDAYS,
-): WeekBar[] {
+export function buildWeekBars(dayMinutes: readonly number[], todayStartMs: number, weekdayNames: readonly string[] = DEFAULT_WEEKDAYS): WeekBar[] {
     const bars: WeekBar[] = []
     for (let i = 0; i < 7; i += 1) {
         const offset = i - 6

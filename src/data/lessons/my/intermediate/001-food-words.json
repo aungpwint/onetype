@@ -6,7 +6,7 @@
     "number": 1,
     "title": "Food Words",
     "titleMy": "အစားအစာ စကားလုံးများ",
-    "description": "Common food words for building vocabulary.",
+    "description": "Common food words: rice, fish, chicken, duck, curry, noodles, salt, and more.",
     "difficulty": "easy",
     "estimatedMinutes": 8,
     "keyboard": "myanmar",
@@ -14,49 +14,34 @@
         "minAccuracy": 88,
         "minWpm": null
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-25"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-my-beginner-25"],
     "focusKeys": [
-        "KeyQ",
+        "BracketLeft",
+        "KeyA",
+        "KeyB",
+        "KeyC",
+        "KeyD",
         "KeyE",
         "KeyF",
-        "KeyI",
         "KeyG",
-        "Semicolon",
-        "KeyU",
+        "KeyH",
+        "KeyI",
         "KeyJ",
-        "ShiftRight",
+        "KeyK",
         "KeyM",
-        "KeyC",
-        "KeyA",
-        "KeyV",
-        "KeyW",
-        "ShiftLeft",
+        "KeyO",
+        "KeyQ",
         "KeyR",
-        "KeyS",
-        "KeyN",
-        "KeyD",
-        "Digit7",
-        "KeyT",
-        "KeyZ"
+        "KeyU",
+        "KeyW",
+        "KeyX",
+        "Semicolon",
+        "ShiftLeft",
+        "ShiftRight"
     ],
-    "targetFingers": [
-        "left-pinky",
-        "left-middle",
-        "left-index",
-        "right-middle",
-        "right-pinky",
-        "right-index",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -65,14 +50,8 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ဆန်",
-                    "ငါး",
-                    "ကြက်",
-                    "နွား",
-                    "ခွေး"
-                ],
-                "count": 26
+                "words": ["ဆန်", "ထမင်း", "ငါး", "ကြက်"],
+                "count": 24
             }
         },
         {
@@ -81,12 +60,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "လက်တွဲ",
-                    "များ",
-                    "ညီညီ",
-                    "မြေး"
-                ],
+                "words": ["ဘဲ", "ဆား", "ဟင်း", "ဝက်"],
                 "count": 24
             }
         },
@@ -96,13 +70,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ရေ",
-                    "နေ",
-                    "အဖေ",
-                    "အမေ",
-                    "ခြေ"
-                ],
+                "words": ["နို့", "ခေါက်ဆွဲ", "သီး", "မုန့်"],
                 "count": 24
             }
         }

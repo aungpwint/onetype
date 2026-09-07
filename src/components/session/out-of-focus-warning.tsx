@@ -20,10 +20,7 @@ export function OutOfFocusWarning() {
     if (!windowFocused) {
         const paused = focusPolicy === 'pause'
         return (
-            <div
-                className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center"
-                aria-live="polite"
-            >
+            <div className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center" aria-live="polite">
                 <div className="mt-28 rounded-2xl border border-line bg-background/85 px-6 py-4 text-center shadow-(--shadow-2) backdrop-blur-xl">
                     <p className="text-sm font-semibold text-foreground">{paused ? 'Round paused' : 'Round on hold'}</p>
                     <p className="mt-1 text-xs text-muted-foreground">

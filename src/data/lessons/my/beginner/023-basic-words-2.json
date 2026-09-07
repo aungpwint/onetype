@@ -14,12 +14,8 @@
         "minAccuracy": 87,
         "minWpm": 12
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-22"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-my-beginner-22"],
     "focusKeys": [
         "KeyR",
         "KeyJ",
@@ -42,19 +38,8 @@
         "KeyQ",
         "KeyI"
     ],
-    "targetFingers": [
-        "left-index",
-        "right-index",
-        "left-middle",
-        "right-middle",
-        "left-pinky",
-        "right-pinky",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "right-index", "left-middle", "right-middle", "left-pinky", "right-pinky", "left-ring"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -63,10 +48,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "မြို့",
-                    "ရွာ"
-                ],
+                "words": ["မြို့", "ရွာ"],
                 "count": 16
             }
         },
@@ -76,12 +58,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ညီ",
-                    "ညီမ",
-                    "လက်",
-                    "နား"
-                ],
+                "words": ["ညီ", "ညီမ", "လက်", "နား"],
                 "count": 18
             }
         },
@@ -91,12 +68,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "မျက်စိ",
-                    "ဆန်",
-                    "ငါး",
-                    "ကြက်"
-                ],
+                "words": ["မျက်စိ", "ဆန်", "ငါး", "ကြက်"],
                 "count": 18
             }
         }

@@ -15,7 +15,9 @@
         "minWpm": 25
     },
     "focusKeys": [
+        "Digit7",
         "KeyA",
+        "KeyB",
         "KeyC",
         "KeyD",
         "KeyE",
@@ -36,12 +38,14 @@
         "KeyU",
         "KeyV",
         "KeyW",
-        "Semicolon",
+        "KeyY",
+        "KeyZ",
         "Period",
+        "Semicolon",
         "ShiftLeft",
         "ShiftRight"
     ],
-    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [

@@ -19,7 +19,9 @@ export function resolvePressedKey(raw: KeyEventLike, layout: KeyboardLayout): Pr
     const shift = raw.shiftKey === true
 
     const fromCode: PressedKey | null =
-        code !== '' && code !== 'Unidentified' && layout.getKey(code) !== undefined ? { code, modifier: shift ? 'shift' : 'none', character: null } : null
+        code !== '' && code !== 'Unidentified' && layout.getKey(code) !== undefined
+            ? { code, modifier: shift ? 'shift' : 'none', character: null }
+            : null
 
     const keyText = raw.key ?? ''
     if (keyText.length === 0) return fromCode

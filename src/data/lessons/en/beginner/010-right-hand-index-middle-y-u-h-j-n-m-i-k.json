@@ -4,9 +4,9 @@
     "level": "beginner",
     "language": "en",
     "number": 10,
-    "title": "Right Hand Index & Middle: Y U H J N M I K ,",
-    "titleMy": "ညာလက် လက်ညှိုးနှင့် လက်ခလယ် - Y U H J N M I K ,",
-    "description": "Y above H, U above J, I above K. N below H, M below J. Comma below K.",
+    "title": "Right Hand Index & Middle: Y U H J N M I K",
+    "titleMy": "ညာလက် လက်ညှိုးနှင့် လက်ခလယ် - Y U H J N M I K",
+    "description": "Y above H, U above J, I above K. N below H, M below J.",
     "difficulty": "easy",
     "estimatedMinutes": 8,
     "keyboard": "qwerty",
@@ -14,32 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyY",
-        "KeyU",
-        "KeyH",
-        "KeyJ",
-        "KeyN",
-        "KeyM",
-        "KeyI",
-        "KeyK"
-    ],
-    "focus": [
-        "top-row",
-        "bottom-row",
-        "row-transition",
-        "key-memory"
-    ],
-    "targetFingers": [
-        "right-index",
-        "right-middle"
-    ],
-    "targetHands": [
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-7"
-    ],
+    "focusKeys": ["KeyY", "KeyU", "KeyH", "KeyJ", "KeyN", "KeyM", "KeyI", "KeyK"],
+    "focus": ["top-row", "bottom-row", "row-transition", "key-memory"],
+    "targetFingers": ["right-index", "right-middle"],
+    "targetHands": ["right"],
+    "prerequisites": ["lesson-en-beginner-7"],
     "exercises": [
         {
             "kind": "generated",
@@ -47,12 +26,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "y",
-                    "u",
-                    "h",
-                    "j"
-                ],
+                "keys": ["y", "u", "h", "j"],
                 "count": 14,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -65,10 +39,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "n",
-                    "m"
-                ],
+                "keys": ["n", "m"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -81,10 +52,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "i",
-                    "k"
-                ],
+                "keys": ["i", "k"],
                 "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -97,16 +65,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "y",
-                    "u",
-                    "h",
-                    "j",
-                    "n",
-                    "m",
-                    "i",
-                    "k"
-                ],
+                "keys": ["y", "u", "h", "j", "n", "m", "i", "k"],
                 "count": 34,
                 "chunkMin": 3,
                 "chunkMax": 5,

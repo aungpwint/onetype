@@ -57,7 +57,13 @@ export function ActivityHeatmap({ days, title = 'Typing activity' }: { days: Act
             <div className="mt-2 flex items-center justify-end gap-1 text-[10px] text-muted-foreground">
                 <span>Less</span>
                 {[0, 1, 2, 3, 4].map((l) => (
-                    <span key={l} className={cn('size-2.5 rounded-[3px]', l === 0 ? 'bg-muted/60' : l === 1 ? 'bg-brass/25' : l === 2 ? 'bg-brass/45' : l === 3 ? 'bg-brass/70' : 'bg-brass')} />
+                    <span
+                        key={l}
+                        className={cn(
+                            'size-2.5 rounded-[3px]',
+                            l === 0 ? 'bg-muted/60' : l === 1 ? 'bg-brass/25' : l === 2 ? 'bg-brass/45' : l === 3 ? 'bg-brass/70' : 'bg-brass',
+                        )}
+                    />
                 ))}
                 <span>More</span>
             </div>

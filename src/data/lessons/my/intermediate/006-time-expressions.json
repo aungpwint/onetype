@@ -6,7 +6,7 @@
     "number": 6,
     "title": "Time Expressions",
     "titleMy": "အချိန် စကားစုများ",
-    "description": "Time words: morning, noon, evening, tomorrow.",
+    "description": "Time words: မနက် (morning), ယနေ့ (today), မနေ့က (yesterday), မနက်ဖြန် (tomorrow), အခု (now).",
     "difficulty": "medium",
     "estimatedMinutes": 10,
     "keyboard": "myanmar",
@@ -14,47 +14,29 @@
         "minAccuracy": 90,
         "minWpm": null
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-my-intermediate-5"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-my-intermediate-5"],
     "focusKeys": [
-        "KeyE",
         "KeyA",
-        "KeyH",
-        "KeyN",
         "KeyB",
-        "KeyU",
-        "KeyF",
-        "KeyR",
-        "ShiftRight",
         "KeyC",
-        "KeyK",
-        "ShiftLeft",
         "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyH",
+        "KeyJ",
+        "KeyK",
+        "KeyN",
+        "KeyR",
         "KeyS",
-        "KeyI",
+        "KeyU",
+        "KeyZ",
         "Semicolon",
-        "KeyT",
-        "KeyM",
-        "KeyY",
-        "KeyG"
+        "ShiftLeft",
+        "ShiftRight"
     ],
-    "targetFingers": [
-        "left-middle",
-        "left-pinky",
-        "right-index",
-        "left-index",
-        "right-pinky",
-        "right-middle",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -63,11 +45,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "နေ့",
-                    "ညဘက်",
-                    "မနက်"
-                ],
+                "words": ["နေ့", "ညဘက်", "မနက်"],
                 "count": 18
             }
         },
@@ -77,10 +55,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ယခု",
-                    "ဒီနေ့"
-                ],
+                "words": ["ယခု", "ဒီနေ့"],
                 "count": 16
             }
         },
@@ -89,16 +64,9 @@
             "id": "lesson-my-intermediate-6-ex-3",
             "instruction": "Type whole words for rhythm",
             "generator": {
-                "type": "chunks",
-                "keys": [
-                    "ချင်း",
-                    "အောက်",
-                    "အပေါ်"
-                ],
-                "count": 22,
-                "chunkMin": 4,
-                "chunkMax": 6,
-                "style": "variable"
+                "type": "words",
+                "words": ["မနက်ဖြန်", "မနေ့က", "ယနေ့", "ညချမ်း"],
+                "count": 20
             }
         }
     ]

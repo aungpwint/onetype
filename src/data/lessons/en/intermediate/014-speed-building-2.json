@@ -14,12 +14,8 @@
         "minAccuracy": 93,
         "minWpm": 25
     },
-    "focus": [
-        "speed"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-13"
-    ],
+    "focus": ["speed"],
+    "prerequisites": ["lesson-en-intermediate-13"],
     "focusKeys": [
         "KeyT",
         "KeyH",
@@ -45,19 +41,8 @@
         "KeyK",
         "KeyB"
     ],
-    "targetFingers": [
-        "left-index",
-        "right-index",
-        "left-middle",
-        "left-pinky",
-        "right-ring",
-        "left-ring",
-        "right-middle"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",

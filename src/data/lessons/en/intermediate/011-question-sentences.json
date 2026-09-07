@@ -14,13 +14,8 @@
         "minAccuracy": 92,
         "minWpm": 22
     },
-    "focus": [
-        "sentences",
-        "punctuation"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-10"
-    ],
+    "focus": ["sentences", "punctuation"],
+    "prerequisites": ["lesson-en-intermediate-10"],
     "focusKeys": [
         "KeyW",
         "KeyH",
@@ -49,20 +44,8 @@
         "Comma",
         "KeyQ"
     ],
-    "targetFingers": [
-        "left-ring",
-        "right-index",
-        "left-pinky",
-        "left-index",
-        "left-middle",
-        "right-ring",
-        "right-middle",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-ring", "right-index", "left-pinky", "left-index", "left-middle", "right-ring", "right-middle", "right-pinky"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -71,11 +54,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "what are you reading?",
-                    "where did she go?",
-                    "when will they arrive?"
-                ],
+                "sentences": ["what are you reading?", "where did she go?", "when will they arrive?"],
                 "count": 4
             }
         },
@@ -85,11 +64,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "why is the sky blue today?",
-                    "how do you make bread?",
-                    "which one do you prefer?"
-                ],
+                "sentences": ["why is the sky blue today?", "how do you make bread?", "which one do you prefer?"],
                 "count": 4
             }
         },
@@ -99,11 +74,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "can you help me, please?",
-                    "may I ask a question?",
-                    "did you see that movie?"
-                ],
+                "sentences": ["can you help me, please?", "may I ask a question?", "did you see that movie?"],
                 "count": 4
             }
         }

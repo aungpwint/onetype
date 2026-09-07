@@ -50,5 +50,5 @@ export function filterCommands(commands: Command[], query: string): Command[] {
 
 export function moveSelection(current: number, delta: number, length: number): number {
     if (length <= 0) return 0
-    return ((((current + delta) % length) + length) % length)
+    return (((current + delta) % length) + length) % length
 }

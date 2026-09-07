@@ -6,7 +6,7 @@
     "number": 1,
     "title": "High-Frequency Words 1",
     "titleMy": "အသုံးများဆုံး စကားလုံးများ (၁)",
-    "description": "The 20 most common English words.",
+    "description": "A set of the most common English words for building rhythm.",
     "difficulty": "easy",
     "estimatedMinutes": 8,
     "keyboard": "qwerty",
@@ -14,43 +14,11 @@
         "minAccuracy": 90,
         "minWpm": 18
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-30"
-    ],
-    "focusKeys": [
-        "KeyT",
-        "KeyH",
-        "KeyE",
-        "KeyA",
-        "KeyN",
-        "KeyD",
-        "KeyY",
-        "KeyO",
-        "KeyU",
-        "KeyW",
-        "KeyI",
-        "KeyS",
-        "KeyF",
-        "KeyR",
-        "KeyM",
-        "KeyV"
-    ],
-    "targetFingers": [
-        "left-index",
-        "right-index",
-        "left-middle",
-        "left-pinky",
-        "right-ring",
-        "left-ring",
-        "right-middle"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-en-beginner-30"],
+    "focusKeys": ["KeyT", "KeyH", "KeyE", "KeyA", "KeyN", "KeyD", "KeyY", "KeyO", "KeyU", "KeyW", "KeyI", "KeyS", "KeyF", "KeyR", "KeyM", "KeyV"],
+    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",

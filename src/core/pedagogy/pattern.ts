@@ -154,11 +154,7 @@ function generateOneToken(profiles: KeyProfile[], length: number, options: Chunk
     }
 }
 
-export function generateChunkTokens(
-    profiles: KeyProfile[],
-    options: ChunkGenerationOptions,
-    rng: Rng,
-): ChunkGenerationResult {
+export function generateChunkTokens(profiles: KeyProfile[], options: ChunkGenerationOptions, rng: Rng): ChunkGenerationResult {
     const tokens: string[] = []
     const units: DrilledUnit[] = []
     const minLength = Math.max(1, options.chunkMin)

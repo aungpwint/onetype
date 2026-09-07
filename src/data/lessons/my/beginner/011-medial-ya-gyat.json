@@ -5,7 +5,7 @@
     "language": "my",
     "number": 11,
     "title": "Medial: ျ (ya-gyat)",
-    "titleMy": "စာလုံးကြို - ျ",
+    "titleMy": "ယပင့် (ya-gyat) - ျ",
     "description": "The ျ medial (KeyS). Consonant + ျ + vowel.",
     "difficulty": "easy",
     "estimatedMinutes": 8,
@@ -14,26 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyU",
-        "KeyS",
-        "KeyY",
-        "KeyN"
-    ],
-    "focus": [
-        "medial"
-    ],
-    "targetFingers": [
-        "right-index",
-        "left-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-10"
-    ],
+    "focusKeys": ["KeyU", "KeyS", "KeyY", "KeyN"],
+    "focus": ["medial"],
+    "targetFingers": ["right-index", "left-ring"],
+    "targetHands": ["right", "left"],
+    "prerequisites": ["lesson-my-beginner-10"],
     "exercises": [
         {
             "kind": "generated",
@@ -41,9 +26,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကျ"
-                ],
+                "keys": ["ကျ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -56,9 +39,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ပျ"
-                ],
+                "keys": ["ပျ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -71,9 +52,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ညျ"
-                ],
+                "keys": ["ညျ"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -86,11 +65,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကျ",
-                    "ပျ",
-                    "ညျ"
-                ],
+                "keys": ["ကျ", "ပျ", "ညျ"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

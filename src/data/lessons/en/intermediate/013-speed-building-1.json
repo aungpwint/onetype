@@ -14,12 +14,8 @@
         "minAccuracy": 93,
         "minWpm": 25
     },
-    "focus": [
-        "speed"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-12"
-    ],
+    "focus": ["speed"],
+    "prerequisites": ["lesson-en-intermediate-12"],
     "focusKeys": [
         "KeyT",
         "KeyH",
@@ -42,19 +38,8 @@
         "KeyK",
         "KeyL"
     ],
-    "targetFingers": [
-        "left-index",
-        "right-index",
-        "left-middle",
-        "left-pinky",
-        "right-ring",
-        "left-ring",
-        "right-middle"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -84,17 +69,7 @@
             "instruction": "Build speed across full words",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "a",
-                    "s",
-                    "d",
-                    "f",
-                    "g",
-                    "h",
-                    "j",
-                    "k",
-                    "l"
-                ],
+                "keys": ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
                 "count": 26,
                 "chunkMin": 4,
                 "chunkMax": 6,

@@ -30,7 +30,14 @@ describe('scoring', () => {
 
     it('builds a per-second pacing series in WPM for English', () => {
         const times = [100, 300, 1500, 2200, 4100]
-        const series = speedSeries({ correctAttempts: 5, incorrectAttempts: 0, backspaceCount: 0, elapsedSeconds: 5, language: 'english', correctTimes: times })
+        const series = speedSeries({
+            correctAttempts: 5,
+            incorrectAttempts: 0,
+            backspaceCount: 0,
+            elapsedSeconds: 5,
+            language: 'english',
+            correctTimes: times,
+        })
         expect(series).toHaveLength(5)
         expect(series[0]).toBeCloseTo(24, 5) // 2 correct in the first second → 120 raw wpm / 5
         expect(series[1]).toBeCloseTo(12, 5) // 1500
@@ -41,7 +48,14 @@ describe('scoring', () => {
 
     it('builds a per-second pacing series in typing units for Myanmar', () => {
         const times = [100, 300, 1500, 2200, 4100]
-        const series = speedSeries({ correctAttempts: 5, incorrectAttempts: 0, backspaceCount: 0, elapsedSeconds: 5, language: 'myanmar', correctTimes: times })
+        const series = speedSeries({
+            correctAttempts: 5,
+            incorrectAttempts: 0,
+            backspaceCount: 0,
+            elapsedSeconds: 5,
+            language: 'myanmar',
+            correctTimes: times,
+        })
         expect(series[0]).toBeCloseTo(120, 5) // 2 units in the first second → 120 units/min
         expect(series[1]).toBeCloseTo(60, 5)
         expect(series[2]).toBeCloseTo(60, 5)
@@ -51,7 +65,14 @@ describe('scoring', () => {
 
     it('keeps a sub-second run to a single populated bucket', () => {
         const times = [100]
-        const series = speedSeries({ correctAttempts: 1, incorrectAttempts: 0, backspaceCount: 0, elapsedSeconds: 0.4, language: 'english', correctTimes: times })
+        const series = speedSeries({
+            correctAttempts: 1,
+            incorrectAttempts: 0,
+            backspaceCount: 0,
+            elapsedSeconds: 0.4,
+            language: 'english',
+            correctTimes: times,
+        })
         expect(series).toHaveLength(1)
         expect(series[0]).toBeCloseTo(30, 5)
     })

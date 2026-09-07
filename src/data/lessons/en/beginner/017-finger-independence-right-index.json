@@ -14,27 +14,11 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyJ",
-        "KeyU",
-        "KeyH",
-        "KeyY",
-        "KeyN",
-        "KeyM"
-    ],
-    "focus": [
-        "finger-independence",
-        "finger-control"
-    ],
-    "targetFingers": [
-        "right-index"
-    ],
-    "targetHands": [
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-13"
-    ],
+    "focusKeys": ["KeyJ", "KeyU", "KeyH", "KeyY", "KeyN", "KeyM"],
+    "focus": ["finger-independence", "finger-control"],
+    "targetFingers": ["right-index"],
+    "targetHands": ["right"],
+    "prerequisites": ["lesson-en-beginner-13"],
     "exercises": [
         {
             "kind": "generated",
@@ -42,10 +26,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "j",
-                    "u"
-                ],
+                "keys": ["j", "u"],
                 "count": 14,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -58,10 +39,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "j",
-                    "h"
-                ],
+                "keys": ["j", "h"],
                 "count": 14,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -74,11 +52,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "y",
-                    "n",
-                    "m"
-                ],
+                "keys": ["y", "n", "m"],
                 "count": 18,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -91,14 +65,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "j",
-                    "y",
-                    "u",
-                    "h",
-                    "n",
-                    "m"
-                ],
+                "keys": ["j", "y", "u", "h", "n", "m"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

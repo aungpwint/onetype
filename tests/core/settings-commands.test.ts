@@ -44,7 +44,9 @@ describe('settings commands', () => {
 
     it('toggle commands treat a missing setting as off', () => {
         const { context, state } = harness({})
-        buildSettingCommands(context).find((c) => c.id === 'setting-numbers')?.run(context)
+        buildSettingCommands(context)
+            .find((c) => c.id === 'setting-numbers')
+            ?.run(context)
         expect(state['practice.numbers']).toBe('on')
     })
 

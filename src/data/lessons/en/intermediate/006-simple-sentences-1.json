@@ -14,12 +14,8 @@
         "minAccuracy": 92,
         "minWpm": 20
     },
-    "focus": [
-        "sentences"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-5"
-    ],
+    "focus": ["sentences"],
+    "prerequisites": ["lesson-en-intermediate-5"],
     "focusKeys": [
         "KeyI",
         "KeyW",
@@ -45,20 +41,8 @@
         "KeyC",
         "KeyP"
     ],
-    "targetFingers": [
-        "right-middle",
-        "left-ring",
-        "right-ring",
-        "right-index",
-        "left-middle",
-        "left-index",
-        "left-pinky",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "targetFingers": ["right-middle", "left-ring", "right-ring", "right-index", "left-middle", "left-index", "left-pinky", "right-pinky"],
+    "targetHands": ["right", "left"],
     "exercises": [
         {
             "kind": "generated",
@@ -66,11 +50,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "i will meet him at the station.",
-                    "they are going to the market.",
-                    "she has a small yellow bag."
-                ],
+                "sentences": ["i will meet him at the station.", "they are going to the market.", "she has a small yellow bag."],
                 "count": 3
             }
         },
@@ -80,11 +60,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "we saw a long river today.",
-                    "the train leaves in ten minutes.",
-                    "he wrote a letter to his friend."
-                ],
+                "sentences": ["we saw a long river today.", "the train leaves in ten minutes.", "he wrote a letter to his friend."],
                 "count": 3
             }
         },
@@ -94,11 +70,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "the children play in the green park.",
-                    "my brother reads the morning news.",
-                    "you can bring your book tomorrow."
-                ],
+                "sentences": ["the children play in the green park.", "my brother reads the morning news.", "you can bring your book tomorrow."],
                 "count": 3
             }
         }

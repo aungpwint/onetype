@@ -262,7 +262,7 @@ function getKeyLabel({
 
             <span
                 className={[
-                    'keycap-primary absolute inset-x-0 bottom-1 whitespace-nowrap text-center',
+                    'keycap-primary absolute inset-x-0 bottom-1 text-center whitespace-nowrap',
                     containsMyanmar(plain) ? 'font-myanmar' : 'font-keyboard',
                     'text-[0.9375rem] font-medium sm:text-base lg:text-lg 2xl:text-xl',
                 ].join(' ')}

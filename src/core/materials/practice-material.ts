@@ -70,7 +70,12 @@ function encodablePool(layout: KeyboardLayout, language: 'english' | 'myanmar' |
 }
 
 function wordPool(layout: KeyboardLayout, language: 'english' | 'myanmar' | 'mixed', pools: { en: LessonData[]; my: LessonData[] }): string[] {
-    const lines = language === 'english' ? encodablePool(layout, 'english', pools) : language === 'myanmar' ? encodablePool(layout, 'myanmar', pools) : encodablePool(layout, 'mixed', pools)
+    const lines =
+        language === 'english'
+            ? encodablePool(layout, 'english', pools)
+            : language === 'myanmar'
+              ? encodablePool(layout, 'myanmar', pools)
+              : encodablePool(layout, 'mixed', pools)
     const seen = new Set<string>()
     const words: string[] = []
     for (const line of lines) {
@@ -126,7 +131,10 @@ function randomToken(language: 'english' | 'myanmar' | 'mixed', length: number):
     return raw.join('')
 }
 
-function decoratePracticeTokens(words: string[], opts: { language: 'english' | 'myanmar' | 'mixed'; punctuation: boolean; numbers: boolean }): string[] {
+function decoratePracticeTokens(
+    words: string[],
+    opts: { language: 'english' | 'myanmar' | 'mixed'; punctuation: boolean; numbers: boolean },
+): string[] {
     const punctuation = opts.punctuation
         ? opts.language === 'english'
             ? EN_PUNCTUATION

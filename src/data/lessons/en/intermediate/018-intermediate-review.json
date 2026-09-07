@@ -14,12 +14,8 @@
         "minAccuracy": 93,
         "minWpm": 25
     },
-    "focus": [
-        "speed"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-17"
-    ],
+    "focus": ["speed"],
+    "prerequisites": ["lesson-en-intermediate-17"],
     "focusKeys": [
         "KeyT",
         "KeyH",
@@ -47,20 +43,8 @@
         "KeyG",
         "KeyJ"
     ],
-    "targetFingers": [
-        "left-index",
-        "right-index",
-        "left-middle",
-        "left-pinky",
-        "right-ring",
-        "left-ring",
-        "right-middle",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -79,11 +63,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "practice builds speed and accuracy.",
-                    "every lesson adds new confidence.",
-                    "keep your eyes on the text."
-                ],
+                "sentences": ["practice builds speed and accuracy.", "every lesson adds new confidence.", "keep your eyes on the text."],
                 "count": 4
             }
         },
@@ -93,20 +73,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "f",
-                    "g",
-                    "h",
-                    "j",
-                    "r",
-                    "t",
-                    "y",
-                    "u",
-                    "v",
-                    "b",
-                    "n",
-                    "m"
-                ],
+                "keys": ["f", "g", "h", "j", "r", "t", "y", "u", "v", "b", "n", "m"],
                 "count": 24,
                 "chunkMin": 4,
                 "chunkMax": 7,

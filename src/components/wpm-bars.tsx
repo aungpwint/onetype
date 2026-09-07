@@ -96,15 +96,7 @@ export function WpmBars({ values, unit = 'wpm', ariaLabel = `Speed over time (${
 
             {n > 0 && avg > 0 ? (
                 <g>
-                    <line
-                        x1={leftPad}
-                        x2={w - rightPad}
-                        y1={yOf(avg)}
-                        y2={yOf(avg)}
-                        stroke="var(--success)"
-                        strokeWidth={1}
-                        strokeDasharray="5 4"
-                    />
+                    <line x1={leftPad} x2={w - rightPad} y1={yOf(avg)} y2={yOf(avg)} stroke="var(--success)" strokeWidth={1} strokeDasharray="5 4" />
                     <rect
                         x={w - rightPad - 58}
                         y={yOf(avg) - 9}
@@ -137,7 +129,7 @@ export function WpmBars({ values, unit = 'wpm', ariaLabel = `Speed over time (${
                     <g key={i} className="wpm-group" style={{ '--i': i } as CSSProperties}>
                         <title>{`Step ${i + 1}: ${Math.round(value)} ${unit}`}</title>
                         <rect
-                            className={`wpm-bar wpm-bar-rise${isBest ? ' wpm-bar--best' : ''}`}
+                            className={`wpm-bar wpm-bar-rise${isBest ? 'wpm-bar--best' : ''}`}
                             x={x}
                             y={y}
                             width={barW}
@@ -145,7 +137,7 @@ export function WpmBars({ values, unit = 'wpm', ariaLabel = `Speed over time (${
                             rx={Math.min(4, barW / 2)}
                         />
                         <text
-                            className={`wpm-val${isBest ? ' wpm-val--best' : ''}`}
+                            className={`wpm-val${isBest ? 'wpm-val--best' : ''}`}
                             x={x + barW / 2}
                             y={y - 5}
                             textAnchor="middle"

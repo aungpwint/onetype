@@ -98,7 +98,12 @@ export default function TestsPage() {
                     value={attemptStats.passRate !== null ? `${Math.round(attemptStats.passRate)}%` : '—'}
                     hint={attemptStats.attempts ? `${attemptStats.passed} of ${attemptStats.attempts} runs passed` : 'No runs yet'}
                 />
-                <StatCard icon={<Trophy className="size-4" />} label="Passed" value={attemptStats.passed || '—'} hint="When speed & accuracy met the target" />
+                <StatCard
+                    icon={<Trophy className="size-4" />}
+                    label="Passed"
+                    value={attemptStats.passed || '—'}
+                    hint="When speed & accuracy met the target"
+                />
                 <StatCard
                     icon={<Gauge className="size-4" />}
                     label="Avg accuracy"
@@ -226,7 +231,9 @@ export default function TestsPage() {
                                                         {formatWpm(best.wpm)}
                                                         <span className="ml-1.5 font-sans text-xs font-normal text-muted-foreground">wpm</span>
                                                     </p>
-                                                    <p className="mt-1 text-xs text-muted-foreground">best run · {formatAccuracy(best.accuracy)} acc</p>
+                                                    <p className="mt-1 text-xs text-muted-foreground">
+                                                        best run · {formatAccuracy(best.accuracy)} acc
+                                                    </p>
                                                 </div>
                                             ) : (
                                                 <div>
@@ -310,8 +317,8 @@ export default function TestsPage() {
                 </section>
             ) : (
                 <EmptyState icon={<Trophy className="size-5" />} title="No attempts yet">
-                    Pick a paper above and type a full run — once you have results, your best speed per test, pass rate and full
-                    attempt history will appear here.
+                    Pick a paper above and type a full run — once you have results, your best speed per test, pass rate and full attempt history will
+                    appear here.
                 </EmptyState>
             )}
         </div>

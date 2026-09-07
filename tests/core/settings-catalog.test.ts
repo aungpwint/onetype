@@ -55,9 +55,7 @@ describe('settings catalogue', () => {
 
 describe('settings page source of truth', () => {
     const pageSource = readFileSync(resolve(fileURLToPath(new URL('../../src/pages/settings-page.tsx', import.meta.url))), 'utf-8')
-    const anchors = new Set(
-        [...pageSource.matchAll(/\bid="settings-([a-z0-9-]+)"/g)].map((m) => m[1]),
-    )
+    const anchors = new Set([...pageSource.matchAll(/\bid="settings-([a-z0-9-]+)"/g)].map((m) => m[1]))
     const catalogIds = new Set(SETTINGS_CATALOG.map((e) => e.id))
 
     it('every page anchor is documented in the catalogue', () => {

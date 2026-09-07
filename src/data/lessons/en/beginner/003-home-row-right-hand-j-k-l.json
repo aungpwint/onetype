@@ -4,9 +4,9 @@
     "level": "beginner",
     "language": "en",
     "number": 3,
-    "title": "Home Row Right Hand: J K L ;",
-    "titleMy": "ညာလက် အခြေခံတန်း - J K L ;",
-    "description": "Place right index on J, middle on K, ring on L, pinky on semicolon.",
+    "title": "Home Row Right Hand: J K L",
+    "titleMy": "ညာလက် အခြေခံတန်း - J K L",
+    "description": "Place right index on J, middle on K, ring on L.",
     "difficulty": "basic",
     "estimatedMinutes": 6,
     "keyboard": "qwerty",
@@ -14,27 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyJ",
-        "KeyK",
-        "KeyL"
-    ],
-    "focus": [
-        "home-row",
-        "finger-control",
-        "key-memory"
-    ],
-    "targetFingers": [
-        "right-index",
-        "right-middle",
-        "right-ring"
-    ],
-    "targetHands": [
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-1"
-    ],
+    "focusKeys": ["KeyJ", "KeyK", "KeyL"],
+    "focus": ["home-row", "finger-control", "key-memory"],
+    "targetFingers": ["right-index", "right-middle", "right-ring"],
+    "targetHands": ["right"],
+    "prerequisites": ["lesson-en-beginner-1"],
     "exercises": [
         {
             "kind": "generated",
@@ -42,11 +26,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "j",
-                    "k",
-                    "l"
-                ],
+                "keys": ["j", "k", "l"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -59,11 +39,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "j",
-                    "k",
-                    "l"
-                ],
+                "keys": ["j", "k", "l"],
                 "count": 16,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -76,11 +52,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "j",
-                    "k",
-                    "l"
-                ],
+                "keys": ["j", "k", "l"],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -93,11 +65,7 @@
             "instruction": "Alternate between both fingers and hands",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "l",
-                    "k",
-                    "j"
-                ],
+                "keys": ["l", "k", "j"],
                 "count": 20,
                 "chunkMin": 4,
                 "chunkMax": 6,

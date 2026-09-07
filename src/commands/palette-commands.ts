@@ -19,11 +19,7 @@ function roundStatus(): string {
 }
 
 function groupFor(id: string): CommandGroup {
-    return id === 'close'
-        ? 'Manage'
-        : id === 'pause' || id === 'restart' || id === 'abandon'
-          ? 'Round'
-          : 'Navigate'
+    return id === 'close' ? 'Manage' : id === 'pause' || id === 'restart' || id === 'abandon' ? 'Round' : 'Navigate'
 }
 
 export function createCommands(context: CommandContext): Command[] {

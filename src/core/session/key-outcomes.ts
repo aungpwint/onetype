@@ -39,9 +39,7 @@ export function summarizeKeyTaps(keyOutcomes: Map<string, KeyOutcome>): KeyTapSu
     }
 
     const totalKeystrokes = correct + incorrect
-    const errorKeys = keys
-        .filter((tap) => tap.incorrect > 0)
-        .sort((a, b) => b.incorrect - a.incorrect || a.correct - b.correct)
+    const errorKeys = keys.filter((tap) => tap.incorrect > 0).sort((a, b) => b.incorrect - a.incorrect || a.correct - b.correct)
 
     return {
         totalKeystrokes,

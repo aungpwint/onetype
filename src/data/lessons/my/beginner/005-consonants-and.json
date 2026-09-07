@@ -4,9 +4,9 @@
     "level": "beginner",
     "language": "my",
     "number": 5,
-    "title": "Consonants: ခ and ဃ",
-    "titleMy": "ဗျည်း - ခ နှင့် ဃ",
-    "description": "ခ (KeyC) with left middle. ဃ is the same key with Shift (KeyC+Shift).",
+    "title": "Bottom Row: ခ ထ ဖ",
+    "titleMy": "အောက်တန်း ဗျည်းများ - ခ ထ ဖ",
+    "description": "ခ (KeyC) with left middle, ထ (KeyX) with left ring, ဖ (KeyZ) with left pinky.",
     "difficulty": "easy",
     "estimatedMinutes": 6,
     "keyboard": "myanmar",
@@ -14,10 +14,10 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": ["KeyC", "KeyX", "KeyZ", "KeyB", "KeyV", "KeyN"],
-    "focus": ["finger-control"],
-    "targetFingers": ["left-middle", "left-ring", "left-pinky", "left-index", "right-index"],
-    "targetHands": ["left", "right"],
+    "focusKeys": ["KeyC", "KeyX", "KeyZ"],
+    "focus": ["bottom-row", "finger-control"],
+    "targetFingers": ["left-middle", "left-ring", "left-pinky"],
+    "targetHands": ["left"],
     "prerequisites": ["lesson-my-beginner-4"],
     "exercises": [
         {
@@ -52,35 +52,20 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": ["ဖ", "ဘ"],
-                "count": 14,
+                "keys": ["ဖ"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable",
-                "mixed": true
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-5-ex-4",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["လ", "ည"],
-                "count": 14,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "variable",
-                "mixed": true
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-5-ex-5",
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": ["ခ", "ထ", "ဖ", "ဘ", "လ", "ည"],
+                "keys": ["ခ", "ထ", "ဖ"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

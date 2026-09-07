@@ -14,32 +14,12 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyQ",
-        "ShiftRight",
-        "KeyW",
-        "KeyE",
-        "KeyR",
-        "KeyT"
-    ],
-    "focus": [
-        "shift"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "right-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focusKeys": ["KeyQ", "ShiftRight", "KeyW", "KeyE", "KeyR", "KeyT"],
+    "focus": ["shift"],
+    "targetFingers": ["left-pinky", "right-pinky", "left-ring", "left-middle", "left-index"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
-    "prerequisites": [
-        "lesson-en-beginner-33"
-    ],
+    "prerequisites": ["lesson-en-beginner-33"],
     "exercises": [
         {
             "kind": "generated",
@@ -47,10 +27,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "Q",
-                    "W"
-                ],
+                "keys": ["Q", "W"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 3,
@@ -63,10 +40,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "E",
-                    "R"
-                ],
+                "keys": ["E", "R"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 3,
@@ -79,13 +53,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "T",
-                    "R",
-                    "E",
-                    "W",
-                    "Q"
-                ],
+                "keys": ["T", "R", "E", "W", "Q"],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 5,

@@ -14,14 +14,8 @@
         "minAccuracy": 90,
         "minWpm": 15
     },
-    "focus": [
-        "key-memory",
-        "accuracy",
-        "speed"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-28"
-    ],
+    "focus": ["key-memory", "accuracy", "speed"],
+    "prerequisites": ["lesson-en-beginner-28"],
     "focusKeys": [
         "KeyA",
         "KeyS",
@@ -58,20 +52,8 @@
         "Digit9",
         "Digit0"
     ],
-    "targetFingers": [
-        "left-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index",
-        "right-index",
-        "right-middle",
-        "right-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -79,15 +61,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "a",
-                    "s",
-                    "d",
-                    "f",
-                    "j",
-                    "k",
-                    "l"
-                ],
+                "keys": ["a", "s", "d", "f", "j", "k", "l"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -100,18 +74,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "q",
-                    "w",
-                    "e",
-                    "r",
-                    "t",
-                    "y",
-                    "u",
-                    "i",
-                    "o",
-                    "p"
-                ],
+                "keys": ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -124,15 +87,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "z",
-                    "x",
-                    "c",
-                    "v",
-                    "b",
-                    "n",
-                    "m"
-                ],
+                "keys": ["z", "x", "c", "v", "b", "n", "m"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -145,18 +100,7 @@
             "instruction": "Cover the number row with your index-to-pinky fingers",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "0"
-                ],
+                "keys": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
                 "count": 20,
                 "chunkMin": 2,
                 "chunkMax": 4,

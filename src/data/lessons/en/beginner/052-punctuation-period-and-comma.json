@@ -5,7 +5,7 @@
     "language": "en",
     "number": 52,
     "title": "Punctuation: Period and Comma",
-    "titleMy": "နားသတ်: period (.) နှင့် comma (,)",
+    "titleMy": "ပုဒ်ဖြတ်ပုဒ်ရပ်: period (.) နှင့် comma (,)",
     "description": "Period and comma in sentences.",
     "difficulty": "medium",
     "estimatedMinutes": 8,
@@ -36,25 +36,10 @@
         "KeyM",
         "KeyW"
     ],
-    "focus": [
-        "punctuation"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-30"
-    ],
-    "targetFingers": [
-        "left-middle",
-        "left-pinky",
-        "left-index",
-        "right-ring",
-        "right-middle",
-        "right-index",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focus": ["punctuation"],
+    "prerequisites": ["lesson-en-beginner-30"],
+    "targetFingers": ["left-middle", "left-pinky", "left-index", "right-ring", "right-middle", "right-index", "left-ring"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -62,13 +47,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "cat.",
-                    "dog.",
-                    "big.",
-                    "run.",
-                    "sit."
-                ],
+                "words": ["cat.", "dog.", "big.", "run.", "sit."],
                 "count": 18,
                 "maxWordLength": 4
             }
@@ -79,13 +58,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "red,",
-                    "blue,",
-                    "green,",
-                    "last,",
-                    "then,"
-                ],
+                "words": ["red,", "blue,", "green,", "last,", "then,"],
                 "count": 18,
                 "maxWordLength": 5
             }
@@ -96,11 +69,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "they ran home.",
-                    "the sun went down.",
-                    "i saw a star."
-                ],
+                "sentences": ["they ran home.", "the sun went down.", "i saw a star."],
                 "count": 3
             }
         }

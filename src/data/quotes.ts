@@ -14,7 +14,11 @@ export const QUOTES: Quote[] = [
     { text: 'The future belongs to those who believe in the beauty of their dreams.', source: 'Eleanor Roosevelt', language: 'english' },
     { text: 'Simplicity is the ultimate sophistication.', source: 'Leonardo da Vinci', language: 'english' },
     { text: 'It always seems impossible until it is done.', source: 'Nelson Mandela', language: 'english' },
-    { text: 'Success is not final, failure is not fatal. It is the courage to continue that counts.', source: 'Winston Churchill', language: 'english' },
+    {
+        text: 'Success is not final, failure is not fatal. It is the courage to continue that counts.',
+        source: 'Winston Churchill',
+        language: 'english',
+    },
     { text: 'The best time to plant a tree was twenty years ago. The second best time is now.', source: 'Chinese Proverb', language: 'english' },
     { text: 'Whether you think you can or you think you cannot, you are right.', source: 'Henry Ford', language: 'english' },
     { text: 'A journey of a thousand miles begins with a single step.', source: 'Lao Tzu', language: 'english' },

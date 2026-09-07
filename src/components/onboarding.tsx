@@ -100,11 +100,7 @@ export function Onboarding() {
                         </Field>
                         <div className="flex items-center justify-between">
                             <Field label="Appearance">
-                                <SelectField
-                                    className="w-40"
-                                    value={theme}
-                                    onChange={(e) => setTheme(e.currentTarget.value as typeof theme)}
-                                >
+                                <SelectField className="w-40" value={theme} onChange={(e) => setTheme(e.currentTarget.value as typeof theme)}>
                                     <option value="system">Follow system</option>
                                     <option value="light">Light desk</option>
                                     <option value="dark">Night desk</option>

@@ -69,10 +69,11 @@ describe('Myanmar lesson raw data', () => {
     it('contains only Myanmar Unicode — no Private Use Area / non-block codepoints — anywhere in the my JSON sources', () => {
         for (const file of listMyFiles(MY_ROOT)) {
             const raw = readFileSync(file, 'utf8')
-            const bad = [...Array.from(raw)]
-                .map((ch) => ch.codePointAt(0)!)
-                .filter((cp) => cp >= 0xe000 /* PUA */)
-            expect(bad, `${path.relative(MY_ROOT, file)} carries non-Unicode codepoint(s) U+${bad.map((cp) => cp.toString(16)).join(', ')}`).toHaveLength(0)
+            const bad = [...Array.from(raw)].map((ch) => ch.codePointAt(0)!).filter((cp) => cp >= 0xe000 /* PUA */)
+            expect(
+                bad,
+                `${path.relative(MY_ROOT, file)} carries non-Unicode codepoint(s) U+${bad.map((cp) => cp.toString(16)).join(', ')}`,
+            ).toHaveLength(0)
         }
     })
 })

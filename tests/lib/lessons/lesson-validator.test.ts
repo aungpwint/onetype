@@ -134,12 +134,12 @@ describe('Myanmar Unicode lesson validation', () => {
     })
 
     it('rejects a ZWNJ in exercise instruction and free-text exercises', () => {
-        expect(() =>
-            validateLesson(myanLesson({ exercises: [{ id: 'ex-i', kind: 'text', text: 'ကြက်', instruction: 'ရ\u200Cေ' }] })),
-        ).toThrow(LessonValidationError)
-        expect(() =>
-            validateLesson(myanLesson({ exercises: [{ id: 'ex-t', kind: 'custom', text: 'ရ\u200Cေ', subtype: 'probe' }] })),
-        ).toThrow(LessonValidationError)
+        expect(() => validateLesson(myanLesson({ exercises: [{ id: 'ex-i', kind: 'text', text: 'ကြက်', instruction: 'ရ\u200Cေ' }] }))).toThrow(
+            LessonValidationError,
+        )
+        expect(() => validateLesson(myanLesson({ exercises: [{ id: 'ex-t', kind: 'custom', text: 'ရ\u200Cေ', subtype: 'probe' }] }))).toThrow(
+            LessonValidationError,
+        )
     })
 
     it('collects multiple problems across fields into one error', () => {

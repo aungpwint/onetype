@@ -14,12 +14,8 @@
         "minAccuracy": 92,
         "minWpm": 22
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-9"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-en-intermediate-9"],
     "focusKeys": [
         "KeyS",
         "KeyU",
@@ -43,20 +39,8 @@
         "KeyM",
         "KeyP"
     ],
-    "targetFingers": [
-        "left-ring",
-        "right-index",
-        "right-ring",
-        "right-middle",
-        "left-index",
-        "left-pinky",
-        "left-middle",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-ring", "right-index", "right-ring", "right-middle", "left-index", "left-pinky", "left-middle", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -64,12 +48,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "sunlight",
-                    "rainbow",
-                    "firefly",
-                    "bookstore"
-                ],
+                "words": ["sunlight", "rainbow", "firefly", "bookstore"],
                 "count": 18,
                 "maxWordLength": 9
             }
@@ -80,12 +59,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "handbook",
-                    "lighthouse",
-                    "forgive",
-                    "oversee"
-                ],
+                "words": ["handbook", "lighthouse", "forgive", "oversee"],
                 "count": 18,
                 "maxWordLength": 9
             }
@@ -96,12 +70,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "snowman",
-                    "homeland",
-                    "typewriter",
-                    "weekend"
-                ],
+                "words": ["snowman", "homeland", "typewriter", "weekend"],
                 "count": 18,
                 "maxWordLength": 10
             }

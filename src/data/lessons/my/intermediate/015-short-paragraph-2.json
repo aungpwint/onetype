@@ -14,13 +14,8 @@
         "minAccuracy": 93,
         "minWpm": 18
     },
-    "focus": [
-        "sentences",
-        "punctuation"
-    ],
-    "prerequisites": [
-        "lesson-my-intermediate-14"
-    ],
+    "focus": ["sentences", "punctuation"],
+    "prerequisites": ["lesson-my-intermediate-14"],
     "focusKeys": [
         "KeyI",
         "KeyG",
@@ -47,20 +42,8 @@
         "KeyC",
         "KeyY"
     ],
-    "targetFingers": [
-        "right-middle",
-        "left-index",
-        "right-pinky",
-        "left-middle",
-        "left-ring",
-        "right-index",
-        "left-pinky",
-        "right-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "targetFingers": ["right-middle", "left-index", "right-pinky", "left-middle", "left-ring", "right-index", "left-pinky", "right-ring"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -69,10 +52,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "ငါး နှစ် ကောင် က မြို့ မှာ ရှိ တယ် ။",
-                    "နွား တစ် ကောင် က ရွာ က လာ တယ် ။"
-                ],
+                "sentences": ["ငါး နှစ် ကောင် က မြို့ မှာ ရှိ တယ် ။", "နွား တစ် ကောင် က ရွာ က လာ တယ် ။"],
                 "count": 3
             }
         },
@@ -82,10 +62,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "လက် နှစ် ချောင်း နဲ့ ရေးပါ ။",
-                    "မျက်စိ က နှစ် လုံး ရှိ တယ် ။"
-                ],
+                "sentences": ["လက် နှစ် ချောင်း နဲ့ ရေးပါ ။", "မျက်စိ က နှစ် လုံး ရှိ တယ် ။"],
                 "count": 3
             }
         }

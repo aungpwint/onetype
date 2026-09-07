@@ -40,7 +40,10 @@ function result(over: Partial<TestResult>): TestResult {
 describe('buildTestRecord', () => {
     it('picks the best run per paper and flags a passed paper', () => {
         const record = buildTestRecord(
-            [result({ attempt: 1, wpm: 38, accuracy: 97, passed: true, scoredOn: 2000 }), result({ attempt: 2, wpm: 52, accuracy: 94, scoredOn: 3000 })],
+            [
+                result({ attempt: 1, wpm: 38, accuracy: 97, passed: true, scoredOn: 2000 }),
+                result({ attempt: 2, wpm: 52, accuracy: 94, scoredOn: 3000 }),
+            ],
             [TEST],
         )
         const entry: TestRecordEntry = record[0]
@@ -72,10 +75,7 @@ describe('buildTestRecord', () => {
 
     it('sorts papers by code', () => {
         const b: TypingTest = { ...TEST, id: 't2', code: 'EN-60-1' }
-        const record = buildTestRecord(
-            [result({ testId: 't1', scoredOn: 3000 }), result({ testId: 't2', scoredOn: 1000 })],
-            [TEST, b],
-        )
+        const record = buildTestRecord([result({ testId: 't1', scoredOn: 3000 }), result({ testId: 't2', scoredOn: 1000 })], [TEST, b])
         expect(record.map((e) => e.code)).toEqual(['EN-60-1', 'MY-90-1'])
     })
 })

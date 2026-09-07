@@ -131,6 +131,15 @@ describe('sequencer — mastery levels', () => {
     it('classifies single pass, triple pass and failed attempts', () => {
         expect(computeMasteryLevel([{ passed: false, accuracy: 20 }], 80)).toBe('attempted')
         expect(computeMasteryLevel([{ passed: true, accuracy: 92 }], 80)).toBe(PASSED)
-        expect(computeMasteryLevel([{ passed: true, accuracy: 92 }, { passed: true, accuracy: 94 }, { passed: true, accuracy: 95 }], 80)).toBe(MASTERED)
+        expect(
+            computeMasteryLevel(
+                [
+                    { passed: true, accuracy: 92 },
+                    { passed: true, accuracy: 94 },
+                    { passed: true, accuracy: 95 },
+                ],
+                80,
+            ),
+        ).toBe(MASTERED)
     })
 })

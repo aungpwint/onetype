@@ -14,12 +14,8 @@
         "minAccuracy": 92,
         "minWpm": 24
     },
-    "focus": [
-        "sentences"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-15"
-    ],
+    "focus": ["sentences"],
+    "prerequisites": ["lesson-en-intermediate-15"],
     "focusKeys": [
         "KeyW",
         "KeyH",
@@ -46,20 +42,8 @@
         "KeyK",
         "KeyU"
     ],
-    "targetFingers": [
-        "left-ring",
-        "right-index",
-        "left-middle",
-        "left-index",
-        "right-ring",
-        "left-pinky",
-        "right-middle",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-ring", "right-index", "left-middle", "left-index", "right-ring", "left-pinky", "right-middle", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",

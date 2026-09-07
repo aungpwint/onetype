@@ -14,29 +14,11 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyU",
-        "KeyF",
-        "ShiftRight",
-        "KeyC",
-        "KeyY"
-    ],
-    "focus": [
-        "syllable"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-18"
-    ],
-    "targetFingers": [
-        "right-index",
-        "left-index",
-        "right-pinky",
-        "left-middle"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focusKeys": ["KeyU", "KeyF", "ShiftRight", "KeyC", "KeyY"],
+    "focus": ["syllable"],
+    "prerequisites": ["lesson-my-beginner-18"],
+    "targetFingers": ["right-index", "left-index", "right-pinky", "left-middle"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -45,9 +27,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "က္က"
-                ],
+                "keys": ["က္က"],
                 "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -60,9 +40,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "က္ခ"
-                ],
+                "keys": ["က္ခ"],
                 "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -75,9 +53,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ပ္ပ"
-                ],
+                "keys": ["ပ္ပ"],
                 "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -90,11 +66,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "က္က",
-                    "က္ခ",
-                    "ပ္ပ"
-                ],
+                "keys": ["က္က", "က္ခ", "ပ္ပ"],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 5,

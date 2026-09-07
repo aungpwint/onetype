@@ -14,12 +14,8 @@
         "minAccuracy": 88,
         "minWpm": 14
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-24"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-en-beginner-24"],
     "focusKeys": [
         "KeyF",
         "KeyI",
@@ -44,20 +40,8 @@
         "KeyM",
         "KeyL"
     ],
-    "targetFingers": [
-        "left-index",
-        "right-middle",
-        "left-ring",
-        "left-pinky",
-        "left-middle",
-        "right-index",
-        "right-pinky",
-        "right-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "right-middle", "left-ring", "left-pinky", "left-middle", "right-index", "right-pinky", "right-ring"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -65,14 +49,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "first",
-                    "after",
-                    "again",
-                    "under",
-                    "never",
-                    "always"
-                ],
+                "words": ["first", "after", "again", "under", "never", "always"],
                 "count": 18,
                 "maxWordLength": 5
             }
@@ -83,14 +60,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "quick",
-                    "white",
-                    "three",
-                    "green",
-                    "happy",
-                    "house"
-                ],
+                "words": ["quick", "white", "three", "green", "happy", "house"],
                 "count": 18,
                 "maxWordLength": 5
             }
@@ -101,15 +71,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "small",
-                    "point",
-                    "think",
-                    "world",
-                    "water",
-                    "large",
-                    "where"
-                ],
+                "words": ["small", "point", "think", "world", "water", "large", "where"],
                 "count": 20,
                 "maxWordLength": 5
             }

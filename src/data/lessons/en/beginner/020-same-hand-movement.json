@@ -14,43 +14,11 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyA",
-        "KeyS",
-        "KeyD",
-        "KeyF",
-        "KeyJ",
-        "KeyK",
-        "KeyL",
-        "KeyW",
-        "KeyE",
-        "KeyR",
-        "KeyU",
-        "KeyI",
-        "KeyO",
-        "KeyP"
-    ],
-    "focus": [
-        "same-hand",
-        "finger-control"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-19"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index",
-        "right-index",
-        "right-middle",
-        "right-ring",
-        "right-pinky"
-    ],
+    "focusKeys": ["KeyA", "KeyS", "KeyD", "KeyF", "KeyJ", "KeyK", "KeyL", "KeyW", "KeyE", "KeyR", "KeyU", "KeyI", "KeyO", "KeyP"],
+    "focus": ["same-hand", "finger-control"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-en-beginner-19"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "exercises": [
         {
             "kind": "generated",
@@ -58,12 +26,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "a",
-                    "s",
-                    "d",
-                    "f"
-                ],
+                "keys": ["a", "s", "d", "f"],
                 "count": 16,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -76,11 +39,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "j",
-                    "k",
-                    "l"
-                ],
+                "keys": ["j", "k", "l"],
                 "count": 14,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -93,11 +52,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "w",
-                    "e",
-                    "r"
-                ],
+                "keys": ["w", "e", "r"],
                 "count": 14,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -110,12 +65,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "u",
-                    "i",
-                    "o",
-                    "p"
-                ],
+                "keys": ["u", "i", "o", "p"],
                 "count": 18,
                 "chunkMin": 3,
                 "chunkMax": 5,

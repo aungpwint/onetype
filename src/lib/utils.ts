@@ -9,9 +9,7 @@ export function clamp(value: number, min: number, max: number): number {
     return Math.min(max, Math.max(min, value))
 }
 
-export const cardClass = cn(
-    'rounded-2xl border border-line bg-surface shadow-[inset_0_1px_0_var(--card-hi),var(--shadow-1)]',
-)
+export const cardClass = cn('rounded-2xl border border-line bg-surface shadow-[inset_0_1px_0_var(--card-hi),var(--shadow-1)]')
 
 export const highlightClass = cn(
     'rounded-xl border border-accent/40 bg-linear-to-b from-accent/10 via-transparent to-transparent shadow-[inset_0_1px_0_color-mix(in_srgb,var(--accent)_10%,transparent)]',
@@ -21,7 +19,7 @@ export const featuredClass = cn(
     'relative overflow-hidden rounded-3xl border border-[color-mix(in_srgb,var(--primary)_24%,transparent)] bg-card/75 shadow-[var(--shadow-3)] backdrop-blur-2xl',
 )
 
-export const appPageClass = cn('mx-auto w-full min-w-0 max-w-[84rem] space-y-6 px-[clamp(1.5rem,2.5vw,2.5rem)] pt-8 pb-14')
+export const appPageClass = cn('mx-auto w-full max-w-[84rem] min-w-0 space-y-6 px-[clamp(1.5rem,2.5vw,2.5rem)] pt-8 pb-14')
 
 export const eyebrowClass = cn('text-[0.6875rem] font-medium tracking-[0.16em] text-ink-faint uppercase')
 
@@ -42,5 +40,5 @@ export const selectClass = cn(
 )
 
 export const inputClass = cn(
-    'flex h-9 w-full rounded-lg border border-line-strong/60 bg-background px-3 py-1 text-sm shadow-sm transition-[border-color,box-shadow] placeholder:text-muted-foreground hover:border-line-strong focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:border-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+    'flex h-9 w-full rounded-lg border border-line-strong/60 bg-background px-3 py-1 text-sm shadow-sm transition-[border-color,box-shadow] placeholder:text-muted-foreground hover:border-line-strong focus:border-accent focus:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
 )

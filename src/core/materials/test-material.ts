@@ -33,10 +33,12 @@ export async function buildTestMaterial(test: TypingTest): Promise<ResolvedLesso
     const { my, en } = await getTestPools()
     const poolBase = test.language === 'english' ? en : test.language === 'mixed' ? [...my, ...en] : my
     // Normalized here so display text and the typing target never diverge.
-    const pool = poolBase.map((raw) => (layout.language === 'myanmar' ? normalizeMyanmarText(raw) : raw)).filter((line) => {
-        for (const ch of line) if (!layout.lookupChar(ch)) return false
-        return true
-    })
+    const pool = poolBase
+        .map((raw) => (layout.language === 'myanmar' ? normalizeMyanmarText(raw) : raw))
+        .filter((line) => {
+            for (const ch of line) if (!layout.lookupChar(ch)) return false
+            return true
+        })
     if (pool.length === 0) {
         throw new Error(`Test "${test.id}": no lines encodable by layout "${test.layoutId}"`)
     }

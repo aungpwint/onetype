@@ -45,11 +45,7 @@ describe('focusQueue', () => {
     it('ranks unpassed papers by combined shortfall', () => {
         const a = test({ id: 'a', code: 'MY-90-1', minWpm: 30, minAccuracy: 96 })
         const b = test({ id: 'b', code: 'MY-90-2', minWpm: 30, minAccuracy: 96 })
-        const queue = focusQueue(
-            [result({ testId: 'a', wpm: 29, accuracy: 96 }), result({ testId: 'b', wpm: 20, accuracy: 80 })],
-            [a, b],
-            3,
-        )
+        const queue = focusQueue([result({ testId: 'a', wpm: 29, accuracy: 96 }), result({ testId: 'b', wpm: 20, accuracy: 80 })], [a, b], 3)
         expect(queue.map((e) => e.code)).toEqual(['MY-90-1', 'MY-90-2'])
         expect(queue[0].shortfall).toBe(1)
         expect(queue[1].shortfall).toBe(26)
@@ -67,7 +63,11 @@ describe('focusQueue', () => {
     })
 
     it('bases the gap on the best run, not the latest', () => {
-        const queue = focusQueue([result({ attempt: 1, wpm: 40, accuracy: 99, scoredOn: 1000 }), result({ attempt: 2, wpm: 10, accuracy: 50, scoredOn: 2000 })], [TEST], 3)
+        const queue = focusQueue(
+            [result({ attempt: 1, wpm: 40, accuracy: 99, scoredOn: 1000 }), result({ attempt: 2, wpm: 10, accuracy: 50, scoredOn: 2000 })],
+            [TEST],
+            3,
+        )
         expect(queue[0].shortfall).toBe(0)
         expect(queue[0].bestWpm).toBe(40)
     })

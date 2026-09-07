@@ -1,14 +1,6 @@
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
 
-import {
-    COMMAND_GROUPS,
-    filterCommands,
-    matchScore,
-    moveSelection,
-    searchableText,
-    type Command,
-    type CommandContext,
-} from '@/commands/registry'
+import { COMMAND_GROUPS, filterCommands, matchScore, moveSelection, searchableText, type Command, type CommandContext } from '@/commands/registry'
 import { createCommands } from '@/commands/palette-commands'
 import { useTypingStore } from '@/stores/typing-store'
 import { useUiStore } from '@/stores/ui-store'

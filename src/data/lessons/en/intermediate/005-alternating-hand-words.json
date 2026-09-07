@@ -14,12 +14,8 @@
         "minAccuracy": 90,
         "minWpm": 22
     },
-    "focus": [
-        "hand-alternation"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-4"
-    ],
+    "focus": ["hand-alternation"],
+    "prerequisites": ["lesson-en-intermediate-4"],
     "focusKeys": [
         "KeyA",
         "KeyR",
@@ -39,20 +35,8 @@
         "KeyP",
         "KeyW"
     ],
-    "targetFingers": [
-        "left-pinky",
-        "left-index",
-        "right-index",
-        "left-middle",
-        "right-middle",
-        "right-ring",
-        "right-pinky",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-pinky", "left-index", "right-index", "left-middle", "right-middle", "right-ring", "right-pinky", "left-ring"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -60,11 +44,7 @@
             "instruction": "Build speed across full words",
             "generator": {
                 "type": "words",
-                "words": [
-                    "arm",
-                    "fun",
-                    "drum"
-                ],
+                "words": ["arm", "fun", "drum"],
                 "count": 30,
                 "maxWordLength": 4
             }
@@ -75,11 +55,7 @@
             "instruction": "Build speed across full words",
             "generator": {
                 "type": "words",
-                "words": [
-                    "again",
-                    "born",
-                    "dark"
-                ],
+                "words": ["again", "born", "dark"],
                 "count": 28,
                 "maxWordLength": 5
             }
@@ -90,14 +66,7 @@
             "instruction": "Build speed across full words",
             "generator": {
                 "type": "words",
-                "words": [
-                    "earth",
-                    "grab",
-                    "hard",
-                    "pad",
-                    "tag",
-                    "drawn"
-                ],
+                "words": ["earth", "grab", "hard", "pad", "tag", "drawn"],
                 "count": 28,
                 "maxWordLength": 6
             }

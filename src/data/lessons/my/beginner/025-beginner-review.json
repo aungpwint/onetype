@@ -14,13 +14,8 @@
         "minAccuracy": 90,
         "minWpm": 15
     },
-    "focus": [
-        "syllable",
-        "tone"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-24"
-    ],
+    "focus": ["syllable", "tone"],
+    "prerequisites": ["lesson-my-beginner-24"],
     "focusKeys": [
         "KeyU",
         "KeyI",
@@ -41,19 +36,8 @@
         "KeyF",
         "KeyG"
     ],
-    "targetFingers": [
-        "right-index",
-        "right-middle",
-        "left-ring",
-        "left-middle",
-        "left-pinky",
-        "right-pinky",
-        "left-index"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "targetFingers": ["right-index", "right-middle", "left-ring", "left-middle", "left-pinky", "right-pinky", "left-index"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -62,12 +46,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "က",
-                    "င",
-                    "တ",
-                    "န"
-                ],
+                "keys": ["က", "င", "တ", "န"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -80,13 +59,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကိ",
-                    "ကု",
-                    "ကေ",
-                    "ကာ",
-                    "ကား"
-                ],
+                "keys": ["ကိ", "ကု", "ကေ", "ကာ", "ကား"],
                 "count": 24,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -99,11 +72,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကျ",
-                    "ကြ",
-                    "မျာ"
-                ],
+                "keys": ["ကျ", "ကြ", "မျာ"],
                 "count": 18,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -116,13 +85,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ရေ",
-                    "မြို့",
-                    "ဆန်",
-                    "ငါး",
-                    "ကြက်"
-                ],
+                "words": ["ရေ", "မြို့", "ဆန်", "ငါး", "ကြက်"],
                 "count": 18
             }
         }

@@ -51,10 +51,7 @@ describe('rankClassOnTest', () => {
     })
 
     it('ignores runs on other papers', () => {
-        const entries = rankClassOnTest(
-            [student({ studentId: 'a', name: 'Aung', runs: [a({ testId: 't2', wpm: 99 })] })],
-            't1',
-        )
+        const entries = rankClassOnTest([student({ studentId: 'a', name: 'Aung', runs: [a({ testId: 't2', wpm: 99 })] })], 't1')
         expect(entries).toHaveLength(0)
     })
 

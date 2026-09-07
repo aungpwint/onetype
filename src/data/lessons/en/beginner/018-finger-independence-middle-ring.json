@@ -4,9 +4,9 @@
     "level": "beginner",
     "language": "en",
     "number": 18,
-    "title": "Finger Independence: Middle & Ring",
-    "titleMy": "လက်ချောင်း လွတ်လပ်မှု - လက်ခလယ်နှင့် လက်သူကြွယ်",
-    "description": "Middle and ring finger drills. Practice independent movement on each hand.",
+    "title": "Finger Independence: Middle Fingers",
+    "titleMy": "လက်ချောင်း လွတ်လပ်မှု - လက်ခလယ် နှစ်ဖက်",
+    "description": "Middle finger drills. Practice independent movement on each hand.",
     "difficulty": "easy",
     "estimatedMinutes": 10,
     "keyboard": "qwerty",
@@ -14,30 +14,11 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyE",
-        "KeyD",
-        "KeyC",
-        "KeyI",
-        "KeyK",
-        "Comma"
-    ],
-    "focus": [
-        "finger-independence",
-        "finger-control"
-    ],
-    "targetFingers": [
-        "left-middle",
-        "right-middle"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-16",
-        "lesson-en-beginner-17"
-    ],
+    "focusKeys": ["KeyE", "KeyD", "KeyC", "KeyI", "KeyK", "Comma"],
+    "focus": ["finger-independence", "finger-control"],
+    "targetFingers": ["left-middle", "right-middle"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-en-beginner-16", "lesson-en-beginner-17"],
     "exercises": [
         {
             "kind": "generated",
@@ -45,11 +26,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "e",
-                    "d",
-                    "c"
-                ],
+                "keys": ["e", "d", "c"],
                 "count": 16,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -62,14 +39,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "e",
-                    "d",
-                    "c",
-                    "i",
-                    "k",
-                    ","
-                ],
+                "keys": ["e", "d", "c", "i", "k", ","],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -82,11 +52,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "d",
-                    "e",
-                    "c"
-                ],
+                "keys": ["d", "e", "c"],
                 "count": 24,
                 "chunkMin": 4,
                 "chunkMax": 6,

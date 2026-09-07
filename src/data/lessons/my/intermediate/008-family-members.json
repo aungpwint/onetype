@@ -14,12 +14,8 @@
         "minAccuracy": 90,
         "minWpm": null
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-my-intermediate-7"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-my-intermediate-7"],
     "focusKeys": [
         "KeyZ",
         "KeyC",
@@ -38,20 +34,8 @@
         "KeyN",
         "KeyS"
     ],
-    "targetFingers": [
-        "left-pinky",
-        "left-middle",
-        "right-middle",
-        "left-index",
-        "right-ring",
-        "right-index",
-        "right-pinky",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-pinky", "left-middle", "right-middle", "left-index", "right-ring", "right-index", "right-pinky", "left-ring"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -60,11 +44,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ဖခင်",
-                    "မိခင်",
-                    "သား"
-                ],
+                "words": ["ဖခင်", "မိခင်", "သား"],
                 "count": 18
             }
         },
@@ -74,11 +54,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "သမီး",
-                    "အစ်ကို",
-                    "ညီမ"
-                ],
+                "words": ["သမီး", "အစ်ကို", "ညီမ"],
                 "count": 18
             }
         },
@@ -88,11 +64,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ညီ",
-                    "ညီမ",
-                    "များ"
-                ],
+                "keys": ["ညီ", "ညီမ", "များ"],
                 "count": 20,
                 "chunkMin": 4,
                 "chunkMax": 6,

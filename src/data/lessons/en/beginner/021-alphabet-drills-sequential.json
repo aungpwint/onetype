@@ -14,13 +14,8 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focus": [
-        "alphabet",
-        "key-memory"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-20"
-    ],
+    "focus": ["alphabet", "key-memory"],
+    "prerequisites": ["lesson-en-beginner-20"],
     "focusKeys": [
         "KeyA",
         "KeyB",
@@ -49,20 +44,8 @@
         "KeyY",
         "KeyZ"
     ],
-    "targetFingers": [
-        "left-pinky",
-        "left-index",
-        "left-middle",
-        "right-index",
-        "right-middle",
-        "right-ring",
-        "right-pinky",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-pinky", "left-index", "left-middle", "right-index", "right-middle", "right-ring", "right-pinky", "left-ring"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -70,11 +53,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "a",
-                    "b",
-                    "c"
-                ],
+                "keys": ["a", "b", "c"],
                 "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -87,13 +66,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "d",
-                    "e",
-                    "f",
-                    "g",
-                    "h"
-                ],
+                "keys": ["d", "e", "f", "g", "h"],
                 "count": 16,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -106,14 +79,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "i",
-                    "j",
-                    "k",
-                    "l",
-                    "m",
-                    "n"
-                ],
+                "keys": ["i", "j", "k", "l", "m", "n"],
                 "count": 18,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -126,13 +92,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "o",
-                    "p",
-                    "q",
-                    "r",
-                    "s"
-                ],
+                "keys": ["o", "p", "q", "r", "s"],
                 "count": 16,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -145,15 +105,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "t",
-                    "u",
-                    "v",
-                    "w",
-                    "x",
-                    "y",
-                    "z"
-                ],
+                "keys": ["t", "u", "v", "w", "x", "y", "z"],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 5,

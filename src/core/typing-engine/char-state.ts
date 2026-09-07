@@ -41,12 +41,7 @@ export function cursorProgressInCluster(unitIndex: number, startUnit: number, en
 // render as one shaped span carrying the committed verdict. The current
 // grapheme's result is memoized on a full content signature, so re-renders
 // only recompute when the caret unit, slot texts, or per-unit outcomes change.
-export function graphemePresentation(
-    unitIndex: number,
-    startUnit: number,
-    slots: GraphemeSlot[],
-    query: UnitOutcomeQuery,
-): GraphemePresentation {
+export function graphemePresentation(unitIndex: number, startUnit: number, slots: GraphemeSlot[], query: UnitOutcomeQuery): GraphemePresentation {
     const endUnit = startUnit + slots.length
     if (!isCurrentGrapheme(unitIndex, startUnit, endUnit)) {
         if (unitIndex >= endUnit) {

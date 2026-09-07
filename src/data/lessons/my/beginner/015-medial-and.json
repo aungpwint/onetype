@@ -5,8 +5,8 @@
     "language": "my",
     "number": 15,
     "title": "Medial: ွ and ှ",
-    "titleMy": "စာလုံးကြို - ွ နှင့် ှ",
-    "description": "Wa-lay ွ (KeyG+Shift) with left index, and Ha-hto ှ (KeyS+Shift) with left ring.",
+    "titleMy": "ဝဆွဲ ွ နှင့် ဟထိုး ှ",
+    "description": "Wa-lay ွ (KeyG+Shift) and Ha-hto ှ (KeyS+Shift), as in ခွ (KeyC), နွ (KeyE), လွ (KeyV), မှာ (KeyR), လှ (KeyV).",
     "difficulty": "easy",
     "estimatedMinutes": 8,
     "keyboard": "myanmar",
@@ -14,33 +14,12 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyU",
-        "KeyJ",
-        "KeyM",
-        "KeyR",
-        "KeyS",
-        "KeyD",
-        "KeyC",
-        "KeyK"
-    ],
-    "focus": [
-        "medial"
-    ],
-    "targetFingers": [
-        "right-index",
-        "left-index",
-        "left-ring",
-        "left-middle",
-        "right-middle"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-12"
-    ],
+    "focusKeys": ["KeyC", "KeyE", "KeyV", "KeyR", "KeyS", "KeyG", "KeyM", "ShiftRight"],
+    "focus": ["medial"],
+    "targetFingers": ["left-middle", "left-index", "left-ring", "right-index", "right-pinky"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-my-beginner-12"],
+    "requiresShift": true,
     "exercises": [
         {
             "kind": "generated",
@@ -48,11 +27,9 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကြာ"
-                ],
+                "keys": ["ခွ"],
                 "count": 14,
-                "chunkMin": 3,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
             }
@@ -63,15 +40,11 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "မျာ",
-                    "ကျိ"
-                ],
-                "count": 16,
-                "chunkMin": 3,
+                "keys": ["နွ"],
+                "count": 14,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable",
-                "mixed": true
+                "style": "repetition"
             }
         },
         {
@@ -80,11 +53,9 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ချု"
-                ],
+                "keys": ["လွ"],
                 "count": 12,
-                "chunkMin": 3,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
             }
@@ -92,15 +63,24 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-15-ex-4",
+            "instruction": "Ha-hto medials",
+            "generator": {
+                "type": "chunks",
+                "keys": ["မှာ", "လှ"],
+                "count": 16,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-beginner-15-ex-5",
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကြာ",
-                    "မျာ",
-                    "ကျိ",
-                    "ချု"
-                ],
+                "keys": ["ခွ", "နွ", "လွ", "မှာ", "လှ"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

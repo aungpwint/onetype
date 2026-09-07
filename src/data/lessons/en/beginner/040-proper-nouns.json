@@ -14,13 +14,9 @@
         "minAccuracy": 88,
         "minWpm": 14
     },
-    "focus": [
-        "shift"
-    ],
+    "focus": ["shift"],
     "requiresShift": true,
-    "prerequisites": [
-        "lesson-en-beginner-39"
-    ],
+    "prerequisites": ["lesson-en-beginner-39"],
     "focusKeys": [
         "KeyJ",
         "ShiftLeft",
@@ -44,20 +40,8 @@
         "KeyF",
         "KeyU"
     ],
-    "targetFingers": [
-        "right-index",
-        "left-pinky",
-        "right-ring",
-        "left-index",
-        "left-middle",
-        "left-ring",
-        "right-pinky",
-        "right-middle"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "targetFingers": ["right-index", "left-pinky", "right-ring", "left-index", "left-middle", "left-ring", "right-pinky", "right-middle"],
+    "targetHands": ["right", "left"],
     "exercises": [
         {
             "kind": "generated",
@@ -65,12 +49,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "John",
-                    "Mary",
-                    "James",
-                    "Alice"
-                ],
+                "words": ["John", "Mary", "James", "Alice"],
                 "count": 12,
                 "maxWordLength": 5
             }
@@ -81,12 +60,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "London",
-                    "Paris",
-                    "Tokyo",
-                    "Cairo"
-                ],
+                "words": ["London", "Paris", "Tokyo", "Cairo"],
                 "count": 12,
                 "maxWordLength": 6
             }
@@ -97,13 +71,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "Monday",
-                    "Friday",
-                    "Sunday",
-                    "March",
-                    "April"
-                ],
+                "words": ["Monday", "Friday", "Sunday", "March", "April"],
                 "count": 12,
                 "maxWordLength": 6
             }

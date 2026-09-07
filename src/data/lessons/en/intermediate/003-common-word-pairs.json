@@ -14,12 +14,8 @@
         "minAccuracy": 90,
         "minWpm": 20
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-2"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-en-intermediate-2"],
     "focusKeys": [
         "KeyO",
         "KeyF",
@@ -39,19 +35,8 @@
         "KeyM",
         "KeyC"
     ],
-    "targetFingers": [
-        "right-ring",
-        "left-index",
-        "right-index",
-        "left-middle",
-        "right-middle",
-        "left-pinky",
-        "left-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "targetFingers": ["right-ring", "left-index", "right-index", "left-middle", "right-middle", "left-pinky", "left-ring"],
+    "targetHands": ["right", "left"],
     "exercises": [
         {
             "kind": "generated",
@@ -59,13 +44,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "of the",
-                    "in the",
-                    "to be",
-                    "on the",
-                    "for the"
-                ],
+                "words": ["of the", "in the", "to be", "on the", "for the"],
                 "count": 20
             }
         },
@@ -75,13 +54,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "and then",
-                    "as well",
-                    "at his",
-                    "by her",
-                    "from a"
-                ],
+                "words": ["and then", "as well", "at his", "by her", "from a"],
                 "count": 20
             }
         },
@@ -91,13 +64,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "is it",
-                    "one of",
-                    "was in",
-                    "we are",
-                    "they can"
-                ],
+                "words": ["is it", "one of", "was in", "we are", "they can"],
                 "count": 20
             }
         }

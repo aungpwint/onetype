@@ -14,12 +14,8 @@
         "minAccuracy": 90,
         "minWpm": null
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-my-intermediate-6"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-my-intermediate-6"],
     "focusKeys": [
         "KeyR",
         "KeyD",
@@ -38,19 +34,8 @@
         "BracketLeft",
         "KeyM"
     ],
-    "targetFingers": [
-        "left-index",
-        "left-middle",
-        "right-middle",
-        "right-pinky",
-        "left-pinky",
-        "left-ring",
-        "right-index"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "left-middle", "right-middle", "right-pinky", "left-pinky", "left-ring", "right-index"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -59,11 +44,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "မိုး",
-                    "နေ",
-                    "လေ"
-                ],
+                "words": ["မိုး", "နေ", "လေ"],
                 "count": 18
             }
         },
@@ -73,11 +54,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ဆီ",
-                    "နှင်း",
-                    "မြေ"
-                ],
+                "words": ["ဆီ", "နှင်း", "မြေ"],
                 "count": 18
             }
         },
@@ -87,11 +64,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ဒီ",
-                    "ဟို",
-                    "ဟာ"
-                ],
+                "words": ["ဒီ", "ဟို", "ဟာ"],
                 "count": 16
             }
         }

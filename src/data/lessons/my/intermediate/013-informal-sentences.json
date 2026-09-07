@@ -14,12 +14,8 @@
         "minAccuracy": 92,
         "minWpm": 15
     },
-    "focus": [
-        "sentences"
-    ],
-    "prerequisites": [
-        "lesson-my-intermediate-12"
-    ],
+    "focus": ["sentences"],
+    "prerequisites": ["lesson-my-intermediate-12"],
     "focusKeys": [
         "KeyK",
         "ShiftLeft",
@@ -49,20 +45,8 @@
         "KeyC",
         "KeyS"
     ],
-    "targetFingers": [
-        "right-middle",
-        "left-pinky",
-        "left-middle",
-        "right-pinky",
-        "right-index",
-        "left-index",
-        "left-ring",
-        "right-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "targetFingers": ["right-middle", "left-pinky", "left-middle", "right-pinky", "right-index", "left-index", "left-ring", "right-ring"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -71,10 +55,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "ဒီနေ့ လဲ ကောင်း တယ် ။",
-                    "မနက် ကြက် ငါး က ကောင်း ။"
-                ],
+                "sentences": ["ဒီနေ့ လဲ ကောင်း တယ် ။", "မနက်စာ က ကောင်း ပါ တယ် ။"],
                 "count": 3
             }
         },
@@ -84,10 +65,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "ညီ က ဒီ စာ ကို ဖတ် ပါ တယ် ။",
-                    "အမေ က ဆန် နဲ့ ငါး ကို ချက်တယ် ။"
-                ],
+                "sentences": ["ညီ က ဒီ စာ ကို ဖတ် ပါ တယ် ။", "အမေ က ဆန် နဲ့ ငါး ကို ချက်တယ် ။"],
                 "count": 3
             }
         }

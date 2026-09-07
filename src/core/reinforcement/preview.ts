@@ -19,10 +19,12 @@ const GOAL_LABELS: Record<MuscleMemoryGoal, string> = {
     pair: 'Key pair',
 }
 
-export function previewWeaknessDrill(keys: { key: string; accuracy: number }[], limit = 8, layout: KeyboardLayout = englishQwerty): DrillPreview | null {
-    const ranked = [...keys]
-        .sort((a, b) => a.accuracy - b.accuracy)
-        .map((k, i) => ({ key: k.key, lowerBound: i }))
+export function previewWeaknessDrill(
+    keys: { key: string; accuracy: number }[],
+    limit = 8,
+    layout: KeyboardLayout = englishQwerty,
+): DrillPreview | null {
+    const ranked = [...keys].sort((a, b) => a.accuracy - b.accuracy).map((k, i) => ({ key: k.key, lowerBound: i }))
     if (ranked.length === 0) return null
     let drill
     try {

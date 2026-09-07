@@ -14,13 +14,8 @@
         "minAccuracy": 92,
         "minWpm": 20
     },
-    "focus": [
-        "sentences",
-        "punctuation"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-7"
-    ],
+    "focus": ["sentences", "punctuation"],
+    "prerequisites": ["lesson-en-intermediate-7"],
     "focusKeys": [
         "KeyD",
         "KeyO",
@@ -50,20 +45,8 @@
         "ShiftLeft",
         "KeyU"
     ],
-    "targetFingers": [
-        "left-middle",
-        "right-ring",
-        "right-index",
-        "right-pinky",
-        "left-index",
-        "left-ring",
-        "left-pinky",
-        "right-middle"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-middle", "right-ring", "right-index", "right-pinky", "left-index", "left-ring", "left-pinky", "right-middle"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -72,11 +55,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "don't stop now!",
-                    "i can't find it.",
-                    "we aren't ready yet."
-                ],
+                "sentences": ["don't stop now!", "i can't find it.", "we aren't ready yet."],
                 "count": 4
             }
         },
@@ -86,11 +65,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "she'll come at noon.",
-                    "they've left the room.",
-                    "he's reading a book."
-                ],
+                "sentences": ["she'll come at noon.", "they've left the room.", "he's reading a book."],
                 "count": 4
             }
         },
@@ -100,11 +75,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "it won't work this way.",
-                    "I'd like some tea.",
-                    "you're doing great!"
-                ],
+                "sentences": ["it won't work this way.", "I'd like some tea.", "you're doing great!"],
                 "count": 4
             }
         }

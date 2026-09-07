@@ -44,6 +44,10 @@ export default defineConfig(async () => ({
     },
 
     build: {
+        // Production bundles must not ship source maps (they would expose the
+        // original TypeScript sources alongside their production runtime).
+        sourcemap: false,
+
         rollupOptions: {
             output: {
                 // Split large stable libraries into cacheable chunks so the

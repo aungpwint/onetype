@@ -128,7 +128,9 @@ describe('Myanmar keyboard produces the exact canonical Unicode sequence', () =>
 
     it.each(REPORTED_CORPUS)('%s is typed back exactly (string + code points, no zero-width)', (line) => assertExactlyTyped(line))
 
-    it.each([...COMBINATIONS, ...AVOWEL_NO_PREBASE])('%s is typed back exactly (string + code points, no zero-width)', (line) => assertExactlyTyped(line))
+    it.each([...COMBINATIONS, ...AVOWEL_NO_PREBASE])('%s is typed back exactly (string + code points, no zero-width)', (line) =>
+        assertExactlyTyped(line),
+    )
 
     it.each(PREBASE_MATRIX)('%s is typed back exactly (string + code points, no zero-width)', (line) => assertExactlyTyped(line))
 

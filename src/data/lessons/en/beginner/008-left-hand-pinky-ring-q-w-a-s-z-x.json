@@ -14,30 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyQ",
-        "KeyW",
-        "KeyA",
-        "KeyS",
-        "KeyZ",
-        "KeyX"
-    ],
-    "focus": [
-        "top-row",
-        "bottom-row",
-        "row-transition",
-        "key-memory"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-4"
-    ],
+    "focusKeys": ["KeyQ", "KeyW", "KeyA", "KeyS", "KeyZ", "KeyX"],
+    "focus": ["top-row", "bottom-row", "row-transition", "key-memory"],
+    "targetFingers": ["left-pinky", "left-ring"],
+    "targetHands": ["left"],
+    "prerequisites": ["lesson-en-beginner-4"],
     "exercises": [
         {
             "kind": "generated",
@@ -45,10 +26,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "q",
-                    "w"
-                ],
+                "keys": ["q", "w"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 3,
@@ -61,10 +39,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "a",
-                    "s"
-                ],
+                "keys": ["a", "s"],
                 "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -77,10 +52,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "z",
-                    "x"
-                ],
+                "keys": ["z", "x"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 3,
@@ -93,14 +65,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "q",
-                    "w",
-                    "a",
-                    "s",
-                    "z",
-                    "x"
-                ],
+                "keys": ["q", "w", "a", "s", "z", "x"],
                 "count": 30,
                 "chunkMin": 3,
                 "chunkMax": 5,

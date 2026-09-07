@@ -247,8 +247,6 @@ export const myanmar = new KeyboardLayout({
     version: MYANMAR_REVISION,
     source: 'Pyidaungsu (Pyidaungsu MM), based on the keymap in keyboard-layout.html. Physical keys are the standard US QWERTY positions; the preposed vowel U+1031 (ေ) is emitted by the KeyA press as the bare code point so that stored lesson text stays clean canonical Myanmar Unicode (no Zero Width Non-Joiner).',
     rows,
-    aliases: [
-        { text: '\u104E', code: 'KeyR', modifier: 'shift' },
-    ],
+    aliases: [{ text: '\u104E', code: 'KeyR', modifier: 'shift' }],
     note: 'KeyR shift = ၎င်း (U+104E U+1004 U+103A U+1038); KeyA plain emits U+1031 (ေ). The legacy ZWNJ-prefixed U+1031 form that the raw Pyidaungsu font keymap sometimes carries is deliberately NOT emitted, so lesson data and rendered text remain valid Myanmar Unicode. Bare U+104E lesson forms are accepted as a legacy alias of the same key. Punctuation: , = , / ၊, . = . / ။, / = / ?, Shift+8/9/0 = * ( ), Backquote shift = ဎ, Backslash = ၏ / ၑ.',
 } satisfies KeyboardLayoutSpec)

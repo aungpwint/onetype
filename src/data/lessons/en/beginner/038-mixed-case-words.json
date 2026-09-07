@@ -14,13 +14,9 @@
         "minAccuracy": 88,
         "minWpm": 14
     },
-    "focus": [
-        "shift"
-    ],
+    "focus": ["shift"],
     "requiresShift": true,
-    "prerequisites": [
-        "lesson-en-beginner-37"
-    ],
+    "prerequisites": ["lesson-en-beginner-37"],
     "focusKeys": [
         "KeyA",
         "ShiftRight",
@@ -46,20 +42,8 @@
         "KeyU",
         "KeyK"
     ],
-    "targetFingers": [
-        "left-pinky",
-        "right-pinky",
-        "right-ring",
-        "left-middle",
-        "left-index",
-        "right-index",
-        "left-ring",
-        "right-middle"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-pinky", "right-pinky", "right-ring", "left-middle", "left-index", "right-index", "left-ring", "right-middle"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -67,12 +51,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "Apple",
-                    "Banana",
-                    "Cherry",
-                    "Dragon"
-                ],
+                "words": ["Apple", "Banana", "Cherry", "Dragon"],
                 "count": 14,
                 "maxWordLength": 6
             }
@@ -83,12 +62,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "Elephant",
-                    "Forest",
-                    "Garden",
-                    "Hammer"
-                ],
+                "words": ["Elephant", "Forest", "Garden", "Hammer"],
                 "count": 14,
                 "maxWordLength": 8
             }
@@ -99,12 +73,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "Island",
-                    "Jungle",
-                    "Kitchen",
-                    "Ladder"
-                ],
+                "words": ["Island", "Jungle", "Kitchen", "Ladder"],
                 "count": 14,
                 "maxWordLength": 7
             }

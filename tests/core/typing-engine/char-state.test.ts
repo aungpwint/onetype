@@ -105,16 +105,40 @@ describe('graphemePresentation (canonical per-unit render state)', () => {
     })
 
     it('fully consumed graphemes flip to a committed verdict and drop the slot view', () => {
-        const ok = graphemePresentation(6, 4, RYE, queryOf([[4, true], [5, true]]))
+        const ok = graphemePresentation(
+            6,
+            4,
+            RYE,
+            queryOf([
+                [4, true],
+                [5, true],
+            ]),
+        )
         expect(ok).toEqual({ isCurrent: false, progress: 1, correctness: 'correct', slots: null })
-        const bad = graphemePresentation(6, 4, RYE, queryOf([[4, true], [5, false]]))
+        const bad = graphemePresentation(
+            6,
+            4,
+            RYE,
+            queryOf([
+                [4, true],
+                [5, false],
+            ]),
+        )
         expect(bad.correctness).toBe('incorrect')
         expect(bad.slots).toBeNull()
     })
 
     it('composing with an earlier error keeps later slots pending and the verdict pending', () => {
         // Unit 4 (ေ) correct, unit 5 (ရ) attempted wrong → unit 5 stays current.
-        const view = graphemePresentation(5, 4, RYE, queryOf([[4, true], [5, false]]))
+        const view = graphemePresentation(
+            5,
+            4,
+            RYE,
+            queryOf([
+                [4, true],
+                [5, false],
+            ]),
+        )
         expect(view.correctness).toBe('pending')
         expect(slotStates(view)).toEqual([
             { text: 'ရ', outcome: 'incorrect', completed: false, isCurrent: true },
@@ -133,14 +157,20 @@ describe('graphemePresentation (canonical per-unit render state)', () => {
         // snapshot keeps its reference across unrelated store notifications —
         // the fresh `slots` array would otherwise defeat zustand's shallow
         // compare and trigger "Maximum update depth exceeded".
-        const state = queryOf([[4, true], [5, false]])
+        const state = queryOf([
+            [4, true],
+            [5, false],
+        ])
         const a = graphemePresentation(5, 4, RYE, state)
         const b = graphemePresentation(5, 4, RYE, state)
         expect(a).toBe(b)
         expect(a.slots).toBe(b.slots)
         expect(a.slots![0]).toBe(b.slots![0])
         // A different positional outcome – even the same caret – rebuilds.
-        const other = queryOf([[4, true], [5, true]])
+        const other = queryOf([
+            [4, true],
+            [5, true],
+        ])
         expect(graphemePresentation(5, 4, RYE, other)).not.toBe(a)
         // A different caret (same outcomes) is a different snapshot.
         expect(graphemePresentation(6, 4, RYE, state)).not.toBe(a)

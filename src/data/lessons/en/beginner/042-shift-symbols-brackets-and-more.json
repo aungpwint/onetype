@@ -14,33 +14,12 @@
         "minAccuracy": 88,
         "minWpm": null
     },
-    "focusKeys": [
-        "BracketLeft",
-        "ShiftLeft",
-        "BracketRight",
-        "Comma",
-        "Period",
-        "Slash",
-        "Equal",
-        "Minus"
-    ],
-    "focus": [
-        "shift"
-    ],
+    "focusKeys": ["BracketLeft", "ShiftLeft", "BracketRight", "Comma", "Period", "Slash", "Equal", "Minus"],
+    "focus": ["shift"],
     "requiresShift": true,
-    "prerequisites": [
-        "lesson-en-beginner-41"
-    ],
-    "targetFingers": [
-        "right-pinky",
-        "left-pinky",
-        "right-middle",
-        "right-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "prerequisites": ["lesson-en-beginner-41"],
+    "targetFingers": ["right-pinky", "left-pinky", "right-middle", "right-ring"],
+    "targetHands": ["right", "left"],
     "exercises": [
         {
             "kind": "generated",
@@ -48,12 +27,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "[",
-                    "{",
-                    "]",
-                    "}"
-                ],
+                "keys": ["[", "{", "]", "}"],
                 "count": 18,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -66,12 +40,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "<",
-                    ">",
-                    "?",
-                    "/"
-                ],
+                "keys": ["<", ">", "?", "/"],
                 "count": 18,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -84,12 +53,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "+",
-                    "=",
-                    "_",
-                    "-"
-                ],
+                "keys": ["+", "=", "_", "-"],
                 "count": 18,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -102,15 +66,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "{",
-                    "}",
-                    "<",
-                    ">",
-                    "?",
-                    "+",
-                    "_"
-                ],
+                "keys": ["{", "}", "<", ">", "?", "+", "_"],
                 "count": 24,
                 "chunkMin": 3,
                 "chunkMax": 5,

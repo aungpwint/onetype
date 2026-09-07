@@ -14,38 +14,11 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyA",
-        "KeyS",
-        "KeyD",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyJ",
-        "KeyK",
-        "KeyL"
-    ],
-    "focus": [
-        "home-row",
-        "hand-alternation"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index",
-        "right-index",
-        "right-middle",
-        "right-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-5",
-        "lesson-en-beginner-6"
-    ],
+    "focusKeys": ["KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL"],
+    "focus": ["home-row", "hand-alternation"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-en-beginner-5", "lesson-en-beginner-6"],
     "exercises": [
         {
             "kind": "generated",
@@ -53,12 +26,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "a",
-                    "s",
-                    "d",
-                    "f"
-                ],
+                "keys": ["a", "s", "d", "f"],
                 "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -71,10 +39,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "g",
-                    "h"
-                ],
+                "keys": ["g", "h"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -87,11 +52,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "j",
-                    "k",
-                    "l"
-                ],
+                "keys": ["j", "k", "l"],
                 "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -104,17 +65,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "a",
-                    "s",
-                    "d",
-                    "f",
-                    "g",
-                    "h",
-                    "j",
-                    "k",
-                    "l"
-                ],
+                "keys": ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
                 "count": 30,
                 "chunkMin": 3,
                 "chunkMax": 6,
@@ -127,14 +78,7 @@
             "instruction": "Alternate between both fingers and hands",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "f",
-                    "g",
-                    "h",
-                    "j",
-                    "d",
-                    "k"
-                ],
+                "keys": ["f", "g", "h", "j", "d", "k"],
                 "count": 26,
                 "chunkMin": 4,
                 "chunkMax": 6,

@@ -79,20 +79,28 @@ function filterCandidates(candidates: string[], env: GeneratorEnvironment, allow
 function generateChunks(spec: ExerciseGeneratorSpec & { type: 'chunks' }, env: GeneratorEnvironment, ctx: GenerationContext): string {
     if (spec.keys.length === 0) throw new Error('Pedagogy: chunk spec has no keys')
     const profiles = profileKeys(spec.keys, (key) => profileUnitForKey(env, key))
-    const result = generateChunkTokens(profiles, {
-        keys: spec.keys,
-        tokenCount: spec.count,
-        chunkMin: spec.chunkMin,
-        chunkMax: spec.chunkMax,
-        style: spec.style ?? 'variable',
-        mixed: spec.mixed ?? false,
-        maxConsecutive: env.def.id === 'english' ? 3 : 2,
-        avoidIdenticalAdjacent: true,
-    }, rngFor(spec, ctx))
+    const result = generateChunkTokens(
+        profiles,
+        {
+            keys: spec.keys,
+            tokenCount: spec.count,
+            chunkMin: spec.chunkMin,
+            chunkMax: spec.chunkMax,
+            style: spec.style ?? 'variable',
+            mixed: spec.mixed ?? false,
+            maxConsecutive: env.def.id === 'english' ? 3 : 2,
+            avoidIdenticalAdjacent: true,
+        },
+        rngFor(spec, ctx),
+    )
     return env.def.joinChunks(result.tokens)
 }
 
-function generateWords(spec: { type: 'words'; bank?: string; words?: string[]; count: number; maxWordLength?: number; keys?: string[]; seed?: number }, env: GeneratorEnvironment, ctx: GenerationContext): string {
+function generateWords(
+    spec: { type: 'words'; bank?: string; words?: string[]; count: number; maxWordLength?: number; keys?: string[]; seed?: number },
+    env: GeneratorEnvironment,
+    ctx: GenerationContext,
+): string {
     const pool = spec.words ?? (spec.bank ? env.def.banks[spec.bank] : undefined)
     if (!pool || pool.length === 0) throw new Error(`Pedagogy: word spec has no source (bank "${spec.bank ?? '<none>'}")`)
     const candidates = filterCandidates(pool, env, spec.keys, spec.maxWordLength)
@@ -101,7 +109,11 @@ function generateWords(spec: { type: 'words'; bank?: string; words?: string[]; c
     return env.def.joinChunks(selected)
 }
 
-function generateSentences(spec: { type: 'sentences'; bank?: string; sentences?: string[]; count: number; seed?: number }, env: GeneratorEnvironment, ctx: GenerationContext): string {
+function generateSentences(
+    spec: { type: 'sentences'; bank?: string; sentences?: string[]; count: number; seed?: number },
+    env: GeneratorEnvironment,
+    ctx: GenerationContext,
+): string {
     const pool = spec.sentences ?? (spec.bank ? env.def.banks[spec.bank] : undefined)
     if (!pool || pool.length === 0) throw new Error(`Pedagogy: sentence spec has no source (bank "${spec.bank ?? '<none>'}")`)
     const selected = pickDistinctCandidates(pool, spec.count, rngFor(spec, ctx))

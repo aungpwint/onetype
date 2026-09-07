@@ -33,7 +33,14 @@ export function bindWindowFocusGuard(
         onRegainedFocus: (afkGapMs: number) => void
         isSessionActive: () => boolean
     },
-    targets: { win: FocusEventTarget; doc: { visibilityState: 'hidden' | 'visible' | 'prerender' | 'unloaded'; addEventListener: (t: 'visibilitychange', l: FocusEventListener) => void; removeEventListener: (t: 'visibilitychange', l: FocusEventListener) => void } } = {
+    targets: {
+        win: FocusEventTarget
+        doc: {
+            visibilityState: 'hidden' | 'visible' | 'prerender' | 'unloaded'
+            addEventListener: (t: 'visibilitychange', l: FocusEventListener) => void
+            removeEventListener: (t: 'visibilitychange', l: FocusEventListener) => void
+        }
+    } = {
         win: window,
         doc: document,
     },

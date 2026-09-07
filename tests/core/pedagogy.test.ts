@@ -269,12 +269,15 @@ describe('pedagogy generator — transition style', () => {
 describe('pedagogy generator — controlled style', () => {
     it('never repeats the same finger consecutively when multiple fingers are available', () => {
         const keys = ['a', 's', 'd', 'j', 'k', 'l']
-        const text = generateLessonExerciseText(
-            chunkSpec({ keys, style: 'controlled', count: 40, chunkMin: 3, chunkMax: 4 }),
-            englishCtx,
-            'english',
-        )
-        const fingerOf: Record<string, string> = { a: 'left-pinky', s: 'left-ring', d: 'left-middle', j: 'right-index', k: 'right-middle', l: 'right-ring' }
+        const text = generateLessonExerciseText(chunkSpec({ keys, style: 'controlled', count: 40, chunkMin: 3, chunkMax: 4 }), englishCtx, 'english')
+        const fingerOf: Record<string, string> = {
+            a: 'left-pinky',
+            s: 'left-ring',
+            d: 'left-middle',
+            j: 'right-index',
+            k: 'right-middle',
+            l: 'right-ring',
+        }
         for (const token of text.split(' ')) {
             const fingers = [...token].map((ch) => fingerOf[ch]!)
             for (let i = 1; i < fingers.length; i += 1) {

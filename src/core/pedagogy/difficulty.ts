@@ -121,13 +121,7 @@ export function difficultyScore(units: UnitLike[], text: string): number {
     const entropyDamp = clamp01(1 - d.entropy) // low entropy = predictable = easier
 
     const score =
-        0.28 * handTension +
-        0.24 * fingerTension +
-        0.14 * reach +
-        0.12 * keySpread +
-        0.1 * shiftWeight +
-        0.06 * clusterWeight +
-        0.06 * entropyDamp
+        0.28 * handTension + 0.24 * fingerTension + 0.14 * reach + 0.12 * keySpread + 0.1 * shiftWeight + 0.06 * clusterWeight + 0.06 * entropyDamp
 
     return clamp01(score)
 }

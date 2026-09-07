@@ -14,12 +14,8 @@
         "minAccuracy": 88,
         "minWpm": 15
     },
-    "focus": [
-        "sentences"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-23"
-    ],
+    "focus": ["sentences"],
+    "prerequisites": ["lesson-my-beginner-23"],
     "focusKeys": [
         "Digit7",
         "ShiftLeft",
@@ -39,28 +35,17 @@
         "KeyZ",
         "KeyD",
         "KeyF",
-        "KeyC",
         "KeyV",
         "KeyK",
-        "KeyL",
         "KeyN",
         "ShiftRight",
-        "KeyP"
+        "KeyO",
+        "KeyP",
+        "KeyW",
+        "KeyX"
     ],
-    "targetFingers": [
-        "right-index",
-        "left-pinky",
-        "left-middle",
-        "right-middle",
-        "left-index",
-        "right-pinky",
-        "left-ring",
-        "right-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "targetFingers": ["right-index", "left-pinky", "left-middle", "right-middle", "left-index", "right-pinky", "left-ring", "right-ring"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -69,12 +54,8 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "ရေ နဲ့ ငါး က များ ။",
-                    "အဖေ နဲ့ အမေ က အိမ် ။",
-                    "ခြေ နဲ့ လက် က များ ။"
-                ],
-                "count": 3
+                "sentences": ["အဖေ က ရေ ကို သောက် ။", "အမေ နဲ့ အဖေ က မြို့ မှာ နေ ။", "ညီ က ကလေး ။", "အိမ် က နီ ။"],
+                "count": 4
             }
         },
         {
@@ -83,12 +64,8 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "နေ က မြို့ ကို ကူ ။",
-                    "ကြက် နဲ့ ငါး က ညီ ။",
-                    "မျက်စိ နဲ့ နား က လက် ။"
-                ],
-                "count": 3
+                "sentences": ["ငါး က ရေ ထဲ နေ ။", "မြို့ က ကြီး ။", "ကလေး က စာ ဖတ် ။", "ရေ က အေး ။"],
+                "count": 4
             }
         }
     ]

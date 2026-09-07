@@ -15,9 +15,9 @@ function makeTargets(visibilityState: 'hidden' | 'visible' = 'visible') {
             ;(listeners as unknown as Record<string, Array<() => void>>)[t].push(l)
         },
         removeEventListener: (t: string, l: () => void) => {
-            ;(listeners as unknown as Record<string, Array<() => void>>)[t] = (
-                listeners as unknown as Record<string, Array<() => void>>
-            )[t].filter((x) => x !== l)
+            ;(listeners as unknown as Record<string, Array<() => void>>)[t] = (listeners as unknown as Record<string, Array<() => void>>)[t].filter(
+                (x) => x !== l,
+            )
         },
     }
     const doc = {
@@ -42,10 +42,7 @@ describe('bindWindowFocusGuard', () => {
         const { win, doc, fire } = makeTargets()
         const onLost = vi.fn()
         const onRegained = vi.fn()
-        const cleanup = bindWindowFocusGuard(
-            { onLostFocus: onLost, onRegainedFocus: onRegained, isSessionActive: () => true },
-            { win, doc },
-        )
+        const cleanup = bindWindowFocusGuard({ onLostFocus: onLost, onRegainedFocus: onRegained, isSessionActive: () => true }, { win, doc })
 
         fire('blur')
         expect(onLost).toHaveBeenCalledTimes(1)
@@ -63,10 +60,7 @@ describe('bindWindowFocusGuard', () => {
         const { win, doc, fire } = makeTargets()
         const onLost = vi.fn()
         const onRegained = vi.fn()
-        bindWindowFocusGuard(
-            { onLostFocus: onLost, onRegainedFocus: onRegained, isSessionActive: () => false },
-            { win, doc },
-        )
+        bindWindowFocusGuard({ onLostFocus: onLost, onRegainedFocus: onRegained, isSessionActive: () => false }, { win, doc })
 
         fire('blur')
         expect(onLost).not.toHaveBeenCalled()
@@ -77,10 +71,7 @@ describe('bindWindowFocusGuard', () => {
     it('reports the AFK gap correctly after a visibility-hidden round trip', () => {
         const { win, doc, fire } = makeTargets()
         const onRegained = vi.fn()
-        bindWindowFocusGuard(
-            { onLostFocus: vi.fn(), onRegainedFocus: onRegained, isSessionActive: () => true },
-            { win, doc },
-        )
+        bindWindowFocusGuard({ onLostFocus: vi.fn(), onRegainedFocus: onRegained, isSessionActive: () => true }, { win, doc })
 
         doc.visibilityState = 'hidden'
         fire('visibilitychange')
@@ -92,10 +83,7 @@ describe('bindWindowFocusGuard', () => {
     it('starts in a lost state when the document begins hidden', () => {
         const { win, doc, fire } = makeTargets('hidden')
         const onRegained = vi.fn()
-        bindWindowFocusGuard(
-            { onLostFocus: vi.fn(), onRegainedFocus: onRegained, isSessionActive: () => true },
-            { win, doc },
-        )
+        bindWindowFocusGuard({ onLostFocus: vi.fn(), onRegainedFocus: onRegained, isSessionActive: () => true }, { win, doc })
 
         fire('focus')
         expect(onRegained).toHaveBeenCalledTimes(1)

@@ -37,7 +37,17 @@ describe('seeded typing tests use the language-matched layout', () => {
 
     it('migrates a stale mixed test (layoutId myanmar) to the mixed layout', async () => {
         const stale = [
-            { id: 't-old', code: 't-old', name: 'Old mixed', durationSeconds: 60, language: 'mixed', layoutId: 'myanmar', minAccuracy: 85, minWpm: 20, contentVersion: 1 },
+            {
+                id: 't-old',
+                code: 't-old',
+                name: 'Old mixed',
+                durationSeconds: 60,
+                language: 'mixed',
+                layoutId: 'myanmar',
+                minAccuracy: 85,
+                minWpm: 20,
+                contentVersion: 1,
+            },
         ]
         localStorage.setItem(TESTS_KEY, JSON.stringify(stale))
         const { localBackend } = await import('@/services/local')
@@ -51,7 +61,17 @@ describe('seeded typing tests use the language-matched layout', () => {
 
     it('leaves valid tests untouched', async () => {
         const valid = [
-            { id: 't-en', code: 't-en', name: 'English', durationSeconds: 60, language: 'english', layoutId: 'english-qwerty', minAccuracy: 85, minWpm: 20, contentVersion: 1 },
+            {
+                id: 't-en',
+                code: 't-en',
+                name: 'English',
+                durationSeconds: 60,
+                language: 'english',
+                layoutId: 'english-qwerty',
+                minAccuracy: 85,
+                minWpm: 20,
+                contentVersion: 1,
+            },
         ]
         localStorage.setItem(TESTS_KEY, JSON.stringify(valid))
         const { localBackend } = await import('@/services/local')

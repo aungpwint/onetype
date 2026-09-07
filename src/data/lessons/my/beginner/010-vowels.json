@@ -6,7 +6,7 @@
     "number": 10,
     "title": "Vowels: ေ ု ူ ဲ",
     "titleMy": "သရများ - ေ ု ူ ဲ",
-    "description": "More vowels: ေ(KeyA) ု(KeyK) ူ(KeyL) ဲ(KeyJ+Shift)",
+    "description": "Vowels and tone signs: ိ (KeyD), ီ (KeyD+Shift), ေ (KeyA), ု (KeyK), ူ (KeyL), ဲ (KeyJ+Shift), ံ (KeyH+Shift)",
     "difficulty": "easy",
     "estimatedMinutes": 8,
     "keyboard": "myanmar",

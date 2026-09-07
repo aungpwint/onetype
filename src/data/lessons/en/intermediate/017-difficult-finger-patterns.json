@@ -14,36 +14,11 @@
         "minAccuracy": 93,
         "minWpm": 24
     },
-    "focus": [
-        "finger-independence"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-16"
-    ],
-    "focusKeys": [
-        "KeyQ",
-        "KeyA",
-        "KeyZ",
-        "KeyW",
-        "KeyS",
-        "KeyX",
-        "KeyO",
-        "KeyL",
-        "Period",
-        "KeyP",
-        "Semicolon",
-        "Slash"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "left-ring",
-        "right-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focus": ["finger-independence"],
+    "prerequisites": ["lesson-en-intermediate-16"],
+    "focusKeys": ["KeyQ", "KeyA", "KeyZ", "KeyW", "KeyS", "KeyX", "KeyO", "KeyL", "Period", "KeyP", "Semicolon", "Slash"],
+    "targetFingers": ["left-pinky", "left-ring", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -51,11 +26,7 @@
             "instruction": "Build speed across full words",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "q",
-                    "a",
-                    "z"
-                ],
+                "keys": ["q", "a", "z"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -68,11 +39,7 @@
             "instruction": "Build speed across full words",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "w",
-                    "s",
-                    "x"
-                ],
+                "keys": ["w", "s", "x"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -85,11 +52,7 @@
             "instruction": "Build speed across full words",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "o",
-                    "l",
-                    "."
-                ],
+                "keys": ["o", "l", "."],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -102,11 +65,7 @@
             "instruction": "Build speed across full words",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "p",
-                    ";",
-                    "/"
-                ],
+                "keys": ["p", ";", "/"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,

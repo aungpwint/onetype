@@ -14,12 +14,8 @@
         "minAccuracy": 92,
         "minWpm": 22
     },
-    "focus": [
-        "sentences"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-6"
-    ],
+    "focus": ["sentences"],
+    "prerequisites": ["lesson-en-intermediate-6"],
     "focusKeys": [
         "KeyW",
         "KeyH",
@@ -46,20 +42,8 @@
         "KeyB",
         "KeyG"
     ],
-    "targetFingers": [
-        "left-ring",
-        "right-index",
-        "left-middle",
-        "left-index",
-        "left-pinky",
-        "right-middle",
-        "right-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-ring", "right-index", "left-middle", "left-index", "left-pinky", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -95,11 +79,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "after the meal, they wash the dishes.",
-                    "before you sleep, turn off the light.",
-                    "since it is late, we should hurry."
-                ],
+                "sentences": ["after the meal, they wash the dishes.", "before you sleep, turn off the light.", "since it is late, we should hurry."],
                 "count": 3
             }
         }

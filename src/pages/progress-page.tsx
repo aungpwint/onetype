@@ -184,11 +184,10 @@ export default function ProgressPage() {
                 </div>
                 <div className="mt-4">
                     <ActivityHeatmap
-                        days={detail.recentSessions.map(
-                            (s): ActivityDay =>
-                                s.correctCount > 0 && s.durationMs > 0
-                                    ? { date: s.startedAt, minutes: s.durationMs / 60000, sessions: 1 }
-                                    : { date: s.startedAt, minutes: 0, sessions: 0 },
+                        days={detail.recentSessions.map((s): ActivityDay =>
+                            s.correctCount > 0 && s.durationMs > 0
+                                ? { date: s.startedAt, minutes: s.durationMs / 60000, sessions: 1 }
+                                : { date: s.startedAt, minutes: 0, sessions: 0 },
                         )}
                     />
                 </div>
@@ -309,11 +308,9 @@ export default function ProgressPage() {
                         {weakPreview ? (
                             <div className="mt-3 rounded-lg border border-line bg-paper-2/50 p-3">
                                 <p className="text-xs text-muted-foreground">
-                                    <span className="font-medium text-foreground">{drillGoalLabel(weakPreview.goal)}</span> drill ·
-                                    targets {weakPreview.count} ke{weakPreview.count === 1 ? 'y' : 'ys'}
-                                    {weakPreview.keys.length > 0 ? (
-                                        <span className="font-myanmar"> — {weakPreview.keys.join(' ')}</span>
-                                    ) : null}
+                                    <span className="font-medium text-foreground">{drillGoalLabel(weakPreview.goal)}</span> drill · targets{' '}
+                                    {weakPreview.count} ke{weakPreview.count === 1 ? 'y' : 'ys'}
+                                    {weakPreview.keys.length > 0 ? <span className="font-myanmar"> — {weakPreview.keys.join(' ')}</span> : null}
                                 </p>
                                 <Button size="sm" variant="default" className="mt-2.5 w-full" onClick={() => navigate('/drill?layout=myanmar')}>
                                     <Sparkles className="size-4" />

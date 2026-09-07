@@ -14,13 +14,9 @@
         "minAccuracy": 88,
         "minWpm": 14
     },
-    "focus": [
-        "shift"
-    ],
+    "focus": ["shift"],
     "requiresShift": true,
-    "prerequisites": [
-        "lesson-en-beginner-38"
-    ],
+    "prerequisites": ["lesson-en-beginner-38"],
     "focusKeys": [
         "KeyT",
         "ShiftRight",
@@ -50,20 +46,8 @@
         "KeyG",
         "ShiftLeft"
     ],
-    "targetFingers": [
-        "left-index",
-        "right-pinky",
-        "right-index",
-        "left-middle",
-        "left-pinky",
-        "right-middle",
-        "right-ring",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "right-pinky", "right-index", "left-middle", "left-pinky", "right-middle", "right-ring", "left-ring"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -71,10 +55,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "The quick fox jumps.",
-                    "A small boy ran home."
-                ],
+                "sentences": ["The quick fox jumps.", "A small boy ran home."],
                 "count": 3
             }
         },
@@ -84,10 +65,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "She will keep the box.",
-                    "We found a red ball."
-                ],
+                "sentences": ["She will keep the box.", "We found a red ball."],
                 "count": 3
             }
         },
@@ -97,10 +75,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "They are walking to town.",
-                    "My friend knows the way."
-                ],
+                "sentences": ["They are walking to town.", "My friend knows the way."],
                 "count": 3
             }
         }

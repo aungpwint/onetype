@@ -14,12 +14,8 @@
         "minAccuracy": 88,
         "minWpm": null
     },
-    "focus": [
-        "numbers"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-27"
-    ],
+    "focus": ["numbers"],
+    "prerequisites": ["lesson-en-beginner-27"],
     "focusKeys": [
         "KeyA",
         "Digit1",
@@ -41,20 +37,8 @@
         "KeyG",
         "KeyH"
     ],
-    "targetFingers": [
-        "left-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index",
-        "right-index",
-        "right-middle",
-        "right-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -62,12 +46,7 @@
             "instruction": "Alternate between both fingers and hands",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "a",
-                    "1",
-                    "s",
-                    "2"
-                ],
+                "keys": ["a", "1", "s", "2"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -80,14 +59,7 @@
             "instruction": "Alternate between both fingers and hands",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "d",
-                    "3",
-                    "f",
-                    "4",
-                    "j",
-                    "7"
-                ],
+                "keys": ["d", "3", "f", "4", "j", "7"],
                 "count": 18,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -100,13 +72,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "k",
-                    "8",
-                    "l",
-                    "9",
-                    "0"
-                ],
+                "keys": ["k", "8", "l", "9", "0"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -119,13 +85,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "5",
-                    "6",
-                    "7",
-                    "g",
-                    "h"
-                ],
+                "keys": ["5", "6", "7", "g", "h"],
                 "count": 20,
                 "chunkMin": 2,
                 "chunkMax": 4,

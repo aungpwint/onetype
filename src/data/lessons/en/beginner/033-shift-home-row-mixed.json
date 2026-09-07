@@ -14,38 +14,12 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyA",
-        "ShiftRight",
-        "KeyS",
-        "KeyD",
-        "KeyF",
-        "KeyJ",
-        "ShiftLeft",
-        "KeyK",
-        "KeyL"
-    ],
-    "focus": [
-        "shift"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focusKeys": ["KeyA", "ShiftRight", "KeyS", "KeyD", "KeyF", "KeyJ", "ShiftLeft", "KeyK", "KeyL"],
+    "focus": ["shift"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
-    "prerequisites": [
-        "lesson-en-beginner-32"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "right-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index",
-        "right-index",
-        "right-middle",
-        "right-ring"
-    ],
+    "prerequisites": ["lesson-en-beginner-32"],
+    "targetFingers": ["left-pinky", "right-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring"],
     "exercises": [
         {
             "kind": "generated",
@@ -53,12 +27,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "A",
-                    "S",
-                    "D",
-                    "F"
-                ],
+                "keys": ["A", "S", "D", "F"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -71,11 +40,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "J",
-                    "K",
-                    "L"
-                ],
+                "keys": ["J", "K", "L"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -88,14 +53,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "A",
-                    "F",
-                    "J",
-                    "L",
-                    "S",
-                    "K"
-                ],
+                "keys": ["A", "F", "J", "L", "S", "K"],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 5,

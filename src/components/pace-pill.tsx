@@ -30,10 +30,7 @@ export function PacePill() {
 
     const byWpm = test.minWpm !== null && pace.byWpm > 0
     const byAcc = pace.byAccuracy > 0
-    const parts = [
-        byWpm ? `${Math.round(pace.byWpm)} wpm` : '',
-        byAcc ? `${pace.byAccuracy.toFixed(1)}% acc` : '',
-    ].filter(Boolean)
+    const parts = [byWpm ? `${Math.round(pace.byWpm)} wpm` : '', byAcc ? `${pace.byAccuracy.toFixed(1)}% acc` : ''].filter(Boolean)
 
     return (
         <AnimatePresence>

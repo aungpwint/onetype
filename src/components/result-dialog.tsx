@@ -74,8 +74,8 @@ class ResultDialogBoundary extends Component<{ children: ReactNode }, { hasError
                 <Modal open onClose={() => useTypingStore.getState().clear()} ariaLabel="Results unavailable">
                     <div className="flex flex-col items-start gap-3 p-4">
                         <p className="text-sm text-muted-foreground">
-                            The result summary could not be rendered, but your session was saved. You can safely close this dialog
-                            and review your progress from the Progress page.
+                            The result summary could not be rendered, but your session was saved. You can safely close this dialog and review your
+                            progress from the Progress page.
                         </p>
                         <Button onClick={() => useTypingStore.getState().clear()}>Close</Button>
                     </div>
@@ -515,9 +515,7 @@ function HeroMetric({ label, value, unit, primary }: { label: string; value: str
                 )}
             >
                 {value}
-                {unit ? (
-                    <span className="ml-1 text-sm font-medium tracking-normal text-ink-faint tabular-nums md:text-base">{unit}</span>
-                ) : null}
+                {unit ? <span className="ml-1 text-sm font-medium tracking-normal text-ink-faint tabular-nums md:text-base">{unit}</span> : null}
             </p>
             <p className={eyebrowClass}>{label}</p>
         </div>

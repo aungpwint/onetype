@@ -14,12 +14,8 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-19"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-my-beginner-19"],
     "focusKeys": [
         "Digit7",
         "ShiftLeft",
@@ -38,20 +34,8 @@
         "KeyM",
         "Semicolon"
     ],
-    "targetFingers": [
-        "right-index",
-        "left-pinky",
-        "left-middle",
-        "right-middle",
-        "right-ring",
-        "left-ring",
-        "left-index",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "targetFingers": ["right-index", "left-pinky", "left-middle", "right-middle", "right-ring", "left-ring", "left-index", "right-pinky"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -60,14 +44,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ရေ",
-                    "နေ",
-                    "ကေ",
-                    "ကု",
-                    "ကူ",
-                    "ကဲ"
-                ],
+                "words": ["ရေ", "နေ", "ကေ", "ကု", "ကူ", "ကဲ"],
                 "count": 24
             }
         },
@@ -77,14 +54,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "တု",
-                    "တူ",
-                    "မု",
-                    "မူ",
-                    "နု",
-                    "နူ"
-                ],
+                "words": ["တု", "တူ", "မု", "မူ", "နု", "နူ"],
                 "count": 24
             }
         },
@@ -94,12 +64,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "အဖေ",
-                    "အမေ",
-                    "ခြေ",
-                    "များ"
-                ],
+                "words": ["အဖေ", "အမေ", "ခြေ", "များ"],
                 "count": 18
             }
         }

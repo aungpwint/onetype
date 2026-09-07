@@ -14,32 +14,12 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyY",
-        "ShiftLeft",
-        "KeyU",
-        "KeyI",
-        "KeyO",
-        "KeyP"
-    ],
-    "focus": [
-        "shift"
-    ],
-    "targetFingers": [
-        "right-index",
-        "left-pinky",
-        "right-middle",
-        "right-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focusKeys": ["KeyY", "ShiftLeft", "KeyU", "KeyI", "KeyO", "KeyP"],
+    "focus": ["shift"],
+    "targetFingers": ["right-index", "left-pinky", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
-    "prerequisites": [
-        "lesson-en-beginner-34"
-    ],
+    "prerequisites": ["lesson-en-beginner-34"],
     "exercises": [
         {
             "kind": "generated",
@@ -47,10 +27,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "Y",
-                    "U"
-                ],
+                "keys": ["Y", "U"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 3,
@@ -63,11 +40,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "I",
-                    "O",
-                    "P"
-                ],
+                "keys": ["I", "O", "P"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -80,13 +53,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "P",
-                    "O",
-                    "I",
-                    "U",
-                    "Y"
-                ],
+                "keys": ["P", "O", "I", "U", "Y"],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 5,

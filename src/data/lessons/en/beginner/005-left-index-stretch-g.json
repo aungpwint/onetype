@@ -14,24 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyF",
-        "KeyG"
-    ],
-    "focus": [
-        "home-row",
-        "finger-control",
-        "key-memory"
-    ],
-    "targetFingers": [
-        "left-index"
-    ],
-    "targetHands": [
-        "left"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-4"
-    ],
+    "focusKeys": ["KeyF", "KeyG"],
+    "focus": ["home-row", "finger-control", "key-memory"],
+    "targetFingers": ["left-index"],
+    "targetHands": ["left"],
+    "prerequisites": ["lesson-en-beginner-4"],
     "exercises": [
         {
             "kind": "generated",
@@ -39,10 +26,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "f",
-                    "g"
-                ],
+                "keys": ["f", "g"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -55,11 +39,7 @@
             "instruction": "Reach to the new keys and return",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "f",
-                    "g",
-                    "f"
-                ],
+                "keys": ["f", "g", "f"],
                 "count": 18,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -72,10 +52,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "f",
-                    "g"
-                ],
+                "keys": ["f", "g"],
                 "count": 24,
                 "chunkMin": 3,
                 "chunkMax": 6,

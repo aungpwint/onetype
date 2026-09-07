@@ -6,7 +6,7 @@
     "number": 2,
     "title": "Question Words",
     "titleMy": "မေးခွန်း စကားလုံးများ",
-    "description": "Question words: ဘာ, ဘယ်, ဘယ်လို.",
+    "description": "Question words: ဘာ (what), ဘယ် (which), ဘယ်သူ (who), ဘယ်မှာ (where), ဘယ်လို (how), ဘယ်လောက် (how much).",
     "difficulty": "easy",
     "estimatedMinutes": 8,
     "keyboard": "myanmar",
@@ -14,44 +14,28 @@
         "minAccuracy": 88,
         "minWpm": null
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-my-intermediate-1"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-my-intermediate-1"],
     "focusKeys": [
+        "KeyA",
         "KeyB",
-        "ShiftRight",
-        "KeyF",
-        "KeyK",
-        "ShiftLeft",
         "KeyD",
-        "BracketLeft",
-        "KeyU",
-        "KeyJ",
+        "KeyE",
+        "KeyF",
+        "KeyH",
+        "KeyK",
+        "KeyL",
         "KeyM",
+        "KeyO",
+        "KeyP",
         "KeyR",
         "KeyS",
-        "KeyC",
-        "KeyW",
-        "KeyL",
-        "KeyV"
+        "KeyU",
+        "KeyV",
+        "ShiftRight"
     ],
-    "targetFingers": [
-        "left-index",
-        "right-pinky",
-        "right-middle",
-        "left-pinky",
-        "left-middle",
-        "right-index",
-        "left-ring",
-        "right-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -60,12 +44,8 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ဘယ်",
-                    "ဒီ",
-                    "ဟို"
-                ],
-                "count": 18
+                "words": ["ဘာ", "ဘယ်"],
+                "count": 16
             }
         },
         {
@@ -73,17 +53,9 @@
             "id": "lesson-my-intermediate-2-ex-2",
             "instruction": "Type whole words for rhythm",
             "generator": {
-                "type": "chunks",
-                "keys": [
-                    "ကြာ",
-                    "မျာ",
-                    "ကျိ",
-                    "ချု"
-                ],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "type": "words",
+                "words": ["ဘယ်သူ", "ဘယ်မှာ", "ဘယ်လို"],
+                "count": 18
             }
         },
         {
@@ -92,11 +64,8 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "တူ",
-                    "လိုက်"
-                ],
-                "count": 16
+                "words": ["ဘယ်နှစ်", "ဘယ်လောက်", "ဘယ်နေ့"],
+                "count": 18
             }
         }
     ]

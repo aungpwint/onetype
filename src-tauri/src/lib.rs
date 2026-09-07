@@ -36,6 +36,20 @@ pub fn run() {
 
             let db = init_database(app)?;
             app.manage(Mutex::new(db));
+
+            // The main window is created here (not from `tauri.conf.json`) so the
+            // web inspector is bound to the build profile: enabled on debug
+            // builds (`tauri dev`) and disabled on release builds. When DevTools
+            // are off, the WebView disables the inspect action in its native
+            // context menu and the inspector shortcuts (F12, Ctrl+Shift+I, ...).
+            tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
+                .title("OneType — English & Myanmar Typing Tutor")
+                .inner_size(1280.0, 800.0)
+                .min_inner_size(960.0, 640.0)
+                .center()
+                .devtools(cfg!(debug_assertions))
+                .build()?;
+
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![

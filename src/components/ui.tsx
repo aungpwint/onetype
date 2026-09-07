@@ -237,12 +237,8 @@ export function StatCard({
                     </span>
                 ) : null}
             </div>
-            <p className={cn('relative leading-none font-semibold tracking-tight tabular-nums', lg ? 'mt-2.5 text-3xl' : 'mt-2 text-2xl')}>
-                {value}
-            </p>
-            {hint ? (
-                <p className={cn('relative text-muted-foreground', lg ? 'mt-2 text-xs' : 'mt-1.5 text-[0.6875rem]')}>{hint}</p>
-            ) : null}
+            <p className={cn('relative leading-none font-semibold tracking-tight tabular-nums', lg ? 'mt-2.5 text-3xl' : 'mt-2 text-2xl')}>{value}</p>
+            {hint ? <p className={cn('relative text-muted-foreground', lg ? 'mt-2 text-xs' : 'mt-1.5 text-[0.6875rem]')}>{hint}</p> : null}
         </div>
     )
 }
@@ -320,7 +316,12 @@ export function Metric({
     return (
         <div className={cn('flex flex-col gap-0.5', align === 'end' ? 'items-end' : 'items-center')}>
             <span className={valueClass}>{value}</span>
-            <span className={cn(size === 'sm' ? 'text-[0.625rem]' : 'text-[0.6875rem]', 'font-medium tracking-[0.12em] text-muted-foreground uppercase')}>
+            <span
+                className={cn(
+                    size === 'sm' ? 'text-[0.625rem]' : 'text-[0.6875rem]',
+                    'font-medium tracking-[0.12em] text-muted-foreground uppercase',
+                )}
+            >
                 {label}
             </span>
         </div>
@@ -354,23 +355,11 @@ export function AsyncButton({
     )
 }
 
-export function CardSection({
-    icon,
-    title,
-    children,
-    id,
-}: {
-    icon?: ReactNode
-    title: ReactNode
-    children?: ReactNode
-    id?: string
-}) {
+export function CardSection({ icon, title, children, id }: { icon?: ReactNode; title: ReactNode; children?: ReactNode; id?: string }) {
     return (
         <section id={id} className={cn(cardClass, 'p-5')}>
             <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
-                {icon ? (
-                    <span className="flex h-7 w-7 items-center justify-center rounded-md bg-muted text-accent">{icon}</span>
-                ) : null}
+                {icon ? <span className="flex h-7 w-7 items-center justify-center rounded-md bg-muted text-accent">{icon}</span> : null}
                 {title}
             </h2>
             {children}
@@ -394,7 +383,10 @@ export function SettingRow({
     id?: string
 }) {
     return (
-        <label id={id} className="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-line px-4 py-3 transition-colors hover:bg-muted/40">
+        <label
+            id={id}
+            className="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-line px-4 py-3 transition-colors hover:bg-muted/40"
+        >
             <span className="flex items-start gap-3">
                 {Icon ? (
                     <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
@@ -411,12 +403,7 @@ export function SettingRow({
     )
 }
 
-export function SelectField({
-    className,
-    disabled,
-    children,
-    ...props
-}: SelectHTMLAttributes<HTMLSelectElement>) {
+export function SelectField({ className, disabled, children, ...props }: SelectHTMLAttributes<HTMLSelectElement>) {
     return (
         <select className={cn(selectClass, className)} disabled={disabled} {...props}>
             {children}

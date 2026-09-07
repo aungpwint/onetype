@@ -14,38 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "Digit1",
-        "Digit2",
-        "Digit3",
-        "Digit4",
-        "Digit5",
-        "Digit6",
-        "Digit7",
-        "Digit8",
-        "Digit9",
-        "Digit0"
-    ],
-    "focus": [
-        "numbers"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-4"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index",
-        "right-index",
-        "right-middle",
-        "right-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focusKeys": ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0"],
+    "focus": ["numbers"],
+    "prerequisites": ["lesson-my-beginner-4"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -53,11 +26,7 @@
             "instruction": "Cover the number row with your index-to-pinky fingers",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "၁",
-                    "၂",
-                    "၃"
-                ],
+                "keys": ["၁", "၂", "၃"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 3,
@@ -70,11 +39,7 @@
             "instruction": "Cover the number row with your index-to-pinky fingers",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "၄",
-                    "၅",
-                    "၆"
-                ],
+                "keys": ["၄", "၅", "၆"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 3,
@@ -87,12 +52,7 @@
             "instruction": "Cover the number row with your index-to-pinky fingers",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "၇",
-                    "၈",
-                    "၉",
-                    "၀"
-                ],
+                "keys": ["၇", "၈", "၉", "၀"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -105,18 +65,7 @@
             "instruction": "Cover the number row with your index-to-pinky fingers",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "၁",
-                    "၂",
-                    "၃",
-                    "၄",
-                    "၅",
-                    "၆",
-                    "၇",
-                    "၈",
-                    "၉",
-                    "၀"
-                ],
+                "keys": ["၁", "၂", "၃", "၄", "၅", "၆", "၇", "၈", "၉", "၀"],
                 "count": 24,
                 "chunkMin": 2,
                 "chunkMax": 4,

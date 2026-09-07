@@ -175,7 +175,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                         className="flex w-full items-center gap-3 rounded-lg border border-transparent px-2 py-2 text-left transition-colors hover:border-line hover:bg-muted/70"
                                         onClick={() => setPickerOpen(true)}
                                     >
-<span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/15 text-xs font-semibold text-accent">
+                                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/15 text-xs font-semibold text-accent">
                                             {active.displayName.slice(0, 1).toUpperCase()}
                                         </span>
                                         <span className="min-w-0">
@@ -246,10 +246,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                     </main>
                 </div>
 
-                <CommandPalette
-                    openAddStudent={() => setAddOpen(true)}
-                    openLearnerPicker={() => setPickerOpen(true)}
-                />
+                <CommandPalette openAddStudent={() => setAddOpen(true)} openLearnerPicker={() => setPickerOpen(true)} />
 
                 <Modal open={pickerOpen} onClose={() => setPickerOpen(false)} ariaLabel="Choose a learner">
                     <div className="mb-4 flex items-center justify-between pr-8">

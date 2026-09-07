@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import {
-    diagnoseClusterComparison,
-    summarizeClusterDiagnoses,
-    type ClusterDiagnosis,
-} from '@/core/unicode/comparison'
+import { diagnoseClusterComparison, summarizeClusterDiagnoses, type ClusterDiagnosis } from '@/core/unicode/comparison'
 import { keyboardOrderForCluster } from '@/core/typing-engine/sequence'
 
 function cp(text: string): string {

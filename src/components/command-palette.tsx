@@ -5,13 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useUiStore } from '@/stores/ui-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { createCommands } from '@/commands/palette-commands'
-import {
-    COMMAND_GROUPS,
-    filterCommands,
-    moveSelection,
-    type Command,
-    type CommandContext,
-} from '@/commands/registry'
+import { COMMAND_GROUPS, filterCommands, moveSelection, type Command, type CommandContext } from '@/commands/registry'
 import { cn, eyebrowClass } from '@/lib/utils'
 
 export function CommandPalette({ openAddStudent, openLearnerPicker }: { openAddStudent: () => void; openLearnerPicker: () => void }) {
@@ -33,13 +27,7 @@ export function CommandPalette({ openAddStudent, openLearnerPicker }: { openAddS
         [navigate, openAddStudent, openLearnerPicker],
     )
 
-    return (
-        <AnimatePresence>
-            {open ? (
-                <PalettePanel key="palette" context={context} close={close} />
-            ) : null}
-        </AnimatePresence>
-    )
+    return <AnimatePresence>{open ? <PalettePanel key="palette" context={context} close={close} /> : null}</AnimatePresence>
 }
 
 const GROUP_LABEL: Record<Command['group'], string> = {
@@ -56,10 +44,7 @@ function PalettePanel({ context, close }: { context: CommandContext; close: (ope
     const commands = useMemo(() => createCommands(context), [context])
 
     const filtered = useMemo(() => filterCommands(commands, query), [commands, query])
-    const selectable = useMemo(
-        () => filtered.map((command, index) => ({ command, index })).filter((entry) => !entry.command.disabled()),
-        [filtered],
-    )
+    const selectable = useMemo(() => filtered.map((command, index) => ({ command, index })).filter((entry) => !entry.command.disabled()), [filtered])
 
     const activeItem = selectable.length > 0 ? selectable[Math.min(browseIndex, selectable.length - 1)] : null
 
@@ -102,7 +87,12 @@ function PalettePanel({ context, close }: { context: CommandContext; close: (ope
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-[16vh]" role="dialog" aria-modal="true" aria-label="Command palette">
+        <div
+            className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-[16vh]"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Command palette"
+        >
             <motion.button
                 aria-label="Close command palette"
                 className="absolute inset-0 bg-black/45 backdrop-blur-sm"

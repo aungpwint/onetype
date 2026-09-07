@@ -171,7 +171,10 @@ describe('Myanmar grapheme corpus — composing while partial, green only when c
                 const active = states.filter((s) => s === 'now').length
                 expect(consumed, `${run.text} consumed @${u + 1}`).toBe(u + 1 - run.startUnit)
                 expect(active, `${run.text} active @${u + 1}`).toBe(1)
-                expect(states.filter((s) => s === 'miss' || s === 'miss-now'), `${run.text} miss`).toHaveLength(0)
+                expect(
+                    states.filter((s) => s === 'miss' || s === 'miss-now'),
+                    `${run.text} miss`,
+                ).toHaveLength(0)
                 expect(v.progress, `${run.text} @${u + 1}/${run.endUnit}`).toBeCloseTo((u + 1 - run.startUnit) / (run.endUnit - run.startUnit))
             }
             // The final unit delivers the complete grapheme → one green span.
@@ -354,7 +357,10 @@ describe('Backspace during composition rewinds the caret one unit immediately', 
         }
         // Each Backspace steps back exactly one unit until 0, then no-ops.
         expect(visited).toEqual(Array.from({ length: total }, (_, i) => Math.max(0, total - 2 - i)))
-        expect(visited.every((v, i) => i === 0 || v <= visited[i - 1]!), 'never moves forward').toBe(true)
+        expect(
+            visited.every((v, i) => i === 0 || v <= visited[i - 1]!),
+            'never moves forward',
+        ).toBe(true)
         expect(engine.unitIndex).toBe(0)
         // The final backspace at 0 is a no-op that does not crash.
         engine.processKey('Backspace', 'none')
@@ -488,9 +494,7 @@ describe('STATE separation — cursor/highlight are real-time, only green waits'
 
         for (let i = 1; i < manya.endUnit; i++) {
             typeUnits(engine, seq, i)
-            expect(cursorProgressInCluster(engine.unitIndex, manya.startUnit, manya.endUnit)).toBeCloseTo(
-                i / manya.endUnit,
-            )
+            expect(cursorProgressInCluster(engine.unitIndex, manya.startUnit, manya.endUnit)).toBeCloseTo(i / manya.endUnit)
             expect(cursorProgressInCluster(engine.unitIndex, space.startUnit, space.endUnit)).toBe(0)
             expect(cursorProgressInCluster(engine.unitIndex, ka.startUnit, ka.endUnit)).toBe(0)
             expect(present(engine, manya).correctness).toBe('pending')

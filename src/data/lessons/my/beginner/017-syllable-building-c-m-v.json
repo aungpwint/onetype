@@ -14,34 +14,11 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focus": [
-        "syllable",
-        "medial"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-16"
-    ],
-    "focusKeys": [
-        "KeyU",
-        "KeyS",
-        "KeyD",
-        "KeyJ",
-        "KeyM",
-        "KeyR",
-        "KeyY",
-        "KeyK"
-    ],
-    "targetFingers": [
-        "right-index",
-        "left-ring",
-        "left-middle",
-        "left-index",
-        "right-middle"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focus": ["syllable", "medial"],
+    "prerequisites": ["lesson-my-beginner-16"],
+    "focusKeys": ["KeyU", "KeyS", "KeyD", "KeyJ", "KeyM", "KeyR", "KeyY", "KeyK"],
+    "targetFingers": ["right-index", "left-ring", "left-middle", "left-index", "right-middle"],
+    "targetHands": ["right", "left"],
     "exercises": [
         {
             "kind": "generated",
@@ -49,9 +26,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကျိ"
-                ],
+                "keys": ["ကျိ"],
                 "count": 14,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -64,10 +39,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကြာ",
-                    "ကျာ"
-                ],
+                "keys": ["ကြာ", "ကျာ"],
                 "count": 16,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -80,10 +52,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "မျာ",
-                    "ပြု"
-                ],
+                "keys": ["မျာ", "ပြု"],
                 "count": 16,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -96,13 +65,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကျိ",
-                    "ကြာ",
-                    "ကျာ",
-                    "မျာ",
-                    "ပြု"
-                ],
+                "keys": ["ကျိ", "ကြာ", "ကျာ", "မျာ", "ပြု"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

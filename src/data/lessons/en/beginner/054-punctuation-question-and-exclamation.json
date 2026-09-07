@@ -5,7 +5,7 @@
     "language": "en",
     "number": 54,
     "title": "Punctuation: Question and Exclamation",
-    "titleMy": "နားသတ်: မေးခွန်းသင်္ကေတ (?) နှင့် အာမေဋိတ်သင်္ကေတ (!)",
+    "titleMy": "ပုဒ်ဖြတ်ပုဒ်ရပ်: မေးခွန်းသင်္ကေတ (?) နှင့် အာမေဋိတ်သင်္ကေတ (!)",
     "description": "Question marks and exclamation marks.",
     "difficulty": "medium",
     "estimatedMinutes": 8,
@@ -37,26 +37,10 @@
         "KeyP",
         "KeyM"
     ],
-    "focus": [
-        "punctuation"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-53"
-    ],
-    "targetFingers": [
-        "right-pinky",
-        "left-pinky",
-        "left-ring",
-        "right-index",
-        "left-index",
-        "right-middle",
-        "left-middle",
-        "right-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focus": ["punctuation"],
+    "prerequisites": ["lesson-en-beginner-53"],
+    "targetFingers": ["right-pinky", "left-pinky", "left-ring", "right-index", "left-index", "right-middle", "left-middle", "right-ring"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -65,12 +49,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "?",
-                    "?",
-                    "!",
-                    "!"
-                ],
+                "keys": ["?", "?", "!", "!"],
                 "count": 18,
                 "chunkMin": 3,
                 "chunkMax": 4,
@@ -83,11 +62,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "what is this?",
-                    "where are you?",
-                    "who is he?"
-                ],
+                "sentences": ["what is this?", "where are you?", "who is he?"],
                 "count": 3
             }
         },
@@ -97,11 +72,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "go now!",
-                    "look out!",
-                    "help me!"
-                ],
+                "sentences": ["go now!", "look out!", "help me!"],
                 "count": 3
             }
         }

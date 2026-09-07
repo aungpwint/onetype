@@ -103,10 +103,12 @@ export default function Learn() {
         for (const lesson of list) {
             const prereqs = lesson.prerequisites ?? []
             const isRoot = prereqs.length === 0 && lesson.number === 1
-            const ok = isRoot || prereqs.every((id) => {
-                const mastered = masteryByLesson.get(id)
-                return mastered === 'passed' || mastered === 'mastered'
-            })
+            const ok =
+                isRoot ||
+                prereqs.every((id) => {
+                    const mastered = masteryByLesson.get(id)
+                    return mastered === 'passed' || mastered === 'mastered'
+                })
             if (ok) unlocked.add(lesson.id)
         }
         return unlocked
@@ -190,11 +192,10 @@ export default function Learn() {
                         <span className="block text-[0.6875rem] font-semibold tracking-wider text-accent uppercase">
                             {RECOMMENDATION_COPY[recommendation.reason]?.label ?? 'Recommended'}
                         </span>
-                        <span className="block truncate font-display text-base font-semibold text-ink">
-                            {recommendation.lesson.title}
-                        </span>
+                        <span className="block truncate font-display text-base font-semibold text-ink">{recommendation.lesson.title}</span>
                         <span className="block truncate text-xs text-muted-foreground">
-                            L{String(recommendation.lesson.number).padStart(2, '0')} · {RECOMMENDATION_COPY[recommendation.reason]?.heading ?? 'Recommended for you'}
+                            L{String(recommendation.lesson.number).padStart(2, '0')} ·{' '}
+                            {RECOMMENDATION_COPY[recommendation.reason]?.heading ?? 'Recommended for you'}
                         </span>
                     </span>
                 </Link>

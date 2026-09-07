@@ -29,7 +29,11 @@ export function environmentFor(id: string): GeneratorEnvironment {
     return { def, layout }
 }
 
-export function generateLessonExerciseText(spec: Parameters<typeof generateExerciseText>[0], ctx: Parameters<typeof generateExerciseText>[2], languageId: string): string {
+export function generateLessonExerciseText(
+    spec: Parameters<typeof generateExerciseText>[0],
+    ctx: Parameters<typeof generateExerciseText>[2],
+    languageId: string,
+): string {
     const env = environmentFor(languageId)
     return generateExerciseText(spec, env, ctx)
 }

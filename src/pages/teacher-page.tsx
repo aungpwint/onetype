@@ -84,7 +84,7 @@ export default function TeacherPage() {
         }
     }, [studentId])
 
-    const boardTest = useMemo(() => (boardTestId ? tests.find((t) => t.id === boardTestId) ?? null : null), [tests, boardTestId])
+    const boardTest = useMemo(() => (boardTestId ? (tests.find((t) => t.id === boardTestId) ?? null) : null), [tests, boardTestId])
 
     const downloadRegister = useCallback(() => {
         const rows = buildRegisterRows(overview?.students ?? [])
@@ -215,63 +215,66 @@ export default function TeacherPage() {
                     </select>
                 </div>
 
-                {boardTest && (board === null ? (
-                    <div className="px-5 py-10 text-center text-sm text-muted-foreground">
-                        <Spinner label="Ranking the class…" />
-                    </div>
-                ) : board.length === 0 ? (
-                    <p className="px-5 py-10 text-center text-sm text-muted-foreground">
-                        No learner has run <span className="font-medium text-foreground">{boardTest.name}</span> yet — results will
-                        land here ranked by best run.
-                    </p>
-                ) : (
-                    <table className="w-full text-left text-sm">
-                        <thead>
-                            <tr className="text-xs tracking-wider text-muted-foreground uppercase">
-                                <th className="px-5 py-2 font-normal">Rank</th>
-                                <th className="px-5 py-2 font-normal">Learner</th>
-                                <th className="px-5 py-2 text-right font-normal">Best</th>
-                                <th className="px-5 py-2 text-right font-normal">Acc</th>
-                                <th className="px-5 py-2 text-right font-normal">Passed</th>
-                                <th className="hidden px-5 py-2 text-right font-normal sm:table-cell">When</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {board.map((e) => (
-                                <tr key={e.studentId} className="border-t border-border transition-colors hover:bg-muted/40">
-                                    <td className="px-5 py-2.5">
-                                        <span
-                                            className={cn(
-                                                'inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold tabular-nums',
-                                                e.rank <= 3 && e.rank >= 1 ? MEDAL[e.rank - 1] : 'border border-line bg-muted/40 text-muted-foreground',
-                                            )}
-                                        >
-                                            {e.rank}
-                                        </span>
-                                    </td>
-                                    <td className="px-5 py-2.5">
-                                        <a
-                                            className="rounded font-medium text-foreground hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-                                            href={`#/teacher/${e.studentId}`}
-                                        >
-                                            {e.name}
-                                        </a>
-                                    </td>
-                                    <td className="px-5 py-2.5 text-right font-display font-semibold tabular-nums">{formatWpm(e.bestWpm)}</td>
-                                    <td className="px-5 py-2.5 text-right tabular-nums">{formatAccuracy(e.bestAccuracy)}</td>
-                                    <td className="px-5 py-2.5 text-right tabular-nums">
-                                        <span className={e.passed ? 'text-success' : 'text-muted-foreground'}>
-                                            {e.passedAttempts}/{e.attempts}
-                                        </span>
-                                    </td>
-                                    <td className="hidden px-5 py-2.5 text-right text-muted-foreground tabular-nums sm:table-cell">
-                                        {formatDateTime(e.scoredOn)}
-                                    </td>
+                {boardTest &&
+                    (board === null ? (
+                        <div className="px-5 py-10 text-center text-sm text-muted-foreground">
+                            <Spinner label="Ranking the class…" />
+                        </div>
+                    ) : board.length === 0 ? (
+                        <p className="px-5 py-10 text-center text-sm text-muted-foreground">
+                            No learner has run <span className="font-medium text-foreground">{boardTest.name}</span> yet — results will land here
+                            ranked by best run.
+                        </p>
+                    ) : (
+                        <table className="w-full text-left text-sm">
+                            <thead>
+                                <tr className="text-xs tracking-wider text-muted-foreground uppercase">
+                                    <th className="px-5 py-2 font-normal">Rank</th>
+                                    <th className="px-5 py-2 font-normal">Learner</th>
+                                    <th className="px-5 py-2 text-right font-normal">Best</th>
+                                    <th className="px-5 py-2 text-right font-normal">Acc</th>
+                                    <th className="px-5 py-2 text-right font-normal">Passed</th>
+                                    <th className="hidden px-5 py-2 text-right font-normal sm:table-cell">When</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                ))}
+                            </thead>
+                            <tbody>
+                                {board.map((e) => (
+                                    <tr key={e.studentId} className="border-t border-border transition-colors hover:bg-muted/40">
+                                        <td className="px-5 py-2.5">
+                                            <span
+                                                className={cn(
+                                                    'inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold tabular-nums',
+                                                    e.rank <= 3 && e.rank >= 1
+                                                        ? MEDAL[e.rank - 1]
+                                                        : 'border border-line bg-muted/40 text-muted-foreground',
+                                                )}
+                                            >
+                                                {e.rank}
+                                            </span>
+                                        </td>
+                                        <td className="px-5 py-2.5">
+                                            <a
+                                                className="rounded font-medium text-foreground hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                                                href={`#/teacher/${e.studentId}`}
+                                            >
+                                                {e.name}
+                                            </a>
+                                        </td>
+                                        <td className="px-5 py-2.5 text-right font-display font-semibold tabular-nums">{formatWpm(e.bestWpm)}</td>
+                                        <td className="px-5 py-2.5 text-right tabular-nums">{formatAccuracy(e.bestAccuracy)}</td>
+                                        <td className="px-5 py-2.5 text-right tabular-nums">
+                                            <span className={e.passed ? 'text-success' : 'text-muted-foreground'}>
+                                                {e.passedAttempts}/{e.attempts}
+                                            </span>
+                                        </td>
+                                        <td className="hidden px-5 py-2.5 text-right text-muted-foreground tabular-nums sm:table-cell">
+                                            {formatDateTime(e.scoredOn)}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ))}
             </section>
 
             {detail ? (
@@ -326,7 +329,9 @@ export default function TeacherPage() {
                                                 <span className="text-xs text-muted-foreground"> · {formatAccuracy(e.bestAccuracy)}</span>
                                             </span>
                                             <span className={e.passed ? 'text-xs font-medium text-success' : 'text-xs text-muted-foreground'}>
-                                                {e.passed ? `passed · ${e.attempts} run${e.attempts === 1 ? '' : 's'}` : `not yet · ${e.attempts} run${e.attempts === 1 ? '' : 's'}`}
+                                                {e.passed
+                                                    ? `passed · ${e.attempts} run${e.attempts === 1 ? '' : 's'}`
+                                                    : `not yet · ${e.attempts} run${e.attempts === 1 ? '' : 's'}`}
                                             </span>
                                         </li>
                                     ))}

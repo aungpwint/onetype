@@ -54,13 +54,13 @@ describe('every Myanmar key is buildable, typeable and slot-exact', () => {
             for (const g of runs) {
                 // Unit texts concatenate to the grapheme text (a unit may be
                 // multi-codepoint, e.g. ၎င်း), hence compare at codepoint level.
-                const presses = seq.units.slice(g.startUnit, g.endUnit).flatMap((u) => Array.from(u.text)).sort()
+                const presses = seq.units
+                    .slice(g.startUnit, g.endUnit)
+                    .flatMap((u) => Array.from(u.text))
+                    .sort()
                 const logical = Array.from(g.text).sort()
                 expect(presses, `press of "${g.text}" (${k.code} ${k.modifier})`).toEqual(logical)
-                expect(
-                    g.slots.map((s) => s.text).join(''),
-                    `slots of "${g.text}" (${k.code} ${k.modifier})`,
-                ).toBe(g.text)
+                expect(g.slots.map((s) => s.text).join(''), `slots of "${g.text}" (${k.code} ${k.modifier})`).toBe(g.text)
             }
         }
     })
@@ -86,7 +86,10 @@ describe('every Myanmar key is buildable, typeable and slot-exact', () => {
             const unit = seq.units[u]!
             const physical = keyForText.get(unit.text)
             if (physical === undefined) continue
-            expect(physical.some((p) => p.code === unit.keyCode && p.modifier === unit.modifier), `unit ${u} ${unit.text}`).toBe(true)
+            expect(
+                physical.some((p) => p.code === unit.keyCode && p.modifier === unit.modifier),
+                `unit ${u} ${unit.text}`,
+            ).toBe(true)
         }
     })
 
@@ -113,13 +116,19 @@ describe('every Myanmar key is buildable, typeable and slot-exact', () => {
             const { seq } = typeThrough(`က ${text} က`)
             const runs = graphemeUnitRuns(seq)
             for (const g of runs) {
-                expect(logicalSlotsForCluster(g.text, seq.units.slice(g.startUnit, g.endUnit).map((u) => u.text)).map((s) => s.unitLocal))
-                    .toEqual(Array.from(g.text).map((_, i) => i))
+                expect(
+                    logicalSlotsForCluster(
+                        g.text,
+                        seq.units.slice(g.startUnit, g.endUnit).map((u) => u.text),
+                    ).map((s) => s.unitLocal),
+                ).toEqual(Array.from(g.text).map((_, i) => i))
             }
         }
     })
 })
 
 function runsJoin(seq: ReturnType<typeof buildSequence>): string {
-    return graphemeUnitRuns(seq).map((g) => g.text).join('')
+    return graphemeUnitRuns(seq)
+        .map((g) => g.text)
+        .join('')
 }

@@ -14,13 +14,9 @@
         "minAccuracy": 90,
         "minWpm": 16
     },
-    "focus": [
-        "shift"
-    ],
+    "focus": ["shift"],
     "requiresShift": true,
-    "prerequisites": [
-        "lesson-en-beginner-42"
-    ],
+    "prerequisites": ["lesson-en-beginner-42"],
     "focusKeys": [
         "KeyA",
         "ShiftRight",
@@ -41,19 +37,8 @@
         "KeyU",
         "KeyI"
     ],
-    "targetFingers": [
-        "left-pinky",
-        "right-pinky",
-        "left-index",
-        "left-middle",
-        "left-ring",
-        "right-index",
-        "right-middle"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-pinky", "right-pinky", "left-index", "left-middle", "left-ring", "right-index", "right-middle"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -61,12 +46,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "A",
-                    "B",
-                    "C",
-                    "D"
-                ],
+                "keys": ["A", "B", "C", "D"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -79,12 +59,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "1",
-                    "!",
-                    "2",
-                    "@"
-                ],
+                "keys": ["1", "!", "2", "@"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -97,12 +72,7 @@
             "instruction": "Reach the shifted symbols cleanly",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "{",
-                    "}",
-                    "[",
-                    "]"
-                ],
+                "keys": ["{", "}", "[", "]"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -115,16 +85,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "Q",
-                    "W",
-                    "E",
-                    "R",
-                    "T",
-                    "Y",
-                    "U",
-                    "I"
-                ],
+                "keys": ["Q", "W", "E", "R", "T", "Y", "U", "I"],
                 "count": 20,
                 "chunkMin": 2,
                 "chunkMax": 5,

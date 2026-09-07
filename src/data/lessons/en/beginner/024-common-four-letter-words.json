@@ -14,12 +14,8 @@
         "minAccuracy": 88,
         "minWpm": 12
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-en-beginner-23"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-en-beginner-23"],
     "focusKeys": [
         "KeyW",
         "KeyI",
@@ -41,19 +37,8 @@
         "KeyC",
         "KeyK"
     ],
-    "targetFingers": [
-        "left-ring",
-        "right-middle",
-        "left-index",
-        "right-index",
-        "left-pinky",
-        "right-ring",
-        "left-middle"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-ring", "right-middle", "left-index", "right-index", "left-pinky", "right-ring", "left-middle"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -61,16 +46,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "with",
-                    "that",
-                    "from",
-                    "have",
-                    "your",
-                    "they",
-                    "this",
-                    "what"
-                ],
+                "words": ["with", "that", "from", "have", "your", "they", "this", "what"],
                 "count": 18,
                 "maxWordLength": 4
             }
@@ -81,16 +57,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "more",
-                    "time",
-                    "than",
-                    "said",
-                    "will",
-                    "each",
-                    "about",
-                    "says"
-                ],
+                "words": ["more", "time", "than", "said", "will", "each", "also", "says"],
                 "count": 20,
                 "maxWordLength": 4
             }
@@ -101,17 +68,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "take",
-                    "them",
-                    "then",
-                    "into",
-                    "great",
-                    "much",
-                    "know",
-                    "where",
-                    "right"
-                ],
+                "words": ["take", "them", "then", "into", "soon", "much", "know", "read", "look"],
                 "count": 22,
                 "maxWordLength": 4
             }

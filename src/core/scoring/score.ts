@@ -53,7 +53,7 @@ export function computeScore(input: ScoreInput): ScoreMetrics {
     // "word" would be dishonest.
     const isMyanmar = language === 'myanmar' || language === 'mixed'
     const speed = isMyanmar ? (minutes > 0 ? characters / minutes : 0) : grossWpm
-    const rawSpeed = isMyanmar ? (minutes > 0 ? totalAttempts / minutes : 0) : (minutes > 0 ? totalAttempts / WORD_LENGTH / minutes : 0)
+    const rawSpeed = isMyanmar ? (minutes > 0 ? totalAttempts / minutes : 0) : minutes > 0 ? totalAttempts / WORD_LENGTH / minutes : 0
     const speedUnit: SpeedUnit = isMyanmar ? 'units/min' : 'wpm'
 
     return {

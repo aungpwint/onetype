@@ -6,7 +6,7 @@
     "number": 20,
     "title": "Shift Characters",
     "titleMy": "Shift အက္ခရာများ",
-    "description": "Myanmar characters that require Shift key.",
+    "description": "Letters and vowels you type with Shift: ဣ ဤ ဥ ဦ ဧ ဩ ဪ.",
     "difficulty": "medium",
     "estimatedMinutes": 8,
     "keyboard": "myanmar",
@@ -14,33 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyE",
-        "ShiftRight",
-        "KeyT",
-        "KeyU",
-        "ShiftLeft",
-        "KeyM",
-        "BracketLeft",
-        "BracketRight"
-    ],
-    "focus": [
-        "shift"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-10"
-    ],
-    "targetFingers": [
-        "left-middle",
-        "right-pinky",
-        "left-index",
-        "right-index",
-        "left-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focusKeys": ["KeyE", "ShiftRight", "KeyT", "KeyU", "ShiftLeft", "KeyM", "BracketLeft", "BracketRight"],
+    "focus": ["shift"],
+    "prerequisites": ["lesson-my-beginner-10"],
+    "targetFingers": ["left-middle", "right-pinky", "left-index", "right-index", "left-pinky"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -49,10 +27,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဣ",
-                    "ဤ"
-                ],
+                "keys": ["ဣ", "ဤ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -65,10 +40,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဥ",
-                    "ဦ"
-                ],
+                "keys": ["ဥ", "ဦ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -81,11 +53,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဧ",
-                    "ဩ",
-                    "ဪ"
-                ],
+                "keys": ["ဧ", "ဩ", "ဪ"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
