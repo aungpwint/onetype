@@ -59,18 +59,24 @@ fn row_to_student(row: &rusqlite::Row<'_>) -> rusqlite::Result<Student> {
 }
 
 fn next_student_code(conn: &Connection) -> Result<String> {
-    let max: Option<String> = conn
-        .query_row(
-            "SELECT COALESCE(MAX(student_code), '') FROM students WHERE student_code LIKE 'STU%'",
-            [],
-            |r| r.get(0),
-        )
-        .optional()?;
-    let next_number = max
-        .and_then(|code| code.strip_prefix("STU").and_then(|n| n.parse::<i64>().ok()))
-        .unwrap_or(0)
-        + 1;
-    Ok(format!("STU{}", next_number))
+    // Numeric max of the suffix (mirrors the browser fallback in local.ts):
+    // a plain MAX() over TEXT would leave the max at "STU9" even after
+    // "STU10" exists, so a roster past 9 learners could never grow again.
+    // Read the raw suffixes and fold the max in Rust — a SQL MAX() over an
+    // aggregate column reports a NULL declared type to rusqlite and fails on
+    // empty tables.
+    let mut stmt = conn.prepare(
+        "SELECT CAST(SUBSTR(student_code, 4) AS INTEGER) FROM students \
+         WHERE student_code LIKE 'STU%' AND SUBSTR(student_code, 4) GLOB '[0-9]*'",
+    )?;
+    let rows = stmt.query_map([], |row| row.get::<_, i64>(0))?;
+    let mut max_suffix: Option<i64> = None;
+    for suffix in rows {
+        let value = suffix?;
+        max_suffix = Some(max_suffix.map_or(value, |current| current.max(value)));
+    }
+    let next_number = max_suffix.unwrap_or(0) + 1;
+    Ok(format!("STU{:03}", next_number))
 }
 
 pub fn create_student(conn: &Connection, req: &CreateStudentRequest) -> Result<Student> {
@@ -167,6 +173,8 @@ pub fn delete_student(conn: &Connection, id: &str) -> Result<()> {
         "key_statistics",
         "finger_statistics",
         "character_statistics",
+        "daily_activity",
+        "achievements",
     ] {
         tx.execute(
             &format!("DELETE FROM {table} WHERE student_id = ?1"),

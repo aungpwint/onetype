@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import type { ThemePreference } from '@/types'
 import { syncWindowTheme, type ResolvedTheme } from '@/services/window-theme'
 import { getThemePreset, isThemePresetId, applyThemePalette, DEFAULT_THEME_PRESET_ID } from '@/core/themes/registry'
+import { useSettingsStore, type AppSettingKey } from '@/stores/settings-store'
 
 interface UiState {
     theme: ThemePreference
@@ -114,6 +115,9 @@ export const useUiStore = create<UiState>((set) => ({
     setSoundEnabled: (enabled) => {
         localStorage.setItem('onetype:sound', enabled ? 'on' : 'off')
         set({ soundEnabled: enabled })
+        // Keep the persisted practice.sound setting and the in-memory toggle
+        // in sync so mute never diverges between the two flags.
+        void useSettingsStore.getState().set('practice.sound' as AppSettingKey, enabled ? 'on' : 'off')
     },
     setFocusMode: (enabled) => {
         localStorage.setItem('onetype:focus-mode', enabled ? 'on' : 'off')

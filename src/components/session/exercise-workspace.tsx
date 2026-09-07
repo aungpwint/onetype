@@ -113,9 +113,9 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
             ) : (
                 <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-4 py-5 sm:px-8">
                     <div className="relative flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
-                        <TargetText />
                         {status === 'ready' ? <TabStartHint /> : null}
                         <QuickRestartHint />
+                        <TargetText />
                         <KeyboardContainer layout={layout} hideReadyMessage />
                         <ExerciseFooter />
                         <OutOfFocusWarning />

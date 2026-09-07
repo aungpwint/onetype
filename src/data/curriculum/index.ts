@@ -3,6 +3,7 @@ import type { LessonData } from './types'
 import { resolveLesson, type ResolvedLesson } from './generator'
 import { createLessonRepository, type LessonRepository } from '@/lib/lessons'
 import type { Lesson } from '@/types/lesson'
+import type { LessonCount } from '@/services/types'
 
 interface CurriculumMeta {
     totalLessons: number
@@ -66,4 +67,16 @@ export function getLessonRepository(): LessonRepository {
 
 export function getCanonicalLesson(id: string): Lesson {
     return repository.getCanonicalLesson(id)
+}
+
+// Lesson-count rows served by the persistence layer carry their own totals;
+// those must never be trusted for display because neither runtime knows the
+// actual curriculum size. Overlay the real per-level totals here so teacher
+// and progress screens agree across browser and Tauri backends.
+export function lessonCountsWithCurriculumTotals(counts: LessonCount[]): LessonCount[] {
+    const totals = getCurriculumMeta().countsByLevel
+    return counts.map((lc) => ({
+        ...lc,
+        total: totals[lc.level as Level] ?? lc.total,
+    }))
 }

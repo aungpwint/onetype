@@ -23,6 +23,12 @@ function toggleLabel(status: SessionStatus, durationSeconds: number | null): str
     return durationSeconds === null ? 'First key starts' : 'Start'
 }
 
+function statusAnnouncement(status: SessionStatus): string {
+    if (status === 'paused') return 'Round paused'
+    if (status === 'running') return 'Round running'
+    return 'Round ready'
+}
+
 export function SessionHeader({ eyebrow, title, status, durationSeconds, onToggle, onExit }: SessionHeaderProps) {
     const isPaused = status === 'paused'
 
@@ -47,10 +53,13 @@ export function SessionHeader({ eyebrow, title, status, durationSeconds, onToggl
                         <LogOut className="size-4" />
                         <span>Exit</span>
                     </Button>
-                    <Button size="sm" variant="default" onClick={onToggle} aria-live="polite">
+                    <Button size="sm" variant="default" onClick={onToggle}>
                         {isPaused ? <Play className="size-4" /> : status === 'running' ? <Pause className="size-4" /> : null}
                         {toggleLabel(status, durationSeconds)}
                     </Button>
+                    <span className="sr-only" aria-live="polite">
+                        {statusAnnouncement(status)}
+                    </span>
                 </div>
             </div>
             {(status === 'ready' || status === 'running') && (

@@ -75,6 +75,67 @@ export const DEFAULT_SETTINGS: Record<AppSettingKey, string> = {
     'notification.lastNotifiedVersion': '',
 }
 
+const ON_OFF: readonly string[] = ['on', 'off']
+
+// Per-key value rules. Any value failing its predicate is coerced back to the
+// default at write time, so garbage (a bad editor value, a malformed import, a
+// stale setting blob) can never be persisted and then resurface as a dead
+// setting that the getters silently fall back on.
+const SETTING_RULES: Partial<Record<AppSettingKey, (value: string) => boolean>> = {
+    'app.language': (v) => v === 'myanmar' || v === 'english',
+    'app.autoUpdate': (v) => ON_OFF.includes(v),
+    'design.theme': (v) => v === 'system' || v === 'light' || v === 'dark',
+    'design.themeEffect': (v) => v === 'none' || v === 'aurora' || v === 'dots',
+    'practice.sound': (v) => ON_OFF.includes(v),
+    'practice.handGuide': (v) => ON_OFF.includes(v),
+    'practice.showKeyboard': (v) => ON_OFF.includes(v),
+    'practice.confirmExit': (v) => ON_OFF.includes(v),
+    'practice.focusGuard': (v) => v === 'pause' || v === 'soft' || v === 'off',
+    'practice.indicateTypos': (v) => v === 'below' || v === 'replace',
+    'practice.quickRestart': (v) => v === 'tab' || v === 'enter' || v === 'off',
+    'practice.soundVolume': (v) => {
+        const n = Number(v)
+        return Number.isFinite(n) && n >= 0 && n <= 1
+    },
+    'practice.timeWarning': (v) => ON_OFF.includes(v),
+    'practice.highlightMode': (v) => v === 'word' || v === 'letter' || v === 'none',
+    'practice.blindMode': (v) => v === 'on' || v === 'off',
+    'practice.hideExtraLetters': (v) => ON_OFF.includes(v),
+    'practice.caretStyle': (v) => v === 'bar' || v === 'block' || v === 'line' || v === 'underline',
+    'practice.smoothCaret': (v) => v === 'off' || v === 'slow' || v === 'medium' || v === 'fast',
+    'practice.paceCaret': (v) => ON_OFF.includes(v),
+    'practice.timerStyle': (v) => v === 'text' || v === 'bar' || v === 'mini' || v === 'off',
+    'practice.unit': (v) => v === 'time' || v === 'words',
+    'practice.time': (v) => positiveInteger(v),
+    'practice.words': (v) => positiveInteger(v),
+    'practice.lang': (v) => v === 'english' || v === 'myanmar',
+    'practice.punctuation': (v) => ON_OFF.includes(v),
+    'practice.numbers': (v) => ON_OFF.includes(v),
+    'view.sidebar': (v) => ON_OFF.includes(v),
+    'dashboard.dailyGoalMinutes': (v) => nonNegativeNumber(v),
+    'teacher.studentCodePrefix': (v) => /^[A-Za-z]{1,6}$/.test(v),
+    'updater.lastChecked': (v) => nonNegativeNumber(v),
+    'notification.enabled': (v) => ON_OFF.includes(v),
+    'notification.notifyUpdates': (v) => ON_OFF.includes(v),
+    'notification.lastNotifiedVersion': (v) => v.length <= 64,
+}
+
+function positiveInteger(value: string): boolean {
+    const n = Number(value)
+    return Number.isInteger(n) && n >= 1 && n <= 100_000
+}
+
+function nonNegativeNumber(value: string): boolean {
+    const n = Number(value)
+    return Number.isFinite(n) && n >= 0
+}
+
+export function sanitizeSettingValue(key: AppSettingKey, value: string): string {
+    const rule = SETTING_RULES[key]
+    if (!rule || rule(value)) return value
+    return DEFAULT_SETTINGS[key]
+}
+
 interface SettingsState {
     values: Record<string, string>
     loaded: boolean
@@ -116,7 +177,8 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         return (valid as readonly string[]).includes(value) ? (value as T) : fallback
     },
     set: async (key, value) => {
-        await backend.setSetting(key, value)
-        set((state) => ({ values: { ...state.values, [key]: value } }))
+        const safe = sanitizeSettingValue(key, value)
+        await backend.setSetting(key, safe)
+        set((state) => ({ values: { ...state.values, [key]: safe } }))
     },
 }))

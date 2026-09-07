@@ -52,7 +52,7 @@ export function OutOfFocusWarning() {
         <div
             className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center"
             role="dialog"
-            aria-modal="false"
+            aria-modal="true"
             aria-label="You stepped away"
         >
             <div className="pointer-events-auto w-full max-w-sm rounded-2xl border border-line bg-card p-6 shadow-(--shadow-3)">

@@ -421,7 +421,8 @@ export default function Dashboard() {
                     <ul className="mt-3 space-y-2">
                         {(['beginner', 'intermediate', 'advanced'] as const).map((level) => {
                             const list = lessonsByLevel[level]
-                            const langList = list.filter((l) => l.language === 'myanmar' && l.level === level)
+                            const activeLanguage = defaultLang === 'myanmar' ? 'myanmar' : 'english'
+                            const langList = list.filter((l) => l.language === activeLanguage && l.level === level)
                             const done = langList.filter((l) => progress?.[l.id]?.completed).length
                             const total = langList.length
                             return (

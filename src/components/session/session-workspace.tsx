@@ -118,6 +118,7 @@ export function Session({
                 <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-5 py-4 sm:px-8">
                     <div className="relative flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
                         <StatsBar />
+                        <QuickRestartHint />
                         <TargetText />
                         <PacePill />
                         <AnimatePresence>
@@ -135,7 +136,6 @@ export function Session({
                                 </motion.div>
                             ) : null}
                         </AnimatePresence>
-                        <QuickRestartHint />
                         {hideKeyboard ? null : <KeyboardContainer layout={layout} />}
                         <OutOfFocusWarning />
                     </div>

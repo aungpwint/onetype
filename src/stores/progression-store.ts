@@ -18,6 +18,11 @@ interface ProgressionState {
     }) => Promise<AchievementRecord[]>
 }
 
+// Guards against a stale async load (triggered by a previous student's
+// session finish or an earlier slow load) resolving after the user already
+// switched to a different active student.
+let progressionToken = 0
+
 export const useProgressionStore = create<ProgressionState>((set) => ({
     streak: null,
     unlocked: [],
@@ -27,6 +32,7 @@ export const useProgressionStore = create<ProgressionState>((set) => ({
 
     load: async (studentId) => {
         if (!studentId) return
+        const token = ++progressionToken
         set({ loading: true })
         try {
             const today = backend.localDateString()
@@ -35,9 +41,10 @@ export const useProgressionStore = create<ProgressionState>((set) => ({
                 backend.getAchievements(studentId),
                 backend.statsSummary(studentId),
             ])
+            if (token !== progressionToken) return
             set({ streak, unlocked, summary, loaded: true })
         } finally {
-            set({ loading: false })
+            if (token === progressionToken) set({ loading: false })
         }
     },
 

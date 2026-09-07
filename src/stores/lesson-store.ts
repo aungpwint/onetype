@@ -16,6 +16,10 @@ interface LessonState {
     uncompletedLessonsForLevel: (level: 'beginner' | 'intermediate' | 'advanced') => LessonData[]
 }
 
+// Monotonic token so a slower previous load can never overwrite a newer one
+// when the active student switches quickly (A → B with A's IPC resolving last).
+let loadProgressToken = 0
+
 export const useLessonStore = create<LessonState>((set, get) => ({
     lessonsByLevel: listLessonsByLevel(),
     progress: null,
@@ -23,19 +27,21 @@ export const useLessonStore = create<LessonState>((set, get) => ({
     loading: false,
     error: null,
     loadProgress: async (studentId) => {
+        const token = ++loadProgressToken
         set({ loading: true, error: null })
         try {
             const rows = await backend.listLessonProgress(studentId)
+            if (token !== loadProgressToken) return
             const map: Record<string, LessonProgress> = {}
             for (const row of rows) map[row.lessonId] = row
             set({ progress: map, progressStudentId: studentId, loading: false })
         } catch (error) {
+            if (token !== loadProgressToken) return
             set({ loading: false, error: error instanceof Error ? error.message : String(error) })
         }
     },
     clearProgress: () => set({ progress: null, progressStudentId: null }),
-    saveProgress: async (req) => {
-        const saved = await backend.saveLessonProgress(req)
+    saveProgress: async (req) => {        const saved = await backend.saveLessonProgress(req)
         set((state) => {
             if (state.progressStudentId !== req.studentId) return { progress: state.progress }
             const map = { ...(state.progress ?? {}) }

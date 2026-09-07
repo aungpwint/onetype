@@ -30,6 +30,9 @@ import { rankWeakest, DEFAULT_WEAKNESS_CONFIG } from '@/core/weakness'
 import { isLayoutAvailable } from '@/core/keyboard-layout/registry'
 import type { Language } from '@/types'
 import { rankClassOnTest, type LeaderboardCandidate, type LeaderboardEntry } from '@/core/leaderboard/ranking'
+import { getCurriculumMeta } from '@/data/curriculum'
+
+const CURRICULUM_TOTALS = getCurriculumMeta().countsByLevel
 
 const PREFIX = 'onetype:local:'
 
@@ -566,14 +569,17 @@ function listFor(studentId: string): Promise<LessonProgress[]> {
 }
 
 function mergeStats(storeKey: string, studentId: string, records: TypingStatRecord[]) {
+    // Key each row by `${studentId}:${keyId}` so a single student's write never
+    // drops rows owned by the other students persisted in the same array.
     const all = read<KeyStatistic[]>(storeKey, [])
     const map = new Map<string, KeyStatistic>()
-    for (const stat of all) if (stat.studentId === studentId) map.set(stat.keyId, stat)
+    for (const stat of all) map.set(`${stat.studentId}:${stat.keyId}`, stat)
     for (const record of records) {
-        const existing = map.get(record.key)
+        const mapKey = `${studentId}:${record.key}`
+        const existing = map.get(mapKey)
         const correct = (existing?.correct ?? 0) + record.correct
         const incorrect = (existing?.incorrect ?? 0) + record.incorrect
-        map.set(record.key, {
+        map.set(mapKey, {
             id: existing?.id ?? newId('st'),
             studentId,
             keyId: record.key,
@@ -626,7 +632,7 @@ async function detailFor(student: Student): Promise<StudentDetail> {
     const lessonCounts = Object.entries(completedByLevel).map(([level, completed]) => ({
         level,
         completed,
-        total: level === 'beginner' ? 40 : level === 'intermediate' ? 30 : 36,
+        total: CURRICULUM_TOTALS[level as keyof typeof CURRICULUM_TOTALS] ?? 0,
     }))
     const totalSessions = sessions.length
     const completed = sessions.filter((s) => s.correctCount > 0)

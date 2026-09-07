@@ -4,6 +4,7 @@ import { TrendingUp, Target, Gauge, Clock, TrendingDown, Minus, Fingerprint, Cal
 import { useStudentStore } from '@/stores/student-store'
 import * as backend from '@/services/backend'
 import type { StudentDetail, TypingSession } from '@/services/types'
+import { lessonCountsWithCurriculumTotals } from '@/data/curriculum'
 import { Stat, Spinner, PageHeader } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
@@ -150,11 +151,12 @@ export default function ProgressPage() {
                     <Stat icon={<Clock className="size-4" />} label="Minutes practiced" value={`${rangeMinutes.toFixed(0)}`} />
                     <Stat icon={<TrendingUp className="size-4" />} label="Best WPM" value={rangeSessions ? Math.round(rangeBest) : '—'} />
                 </div>
-                <div className="inline-flex rounded-lg border border-line bg-muted/70 p-1">
+                <div className="inline-flex rounded-lg border border-line bg-muted/70 p-1" role="group" aria-label="Session range">
                     {(['week', 'month', 'all'] as Range[]).map((r) => (
                         <button
                             key={r}
                             type="button"
+                            aria-pressed={range === r}
                             onClick={() => setRange(r)}
                             className={cn(
                                 'rounded-md px-3 py-1.5 text-xs capitalize transition-[color,background-color,box-shadow] duration-150',
@@ -251,7 +253,7 @@ export default function ProgressPage() {
                 <div className={cn(cardClass, 'p-5 lg:col-span-2')}>
                     <h2 className={sectionTitleClass}>Curriculum levels</h2>
                     <ul className="mt-4 space-y-3">
-                        {detail.lessonCounts.map((lc) => (
+                        {lessonCountsWithCurriculumTotals(detail.lessonCounts).map((lc) => (
                             <li key={lc.level}>
                                 <div className="flex items-baseline justify-between text-sm">
                                     <span className="text-muted-foreground capitalize">{lc.level}</span>

@@ -230,7 +230,13 @@ export async function importBackup(): Promise<ImportReport | null> {
     if (!picked) return null
     const text = await picked.text()
     localStorage.setItem('onetype:local:import:demo', text)
-    return localBackend.importFile('demo')
+    try {
+        return await localBackend.importFile('demo')
+    } finally {
+        // The raw backup only exists to funnel the picked file into the local
+        // backend; drop it immediately so it never lingers in storage.
+        localStorage.removeItem('onetype:local:import:demo')
+    }
 }
 
 export async function recordActivity(req: RecordActivityRequest, today: string): Promise<RecordActivityResult> {

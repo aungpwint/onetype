@@ -602,11 +602,13 @@ function SettingsSearch({
                     value={query}
                     onChange={(e) => onQuery(e.target.value)}
                     placeholder="Search settings… e.g. caret, sound, backup"
+                    aria-label="Search settings"
                     className={cn(inputClass, 'pl-9 pr-20')}
                 />
                 {query !== '' ? (
                     <button
                         onClick={() => onQuery('')}
+                        aria-label="Clear search"
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-muted-foreground hover:text-foreground"
                     >
                         Clear

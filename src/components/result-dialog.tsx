@@ -65,12 +65,24 @@ class ResultDialogBoundary extends Component<{ children: ReactNode }, { hasError
     }
 
     componentDidCatch(error: unknown) {
-        console.error('Result dialog crashed; resetting to a fresh run.', error)
-        useTypingStore.getState().clear()
+        console.error('Result dialog crashed.', error)
     }
 
     render() {
-        return this.state.hasError ? null : this.props.children
+        if (this.state.hasError) {
+            return (
+                <Modal open onClose={() => useTypingStore.getState().clear()} ariaLabel="Results unavailable">
+                    <div className="flex flex-col items-start gap-3 p-4">
+                        <p className="text-sm text-muted-foreground">
+                            The result summary could not be rendered, but your session was saved. You can safely close this dialog
+                            and review your progress from the Progress page.
+                        </p>
+                        <Button onClick={() => useTypingStore.getState().clear()}>Close</Button>
+                    </div>
+                </Modal>
+            )
+        }
+        return this.props.children
     }
 }
 

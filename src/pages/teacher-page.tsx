@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { GraduationCap, Users, Clock, Target, Gauge, Trophy, FileText, Fingerprint, Download, Printer } from 'lucide-react'
 import * as backend from '@/services/backend'
 import type { StudentDetail, TeacherOverview, TypingTest } from '@/services/types'
+import { lessonCountsWithCurriculumTotals } from '@/data/curriculum'
 import type { LeaderboardEntry } from '@/core/leaderboard/ranking'
 import { buildTestRecord } from '@/core/tests/record'
 import { keyIdLabel } from '@/core/reinforcement/service'
@@ -274,7 +275,7 @@ export default function TeacherPage() {
                         <Stat icon={<GraduationCap className="size-4" />} label="Sessions" value={detail.totalSessions} />
                     </div>
                     <div className="mt-4 space-y-1.5 text-sm text-muted-foreground">
-                        {detail.lessonCounts.map((lc) => (
+                        {lessonCountsWithCurriculumTotals(detail.lessonCounts).map((lc) => (
                             <div key={lc.level} className="flex items-center gap-2">
                                 <span className="w-32 capitalize">{lc.level}</span>
                                 <Progress value={pct(lc.completed, lc.total)} className="flex-1" />

@@ -83,6 +83,22 @@ function PalettePanel({ context, close }: { context: CommandContext; close: (ope
             event.preventDefault()
             run(activeItem.command)
         }
+        if (event.key === 'Tab') {
+            // Focus trap: cycle between the search input and the command
+            // buttons so Tab (and Shift+Tab) never escapes the modal dialog.
+            event.preventDefault()
+            const focusables = Array.from(document.querySelectorAll<HTMLElement>('[data-palette-focusable]'))
+            if (focusables.length === 0) return
+            const active = document.activeElement
+            const current = focusables.indexOf(active as HTMLElement)
+            if (event.shiftKey) {
+                const prev = current <= 0 ? focusables.length - 1 : current - 1
+                focusables[prev]?.focus()
+            } else {
+                const next = current < 0 ? 0 : (current + 1) % focusables.length
+                focusables[next]?.focus()
+            }
+        }
     }
 
     return (
@@ -107,6 +123,13 @@ function PalettePanel({ context, close }: { context: CommandContext; close: (ope
                     <Search className="size-4 shrink-0 text-muted-foreground" />
                     <input
                         autoFocus
+                        data-palette-focusable
+                        role="combobox"
+                        aria-expanded="true"
+                        aria-controls="command-palette-list"
+                        aria-activedescendant={activeItem ? `command-option-${activeItem.command.id}` : undefined}
+                        aria-autocomplete="list"
+                        aria-label="Search commands"
                         value={query}
                         onChange={(event) => {
                             setQuery(event.currentTarget.value)
@@ -119,7 +142,7 @@ function PalettePanel({ context, close }: { context: CommandContext; close: (ope
                     <kbd className="rounded-md border border-line bg-muted px-1.5 py-0.5 font-mono text-[0.625rem] text-muted-foreground">esc</kbd>
                 </div>
 
-                <div className="max-h-[46vh] overflow-y-auto p-1.5">
+                <div id="command-palette-list" role="listbox" aria-label="Commands" className="max-h-[46vh] overflow-y-auto p-1.5">
                     {filtered.length === 0 ? (
                         <p className="px-3 py-6 text-center text-sm text-muted-foreground">No command matches “{query}”.</p>
                     ) : (
@@ -134,15 +157,23 @@ function PalettePanel({ context, close }: { context: CommandContext; close: (ope
                                             const disabled = command.disabled()
                                             const selected = activeItem?.command.id === command.id
                                             return (
-                                                <li key={command.id}>
+                                                <li key={command.id} role="presentation">
                                                     <button
+                                                        id={`command-option-${command.id}`}
                                                         type="button"
+                                                        role="option"
+                                                        aria-selected={selected}
+                                                        data-palette-focusable
                                                         className={cn(
                                                             'flex w-full items-center justify-between gap-3 rounded-lg px-3 py-1.5 text-left text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
                                                             selected ? 'bg-accent/10 text-accent' : 'text-foreground',
                                                             disabled && 'cursor-not-allowed opacity-45',
                                                         )}
                                                         disabled={disabled}
+                                                        onFocus={() => {
+                                                            const index = selectable.findIndex((entry) => entry.command.id === command.id)
+                                                            if (index >= 0) setBrowseIndex(index)
+                                                        }}
                                                         onClick={() => {
                                                             void (document.activeElement as HTMLElement | null)?.blur()
                                                             run(command)

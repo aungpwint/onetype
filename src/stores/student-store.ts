@@ -53,10 +53,18 @@ export const useStudentStore = create<StudentState>((set, get) => ({
     remove: async (id) => {
         await backend.deleteStudent(id)
         const removedActive = get().active?.id === id
+        const remaining = get().students.filter((s) => s.id !== id)
         set((state) => ({
-            students: state.students.filter((s) => s.id !== id),
+            students: remaining,
             active: removedActive ? null : state.active,
         }))
+        // Deletion of the active learner demotes the next one (the backend
+        // already promoted it): reselect so the UI never lands on a blank page.
+        if (removedActive && remaining.length > 0) {
+            void get()
+                .select(remaining[0].id)
+                .catch(() => undefined)
+        }
     },
     select: async (id) => {
         const active = await backend.setActiveStudent(id)
