@@ -793,25 +793,25 @@ pub fn class_leaderboard(conn: &Connection, test_id: &str) -> Result<Vec<Leaderb
     let mut by_student: std::collections::HashMap<String, Acc> = std::collections::HashMap::new();
     for row in rows {
         let (student_id, name, wpm, accuracy, passed, scored_on) = row?;
-        let entry = by_student
-            .entry(student_id.clone())
-            .or_insert(Acc {
-                student_id,
-                name,
-                best_wpm: f64::NEG_INFINITY,
-                best_accuracy: 0.0,
-                passed: false,
-                scored_on: i64::MAX,
-                attempts: 0,
-                passed_attempts: 0,
-            });
+        let entry = by_student.entry(student_id.clone()).or_insert(Acc {
+            student_id,
+            name,
+            best_wpm: f64::NEG_INFINITY,
+            best_accuracy: 0.0,
+            passed: false,
+            scored_on: i64::MAX,
+            attempts: 0,
+            passed_attempts: 0,
+        });
         entry.attempts += 1;
         if passed {
             entry.passed_attempts += 1;
         }
         let better = wpm > entry.best_wpm
             || (wpm == entry.best_wpm && accuracy > entry.best_accuracy)
-            || (wpm == entry.best_wpm && accuracy == entry.best_accuracy && scored_on < entry.scored_on);
+            || (wpm == entry.best_wpm
+                && accuracy == entry.best_accuracy
+                && scored_on < entry.scored_on);
         if better {
             entry.best_wpm = wpm;
             entry.best_accuracy = accuracy;
