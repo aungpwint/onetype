@@ -36,7 +36,7 @@ class UpdaterService {
         return this.status
     }
 
-    async check(currentVersion?: string): Promise<boolean> {
+    async check(currentVersion?: string, { silent = false } = {}): Promise<boolean> {
         if (this.checking) return false
         if (!isTauriRuntime()) {
             this.emit({ state: 'not-available' })
@@ -70,8 +70,12 @@ class UpdaterService {
             })
             return true
         } catch (err) {
-            const message = mapUpdateError(err)
-            this.emit({ state: 'error', message })
+            if (!silent) {
+                const message = mapUpdateError(err)
+                this.emit({ state: 'error', message })
+            } else {
+                this.emit({ state: 'not-available' })
+            }
             return false
         } finally {
             this.checking = false

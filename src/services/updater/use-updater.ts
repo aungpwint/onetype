@@ -39,7 +39,7 @@ export function useStartupUpdateCheck() {
             const last = Number(lastChecked) || 0
             if (throttled && now - last < CHECK_THROTTLE_MS) return
 
-            const available = await updaterService.check()
+            const available = await updaterService.check(undefined, { silent: true })
             if (disposed) return
 
             await setSetting('updater.lastChecked', String(now))
