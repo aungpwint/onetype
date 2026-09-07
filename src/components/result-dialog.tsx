@@ -220,7 +220,7 @@ function ResultDialogInner() {
 
             <div
                 className={cn(
-                    'mt-5 overflow-hidden rounded-2xl border bg-surface shadow-[var(--shadow-1)]',
+                    'mt-5 overflow-hidden rounded-2xl border bg-surface shadow-(--shadow-1)',
                     result.passed ? 'border-success/25' : 'border-warning/30',
                 )}
             >
@@ -337,7 +337,7 @@ function ResultDialogInner() {
                 ) : null}
             </div>
 
-            <div className="mt-5 flex flex-wrap justify-end gap-2 border-t border-line pt-4">
+            <div className="sticky bottom-0 z-10 -mx-6 mt-5 flex flex-wrap items-center justify-end gap-2 border-t border-line bg-card/85 px-6 pt-4 pb-4 backdrop-blur-2xl">
                 <Button variant="outline" onClick={beforeNavigate(isDrill ? '/' : isLesson ? '/learn' : isPractice ? '/practice' : '/tests')}>
                     <ArrowLeft className="size-4" />
                     {isDrill ? 'Dashboard' : 'Back to list'}
