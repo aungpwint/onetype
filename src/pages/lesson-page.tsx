@@ -4,6 +4,7 @@ import { useTypingStore } from '@/stores/typing-store'
 import { ExerciseWorkspace } from '@/components/session/exercise-workspace'
 import { SessionGate } from '@/components/session/session-workspace'
 import { useBeginSession } from '@/hooks/use-begin-session'
+import { UI_KEYS } from '@/services/storage-keys'
 import type { TypingMode } from '@/types'
 
 export default function LessonPage() {
@@ -13,7 +14,7 @@ export default function LessonPage() {
     const beginLesson = useTypingStore((s) => s.beginLesson)
 
     const load = useCallback(() => {
-        const mode = (localStorage.getItem('onetype:lesson-mode') as TypingMode | null) ?? 'guided'
+        const mode = (localStorage.getItem(UI_KEYS.lessonMode) as TypingMode | null) ?? 'guided'
         return lessonId ? beginLesson(lessonId, mode) : Promise.resolve()
     }, [lessonId, beginLesson])
 

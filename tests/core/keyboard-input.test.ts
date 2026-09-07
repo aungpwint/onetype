@@ -192,11 +192,11 @@ describe('Keycap label equals inserted character (single mapping)', () => {
 })
 
 describe('Myanmar curriculum is keyboard-typeable end to end', () => {
-    it('every Myanmar-bearing lesson line reconstructs to its exact stored Unicode', () => {
-        const lessons = getLessonRepository().listAllByLanguage().my
+    it('every Myanmar-bearing lesson line reconstructs to its exact stored Unicode', async () => {
+        const lessons = (await getLessonRepository()).listAllByLanguage().my
         expect(lessons.length).toBeGreaterThan(0)
         for (const lesson of lessons) {
-            const canonical = getCanonicalLesson(lesson.id)
+            const canonical = await getCanonicalLesson(lesson.id)
             // Mixed-script lessons type through the mixed layout; pure Myanmar
             // lessons through the Myanmar layout.
             const layout = getLayoutOrThrow(toLayoutId(canonical.keyboard))

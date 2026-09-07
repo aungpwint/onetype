@@ -5,7 +5,7 @@
     "language": "my",
     "number": 8,
     "title": "Reporting Sentences",
-    "titleMy": "သတင်းနှင့် အစီရင်ခံ",
+    "titleMy": "အစီရင်ခံ ဝါကျများ",
     "description": "News and reporting style sentences.",
     "difficulty": "hard",
     "estimatedMinutes": 15,
@@ -14,52 +14,11 @@
         "minAccuracy": 92,
         "minWpm": 25
     },
-    "focus": [
-        "sentences"
-    ],
-    "prerequisites": [
-        "lesson-my-advanced-7"
-    ],
-    "focusKeys": [
-        "KeyK",
-        "ShiftLeft",
-        "KeyD",
-        "ShiftRight",
-        "KeyE",
-        "KeyA",
-        "KeyH",
-        "Digit7",
-        "KeyU",
-        "KeyP",
-        "KeyR",
-        "KeyF",
-        "Semicolon",
-        "KeyW",
-        "KeyB",
-        "Period",
-        "KeyV",
-        "KeyI",
-        "KeyT",
-        "KeyZ",
-        "KeyO",
-        "KeyM",
-        "KeyY",
-        "KeyG"
-    ],
-    "targetFingers": [
-        "right-middle",
-        "left-pinky",
-        "left-middle",
-        "right-pinky",
-        "right-index",
-        "left-index",
-        "left-ring",
-        "right-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focus": ["sentences"],
+    "prerequisites": ["lesson-my-advanced-7"],
+    "focusKeys": ["KeyU", "KeyT", "KeyR", "KeyD", "KeyF", "KeyG", "KeyH", "Semicolon", "Period", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["right-middle", "left-pinky", "left-middle", "right-pinky", "right-index", "left-index", "left-ring"],
+    "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [
         {
@@ -68,10 +27,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "ဒီနေ့ ရေ က စိမ်း တယ် ။",
-                    "မနက် က နေ လင်း တယ် ။"
-                ],
+                "sentences": ["ယနေ့ မိုးလေဝသ အခြေအနေမှာ သာယာမည်ဖြစ်သည်။", "အစည်းအဝေးကို နံနက် ကိုးနာရီတွင် စတင်မည်ဖြစ်သည်။"],
                 "count": 4
             }
         },
@@ -81,10 +37,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "အဖေ က သတင်း စာ ကို ဖတ် ပါ တယ် ။",
-                    "အမေ က စာ ကို ရေး ပါ တယ် ။"
-                ],
+                "sentences": ["လုပ်ငန်းဆောင်ရွက်ချက်များကို အစီရင်ခံစာ တင်ပြသည်။", "သတင်းအချက်အလက်များကို စနစ်တကျ ပြုစုထားသည်။"],
                 "count": 4
             }
         }

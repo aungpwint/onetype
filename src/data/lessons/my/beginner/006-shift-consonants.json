@@ -4,9 +4,9 @@
     "level": "beginner",
     "language": "my",
     "number": 6,
-    "title": "Shift Consonants: ဖ ဂ ဋ္ဌ",
-    "titleMy": "Shift ဗျည်း - ဖ ဂ ဋ္ဌ",
-    "description": "Shift consonants: ဖ (KeyZ) ဂ (Semicolon+Shift) ဋ္ဌ (Digit3+Shift + virama + KeyX+Shift)",
+    "title": "Shift Consonants: ဈ ဇ ဒ ဓ",
+    "titleMy": "Shift ဗျည်းများ - ဈ ဇ ဒ ဓ",
+    "description": "Shift consonants practice: ဈ, ဇ, ဒ, ဓ, ဏ, ဌ, ဿ, ဗ",
     "difficulty": "easy",
     "estimatedMinutes": 6,
     "keyboard": "myanmar",
@@ -14,35 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyQ",
-        "ShiftRight",
-        "KeyZ",
-        "KeyK",
-        "ShiftLeft",
-        "KeyL",
-        "KeyP",
-        "KeyX",
-        "KeyO",
-        "KeyA"
-    ],
-    "focus": [
-        "shift"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "right-pinky",
-        "right-middle",
-        "right-ring",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-5"
-    ],
+    "focusKeys": ["KeyQ", "ShiftRight", "KeyZ", "KeyK", "ShiftLeft", "KeyL", "KeyP", "KeyX", "KeyO", "KeyA"],
+    "focus": ["shift"],
+    "targetFingers": ["left-pinky", "right-pinky", "right-middle", "right-ring", "left-ring"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-my-beginner-5"],
     "requiresShift": true,
     "exercises": [
         {
@@ -51,10 +27,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဈ",
-                    "ဇ"
-                ],
+                "keys": ["ဈ", "ဇ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -67,10 +40,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဒ",
-                    "ဓ"
-                ],
+                "keys": ["ဒ", "ဓ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -83,10 +53,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဏ",
-                    "ဌ"
-                ],
+                "keys": ["ဏ", "ဌ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -99,10 +66,7 @@
             "instruction": "Hold the correct Shift key",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဿ",
-                    "ဗ"
-                ],
+                "keys": ["ဿ", "ဗ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,

@@ -14,12 +14,42 @@
         "minAccuracy": 94,
         "minWpm": 30
     },
+    "focusKeys": [
+        "KeyA",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "Semicolon",
+        "Period",
+        "ShiftLeft",
+        "ShiftRight"
+    ],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
+    "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-17-ex-1",
             "kind": "text",
-            "instruction": "နိုင်ငံတစ်ဝန်း ငြိမ်းချမ်းရေးအတွက် ပညာရေး စနစ်ကို တိုးတက်အောင် ဆောင်ရွက်ရန် ဆုံးဖြတ်ခဲ့ကြသည်။",
-            "text": "နိုင်ငံတစ်ဝန်း ငြိမ်းချမ်းရေးအတွက် ပညာရေး စနစ်ကို တိုးတက်အောင် ဆောင်ရွက်ရန် ဆုံးဖြတ်ခဲ့ကြသည်။"
+            "instruction": "နိုင်ငံတစ်ဝန်း ငြိမ်းချမ်းရေးအတွက် ပညာရေး စနစ်ကို တိုးတက်အောင် ဆောင်ရွက်ရန် ဆုံးဖြတ်ခဲ့ကြသည်။ လူထုကလည်း ထောက်ခံခဲ့ကြသည်။",
+            "text": "နိုင်ငံတစ်ဝန်း ငြိမ်းချမ်းရေးအတွက် ပညာရေး စနစ်ကို တိုးတက်အောင် ဆောင်ရွက်ရန် ဆုံးဖြတ်ခဲ့ကြသည်။ လူထုကလည်း ထောက်ခံခဲ့ကြသည်။"
         }
     ],
     "focus": ["speed", "accuracy", "sentences", "unicode"],

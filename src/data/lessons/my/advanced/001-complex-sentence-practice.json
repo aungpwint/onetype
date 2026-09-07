@@ -5,7 +5,7 @@
     "language": "my",
     "number": 1,
     "title": "Complex Sentence Practice",
-    "titleMy": "ရှုပ်ထွေးသည့် ဝါကျ လေ့ကျင့်ခန်း",
+    "titleMy": "ဝါကျရှည်များ လေ့ကျင့်ခန်း",
     "description": "Type complex sentences accurately.",
     "difficulty": "easy",
     "estimatedMinutes": 10,
@@ -14,53 +14,11 @@
         "minAccuracy": 90,
         "minWpm": 18
     },
-    "focus": [
-        "sentences"
-    ],
-    "prerequisites": [
-        "lesson-my-intermediate-15"
-    ],
-    "focusKeys": [
-        "KeyT",
-        "KeyZ",
-        "KeyA",
-        "KeyU",
-        "Digit7",
-        "ShiftLeft",
-        "KeyD",
-        "KeyK",
-        "KeyV",
-        "KeyW",
-        "KeyB",
-        "ShiftRight",
-        "KeyF",
-        "Period",
-        "KeyR",
-        "KeyQ",
-        "KeyE",
-        "KeyJ",
-        "KeyH",
-        "Semicolon",
-        "KeyP",
-        "KeyO",
-        "KeyN",
-        "KeyG",
-        "KeyM"
-    ],
-    "targetFingers": [
-        "left-index",
-        "left-pinky",
-        "right-index",
-        "left-middle",
-        "right-middle",
-        "left-ring",
-        "right-pinky",
-        "right-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focus": ["sentences"],
+    "prerequisites": ["lesson-my-intermediate-15"],
+    "focusKeys": ["KeyT", "KeyF", "KeyE", "KeyD", "KeyU", "KeyR", "KeyH", "Semicolon", "KeyA", "KeyV", "KeyW", "KeyS", "ShiftRight"],
+    "targetFingers": ["left-index", "left-middle", "right-index", "left-pinky", "right-pinky", "left-ring"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -69,10 +27,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "အဖေ က ရေ ကို လို တယ် ။",
-                    "အမေ က ဆန် ကို လို တယ် ။"
-                ],
+                "sentences": ["အဖေက ရေကို လိုသည်။", "အမေက ဆန်ကို လိုသည်။", "ဒီမြို့တော်ကို သွားသည်။"],
                 "count": 4
             }
         },
@@ -82,10 +37,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "မြို့ က အ ကြီး ဆုံး မြို့ ဖြစ် သည် ။",
-                    "ရွာ က သေး သော ရွာ ။"
-                ],
+                "sentences": ["ဒီမြို့က အကြီးဆုံး မြို့ဖြစ်သည်။", "ဒီရွာက သေးသော ရွာဖြစ်သည်။", "ဘာကို ပြောကြသည်။", "ရွာတွေမှာ နေကြသည်။"],
                 "count": 4
             }
         }

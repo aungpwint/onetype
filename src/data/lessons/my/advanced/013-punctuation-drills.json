@@ -5,7 +5,7 @@
     "language": "my",
     "number": 13,
     "title": "Punctuation Drills",
-    "titleMy": "အနားသတ် သင်္ကေတ",
+    "titleMy": "နားသတ် လေ့ကျင့်ခန်း",
     "description": "Comma and period in various contexts.",
     "difficulty": "hard",
     "estimatedMinutes": 15,
@@ -14,52 +14,36 @@
         "minAccuracy": 93,
         "minWpm": 25
     },
-    "focus": [
-        "punctuation"
-    ],
-    "prerequisites": [
-        "lesson-my-advanced-12"
-    ],
+    "focus": ["punctuation"],
+    "prerequisites": ["lesson-my-advanced-12"],
     "focusKeys": [
-        "KeyC",
-        "KeyJ",
         "KeyA",
-        "Comma",
-        "ShiftLeft",
-        "KeyV",
-        "KeyU",
+        "KeyC",
+        "KeyD",
+        "KeyE",
         "KeyF",
         "KeyG",
+        "KeyH",
         "KeyI",
-        "Semicolon",
-        "Period",
-        "KeyE",
+        "KeyJ",
+        "KeyK",
         "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
         "KeyR",
         "KeyS",
-        "KeyP",
-        "KeyD",
-        "ShiftRight",
+        "KeyU",
+        "KeyV",
+        "Semicolon",
+        "Comma",
+        "Period",
         "Digit7",
-        "KeyK",
-        "KeyO",
-        "KeyH",
-        "KeyN"
+        "ShiftLeft",
+        "ShiftRight"
     ],
-    "targetFingers": [
-        "left-middle",
-        "right-index",
-        "left-pinky",
-        "right-middle",
-        "left-index",
-        "right-pinky",
-        "right-ring",
-        "left-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-middle", "right-index", "left-pinky", "right-middle", "left-index", "right-pinky", "right-ring", "left-ring"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -68,10 +52,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "ခြေ ၊ လက် ၊ ခေါင်း ။",
-                    "နား ၊ မျက်စိ ၊ နှာခေါင်း ။"
-                ],
+                "sentences": ["ခြေ ၊ လက် ၊ ခေါင်း ။", "နား ၊ မျက်စိ ၊ နှာခေါင်း ။"],
                 "count": 4
             }
         },
@@ -81,10 +62,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "ရေ ကို သုံး ၊ နေ ကို ကြည့် ။",
-                    "ညီ က လာ ၊ ညီမ က သွား ။"
-                ],
+                "sentences": ["ရေ ကို သုံး ၊ နေ ကို ကြည့် ။", "ညီ က လာ ၊ ညီမ က သွား ။"],
                 "count": 4
             }
         }

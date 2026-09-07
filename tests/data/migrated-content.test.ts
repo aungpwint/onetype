@@ -6,27 +6,27 @@ import { languageDefinitionFor } from '@/core/pedagogy'
 
 const PLANNED = 126
 
-function allGenerated(lessonId: string): GeneratedExercise[] {
-    return getCanonicalLesson(lessonId).exercises.filter(isGeneratedExercise) as GeneratedExercise[]
+async function allGenerated(lessonId: string): Promise<GeneratedExercise[]> {
+    return (await getCanonicalLesson(lessonId)).exercises.filter(isGeneratedExercise) as GeneratedExercise[]
 }
 
-describe('migrated generated content', () => {
-    const lessons = getLessonRepository().getLessons()
+const lessons = (await getLessonRepository()).getLessons()
 
-    it('exactly the planned lesson set is generated; the rest stay authored prose', () => {
+describe('migrated generated content', () => {
+    it('exactly the planned lesson set is generated; the rest stay authored prose', async () => {
         let generated = 0
         for (const lesson of lessons) {
-            if (getCanonicalLesson(lesson.id).exercises.some(isGeneratedExercise)) generated += 1
+            if ((await getCanonicalLesson(lesson.id)).exercises.some(isGeneratedExercise)) generated += 1
         }
         expect(generated).toBe(PLANNED)
         // bilingual advanced lesson keeps its authored prose
-        const bilingual = getCanonicalLesson('lesson-my-advanced-11')
+        const bilingual = await getCanonicalLesson('lesson-my-advanced-11')
         expect(bilingual.exercises.every((e) => !isGeneratedExercise(e))).toBe(true)
     })
 
-    it('every generated exercise carries a schema-shaped generator', () => {
+    it('every generated exercise carries a schema-shaped generator', async () => {
         for (const lesson of lessons) {
-            for (const ex of allGenerated(lesson.id)) {
+            for (const ex of await allGenerated(lesson.id)) {
                 const gen = ex.generator
                 expect(['chunks', 'words', 'sentences'], `${lesson.id}: ${gen.type}`).toContain(gen.type)
                 expect(gen.count, lesson.id).toBeGreaterThan(0)
@@ -39,22 +39,22 @@ describe('migrated generated content', () => {
         }
     })
 
-    it('resolves identically across repeated calls (deterministic seeding)', () => {
+    it('resolves identically across repeated calls (deterministic seeding)', async () => {
         for (const lesson of lessons) {
-            if (allGenerated(lesson.id).length === 0) continue
-            const a = resolveLessonById(lesson.id)
-            const b = resolveLessonById(lesson.id)
+            if ((await allGenerated(lesson.id)).length === 0) continue
+            const a = await resolveLessonById(lesson.id)
+            const b = await resolveLessonById(lesson.id)
             expect(a.sequence.text, lesson.id).toBe(b.sequence.text)
             expect(a.sequence.units.length, lesson.id).toBe(b.sequence.units.length)
         }
     })
 
-    it('declared focusKeys are each exercised by the generated text', () => {
+    it('declared focusKeys are each exercised by the generated text', async () => {
         for (const lesson of lessons) {
-            if (allGenerated(lesson.id).length === 0) continue
-            const canonical = getCanonicalLesson(lesson.id)
+            if ((await allGenerated(lesson.id)).length === 0) continue
+            const canonical = await getCanonicalLesson(lesson.id)
             const declared = canonical.focusKeys ?? []
-            const resolved = resolveLessonById(lesson.id)
+            const resolved = await resolveLessonById(lesson.id)
             const unitCodes = new Set(resolved.sequence.units.map((u) => u.keyCode))
             const hasShiftRight = resolved.sequence.units.some((u) => u.modifier === 'shift' && u.shiftHand === 'right')
             const hasShiftLeft = resolved.sequence.units.some((u) => u.modifier === 'shift' && u.shiftHand === 'left')
@@ -66,10 +66,10 @@ describe('migrated generated content', () => {
         }
     })
 
-    it('keeps spacing healthy (no double spaces, no empty tokens)', () => {
+    it('keeps spacing healthy (no double spaces, no empty tokens)', async () => {
         for (const lesson of lessons) {
-            if (allGenerated(lesson.id).length === 0) continue
-            const resolved = resolveLessonById(lesson.id)
+            if ((await allGenerated(lesson.id)).length === 0) continue
+            const resolved = await resolveLessonById(lesson.id)
             expect(resolved.sequence.text.includes('  '), lesson.id).toBe(false)
             for (const phase of resolved.phases) {
                 expect(phase.text.trimStart(), lesson.id).toBe(phase.text)
@@ -77,9 +77,9 @@ describe('migrated generated content', () => {
         }
     })
 
-    it('every generated source string is fully typeable through its layout', () => {
+    it('every generated source string is fully typeable through its layout', async () => {
         for (const lesson of lessons) {
-            for (const ex of allGenerated(lesson.id)) {
+            for (const ex of await allGenerated(lesson.id)) {
                 const gen = ex.generator
                 const lang = lesson.language === 'myanmar' ? 'myanmar' : 'english'
                 const layout = languageDefinitionFor(lang)

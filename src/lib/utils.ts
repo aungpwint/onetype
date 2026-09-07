@@ -40,3 +40,7 @@ export const chipClass = cn('inline-flex items-center gap-1.5 rounded-full borde
 export const selectClass = cn(
     'flex h-9 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30',
 )
+
+export const inputClass = cn(
+    'flex h-9 w-full rounded-lg border border-line-strong/60 bg-background px-3 py-1 text-sm shadow-sm transition-[border-color,box-shadow] placeholder:text-muted-foreground hover:border-line-strong focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:border-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+)

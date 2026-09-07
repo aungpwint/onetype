@@ -5,7 +5,7 @@
     "language": "my",
     "number": 18,
     "title": "Examination Practice",
-    "titleMy": "စာမေးပွဲ ကြိုတင် လေ့ကျင့်ခန်း",
+    "titleMy": "စာမေးပွဲ လေ့ကျင့်ခန်း",
     "description": "Final examination passage for Myanmar.",
     "difficulty": "hard",
     "estimatedMinutes": 20,
@@ -14,6 +14,37 @@
         "minAccuracy": 95,
         "minWpm": 32
     },
+    "focusKeys": [
+        "KeyA",
+        "KeyB",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "Semicolon",
+        "Period",
+        "ShiftLeft",
+        "ShiftRight"
+    ],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
+    "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-18-ex-1",
@@ -24,8 +55,8 @@
         {
             "id": "lesson-my-advanced-18-ex-2",
             "kind": "text",
-            "instruction": "အချိန်ကိုလေးစားပါ။ စာကိုပုံမှန်လေ့လာပါ။ ကျန်းမာရေးအတွက် အိပ်ရေးဝဝအိပ်ပါ။",
-            "text": "အချိန်ကိုလေးစားပါ။ စာကိုပုံမှန်လေ့လာပါ။ ကျန်းမာရေးအတွက် အိပ်ရေးဝဝအိပ်ပါ။"
+            "instruction": "အချိန်ကိုလေးစားပါ။ စာကိုပုံမှန်လေ့လာပါ။ ကျန်းမာရေးအတွက် အိပ်ရေးဝဝအိပ်ပါ။ ဘာသာစကားကို လေ့ကျင့်ပါ။",
+            "text": "အချိန်ကိုလေးစားပါ။ စာကိုပုံမှန်လေ့လာပါ။ ကျန်းမာရေးအတွက် အိပ်ရေးဝဝအိပ်ပါ။ ဘာသာစကားကို လေ့ကျင့်ပါ။"
         }
     ],
     "focus": ["speed", "accuracy", "sentences", "unicode"],

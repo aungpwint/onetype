@@ -106,6 +106,7 @@ function ResultDialogInner() {
     const practiceMissed = useTypingStore((s) => s.practiceMissedWords)
     const engine = useTypingStore((s) => s.engine)
     const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel)
+    const loadCatalog = useLessonStore((s) => s.loadCatalog)
 
     const pb = usePersonalBest(result?.metrics.speed ?? 0, result?.metrics.speedUnit ?? 'wpm', session?.startedAt ?? 0, session?.layout.id ?? '')
     const rank = useClassResultRank(session?.test?.id ?? null)
@@ -116,6 +117,10 @@ function ResultDialogInner() {
                   (l) => l.number === session.resolved.number + 1 && l.language === session.resolved.language,
               )?.id ?? null)
             : null
+
+    useEffect(() => {
+        void loadCatalog()
+    }, [loadCatalog])
 
     useEffect(() => {
         if (!nextLessonId) return

@@ -157,7 +157,7 @@ export function TargetText() {
 
     return (
         <motion.div
-            className="mx-auto w-full max-w-5xl pt-4"
+            className="mx-auto w-full max-w-5xl pb-4"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}

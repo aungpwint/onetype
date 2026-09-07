@@ -5,7 +5,7 @@
     "language": "my",
     "number": 5,
     "title": "Common Words Level 1",
-    "titleMy": "အသုံးများသော စကားလုံး (၁)",
+    "titleMy": "အသုံးများသော စကားလုံးများ (၁)",
     "description": "Work and daily life vocabulary.",
     "difficulty": "medium",
     "estimatedMinutes": 12,
@@ -14,53 +14,11 @@
         "minAccuracy": 92,
         "minWpm": 20
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-my-advanced-4"
-    ],
-    "focusKeys": [
-        "Digit7",
-        "ShiftLeft",
-        "KeyA",
-        "KeyT",
-        "KeyZ",
-        "KeyR",
-        "KeyC",
-        "KeyJ",
-        "KeyG",
-        "ShiftRight",
-        "Semicolon",
-        "KeyE",
-        "KeyM",
-        "KeyV",
-        "KeyU",
-        "KeyF",
-        "KeyW",
-        "KeyS",
-        "KeyD",
-        "KeyK",
-        "KeyH",
-        "KeyI",
-        "KeyN",
-        "KeyB",
-        "KeyY",
-        "KeyP"
-    ],
-    "targetFingers": [
-        "right-index",
-        "left-pinky",
-        "left-index",
-        "left-middle",
-        "right-pinky",
-        "left-ring",
-        "right-middle"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-my-advanced-4"],
+    "focusKeys": ["KeyT", "KeyF", "KeyD", "KeyU", "KeyR", "KeyH", "Semicolon", "KeyA", "KeyE", "KeyM", "KeyV", "KeyW", "KeyS", "ShiftLeft"],
+    "targetFingers": ["left-index", "left-middle", "right-index", "left-pinky", "right-pinky", "left-ring"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {

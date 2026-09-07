@@ -36,6 +36,9 @@ const CARD_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
 export default function Learn() {
     const { level: levelParam } = useParams<{ level: string }>()
     const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel)
+    const catalogLoaded = useLessonStore((s) => s.catalogLoaded)
+    const catalogError = useLessonStore((s) => s.catalogError)
+    const loadCatalog = useLessonStore((s) => s.loadCatalog)
     const progress = useLessonStore((s) => s.progress)
     const progressStudentId = useLessonStore((s) => s.progressStudentId)
     const loadProgress = useLessonStore((s) => s.loadProgress)
@@ -46,6 +49,10 @@ export default function Learn() {
 
     const [level, setLevel] = useState<Level>(() => ((LEVEL_ORDER as string[]).includes(levelParam ?? '') ? (levelParam as Level) : 'beginner'))
     const [exerciseResults, setExerciseResults] = useState<ExerciseResult[]>([])
+
+    useEffect(() => {
+        void loadCatalog()
+    }, [loadCatalog])
 
     useEffect(() => {
         if (active) void loadProgress(active.id)
@@ -106,6 +113,18 @@ export default function Learn() {
     }, [list, masteryByLesson])
 
     const doneCount = list.filter((l) => progress?.[l.id]?.completed).length
+
+    if (!catalogLoaded) {
+        return (
+            <div className={appPageClass}>
+                {catalogError ? (
+                    <p className="text-sm text-destructive">Could not load the curriculum: {catalogError}</p>
+                ) : (
+                    <Spinner label="Loading curriculum…" />
+                )}
+            </div>
+        )
+    }
 
     return (
         <div className={appPageClass}>

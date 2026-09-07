@@ -283,7 +283,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
         beginLesson: async (lessonId, mode = 'guided') => {
             const active = await requireActiveStudent(set)
             if (!active) return
-            const resolved = resolveLessonById(lessonId)
+            const resolved = await resolveLessonById(lessonId)
             const layout = getLayoutOrThrow(resolved.layoutId)
             const attempt = await backend.nextExerciseAttempt(active.id, lessonId)
             const session: TypingSessionState = {
@@ -302,7 +302,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
         beginTest: async (test) => {
             const active = await requireActiveStudent(set)
             if (!active) return
-            const resolved = buildTestMaterial(test)
+            const resolved = await buildTestMaterial(test)
             const layout = resolveTestLayout(test)
             const attempt = await backend.nextTestAttempt(active.id, test.id)
             const session: TypingSessionState = {
@@ -336,7 +336,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
         beginPractice: async (config) => {
             // Quick practice is untracked: no student profile, attempts or
             // backend writes are needed.
-            const resolved = buildPracticeMaterial(config)
+            const resolved = await buildPracticeMaterial(config)
             const layout = layoutForLanguage(config.language)
             const session: TypingSessionState = {
                 kind: 'practice',

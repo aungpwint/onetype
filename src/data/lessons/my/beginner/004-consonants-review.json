@@ -5,7 +5,7 @@
     "language": "my",
     "number": 4,
     "title": "Consonants Review",
-    "titleMy": "ဗျည်း ပြန်လည်သုံးသပ်",
+    "titleMy": "ဗျည်းများ ပြန်လည်သုံးသပ်ခြင်း",
     "description": "Review all consonants learned so far, both hands.",
     "difficulty": "basic",
     "estimatedMinutes": 8,
@@ -14,39 +14,11 @@
         "minAccuracy": 87,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyQ",
-        "KeyW",
-        "KeyE",
-        "KeyR",
-        "KeyT",
-        "KeyU",
-        "KeyI",
-        "KeyO",
-        "KeyP",
-        "BracketLeft"
-    ],
-    "focus": [
-        "top-row"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-2",
-        "lesson-my-beginner-3"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index",
-        "right-index",
-        "right-middle",
-        "right-ring",
-        "right-pinky"
-    ],
+    "focusKeys": ["KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft"],
+    "focus": ["top-row"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-my-beginner-2", "lesson-my-beginner-3"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "exercises": [
         {
             "kind": "generated",
@@ -54,13 +26,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဆ",
-                    "တ",
-                    "န",
-                    "မ",
-                    "အ"
-                ],
+                "keys": ["ဆ", "တ", "န", "မ", "အ"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -73,13 +39,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "က",
-                    "င",
-                    "သ",
-                    "စ",
-                    "ဟ"
-                ],
+                "keys": ["က", "င", "သ", "စ", "ဟ"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -92,18 +52,7 @@
             "instruction": "Review everything you have learned",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဆ",
-                    "တ",
-                    "န",
-                    "မ",
-                    "အ",
-                    "က",
-                    "င",
-                    "သ",
-                    "စ",
-                    "ဟ"
-                ],
+                "keys": ["ဆ", "တ", "န", "မ", "အ", "က", "င", "သ", "စ", "ဟ"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

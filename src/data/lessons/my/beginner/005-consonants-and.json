@@ -14,31 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyC",
-        "KeyX",
-        "KeyZ",
-        "KeyB",
-        "KeyV",
-        "KeyN"
-    ],
-    "focus": [
-        "finger-control"
-    ],
-    "targetFingers": [
-        "left-middle",
-        "left-ring",
-        "left-pinky",
-        "left-index",
-        "right-index"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-4"
-    ],
+    "focusKeys": ["KeyC", "KeyX", "KeyZ", "KeyB", "KeyV", "KeyN"],
+    "focus": ["finger-control"],
+    "targetFingers": ["left-middle", "left-ring", "left-pinky", "left-index", "right-index"],
+    "targetHands": ["left", "right"],
+    "prerequisites": ["lesson-my-beginner-4"],
     "exercises": [
         {
             "kind": "generated",
@@ -46,9 +26,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ခ"
-                ],
+                "keys": ["ခ"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -61,9 +39,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ထ"
-                ],
+                "keys": ["ထ"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -76,10 +52,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဖ",
-                    "ဘ"
-                ],
+                "keys": ["ဖ", "ဘ"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -93,10 +66,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "လ",
-                    "ည"
-                ],
+                "keys": ["လ", "ည"],
                 "count": 14,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -110,14 +80,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ခ",
-                    "ထ",
-                    "ဖ",
-                    "ဘ",
-                    "လ",
-                    "ည"
-                ],
+                "keys": ["ခ", "ထ", "ဖ", "ဘ", "လ", "ည"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

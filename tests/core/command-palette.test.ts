@@ -3,7 +3,6 @@ import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
 import {
     COMMAND_GROUPS,
     filterCommands,
-    findCommandIndex,
     matchScore,
     moveSelection,
     searchableText,
@@ -107,10 +106,7 @@ describe('command registry', () => {
         expect(moveSelection(1, -5, 3)).toBe(2)
     })
 
-    it('findCommandIndex locates a command by id', () => {
-        const cmds = [command('a'), command('b')]
-        expect(findCommandIndex(cmds, 'b')).toBe(1)
-        expect(findCommandIndex(cmds, 'zz')).toBe(-1)
+    it('exposes a Navigate command group', () => {
         expect(COMMAND_GROUPS).toContain('Navigate')
     })
 })

@@ -5,7 +5,7 @@
     "language": "my",
     "number": 1,
     "title": "First Consonants: က and င",
-    "titleMy": "ပထမအက္ခရာများ - က နှင့် င",
+    "titleMy": "ပထမ ဗျည်းများ - က နှင့် င",
     "description": "Typing Myanmar consonants on the top row. က (KeyU) with right index, င (KeyI) with right middle.",
     "difficulty": "basic",
     "estimatedMinutes": 5,
@@ -14,22 +14,10 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyU",
-        "KeyI"
-    ],
-    "focus": [
-        "top-row",
-        "finger-control",
-        "key-memory"
-    ],
-    "targetFingers": [
-        "right-index",
-        "right-middle"
-    ],
-    "targetHands": [
-        "right"
-    ],
+    "focusKeys": ["KeyU", "KeyI"],
+    "focus": ["top-row", "finger-control", "key-memory"],
+    "targetFingers": ["right-index", "right-middle"],
+    "targetHands": ["right"],
     "exercises": [
         {
             "kind": "generated",
@@ -37,10 +25,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "က",
-                    "င"
-                ],
+                "keys": ["က", "င"],
                 "count": 18,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -53,10 +38,7 @@
             "instruction": "Alternate between both fingers and hands",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "က",
-                    "င"
-                ],
+                "keys": ["က", "င"],
                 "count": 18,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -69,10 +51,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "က",
-                    "င"
-                ],
+                "keys": ["က", "င"],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 5,

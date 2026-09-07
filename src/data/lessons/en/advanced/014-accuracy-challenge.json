@@ -14,12 +14,8 @@
         "minAccuracy": 95,
         "minWpm": 34
     },
-    "focus": [
-        "accuracy"
-    ],
-    "prerequisites": [
-        "lesson-en-advanced-13"
-    ],
+    "focus": ["accuracy"],
+    "prerequisites": ["lesson-en-advanced-13"],
     "focusKeys": [
         "KeyA",
         "KeyC",
@@ -44,20 +40,8 @@
         "KeyG",
         "KeyW"
     ],
-    "targetFingers": [
-        "left-pinky",
-        "left-middle",
-        "right-index",
-        "left-index",
-        "right-pinky",
-        "right-middle",
-        "left-ring",
-        "right-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-pinky", "left-middle", "right-index", "left-index", "right-pinky", "right-middle", "left-ring", "right-ring"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -65,12 +49,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "accuracy",
-                    "precision",
-                    "rhythm",
-                    "cadence"
-                ],
+                "words": ["accuracy", "precision", "rhythm", "cadence"],
                 "count": 20,
                 "maxWordLength": 9
             }
@@ -81,16 +60,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "a",
-                    "s",
-                    "d",
-                    "f",
-                    "j",
-                    "k",
-                    "l",
-                    ";"
-                ],
+                "keys": ["a", "s", "d", "f", "j", "k", "l", ";"],
                 "count": 22,
                 "chunkMin": 3,
                 "chunkMax": 6,
@@ -103,12 +73,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "steady",
-                    "timing",
-                    "control",
-                    "flow"
-                ],
+                "words": ["steady", "timing", "control", "flow"],
                 "count": 20,
                 "maxWordLength": 7
             }

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { TrendingUp, Target, Gauge, Clock, TrendingDown, Minus, Fingerprint, CalendarDays, Sparkles } from 'lucide-react'
 import { useStudentStore } from '@/stores/student-store'
 import * as backend from '@/services/backend'
-import type { StudentDetail, TypingSession } from '@/services/types'
+import type { LessonCount, StudentDetail, TypingSession } from '@/services/types'
 import { lessonCountsWithCurriculumTotals } from '@/data/curriculum'
 import { Stat, Spinner, PageHeader } from '@/components/ui'
 import { Button } from '@/components/ui/button'
@@ -101,17 +101,25 @@ export default function ProgressPage() {
     const active = useStudentStore((s) => s.active)
     const navigate = useNavigate()
     const [detail, setDetail] = useState<StudentDetail | null>(null)
+    const [lessonCounts, setLessonCounts] = useState<LessonCount[] | null>(null)
     const [range, setRange] = useState<Range>('all')
 
     useEffect(() => {
         if (!active) return
+        let alive = true
         void (async () => {
-            setDetail(await backend.studentDetail(active.id))
+            const next = await backend.studentDetail(active.id)
+            if (!alive) return
+            setDetail(next)
+            setLessonCounts(await lessonCountsWithCurriculumTotals(next.lessonCounts))
         })()
+        return () => {
+            alive = false
+        }
     }, [active])
 
     if (!active) return null
-    if (!detail)
+    if (!detail || !lessonCounts)
         return (
             <div className="flex min-h-0 flex-1 items-center justify-center">
                 <Spinner label="Tallying the marks…" />
@@ -253,7 +261,7 @@ export default function ProgressPage() {
                 <div className={cn(cardClass, 'p-5 lg:col-span-2')}>
                     <h2 className={sectionTitleClass}>Curriculum levels</h2>
                     <ul className="mt-4 space-y-3">
-                        {lessonCountsWithCurriculumTotals(detail.lessonCounts).map((lc) => (
+                        {lessonCounts.map((lc) => (
                             <li key={lc.level}>
                                 <div className="flex items-baseline justify-between text-sm">
                                     <span className="text-muted-foreground capitalize">{lc.level}</span>

@@ -3,10 +3,11 @@ import { listAllLessons, resolveLessonById, hasLesson, getLessonData, getCurricu
 import { getLayoutOrThrow } from '@/core/keyboard-layout/registry'
 import { remainingText, completedText } from '@/core/typing-engine/sequence'
 
-describe('curriculum content', () => {
-    const lessons = listAllLessons()
-    const meta = getCurriculumMeta()
+const lessons = await listAllLessons()
+const meta = await getCurriculumMeta()
+const ids = await allResolvedLessonIds()
 
+describe('curriculum content', () => {
     it('has the expected number of lessons per level per language', () => {
         expect(meta.countsByLevel.beginner).toBe(81)
         expect(meta.countsByLevel.intermediate).toBe(33)
@@ -14,17 +15,17 @@ describe('curriculum content', () => {
         expect(meta.totalLessons).toBe(150)
     })
 
-    it('every lesson id follows the convention lesson-{lang}-{level}-{number}', () => {
+    it('every lesson id follows the convention lesson-{lang}-{level}-{number}', async () => {
         for (const lesson of lessons) {
             const lang = lesson.language === 'english' ? 'en' : 'my'
             expect(lesson.id).toBe(`lesson-${lang}-${lesson.level}-${lesson.number}`)
-            expect(hasLesson(lesson.id)).toBe(true)
+            expect(await hasLesson(lesson.id)).toBe(true)
         }
     })
 
-    it('every lesson resolves and every item maps to a defined key in its layout', { timeout: 60000 }, () => {
-        for (const id of allResolvedLessonIds()) {
-            const resolved = resolveLessonById(id)
+    it('every lesson resolves and every item maps to a defined key in its layout', { timeout: 60000 }, async () => {
+        for (const id of ids) {
+            const resolved = await resolveLessonById(id)
             expect(resolved.totalUnits).toBeGreaterThan(0)
             expect(resolved.phases.length).toBeGreaterThan(0)
             const layout = getLayoutOrThrow(resolved.layoutId)
@@ -37,9 +38,9 @@ describe('curriculum content', () => {
         }
     })
 
-    it('phase ranges are contiguous and exactly cover every unit', () => {
-        for (const id of allResolvedLessonIds()) {
-            const resolved = resolveLessonById(id)
+    it('phase ranges are contiguous and exactly cover every unit', async () => {
+        for (const id of ids) {
+            const resolved = await resolveLessonById(id)
             let cursor = 0
             for (const phase of resolved.phases) {
                 expect(phase.startUnit, `phase ${phase.label} of "${id}"`).toBe(cursor)
@@ -52,9 +53,9 @@ describe('curriculum content', () => {
         }
     })
 
-    it("every unit's shiftHand is consistent with requiring shift for that key", { timeout: 60000 }, () => {
-        for (const id of allResolvedLessonIds()) {
-            const resolved = resolveLessonById(id)
+    it("every unit's shiftHand is consistent with requiring shift for that key", { timeout: 60000 }, async () => {
+        for (const id of ids) {
+            const resolved = await resolveLessonById(id)
             const layout = getLayoutOrThrow(resolved.layoutId)
             for (const unit of resolved.sequence.units) {
                 const key = layout.getKey(unit.keyCode)!
@@ -70,9 +71,9 @@ describe('curriculum content', () => {
         }
     })
 
-    it('grapheme ranges are consistent with the units that reference them', () => {
-        for (const id of allResolvedLessonIds()) {
-            const resolved = resolveLessonById(id)
+    it('grapheme ranges are consistent with the units that reference them', async () => {
+        for (const id of ids) {
+            const resolved = await resolveLessonById(id)
             const { units, graphemes, graphemeUnitRanges } = resolved.sequence
             expect(graphemeUnitRanges.length, `ranges of "${id}"`).toBe(graphemes.length)
             for (let gi = 0; gi < graphemes.length; gi++) {
@@ -88,11 +89,14 @@ describe('curriculum content', () => {
         }
     })
 
-    it('remainingText and completedText stay coherent across multi-phase lessons', () => {
-        const multi = allResolvedLessonIds().filter((id) => resolveLessonById(id).phases.length > 1)
+    it('remainingText and completedText stay coherent across multi-phase lessons', async () => {
+        const multi: string[] = []
+        for (const id of ids) {
+            if ((await resolveLessonById(id)).phases.length > 1) multi.push(id)
+        }
         expect(multi.length).toBeGreaterThan(0)
         for (const id of multi.slice(0, 20)) {
-            const seq = resolveLessonById(id).sequence
+            const seq = (await resolveLessonById(id)).sequence
             const lastUnit = seq.units.length - 1
             for (const idx of [0, 1, Math.floor(lastUnit / 2), lastUnit]) {
                 const remaining = remainingText(seq, idx)
@@ -114,10 +118,10 @@ describe('curriculum content', () => {
         }
     })
 
-    it('every prerequisite references an existing lesson', () => {
+    it('every prerequisite references an existing lesson', async () => {
         for (const lesson of lessons) {
             for (const prereq of lesson.prerequisites ?? []) {
-                expect(getLessonData(prereq), `prereq "${prereq}" of "${lesson.id}"`).toBeDefined()
+                expect(await getLessonData(prereq), `prereq "${prereq}" of "${lesson.id}"`).toBeDefined()
             }
         }
     })

@@ -32,8 +32,6 @@ import type { Language } from '@/types'
 import { rankClassOnTest, type LeaderboardCandidate, type LeaderboardEntry } from '@/core/leaderboard/ranking'
 import { getCurriculumMeta } from '@/data/curriculum'
 
-const CURRICULUM_TOTALS = getCurriculumMeta().countsByLevel
-
 const PREFIX = 'onetype:local:'
 
 const KEYS = {
@@ -629,10 +627,11 @@ async function detailFor(student: Student): Promise<StudentDetail> {
     for (const p of lessonProgress) {
         if (p.completed) completedByLevel[p.level] = (completedByLevel[p.level] ?? 0) + 1
     }
+    const totals = (await getCurriculumMeta()).countsByLevel
     const lessonCounts = Object.entries(completedByLevel).map(([level, completed]) => ({
         level,
         completed,
-        total: CURRICULUM_TOTALS[level as keyof typeof CURRICULUM_TOTALS] ?? 0,
+        total: totals[level as keyof typeof totals] ?? 0,
     }))
     const totalSessions = sessions.length
     const completed = sessions.filter((s) => s.correctCount > 0)

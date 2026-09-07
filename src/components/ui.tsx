@@ -269,9 +269,6 @@ export function Field({
     )
 }
 
-export const inputClass =
-    'flex h-9 w-full rounded-lg border border-line-strong/60 bg-background px-3 py-1 text-sm shadow-sm transition-[border-color,box-shadow] placeholder:text-muted-foreground hover:border-line-strong focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30'
-
 export function PageHeader({
     eyebrow,
     title,

@@ -11,6 +11,7 @@ import type { ExerciseGeneratorSpec } from '@/core/pedagogy'
 import type { LessonExercise } from '@/types/exercise'
 
 const MY_ROOT = path.resolve(fileURLToPath(new URL('../../src/data/lessons/my', import.meta.url)))
+const myLessons = (await getLessonRepository()).listAllByLanguage().my
 
 function listMyFiles(dir: string): string[] {
     const out: string[] = []
@@ -110,15 +111,13 @@ describe('Canonical Myanmar word corpus', () => {
 })
 
 describe('Every canonical Myanmar lesson', () => {
-    const myLessons = getLessonRepository().listAllByLanguage().my
-
     it('has lessons in the catalog', () => {
         expect(myLessons.length).toBeGreaterThan(0)
     })
 
-    it('keeps every Myanmar-bearing string NFC and free of invisible characters', () => {
+    it('keeps every Myanmar-bearing string NFC and free of invisible characters', async () => {
         for (const lesson of myLessons) {
-            const canonical = getCanonicalLesson(lesson.id)
+            const canonical = await getCanonicalLesson(lesson.id)
             const samples: string[] = []
             if (canonical.titleMy !== undefined) samples.push(canonical.titleMy)
             samples.push(canonical.description)

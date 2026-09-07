@@ -13,6 +13,8 @@ import { getLessonRepository, getCanonicalLesson, resolveLessonById } from '@/da
 import { toLayoutId } from '@/types/keyboard'
 import { exerciseText, type LessonExercise } from '@/types/exercise'
 
+const repository = await getLessonRepository()
+
 const CORPUS_LINES = ['ရေ ဆန် ငါး ကြက်', 'အဖေ အမေ ညီ ညီမ', 'မျက်စိ နား လက် ခြေ', 'အခြေခံ စကားလုံး (၂)', 'အိမ် မြို့ ရွာ']
 
 describe('Myanmar grapheme runs are complete shaping units', () => {
@@ -80,11 +82,11 @@ describe('Per-run font classification (Char contract)', () => {
 })
 
 describe('Myanmar lesson corpus never yields a shaping-broken run', () => {
-    it('every Myanmar-bearing lesson line segments to clean clusters', () => {
-        const lessons = getLessonRepository().listAllByLanguage().my
+    it('every Myanmar-bearing lesson line segments to clean clusters', async () => {
+        const lessons = repository.listAllByLanguage().my
         expect(lessons.length).toBeGreaterThan(0)
         for (const lesson of lessons) {
-            const canonical = getCanonicalLesson(lesson.id)
+            const canonical = await getCanonicalLesson(lesson.id)
             const layout = getLayoutOrThrow(toLayoutId(canonical.keyboard))
             for (const line of lessonStrings(canonical)) {
                 const seq = buildSequence(line, layout)
@@ -99,12 +101,12 @@ describe('Myanmar lesson corpus never yields a shaping-broken run', () => {
 })
 
 describe('Target text displays the exact lesson data', () => {
-    it('every phase of every lesson resolves to its original exercise text', () => {
-        const repo = getLessonRepository()
+    it('every phase of every lesson resolves to its original exercise text', async () => {
+        const repo = repository
         const lessons = [...repo.listAllByLanguage().my, ...repo.listAllByLanguage().en]
         for (const lesson of lessons) {
-            const canonical = getCanonicalLesson(lesson.id)
-            const resolved = resolveLessonById(lesson.id)
+            const canonical = await getCanonicalLesson(lesson.id)
+            const resolved = await resolveLessonById(lesson.id)
             expect(resolved.phases.length, `${lesson.id}: phase/exercise count mismatch`).toBe(canonical.exercises.length)
             const ctx = { lessonId: canonical.id, languageId: canonical.language === 'my' ? 'myanmar' : 'english' }
             for (let i = 0; i < canonical.exercises.length; i++) {
@@ -114,9 +116,9 @@ describe('Target text displays the exact lesson data', () => {
         }
     })
 
-    it('English uppercase (Shift) lessons keep their exact letters (case preserved) on screen', () => {
-        const canonical = getCanonicalLesson('lesson-en-beginner-31')
-        const resolved = resolveLessonById('lesson-en-beginner-31')
+    it('English uppercase (Shift) lessons keep their exact letters (case preserved) on screen', async () => {
+        const canonical = await getCanonicalLesson('lesson-en-beginner-31')
+        const resolved = await resolveLessonById('lesson-en-beginner-31')
         const ctx = { lessonId: canonical.id, languageId: 'english' }
         const expected = exerciseText(canonical.exercises[0]!, ctx)
         expect(resolved.phases[0]!.text).toBe(expected)
@@ -124,11 +126,11 @@ describe('Target text displays the exact lesson data', () => {
         expect(resolved.phases[0]!.text).toMatch(/[A-Z]/)
     })
 
-    it('the resolved sequence text is precisely the phases as shown, joined with a space', () => {
-        const repo = getLessonRepository()
+    it('the resolved sequence text is precisely the phases as shown, joined with a space', async () => {
+        const repo = repository
         const lessons = [...repo.listAllByLanguage().my, ...repo.listAllByLanguage().en]
         for (const lesson of lessons) {
-            const resolved = resolveLessonById(lesson.id)
+            const resolved = await resolveLessonById(lesson.id)
             expect(resolved.sequence.text, lesson.id).toBe(resolved.phases.map((p) => p.text).join(' '))
         }
     })

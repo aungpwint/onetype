@@ -5,7 +5,7 @@
     "language": "my",
     "number": 4,
     "title": "Medial Combinations",
-    "titleMy": "စာလုံးကြို ပေါင်းစပ်",
+    "titleMy": "ဗျည်းတွဲများ လေ့ကျင့်ခန်း",
     "description": "Complex medial combinations in words.",
     "difficulty": "medium",
     "estimatedMinutes": 12,
@@ -14,42 +14,11 @@
         "minAccuracy": 92,
         "minWpm": 20
     },
-    "focus": [
-        "medial"
-    ],
-    "prerequisites": [
-        "lesson-my-advanced-3"
-    ],
-    "focusKeys": [
-        "KeyC",
-        "KeyS",
-        "KeyK",
-        "KeyJ",
-        "KeyA",
-        "KeyU",
-        "KeyM",
-        "KeyR",
-        "KeyY",
-        "KeyD",
-        "Semicolon",
-        "KeyT",
-        "KeyH",
-        "ShiftLeft",
-        "KeyF"
-    ],
-    "targetFingers": [
-        "left-middle",
-        "left-ring",
-        "right-middle",
-        "right-index",
-        "left-pinky",
-        "left-index",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focus": ["medial"],
+    "prerequisites": ["lesson-my-advanced-3"],
+    "focusKeys": ["KeyS", "KeyJ", "KeyG", "ShiftLeft", "KeyU", "KeyD", "KeyF", "KeyE", "Semicolon"],
+    "targetFingers": ["left-ring", "right-index", "left-index", "left-pinky", "left-middle", "right-pinky"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -58,11 +27,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ချု",
-                    "ခြေ",
-                    "ကျော"
-                ],
+                "keys": ["ချုပ်", "ခြေ", "ကျော"],
                 "count": 20,
                 "chunkMin": 4,
                 "chunkMax": 6,
@@ -75,11 +40,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "မျာ",
-                    "ပျို",
-                    "ကြာ"
-                ],
+                "keys": ["များ", "ပျို", "ကြာ", "နှာ", "ကွာ"],
                 "count": 20,
                 "chunkMin": 4,
                 "chunkMax": 6,
@@ -92,11 +53,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "များ",
-                    "အခြေခံ",
-                    "ကြက်"
-                ],
+                "keys": ["ကျောင်း", "အခြေခံ", "ကြက်"],
                 "count": 22,
                 "chunkMin": 5,
                 "chunkMax": 7,

@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest'
 import {
     summarizeKeyTaps,
     keyTapTone,
-    keyTapAccuracy,
     worstKeys,
     type KeyTap,
 } from '@/core/session/key-outcomes'
@@ -83,10 +82,5 @@ describe('key tap summaries', () => {
         expect(keyTapTone(clean)).toBe('clean')
         expect(keyTapTone(slip)).toBe('slip')
         expect(keyTapTone(heavy)).toBe('heavy')
-    })
-
-    it('reports per-key accuracy', () => {
-        expect(keyTapAccuracy({ id: 'KeyA:none', code: 'KeyA', modifier: 'none', correct: 3, incorrect: 1 })).toBe(75)
-        expect(keyTapAccuracy({ id: 'KeyA:none', code: 'KeyA', modifier: 'none', correct: 0, incorrect: 0 })).toBe(100)
     })
 })

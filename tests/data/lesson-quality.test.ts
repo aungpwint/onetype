@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 import { getCanonicalLesson, getLessonRepository } from '@/data/curriculum'
 import type { Lesson } from '@/types/lesson'
 import { type GeneratedExercise, exerciseText, isGeneratedExercise } from '@/types/exercise'
@@ -66,11 +66,11 @@ function layoutOf(lesson: Lesson) {
     return languageIdOf(lesson) === 'myanmar' ? myanmarLayout() : englishLayout()
 }
 
-function allGeneratedExercises(): { lesson: Lesson; exercise: GeneratedExercise; text: string }[] {
+async function allGeneratedExercises(): Promise<{ lesson: Lesson; exercise: GeneratedExercise; text: string }[]> {
     const out: { lesson: Lesson; exercise: GeneratedExercise; text: string }[] = []
-    const lessons = getLessonRepository().getLessons()
+    const lessons = (await getLessonRepository()).getLessons()
     for (const meta of lessons) {
-        const lesson = getCanonicalLesson(meta.id)
+        const lesson = await getCanonicalLesson(meta.id)
         for (const exercise of generatedOf(lesson)) {
             const text = exerciseText(exercise, { lessonId: lesson.id, languageId: languageIdOf(lesson) })
             out.push({ lesson, exercise, text })
@@ -80,8 +80,11 @@ function allGeneratedExercises(): { lesson: Lesson; exercise: GeneratedExercise;
 }
 
 describe('generated lesson content quality', () => {
-    const all = allGeneratedExercises()
-    expect(all.length).toBeGreaterThanOrEqual(PLANNED)
+    let all: { lesson: Lesson; exercise: GeneratedExercise; text: string }[] = []
+    beforeAll(async () => {
+        all = await allGeneratedExercises()
+        expect(all.length).toBeGreaterThanOrEqual(PLANNED)
+    })
 
     it('every planned lesson resolves to clean, non-empty, well-separated text', () => {
         for (const { lesson, text } of all) {

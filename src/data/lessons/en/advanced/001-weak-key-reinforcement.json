@@ -5,7 +5,7 @@
     "language": "en",
     "number": 1,
     "title": "Weak Key Reinforcement",
-    "titleMy": "အားနည်းသည့် ကီးများ ပြန်လည်လေ့ကျင့်ခြင်း",
+    "titleMy": "အားနည်းသော ကီးများ အားဖြည့်လေ့ကျင့်ခြင်း",
     "description": "Drills targeting commonly mistyped keys.",
     "difficulty": "medium",
     "estimatedMinutes": 12,
@@ -14,43 +14,11 @@
         "minAccuracy": 93,
         "minWpm": 30
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-en-intermediate-18"
-    ],
-    "focusKeys": [
-        "KeyT",
-        "KeyH",
-        "KeyE",
-        "KeyA",
-        "KeyN",
-        "KeyD",
-        "KeyY",
-        "KeyO",
-        "KeyU",
-        "KeyW",
-        "KeyI",
-        "KeyS",
-        "KeyF",
-        "KeyR",
-        "KeyM",
-        "KeyV"
-    ],
-    "targetFingers": [
-        "left-index",
-        "right-index",
-        "left-middle",
-        "left-pinky",
-        "right-ring",
-        "left-ring",
-        "right-middle"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-en-intermediate-18"],
+    "focusKeys": ["KeyT", "KeyH", "KeyE", "KeyA", "KeyN", "KeyD", "KeyY", "KeyO", "KeyU", "KeyW", "KeyI", "KeyS", "KeyF", "KeyR", "KeyM", "KeyV"],
+    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",

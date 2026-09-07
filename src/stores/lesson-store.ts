@@ -4,28 +4,57 @@ import type { LessonProgress } from '@/services/types'
 import { listLessonsByLevel } from '@/data/curriculum'
 import type { LessonData } from '@/data/curriculum/types'
 
+type CurriculumLevel = 'beginner' | 'intermediate' | 'advanced'
+
+const EMPTY_LEVELS: Record<CurriculumLevel, LessonData[]> = {
+    beginner: [],
+    intermediate: [],
+    advanced: [],
+}
+
 interface LessonState {
-    lessonsByLevel: Record<'beginner' | 'intermediate' | 'advanced', LessonData[]>
+    lessonsByLevel: Record<CurriculumLevel, LessonData[]>
+    catalogLoaded: boolean
+    catalogError: string | null
     progress: Record<string, LessonProgress> | null
     progressStudentId: string | null
     loading: boolean
     error: string | null
+    loadCatalog: () => Promise<void>
     loadProgress: (studentId: string) => Promise<void>
     clearProgress: () => void
     saveProgress: (req: Parameters<typeof backend.saveLessonProgress>[0]) => Promise<LessonProgress>
-    uncompletedLessonsForLevel: (level: 'beginner' | 'intermediate' | 'advanced') => LessonData[]
+    uncompletedLessonsForLevel: (level: CurriculumLevel) => LessonData[]
 }
+
+// The catalog is a singleton: concurrent callers share one in-flight load and
+// a failed load resets so a later navigation can retry.
+let catalogPromise: Promise<void> | null = null
 
 // Monotonic token so a slower previous load can never overwrite a newer one
 // when the active student switches quickly (A → B with A's IPC resolving last).
 let loadProgressToken = 0
 
 export const useLessonStore = create<LessonState>((set, get) => ({
-    lessonsByLevel: listLessonsByLevel(),
+    lessonsByLevel: EMPTY_LEVELS,
+    catalogLoaded: false,
+    catalogError: null,
     progress: null,
     progressStudentId: null,
     loading: false,
     error: null,
+    loadCatalog: () => {
+        if (get().catalogLoaded) return Promise.resolve()
+        catalogPromise ??= listLessonsByLevel()
+            .then((lessonsByLevel) => {
+                set({ lessonsByLevel, catalogLoaded: true, catalogError: null })
+            })
+            .catch((error) => {
+                catalogPromise = null
+                set({ catalogError: error instanceof Error ? error.message : String(error) })
+            })
+        return catalogPromise
+    },
     loadProgress: async (studentId) => {
         const token = ++loadProgressToken
         set({ loading: true, error: null })

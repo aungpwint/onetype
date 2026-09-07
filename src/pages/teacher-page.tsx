@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { GraduationCap, Users, Clock, Target, Gauge, Trophy, FileText, Fingerprint, Download, Printer } from 'lucide-react'
 import * as backend from '@/services/backend'
-import type { StudentDetail, TeacherOverview, TypingTest } from '@/services/types'
+import type { LessonCount, StudentDetail, TeacherOverview, TypingTest } from '@/services/types'
 import { lessonCountsWithCurriculumTotals } from '@/data/curriculum'
 import type { LeaderboardEntry } from '@/core/leaderboard/ranking'
 import { buildTestRecord } from '@/core/tests/record'
@@ -24,6 +24,13 @@ export default function TeacherPage() {
     const { studentId } = useParams<{ studentId: string }>()
     const [overview, setOverview] = useState<TeacherOverview | null>(null)
     const [detail, setDetail] = useState<StudentDetail | null>(null)
+    const [detailLessonCounts, setDetailLessonCounts] = useState<LessonCount[] | null>(null)
+    const [detailFor, setDetailFor] = useState<string | undefined>(studentId)
+    if (detailFor !== studentId) {
+        setDetailFor(studentId)
+        setDetail(null)
+        setDetailLessonCounts(null)
+    }
     const [tests, setTests] = useState<TypingTest[]>([])
     const [boardTestId, setBoardTestId] = useState<string | null>(null)
     const [board, setBoard] = useState<LeaderboardEntry[] | null>(null)
@@ -64,12 +71,17 @@ export default function TeacherPage() {
     }, [boardTestId])
 
     useEffect(() => {
-        if (!studentId) {
-            return
-        }
+        if (!studentId) return
+        let alive = true
         void (async () => {
-            setDetail(await backend.studentDetail(studentId))
+            const next = await backend.studentDetail(studentId)
+            if (!alive) return
+            setDetail(next)
+            setDetailLessonCounts(await lessonCountsWithCurriculumTotals(next.lessonCounts))
         })()
+        return () => {
+            alive = false
+        }
     }, [studentId])
 
     const boardTest = useMemo(() => (boardTestId ? tests.find((t) => t.id === boardTestId) ?? null : null), [tests, boardTestId])
@@ -275,7 +287,7 @@ export default function TeacherPage() {
                         <Stat icon={<GraduationCap className="size-4" />} label="Sessions" value={detail.totalSessions} />
                     </div>
                     <div className="mt-4 space-y-1.5 text-sm text-muted-foreground">
-                        {lessonCountsWithCurriculumTotals(detail.lessonCounts).map((lc) => (
+                        {(detailLessonCounts ?? detail.lessonCounts).map((lc) => (
                             <div key={lc.level} className="flex items-center gap-2">
                                 <span className="w-32 capitalize">{lc.level}</span>
                                 <Progress value={pct(lc.completed, lc.total)} className="flex-1" />

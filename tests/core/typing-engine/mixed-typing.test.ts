@@ -156,8 +156,8 @@ describe('mixed metrics', () => {
 })
 
 describe('mixed practice material', () => {
-    it('builds custom mixed text on the mixed layout', () => {
-        const resolved = buildPracticeMaterial({ language: 'mixed', unit: 'text', text: 'Hello မင်္ဂလာပါ။' })
+    it('builds custom mixed text on the mixed layout', async () => {
+        const resolved = await buildPracticeMaterial({ language: 'mixed', unit: 'text', text: 'Hello မင်္ဂလာပါ။' })
         expect(resolved.layoutId).toBe('english-myanmar-mixed')
         const text = resolved.phases.map((p) => p.text).join(' ')
         expect(containsMyanmar(text)).toBe(true)
@@ -165,8 +165,8 @@ describe('mixed practice material', () => {
         expect(resolved.sequence.units.length).toBeGreaterThan(0)
     })
 
-    it('draws mixed word practice from both scripts', () => {
-        const resolved = buildPracticeMaterial({ language: 'mixed', unit: 'words', words: 30 })
+    it('draws mixed word practice from both scripts', async () => {
+        const resolved = await buildPracticeMaterial({ language: 'mixed', unit: 'words', words: 30 })
         const text = resolved.phases.map((p) => p.text).join(' ')
         expect(containsMyanmar(text)).toBe(true)
         expect(/[A-Za-z]/.test(text)).toBe(true)

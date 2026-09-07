@@ -9,22 +9,29 @@ import { normalizeMyanmarText, containsMyanmar } from '@/core/unicode/myanmar'
 
 import type { Difficulty, Language } from '@/types'
 
-const repository = getLessonRepository()
+let testPoolsPromise: Promise<{ my: string[]; en: string[] }> | null = null
 
-const MYANMAR_POOL = [
-    ...repository.listByLanguageAndLevel('my', 'advanced').reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []),
-    ...repository.listByLanguageAndLevel('my', 'intermediate').reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []),
-]
-
-const ENGLISH_POOL = repository.listByLanguageAndLevel('en', 'advanced').reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), [])
+// Test lines span the hardest lessons, so the pools are built once behind the
+// lazily loaded catalog instead of eagerly at module scope.
+function getTestPools(): Promise<{ my: string[]; en: string[] }> {
+    testPoolsPromise ??= getLessonRepository().then((repository) => ({
+        my: [
+            ...repository.listByLanguageAndLevel('my', 'advanced').reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []),
+            ...repository.listByLanguageAndLevel('my', 'intermediate').reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []),
+        ],
+        en: repository.listByLanguageAndLevel('en', 'advanced').reduce<string[]>((acc, l) => acc.concat(l.phases.map((p) => p.text)), []),
+    }))
+    return testPoolsPromise
+}
 
 export function resolveTestLayout(test: TypingTest): KeyboardLayout {
     return getLayout(test.layoutId) ?? layoutForLanguage(test.language === 'english' ? 'english' : test.language === 'mixed' ? 'mixed' : 'myanmar')
 }
 
-export function buildTestMaterial(test: TypingTest): ResolvedLesson {
+export async function buildTestMaterial(test: TypingTest): Promise<ResolvedLesson> {
     const layout = resolveTestLayout(test)
-    const poolBase = test.language === 'english' ? ENGLISH_POOL : test.language === 'mixed' ? [...MYANMAR_POOL, ...ENGLISH_POOL] : MYANMAR_POOL
+    const { my, en } = await getTestPools()
+    const poolBase = test.language === 'english' ? en : test.language === 'mixed' ? [...my, ...en] : my
     // Normalized here so display text and the typing target never diverge.
     const pool = poolBase.map((raw) => (layout.language === 'myanmar' ? normalizeMyanmarText(raw) : raw)).filter((line) => {
         for (const ch of line) if (!layout.lookupChar(ch)) return false

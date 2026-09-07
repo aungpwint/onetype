@@ -5,7 +5,7 @@
     "language": "my",
     "number": 13,
     "title": "Asat: ် and Virama: ္",
-    "titleMy": "အသတ် ် နှင့် ္",
+    "titleMy": "အသတ် ် နှင့် ဗီရာမ ္",
     "description": "Asat ်(KeyF) kills the inherent vowel. Virama ္(KeyF+Shift) stacks consonants.",
     "difficulty": "easy",
     "estimatedMinutes": 8,

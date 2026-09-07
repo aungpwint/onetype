@@ -5,8 +5,8 @@
     "language": "my",
     "number": 2,
     "title": "Top Row Consonants: Left Hand",
-    "titleMy": "အပေါ်တန်း ဗျည်း - ဘယ်ဘက်လက်",
-    "description": "Left hand top row: တ(KeyW) န(KeyE) မ(KeyR) အ(KeyT)",
+    "titleMy": "အပေါ်တန်း ဗျည်းများ - ဘယ်လက်",
+    "description": "Left hand top row: ဆ(KeyQ) တ(KeyW) န(KeyE) မ(KeyR) အ(KeyT)",
     "difficulty": "basic",
     "estimatedMinutes": 6,
     "keyboard": "myanmar",
@@ -14,28 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyQ",
-        "KeyW",
-        "KeyE",
-        "KeyR",
-        "KeyT"
-    ],
-    "focus": [
-        "top-row"
-    ],
-    "targetFingers": [
-        "left-pinky",
-        "left-ring",
-        "left-middle",
-        "left-index"
-    ],
-    "targetHands": [
-        "left"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-1"
-    ],
+    "focusKeys": ["KeyQ", "KeyW", "KeyE", "KeyR", "KeyT"],
+    "focus": ["top-row"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index"],
+    "targetHands": ["left"],
+    "prerequisites": ["lesson-my-beginner-1"],
     "exercises": [
         {
             "kind": "generated",
@@ -43,10 +26,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဆ",
-                    "တ"
-                ],
+                "keys": ["ဆ", "တ"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -59,10 +39,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "န",
-                    "မ"
-                ],
+                "keys": ["န", "မ"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -76,9 +53,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "အ"
-                ],
+                "keys": ["အ"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -91,13 +66,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ဆ",
-                    "တ",
-                    "န",
-                    "မ",
-                    "အ"
-                ],
+                "keys": ["ဆ", "တ", "န", "မ", "အ"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

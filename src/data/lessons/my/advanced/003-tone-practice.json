@@ -5,7 +5,7 @@
     "language": "my",
     "number": 3,
     "title": "Tone Practice",
-    "titleMy": "သံ လေ့ကျင့်ခန်း",
+    "titleMy": "အသံထွက် သင်္ကေတများ လေ့ကျင့်ခန်း",
     "description": "Practice tone marks with various syllables.",
     "difficulty": "medium",
     "estimatedMinutes": 12,
@@ -14,43 +14,11 @@
         "minAccuracy": 92,
         "minWpm": 20
     },
-    "focus": [
-        "tone"
-    ],
-    "prerequisites": [
-        "lesson-my-advanced-2"
-    ],
-    "focusKeys": [
-        "KeyU",
-        "KeyM",
-        "Semicolon",
-        "KeyD",
-        "ShiftRight",
-        "KeyB",
-        "KeyF",
-        "KeyH",
-        "ShiftLeft",
-        "KeyK",
-        "KeyW",
-        "KeyR",
-        "KeyS",
-        "KeyQ",
-        "KeyN",
-        "Digit7"
-    ],
-    "targetFingers": [
-        "right-index",
-        "right-pinky",
-        "left-middle",
-        "left-index",
-        "left-pinky",
-        "right-middle",
-        "left-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focus": ["tone"],
+    "prerequisites": ["lesson-my-advanced-2"],
+    "focusKeys": ["Semicolon", "KeyH", "KeyA", "KeyE", "KeyD", "KeyF", "KeyU", "KeyS"],
+    "targetFingers": ["right-pinky", "left-index", "left-pinky", "left-middle", "right-index", "left-ring"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -59,11 +27,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကား",
-                    "ကီး",
-                    "ကယ်"
-                ],
+                "keys": ["ကား", "ကီး", "ကယ်", "သေး"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -76,11 +40,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကံ",
-                    "ကို",
-                    "တို့"
-                ],
+                "keys": ["ကံ", "ကို", "တို့", "နား"],
                 "count": 20,
                 "chunkMin": 3,
                 "chunkMax": 5,
@@ -93,11 +53,7 @@
             "instruction": "Type larger clusters fluently",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "များ",
-                    "ဆည်း",
-                    "ရည်း"
-                ],
+                "keys": ["များ", "ဆည်း", "ရည်း"],
                 "count": 20,
                 "chunkMin": 4,
                 "chunkMax": 6,

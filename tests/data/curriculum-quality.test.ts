@@ -5,9 +5,9 @@ function resolve(id: string) {
     return resolveLessonById(id)
 }
 
-describe('curriculum quality audit', () => {
-    const lessons = listAllLessons()
+const lessons = await listAllLessons()
 
+describe('curriculum quality audit', () => {
     it('every lesson has at least one non-empty phase', () => {
         for (const lesson of lessons) {
             expect(lesson.phases.length, lesson.id).toBeGreaterThan(0)
@@ -36,11 +36,11 @@ describe('curriculum quality audit', () => {
         }
     })
 
-    it('declared focus keys are actually exercised by the lesson', () => {
+    it('declared focus keys are actually exercised by the lesson', async () => {
         for (const lesson of lessons) {
             const declared = lesson.focusKeys ?? []
             if (declared.length === 0) continue
-            const resolved = resolve(lesson.id)
+            const resolved = await resolve(lesson.id)
             const unitCodes = new Set(resolved.sequence.units.map((u) => u.keyCode))
             const shiftRight = resolved.sequence.units.some((u) => u.modifier === 'shift' && u.shiftHand === 'right')
             const shiftLeft = resolved.sequence.units.some((u) => u.modifier === 'shift' && u.shiftHand === 'left')
@@ -57,9 +57,9 @@ describe('curriculum quality audit', () => {
         }
     })
 
-    it('declared target hands and fingers actually appear in the lesson', () => {
+    it('declared target hands and fingers actually appear in the lesson', async () => {
         for (const lesson of lessons) {
-            const resolved = resolve(lesson.id)
+            const resolved = await resolve(lesson.id)
             const letterHands = new Set(resolved.sequence.units.map((u) => u.hand))
             const shiftHands = new Set(resolved.sequence.units.filter((u) => u.shiftHand).map((u) => u.shiftHand))
             const hands = new Set([...letterHands, ...shiftHands])
@@ -78,11 +78,11 @@ describe('curriculum quality audit', () => {
         }
     })
 
-    it('Shift is not introduced before the dedicated shift stage of the progression', () => {
+    it('Shift is not introduced before the dedicated shift stage of the progression', async () => {
         const englishLessons = lessons.filter((l) => l.language === 'english')
         let shiftStart = -1
         for (let i = 0; i < englishLessons.length; i++) {
-            if (resolve(englishLessons[i].id).sequence.units.some((u) => u.modifier === 'shift')) {
+            if ((await resolve(englishLessons[i].id)).sequence.units.some((u) => u.modifier === 'shift')) {
                 shiftStart = i
                 break
             }
@@ -90,15 +90,15 @@ describe('curriculum quality audit', () => {
         expect(shiftStart).toBeGreaterThan(0)
         for (let i = 0; i < shiftStart; i++) {
             const lesson = englishLessons[i]
-            const hasShiftUnit = resolve(lesson.id).sequence.units.some((u) => u.modifier === 'shift')
+            const hasShiftUnit = (await resolve(lesson.id)).sequence.units.some((u) => u.modifier === 'shift')
             expect(hasShiftUnit, `${lesson.id} must not require Shift yet`).toBe(false)
         }
     })
 
-    it('lessons that declare Shift triggers actually require it', () => {
+    it('lessons that declare Shift triggers actually require it', async () => {
         for (const lesson of lessons) {
             if (!lesson.requiresShift) continue
-            const resolved = resolve(lesson.id)
+            const resolved = await resolve(lesson.id)
             expect(
                 resolved.sequence.units.some((u) => u.modifier === 'shift'),
                 `${lesson.id} declares requiresShift but has no shift unit`,
@@ -113,11 +113,11 @@ describe('curriculum quality audit', () => {
         }
     })
 
-    it('focus metadata matches the lesson level where provided', () => {
+    it('focus metadata matches the lesson level where provided', async () => {
         for (const lesson of lessons) {
             const focus = lesson.focus ?? []
             if (focus.length === 0) continue
-            const resolved = resolve(lesson.id)
+            const resolved = await resolve(lesson.id)
             // A lesson that targets the shift focus must actually contain shift units.
             if (focus.includes('shift')) {
                 expect(
@@ -134,12 +134,12 @@ describe('curriculum quality audit', () => {
         }
     })
 
-    it('every lesson resolves deterministically (idempotent) across repeated resolution', () => {
+    it('every lesson resolves deterministically (idempotent) across repeated resolution', async () => {
         // Spot-check a spread of lessons (faster than all 150 twice).
         const sample = lessons.filter((_, i) => i % 25 === 0)
         for (const lesson of sample) {
-            const a = resolveLessonById(lesson.id)
-            const b = resolve(lesson.id)
+            const a = await resolveLessonById(lesson.id)
+            const b = await resolve(lesson.id)
             expect(a.sequence.units.length).toBe(b.sequence.units.length)
             expect(a.totalUnits).toBe(a.sequence.units.length)
         }

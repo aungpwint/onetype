@@ -5,7 +5,7 @@
     "language": "my",
     "number": 6,
     "title": "Meeting Vocabulary",
-    "titleMy": "တွေ့ဆုံရေး စကား",
+    "titleMy": "အစည်းအဝေးသုံး စကားလုံးများ",
     "description": "Meeting and appointment vocabulary.",
     "difficulty": "medium",
     "estimatedMinutes": 12,
@@ -14,47 +14,11 @@
         "minAccuracy": 92,
         "minWpm": 22
     },
-    "focus": [
-        "words"
-    ],
-    "prerequisites": [
-        "lesson-my-advanced-5"
-    ],
-    "focusKeys": [
-        "KeyT",
-        "KeyP",
-        "KeyN",
-        "KeyF",
-        "Semicolon",
-        "KeyW",
-        "ShiftRight",
-        "KeyA",
-        "KeyD",
-        "ShiftLeft",
-        "KeyY",
-        "KeyJ",
-        "KeyM",
-        "Digit7",
-        "KeyQ",
-        "KeyK",
-        "KeyO",
-        "KeyC",
-        "KeyS"
-    ],
-    "targetFingers": [
-        "left-index",
-        "right-pinky",
-        "right-index",
-        "left-ring",
-        "left-pinky",
-        "left-middle",
-        "right-middle",
-        "right-ring"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "focus": ["words"],
+    "prerequisites": ["lesson-my-advanced-5"],
+    "focusKeys": ["KeyT", "KeyP", "KeyN", "KeyC", "KeyW", "KeyS", "KeyD", "KeyF", "KeyH", "Semicolon", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-index", "right-pinky", "right-index", "left-middle", "left-ring", "right-middle"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -63,11 +27,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "အစည်း",
-                    "အဝေး",
-                    "အစီအစဉ်"
-                ],
+                "words": ["အစည်းအဝေး", "ချိန်းဆိုမှု", "အစီအစဉ်"],
                 "count": 20
             }
         },
@@ -77,11 +37,7 @@
             "instruction": "Type whole words for rhythm",
             "generator": {
                 "type": "words",
-                "words": [
-                    "ပြောရေး",
-                    "ဆိုရေး",
-                    "သေချာ"
-                ],
+                "words": ["ဆွေးနွေးပွဲ", "ဆုံးဖြတ်ချက်", "သဘောတူညီချက်"],
                 "count": 20
             }
         }

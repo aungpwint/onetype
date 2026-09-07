@@ -8,12 +8,12 @@ type CatalogJson = {
 }
 
 const CATALOG = catalog as CatalogJson
+const repository = await getLessonRepository()
 
 const LANGUAGE_TOTAL: Record<string, number> = { en: 92, my: 58 }
 const LEVEL_TOTAL: Record<string, number> = { beginner: 81, intermediate: 33, advanced: 36 }
 
 describe('lesson JSON source of truth', () => {
-    const repository = getLessonRepository()
     const lessons = repository.getLessons()
 
     it('serves exactly the cataloged lesson set with no duplicates', () => {
@@ -35,12 +35,12 @@ describe('lesson JSON source of truth', () => {
         expect(repository.lessonCount()).toBe(150)
     })
 
-    it('every catalog entry is unique and consistent with its lesson file', () => {
+    it('every catalog entry is unique and consistent with its lesson file', async () => {
         const catalogKeys = new Set(CATALOG.lessons.map((entry) => entry.id))
         expect(catalogKeys.size).toBe(CATALOG.lessons.length)
 
         for (const entry of CATALOG.lessons) {
-            const lesson = getCanonicalLesson(entry.id)
+            const lesson = await getCanonicalLesson(entry.id)
             expect(lesson.language).toBe(entry.language)
             expect(lesson.level).toBe(entry.level)
             expect(lesson.number).toBe(entry.number)
@@ -60,9 +60,9 @@ describe('lesson JSON source of truth', () => {
         }
     })
 
-    it('no lesson carries an empty exercise set', () => {
+    it('no lesson carries an empty exercise set', async () => {
         for (const lesson of lessons) {
-            expect(getCanonicalLesson(lesson.id).exercises.length).toBeGreaterThan(0)
+            expect((await getCanonicalLesson(lesson.id)).exercises.length).toBeGreaterThan(0)
         }
     })
 })

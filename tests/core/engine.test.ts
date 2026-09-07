@@ -126,9 +126,9 @@ describe('typing unit model', () => {
 })
 
 describe('grapheme unit runs', () => {
-    it('covers every unit of a resolved multi-phase lesson without going out of bounds', () => {
+    it('covers every unit of a resolved multi-phase lesson without going out of bounds', async () => {
         for (const id of ['lesson-my-beginner-1', 'lesson-my-beginner-5', 'lesson-en-beginner-18']) {
-            const resolved = resolveLessonById(id)
+            const resolved = await resolveLessonById(id)
             const runs = graphemeUnitRuns(resolved.sequence)
             expect(runs.length).toBe(resolved.sequence.graphemes.length)
             expect(runs[0].startUnit).toBe(0)
@@ -155,13 +155,13 @@ describe('grapheme unit runs', () => {
         expect(runs.reduce((acc, r) => acc + (r.endUnit - r.startUnit), 0)).toBe(seq.units.length)
     })
 
-    it('keeps runs inside a single grapheme so phase text renders intact', () => {
+    it('keeps runs inside a single grapheme so phase text renders intact', async () => {
         // Regression: a run must be bounded by its grapheme's unit range, not by
         // text equality. When one phase ends with ";" and the next starts with ";",
         // grouping by text merged the two into a run that spilled past the phase
         // boundary (endUnit > endUnit), so TargetText's phase filter dropped the
         // trailing ";" and the learner could not see the final character.
-        const resolved = resolveLessonById('lesson-en-beginner-3')
+        const resolved = await resolveLessonById('lesson-en-beginner-3')
         for (const phase of resolved.phases) {
             const runs = graphemeUnitRuns(resolved.sequence).filter((g) => g.startUnit >= phase.startUnit && g.endUnit <= phase.endUnit)
             expect(runs.map((r) => r.text).join('')).toBe(phase.text)

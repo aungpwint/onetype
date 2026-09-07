@@ -14,12 +14,43 @@
         "minAccuracy": 94,
         "minWpm": 28
     },
+    "focusKeys": [
+        "KeyA",
+        "KeyB",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "Semicolon",
+        "Period",
+        "ShiftLeft",
+        "ShiftRight"
+    ],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
+    "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-14-ex-1",
             "kind": "text",
-            "instruction": "ရေအလုံအလောက်မရှိသောကြောင့် စိုက်ပျိုးရေး ဒုက္ခရောက်ခဲ့သည်။ ထို့ကြောင့် စပါးစျေးနှုန်း မြင့်တက်လာခဲ့ပါတယ်။",
-            "text": "ရေအလုံအလောက်မရှိသောကြောင့် စိုက်ပျိုးရေး ဒုက္ခရောက်ခဲ့သည်။ ထို့ကြောင့် စပါးစျေးနှုန်း မြင့်တက်လာခဲ့ပါတယ်။"
+            "instruction": "ရေအလုံအလောက်မရှိသောကြောင့် စိုက်ပျိုးရေး ဒုက္ခရောက်ခဲ့သည်။ ထို့ကြောင့် စပါးစျေးနှုန်း မြင့်တက်လာခဲ့ပါတယ်။ ရာသီဥတုလည်း ပူပြင်းခဲ့ပါတယ်။",
+            "text": "ရေအလုံအလောက်မရှိသောကြောင့် စိုက်ပျိုးရေး ဒုက္ခရောက်ခဲ့သည်။ ထို့ကြောင့် စပါးစျေးနှုန်း မြင့်တက်လာခဲ့ပါတယ်။ ရာသီဥတုလည်း ပူပြင်းခဲ့ပါတယ်။"
         }
     ],
     "focus": ["sentences", "unicode", "speed", "accuracy"],

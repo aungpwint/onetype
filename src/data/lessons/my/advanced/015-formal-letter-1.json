@@ -14,6 +14,36 @@
         "minAccuracy": 94,
         "minWpm": 28
     },
+    "focusKeys": [
+        "KeyA",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "Semicolon",
+        "Period",
+        "ShiftLeft",
+        "ShiftRight"
+    ],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
+    "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-15-ex-1",
@@ -24,8 +54,8 @@
         {
             "id": "lesson-my-advanced-15-ex-2",
             "kind": "text",
-            "instruction": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။",
-            "text": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။"
+            "instruction": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။ နှင့် ပူးတွဲ ပေးပို့ပါသည်။",
+            "text": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။ နှင့် ပူးတွဲ ပေးပို့ပါသည်။"
         }
     ],
     "focus": ["sentences", "unicode", "accuracy"],

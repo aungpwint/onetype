@@ -14,30 +14,11 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": [
-        "KeyU",
-        "KeyM",
-        "KeyI",
-        "KeyR",
-        "KeyW"
-    ],
-    "focus": [
-        "syllable",
-        "tone"
-    ],
-    "targetFingers": [
-        "right-index",
-        "right-middle",
-        "left-index",
-        "left-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
-    "prerequisites": [
-        "lesson-my-beginner-8"
-    ],
+    "focusKeys": ["KeyU", "KeyM", "KeyI", "KeyR", "KeyW"],
+    "focus": ["syllable"],
+    "targetFingers": ["right-index", "right-middle", "left-index", "left-ring"],
+    "targetHands": ["right", "left"],
+    "prerequisites": ["lesson-my-beginner-8"],
     "exercises": [
         {
             "kind": "generated",
@@ -45,10 +26,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကာ",
-                    "ငာ"
-                ],
+                "keys": ["ကာ", "ငာ"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -61,10 +39,7 @@
             "instruction": "Warm up with short clusters",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "မာ",
-                    "တာ"
-                ],
+                "keys": ["မာ", "တာ"],
                 "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -77,12 +52,7 @@
             "instruction": "Keep your fingers on the home row",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "ကာ",
-                    "ငာ",
-                    "မာ",
-                    "တာ"
-                ],
+                "keys": ["ကာ", "ငာ", "မာ", "တာ"],
                 "count": 26,
                 "chunkMin": 3,
                 "chunkMax": 5,

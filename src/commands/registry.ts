@@ -52,7 +52,3 @@ export function moveSelection(current: number, delta: number, length: number): n
     if (length <= 0) return 0
     return ((((current + delta) % length) + length) % length)
 }
-
-export function findCommandIndex(commands: Command[], id: string): number {
-    return commands.findIndex((command) => command.id === id)
-}

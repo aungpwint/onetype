@@ -3,6 +3,7 @@ import type { ThemePreference } from '@/types'
 import { syncWindowTheme, type ResolvedTheme } from '@/services/window-theme'
 import { getThemePreset, isThemePresetId, applyThemePalette, DEFAULT_THEME_PRESET_ID } from '@/core/themes/registry'
 import { useSettingsStore, type AppSettingKey } from '@/stores/settings-store'
+import { UI_KEYS } from '@/services/storage-keys'
 
 interface UiState {
     theme: ThemePreference
@@ -24,7 +25,7 @@ interface UiState {
 
 function readStoredTheme(): ThemePreference {
     try {
-        const value = localStorage.getItem('onetype:theme')
+        const value = localStorage.getItem(UI_KEYS.theme)
         if (value === 'light' || value === 'dark' || value === 'system') return value
     } catch {
         return 'system'
@@ -34,7 +35,7 @@ function readStoredTheme(): ThemePreference {
 
 function readStoredThemePreset(): string {
     try {
-        const value = localStorage.getItem('onetype:theme-preset')
+        const value = localStorage.getItem(UI_KEYS.themePreset)
         if (value && isThemePresetId(value)) return value
     } catch {
         return DEFAULT_THEME_PRESET_ID
@@ -44,7 +45,7 @@ function readStoredThemePreset(): string {
 
 function readStoredSound(): boolean {
     try {
-        return localStorage.getItem('onetype:sound') !== 'off'
+        return localStorage.getItem(UI_KEYS.sound) !== 'off'
     } catch {
         return true
     }
@@ -52,7 +53,7 @@ function readStoredSound(): boolean {
 
 function readStoredFocusMode(): boolean {
     try {
-        return localStorage.getItem('onetype:focus-mode') === 'on'
+        return localStorage.getItem(UI_KEYS.focusMode) === 'on'
     } catch {
         return false
     }
@@ -98,13 +99,13 @@ export const useUiStore = create<UiState>((set) => ({
     focusMode: readStoredFocusMode(),
     commandPaletteOpen: false,
     setTheme: (theme) => {
-        localStorage.setItem('onetype:theme', theme)
+        localStorage.setItem(UI_KEYS.theme, theme)
         applyTheme(theme)
         set({ theme })
     },
     setThemePreset: (presetId) => {
         if (!isThemePresetId(presetId)) return
-        localStorage.setItem('onetype:theme-preset', presetId)
+        localStorage.setItem(UI_KEYS.themePreset, presetId)
         const theme = useUiStore.getState().theme
         applyTheme(theme, presetId)
         set({ themePreset: presetId })
@@ -113,14 +114,14 @@ export const useUiStore = create<UiState>((set) => ({
     setSidebarOpen: (open) => set({ sidebarOpen: open }),
     toggleHandGuide: () => set((state) => ({ handGuideVisible: !state.handGuideVisible })),
     setSoundEnabled: (enabled) => {
-        localStorage.setItem('onetype:sound', enabled ? 'on' : 'off')
+        localStorage.setItem(UI_KEYS.sound, enabled ? 'on' : 'off')
         set({ soundEnabled: enabled })
         // Keep the persisted practice.sound setting and the in-memory toggle
         // in sync so mute never diverges between the two flags.
         void useSettingsStore.getState().set('practice.sound' as AppSettingKey, enabled ? 'on' : 'off')
     },
     setFocusMode: (enabled) => {
-        localStorage.setItem('onetype:focus-mode', enabled ? 'on' : 'off')
+        localStorage.setItem(UI_KEYS.focusMode, enabled ? 'on' : 'off')
         set({ focusMode: enabled })
     },
     setCommandPaletteOpen: (open) => set({ commandPaletteOpen: open }),

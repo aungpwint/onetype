@@ -1,7 +1,7 @@
 import type { Level } from '@/types'
 import type { LessonData } from './types'
 import { resolveLesson, type ResolvedLesson } from './generator'
-import { createLessonRepository, type LessonRepository } from '@/lib/lessons'
+import type { LessonRepository } from '@/lib/lessons'
 import type { Lesson } from '@/types/lesson'
 import type { LessonCount } from '@/services/types'
 
@@ -10,43 +10,44 @@ interface CurriculumMeta {
     countsByLevel: Record<Level, number>
 }
 
-const LESSON_IDS: string[] = []
-
 const RESOLVED_LESSON_CACHE = new Map<string, ResolvedLesson>()
 
-const repository: LessonRepository = createLessonRepository()
+// The whole lesson catalog (JSON files, zod validation, repository build) is
+// lazy: it only needs to exist once a session or the Learn screen starts, so
+// nothing pays for it at boot. All callers go through the async API below.
+let repositoryPromise: Promise<LessonRepository> | null = null
 
-function rebindIds(): void {
-    LESSON_IDS.length = 0
-    LESSON_IDS.push(...repository.ids())
-}
-rebindIds()
-
-export function listAllLessons(): LessonData[] {
-    return repository.getLessons()
+export function getLessonRepository(): Promise<LessonRepository> {
+    repositoryPromise ??= import('@/lib/lessons').then((m) => m.createLessonRepository())
+    return repositoryPromise
 }
 
-export function getLessonData(id: string): LessonData {
-    return repository.getLesson(id)
+export async function listAllLessons(): Promise<LessonData[]> {
+    return (await getLessonRepository()).getLessons()
 }
 
-export function hasLesson(id: string): boolean {
-    return repository.hasLesson(id)
+export async function getLessonData(id: string): Promise<LessonData> {
+    return (await getLessonRepository()).getLesson(id)
 }
 
-export function listLessonsByLevel(): Record<Level, LessonData[]> {
-    return repository.listAllByLevel()
+export async function hasLesson(id: string): Promise<boolean> {
+    return (await getLessonRepository()).hasLesson(id)
 }
 
-export function resolveLessonById(id: string): ResolvedLesson {
+export async function listLessonsByLevel(): Promise<Record<Level, LessonData[]>> {
+    return (await getLessonRepository()).listAllByLevel()
+}
+
+export async function resolveLessonById(id: string): Promise<ResolvedLesson> {
     const cached = RESOLVED_LESSON_CACHE.get(id)
     if (cached) return cached
-    const resolved = resolveLesson(getLessonData(id))
+    const resolved = resolveLesson(await getLessonData(id))
     RESOLVED_LESSON_CACHE.set(id, resolved)
     return resolved
 }
 
-export function getCurriculumMeta(): CurriculumMeta {
+export async function getCurriculumMeta(): Promise<CurriculumMeta> {
+    const repository = await getLessonRepository()
     return {
         totalLessons: repository.lessonCount(),
         countsByLevel: {
@@ -57,24 +58,20 @@ export function getCurriculumMeta(): CurriculumMeta {
     }
 }
 
-export function allResolvedLessonIds(): string[] {
-    return LESSON_IDS
+export async function allResolvedLessonIds(): Promise<string[]> {
+    return (await getLessonRepository()).ids()
 }
 
-export function getLessonRepository(): LessonRepository {
-    return repository
-}
-
-export function getCanonicalLesson(id: string): Lesson {
-    return repository.getCanonicalLesson(id)
+export async function getCanonicalLesson(id: string): Promise<Lesson> {
+    return (await getLessonRepository()).getCanonicalLesson(id)
 }
 
 // Lesson-count rows served by the persistence layer carry their own totals;
 // those must never be trusted for display because neither runtime knows the
 // actual curriculum size. Overlay the real per-level totals here so teacher
 // and progress screens agree across browser and Tauri backends.
-export function lessonCountsWithCurriculumTotals(counts: LessonCount[]): LessonCount[] {
-    const totals = getCurriculumMeta().countsByLevel
+export async function lessonCountsWithCurriculumTotals(counts: LessonCount[]): Promise<LessonCount[]> {
+    const totals = (await getCurriculumMeta()).countsByLevel
     return counts.map((lc) => ({
         ...lc,
         total: totals[lc.level as Level] ?? lc.total,

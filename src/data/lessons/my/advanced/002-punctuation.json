@@ -4,9 +4,9 @@
     "level": "advanced",
     "language": "my",
     "number": 2,
-    "title": "Punctuation: ၍ ၑ ၒ",
-    "titleMy": "သင်္ကေတအက္ခရာ",
-    "description": "Practice with formal Myanmar punctuation marks.",
+    "title": "Punctuation: ၍ ၎င်း ၌",
+    "titleMy": "မြန်မာ သင်္ကေတနှင့် အသုံးများ - ၍ ၎င်း ၌",
+    "description": "Practice with formal Myanmar punctuation marks and symbols.",
     "difficulty": "easy",
     "estimatedMinutes": 10,
     "keyboard": "myanmar",
@@ -14,52 +14,11 @@
         "minAccuracy": 90,
         "minWpm": 18
     },
-    "focus": [
-        "punctuation"
-    ],
-    "prerequisites": [
-        "lesson-my-advanced-1"
-    ],
-    "focusKeys": [
-        "Digit7",
-        "ShiftLeft",
-        "KeyA",
-        "Comma",
-        "KeyE",
-        "KeyV",
-        "KeyU",
-        "KeyO",
-        "KeyK",
-        "KeyH",
-        "Semicolon",
-        "KeyR",
-        "KeyS",
-        "KeyD",
-        "Period",
-        "KeyJ",
-        "KeyF",
-        "KeyI",
-        "KeyG",
-        "KeyQ",
-        "KeyT",
-        "ShiftRight",
-        "KeyM",
-        "KeyN"
-    ],
-    "targetFingers": [
-        "right-index",
-        "left-pinky",
-        "right-middle",
-        "left-middle",
-        "left-index",
-        "right-ring",
-        "right-pinky",
-        "left-ring"
-    ],
-    "targetHands": [
-        "right",
-        "left"
-    ],
+    "focus": ["punctuation"],
+    "prerequisites": ["lesson-my-advanced-1"],
+    "focusKeys": ["KeyI", "KeyU", "KeyC", "Comma", "Period", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["right-index", "left-middle", "right-middle", "left-pinky", "right-pinky"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
@@ -68,10 +27,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "ရေ ၊ နေ ၊ လေ က သုံး မျိုး ။",
-                    "ကြက် ၊ ငါး ၊ ဆန် ။"
-                ],
+                "sentences": ["ရေ၊ နေ၊ လေက သုံးမျိုးဖြစ်သည်။", "ကြက်၊ ငါး၊ ဆန်တို့ကို ဝယ်ယူသည်။"],
                 "count": 4
             }
         },
@@ -81,10 +37,7 @@
             "instruction": "Type the full phrases with correct spacing",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "အိမ် က ရွာ မှာ ရှိ သည် ။",
-                    "ညီ က မြို့ က လာ သည် ။"
-                ],
+                "sentences": ["အိမ်သည် ရွာ၌ ရှိသည်။", "ညီသည် မြို့မှ လာခဲ့၍ တွေ့ဆုံသည်။"],
                 "count": 4
             }
         }

@@ -14,12 +14,42 @@
         "minAccuracy": 94,
         "minWpm": 30
     },
+    "focusKeys": [
+        "KeyA",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "Semicolon",
+        "Period",
+        "ShiftLeft",
+        "ShiftRight"
+    ],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
+    "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-16-ex-1",
             "kind": "text",
-            "instruction": "အလုပ်ခွင်ထဲ တစ်ရက် လစာငွေ နှင့် ပတ်သက်ပြီး မေးမြန်းချင်ပါသည်။",
-            "text": "အလုပ်ခွင်ထဲ တစ်ရက် လစာငွေ နှင့် ပတ်သက်ပြီး မေးမြန်းချင်ပါသည်။"
+            "instruction": "အလုပ်ခွင်ထဲ တစ်ရက် လစာငွေ နှင့် ပတ်သက်ပြီး မေးမြန်းချင်ပါသည်။ ပူးတွဲ တင်ပြပါသည်။",
+            "text": "အလုပ်ခွင်ထဲ တစ်ရက် လစာငွေ နှင့် ပတ်သက်ပြီး မေးမြန်းချင်ပါသည်။ ပူးတွဲ တင်ပြပါသည်။"
         },
         {
             "id": "lesson-my-advanced-16-ex-2",

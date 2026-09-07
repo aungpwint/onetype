@@ -60,6 +60,8 @@ export default function Dashboard() {
     const progressStudentId = useLessonStore((s) => s.progressStudentId)
     const loadProgress = useLessonStore((s) => s.loadProgress)
     const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel)
+    const catalogLoaded = useLessonStore((s) => s.catalogLoaded)
+    const loadCatalog = useLessonStore((s) => s.loadCatalog)
     const defaultLang = useSettingsStore((s) => s.get('app.language'))
     const dailyGoalMinutes = useSettingsStore((s) => Math.max(0, s.getNumber('dashboard.dailyGoalMinutes', 0)))
     const streak = useProgressionStore((s) => s.streak)
@@ -79,6 +81,10 @@ export default function Dashboard() {
         return d.getTime()
     }, [])
     const DAY_MS = 86_400_000
+
+    useEffect(() => {
+        void loadCatalog()
+    }, [loadCatalog])
 
     useEffect(() => {
         if (!active) return
@@ -146,6 +152,15 @@ export default function Dashboard() {
     }, [progress, lessonsByLevel, defaultLang])
 
     if (!active) return null
+    if (!catalogLoaded) {
+        return (
+            <div className={cn(appPageClass, 'h-full')}>
+                <div className="flex min-h-0 flex-1 items-center justify-center">
+                    <Spinner label="Loading curriculum…" />
+                </div>
+            </div>
+        )
+    }
     const progressLoaded = progressStudentId === active.id && (progress ?? false)
     const continueTitle = nextLesson ? nextLesson.title : 'Curriculum finished'
 

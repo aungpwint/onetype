@@ -9,7 +9,25 @@ import { splitGraphemes } from '@/core/unicode/graphemes'
 import type { Difficulty, Language } from '@/types'
 import { quotePool } from '@/data/quotes'
 
-const repository = getLessonRepository()
+let lessonPoolsPromise: Promise<{ en: LessonData[]; my: LessonData[] }> | null = null
+
+// The practice pools span the whole curriculum, so they are built once behind
+// the lazily loaded catalog instead of eagerly at module scope.
+function getLessonPools(): Promise<{ en: LessonData[]; my: LessonData[] }> {
+    lessonPoolsPromise ??= getLessonRepository().then((repository) => ({
+        en: [
+            ...repository.listByLanguageAndLevel('en', 'beginner'),
+            ...repository.listByLanguageAndLevel('en', 'intermediate'),
+            ...repository.listByLanguageAndLevel('en', 'advanced'),
+        ],
+        my: [
+            ...repository.listByLanguageAndLevel('my', 'beginner'),
+            ...repository.listByLanguageAndLevel('my', 'intermediate'),
+            ...repository.listByLanguageAndLevel('my', 'advanced'),
+        ],
+    }))
+    return lessonPoolsPromise
+}
 
 export type PracticeUnit = 'time' | 'words' | 'text' | 'quote'
 
@@ -23,17 +41,6 @@ export interface PracticeConfig {
     numbers?: boolean
 }
 
-const ALL_EN_LESSONS = [
-    ...repository.listByLanguageAndLevel('en', 'beginner'),
-    ...repository.listByLanguageAndLevel('en', 'intermediate'),
-    ...repository.listByLanguageAndLevel('en', 'advanced'),
-]
-const ALL_MY_LESSONS = [
-    ...repository.listByLanguageAndLevel('my', 'beginner'),
-    ...repository.listByLanguageAndLevel('my', 'intermediate'),
-    ...repository.listByLanguageAndLevel('my', 'advanced'),
-]
-
 function encodableLine(layout: KeyboardLayout, raw: string): string {
     const line = layout.language === 'myanmar' ? normalizeMyanmarText(raw) : raw
     for (const grapheme of splitGraphemes(line)) {
@@ -46,8 +53,8 @@ function encodableLine(layout: KeyboardLayout, raw: string): string {
     return line
 }
 
-function encodablePool(layout: KeyboardLayout, language: 'english' | 'myanmar' | 'mixed'): string[] {
-    const lessons = language === 'english' ? ALL_EN_LESSONS : language === 'myanmar' ? ALL_MY_LESSONS : [...ALL_MY_LESSONS, ...ALL_EN_LESSONS]
+function encodablePool(layout: KeyboardLayout, language: 'english' | 'myanmar' | 'mixed', pools: { en: LessonData[]; my: LessonData[] }): string[] {
+    const lessons = language === 'english' ? pools.en : language === 'myanmar' ? pools.my : [...pools.my, ...pools.en]
     const seen = new Set<string>()
     const pool: string[] = []
     for (const lesson of lessons) {
@@ -62,8 +69,8 @@ function encodablePool(layout: KeyboardLayout, language: 'english' | 'myanmar' |
     return pool
 }
 
-function wordPool(layout: KeyboardLayout, language: 'english' | 'myanmar' | 'mixed'): string[] {
-    const lines = language === 'english' ? encodablePool(layout, 'english') : language === 'myanmar' ? encodablePool(layout, 'myanmar') : encodablePool(layout, 'mixed')
+function wordPool(layout: KeyboardLayout, language: 'english' | 'myanmar' | 'mixed', pools: { en: LessonData[]; my: LessonData[] }): string[] {
+    const lines = language === 'english' ? encodablePool(layout, 'english', pools) : language === 'myanmar' ? encodablePool(layout, 'myanmar', pools) : encodablePool(layout, 'mixed', pools)
     const seen = new Set<string>()
     const words: string[] = []
     for (const line of lines) {
@@ -145,9 +152,9 @@ function decoratePracticeTokens(words: string[], opts: { language: 'english' | '
     return tokens
 }
 
-function buildDecoratedWords(config: PracticeConfig, layout: KeyboardLayout, count: number): string {
+function buildDecoratedWords(config: PracticeConfig, layout: KeyboardLayout, count: number, pools: { en: LessonData[]; my: LessonData[] }): string {
     const picked: string[] = []
-    const words = wordPool(layout, config.language)
+    const words = wordPool(layout, config.language, pools)
     if (words.length === 0) throw new Error(`No practice words available for "${config.language}"`)
     for (let i = 0; i < count; i += 1) {
         picked.push(words[Math.floor(Math.random() * words.length)])
@@ -164,9 +171,10 @@ function buildDecoratedWords(config: PracticeConfig, layout: KeyboardLayout, cou
     return text
 }
 
-export function buildPracticeMaterial(config: PracticeConfig): ResolvedLesson {
+export async function buildPracticeMaterial(config: PracticeConfig): Promise<ResolvedLesson> {
     const layout = layoutForLanguage(config.language)
     const unit = config.unit
+    const pools = await getLessonPools()
 
     let text: string
     if (unit === 'text') {
@@ -183,9 +191,9 @@ export function buildPracticeMaterial(config: PracticeConfig): ResolvedLesson {
     } else if (unit === 'words') {
         const count = Math.max(1, Math.min(200, config.words ?? 25))
         if (config.punctuation === true || config.numbers === true) {
-            text = buildDecoratedWords(config, layout, count)
+            text = buildDecoratedWords(config, layout, count, pools)
         } else {
-            const words = wordPool(layout, config.language)
+            const words = wordPool(layout, config.language, pools)
             if (words.length === 0) throw new Error(`No practice words available for "${config.language}"`)
             const picked: string[] = []
             for (let i = 0; i < count; i += 1) {
@@ -196,11 +204,11 @@ export function buildPracticeMaterial(config: PracticeConfig): ResolvedLesson {
     } else {
         const seconds = Math.max(15, Math.min(120, config.time ?? 30))
         if (config.punctuation === true || config.numbers === true) {
-            text = buildDecoratedWords(config, layout, Math.max(30, Math.ceil(seconds * 3)))
+            text = buildDecoratedWords(config, layout, Math.max(30, Math.ceil(seconds * 3)), pools)
         } else {
             // Sustained ≈ 200 chars/min with comfortable headroom.
             const targetChars = Math.max(120, seconds * 200)
-            const pool = encodablePool(layout, config.language)
+            const pool = encodablePool(layout, config.language, pools)
             if (pool.length === 0) throw new Error(`No practice material available for "${config.language}"`)
             text = repeatUntil(targetChars, pool)
         }

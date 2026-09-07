@@ -27,9 +27,9 @@ import { useUpdater } from '@/services/updater/use-updater'
 import type { ThemePreference } from '@/types'
 import { THEMES, DEFAULT_THEME_PRESET_ID } from '@/core/themes/registry'
 import { searchSettings, groupMatches, type SettingsEntry } from '@/core/settings/catalog'
-import { Field, Modal, PageHeader, AsyncButton, CardSection, SettingRow, SelectField, inputClass } from '@/components/ui'
+import { Field, Modal, PageHeader, AsyncButton, CardSection, SettingRow, SelectField } from '@/components/ui'
 import { Button } from '@/components/ui/button'
-import { cn, appPageClass } from '@/lib/utils'
+import { cn, appPageClass, inputClass } from '@/lib/utils'
 
 export default function SettingsPage() {
     const theme = useUiStore((s) => s.theme)

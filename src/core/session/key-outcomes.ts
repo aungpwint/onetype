@@ -24,11 +24,6 @@ export function keyTapTone(tap: KeyTap): KeyTapTone {
     return tap.incorrect > tap.correct ? 'heavy' : 'slip'
 }
 
-export function keyTapAccuracy(tap: KeyTap): number {
-    const total = tap.correct + tap.incorrect
-    return total === 0 ? 100 : (tap.correct / total) * 100
-}
-
 export function summarizeKeyTaps(keyOutcomes: Map<string, KeyOutcome>): KeyTapSummary {
     const keys: KeyTap[] = []
     let correct = 0

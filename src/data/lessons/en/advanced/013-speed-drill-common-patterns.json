@@ -5,7 +5,7 @@
     "language": "en",
     "number": 13,
     "title": "Speed Drill: Common Patterns",
-    "titleMy": "အရှိန်လေ့ကျင့်ခန်း - အသုံးများ ပုံစံ",
+    "titleMy": "အရှိန်လေ့ကျင့်ခန်း - အသုံးများသော ပုံစံများ",
     "description": "Repeated common English patterns for speed building.",
     "difficulty": "hard",
     "estimatedMinutes": 12,
@@ -14,12 +14,8 @@
         "minAccuracy": 94,
         "minWpm": 34
     },
-    "focus": [
-        "speed"
-    ],
-    "prerequisites": [
-        "lesson-en-advanced-12"
-    ],
+    "focus": ["speed"],
+    "prerequisites": ["lesson-en-advanced-12"],
     "focusKeys": [
         "KeyE",
         "KeyR",
@@ -44,20 +40,8 @@
         "KeyC",
         "KeyB"
     ],
-    "targetFingers": [
-        "left-middle",
-        "left-index",
-        "right-index",
-        "right-middle",
-        "left-pinky",
-        "right-ring",
-        "left-ring",
-        "right-pinky"
-    ],
-    "targetHands": [
-        "left",
-        "right"
-    ],
+    "targetFingers": ["left-middle", "left-index", "right-index", "right-middle", "left-pinky", "right-ring", "left-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
@@ -65,14 +49,7 @@
             "instruction": "Build speed across full words",
             "generator": {
                 "type": "chunks",
-                "keys": [
-                    "e",
-                    "r",
-                    "t",
-                    "y",
-                    "u",
-                    "i"
-                ],
+                "keys": ["e", "r", "t", "y", "u", "i"],
                 "count": 24,
                 "chunkMin": 4,
                 "chunkMax": 7,

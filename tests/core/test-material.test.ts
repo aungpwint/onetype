@@ -20,10 +20,10 @@ function makeTest(overrides: Partial<TypingTest> = {}): TypingTest {
 }
 
 describe('buildTestMaterial', () => {
-    it('builds a resolved lesson whose every unit maps to a key in the layout', () => {
+    it('builds a resolved lesson whose every unit maps to a key in the layout', async () => {
         for (const language of ['myanmar', 'english', 'mixed'] as const) {
             const layoutId = language === 'english' ? 'english-qwerty' : language === 'mixed' ? 'english-myanmar-mixed' : 'myanmar'
-            const material = buildTestMaterial(makeTest({ language, layoutId }))
+            const material = await buildTestMaterial(makeTest({ language, layoutId }))
             const layout = getLayoutOrThrow(layoutId)
             expect(material.totalUnits).toBeGreaterThan(0)
             for (const unit of material.sequence.units) {
@@ -34,8 +34,8 @@ describe('buildTestMaterial', () => {
         }
     })
 
-    it('builds a mixed test on the mixed layout that contains BOTH scripts', () => {
-        const material = buildTestMaterial(makeTest({ id: 't-mixed', language: 'mixed', layoutId: 'english-myanmar-mixed' }))
+    it('builds a mixed test on the mixed layout that contains BOTH scripts', async () => {
+        const material = await buildTestMaterial(makeTest({ id: 't-mixed', language: 'mixed', layoutId: 'english-myanmar-mixed' }))
         expect(material.layoutId).toBe('english-myanmar-mixed')
         const text = material.phases.map((p) => p.text).join(' ')
         expect(containsMyanmar(text)).toBe(true)
@@ -45,9 +45,9 @@ describe('buildTestMaterial', () => {
         }
     })
 
-    it('scales material size with the test duration', () => {
-        const short = buildTestMaterial(makeTest({ id: 't-short', durationSeconds: 60 }))
-        const long = buildTestMaterial(makeTest({ id: 't-long', durationSeconds: 600 }))
+    it('scales material size with the test duration', async () => {
+        const short = await buildTestMaterial(makeTest({ id: 't-short', durationSeconds: 60 }))
+        const long = await buildTestMaterial(makeTest({ id: 't-long', durationSeconds: 600 }))
         expect(long.sequence.units.length).toBeGreaterThan(short.sequence.units.length)
     })
 })

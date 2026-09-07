@@ -14,12 +14,42 @@
         "minAccuracy": 92,
         "minWpm": 25
     },
+    "focusKeys": [
+        "KeyA",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "Semicolon",
+        "Period",
+        "ShiftLeft",
+        "ShiftRight"
+    ],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
+    "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-9-ex-1",
             "kind": "text",
-            "instruction": "မနေ့က ရန်ကုန်တိုင်းဒေသကြီးတွင် မိုးကြီးရွာခဲ့သည်။ လေယာဉ်ခရီးစဉ်အချို့ နှောင့်နှေးခဲ့ရသည်။",
-            "text": "မနေ့က ရန်ကုန်တိုင်းဒေသကြီးတွင် မိုးကြီးရွာခဲ့သည်။ လေယာဉ်ခရီးစဉ်အချို့ နှောင့်နှေးခဲ့ရသည်။"
+            "instruction": "မနေ့က ရန်ကုန်တိုင်းဒေသကြီးတွင် မိုးကြီးရွာခဲ့သည်။ လေယာဉ်ခရီးစဉ်အချို့ နှောင့်နှေးခဲ့ရသည်။ လူထုက ကြိုဆိုကြသည်။",
+            "text": "မနေ့က ရန်ကုန်တိုင်းဒေသကြီးတွင် မိုးကြီးရွာခဲ့သည်။ လေယာဉ်ခရီးစဉ်အချို့ နှောင့်နှေးခဲ့ရသည်။ လူထုက ကြိုဆိုကြသည်။"
         }
     ],
     "focus": ["sentences", "unicode", "speed", "accuracy"],
