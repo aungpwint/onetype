@@ -26,13 +26,13 @@ interface TypingLens {
 
 function useTypingLens(): TypingLens {
     return {
-        highlightMode: useSettingsStore((s) => s.get('practice.highlightMode') ?? 'word'),
-        blindMode: useSettingsStore((s) => s.get('practice.blindMode') ?? 'off'),
-        hideExtraLetters: useSettingsStore((s) => s.get('practice.hideExtraLetters') ?? 'off'),
-        caretStyle: useSettingsStore((s) => s.get('practice.caretStyle') ?? 'bar'),
-        smoothCaret: useSettingsStore((s) => s.get('practice.smoothCaret') ?? 'medium'),
-        paceCaret: useSettingsStore((s) => s.get('practice.paceCaret') ?? 'off'),
-        indicateTypos: useSettingsStore((s) => s.get('practice.indicateTypos') ?? 'below'),
+        highlightMode: useSettingsStore((s) => s.getEnum('practice.highlightMode', ['word', 'letter', 'none'] as const, 'word')),
+        blindMode: useSettingsStore((s) => s.getEnum('practice.blindMode', ['on', 'off'] as const, 'off')),
+        hideExtraLetters: useSettingsStore((s) => s.getEnum('practice.hideExtraLetters', ['on', 'off'] as const, 'off')),
+        caretStyle: useSettingsStore((s) => s.getEnum('practice.caretStyle', ['bar', 'block', 'underline', 'line'] as const, 'bar')),
+        smoothCaret: useSettingsStore((s) => s.getEnum('practice.smoothCaret', ['off', 'slow', 'medium', 'fast'] as const, 'medium')),
+        paceCaret: useSettingsStore((s) => s.getEnum('practice.paceCaret', ['on', 'off'] as const, 'off')),
+        indicateTypos: useSettingsStore((s) => s.getEnum('practice.indicateTypos', ['below', 'replace', 'off'] as const, 'below')),
     }
 }
 

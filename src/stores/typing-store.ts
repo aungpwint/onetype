@@ -12,6 +12,7 @@ import type { Modifier, TypingMode } from '@/types'
 import { resolvePressedKey } from '@/core/input/key-resolution'
 import type { ScoreMetrics } from '@/core/scoring/score'
 import type { AchievementRecord, TypingStatRecord, TypingTest } from '@/services/types'
+import type { Student } from '@/services/types'
 import { reinforcementFromWeakKeys, type ReinforcedDrill, type MuscleMemoryGoal } from '@/core/reinforcement'
 import { projectMasteryDelta, type MasteryDelta } from '@/core/mastery'
 import * as backend from '@/services/backend'
@@ -203,6 +204,17 @@ export async function buildAdaptiveDrill(
     return reinforcementFromWeakKeys(weakIds, { goal: opts.goal, layout })
 }
 
+const NO_ACTIVE_STUDENT_ERROR = 'Please add a student profile first.'
+
+async function requireActiveStudent(set: (patch: Partial<TypingState>) => void): Promise<Student | null> {
+    const active = await useStudentStore.getState().ensureActive()
+    if (!active) {
+        set({ error: NO_ACTIVE_STUDENT_ERROR })
+        return null
+    }
+    return active
+}
+
 export const useTypingStore = create<TypingState>((set, get) => {
     const launchSession = (session: TypingSessionState) => {
         const engine = createEngine(session)
@@ -269,11 +281,8 @@ export const useTypingStore = create<TypingState>((set, get) => {
         },
 
         beginLesson: async (lessonId, mode = 'guided') => {
-            const active = await useStudentStore.getState().ensureActive()
-            if (!active) {
-                set({ error: 'Please add a student profile first.' })
-                return
-            }
+            const active = await requireActiveStudent(set)
+            if (!active) return
             const resolved = resolveLessonById(lessonId)
             const layout = getLayoutOrThrow(resolved.layoutId)
             const attempt = await backend.nextExerciseAttempt(active.id, lessonId)
@@ -291,11 +300,8 @@ export const useTypingStore = create<TypingState>((set, get) => {
         },
 
         beginTest: async (test) => {
-            const active = await useStudentStore.getState().ensureActive()
-            if (!active) {
-                set({ error: 'Please add a student profile first.' })
-                return
-            }
+            const active = await requireActiveStudent(set)
+            if (!active) return
             const resolved = buildTestMaterial(test)
             const layout = resolveTestLayout(test)
             const attempt = await backend.nextTestAttempt(active.id, test.id)
@@ -313,11 +319,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
         },
 
         beginDrill: async (drill) => {
-            const active = await useStudentStore.getState().ensureActive()
-            if (!active) {
-                set({ error: 'Please add a student profile first.' })
-                return
-            }
+            if (!(await requireActiveStudent(set))) return
             const session: TypingSessionState = {
                 kind: 'drill',
                 drill,
@@ -560,8 +562,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
                 if (session.kind === 'drill') {
                     // Drills count toward practice/achievement stats and key
                     // weakness tracking, but are never a lesson or test result.
-                    await saveStatistics(active.id, session.layout.id)
-                    publish({ newlyUnlocked: await recordProgression(metrics, true, reason) })
+                    publish({ newlyUnlocked: await persistStatisticsAndProgression(active, session.layout.id, metrics, true, reason) })
                     return
                 }
 
@@ -582,8 +583,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
                     layoutId: session.layout.id,
                     contentVersion,
                 })
-                await saveStatistics(active.id, session.layout.id)
-                publish({ newlyUnlocked: await recordProgression(metrics, passed, reason) })
+                publish({ newlyUnlocked: await persistStatisticsAndProgression(active, session.layout.id, metrics, passed, reason) })
             } catch (error) {
                 // Show the result anyway, flagging that it could not be saved.
                 publish({ saveError: error instanceof Error ? error.message : String(error), newlyUnlocked: [] })
@@ -710,25 +710,12 @@ let focusPolicy: FocusPolicy = 'off'
 let focusGuardCleanup: (() => void) | null = null
 
 function readFocusPolicy(): FocusPolicy {
-    try {
-        const value = useSettingsStore.getState().get('practice.focusGuard')
-        if (value === 'pause') return 'pause'
-        if (value === 'soft') return 'soft'
-    } catch {
-        /* fall through */
-    }
-    return 'off'
+    return useSettingsStore.getState().getEnum('practice.focusGuard', ['off', 'pause', 'soft'] as const, 'off')
 }
 
 function readQuickRestartCode(): string | null {
-    try {
-        const value = useSettingsStore.getState().get('practice.quickRestart')
-        if (value === 'tab') return 'Tab'
-        if (value === 'enter') return 'Enter'
-    } catch {
-        /* fall through */
-    }
-    return null
+    const value = useSettingsStore.getState().getEnum('practice.quickRestart', ['tab', 'enter'] as const, 'tab')
+    return value === 'tab' ? 'Tab' : value === 'enter' ? 'Enter' : null
 }
 
 function bindFocusGuard() {
@@ -759,6 +746,17 @@ function bindFocusGuard() {
 function unbindFocusGuard() {
     focusGuardCleanup?.()
     focusGuardCleanup = null
+}
+
+async function persistStatisticsAndProgression(
+    active: Student,
+    layoutId: string,
+    metrics: ScoreMetrics,
+    passed: boolean,
+    reason: 'completed' | 'time-up',
+): Promise<string[]> {
+    await saveStatistics(active.id, layoutId)
+    return recordProgression(metrics, passed, reason)
 }
 
 async function saveStatistics(studentId: string, layoutId: string) {

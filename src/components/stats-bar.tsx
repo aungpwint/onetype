@@ -13,8 +13,8 @@ export function StatsBar() {
     void tick
     const [, force] = useState(0)
     const warned = useRef(false)
-    const timeWarning = useSettingsStore((s) => s.get('practice.timeWarning') ?? 'on')
-    const timerStyle = useSettingsStore((s) => s.get('practice.timerStyle') ?? 'text')
+    const timeWarning = useSettingsStore((s) => s.getEnum('practice.timeWarning', ['on', 'off'] as const, 'on'))
+    const timerStyle = useSettingsStore((s) => s.getEnum('practice.timerStyle', ['text', 'bar', 'mini', 'off'] as const, 'text'))
 
     const running = status === 'running'
 
@@ -25,9 +25,9 @@ export function StatsBar() {
         return () => window.clearInterval(id)
     }, [running])
 
-    const stats = useTypingStore.getState().getLiveStats()
-    const durationSeconds = useTypingStore.getState().session?.durationSeconds ?? null
-    const engine = useTypingStore.getState().engine
+    const store = useTypingStore.getState()
+    const durationSeconds = store.session?.durationSeconds ?? null
+    const engine = store.engine
     const remaining = durationSeconds !== null && engine ? Math.max(0, durationSeconds - engine.elapsedSeconds()) : null
 
     const inWarningZone = running && durationSeconds !== null && remaining !== null && remaining <= 10
@@ -38,14 +38,18 @@ export function StatsBar() {
         if (timeWarning !== 'off' && useUiStore.getState().soundEnabled) playTimeWarningSound()
     }, [inWarningZone, timeWarning])
 
-    const metrics = engine?.currentMetrics()
+    const totalUnits = store.session?.resolved.totalUnits ?? 0
+    const unitIndex = engine?.unitIndex ?? 0
+    const incorrectCount = engine?.incorrectCount ?? 0
+    const metrics = engine?.currentMetrics() ?? null
     const speedUnit = metrics?.speedUnit ?? 'wpm'
     const speedLabel = speedUnit === 'units/min' ? 'UNITS/MIN' : 'WPM'
-    const speed = Math.round(metrics?.speed ?? stats.wpm)
+    const speed = Math.round(metrics?.speed ?? 0)
     const raw = Math.round(metrics?.rawSpeed ?? 0)
     const consistency = Math.round(metrics?.consistency ?? 100)
-    const progress = stats.totalUnits > 0 ? Math.round((stats.unitIndex / stats.totalUnits) * 100) : 0
-    const idle = stats.unitIndex === 0
+    const accuracy = metrics?.accuracy ?? 0
+    const progress = totalUnits > 0 ? Math.round((unitIndex / totalUnits) * 100) : 0
+    const idle = unitIndex === 0
     const rawLabel = speedUnit === 'units/min' ? 'Raw units/min' : 'Raw WPM'
 
     const timed = durationSeconds !== null && remaining !== null
@@ -89,7 +93,7 @@ export function StatsBar() {
             ) : null}
 
             <div className="mt-3.5 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
-                <Metric label="Accuracy" value={idle ? '—' : `${stats.accuracy.toFixed(1)}%`} />
+                <Metric label="Accuracy" value={idle ? '—' : `${accuracy.toFixed(1)}%`} />
                 <span className="h-5 w-px bg-line-strong/60" aria-hidden />
                 <Metric label={rawLabel} value={idle ? '—' : String(raw)} />
                 <span className="h-5 w-px bg-line-strong/60" aria-hidden />
@@ -101,7 +105,7 @@ export function StatsBar() {
                     </>
                 ) : null}
                 <span className="h-5 w-px bg-line-strong/60" aria-hidden />
-                <Metric label="Errors" value={idle ? '—' : String(stats.incorrectCount)} tone={stats.incorrectCount > 0 ? 'destructive' : 'muted'} />
+                <Metric label="Errors" value={idle ? '—' : String(incorrectCount)} tone={incorrectCount > 0 ? 'destructive' : 'muted'} />
             </div>
         </div>
     )

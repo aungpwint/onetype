@@ -1,11 +1,12 @@
-import { Component, useEffect, useRef, type ReactNode } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Component, useEffect, useRef, type ReactNode, type SelectHTMLAttributes } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
 import { RefreshCw, RotateCcw, X, type LucideIcon } from 'lucide-react'
 import { Button, type ButtonProps } from './ui/button'
+import { Switch } from './ui/switch'
 import { useSettingsStore } from '@/stores/settings-store'
 import { useUiStore } from '@/stores/ui-store'
-import { cn, cardClass, eyebrowClass, pageTitleClass, sectionTitleClass } from '@/lib/utils'
+import { cn, cardClass, eyebrowClass, pageTitleClass, sectionTitleClass, selectClass } from '@/lib/utils'
 
 export class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
     state = { error: null as Error | null }
@@ -47,7 +48,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
 }
 
 export function Atmosphere({ className }: { className?: string }) {
-    const effect = useSettingsStore((s) => s.get('design.themeEffect') ?? 'none')
+    const effect = useSettingsStore((s) => s.getEnum('design.themeEffect', ['none', 'aurora', 'dots'] as const, 'none'))
     const focusMode = useUiStore((s) => s.focusMode)
     const hasEffect = effect === 'aurora' || effect === 'dots'
     const quiet = focusMode && hasEffect
@@ -103,6 +104,7 @@ export function Modal({
     closeOnBackdrop?: boolean
 }) {
     const panelRef = useRef<HTMLDivElement | null>(null)
+    const reduceMotion = useReducedMotion()
 
     useEffect(() => {
         if (!open) return
@@ -148,9 +150,9 @@ export function Modal({
                             width,
                             className,
                         )}
-                        initial={{ opacity: 0, y: 14, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 14, scale: 0.98 }}
+                        animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+                        exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.98 }}
                         transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                     >
                         {dismissable && (
@@ -194,6 +196,51 @@ export function Stat({ label, value, hint, icon }: { label: string; value: React
             </div>
             <p className="mt-1.5 font-display text-2xl leading-tight font-semibold tracking-tight tabular-nums">{value}</p>
             {hint ? <p className="mt-1 text-xs text-muted-foreground">{hint}</p> : null}
+        </div>
+    )
+}
+
+export function StatCard({
+    icon,
+    label,
+    value,
+    hint,
+    size = 'md',
+}: {
+    icon?: ReactNode
+    label: string
+    value: ReactNode
+    hint?: string
+    size?: 'md' | 'lg'
+}) {
+    const lg = size === 'lg'
+    return (
+        <div
+            className={cn(
+                'group relative overflow-hidden rounded-2xl border border-line bg-card shadow-(--shadow-1) transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-line-strong hover:shadow-(--shadow-3)',
+                lg ? 'p-5' : 'p-4',
+            )}
+        >
+            <span aria-hidden className="pointer-events-none absolute inset-0 bg-linear-to-b from-surface-elevated/60 to-transparent opacity-80" />
+            <div className="relative flex items-center justify-between gap-2">
+                <p className={eyebrowClass}>{label}</p>
+                {icon ? (
+                    <span
+                        className={cn(
+                            'flex shrink-0 items-center justify-center border border-line bg-paper-2/70 text-accent',
+                            lg
+                                ? 'h-8 w-8 rounded-lg transition-[border-color,background-color,color] duration-200 group-hover:border-accent/30 group-hover:bg-accent/10 group-hover:text-accent'
+                                : 'h-7 w-7 rounded-md',
+                        )}
+                    >
+                        {icon}
+                    </span>
+                ) : null}
+            </div>
+            <p className={cn('relative font-display leading-none font-semibold tracking-tight tabular-nums', lg ? 'mt-2.5 text-3xl' : 'mt-2 text-2xl')}>{value}</p>
+            {hint ? (
+                <p className={cn('relative text-muted-foreground', lg ? 'mt-2 text-xs' : 'mt-1.5 text-[0.6875rem]')}>{hint}</p>
+            ) : null}
         </div>
     )
 }
@@ -310,5 +357,75 @@ export function AsyncButton({
                 </>
             )}
         </Button>
+    )
+}
+
+export function CardSection({
+    icon,
+    title,
+    children,
+    id,
+}: {
+    icon?: ReactNode
+    title: ReactNode
+    children?: ReactNode
+    id?: string
+}) {
+    return (
+        <section id={id} className={cn(cardClass, 'p-5')}>
+            <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
+                {icon ? (
+                    <span className="flex h-7 w-7 items-center justify-center rounded-md bg-muted text-accent">{icon}</span>
+                ) : null}
+                {title}
+            </h2>
+            {children}
+        </section>
+    )
+}
+
+export function SettingRow({
+    title,
+    description,
+    checked,
+    onChecked,
+    icon: Icon,
+    id,
+}: {
+    title: string
+    description: string
+    checked: boolean
+    onChecked: (v: boolean) => void
+    icon?: LucideIcon
+    id?: string
+}) {
+    return (
+        <label id={id} className="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-line px-4 py-3 transition-colors hover:bg-muted/40">
+            <span className="flex items-start gap-3">
+                {Icon ? (
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+                        <Icon className="size-4" />
+                    </span>
+                ) : null}
+                <span>
+                    <span className="block text-sm font-medium">{title}</span>
+                    <span className="block text-xs text-muted-foreground">{description}</span>
+                </span>
+            </span>
+            <Switch checked={checked} onCheckedChange={onChecked} />
+        </label>
+    )
+}
+
+export function SelectField({
+    className,
+    disabled,
+    children,
+    ...props
+}: SelectHTMLAttributes<HTMLSelectElement>) {
+    return (
+        <select className={cn(selectClass, className)} disabled={disabled} {...props}>
+            {children}
+        </select>
     )
 }

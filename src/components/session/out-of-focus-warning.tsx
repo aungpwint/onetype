@@ -11,7 +11,7 @@ export function OutOfFocusWarning() {
     const togglePause = useTypingStore((s) => s.togglePause)
     const restart = useTypingStore((s) => s.restart)
     const acknowledgeAway = useTypingStore((s) => s.acknowledgeAway)
-    const focusPolicy = useSettingsStore((s) => s.get('practice.focusGuard'))
+    const focusPolicy = useSettingsStore((s) => s.getEnum('practice.focusGuard', ['off', 'pause', 'soft'] as const, 'off'))
 
     const afk = afkGapMs !== null && afkGapMs > AFK_THRESHOLD_MS
 

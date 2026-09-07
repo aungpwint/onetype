@@ -15,6 +15,25 @@ export default defineConfig(async () => ({
         },
     },
 
+    build: {
+        rollupOptions: {
+            output: {
+                // Split large stable libraries into cacheable chunks so the
+                // initial load and future updates stay snappy on desktop.
+                manualChunks(id) {
+                    if (!id.includes('node_modules')) return undefined
+                    if (id.includes('framer-motion')) return 'motion'
+                    if (id.includes('react-router') || id.includes('react-dom') || id.includes('react/') || id.includes('react/jsx-'))
+                        return 'react'
+                    if (id.includes('lucide-react')) return 'icons'
+                    if (id.includes('zustand')) return 'state'
+                    if (id.includes('@tauri-apps')) return 'tauri'
+                    return 'vendor'
+                },
+            },
+        },
+    },
+
     // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
     //
     // 1. prevent Vite from obscuring rust errors

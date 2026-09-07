@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, BarChart3, BookOpen, CalendarDays, Flame, Gauge, Target, Timer, Trophy } from 'lucide-react'
 import { useStudentStore } from '@/stores/student-store'
@@ -11,7 +11,7 @@ import { ACHIEVEMENT_CATALOG } from '@/data/achievements'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { dailyGoalState } from '@/core/goals/daily-goal'
 import { buildWeekBars } from '@/core/progress/weekly'
-import { Spinner } from '@/components/ui'
+import { StatCard, Spinner } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { WpmBars } from '@/components/wpm-bars'
@@ -25,22 +25,6 @@ function hourGreeting(): string {
     if (h < 17) return 'Good afternoon'
     if (h < 21) return 'Good evening'
     return 'Night practice'
-}
-
-function StatCard({ icon, label, value, hint }: { icon: ReactNode; label: string; value: ReactNode; hint?: string }) {
-    return (
-        <div className="group relative overflow-hidden rounded-2xl border border-line bg-card p-5 shadow-(--shadow-1) transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-line-strong hover:shadow-(--shadow-3)">
-            <span aria-hidden className="pointer-events-none absolute inset-0 bg-linear-to-b from-surface-elevated/60 to-transparent opacity-80" />
-            <div className="relative flex items-center justify-between gap-2">
-                <p className={eyebrowClass}>{label}</p>
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-line bg-paper-2/70 text-accent transition-[border-color,background-color,color] duration-200 group-hover:border-accent/30 group-hover:bg-accent/10 group-hover:text-accent">
-                    {icon}
-                </span>
-            </div>
-            <p className="relative mt-2.5 font-display text-3xl leading-none font-semibold tracking-tight tabular-nums">{value}</p>
-            {hint ? <p className="relative mt-2 text-xs text-muted-foreground">{hint}</p> : null}
-        </div>
-    )
 }
 
 function GoalRing({ minutes, goalMinutes }: { minutes: number; goalMinutes: number }) {
@@ -77,10 +61,7 @@ export default function Dashboard() {
     const loadProgress = useLessonStore((s) => s.loadProgress)
     const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel)
     const defaultLang = useSettingsStore((s) => s.get('app.language'))
-    const dailyGoalMinutes = useSettingsStore((s) => {
-        const parsed = Number.parseInt(s.get('dashboard.dailyGoalMinutes'), 10)
-        return Number.isFinite(parsed) && parsed > 0 ? parsed : 0
-    })
+    const dailyGoalMinutes = useSettingsStore((s) => Math.max(0, s.getNumber('dashboard.dailyGoalMinutes', 0)))
     const streak = useProgressionStore((s) => s.streak)
     const unlocked = useProgressionStore((s) => s.unlocked)
     const summary = useProgressionStore((s) => s.summary)
@@ -197,24 +178,28 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
                 <StatCard
+                    size="lg"
                     icon={<Gauge className="size-4" />}
                     label="Avg WPM"
                     value={stats.avgWpm ? Math.round(stats.avgWpm) : '—'}
                     hint={stats.bestWpm ? `Best ${Math.round(stats.bestWpm)} wpm` : 'No speed data yet'}
                 />
                 <StatCard
+                    size="lg"
                     icon={<Target className="size-4" />}
                     label="Avg accuracy"
                     value={stats.avgAcc ? `${stats.avgAcc.toFixed(1)}%` : '—'}
                     hint={stats.bestAcc ? `Best ${stats.bestAcc.toFixed(0)}%` : 'Accuracy tracks every run'}
                 />
                 <StatCard
+                    size="lg"
                     icon={<BookOpen className="size-4" />}
                     label="Lessons passed"
                     value={progressLoaded ? stats.completed : '…'}
                     hint="Across the whole curriculum"
                 />
                 <StatCard
+                    size="lg"
                     icon={<Trophy className="size-4" />}
                     label="Tests passed"
                     value={tests.length ? stats.passedTests : '…'}

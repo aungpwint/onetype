@@ -80,6 +80,9 @@ interface SettingsState {
     loaded: boolean
     load: () => Promise<void>
     get: (key: AppSettingKey) => string
+    getBoolean: (key: AppSettingKey, fallback?: boolean) => boolean
+    getNumber: (key: AppSettingKey, fallback?: number) => number
+    getEnum: <T extends string>(key: AppSettingKey, valid: readonly T[], fallback: T) => T
     set: (key: AppSettingKey, value: string) => Promise<void>
 }
 
@@ -96,6 +99,21 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     },
     get: (key) => {
         return get().values[key] ?? DEFAULT_SETTINGS[key]
+    },
+    getBoolean: (key, fallback = false) => {
+        const value = get().values[key] ?? DEFAULT_SETTINGS[key]
+        if (value === 'on') return true
+        if (value === 'off') return false
+        return fallback
+    },
+    getNumber: (key, fallback = 0) => {
+        const value = get().values[key] ?? DEFAULT_SETTINGS[key]
+        const parsed = Number(value)
+        return Number.isFinite(parsed) ? parsed : fallback
+    },
+    getEnum: <T extends string>(key: AppSettingKey, valid: readonly T[], fallback: T) => {
+        const value = get().values[key] ?? DEFAULT_SETTINGS[key]
+        return (valid as readonly string[]).includes(value) ? (value as T) : fallback
     },
     set: async (key, value) => {
         await backend.setSetting(key, value)

@@ -1,4 +1,5 @@
 import type { TestResult, TypingTest } from '@/services/types'
+import { bestRun, groupTestResults } from './best-run'
 
 interface FocusEntry {
     testId: string
@@ -10,23 +11,9 @@ interface FocusEntry {
     shortfall: number
 }
 
-function bestRun(runs: readonly TestResult[]): TestResult {
-    let best = runs[0]
-    for (const r of runs) {
-        if (r.wpm > best.wpm || (r.wpm === best.wpm && r.accuracy > best.accuracy)) best = r
-    }
-    return best
-}
-
 export function focusQueue(results: readonly TestResult[], tests: readonly TypingTest[], limit = 3): FocusEntry[] {
     const byId = new Map(tests.map((t) => [t.id, t]))
-    const grouped = new Map<string, TestResult[]>()
-
-    for (const r of results) {
-        const list = grouped.get(r.testId) ?? []
-        list.push(r)
-        grouped.set(r.testId, list)
-    }
+    const grouped = groupTestResults(results)
 
     const entries: FocusEntry[] = []
     for (const [testId, runs] of grouped) {

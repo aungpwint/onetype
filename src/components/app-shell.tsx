@@ -102,6 +102,12 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
     return (
         <TooltipProvider>
             <div className="relative isolate flex h-screen overflow-hidden">
+                <a
+                    href="#main-content"
+                    className="sr-only z-50 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-accent-ink focus:not-sr-only focus:absolute focus:top-4 focus:left-4"
+                >
+                    Skip to content
+                </a>
                 <Atmosphere />
                 <AnimatePresence initial={false}>
                     {sidebarOpen ? (
@@ -232,7 +238,7 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                             </Button>
                         </div>
                     </header>
-                    <main ref={contentRef} className="min-h-0 flex-1 overflow-y-auto">
+                    <main id="main-content" ref={contentRef} className="min-h-0 flex-1 overflow-y-auto outline-none" tabIndex={-1}>
                         {children}
                     </main>
                 </div>

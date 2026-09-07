@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion'
-import { AlertCircle, ArrowLeft, Pause, Play } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { ArrowLeft, Pause, Play } from 'lucide-react'
 import { useTypingStore } from '@/stores/typing-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { containsMyanmar } from '@/core/unicode/myanmar'
@@ -9,9 +9,10 @@ import { TargetText } from '@/components/target-text'
 import { ResultDialog } from '@/components/result-dialog'
 import { ConfirmAbandon } from '@/components/session/confirm-abandon'
 import { OutOfFocusWarning } from '@/components/session/out-of-focus-warning'
+import { SessionError, KeyboardLoading } from '@/components/session/session-status'
 import { useConfirmExit } from '@/components/session/use-confirm-exit'
 import { SessionTools } from '@/components/session/session-tools'
-import { Metric, Spinner } from '@/components/ui'
+import { Metric } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 
 const LEVEL_LABEL: Record<string, string> = {
@@ -33,6 +34,7 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
         abandon()
         onExit?.()
     })
+    const reduceMotion = useReducedMotion()
 
     const resolved = session?.resolved
     const layout = engine?.layout ?? null
@@ -50,7 +52,7 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
     return (
         <motion.div
             className="flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden"
-            initial={{ opacity: 0, y: 8 }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
         >
@@ -104,20 +106,10 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
                 </div>
             </header>
 
-            {error ? (
-                <p
-                    className="mx-5 mt-3 flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive sm:mx-8"
-                    role="alert"
-                >
-                    <AlertCircle className="size-4 shrink-0" />
-                    {error}
-                </p>
-            ) : null}
+            {error ? <SessionError message={error} /> : null}
 
             {!layout || !engine ? (
-                <div className="flex min-h-0 flex-1 items-center justify-center">
-                    <Spinner label="Loading the keys…" />
-                </div>
+                <KeyboardLoading />
             ) : (
                 <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-4 py-5 sm:px-8">
                     <div className="relative flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
@@ -174,7 +166,7 @@ function TabStartHint() {
 
 export function QuickRestartHint() {
     const pendingRestartAt = useTypingStore((s) => s.pendingRestartAt)
-    const quickRestart = useSettingsStore((s) => s.get('practice.quickRestart') ?? 'tab')
+    const quickRestart = useSettingsStore((s) => s.getEnum('practice.quickRestart', ['tab', 'enter'] as const, 'tab'))
     if (!pendingRestartAt) return null
     const label = quickRestart === 'enter' ? 'Enter' : 'Tab'
     return (

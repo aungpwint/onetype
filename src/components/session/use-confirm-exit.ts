@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useSettingsStore } from '@/stores/settings-store'
 
 export function useConfirmExit(onExit: () => void) {
-    const confirmExit = useSettingsStore((s) => s.get('practice.confirmExit'))
+    const confirmExit = useSettingsStore((s) => s.getEnum('practice.confirmExit', ['on', 'off'] as const, 'on'))
     const [open, setOpen] = useState(false)
 
     const requestExit = () => {

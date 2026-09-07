@@ -5,7 +5,7 @@ import { useStudentStore } from '@/stores/student-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { useUiStore } from '@/stores/ui-store'
 import { cn, eyebrowClass } from '@/lib/utils'
-import { Field, Atmosphere } from './ui'
+import { Field, Atmosphere, SelectField } from './ui'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 
@@ -100,15 +100,15 @@ export function Onboarding() {
                         </Field>
                         <div className="flex items-center justify-between">
                             <Field label="Appearance">
-                                <select
-                                    className="flex h-9 w-40 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                                <SelectField
+                                    className="w-40"
                                     value={theme}
                                     onChange={(e) => setTheme(e.currentTarget.value as typeof theme)}
                                 >
                                     <option value="system">Follow system</option>
                                     <option value="light">Light desk</option>
                                     <option value="dark">Night desk</option>
-                                </select>
+                                </SelectField>
                             </Field>
                         </div>
                         {message ? <p className="text-sm text-destructive">{message}</p> : null}

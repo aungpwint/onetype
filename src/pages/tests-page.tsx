@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Check, Gauge, Target, Timer, Trophy, X } from 'lucide-react'
 import * as backend from '@/services/backend'
@@ -8,9 +8,9 @@ import { containsMyanmar } from '@/core/unicode/myanmar'
 import { classStanding, type Standing } from '@/core/leaderboard/standing'
 import { focusQueue } from '@/core/tests/focus'
 import { Badge } from '@/components/ui/badge'
-import { EmptyState, PageHeader, Spinner } from '@/components/ui'
+import { EmptyState, PageHeader, Spinner, StatCard } from '@/components/ui'
 import { formatDateTime, formatWpm, formatAccuracy, bestResultByTest } from '@/lib/format'
-import { cn, cardClass, appPageClass, sectionTitleClass, eyebrowClass } from '@/lib/utils'
+import { cn, cardClass, appPageClass, sectionTitleClass } from '@/lib/utils'
 
 function groupByLanguage(tests: TypingTest[]): Array<{ language: string; tests: TypingTest[] }> {
     const order = ['myanmar', 'english', 'mixed']
@@ -20,20 +20,6 @@ function groupByLanguage(tests: TypingTest[]): Array<{ language: string; tests: 
         map.set(lang, [...(map.get(lang) ?? []), t])
     }
     return order.filter((l) => map.has(l)).map((l) => ({ language: l, tests: map.get(l)! }))
-}
-
-function StatTile({ icon, label, value, hint }: { icon: ReactNode; label: string; value: ReactNode; hint?: string }) {
-    return (
-        <div className="group relative overflow-hidden rounded-2xl border border-line bg-card p-4 shadow-(--shadow-1) transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-line-strong hover:shadow-(--shadow-3)">
-            <span aria-hidden className="pointer-events-none absolute inset-0 bg-linear-to-b from-surface-elevated/60 to-transparent opacity-80" />
-            <div className="relative flex items-center justify-between gap-2">
-                <p className={eyebrowClass}>{label}</p>
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-line bg-paper-2/70 text-accent">{icon}</span>
-            </div>
-            <p className="relative mt-2 font-display text-2xl leading-none font-semibold tracking-tight tabular-nums">{value}</p>
-            {hint ? <p className="relative mt-1.5 text-[0.6875rem] text-muted-foreground">{hint}</p> : null}
-        </div>
-    )
 }
 
 export default function TestsPage() {
@@ -105,15 +91,15 @@ export default function TestsPage() {
             />
 
             <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-                <StatTile icon={<Timer className="size-4" />} label="Attempts" value={attemptStats.attempts || '—'} hint="Across every paper" />
-                <StatTile
+                <StatCard icon={<Timer className="size-4" />} label="Attempts" value={attemptStats.attempts || '—'} hint="Across every paper" />
+                <StatCard
                     icon={<Target className="size-4" />}
                     label="Pass rate"
                     value={attemptStats.passRate !== null ? `${Math.round(attemptStats.passRate)}%` : '—'}
                     hint={attemptStats.attempts ? `${attemptStats.passed} of ${attemptStats.attempts} runs passed` : 'No runs yet'}
                 />
-                <StatTile icon={<Trophy className="size-4" />} label="Passed" value={attemptStats.passed || '—'} hint="When speed & accuracy met the target" />
-                <StatTile
+                <StatCard icon={<Trophy className="size-4" />} label="Passed" value={attemptStats.passed || '—'} hint="When speed & accuracy met the target" />
+                <StatCard
                     icon={<Gauge className="size-4" />}
                     label="Avg accuracy"
                     value={attemptStats.attempts ? formatAccuracy(attemptStats.avgAcc) : '—'}

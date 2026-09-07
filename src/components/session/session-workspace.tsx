@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { AlertCircle, Check, Keyboard, Loader2, Pause, Play, LogOut, ShieldAlert } from 'lucide-react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { Check, Keyboard, Loader2, Pause, Play, LogOut, ShieldAlert } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useTypingStore } from '@/stores/typing-store'
 import { useUiStore } from '@/stores/ui-store'
@@ -14,6 +14,7 @@ import { SessionHeader } from '@/components/session/session-header'
 import { QuickRestartHint } from '@/components/session/exercise-workspace'
 import { ConfirmAbandon } from '@/components/session/confirm-abandon'
 import { OutOfFocusWarning } from '@/components/session/out-of-focus-warning'
+import { SessionError, KeyboardLoading } from '@/components/session/session-status'
 import { useConfirmExit } from '@/components/session/use-confirm-exit'
 import { ResultDialog } from '@/components/result-dialog'
 import { Spinner } from '@/components/ui'
@@ -51,10 +52,12 @@ export function Session({
 
     const minimalChrome = focusMode && (status === 'running' || status === 'ready') && !error
 
+    const reduceMotion = useReducedMotion()
+
     return (
         <motion.div
             className="flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden"
-            initial={{ opacity: 0, y: 8 }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
         >
@@ -107,20 +110,10 @@ export function Session({
                 )}
             </AnimatePresence>
 
-            {error ? (
-                <p
-                    className="mx-5 mt-3 flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive sm:mx-8"
-                    role="alert"
-                >
-                    <AlertCircle className="size-4 shrink-0" />
-                    {error}
-                </p>
-            ) : null}
+            {error ? <SessionError message={error} /> : null}
 
             {!layout || !engine ? (
-                <div className="flex min-h-0 flex-1 items-center justify-center">
-                    <Spinner label="Loading the keys…" />
-                </div>
+                <KeyboardLoading />
             ) : (
                 <div className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-5 py-4 sm:px-8">
                     <div className="relative flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-4 lg:gap-5">
@@ -160,6 +153,7 @@ const PREP_STEP_MS = 420
 
 function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
     const [active, setActive] = useState(0)
+    const reduceMotion = useReducedMotion()
 
     useEffect(() => {
         const id = window.setInterval(() => setActive((a) => (a + 1) % steps.length), PREP_STEP_MS)
@@ -171,7 +165,7 @@ function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
             role="status"
             aria-live="polite"
             className="relative isolate my-auto w-full max-w-sm overflow-hidden rounded-3xl border border-line bg-card/75 p-8 shadow-(--shadow-3) backdrop-blur-2xl sm:p-10"
-            initial={{ opacity: 0, y: 14, scale: 0.98 }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 14, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
         >

@@ -27,10 +27,9 @@ import { useUpdater } from '@/services/updater/use-updater'
 import type { ThemePreference } from '@/types'
 import { THEMES, DEFAULT_THEME_PRESET_ID } from '@/core/themes/registry'
 import { searchSettings, groupMatches, type SettingsEntry } from '@/core/settings/catalog'
-import { Field, Modal, PageHeader, AsyncButton, inputClass } from '@/components/ui'
+import { Field, Modal, PageHeader, AsyncButton, CardSection, SettingRow, SelectField, inputClass } from '@/components/ui'
 import { Button } from '@/components/ui/button'
-import { Switch } from '@/components/ui/switch'
-import { cn, cardClass, appPageClass, sectionTitleClass } from '@/lib/utils'
+import { cn, appPageClass } from '@/lib/utils'
 
 export default function SettingsPage() {
     const theme = useUiStore((s) => s.theme)
@@ -130,31 +129,31 @@ export default function SettingsPage() {
 
             <SettingsSearch query={query} onQuery={setQuery} results={searchResults} onJump={jumpTo} />
 
-            <Section icon={<Palette className="size-4" />} title="Appearance" id="settings-appearance">
+            <CardSection icon={<Palette className="size-4" />} title="Appearance" id="settings-appearance">
                 <div className="mt-4 flex flex-wrap items-end gap-4">
                     <Field label="Theme" id="settings-theme">
                         <div className="relative">
-                            <select
-                                className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            <SelectField
+                                className="w-44"
                                 value={theme}
                                 onChange={(e) => setTheme(e.currentTarget.value as ThemePreference)}
                             >
                                 <option value="system">Follow system</option>
                                 <option value="light">Light desk</option>
                                 <option value="dark">Night desk</option>
-                            </select>
+                            </SelectField>
                         </div>
                     </Field>
                     <Field label="Default language" id="settings-default-language">
                         <div className="relative">
-                            <select
-                                className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            <SelectField
+                                className="w-44"
                                 value={defaultLang}
                                 onChange={(e) => void settings.set('app.language', e.currentTarget.value)}
                             >
                                 <option value="myanmar">Myanmar (မြန်မာ)</option>
                                 <option value="english">English</option>
-                            </select>
+                            </SelectField>
                         </div>
                     </Field>
                 </div>
@@ -212,20 +211,20 @@ export default function SettingsPage() {
 
                 <Field label="Background effect" className="mt-4" id="settings-background-effect">
                     <div className="relative">
-                        <select
-                            className="flex h-9 w-44 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                        <SelectField
+                            className="w-44"
                             value={themeEffect}
                             onChange={(e) => void settings.set('design.themeEffect', e.currentTarget.value)}
                         >
                             <option value="none">None</option>
                             <option value="aurora">Aurora</option>
                             <option value="dots">Point grid</option>
-                        </select>
+                        </SelectField>
                     </div>
                 </Field>
-            </Section>
+            </CardSection>
 
-            <Section icon={<Palette className="size-4" />} title="Typing experience" id="settings-typing-experience">
+            <CardSection icon={<Palette className="size-4" />} title="Typing experience" id="settings-typing-experience">
                 <div className="mt-4 space-y-3">
                     <SettingRow
                         title="Time warning sound"
@@ -240,15 +239,15 @@ export default function SettingsPage() {
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                     <Field label="Quick restart key" id="settings-quick-restart">
                         <div className="relative">
-                            <select
-                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            <SelectField
+                                className="w-full"
                                 value={quickRestart}
                                 onChange={(e) => void settings.set('practice.quickRestart', e.currentTarget.value)}
                             >
                                 <option value="tab">Tab</option>
                                 <option value="enter">Enter</option>
                                 <option value="off">Off</option>
-                            </select>
+                            </SelectField>
                         </div>
                     </Field>
                     <Field label="Sound volume" id="settings-sound-volume">
@@ -270,27 +269,27 @@ export default function SettingsPage() {
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                     <Field label="Highlight" id="settings-highlight">
                         <div className="relative">
-                            <select
-                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            <SelectField
+                                className="w-full"
                                 value={highlightMode}
                                 onChange={(e) => void settings.set('practice.highlightMode', e.currentTarget.value)}
                             >
                                 <option value="word">Word</option>
                                 <option value="letter">Letter</option>
                                 <option value="none">Off</option>
-                            </select>
+                            </SelectField>
                         </div>
                     </Field>
                     <Field label="Blind mode" id="settings-blind-mode">
                         <div className="relative">
-                            <select
-                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            <SelectField
+                                className="w-full"
                                 value={blindMode}
                                 onChange={(e) => void settings.set('practice.blindMode', e.currentTarget.value)}
                             >
                                 <option value="off">Off</option>
                                 <option value="on">Hide upcoming</option>
-                            </select>
+                            </SelectField>
                         </div>
                     </Field>
                 </div>
@@ -298,8 +297,8 @@ export default function SettingsPage() {
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                     <Field label="Caret style" id="settings-caret-style">
                         <div className="relative">
-                            <select
-                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            <SelectField
+                                className="w-full"
                                 value={caretStyle}
                                 onChange={(e) => void settings.set('practice.caretStyle', e.currentTarget.value)}
                             >
@@ -307,13 +306,13 @@ export default function SettingsPage() {
                                 <option value="block">Block</option>
                                 <option value="line">Line</option>
                                 <option value="underline">Underline</option>
-                            </select>
+                            </SelectField>
                         </div>
                     </Field>
                     <Field label="Smooth caret" id="settings-smooth-caret">
                         <div className="relative">
-                            <select
-                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            <SelectField
+                                className="w-full"
                                 value={smoothCaret}
                                 onChange={(e) => void settings.set('practice.smoothCaret', e.currentTarget.value)}
                             >
@@ -321,7 +320,7 @@ export default function SettingsPage() {
                                 <option value="slow">Slow</option>
                                 <option value="medium">Medium</option>
                                 <option value="fast">Fast</option>
-                            </select>
+                            </SelectField>
                         </div>
                     </Field>
                 </div>
@@ -348,8 +347,8 @@ export default function SettingsPage() {
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                     <Field label="Timer style" id="settings-timer-style">
                         <div className="relative">
-                            <select
-                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            <SelectField
+                                className="w-full"
                                 value={timerStyle}
                                 onChange={(e) => void settings.set('practice.timerStyle', e.currentTarget.value)}
                             >
@@ -357,13 +356,13 @@ export default function SettingsPage() {
                                 <option value="bar">Progress bar</option>
                                 <option value="mini">Mini</option>
                                 <option value="off">Hidden</option>
-                            </select>
+                            </SelectField>
                         </div>
                     </Field>
                 </div>
-            </Section>
+            </CardSection>
 
-            <Section icon={<Keyboard className="size-4" />} title="Practice" id="settings-practice">
+            <CardSection icon={<Keyboard className="size-4" />} title="Practice" id="settings-practice">
                 <div className="mt-4 space-y-3">
                     <SettingRow
                         title="Key click sounds"
@@ -410,27 +409,27 @@ export default function SettingsPage() {
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                     <Field label="Pause when you leave the window" id="settings-focus-guard">
                         <div className="relative">
-                            <select
-                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            <SelectField
+                                className="w-full"
                                 value={focusGuard}
                                 onChange={(e) => void settings.set('practice.focusGuard', e.currentTarget.value)}
                             >
                                 <option value="pause">Pause (recommended)</option>
                                 <option value="soft">Keep timing</option>
                                 <option value="off">Off</option>
-                            </select>
+                            </SelectField>
                         </div>
                     </Field>
                     <Field label="How mistakes are shown" id="settings-indicate-typos">
                         <div className="relative">
-                            <select
-                                className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                            <SelectField
+                                className="w-full"
                                 value={indicateTypos}
                                 onChange={(e) => void settings.set('practice.indicateTypos', e.currentTarget.value)}
                             >
                                 <option value="below">Underline</option>
                                 <option value="replace">Replace</option>
-                            </select>
+                            </SelectField>
                         </div>
                     </Field>
                     <Field label="Daily practice goal (minutes)" id="settings-daily-goal">
@@ -444,9 +443,9 @@ export default function SettingsPage() {
                         />
                     </Field>
                 </div>
-            </Section>
+            </CardSection>
 
-            <Section icon={<Paintbrush className="size-4" />} title="Keyboard shortcuts" id="settings-shortcuts">
+            <CardSection icon={<Paintbrush className="size-4" />} title="Keyboard shortcuts" id="settings-shortcuts">
                 <p className="mt-1 text-sm text-muted-foreground">
                     Navigate the app without the mouse. During a round, plain keys are reserved for typing.
                 </p>
@@ -465,9 +464,9 @@ export default function SettingsPage() {
                         </div>
                     ))}
                 </dl>
-            </Section>
+            </CardSection>
 
-            <Section icon={<Bell className="size-4" />} title="Notifications" id="settings-notifications">
+            <CardSection icon={<Bell className="size-4" />} title="Notifications" id="settings-notifications">
                 <div className="mt-4 space-y-3">
                     <SettingRow
                         title="Enable notifications"
@@ -486,9 +485,9 @@ export default function SettingsPage() {
                         id="settings-notify-updates"
                     />
                 </div>
-            </Section>
+            </CardSection>
 
-            <Section icon={<DownloadCloud className="size-4" />} title="Updates" id="settings-updates">
+            <CardSection icon={<DownloadCloud className="size-4" />} title="Updates" id="settings-updates">
                 <div className="mt-4 space-y-3">
                     <SettingRow
                         title="Check for updates automatically"
@@ -526,9 +525,9 @@ export default function SettingsPage() {
                     )}
                     {updater.status.state === 'error' && <span className="text-xs text-destructive">{updater.status.message}</span>}
                 </div>
-            </Section>
+            </CardSection>
 
-            <Section icon={<Database className="size-4" />} title="Data" id="settings-data">
+            <CardSection icon={<Database className="size-4" />} title="Data" id="settings-data">
                 <p className="mt-1 text-sm text-muted-foreground">
                     Everything lives in an on-device database. Back it up or move it between machines by exporting.
                 </p>
@@ -571,7 +570,7 @@ export default function SettingsPage() {
                 <p className="mt-3 text-xs text-muted-foreground">
                     In the browser/dev preview, export downloads a JSON file and import reads one back.
                 </p>
-            </Section>
+            </CardSection>
 
             <Modal open={report !== null} onClose={() => setReport(null)} ariaLabel="Report">
                 <h2 className="font-display text-lg capitalize">{report?.kind}</h2>
@@ -581,49 +580,6 @@ export default function SettingsPage() {
                 </div>
             </Modal>
         </div>
-    )
-}
-
-function Section({ icon, title, children, id }: { icon: React.ReactNode; title: string; children: React.ReactNode; id?: string }) {
-    return (
-        <section id={id} className={cn(cardClass, 'p-5')}>
-            <h2 className={cn(sectionTitleClass, 'flex items-center gap-2')}>
-                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-muted text-accent">{icon}</span>
-                {title}
-            </h2>
-            {children}
-        </section>
-    )
-}
-
-function SettingRow({
-    title,
-    description,
-    checked,
-    onChecked,
-    icon: Icon,
-    id,
-}: {
-    title: string
-    description: string
-    checked: boolean
-    onChecked: (v: boolean) => void
-    icon: React.ComponentType<{ className?: string }>
-    id?: string
-}) {
-    return (
-        <label id={id} className="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-border px-4 py-3 transition-colors hover:bg-muted/40">
-            <span className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
-                    <Icon className="size-4" />
-                </span>
-                <span>
-                    <span className="block text-sm font-medium">{title}</span>
-                    <span className="block text-xs text-muted-foreground">{description}</span>
-                </span>
-            </span>
-            <Switch checked={checked} onCheckedChange={onChecked} />
-        </label>
     )
 }
 

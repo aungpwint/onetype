@@ -9,7 +9,7 @@ import { resolveTarget } from '@/core/target-model'
 
 export function KeyboardContainer({ layout, hideReadyMessage }: { layout: KeyboardLayout; hideReadyMessage?: boolean }) {
     const handGuide = useUiStore((s) => s.handGuideVisible)
-    const showKeyboard = useSettingsStore((s) => s.get('practice.showKeyboard'))
+    const showKeyboard = useSettingsStore((s) => s.getEnum('practice.showKeyboard', ['on', 'off'] as const, 'on'))
 
     if (showKeyboard === 'off') return null
 

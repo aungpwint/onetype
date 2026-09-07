@@ -1,4 +1,5 @@
 import type { TestResult, TypingTest } from '@/services/types'
+import { bestRun, groupTestResults } from './best-run'
 
 export interface TestRecordEntry {
     testId: string
@@ -14,22 +15,13 @@ export interface TestRecordEntry {
 
 export function buildTestRecord(results: readonly TestResult[], tests: readonly TypingTest[]): TestRecordEntry[] {
     const byId = new Map(tests.map((t) => [t.id, t]))
-    const grouped = new Map<string, TestResult[]>()
-
-    for (const r of results) {
-        const list = grouped.get(r.testId) ?? []
-        list.push(r)
-        grouped.set(r.testId, list)
-    }
+    const grouped = groupTestResults(results)
 
     const entries: TestRecordEntry[] = []
     for (const [testId, runs] of grouped) {
         const meta = byId.get(testId)
         if (!meta) continue
-        let best = runs[0]
-        for (const r of runs) {
-            if (r.wpm > best.wpm || (r.wpm === best.wpm && r.accuracy > best.accuracy)) best = r
-        }
+        const best = bestRun(runs)
         entries.push({
             testId,
             code: meta.code,

@@ -30,3 +30,7 @@ export const kbdClass = cn(
 )
 
 export const chipClass = cn('inline-flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1 text-xs text-ink-soft')
+
+export const selectClass = cn(
+    'flex h-9 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/30',
+)
