@@ -203,15 +203,19 @@ export class TypingEngine {
         const outcome = this.keyOutcomes.get(keyKey) ?? { correct: 0, incorrect: 0 }
         this.totalKeys += 1
 
-        // Primarily grade by the ACTUAL typed character when one is supplied
-        // (required so a mixed English+Myanmar exercise can tell `u` from `က`
-        // even though both ride the same physical KeyU). When no character is
-        // given (e.g. older direct callers/tests) fall back to physical key.
+        // Grade by the ACTUAL typed character when it is registered in the
+        // layout's charMap (required so a mixed English+Myanmar exercise can
+        // tell `u` from `က` even though both ride the same physical KeyU).
+        // When the typed character is NOT in the charMap the OS keyboard is
+        // producing characters from a different script (e.g. English OS
+        // keyboard while the app Myanmar layout is active) — fall back to
+        // physical key code so the app-level layout still works.
         const normalizedChar = character != null && character.length > 0 ? character.normalize('NFC') : null
         const expectedChar = expected.text.normalize('NFC')
         const charMatches = normalizedChar === expectedChar
         const codeMatches = code === expected.keyCode
-        const correctInput = normalizedChar != null ? charMatches : codeMatches
+        const charIsInLayout = normalizedChar != null && this.layout.lookupChar(normalizedChar) != null
+        const correctInput = charIsInLayout ? charMatches : codeMatches
         const isCorrect = correctInput && modifier === expected.modifier
 
         if (isCorrect) {

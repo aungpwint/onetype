@@ -683,9 +683,12 @@ function bindKeys() {
         const pressed = resolvePressedKey(event, engine.layout)
         if (!pressed) return
         const expected = engine.expectedUnit
+        const rawChar = pressed.character != null ? pressed.character.normalize('NFC') : null
         const correct = expected
             ? pressed.modifier === expected.modifier &&
-              (pressed.character != null ? pressed.character.normalize('NFC') === expected.text.normalize('NFC') : pressed.code === expected.keyCode)
+              (rawChar != null && engine.layout.lookupChar(rawChar) != null
+                  ? rawChar === expected.text.normalize('NFC')
+                  : pressed.code === expected.keyCode)
             : pressed.code === 'Space'
         engine.processKey(pressed.code, pressed.modifier, pressed.character)
         if (useUiStore.getState().soundEnabled) {
