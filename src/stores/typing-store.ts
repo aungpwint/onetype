@@ -213,7 +213,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
     const teardownSession = () => {
         unbindKeys()
         unbindFocusGuard()
-        set({ session: null, engine: null, status: 'idle', ...INITIAL_RUN_STATE })
+        set({ ...INITIAL_RUN_STATE, session: null, engine: null, status: 'idle' })
     }
 
     return {
