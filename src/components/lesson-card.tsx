@@ -3,6 +3,7 @@ import { ArrowRight, Clock, Crosshair, Gauge, Lock } from 'lucide-react'
 import type { LessonData } from '@/data/curriculum/types'
 import type { MasteryLevel } from '@/core/mastery'
 import type { LessonProgress } from '@/services/types'
+import { useSettingsStore } from '@/stores/settings-store'
 import { Badge } from './ui/badge'
 import { cn } from '@/lib/utils'
 
@@ -33,6 +34,11 @@ function MasteryBadge({ level }: { level: MasteryLevel }) {
 }
 
 export function LessonCard({ lesson, mastery, progress, locked = false }: LessonCardProps) {
+    const storedLang = useSettingsStore((s) => s.get('app.language'))
+    const isMyanmar = storedLang === 'myanmar'
+    const title = isMyanmar ? lesson.titleMy : lesson.title
+    const titleSecondary = isMyanmar ? lesson.title : lesson.titleMy
+
     const passed = mastery === 'passed' || mastery === 'mastered'
     const attempted = mastery === 'attempted'
     const showAccuracy = attempted && progress && progress.attempts > 0
@@ -74,8 +80,8 @@ export function LessonCard({ lesson, mastery, progress, locked = false }: Lesson
                 </div>
 
                 <div className="min-w-0">
-                    <h3 className="font-display text-xl leading-tight font-semibold tracking-[-0.01em] text-ink">{lesson.title}</h3>
-                    <p className="mt-2 font-myanmar text-xs leading-relaxed text-ink-faint">{lesson.titleMy}</p>
+                    <h3 className="font-display text-xl leading-tight font-semibold tracking-[-0.01em] text-ink">{title}</h3>
+                    <p className="mt-2 font-myanmar text-xs leading-relaxed text-ink-faint">{titleSecondary}</p>
                 </div>
 
                 {lesson.focusKeys && lesson.focusKeys.length > 0 ? (
