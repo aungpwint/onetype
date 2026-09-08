@@ -6,9 +6,9 @@
     "number": 12,
     "title": "Essay Writing",
     "titleMy": "စာစီစာကုံး",
-    "description": "Type an essay paragraph about education.",
+    "description": "ပညာရေး အကြောင်း ရေးသားထားသော စာစီစာကုံး စာပိုဒ်ကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 18,
+    "estimatedMinutes": 8,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 93,
@@ -52,7 +52,7 @@
         {
             "id": "lesson-my-advanced-12-ex-1",
             "kind": "text",
-            "instruction": "ပညာရေးသည် လူ့ဘဝကို မြှင့်တင်ပေးသည်။ ကောင်းမွန်သော ပညာရေးသည် နိုင်ငံတိုးတက်ရေးအတွက် အခြေခံဖြစ်သည်။",
+            "instruction": "ပညာရေး အက်ဆေး စာပိုဒ်တစ်ခုလုံးကို ရိုက်ပါ",
             "text": "ပညာရေးသည် လူ့ဘဝကို မြှင့်တင်ပေးသည်။ ကောင်းမွန်သော ပညာရေးသည် နိုင်ငံတိုးတက်ရေးအတွက် အခြေခံဖြစ်သည်။"
         }
     ],

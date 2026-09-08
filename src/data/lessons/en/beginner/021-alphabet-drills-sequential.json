@@ -8,7 +8,7 @@
     "titleMy": "အက္ခရာလေ့ကျင့်ခန်း - အစဉ်လိုက်",
     "description": "Type the alphabet in order. Reinforce key location across the full keyboard.",
     "difficulty": "medium",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -50,12 +50,12 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-21-ex-1",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "Ride the alphabet from A to F",
             "generator": {
                 "type": "chunks",
-                "keys": ["a", "b", "c"],
-                "count": 12,
-                "chunkMin": 3,
+                "keys": ["a", "b", "c", "d", "e", "f"],
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable"
             }
@@ -63,53 +63,28 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-21-ex-2",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "Keep going from G to N",
             "generator": {
                 "type": "chunks",
-                "keys": ["d", "e", "f", "g", "h"],
-                "count": 16,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "keys": ["g", "h", "i", "j", "k", "l", "m", "n"],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-21-ex-3",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "Tiny challenge: race the alphabet from O to Z",
             "generator": {
                 "type": "chunks",
-                "keys": ["i", "j", "k", "l", "m", "n"],
-                "count": 18,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-21-ex-4",
-            "instruction": "Type larger clusters fluently",
-            "generator": {
-                "type": "chunks",
-                "keys": ["o", "p", "q", "r", "s"],
-                "count": 16,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-21-ex-5",
-            "instruction": "Type larger clusters fluently",
-            "generator": {
-                "type": "chunks",
-                "keys": ["t", "u", "v", "w", "x", "y", "z"],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "keys": ["o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

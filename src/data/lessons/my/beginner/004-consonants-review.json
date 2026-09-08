@@ -6,9 +6,9 @@
     "number": 4,
     "title": "Consonants Review",
     "titleMy": "ဗျည်းများ ပြန်လည်သုံးသပ်ခြင်း",
-    "description": "Review all consonants learned so far, both hands.",
+    "description": "ယခုအထိ သင်ယူခဲ့သော ဗျည်းများ အားလုံးကို လက်နှစ်ဖက်ဖြင့် ပြန်လည် လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "basic",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
@@ -23,39 +23,39 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-4-ex-1",
-            "instruction": "Review everything you have learned",
+            "instruction": "ဘယ်လက် ဗျည်း ငါးခုကို ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဆ", "တ", "န", "မ", "အ"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 8,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-4-ex-2",
-            "instruction": "Review everything you have learned",
+            "instruction": "ညာလက် ဗျည်း ငါးခုကို ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က", "င", "သ", "စ", "ဟ"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-4-ex-3",
-            "instruction": "Review everything you have learned",
+            "instruction": "လက်နှစ်ဖက်စလုံး တွဲဖက်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဆ", "တ", "န", "မ", "အ", "က", "င", "သ", "စ", "ဟ"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable",
                 "mixed": true
             }

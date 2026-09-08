@@ -6,9 +6,9 @@
     "number": 5,
     "title": "Technology Paragraph",
     "titleMy": "နည်းပညာအကြောင်း စာပိုဒ်",
-    "description": "Type about technology. Practice words with varied letter patterns.",
+    "description": "Everyday words about technology; tackle the longer letter patterns without losing rhythm.",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-5-ex-1",
             "kind": "text",
-            "instruction": "Computers and phones connect people around the world in seconds. We can learn, work, and shop using the internet. It is important to use technology wisely and not spend the whole day on a screen.",
+            "instruction": "Type the whole paragraph once for control, then once for tempo.",
             "text": "Computers and phones connect people around the world in seconds. We can learn, work, and shop using the internet. It is important to use technology wisely and not spend the whole day on a screen."
         }
     ],

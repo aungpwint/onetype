@@ -6,9 +6,9 @@
     "number": 16,
     "title": "Essay Passage: Community",
     "titleMy": "စာစီစာကုံး - လူ့အသိုင်းအဝိုင်း",
-    "description": "Type a longer essay passage about community.",
+    "description": "A longer essay passage about community; keep your rhythm through the commas and the repeated structure.",
     "difficulty": "hard",
-    "estimatedMinutes": 18,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 95,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-16-ex-1",
             "kind": "text",
-            "instruction": "A community is a group of people who help and support one another. When someone is sick, the neighbors offer food and care. When it rains, they share umbrellas. A strong community makes life safer, warmer, and more joyful for every person who belongs to it.",
+            "instruction": "Match the calm, repeating rhythm of the examples all the way to the last sentence.",
             "text": "A community is a group of people who help and support one another. When someone is sick, the neighbors offer food and care. When it rains, they share umbrellas. A strong community makes life safer, warmer, and more joyful for every person who belongs to it."
         }
     ],

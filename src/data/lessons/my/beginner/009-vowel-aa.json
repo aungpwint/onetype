@@ -6,9 +6,9 @@
     "number": 9,
     "title": "Vowel: ာ (aa)",
     "titleMy": "သရ - ာ",
-    "description": "The ာ vowel (KeyM). Type consonant then ာ.",
+    "description": "သရ ာ (KeyM) ကို လေ့ကျင့်သည်။ ဗျည်းတစ်လုံး ရိုက်ပြီးနောက် ာ ကို ရိုက်ရသည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 6,
+    "estimatedMinutes": 2,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-9-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "က နှင့် ာ ပေါင်းစည်း၍ ကာ ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကာ", "ငာ"],
-                "count": 16,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -36,27 +36,28 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-9-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ဘယ်လက်ဖြင့် မာ နှင့် တာ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["မာ", "တာ"],
-                "count": 16,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-9-ex-3",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "ာ သရ မျိုးစုံ ဖြတ်သန်းလေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကာ", "ငာ", "မာ", "တာ"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

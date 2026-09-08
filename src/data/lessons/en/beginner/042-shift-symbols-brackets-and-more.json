@@ -8,7 +8,7 @@
     "titleMy": "Shift + သင်္ကေတ: ကွင်းများနှင့် အခြားသင်္ကေတများ",
     "description": "Shift for brackets, quotes, and other symbols.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -24,11 +24,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-42-ex-1",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Meet the square and curly brackets",
             "generator": {
                 "type": "chunks",
                 "keys": ["[", "{", "]", "}"],
-                "count": 18,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
@@ -37,11 +37,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-42-ex-2",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Follow the rhythm of angle brackets and slash",
             "generator": {
                 "type": "chunks",
                 "keys": ["<", ">", "?", "/"],
-                "count": 18,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
@@ -50,27 +50,15 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-42-ex-3",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Tiny challenge: plus, minus and brackets together",
             "generator": {
                 "type": "chunks",
-                "keys": ["+", "=", "_", "-"],
-                "count": 18,
+                "keys": ["+", "=", "_", "{", "}", "<", ">"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "alternation"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-42-ex-4",
-            "instruction": "Reach the shifted symbols cleanly",
-            "generator": {
-                "type": "chunks",
-                "keys": ["{", "}", "<", ">", "?", "+", "_"],
-                "count": 24,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

@@ -6,9 +6,9 @@
     "number": 11,
     "title": "Question Sentences",
     "titleMy": "မေးခွန်းဝါကျများ",
-    "description": "Sentences that ask questions. Practice question mark usage.",
+    "description": "Sentences that ask questions; practice the question mark so it lands exactly where the sentence ends.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 92,
@@ -16,42 +16,15 @@
     },
     "focus": ["sentences", "punctuation"],
     "prerequisites": ["lesson-en-intermediate-10"],
-    "focusKeys": [
-        "KeyW",
-        "KeyH",
-        "KeyA",
-        "KeyT",
-        "KeyR",
-        "KeyE",
-        "KeyY",
-        "KeyO",
-        "KeyU",
-        "KeyD",
-        "KeyI",
-        "KeyN",
-        "KeyG",
-        "Slash",
-        "ShiftLeft",
-        "KeyS",
-        "KeyL",
-        "KeyV",
-        "KeyK",
-        "KeyB",
-        "KeyM",
-        "KeyC",
-        "KeyP",
-        "KeyF",
-        "Comma",
-        "KeyQ"
-    ],
-    "targetFingers": ["left-ring", "right-index", "left-pinky", "left-index", "left-middle", "right-ring", "right-middle", "right-pinky"],
-    "targetHands": ["left", "right"],
     "requiresShift": true,
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyQ", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Slash", "ShiftLeft"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-11-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Warm up with what, where and when",
             "generator": {
                 "type": "sentences",
                 "sentences": ["what are you reading?", "where did she go?", "when will they arrive?"],
@@ -61,20 +34,20 @@
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-11-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Keep the rhythm: the question mark is one clean press",
             "generator": {
                 "type": "sentences",
-                "sentences": ["why is the sky blue today?", "how do you make bread?", "which one do you prefer?"],
+                "sentences": ["why is the sky blue?", "how do you make bread?", "which one do you prefer?"],
                 "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-11-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Tiny challenge: a full set of question shapes at speed",
             "generator": {
                 "type": "sentences",
-                "sentences": ["can you help me, please?", "may I ask a question?", "did you see that movie?"],
+                "sentences": ["can you help me now?", "may i ask a question?", "did you see that movie?"],
                 "count": 4
             }
         }

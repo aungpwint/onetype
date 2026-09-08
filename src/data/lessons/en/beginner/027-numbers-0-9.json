@@ -8,7 +8,7 @@
     "titleMy": "ဂဏန်း ၀-၉",
     "description": "Type the number row. Left hand: 1-5, Right hand: 6-0.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -23,50 +23,37 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-27-ex-1",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Reach up to 1 2 3 4 5 with the left hand",
             "generator": {
                 "type": "chunks",
-                "keys": ["1", "2", "3"],
-                "count": 14,
+                "keys": ["1", "2", "3", "4", "5"],
+                "count": 8,
                 "chunkMin": 2,
-                "chunkMax": 3,
+                "chunkMax": 4,
                 "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-27-ex-2",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Reach up to 6 7 8 9 0 with the right hand",
             "generator": {
                 "type": "chunks",
-                "keys": ["4", "5", "6", "7"],
-                "count": 16,
+                "keys": ["6", "7", "8", "9", "0"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-27-ex-3",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
-            "generator": {
-                "type": "chunks",
-                "keys": ["8", "9", "0"],
-                "count": 14,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-27-ex-4",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Tiny challenge: cover the whole number row",
             "generator": {
                 "type": "chunks",
                 "keys": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-                "count": 24,
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable",

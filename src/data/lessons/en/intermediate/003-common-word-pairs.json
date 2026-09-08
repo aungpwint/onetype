@@ -6,9 +6,9 @@
     "number": 3,
     "title": "Common Word Pairs",
     "titleMy": "အသုံးများသော စကားလုံး စုံတွဲများ",
-    "description": "Common two-word combinations for smooth typing.",
+    "description": "Two everyday words joined into one smooth motion; keep your hands quiet and the rhythm even.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 90,
@@ -16,56 +16,38 @@
     },
     "focus": ["words"],
     "prerequisites": ["lesson-en-intermediate-2"],
-    "focusKeys": [
-        "KeyO",
-        "KeyF",
-        "KeyT",
-        "KeyH",
-        "KeyE",
-        "KeyI",
-        "KeyN",
-        "KeyB",
-        "KeyR",
-        "KeyA",
-        "KeyD",
-        "KeyS",
-        "KeyW",
-        "KeyL",
-        "KeyY",
-        "KeyM",
-        "KeyC"
-    ],
-    "targetFingers": ["right-ring", "left-index", "right-index", "left-middle", "right-middle", "left-pinky", "left-ring"],
-    "targetHands": ["right", "left"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-3-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Warm up with quick two-word pairs you meet every day",
             "generator": {
                 "type": "words",
-                "words": ["of the", "in the", "to be", "on the", "for the"],
-                "count": 20
+                "words": ["of the", "in the", "to be", "on the", "for the", "and the"],
+                "count": 10
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-3-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Keep the rhythm as the pairs move across the keys",
             "generator": {
                 "type": "words",
-                "words": ["and then", "as well", "at his", "by her", "from a"],
-                "count": 20
+                "words": ["as well", "all day", "one day", "come in", "go out", "take it", "find it", "read it"],
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-3-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Tiny challenge: the longest pairs, still in one smooth motion",
             "generator": {
                 "type": "words",
-                "words": ["is it", "one of", "was in", "we are", "they can"],
-                "count": 20
+                "words": ["more than", "less than", "best of", "well done", "right then", "never again"],
+                "count": 10
             }
         }
     ]

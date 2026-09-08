@@ -6,9 +6,9 @@
     "number": 22,
     "title": "Basic Words 1",
     "titleMy": "အခြေခံ စကားလုံးများ (၁)",
-    "description": "Common two-syllable words using learned keys.",
+    "description": "သင်ယူပြီးသား အခြေခံ စာလုံးများဖြင့် နှစ်လုံးထား စကားလုံးများကို ရိုက်လေ့ကျင့်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
@@ -41,31 +41,31 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-22-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "ရေ နေ ကေ ကဲ့သို့ စကားလုံးတိုများ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ရေ", "နေ", "ကေ", "ကု", "ကူ", "ကဲ"],
-                "count": 24
+                "count": 10
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-22-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "စည်းချက်အတိုင်း တု တူ မု မူ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["တု", "တူ", "မု", "မူ", "နု", "နူ"],
-                "count": 24
+                "count": 10
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-22-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "နှစ်လုံးပါ စကားလုံးများ ဖြတ်သန်းရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["အဖေ", "အမေ", "ခြေ", "များ"],
-                "count": 18
+                "count": 10
             }
         }
     ]

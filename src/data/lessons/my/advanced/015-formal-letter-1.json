@@ -6,9 +6,9 @@
     "number": 15,
     "title": "Formal Letter 1",
     "titleMy": "တရားဝင် စာ (၁)",
-    "description": "Formal letter writing style.",
+    "description": "တရားဝင် ဆက်သွယ်ရေး စာများတွင် သုံးသော စတိုင်အတိုင်း ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 18,
+    "estimatedMinutes": 8,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 94,
@@ -50,13 +50,13 @@
         {
             "id": "lesson-my-advanced-15-ex-1",
             "kind": "text",
-            "instruction": "ခင်လေးဇာ လေးစားစွာဖြင့် အကြောင်းကြားအပ်ပါသည်။",
+            "instruction": "တရားဝင်စာဖွင့် စာကြောင်းကို ရိုက်ပါ",
             "text": "ခင်လေးဇာ လေးစားစွာဖြင့် အကြောင်းကြားအပ်ပါသည်။"
         },
         {
             "id": "lesson-my-advanced-15-ex-2",
             "kind": "text",
-            "instruction": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။ နှင့် ပူးတွဲ ပေးပို့ပါသည်။",
+            "instruction": "စာ၏ အသေးစိတ် ဖော်ပြချက် စာကြောင်းများကို ရိုက်ပါ",
             "text": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။ နှင့် ပူးတွဲ ပေးပို့ပါသည်။"
         }
     ],

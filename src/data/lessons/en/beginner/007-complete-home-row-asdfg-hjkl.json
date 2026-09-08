@@ -8,7 +8,7 @@
     "titleMy": "ပြည့်စုံသော အခြေခံတန်း - ASDFG HJKL;",
     "description": "All home row keys. Practice smooth transitions across the full row.",
     "difficulty": "basic",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -23,24 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-7-ex-1",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["a", "s", "d", "f"],
-                "count": 12,
-                "chunkMin": 3,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-7-ex-2",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Meet G and H, the two new home-row keys",
             "generator": {
                 "type": "chunks",
                 "keys": ["g", "h"],
-                "count": 12,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -48,40 +35,27 @@
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-7-ex-3",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["j", "k", "l"],
-                "count": 12,
-                "chunkMin": 3,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-7-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "id": "lesson-en-beginner-7-ex-2",
+            "instruction": "Glide across the full home row in both directions",
             "generator": {
                 "type": "chunks",
                 "keys": ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-                "count": 30,
-                "chunkMin": 3,
-                "chunkMax": 6,
-                "style": "variable"
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-7-ex-5",
-            "instruction": "Alternate between both fingers and hands",
+            "id": "lesson-en-beginner-7-ex-3",
+            "instruction": "Tiny challenge: every finger finds the row without looking",
             "generator": {
                 "type": "chunks",
-                "keys": ["f", "g", "h", "j", "d", "k"],
-                "count": 26,
-                "chunkMin": 4,
-                "chunkMax": 6,
+                "keys": ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable",
                 "mixed": true
             }

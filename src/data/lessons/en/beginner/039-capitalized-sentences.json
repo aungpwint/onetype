@@ -8,7 +8,7 @@
     "titleMy": "စာလုံးအကြီးဖြင့် စတင်သော ဝါကျများ",
     "description": "Sentences that start with a capital letter.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -52,7 +52,7 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-39-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Start each sentence with a capital letter",
             "generator": {
                 "type": "sentences",
                 "sentences": ["The quick fox jumps.", "A small boy ran home."],
@@ -62,7 +62,7 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-39-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Follow the rhythm, capital first and period last",
             "generator": {
                 "type": "sentences",
                 "sentences": ["She will keep the box.", "We found a red ball."],
@@ -72,7 +72,7 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-39-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Tiny challenge: longer sentences, steady pace",
             "generator": {
                 "type": "sentences",
                 "sentences": ["They are walking to town.", "My friend knows the way."],

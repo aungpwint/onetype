@@ -8,7 +8,7 @@
     "titleMy": "ရိုးရှင်းသော ဝါကျတိုများ",
     "description": "Short sentences using words you already know. Focus on rhythm.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 90,
@@ -45,7 +45,7 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-26-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Your first sentences — the cat is on the mat",
             "generator": {
                 "type": "sentences",
                 "sentences": ["the cat is on the mat.", "she can see the sun.", "we run to the park."],
@@ -55,7 +55,7 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-26-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Follow the rhythm of each sentence",
             "generator": {
                 "type": "sentences",
                 "sentences": ["he has a red car.", "they are in the house.", "this is a big dog."],
@@ -65,7 +65,7 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-26-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Tiny challenge: read the whole sentence in one sweep",
             "generator": {
                 "type": "sentences",
                 "sentences": ["i like to read a book.", "the man sat by the gate.", "we go home at noon."],

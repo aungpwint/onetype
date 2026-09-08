@@ -6,9 +6,9 @@
     "number": 11,
     "title": "Explanatory Writing",
     "titleMy": "ရှင်းလင်းဖော်ပြသော စာရေးသားခြင်း",
-    "description": "Type an explanatory paragraph about a process.",
+    "description": "A step-by-step paragraph with sequence words; the commas and capitals carry the order of the process.",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 94,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-11-ex-1",
             "kind": "text",
-            "instruction": "To grow a plant, first put some soil in a pot. Next, plant a seed and cover it lightly. Then water it a little every day. Finally, place the pot near sunlight and wait for the seed to sprout.",
+            "instruction": "Type each step in order; a steady pace on a process keeps every comma in place.",
             "text": "To grow a plant, first put some soil in a pot. Next, plant a seed and cover it lightly. Then water it a little every day. Finally, place the pot near sunlight and wait for the seed to sprout."
         }
     ],

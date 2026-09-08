@@ -8,7 +8,7 @@
     "titleMy": "Shift ပြန်လည်သုံးသပ်ခြင်း - ကီးဘုတ် အပြည့်",
     "description": "Complete Shift review with all key types.",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 90,
@@ -43,52 +43,39 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-43-ex-1",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Capital letters over the left side",
             "generator": {
                 "type": "chunks",
                 "keys": ["A", "B", "C", "D"],
-                "count": 16,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-43-ex-2",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Swap between digits and their shifted symbols",
             "generator": {
                 "type": "chunks",
-                "keys": ["1", "!", "2", "@"],
-                "count": 16,
+                "keys": ["!", "@", "1", "2", "#"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "alternation"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-43-ex-3",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Tiny challenge: caps, braces and brackets together",
             "generator": {
                 "type": "chunks",
-                "keys": ["{", "}", "[", "]"],
-                "count": 16,
+                "keys": ["{", "}", "[", "]", "Q", "W", "E", "R", "T", "Y", "U", "I"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-43-ex-4",
-            "instruction": "Hold the correct Shift key",
-            "generator": {
-                "type": "chunks",
-                "keys": ["Q", "W", "E", "R", "T", "Y", "U", "I"],
-                "count": 20,
-                "chunkMin": 2,
-                "chunkMax": 5,
                 "style": "variable",
                 "mixed": true
             }

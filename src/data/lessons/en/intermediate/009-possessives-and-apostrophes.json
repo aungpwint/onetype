@@ -6,9 +6,9 @@
     "number": 9,
     "title": "Possessives and Apostrophes",
     "titleMy": "ပိုင်ဆိုင်မှု (Possessive) နှင့် apostrophe",
-    "description": "Possessives: Sam's book, the cat's tail.",
+    "description": "Ownership words like alice's and the boys'; practice the 's and s' forms until the apostrophe feels natural.",
     "difficulty": "medium",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 92,
@@ -16,40 +16,14 @@
     },
     "focus": ["sentences", "punctuation"],
     "prerequisites": ["lesson-en-intermediate-8"],
-    "focusKeys": [
-        "KeyA",
-        "KeyL",
-        "KeyI",
-        "KeyC",
-        "KeyE",
-        "Quote",
-        "KeyS",
-        "KeyT",
-        "KeyP",
-        "KeyN",
-        "KeyG",
-        "Period",
-        "KeyH",
-        "KeyB",
-        "KeyO",
-        "KeyY",
-        "KeyR",
-        "KeyM",
-        "KeyD",
-        "KeyJ",
-        "KeyK",
-        "KeyW",
-        "KeyV",
-        "Comma",
-        "KeyU"
-    ],
-    "targetFingers": ["left-pinky", "right-ring", "right-middle", "left-middle", "right-pinky", "left-ring", "left-index", "right-index"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyG", "KeyH", "KeyI", "KeyJ", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Quote", "Period"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-9-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Warm up with simple possessives",
             "generator": {
                 "type": "sentences",
                 "sentences": ["alice's cat is sleeping.", "the boys' room is tidy.", "james's phone rang."],
@@ -59,7 +33,7 @@
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-9-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Keep the rhythm: the apostrophe is part of the word",
             "generator": {
                 "type": "sentences",
                 "sentences": ["the teacher's desk is clean.", "his sister's bike is new.", "my mother's cooking smells good."],
@@ -69,10 +43,10 @@
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-9-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Tiny challenge: own the apostrophe without breaking pace",
             "generator": {
                 "type": "sentences",
-                "sentences": ["it's a lovely morning.", "whether it's hot or cold, run outside."],
+                "sentences": ["it's a lovely morning.", "the dog's bone is buried.", "that is the best part."],
                 "count": 4
             }
         }

@@ -8,7 +8,7 @@
     "titleMy": "ညာလက် လက်ညှိုးနှင့် လက်ခလယ် - Y U H J N M I K",
     "description": "Y above H, U above J, I above K. N below H, M below J.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 85,
@@ -23,24 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-10-ex-1",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Stretch the right index finger up and down: Y H N",
             "generator": {
                 "type": "chunks",
-                "keys": ["y", "u", "h", "j"],
-                "count": 14,
-                "chunkMin": 3,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-10-ex-2",
-            "instruction": "Reach to the new keys and return",
-            "generator": {
-                "type": "chunks",
-                "keys": ["n", "m"],
-                "count": 12,
+                "keys": ["y", "h", "n"],
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -48,27 +35,27 @@
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-10-ex-3",
-            "instruction": "Keep your fingers on the home row",
+            "id": "lesson-en-beginner-10-ex-2",
+            "instruction": "Stretch the right middle finger up and down: U J M, I K",
             "generator": {
                 "type": "chunks",
-                "keys": ["i", "k"],
-                "count": 12,
-                "chunkMin": 3,
+                "keys": ["u", "j", "m", "i", "k"],
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-10-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "id": "lesson-en-beginner-10-ex-3",
+            "instruction": "Tiny challenge: let each right finger own its column",
             "generator": {
                 "type": "chunks",
                 "keys": ["y", "u", "h", "j", "n", "m", "i", "k"],
-                "count": 34,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

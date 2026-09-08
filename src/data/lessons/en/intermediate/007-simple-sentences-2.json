@@ -6,9 +6,9 @@
     "number": 7,
     "title": "Simple Sentences 2",
     "titleMy": "ရိုးရှင်းသော ဝါကျတိုများ (၂)",
-    "description": "Sentences with common verbs and everyday vocabulary.",
+    "description": "Sentences that open with a clause; practice the comma as a smooth pause inside the sentence.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 92,
@@ -16,71 +16,38 @@
     },
     "focus": ["sentences"],
     "prerequisites": ["lesson-en-intermediate-6"],
-    "focusKeys": [
-        "KeyW",
-        "KeyH",
-        "KeyE",
-        "KeyN",
-        "KeyT",
-        "KeyR",
-        "KeyA",
-        "KeyI",
-        "KeyS",
-        "KeyO",
-        "KeyP",
-        "Comma",
-        "KeyL",
-        "KeyK",
-        "Period",
-        "KeyF",
-        "KeyY",
-        "KeyU",
-        "KeyC",
-        "KeyV",
-        "KeyD",
-        "KeyM",
-        "KeyB",
-        "KeyG"
-    ],
-    "targetFingers": ["left-ring", "right-index", "left-middle", "left-index", "left-pinky", "right-middle", "right-ring", "right-pinky"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Comma", "Period"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-7-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Warm up with one comma in each sentence",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "when the rain stops, we will walk.",
-                    "if you practice every day, you will improve.",
-                    "because the road is wet, they walk slowly."
-                ],
-                "count": 3
+                "sentences": ["if you practice, you will improve.", "when the bell rings, we line up.", "because the road is wet, drive slowly."],
+                "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-7-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Keep the rhythm through the pause at the comma",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "she stays late whenever she has homework.",
-                    "although it was warm, he wore a coat.",
-                    "the more you read, the more you know."
-                ],
-                "count": 3
+                "sentences": ["after the meal, they wash the dishes.", "before you sleep, turn off the light.", "although it was warm, he wore a coat."],
+                "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-7-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Tiny challenge: opener clauses at full speed",
             "generator": {
                 "type": "sentences",
-                "sentences": ["after the meal, they wash the dishes.", "before you sleep, turn off the light.", "since it is late, we should hurry."],
-                "count": 3
+                "sentences": ["whenever she is free, she reads.", "since it is late, we should hurry.", "until the rain stops, we stay inside."],
+                "count": 4
             }
         }
     ]

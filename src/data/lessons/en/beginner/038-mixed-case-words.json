@@ -8,7 +8,7 @@
     "titleMy": "အကြီးအသေး ရောနှော စကားလုံးများ",
     "description": "Words with capital letters. First letter capitalized.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -48,33 +48,33 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-38-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Press shift, then tap the first letter of each word",
             "generator": {
                 "type": "words",
                 "words": ["Apple", "Banana", "Cherry", "Dragon"],
-                "count": 14,
+                "count": 10,
                 "maxWordLength": 6
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-38-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Keep the rhythm — capitals only on the first letter",
             "generator": {
                 "type": "words",
                 "words": ["Elephant", "Forest", "Garden", "Hammer"],
-                "count": 14,
+                "count": 10,
                 "maxWordLength": 8
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-38-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Tiny challenge: one quick shift per word",
             "generator": {
                 "type": "words",
                 "words": ["Island", "Jungle", "Kitchen", "Ladder"],
-                "count": 14,
+                "count": 10,
                 "maxWordLength": 7
             }
         }

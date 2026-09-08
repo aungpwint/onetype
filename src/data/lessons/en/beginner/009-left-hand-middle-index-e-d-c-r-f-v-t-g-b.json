@@ -8,7 +8,7 @@
     "titleMy": "ဘယ်လက် လက်ခလယ်နှင့် လက်ညှိုး - E D C R F V T G B",
     "description": "E above D, R above F, T above G. C below D, V below F, B below G.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 85,
@@ -23,12 +23,12 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-9-ex-1",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Stretch the middle finger up and down: E D C",
             "generator": {
                 "type": "chunks",
-                "keys": ["e", "d", "c"],
-                "count": 14,
-                "chunkMin": 3,
+                "keys": ["e", "d", "c", "a", "s"],
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
             }
@@ -36,40 +36,28 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-9-ex-2",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Stretch the index finger up and down: R F V, T G B",
             "generator": {
                 "type": "chunks",
-                "keys": ["r", "f", "v"],
-                "count": 14,
-                "chunkMin": 3,
+                "keys": ["r", "f", "v", "t", "g", "b"],
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-9-ex-3",
-            "instruction": "Reach to the new keys and return",
-            "generator": {
-                "type": "chunks",
-                "keys": ["t", "g", "b"],
-                "count": 14,
-                "chunkMin": 3,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-9-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Tiny challenge: keep the left hand steady across all rows",
             "generator": {
                 "type": "chunks",
                 "keys": ["e", "d", "c", "r", "f", "v", "t", "g", "b", "q", "w", "a", "s", "z", "x"],
-                "count": 34,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

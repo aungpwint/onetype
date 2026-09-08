@@ -6,9 +6,9 @@
     "number": 1,
     "title": "High-Frequency Words 1",
     "titleMy": "အသုံးများဆုံး စကားလုံးများ (၁)",
-    "description": "A set of the most common English words for building rhythm.",
+    "description": "Warm up with the most common English words and settle into a steady rhythm.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 90,
@@ -16,41 +16,38 @@
     },
     "focus": ["words"],
     "prerequisites": ["lesson-en-beginner-30"],
-    "focusKeys": ["KeyT", "KeyH", "KeyE", "KeyA", "KeyN", "KeyD", "KeyY", "KeyO", "KeyU", "KeyW", "KeyI", "KeyS", "KeyF", "KeyR", "KeyM", "KeyV"],
-    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle"],
+    "focusKeys": ["KeyA", "KeyC", "KeyD", "KeyE", "KeyF", "KeyH", "KeyI", "KeyM", "KeyN", "KeyO", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-1-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Warm up with the words you already know",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 24,
-                "maxWordLength": 5
+                "words": ["the", "and", "for", "you", "are", "was", "one", "two"],
+                "count": 10
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-1-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Keep the rhythm going with longer common words",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 24,
-                "maxWordLength": 6
+                "words": ["that", "with", "this", "from", "they", "have", "your", "were"],
+                "count": 10
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-1-ex-3",
-            "instruction": "Build speed across full words",
+            "instruction": "Tiny challenge: type the whole set without looking down",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 26,
-                "maxWordLength": 7
+                "words": ["there", "these", "what", "when", "which", "more", "some", "then"],
+                "count": 10
             }
         }
     ]

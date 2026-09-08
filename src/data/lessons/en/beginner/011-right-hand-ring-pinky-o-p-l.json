@@ -8,7 +8,7 @@
     "titleMy": "ညာလက် လက်သူကြွယ်နှင့် လက်သန်း - O P L ; . / [ ]",
     "description": "O above L, P above semicolon. Period below L. Slash below semicolon.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 85,
@@ -23,54 +23,40 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-11-ex-1",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Reach up with ring and pinky to O and P",
             "generator": {
                 "type": "chunks",
                 "keys": ["o", "p"],
-                "count": 12,
+                "count": 8,
                 "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-11-ex-2",
-            "instruction": "Reach to the new keys and return",
-            "generator": {
-                "type": "chunks",
-                "keys": ["l", "p"],
-                "count": 12,
-                "chunkMin": 3,
                 "chunkMax": 4,
                 "style": "repetition"
             }
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-11-ex-3",
-            "instruction": "Keep your fingers on the home row",
+            "id": "lesson-en-beginner-11-ex-2",
+            "instruction": "Come back to L and take turns with O and P",
             "generator": {
                 "type": "chunks",
-                "keys": ["o", "l", "p"],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "keys": ["l", "o", "p"],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-11-ex-4",
-            "instruction": "Alternate between both fingers and hands",
+            "id": "lesson-en-beginner-11-ex-3",
+            "instruction": "Tiny challenge: ring and pinky share the load evenly",
             "generator": {
                 "type": "chunks",
-                "keys": ["p", "o", "l"],
-                "count": 20,
-                "chunkMin": 4,
-                "chunkMax": 5,
-                "style": "variable",
-                "mixed": true
+                "keys": ["o", "p", "l"],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
             }
         }
     ]

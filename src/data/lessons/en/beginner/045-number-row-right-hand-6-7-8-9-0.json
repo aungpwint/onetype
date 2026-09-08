@@ -8,7 +8,7 @@
     "titleMy": "ဂဏန်းတန်း ညာလက် - ၆ ၇ ၈ ၉ ၀",
     "description": "Right index: 6-7, middle: 8, ring: 9, pinky: 0.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 2,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -23,37 +23,37 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-45-ex-1",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Reach up to 6 and 7 — the right index stretches",
             "generator": {
                 "type": "chunks",
                 "keys": ["6", "7"],
-                "count": 12,
+                "count": 8,
                 "chunkMin": 2,
-                "chunkMax": 3,
+                "chunkMax": 4,
                 "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-45-ex-2",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Now 8, 9 and 0 to the edge",
             "generator": {
                 "type": "chunks",
                 "keys": ["8", "9", "0"],
-                "count": 14,
+                "count": 10,
                 "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-45-ex-3",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Tiny challenge: cover 6 to 0 with the right hand",
             "generator": {
                 "type": "chunks",
                 "keys": ["6", "7", "8", "9", "0"],
-                "count": 24,
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable"

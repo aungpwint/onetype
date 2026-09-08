@@ -8,7 +8,7 @@
     "titleMy": "ဂဏန်းနှင့် သင်္ကေတ နောက်ဆုံး ပြန်လည်သုံးသပ်ခြင်း",
     "description": "Complete review of numbers, symbols, and punctuation.",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 90,
@@ -48,39 +48,37 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-56-ex-1",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Warm up the left-hand digits",
             "generator": {
                 "type": "chunks",
-                "keys": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-                "count": 20,
+                "keys": ["1", "2", "3", "4", "5"],
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable",
-                "mixed": true
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-56-ex-2",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Now the right-hand digits, then their symbols",
             "generator": {
                 "type": "chunks",
-                "keys": ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"],
-                "count": 20,
+                "keys": ["6", "7", "8", "9", "0", "!", "%", ")"] ,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable",
-                "mixed": true
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-56-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Tiny challenge: real bits of text with numbers",
             "generator": {
                 "type": "words",
                 "words": ["pen,", "box.", "7.", "25", "run!", "2+2"],
-                "count": 16,
+                "count": 8,
                 "maxWordLength": 4
             }
         }

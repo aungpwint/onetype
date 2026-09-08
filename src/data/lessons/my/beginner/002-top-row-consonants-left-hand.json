@@ -6,9 +6,9 @@
     "number": 2,
     "title": "Top Row Consonants: Left Hand",
     "titleMy": "အပေါ်တန်း ဗျည်းများ - ဘယ်လက်",
-    "description": "Left hand top row: ဆ(KeyQ) တ(KeyW) န(KeyE) မ(KeyR) အ(KeyT)",
+    "description": "ဘယ်လက်ဖြင့် ရိုက်ရသော အပေါ်တန်း ဗျည်းများ ဖြစ်သည် - ဆ (KeyQ) ၊ တ (KeyW) ၊ န (KeyE) ၊ မ (KeyR) ၊ အ (KeyT)။",
     "difficulty": "basic",
-    "estimatedMinutes": 6,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-2-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ဘယ်လက်ဖြင့် ဆ နှင့် တ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဆ", "တ"],
-                "count": 16,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -36,40 +36,26 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-2-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "န မ အ တို့ကို ဆက်တိုက်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["န", "မ"],
-                "count": 16,
+                "keys": ["န", "မ", "အ"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable",
-                "mixed": true
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-2-ex-3",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["အ"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-2-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "ဘယ်လက်ခလုတ် ငါးခုလုံးကို ဖြတ်သန်းဝင်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဆ", "တ", "န", "မ", "အ"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

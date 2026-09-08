@@ -6,9 +6,9 @@
     "number": 1,
     "title": "Food Words",
     "titleMy": "အစားအစာ စကားလုံးများ",
-    "description": "Common food words: rice, fish, chicken, duck, curry, noodles, salt, and more.",
+    "description": "နေ့စဉ် စားသောက်မှုတွင် သုံးသော အစားအစာ အမည်များကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ ဆန် ၊ ထမင်း ၊ ငါး ၊ ကြက် ၊ ဘဲ ၊ ဆား ၊ ဟင်း ၊ ဝက်သား ၊ နို့ ၊ ခေါက်ဆွဲ ၊ သီး ၊ မုန့် စသည့် စကားလုံးများ ပါဝင်သည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 88,
@@ -47,31 +47,31 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-1-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "စာလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ဆန်", "ထမင်း", "ငါး", "ကြက်"],
-                "count": 24
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-1-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "စာလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
-                "words": ["ဘဲ", "ဆား", "ဟင်း", "ဝက်"],
-                "count": 24
+                "words": ["ဘဲ", "ဆား", "ဟင်း", "ဝက်သား"],
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-1-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "စာလုံးတိုင်း မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["နို့", "ခေါက်ဆွဲ", "သီး", "မုန့်"],
-                "count": 24
+                "count": 12
             }
         }
     ]

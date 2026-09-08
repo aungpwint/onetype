@@ -8,7 +8,7 @@
     "titleMy": "တန်းကူးပြောင်း လေ့ကျင့်ခန်း - အခြေခံတန်းမှ အောက်တန်း",
     "description": "Practice reaching from the home row down to the bottom row and returning.",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -23,66 +23,41 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-15-ex-1",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Drop the left fingers down from home to Z X C V",
             "generator": {
                 "type": "chunks",
-                "keys": ["a", "s", "d", "f"],
-                "count": 12,
+                "keys": ["a", "s", "d", "f", "z", "x", "c", "v"],
+                "count": 8,
                 "chunkMin": 2,
-                "chunkMax": 3,
+                "chunkMax": 4,
                 "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-15-ex-2",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Drop the right fingers down from home to N M",
             "generator": {
                 "type": "chunks",
-                "keys": ["z", "x", "c", "v"],
-                "count": 12,
+                "keys": ["j", "k", "l", "n", "m"],
+                "count": 10,
                 "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-15-ex-3",
-            "instruction": "Keep your fingers on the home row",
-            "generator": {
-                "type": "chunks",
-                "keys": ["j", "k", "l"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-15-ex-4",
-            "instruction": "Reach to the new keys and return",
-            "generator": {
-                "type": "chunks",
-                "keys": ["n", "m"],
-                "count": 10,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-15-ex-5",
-            "instruction": "Review everything you have learned",
+            "instruction": "Tiny challenge: reach down, tap, and bounce back home",
             "generator": {
                 "type": "chunks",
                 "keys": ["f", "g", "h", "j", "z", "x", "c", "v", "b", "n", "m"],
-                "count": 28,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

@@ -6,9 +6,9 @@
     "number": 2,
     "title": "High-Frequency Words 2",
     "titleMy": "အသုံးများဆုံး စကားလုံးများ (၂)",
-    "description": "More high-frequency words for building rhythm.",
+    "description": "More everyday words — longer, but just as familiar. Clean, even strokes.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 90,
@@ -16,41 +16,38 @@
     },
     "focus": ["words"],
     "prerequisites": ["lesson-en-intermediate-1"],
-    "focusKeys": ["KeyT", "KeyH", "KeyE", "KeyA", "KeyN", "KeyD", "KeyY", "KeyO", "KeyU", "KeyW", "KeyI", "KeyS", "KeyF", "KeyR", "KeyM", "KeyV"],
-    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyX"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-2-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Warm up with five-letter words you use all the time",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 26,
-                "maxWordLength": 7
+                "words": ["about", "their", "there", "which", "would", "could", "should", "never"],
+                "count": 10
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-2-ex-2",
-            "instruction": "Build speed across full words",
+            "instruction": "Let the fingers find longer syllables on their own",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 28,
-                "maxWordLength": 8
+                "words": ["because", "between", "people", "friend", "school", "before", "again", "after"],
+                "count": 10
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-2-ex-3",
-            "instruction": "Build speed across full words",
+            "instruction": "Tiny challenge: keep a steady pace through the long words",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 30,
-                "maxWordLength": 9
+                "words": ["morning", "evening", "together", "another", "example", "important"],
+                "count": 10
             }
         }
     ]

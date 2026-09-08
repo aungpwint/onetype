@@ -6,9 +6,9 @@
     "number": 8,
     "title": "Travel Writing",
     "titleMy": "ခရီးသွားစာရေးသားခြင်း",
-    "description": "Type about travel. Practice varied sentence structures.",
+    "description": "A short travel passage with varied sentence openings; practice switching between different structures smoothly.",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 94,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-8-ex-1",
             "kind": "text",
-            "instruction": "Traveling opens our eyes to new places and cultures. We meet friendly people, taste new food, and hear different languages. Each journey teaches us something that no classroom can show us.",
+            "instruction": "Type every sentence at the same easy tempo; the variety is in the words, not in rushing.",
             "text": "Traveling opens our eyes to new places and cultures. We meet friendly people, taste new food, and hear different languages. Each journey teaches us something that no classroom can show us."
         }
     ],

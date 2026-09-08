@@ -6,9 +6,9 @@
     "number": 12,
     "title": "Question Sentences",
     "titleMy": "မေးခွန်းဝါကျများ",
-    "description": "Sentences that ask questions.",
+    "description": "မေးခွန်း ဝါကျများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ ဘာ ၊ ဘယ် ၊ ဘယ်သူ စသည့် မေးခွန်း စကားလုံးများ ပါဝင်သော ဝါကျများ ဖြစ်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 5,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
@@ -49,7 +49,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-12-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "မေးခွန်း ဝါကျတစ်ကြောင်းလုံး ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ဘယ် သူ က ဒီ စာ ကို ရေး လဲ ။", "ဘယ် က လာ လဲ ။"],
@@ -59,7 +59,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-12-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "မေးခွန်း ဝါကျများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ဒီ မြို့ မှာ ဘာ တွေ ရှိ သလဲ ။", "နေ့ တိုင်း ဘာ စား လဲ ။"],

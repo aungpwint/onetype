@@ -6,9 +6,9 @@
     "number": 10,
     "title": "Body Parts + Actions",
     "titleMy": "ကိုယ်ခန္ဓာနှင့် လုပ်ဆောင်မှုများ",
-    "description": "Body parts with action verbs.",
+    "description": "ကိုယ်ခန္ဓာ အစိတ်အပိုင်းများ နှင့် လုပ်ဆောင်ချက် ကြိယာများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ မျက်စိ ၊ နား ၊ လက် ၊ ခြေ ၊ ခေါင်း ၊ ကိုယ် ၊ ပြေး ၊ သွား ၊ ရပ် စသည်တို့ ပါဝင်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
@@ -47,31 +47,31 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-10-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "ကိုယ်ခန္ဓာ စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["မျက်စိ", "နား", "လက်"],
-                "count": 18
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-10-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "ကိုယ်ခန္ဓာ စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ခြေ", "ခေါင်း", "ကိုယ်"],
-                "count": 18
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-10-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "လုပ်ဆောင်ချက် ကြိယာများကို မှန်ကန်စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ပြေး", "သွား", "ရပ်"],
-                "count": 18
+                "count": 12
             }
         }
     ]

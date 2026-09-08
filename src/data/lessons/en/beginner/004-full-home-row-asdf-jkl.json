@@ -8,7 +8,7 @@
     "titleMy": "အခြေခံတန်း အပြည့် - ASDF JKL;",
     "description": "Combine both hands on the home row. Type forward and backward.",
     "difficulty": "basic",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -23,12 +23,12 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-4-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "Walk the full home row from A to L and back",
             "generator": {
                 "type": "chunks",
-                "keys": ["a", "s", "d", "f"],
-                "count": 14,
-                "chunkMin": 3,
+                "keys": ["a", "s", "d", "f", "j", "k", "l"],
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
             }
@@ -36,39 +36,26 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-4-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "Let the left and right hands take turns",
             "generator": {
                 "type": "chunks",
-                "keys": ["j", "k", "l"],
-                "count": 14,
-                "chunkMin": 3,
+                "keys": ["a", "s", "d", "f", "j", "k", "l"],
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "alternation"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-4-ex-3",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Tiny challenge: chain the whole home row smoothly",
             "generator": {
                 "type": "chunks",
-                "keys": ["f", "j", "d", "k", "s", "l", "a"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-4-ex-4",
-            "instruction": "Alternate between both fingers and hands",
-            "generator": {
-                "type": "chunks",
-                "keys": ["a", "l", "d", "k", "f", "j", "s"],
-                "count": 24,
-                "chunkMin": 4,
-                "chunkMax": 6,
+                "keys": ["a", "s", "d", "f", "j", "k", "l"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable",
                 "mixed": true
             }

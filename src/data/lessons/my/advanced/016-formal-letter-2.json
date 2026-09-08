@@ -6,9 +6,9 @@
     "number": 16,
     "title": "Formal Letter 2",
     "titleMy": "တရားဝင် စာ (၂)",
-    "description": "Another formal letter template.",
+    "description": "တရားဝင် စာ၏ နောက်ထပ် ပုံစံများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 18,
+    "estimatedMinutes": 8,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 94,
@@ -52,13 +52,13 @@
         {
             "id": "lesson-my-advanced-16-ex-1",
             "kind": "text",
-            "instruction": "အလုပ်ခွင်ထဲ တစ်ရက် လစာငွေ နှင့် ပတ်သက်ပြီး မေးမြန်းချင်ပါသည်။ ပူးတွဲ တင်ပြပါသည်။",
+            "instruction": "လစာငွေ မေးမြန်းချက် စာကြောင်းများကို ရိုက်ပါ",
             "text": "အလုပ်ခွင်ထဲ တစ်ရက် လစာငွေ နှင့် ပတ်သက်ပြီး မေးမြန်းချင်ပါသည်။ ပူးတွဲ တင်ပြပါသည်။"
         },
         {
             "id": "lesson-my-advanced-16-ex-2",
             "kind": "text",
-            "instruction": "ကြင်နာစွာ ဆောင်ရွက်ပေးပါရန် ပန်ကြားပါသည်။",
+            "instruction": "ပန်ကြားချက် စာကြောင်းကို ရိုက်ပါ",
             "text": "ကြင်နာစွာ ဆောင်ရွက်ပေးပါရန် ပန်ကြားပါသည်။"
         }
     ],

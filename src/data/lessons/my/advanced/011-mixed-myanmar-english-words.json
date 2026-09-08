@@ -6,9 +6,9 @@
     "number": 11,
     "title": "Mixed Myanmar + English Text",
     "titleMy": "မြန်မာ + အင်္ဂလိပ် ရောနှော စာသား",
-    "description": "One workshop typing natural text that mixes Myanmar Unicode and English words on the same line.",
+    "description": "မြန်မာ ယူနီကုဒ် နှင့် အင်္ဂလိပ် စကားလုံးများ တစ်တန်းတည်း ရောနှော ပါဝင်သော သဘာဝ စာကြောင်းများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 7,
     "keyboard": "mixed",
     "completion": {
         "minAccuracy": 93,

@@ -8,7 +8,7 @@
     "titleMy": "Shift + ဂဏန်း: ! @ # $ %",
     "description": "Shift plus number keys produce symbols. Train the physical combination.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -24,53 +24,41 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-41-ex-1",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Warm up with the plain digits first",
             "generator": {
                 "type": "chunks",
-                "keys": ["1", "!", "2", "@"],
-                "count": 16,
+                "keys": ["1", "2", "3", "4"],
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "alternation"
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-41-ex-2",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Add shift — 1 becomes ! and 2 becomes @",
             "generator": {
                 "type": "chunks",
-                "keys": ["3", "#", "4", "$", "5", "%"],
-                "count": 18,
+                "keys": ["!", "@", "#", "$", "%"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "alternation"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-41-ex-3",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Tiny challenge: flip between plain and shifted",
             "generator": {
                 "type": "chunks",
-                "keys": ["6", "^", "7", "&", "8", "*"],
-                "count": 18,
+                "keys": ["6", "7", "8", "9", "0", "^", "&", "*", "(", ")"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "alternation"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-41-ex-4",
-            "instruction": "Reach the shifted symbols cleanly",
-            "generator": {
-                "type": "chunks",
-                "keys": ["9", "(", "0", ")"],
-                "count": 16,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "alternation"
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

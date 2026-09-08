@@ -6,9 +6,9 @@
     "number": 17,
     "title": "Syllable Building: C+M+V",
     "titleMy": "ဝဏ္ဏ ဖွဲ့ - ဗျည်း + စာလုံးကြို + သရ",
-    "description": "Build syllables with consonant + medial + vowel.",
+    "description": "ဗျည်း + စာလုံးကြို + သရ ဖွဲ့စည်းမှုဖြင့် ဝဏ္ဏများကို တည်ဆောက်၍ ရိုက်လေ့ကျင့်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
@@ -23,12 +23,12 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-17-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "စာလုံးကြိုပါသော ကျိ နှင့် ကြာ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ကျိ"],
-                "count": 14,
-                "chunkMin": 3,
+                "keys": ["ကျိ", "ကြာ"],
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
             }
@@ -36,40 +36,28 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-17-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "စည်းချက်အတိုင်း ကျာ နှင့် မျာ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ကြာ", "ကျာ"],
-                "count": 16,
-                "chunkMin": 3,
+                "keys": ["ကျာ", "မျာ"],
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-17-ex-3",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["မျာ", "ပြု"],
-                "count": 16,
-                "chunkMin": 3,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-17-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "စာလုံးကြို သရ တွဲဖက်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကျိ", "ကြာ", "ကျာ", "မျာ", "ပြု"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

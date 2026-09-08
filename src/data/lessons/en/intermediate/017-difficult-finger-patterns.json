@@ -6,9 +6,9 @@
     "number": 17,
     "title": "Difficult Finger Patterns",
     "titleMy": "ခက်ခဲသော လက်ချောင်း ပုံစံများ",
-    "description": "Practice awkward letter combinations that cause errors.",
+    "description": "The key pairs that tempt your fingers to drift; isolate each movement first, then speed it up.",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -23,52 +23,52 @@
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-17-ex-1",
-            "instruction": "Build speed across full words",
+            "instruction": "Warm up the left pinky: q, a and z",
             "generator": {
                 "type": "chunks",
                 "keys": ["q", "a", "z"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-17-ex-2",
-            "instruction": "Build speed across full words",
+            "instruction": "Keep the left ring finger quiet and precise",
             "generator": {
                 "type": "chunks",
                 "keys": ["w", "s", "x"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-17-ex-3",
-            "instruction": "Build speed across full words",
+            "instruction": "Mirror it on the right ring finger",
             "generator": {
                 "type": "chunks",
                 "keys": ["o", "l", "."],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-17-ex-4",
-            "instruction": "Build speed across full words",
+            "instruction": "Tiny challenge: the pinky gets its turn",
             "generator": {
                 "type": "chunks",
                 "keys": ["p", ";", "/"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

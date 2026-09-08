@@ -8,7 +8,7 @@
     "titleMy": "တန်းကူးပြောင်း လေ့ကျင့်ခန်း - အပေါ်တန်းမှ အခြေခံတန်း",
     "description": "Practice reaching from the home row up to the top row and returning.",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -23,66 +23,41 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-14-ex-1",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Lift the left fingers up from home to Q W E",
             "generator": {
                 "type": "chunks",
-                "keys": ["q", "w", "e"],
-                "count": 12,
+                "keys": ["q", "w", "e", "a", "s", "d"],
+                "count": 8,
                 "chunkMin": 2,
-                "chunkMax": 3,
+                "chunkMax": 4,
                 "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-14-ex-2",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Lift the right fingers up from home to Y U I",
             "generator": {
                 "type": "chunks",
-                "keys": ["a", "s", "d"],
-                "count": 12,
+                "keys": ["y", "u", "i", "j", "k", "l"],
+                "count": 10,
                 "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-14-ex-3",
-            "instruction": "Reach to the new keys and return",
-            "generator": {
-                "type": "chunks",
-                "keys": ["y", "u", "i"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-14-ex-4",
-            "instruction": "Keep your fingers on the home row",
-            "generator": {
-                "type": "chunks",
-                "keys": ["j", "k", "l"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-14-ex-5",
-            "instruction": "Review everything you have learned",
+            "instruction": "Tiny challenge: hop between rows without losing your place",
             "generator": {
                 "type": "chunks",
                 "keys": ["q", "w", "e", "a", "s", "d", "y", "u", "i", "j", "k", "l"],
-                "count": 30,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

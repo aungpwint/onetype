@@ -6,9 +6,9 @@
     "number": 1,
     "title": "Complex Sentence Practice",
     "titleMy": "ဝါကျရှည်များ လေ့ကျင့်ခန်း",
-    "description": "Type complex sentences accurately.",
+    "description": "ရှည်လျားသော ဝါကျများကို မှန်ကန်စွာ ရိုက်နိုင်ရန် ရည်ရွယ်သော သင်ခန်းစာ ဖြစ်သည်။ နေ့စဉ် သုံးစွဲသော စာကြောင်းများကို စာလုံးပေါင်း မှန်မှန်နှင့် လေ့ကျင့်ရမည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
@@ -52,7 +52,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-1-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "ဝါကျရှည် တစ်ကြောင်းလုံး ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["အဖေက ရေကို လိုသည်။", "အမေက ဆန်ကို လိုသည်။", "ဒီမြို့တော်ကို သွားသည်။"],
@@ -62,7 +62,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-1-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "ဝါကျရှည်များကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ဒီမြို့က အကြီးဆုံး မြို့ဖြစ်သည်။", "ဒီရွာက သေးသော ရွာဖြစ်သည်။", "ဘာကို ပြောကြသည်။", "ရွာတွေမှာ နေကြသည်။"],

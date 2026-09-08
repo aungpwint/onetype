@@ -8,7 +8,7 @@
     "titleMy": "ဂဏန်းပုံစံများ",
     "description": "Number patterns that train finger transitions on the number row.",
     "difficulty": "medium",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -23,53 +23,41 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-47-ex-1",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Warm up 1 2 3 — slide the left finger",
             "generator": {
                 "type": "chunks",
-                "keys": ["1", "2", "1", "2"],
-                "count": 18,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "alternation"
+                "keys": ["1", "2", "3"],
+                "count": 8,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-47-ex-2",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Now 5 6 7 across the index fingers",
             "generator": {
                 "type": "chunks",
-                "keys": ["5", "6", "5", "6"],
-                "count": 18,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "alternation"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-47-ex-3",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
-            "generator": {
-                "type": "chunks",
-                "keys": ["9", "0", "9", "0", "1"],
-                "count": 20,
-                "chunkMin": 4,
-                "chunkMax": 6,
+                "keys": ["5", "6", "7"],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "runs"
             }
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-47-ex-4",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "id": "lesson-en-beginner-47-ex-3",
+            "instruction": "Tiny challenge: jump between far number keys",
             "generator": {
                 "type": "chunks",
-                "keys": ["1", "3", "5", "7", "9", "2", "4", "6", "8", "0"],
-                "count": 24,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "keys": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

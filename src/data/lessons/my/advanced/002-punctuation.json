@@ -5,10 +5,10 @@
     "language": "my",
     "number": 2,
     "title": "Punctuation: ၍ ၎င်း ၌",
-    "titleMy": "မြန်မာ သင်္ကေတနှင့် အသုံးများ - ၍ ၎င်း ၌",
-    "description": "Practice with formal Myanmar punctuation marks and symbols.",
+    "titleMy": "မြန်မာ သင်္ကေတနှင့် အသုံးများ ၍ ၎င်း ၌",
+    "description": "မြန်မာ စာတွင် အသုံးပြုသော သင်္ကေတများ ဖြစ်သည့် ၍ ၊ ၎င်း ၊ ၌ တို့ ပါဝင်သော ဝါကျများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
@@ -56,7 +56,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-2-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "ပုဒ်ဖြတ် သင်္ကေတများ ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ရေ၊ နေ၊ လေက သုံးမျိုးဖြစ်သည်။", "ကြက်၊ ငါး၊ ဆန်တို့ကို ဝယ်ယူသည်။"],
@@ -66,7 +66,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-2-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "တရားဝင် သင်္ကေတများ ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["အိမ်သည် ရွာ၌ ရှိသည်။", "ညီသည် မြို့မှ လာခဲ့၍ တွေ့ဆုံသည်။"],

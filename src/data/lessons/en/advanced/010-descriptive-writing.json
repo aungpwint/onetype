@@ -6,9 +6,9 @@
     "number": 10,
     "title": "Descriptive Writing",
     "titleMy": "သရုပ်ဖော် စာရေးသားခြင်း",
-    "description": "Type a descriptive paragraph with rich vocabulary.",
+    "description": "A rich, image-filled paragraph; keep accuracy high while the vocabulary stretches your fingers to new corners.",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 94,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-10-ex-1",
             "kind": "text",
-            "instruction": "The sunset turned the sky into a sea of orange and pink. Long shadows stretched across the quiet field. A cool breeze carried the smell of fresh grass while the first little star began to shine.",
+            "instruction": "Slow down for the unusual words and glide through the familiar ones.",
             "text": "The sunset turned the sky into a sea of orange and pink. Long shadows stretched across the quiet field. A cool breeze carried the smell of fresh grass while the first little star began to shine."
         }
     ],

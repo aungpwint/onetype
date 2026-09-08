@@ -6,9 +6,9 @@
     "number": 25,
     "title": "Beginner Review",
     "titleMy": "အခြေခံ ပြန်လည်သုံးသပ်ခြင်း",
-    "description": "Review all beginner Myanmar skills.",
+    "description": "အခြေခံ အဆင့်ရှိ မြန်မာ စွမ်းရည်များကို ပြန်လည် သုံးသပ်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
@@ -43,50 +43,51 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-25-ex-1",
-            "instruction": "Review everything you have learned",
+            "instruction": "ဗျည်း က င တ န ကို ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က", "င", "တ", "န"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-25-ex-2",
-            "instruction": "Review everything you have learned",
+            "instruction": "က တွင် သရ ပေါင်းစုံ ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကိ", "ကု", "ကေ", "ကာ", "ကား"],
-                "count": 24,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-25-ex-3",
-            "instruction": "Review everything you have learned",
+            "instruction": "ယပင့် ရရစ် မျာ တို့ကို ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကျ", "ကြ", "မျာ"],
-                "count": 18,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-25-ex-4",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "အစစ်အမှန် စကားလုံးများဖြင့် ဖြတ်သန်းလေ့ကျင့်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ရေ", "မြို့", "ဆန်", "ငါး", "ကြက်"],
-                "count": 18
+                "count": 10
             }
         }
     ]

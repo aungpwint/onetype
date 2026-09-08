@@ -6,9 +6,9 @@
     "number": 13,
     "title": "Speed Building 1",
     "titleMy": "အရှိန်မြှင့် (၁)",
-    "description": "Type common pangrams and sentences quickly.",
+    "description": "Sprint through the words you already know; speed follows accuracy, so keep every stroke clean.",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -16,64 +16,38 @@
     },
     "focus": ["speed"],
     "prerequisites": ["lesson-en-intermediate-12"],
-    "focusKeys": [
-        "KeyT",
-        "KeyH",
-        "KeyE",
-        "KeyA",
-        "KeyN",
-        "KeyD",
-        "KeyY",
-        "KeyO",
-        "KeyU",
-        "KeyW",
-        "KeyI",
-        "KeyS",
-        "KeyF",
-        "KeyR",
-        "KeyM",
-        "KeyV",
-        "KeyG",
-        "KeyJ",
-        "KeyK",
-        "KeyL"
-    ],
-    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Period", "Comma", "Semicolon"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-13-ex-1",
-            "instruction": "Build speed across full words",
+            "instruction": "Warm up with the most frequent English words",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 30,
-                "maxWordLength": 6
+                "words": ["the", "and", "you", "that", "with", "this", "from", "have", "are", "was", "your", "they", "one", "two", "for"],
+                "count": 15
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-13-ex-2",
-            "instruction": "Build speed across full words",
+            "instruction": "Keep the rhythm through the words you meet in every sentence",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 32,
-                "maxWordLength": 7
+                "words": ["some", "them", "then", "there", "their", "what", "when", "while", "which", "more", "most", "only", "other", "where", "about", "again"],
+                "count": 16
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-13-ex-3",
-            "instruction": "Build speed across full words",
+            "instruction": "Tiny challenge: three steady sentences, eyes on the text",
             "generator": {
-                "type": "chunks",
-                "keys": ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-                "count": 26,
-                "chunkMin": 4,
-                "chunkMax": 6,
-                "style": "variable"
+                "type": "sentences",
+                "sentences": ["practice every day for steady progress.", "keep your eyes on the screen, not the keys.", "accuracy first; speed will follow."],
+                "count": 4
             }
         }
     ]

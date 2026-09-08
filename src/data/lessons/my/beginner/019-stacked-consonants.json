@@ -6,9 +6,9 @@
     "number": 19,
     "title": "Stacked Consonants",
     "titleMy": "ဗျည်းထပ်တင်",
-    "description": "Stacked consonants using virama ္. E.g., မင်္ဂလာ.",
+    "description": "ဝိရမ္ ္ ဖြင့် ဗျည်းကို ထပ်ပင်းရိုက်သည်။ ဥပမာ မင်္ဂလာ။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
@@ -24,12 +24,12 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-19-ex-1",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "ဗျည်းထပ်တက် က္က ကို အနီးကပ်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က္က"],
-                "count": 12,
-                "chunkMin": 3,
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
             }
@@ -37,40 +37,28 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-19-ex-2",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "စည်းချက်အတိုင်း က္ခ နှင့် ပ္ပ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["က္ခ"],
-                "count": 12,
-                "chunkMin": 3,
+                "keys": ["က္ခ", "ပ္ပ"],
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-19-ex-3",
-            "instruction": "Type larger clusters fluently",
-            "generator": {
-                "type": "chunks",
-                "keys": ["ပ္ပ"],
-                "count": 12,
-                "chunkMin": 3,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-19-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "ထပ်တက် သုံးမျိုးလုံး တစ်ဆက်တည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က္က", "က္ခ", "ပ္ပ"],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

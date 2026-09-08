@@ -6,9 +6,9 @@
     "number": 14,
     "title": "Tone Marks: း ့ ံ ဲ",
     "titleMy": "သံသင်္ကေတ - း ့ ံ ဲ",
-    "description": "Tone-carrying signs: း (Semicolon), ့ (KeyH), ံ (KeyH+Shift), ဲ (KeyJ+Shift).",
+    "description": "သံသင်္ကေတများကို လေ့ကျင့်သည် - း (Semicolon) ၊ ့ (KeyH) ၊ ံ (KeyH+Shift) ၊ ဲ (KeyJ+Shift)။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -24,11 +24,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-14-ex-1",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "သံသင်္ကေတ ပါသော ကား နှင့် ကီး တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကား", "ကီး"],
-                "count": 16,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
@@ -37,40 +37,28 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-14-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "စည်းချက်အတိုင်း ကံ နှင့် ကဲ့ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကံ", "ကဲ့"],
-                "count": 16,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-14-ex-3",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["တို့"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-14-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "သံသင်္ကေတ အားလုံး တစ်ဆက်တည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကား", "ကီး", "ကံ", "ကဲ့", "တို့"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

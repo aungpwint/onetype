@@ -6,9 +6,9 @@
     "number": 11,
     "title": "Medial: ျ (ya-gyat)",
     "titleMy": "ယပင့် (ya-gyat) - ျ",
-    "description": "The ျ medial (KeyS). Consonant + ျ + vowel.",
+    "description": "ယပင့် ျ (KeyS) ကို လေ့ကျင့်သည်။ ဗျည်း + ျ + သရ အစီအစဉ်ဖြင့် ရိုက်ရသည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-11-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ကျ မှာ ဗျည်း နှင့် ယပင့် ပေါင်းစပ်ထားသည်",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကျ"],
-                "count": 14,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -36,39 +36,26 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-11-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ပျ နှင့် ညျ တို့ကို ဆက်တိုက်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ပျ"],
-                "count": 14,
+                "keys": ["ပျ", "ညျ"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-11-ex-3",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["ညျ"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-11-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "ယပင့် စာလုံးကြို သုံးခုလုံး ဖြတ်သန်းရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကျ", "ပျ", "ညျ"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

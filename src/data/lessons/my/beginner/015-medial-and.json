@@ -6,9 +6,9 @@
     "number": 15,
     "title": "Medial: ွ and ှ",
     "titleMy": "ဝဆွဲ ွ နှင့် ဟထိုး ှ",
-    "description": "Wa-lay ွ (KeyG+Shift) and Ha-hto ှ (KeyS+Shift), as in ခွ (KeyC), နွ (KeyE), လွ (KeyV), မှာ (KeyR), လှ (KeyV).",
+    "description": "ဝဆွဲ ွ (KeyG+Shift) နှင့် ဟထိုး ှ (KeyS+Shift) တို့ကို လေ့ကျင့်သည်။ ဥပမာ ခွ (KeyC) ၊ နွ (KeyE) ၊ လွ (KeyV) ၊ မှာ (KeyR) ၊ လှ (KeyV)။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -24,11 +24,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-15-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ဝဆွဲ ပါသော ခွ နှင့် နွ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ခွ"],
-                "count": 14,
+                "keys": ["ခွ", "နွ"],
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -37,54 +37,28 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-15-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "စည်းချက်အတိုင်း လွ ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["နွ"],
-                "count": 14,
+                "keys": ["လွ"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-15-ex-3",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ဝဆွဲ နှင့် ဟထိုး ရောနှောလေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["လွ"],
+                "keys": ["ခွ", "နွ", "လွ", "မှာ", "လှ"],
                 "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-15-ex-4",
-            "instruction": "Ha-hto medials",
-            "generator": {
-                "type": "chunks",
-                "keys": ["မှာ", "လှ"],
-                "count": 16,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable",
                 "mixed": true
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-15-ex-5",
-            "instruction": "Keep your fingers on the home row",
-            "generator": {
-                "type": "chunks",
-                "keys": ["ခွ", "နွ", "လွ", "မှာ", "လှ"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
             }
         }
     ]

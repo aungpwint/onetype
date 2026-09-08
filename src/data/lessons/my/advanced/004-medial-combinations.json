@@ -6,9 +6,9 @@
     "number": 4,
     "title": "Medial Combinations",
     "titleMy": "ဗျည်းတွဲများ လေ့ကျင့်ခန်း",
-    "description": "Complex medial combinations in words.",
+    "description": "ဗျည်းတွဲ အစုများ ပါဝင်သော စကားလုံးများကို ကျွမ်းကျင်စွာ ရိုက်နိုင်ရန် ရည်ရွယ်သော သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 5,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
@@ -44,11 +44,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-4-ex-1",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "ဗျည်းတွဲ အစုများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ချုပ်", "ခြေ", "ကျော"],
-                "count": 20,
+                "count": 12,
                 "chunkMin": 4,
                 "chunkMax": 6,
                 "style": "variable"
@@ -57,11 +57,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-4-ex-2",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "ဗျည်းတွဲ အစုများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["များ", "ပျို", "ကြာ", "နှာ", "ကွာ"],
-                "count": 20,
+                "count": 12,
                 "chunkMin": 4,
                 "chunkMax": 6,
                 "style": "variable"
@@ -70,11 +70,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-4-ex-3",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "ရှုပ်ထွေးသော ဗျည်းတွဲများကို မှန်ကန်စွာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကျောင်း", "အခြေခံ", "ကြက်"],
-                "count": 22,
+                "count": 12,
                 "chunkMin": 5,
                 "chunkMax": 7,
                 "style": "variable"

@@ -6,9 +6,9 @@
     "number": 8,
     "title": "Contractions",
     "titleMy": "အတိုကောက် စကားလုံးများ",
-    "description": "Common contractions: don't, can't, won't, etc.",
+    "description": "Common contractions like don't, can't and won't; let the apostrophe become a natural part of the word.",
     "difficulty": "medium",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 92,
@@ -16,66 +16,38 @@
     },
     "focus": ["sentences", "punctuation"],
     "prerequisites": ["lesson-en-intermediate-7"],
-    "focusKeys": [
-        "KeyD",
-        "KeyO",
-        "KeyN",
-        "Quote",
-        "KeyT",
-        "KeyS",
-        "KeyP",
-        "KeyW",
-        "Digit1",
-        "ShiftRight",
-        "KeyI",
-        "KeyC",
-        "KeyA",
-        "KeyF",
-        "Period",
-        "KeyE",
-        "KeyR",
-        "KeyY",
-        "KeyH",
-        "KeyL",
-        "KeyM",
-        "KeyV",
-        "KeyG",
-        "KeyB",
-        "KeyK",
-        "ShiftLeft",
-        "KeyU"
-    ],
-    "targetFingers": ["left-middle", "right-ring", "right-index", "right-pinky", "left-index", "left-ring", "left-pinky", "right-middle"],
-    "targetHands": ["left", "right"],
     "requiresShift": true,
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Quote", "Period", "Digit1", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-8-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Warm up with a contraction at the start of the sentence",
             "generator": {
                 "type": "sentences",
-                "sentences": ["don't stop now!", "i can't find it.", "we aren't ready yet."],
+                "sentences": ["Don't stop now.", "i can't find my keys.", "we aren't ready yet."],
                 "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-8-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Keep the rhythm: let the apostrophe fall between the words",
             "generator": {
                 "type": "sentences",
-                "sentences": ["she'll come at noon.", "they've left the room.", "he's reading a book."],
+                "sentences": ["She'll come at noon.", "they've left the room.", "he's reading a book."],
                 "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-8-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Tiny challenge: capitals, contractions and punctuation together",
             "generator": {
                 "type": "sentences",
-                "sentences": ["it won't work this way.", "I'd like some tea.", "you're doing great!"],
+                "sentences": ["You're doing great!", "it won't work this way.", "He's very kind."],
                 "count": 4
             }
         }

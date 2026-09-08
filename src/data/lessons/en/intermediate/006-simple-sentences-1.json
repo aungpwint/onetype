@@ -6,9 +6,9 @@
     "number": 6,
     "title": "Simple Sentences 1",
     "titleMy": "ရိုးရှင်းသော ဝါကျတိုများ (၁)",
-    "description": "Short, common sentences for building typing rhythm.",
+    "description": "Short, everyday sentences that flow start to finish; learn to type the spaces and the full stop cleanly.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 92,
@@ -16,62 +16,38 @@
     },
     "focus": ["sentences"],
     "prerequisites": ["lesson-en-intermediate-5"],
-    "focusKeys": [
-        "KeyI",
-        "KeyW",
-        "KeyL",
-        "KeyM",
-        "KeyE",
-        "KeyT",
-        "KeyH",
-        "KeyA",
-        "KeyS",
-        "KeyO",
-        "KeyN",
-        "Period",
-        "KeyY",
-        "KeyR",
-        "KeyG",
-        "KeyK",
-        "KeyB",
-        "KeyV",
-        "KeyD",
-        "KeyU",
-        "KeyF",
-        "KeyC",
-        "KeyP"
-    ],
-    "targetFingers": ["right-middle", "left-ring", "right-ring", "right-index", "left-middle", "left-index", "left-pinky", "right-pinky"],
-    "targetHands": ["right", "left"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Period", "Quote"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-6-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Warm up with short sentences that end in a full stop",
             "generator": {
                 "type": "sentences",
-                "sentences": ["i will meet him at the station.", "they are going to the market.", "she has a small yellow bag."],
-                "count": 3
+                "sentences": ["i walk to the shop.", "the cat sat on the wall.", "we like the warm sun.", "they open the big gate."],
+                "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-6-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Keep the rhythm flowing through each short sentence",
             "generator": {
                 "type": "sentences",
-                "sentences": ["we saw a long river today.", "the train leaves in ten minutes.", "he wrote a letter to his friend."],
-                "count": 3
+                "sentences": ["she reads a book at night.", "he drinks water every day.", "the birds sing in the tree.", "a small dog ran across the yard."],
+                "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-6-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Tiny challenge: longer sentences at a steady pace",
             "generator": {
                 "type": "sentences",
-                "sentences": ["the children play in the green park.", "my brother reads the morning news.", "you can bring your book tomorrow."],
-                "count": 3
+                "sentences": ["my friend lives near the lake.", "the children play in the park.", "please bring your bag tomorrow.", "the train leaves at eight o'clock."],
+                "count": 4
             }
         }
     ]

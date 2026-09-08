@@ -6,9 +6,9 @@
     "number": 4,
     "title": "Travel Words",
     "titleMy": "ခရီးသွား စကားလုံးများ",
-    "description": "Travel vocabulary: ကား (car), ရထား (train), လိုက်ကား (bus), ဘူတာ (station), and directions.",
+    "description": "ခရီးသွားလာရာတွင် သုံးသော စကားလုံးများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ ကား ၊ ရထား ၊ ခရီး ၊ လိုက်ကား ၊ မြို့ ၊ ရွာ ၊ ဘူတာ ၊ လမ်း ၊ အရှေ့ ၊ အနောက် ၊ အပေါ် ၊ အောက် စသည်တို့ ပါဝင်သည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 88,
@@ -49,31 +49,31 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-4-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "ခရီးသွား စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ကား", "ရထား", "ခရီး", "လိုက်ကား"],
-                "count": 20
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-4-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "ခရီးသွား စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["မြို့", "ရွာ", "ဘူတာ", "လမ်း"],
-                "count": 20
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-4-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "လမ်းညွှန် စကားလုံးများကို မှန်ကန်စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["အရှေ့", "အနောက်", "အပေါ်", "အောက်"],
-                "count": 18
+                "count": 12
             }
         }
     ]

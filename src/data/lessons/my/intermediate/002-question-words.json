@@ -6,9 +6,9 @@
     "number": 2,
     "title": "Question Words",
     "titleMy": "မေးခွန်း စကားလုံးများ",
-    "description": "Question words: ဘာ (what), ဘယ် (which), ဘယ်သူ (who), ဘယ်မှာ (where), ဘယ်လို (how), ဘယ်လောက် (how much).",
+    "description": "မေးမြန်းရာတွင် သုံးသော မေးခွန်း စကားလုံးများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ ဘာ ၊ ဘယ် ၊ ဘယ်သူ ၊ ဘယ်မှာ ၊ ဘယ်လို ၊ ဘယ်နှစ် ၊ ဘယ်လောက် ၊ ဘယ်နေ့ စသည်တို့ ပါဝင်သည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 88,
@@ -41,31 +41,31 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-2-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "မေးခွန်း စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ဘာ", "ဘယ်"],
-                "count": 16
+                "count": 8
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-2-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "မေးခွန်း စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ဘယ်သူ", "ဘယ်မှာ", "ဘယ်လို"],
-                "count": 18
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-2-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "စာလုံးတိုင်း မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ဘယ်နှစ်", "ဘယ်လောက်", "ဘယ်နေ့"],
-                "count": 18
+                "count": 12
             }
         }
     ]

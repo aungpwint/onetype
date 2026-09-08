@@ -6,9 +6,9 @@
     "number": 15,
     "title": "Essay Passage: Learning",
     "titleMy": "စာစီစာကုံး - သင်ယူလေ့လာခြင်း",
-    "description": "Type a longer essay passage about learning.",
+    "description": "A longer essay passage about learning; build the stamina to hold accuracy across several sentences in a row.",
     "difficulty": "hard",
-    "estimatedMinutes": 18,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 95,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-15-ex-1",
             "kind": "text",
-            "instruction": "Learning is a lifelong journey that begins at birth and continues until the end of life. Every skill we master, from reading a book to typing a letter, opens a new door. The best learners stay curious and never fear mistakes, because mistakes are the footprints on the road to mastery.",
+            "instruction": "Break the passage into three chunks and type each one in a single breath.",
             "text": "Learning is a lifelong journey that begins at birth and continues until the end of life. Every skill we master, from reading a book to typing a letter, opens a new door. The best learners stay curious and never fear mistakes, because mistakes are the footprints on the road to mastery."
         }
     ],

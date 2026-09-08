@@ -6,9 +6,9 @@
     "number": 18,
     "title": "Final Examination",
     "titleMy": "နောက်ဆုံးစစ်ဆေးမှု",
-    "description": "Final exam passage. Demonstrate mastery of touch typing.",
+    "description": "The final test of the whole course; one long, honest passage that asks for everything you have practiced.",
     "difficulty": "hard",
-    "estimatedMinutes": 20,
+    "estimatedMinutes": 7,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 95,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-18-ex-1",
             "kind": "text",
-            "instruction": "Success is not built in a single day. It is the sum of many small, honest efforts repeated with care. A writer practices every page, a runner trains every mile, and a typist trains every key. Now that you have reached this lesson, you have already learned the most important secret: steady daily practice turns a beginner into an expert.",
+            "instruction": "Type it once, calmly, as a final proof of everything you have learned.",
             "text": "Success is not built in a single day. It is the sum of many small, honest efforts repeated with care. A writer practices every page, a runner trains every mile, and a typist trains every key. Now that you have reached this lesson, you have already learned the most important secret: steady daily practice turns a beginner into an expert."
         }
     ],

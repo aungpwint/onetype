@@ -8,7 +8,7 @@
     "titleMy": "ဘယ်လက် အခြေခံတန်း - A S D F",
     "description": "Place left pinky on A, ring on S, middle on D, index on F.",
     "difficulty": "basic",
-    "estimatedMinutes": 6,
+    "estimatedMinutes": 2,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 85,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-2-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "Line up the left hand: pinky on A, ring on S, middle on D, index on F",
             "generator": {
                 "type": "chunks",
                 "keys": ["a", "s", "d", "f"],
-                "count": 16,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -36,41 +36,27 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-2-ex-2",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Let each finger strike its own key, then relax",
             "generator": {
                 "type": "chunks",
                 "keys": ["a", "s", "d", "f"],
-                "count": 16,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-2-ex-3",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Tiny challenge: keep the whole hand on the home row",
             "generator": {
                 "type": "chunks",
                 "keys": ["a", "s", "d", "f"],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-2-ex-4",
-            "instruction": "Alternate between both fingers and hands",
-            "generator": {
-                "type": "chunks",
-                "keys": ["a", "d", "f", "s"],
-                "count": 20,
-                "chunkMin": 4,
-                "chunkMax": 6,
-                "style": "variable",
-                "mixed": true
             }
         }
     ]

@@ -5,13 +5,13 @@
     "language": "my",
     "number": 3,
     "title": "Complex Syllables: Stacked Consonants",
-    "titleMy": "ရှုပ်ထွေးသော ဝဏ္ဏများ - ဗျည်းထပ်တင်",
-    "description": "Words with stacked consonants using virama.",
+    "titleMy": "ရှုပ်ထွေးသော ဝဏ္ဏများ ဗျည်းထပ်တင်",
+    "description": "ဗျည်းထပ်တင် ဝဏ္ဏများ ပါဝင်သော စာလုံးစုများကို ချောမွေ့စွာ ရိုက်နိုင်ရန် ရည်ရွယ်သည်။ က္က ၊ က္ခ ၊ ပ္ပ ၊ မြန် ၊ မင်း ၊ ညင် ၊ ကျိ ၊ ကြာ ၊ မျာ ၊ ပြု အစရှိသော အစုများကို လေ့ကျင့်ရမည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 90,
+        "minAccuracy": 88,
         "minWpm": null
     },
     "focus": ["syllable"],
@@ -24,11 +24,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-3-ex-1",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "ဗျည်းစု အစုများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က္က", "က္ခ", "ပ္ပ"],
-                "count": 24,
+                "count": 12,
                 "chunkMin": 4,
                 "chunkMax": 6,
                 "style": "variable"
@@ -37,11 +37,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-3-ex-2",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "ဝဏ္ဏစုများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["မြန်", "မင်း", "ညင်"],
-                "count": 22,
+                "count": 12,
                 "chunkMin": 4,
                 "chunkMax": 6,
                 "style": "variable"
@@ -50,11 +50,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-3-ex-3",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "စာလုံးတိုင်း မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကျိ", "ကြာ", "မျာ", "ပြု"],
-                "count": 22,
+                "count": 12,
                 "chunkMin": 4,
                 "chunkMax": 6,
                 "style": "variable"

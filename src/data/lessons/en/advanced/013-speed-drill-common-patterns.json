@@ -6,9 +6,9 @@
     "number": 13,
     "title": "Speed Drill: Common Patterns",
     "titleMy": "အရှိန်လေ့ကျင့်ခန်း - အသုံးများသော ပုံစံများ",
-    "description": "Repeated common English patterns for speed building.",
+    "description": "Sprint through the letter pairs and words that appear in nearly every sentence; speed comes from rhythm, not strain.",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 94,
@@ -16,68 +16,40 @@
     },
     "focus": ["speed"],
     "prerequisites": ["lesson-en-advanced-12"],
-    "focusKeys": [
-        "KeyE",
-        "KeyR",
-        "KeyT",
-        "KeyY",
-        "KeyU",
-        "KeyI",
-        "KeyH",
-        "KeyA",
-        "KeyN",
-        "KeyD",
-        "KeyO",
-        "KeyW",
-        "KeyS",
-        "KeyF",
-        "KeyM",
-        "KeyV",
-        "KeyP",
-        "KeyG",
-        "KeyL",
-        "Period",
-        "KeyC",
-        "KeyB"
-    ],
-    "targetFingers": ["left-middle", "left-index", "right-index", "right-middle", "left-pinky", "right-ring", "left-ring", "right-pinky"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyQ", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Period"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-advanced-13-ex-1",
-            "instruction": "Build speed across full words",
+            "instruction": "Warm up: keep the top-row rhythm steady",
             "generator": {
                 "type": "chunks",
-                "keys": ["e", "r", "t", "y", "u", "i"],
-                "count": 24,
-                "chunkMin": 4,
-                "chunkMax": 7,
-                "style": "runs"
+                "keys": ["r", "t", "y", "u", "e", "i", "o"],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-advanced-13-ex-2",
-            "instruction": "Build speed across full words",
+            "instruction": "Build speed across words you use constantly",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 28,
-                "maxWordLength": 8
+                "words": ["river", "their", "through", "great", "green", "right", "ships", "strong", "heavy", "quick", "train", "slow"],
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-advanced-13-ex-3",
-            "instruction": "Build speed across full words",
+            "instruction": "Tiny challenge: full sentences with your eyes on the text",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "the rapid river runs through the green valley.",
-                    "great ships sail across the wide ocean.",
-                    "strong bamboo bends before the heavy wind."
-                ],
+                "sentences": ["the rapid river runs through the green valley.", "great ships sail across the wide ocean.", "strong bamboo bends before the heavy wind."],
                 "count": 4
             }
         }

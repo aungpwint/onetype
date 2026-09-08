@@ -6,9 +6,9 @@
     "number": 6,
     "title": "Time Expressions",
     "titleMy": "အချိန် စကားစုများ",
-    "description": "Time words: မနက် (morning), ယနေ့ (today), မနေ့က (yesterday), မနက်ဖြန် (tomorrow), အခု (now).",
+    "description": "အချိန် နှင့် ရက်စွဲ ပြောဆိုရာတွင် သုံးသော စကားလုံးများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ နေ့ ၊ ညဘက် ၊ မနက် ၊ ယခု ၊ ဒီနေ့ ၊ မနက်ဖြန် ၊ မနေ့က ၊ ယနေ့ ၊ ညချမ်း စသည်တို့ ပါဝင်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
@@ -42,31 +42,31 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-6-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "အချိန် စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["နေ့", "ညဘက်", "မနက်"],
-                "count": 18
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-6-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "အချိန် စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ယခု", "ဒီနေ့"],
-                "count": 16
+                "count": 8
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-6-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "နေ့ရက် စကားလုံးများကို မှန်ကန်စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["မနက်ဖြန်", "မနေ့က", "ယနေ့", "ညချမ်း"],
-                "count": 20
+                "count": 12
             }
         }
     ]

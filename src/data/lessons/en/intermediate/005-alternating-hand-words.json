@@ -6,9 +6,9 @@
     "number": 5,
     "title": "Alternating-Hand Words",
     "titleMy": "လက်နှစ်ဖက် အလှည့်ကျ စကားလုံးများ",
-    "description": "Words that alternate between left and right hands.",
+    "description": "Familiar words that bounce between your hands; build the hand-swap reflex that makes typing feel effortless.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 90,
@@ -16,59 +16,41 @@
     },
     "focus": ["hand-alternation"],
     "prerequisites": ["lesson-en-intermediate-4"],
-    "focusKeys": [
-        "KeyA",
-        "KeyR",
-        "KeyM",
-        "KeyF",
-        "KeyU",
-        "KeyN",
-        "KeyD",
-        "KeyG",
-        "KeyI",
-        "KeyB",
-        "KeyO",
-        "KeyK",
-        "KeyE",
-        "KeyT",
-        "KeyH",
-        "KeyP",
-        "KeyW"
-    ],
-    "targetFingers": ["left-pinky", "left-index", "right-index", "left-middle", "right-middle", "right-ring", "right-pinky", "left-ring"],
+    "focusKeys": ["KeyA", "KeyB", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyL", "KeyM", "KeyN", "KeyO", "KeyR", "KeyS", "KeyT", "KeyW"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-5-ex-1",
-            "instruction": "Build speed across full words",
+            "instruction": "Warm up with short hand-swap chunks",
             "generator": {
-                "type": "words",
-                "words": ["arm", "fun", "drum"],
-                "count": 30,
-                "maxWordLength": 4
+                "type": "chunks",
+                "keys": ["t", "h", "e", "n", "i", "w", "a", "l"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "transition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-5-ex-2",
-            "instruction": "Build speed across full words",
+            "instruction": "Keep the rhythm: let each new word land on the other hand",
             "generator": {
                 "type": "words",
-                "words": ["again", "born", "dark"],
-                "count": 28,
-                "maxWordLength": 5
+                "words": ["then", "them", "when", "with", "than", "both", "hand", "land"],
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-5-ex-3",
-            "instruction": "Build speed across full words",
+            "instruction": "Tiny challenge: hold the speed through the alternating pairs",
             "generator": {
                 "type": "words",
-                "words": ["earth", "grab", "hard", "pad", "tag", "drawn"],
-                "count": 28,
-                "maxWordLength": 6
+                "words": ["hair", "their", "fight", "right", "sight", "eight"],
+                "count": 10
             }
         }
     ]

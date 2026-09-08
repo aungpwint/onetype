@@ -6,9 +6,9 @@
     "number": 9,
     "title": "Daily News Paragraph",
     "titleMy": "နေ့စဉ်သတင်း စာပိုဒ်",
-    "description": "Type a news-style paragraph.",
+    "description": "သတင်းပုံစံဖြင့် ရေးသားထားသော စာပိုဒ်တစ်ခုလုံးကို ချောမွေ့စွာ ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 7,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
@@ -52,7 +52,7 @@
         {
             "id": "lesson-my-advanced-9-ex-1",
             "kind": "text",
-            "instruction": "မနေ့က ရန်ကုန်တိုင်းဒေသကြီးတွင် မိုးကြီးရွာခဲ့သည်။ လေယာဉ်ခရီးစဉ်အချို့ နှောင့်နှေးခဲ့ရသည်။ လူထုက ကြိုဆိုကြသည်။",
+            "instruction": "သတင်း စာပိုဒ်တစ်ခုလုံးကို ရိုက်ပါ",
             "text": "မနေ့က ရန်ကုန်တိုင်းဒေသကြီးတွင် မိုးကြီးရွာခဲ့သည်။ လေယာဉ်ခရီးစဉ်အချို့ နှောင့်နှေးခဲ့ရသည်။ လူထုက ကြိုဆိုကြသည်။"
         }
     ],

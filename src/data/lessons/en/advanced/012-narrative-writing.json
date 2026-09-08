@@ -6,9 +6,9 @@
     "number": 12,
     "title": "Narrative Writing",
     "titleMy": "ဖြစ်စဉ်ဖော်ပြသော စာရေးသားခြင်း",
-    "description": "Type a narrative paragraph with past tense verbs.",
+    "description": "A past-tense story about a day by the sea; keep the tempo rising gently toward the last happy line.",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 94,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-12-ex-1",
             "kind": "text",
-            "instruction": "Last summer, my family visited a small town by the sea. We woke up early to watch the fishermen pull in their boats. I collected bright shells on the sand. It was the happiest day of my year.",
+            "instruction": "Type the story top to bottom without stopping; smoothness matters more than speed.",
             "text": "Last summer, my family visited a small town by the sea. We woke up early to watch the fishermen pull in their boats. I collected bright shells on the sand. It was the happiest day of my year."
         }
     ],

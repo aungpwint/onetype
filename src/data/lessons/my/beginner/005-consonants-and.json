@@ -6,9 +6,9 @@
     "number": 5,
     "title": "Bottom Row: ခ ထ ဖ",
     "titleMy": "အောက်တန်း ဗျည်းများ - ခ ထ ဖ",
-    "description": "ခ (KeyC) with left middle, ထ (KeyX) with left ring, ဖ (KeyZ) with left pinky.",
+    "description": "ခ (KeyC) ကို ဘယ်လက် လက်ခလယ်ဖြင့် ၊ ထ (KeyX) ကို ဘယ်လက် လက်သူကြွယ်ဖြင့် ၊ ဖ (KeyZ) ကို ဘယ်လက် လက်သန်းဖြင့် ရိုက်ရသည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 6,
+    "estimatedMinutes": 2,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-5-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ခ နှင့် ထ တို့ဆီသို့ လက်ဆန့်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ခ"],
-                "count": 12,
+                "keys": ["ခ", "ထ"],
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -36,39 +36,26 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-5-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ဖ ကို လက်သန်းဖြင့် ဆန့်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ထ"],
-                "count": 12,
+                "keys": ["ဖ"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-5-ex-3",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["ဖ"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-5-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "အောက်တန်းခလုတ် သုံးခုလုံးကို ဖြတ်သန်းရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ခ", "ထ", "ဖ"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

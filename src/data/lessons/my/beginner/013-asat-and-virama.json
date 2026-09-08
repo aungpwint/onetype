@@ -6,9 +6,9 @@
     "number": 13,
     "title": "Asat: ်",
     "titleMy": "အသတ် သင်္ကေတ - ်",
-    "description": "The asat ် (KeyF) marks a consonant as final, as in က် (KeyU + KeyF) and င် (KeyI + KeyF).",
+    "description": "အသတ် ် (KeyF) သည် ဗျည်းကို အဆုံးသတ် ချက်အဖြစ် သတ်မှတ်သည်။ ဥပမာ က် (KeyU + KeyF) နှင့် င် (KeyI + KeyF)။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-13-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "က နောက်တွင် အသတ် ထည့်၍ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က်"],
-                "count": 14,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -36,40 +36,28 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-13-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "င နောက်တွင် အသတ် ထည့်၍ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["င်"],
-                "count": 14,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-13-ex-3",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["တ်", "ည်"],
-                "count": 16,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-13-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "က် င် တ် ည် အားလုံး တွဲဖက်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က်", "င်", "တ်", "ည်"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

@@ -6,9 +6,9 @@
     "number": 3,
     "title": "School Life Paragraph",
     "titleMy": "ကျောင်းသားဘဝအကြောင်း စာပိုဒ်",
-    "description": "Type about school life. Practice capital letters at sentence starts.",
+    "description": "A paragraph about school where every sentence starts with a capital letter; practice the shift timing between sentences.",
     "difficulty": "medium",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-3-ex-1",
             "kind": "text",
-            "instruction": "Our school has many big and bright classrooms. The teachers are kind and patient. We study English, Math, and Science every day. I enjoy learning new things with my classmates.",
+            "instruction": "Type the passage and land each capital letter on the beat of the full stop.",
             "text": "Our school has many big and bright classrooms. The teachers are kind and patient. We study English, Math, and Science every day. I enjoy learning new things with my classmates."
         }
     ],

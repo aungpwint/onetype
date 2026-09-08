@@ -8,7 +8,7 @@
     "titleMy": "လက်ချောင်း နေရာချခြင်း - F နှင့် J",
     "description": "Place your left index finger on F and right index finger on J. Feel the bumps.",
     "difficulty": "basic",
-    "estimatedMinutes": 5,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 85,
@@ -22,11 +22,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-1-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "Feel the bumps on F and J with your index fingers",
             "generator": {
                 "type": "chunks",
                 "keys": ["f", "j"],
-                "count": 18,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -35,39 +35,26 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-1-ex-2",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "Alternate F and J to find a steady rhythm",
             "generator": {
                 "type": "chunks",
                 "keys": ["f", "j"],
-                "count": 18,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "alternation"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-1-ex-3",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Tiny challenge: switch fingers without looking",
             "generator": {
                 "type": "chunks",
                 "keys": ["f", "j"],
-                "count": 22,
-                "chunkMin": 4,
-                "chunkMax": 6,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-1-ex-4",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["f", "j", "f"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable",
                 "mixed": true
             }

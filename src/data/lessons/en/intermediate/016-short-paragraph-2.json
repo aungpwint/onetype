@@ -6,9 +6,9 @@
     "number": 16,
     "title": "Short Paragraph 2",
     "titleMy": "စာပိုဒ်တို (၂)",
-    "description": "A longer paragraph about a familiar topic.",
+    "description": "Longer sentences with an early comma; keep the flow going from clause to clause like a real paragraph.",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 92,
@@ -16,60 +16,37 @@
     },
     "focus": ["sentences"],
     "prerequisites": ["lesson-en-intermediate-15"],
-    "focusKeys": [
-        "KeyW",
-        "KeyH",
-        "KeyE",
-        "KeyN",
-        "KeyT",
-        "KeyB",
-        "KeyL",
-        "KeyR",
-        "KeyA",
-        "KeyG",
-        "Comma",
-        "KeyV",
-        "KeyY",
-        "KeyO",
-        "KeyF",
-        "KeyC",
-        "KeyS",
-        "KeyM",
-        "Period",
-        "KeyP",
-        "KeyD",
-        "KeyI",
-        "KeyK",
-        "KeyU"
-    ],
-    "targetFingers": ["left-ring", "right-index", "left-middle", "left-index", "right-ring", "left-pinky", "right-middle", "right-pinky"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyX", "KeyY", "Comma", "Period"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-16-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Warm up: sentences with one early comma",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "when the bell rang, everyone left the classroom.",
-                    "he opened the window to let in fresh air.",
-                    "the farmers work in the field until sunset."
-                ],
+                "sentences": ["when the bell rang, everyone left the classroom.", "he opened the window to let in fresh air.", "the farmers work in the field until sunset."],
                 "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-16-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Keep the rhythm through the compound sentences",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "a strong wind blew through the open market.",
-                    "they waited by the door for the rain to stop.",
-                    "my sister painted a picture of the hills."
-                ],
+                "sentences": ["a strong wind blew through the open market.", "they waited by the door for the rain to stop.", "my sister painted a picture of the hills."],
+                "count": 4
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-en-intermediate-16-ex-3",
+            "instruction": "Tiny challenge: endings that sound like the next paragraph",
+            "generator": {
+                "type": "sentences",
+                "sentences": ["after lunch, the students gather in the yard.", "she kept the letter in an old leather box.", "it looks like rain from the north today."],
                 "count": 4
             }
         }

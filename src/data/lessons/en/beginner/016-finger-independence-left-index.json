@@ -8,7 +8,7 @@
     "titleMy": "လက်ချောင်း လွတ်လပ်မှု - ဘယ်လက် လက်ညှိုး",
     "description": "Left index finger drills: F R T V B G. Other fingers stay on home row.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -23,12 +23,12 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-16-ex-1",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Move only the left index finger: up to R and T, down to V and B",
             "generator": {
                 "type": "chunks",
-                "keys": ["f", "r"],
-                "count": 14,
-                "chunkMin": 3,
+                "keys": ["f", "r", "t", "v", "b"],
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
             }
@@ -36,39 +36,26 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-16-ex-2",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Slide the left index right to G and back to F",
             "generator": {
                 "type": "chunks",
                 "keys": ["f", "g"],
-                "count": 14,
-                "chunkMin": 3,
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-16-ex-3",
-            "instruction": "Reach to the new keys and return",
-            "generator": {
-                "type": "chunks",
-                "keys": ["g", "t", "b"],
-                "count": 14,
-                "chunkMin": 3,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-16-ex-4",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Tiny challenge: one busy finger, four quiet ones",
             "generator": {
                 "type": "chunks",
                 "keys": ["f", "r", "g", "t", "v", "b"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

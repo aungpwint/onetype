@@ -6,9 +6,9 @@
     "number": 10,
     "title": "Compound Words",
     "titleMy": "ပေါင်းစပ် စကားလုံးများ",
-    "description": "Words made of two smaller words. Build fluency with longer words.",
+    "description": "Longer words built from two familiar parts; hold the rhythm all the way through without losing accuracy.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 92,
@@ -16,63 +16,38 @@
     },
     "focus": ["words"],
     "prerequisites": ["lesson-en-intermediate-9"],
-    "focusKeys": [
-        "KeyS",
-        "KeyU",
-        "KeyN",
-        "KeyL",
-        "KeyI",
-        "KeyG",
-        "KeyH",
-        "KeyT",
-        "KeyR",
-        "KeyA",
-        "KeyB",
-        "KeyO",
-        "KeyW",
-        "KeyF",
-        "KeyE",
-        "KeyY",
-        "KeyK",
-        "KeyD",
-        "KeyV",
-        "KeyM",
-        "KeyP"
-    ],
-    "targetFingers": ["left-ring", "right-index", "right-ring", "right-middle", "left-index", "left-pinky", "left-middle", "right-pinky"],
+    "focusKeys": ["KeyA", "KeyB", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-10-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Warm up: two short words joined as one",
             "generator": {
                 "type": "words",
-                "words": ["sunlight", "rainbow", "firefly", "bookstore"],
-                "count": 18,
-                "maxWordLength": 9
+                "words": ["sunlight", "rainbow", "firefly", "notebook"],
+                "count": 8
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-10-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Keep the rhythm: the compound should feel like a single word",
             "generator": {
                 "type": "words",
-                "words": ["handbook", "lighthouse", "forgive", "oversee"],
-                "count": 18,
-                "maxWordLength": 9
+                "words": ["handbook", "balloon", "birthday", "weekend"],
+                "count": 8
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-10-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Tiny challenge: the longest compounds in one breath",
             "generator": {
                 "type": "words",
-                "words": ["snowman", "homeland", "typewriter", "weekend"],
-                "count": 18,
-                "maxWordLength": 10
+                "words": ["typewriter", "waterfall", "everybody", "sometimes"],
+                "count": 8
             }
         }
     ]

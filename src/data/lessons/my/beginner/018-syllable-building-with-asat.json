@@ -6,9 +6,9 @@
     "number": 18,
     "title": "Syllable Building: With Asat",
     "titleMy": "ဝဏ္ဏ ဖွဲ့ - အသတ်ဖြင့်",
-    "description": "Syllables ending with asat (closed syllables).",
+    "description": "အသတ်ဖြင့် အဆုံးသတ်သော ဝဏ္ဏများ (အပိတ်ဝဏ္ဏများ) ကို ရိုက်လေ့ကျင့်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
@@ -23,55 +23,41 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-18-ex-1",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "ကိုင် ကို ထပ်ခါထပ်ခါ ရိုက်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကိုင်"],
-                "count": 14,
-                "chunkMin": 4,
-                "chunkMax": 5,
+                "count": 8,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-18-ex-2",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "စည်းချက်အတိုင်း ပင် နှင့် ညင် တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ပင်", "ညင်"],
-                "count": 16,
-                "chunkMin": 4,
-                "chunkMax": 5,
-                "style": "variable",
-                "mixed": true
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-18-ex-3",
-            "instruction": "Type larger clusters fluently",
-            "generator": {
-                "type": "chunks",
-                "keys": ["မြန်", "မင်း"],
-                "count": 16,
-                "chunkMin": 4,
-                "chunkMax": 5,
-                "style": "variable",
-                "mixed": true
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-18-ex-4",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "အသတ်ပိတ် ဝဏ္ဏများ တစ်ဆက်တည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကိုင်", "ပင်", "ညင်", "မြန်", "မင်း"],
-                "count": 24,
-                "chunkMin": 4,
-                "chunkMax": 6,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

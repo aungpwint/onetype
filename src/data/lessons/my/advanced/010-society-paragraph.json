@@ -6,9 +6,9 @@
     "number": 10,
     "title": "Society Paragraph",
     "titleMy": "လူမှုဘဝ စာပိုဒ်",
-    "description": "Type about society and community.",
+    "description": "လူမှုအသိုင်းအဝိုင်း နှင့် ပတ်သက်သော အကြောင်းအရာများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 7,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 93,
@@ -52,7 +52,7 @@
         {
             "id": "lesson-my-advanced-10-ex-1",
             "kind": "text",
-            "instruction": "လူငယ်တွေအတွက် စာဖတ်ခြင်း က အရေးကြီးတယ်။ ကျောင်းအုပ်က စာကြည့်တိုက် ဖွင့်တယ်။ မိသားစုနဲ့ နေကြသည်။",
+            "instruction": "လူမှုရေး စာပိုဒ်တစ်ခုလုံးကို ရိုက်ပါ",
             "text": "လူငယ်တွေအတွက် စာဖတ်ခြင်း က အရေးကြီးတယ်။ ကျောင်းအုပ်က စာကြည့်တိုက် ဖွင့်တယ်။ မိသားစုနဲ့ နေကြသည်။"
         }
     ],

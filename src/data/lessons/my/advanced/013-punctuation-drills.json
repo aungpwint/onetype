@@ -6,9 +6,9 @@
     "number": 13,
     "title": "Punctuation Drills",
     "titleMy": "ပုဒ်ဖြတ်ပုဒ်ရပ် လေ့ကျင့်ခန်း",
-    "description": "Comma and period in various contexts.",
+    "description": "ပုဒ်ဖြတ်ပုဒ်ရပ် အမျိုးမျိုး ပါဝင်သော ဝါကျများကို မှန်ကန်စွာ ရိုက်နိုင်ရန် ရည်ရွယ်သော သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 6,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 93,
@@ -49,7 +49,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-13-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "ပုဒ်ဖြတ်ပုဒ်ရပ် ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ခြေ ၊ လက် ၊ ခေါင်း ။", "နား ၊ မျက်စိ ၊ နှာခေါင်း ။"],
@@ -59,7 +59,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-13-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "ပုဒ်ဖြတ်ပုဒ်ရပ် များကို ရိုက်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ရေ ကို သုံး ၊ နေ ကို ကြည့် ။", "ညီ က လာ ၊ ညီမ က သွား ။"],

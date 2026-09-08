@@ -4,11 +4,11 @@
     "level": "beginner",
     "language": "en",
     "number": 49,
-    "title": "Shift Number Symbols: ! @ # $ %",
-    "titleMy": "Shift + ဂဏန်းသင်္ကေတများ: ! @ # $ %",
+    "title": "Shift Number Symbols (Left): ! @ # $ %",
+    "titleMy": "ဘယ်ဘက် Shift ဂဏန်းသင်္ကေတများ: ! @ # $ %",
     "description": "Shift symbols on the left hand number row: ! @ # $ %. Hold right Shift.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -24,53 +24,41 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-49-ex-1",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Build ! @ # — hold the other pinky on shift",
             "generator": {
                 "type": "chunks",
                 "keys": ["!", "@", "#"],
-                "count": 14,
+                "count": 8,
                 "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-49-ex-2",
-            "instruction": "Reach the shifted symbols cleanly",
-            "generator": {
-                "type": "chunks",
-                "keys": ["$", "%"],
-                "count": 14,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-49-ex-3",
-            "instruction": "Reach the new keys and return",
-            "generator": {
-                "type": "chunks",
-                "keys": ["1", "2", "3", "4", "5"],
-                "count": 18,
-                "chunkMin": 3,
                 "chunkMax": 4,
                 "style": "repetition"
             }
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-49-ex-4",
-            "instruction": "Reach the shifted symbols cleanly",
+            "id": "lesson-en-beginner-49-ex-2",
+            "instruction": "Add $ and % at the edge of the row",
             "generator": {
                 "type": "chunks",
-                "keys": ["!", "@", "#", "$", "%"],
-                "count": 24,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "keys": ["$", "%"],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-en-beginner-49-ex-3",
+            "instruction": "Tiny challenge: flip between digits and symbols",
+            "generator": {
+                "type": "chunks",
+                "keys": ["1", "2", "3", "4", "5", "!", "@", "#", "$", "%"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

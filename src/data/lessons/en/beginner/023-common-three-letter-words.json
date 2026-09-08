@@ -8,7 +8,7 @@
     "titleMy": "အသုံးများသော အက္ခရာ ၃ လုံး စကားလုံးများ",
     "description": "Common short words using the keys you know. Type them fluidly.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -23,33 +23,33 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-23-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Meet your first three-letter words",
             "generator": {
                 "type": "words",
                 "words": ["the", "and", "for", "you", "are"],
-                "count": 14,
+                "count": 8,
                 "maxWordLength": 3
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-23-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Type words as one smooth motion",
             "generator": {
                 "type": "words",
                 "words": ["was", "his", "her", "can", "may", "new", "now", "one"],
-                "count": 18,
+                "count": 10,
                 "maxWordLength": 3
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-23-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Tiny challenge: read ahead and keep the rhythm",
             "generator": {
                 "type": "words",
                 "words": ["out", "run", "she", "sit", "the", "two", "use", "way", "why", "yes"],
-                "count": 22,
+                "count": 10,
                 "maxWordLength": 3
             }
         }

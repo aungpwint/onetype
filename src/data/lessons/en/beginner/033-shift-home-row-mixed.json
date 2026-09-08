@@ -8,7 +8,7 @@
     "titleMy": "Shift အခြေခံတန်း ရောနှော",
     "description": "Mix uppercase and lowercase across both hands on the home row.",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -24,39 +24,39 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-33-ex-1",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Capital letters climb the left home row",
             "generator": {
                 "type": "chunks",
                 "keys": ["A", "S", "D", "F"],
-                "count": 16,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-33-ex-2",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Now the right side perks up too",
             "generator": {
                 "type": "chunks",
                 "keys": ["J", "K", "L"],
-                "count": 14,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-33-ex-3",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Tiny challenge: capitals and smalls side by side",
             "generator": {
                 "type": "chunks",
                 "keys": ["A", "F", "J", "L", "S", "K"],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable",
                 "mixed": true
             }

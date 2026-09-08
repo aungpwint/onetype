@@ -8,7 +8,7 @@
     "titleMy": "ဘယ်လက် အပြည့် - QWERT ASDFG ZXCVB",
     "description": "All left-hand keys across all three rows. Practice smooth vertical movement.",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 85,
@@ -23,12 +23,12 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-12-ex-1",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "Run the whole left-top row QWERT",
             "generator": {
                 "type": "chunks",
                 "keys": ["q", "w", "e", "r", "t"],
-                "count": 16,
-                "chunkMin": 3,
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
             }
@@ -36,39 +36,26 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-12-ex-2",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Run the whole left-bottom row ZXCVB",
             "generator": {
                 "type": "chunks",
-                "keys": ["a", "s", "d", "f", "g"],
-                "count": 16,
-                "chunkMin": 3,
+                "keys": ["z", "x", "c", "v", "b"],
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-12-ex-3",
-            "instruction": "Type larger clusters fluently",
-            "generator": {
-                "type": "chunks",
-                "keys": ["z", "x", "c", "v", "b"],
-                "count": 16,
-                "chunkMin": 3,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-12-ex-4",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "Tiny challenge: glide up and down all three rows",
             "generator": {
                 "type": "chunks",
                 "keys": ["q", "w", "e", "r", "t", "a", "s", "d", "f", "g", "z", "x", "c", "v", "b"],
-                "count": 36,
-                "chunkMin": 3,
-                "chunkMax": 6,
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

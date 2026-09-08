@@ -6,9 +6,9 @@
     "number": 12,
     "title": "Dialogue Typing",
     "titleMy": "စကားပြော (Dialogue) ရိုက်ခြင်း",
-    "description": "Type conversations with quotation marks and punctuation.",
+    "description": "Quoted conversation with capitals and punctuation; bring words and marks together in natural dialogue.",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -16,55 +16,38 @@
     },
     "focus": ["sentences", "punctuation"],
     "prerequisites": ["lesson-en-intermediate-11"],
-    "focusKeys": [
-        "Quote",
-        "ShiftLeft",
-        "KeyG",
-        "KeyO",
-        "KeyD",
-        "KeyM",
-        "KeyR",
-        "KeyN",
-        "KeyI",
-        "Comma",
-        "KeyS",
-        "KeyH",
-        "KeyE",
-        "KeyA",
-        "Period",
-        "KeyY",
-        "KeyU",
-        "KeyL",
-        "KeyT",
-        "KeyP",
-        "KeyW",
-        "Slash",
-        "KeyK",
-        "KeyB",
-        "KeyC",
-        "KeyV"
-    ],
-    "targetFingers": ["right-pinky", "left-pinky", "left-index", "right-ring", "left-middle", "right-index", "right-middle", "left-ring"],
-    "targetHands": ["right", "left"],
     "requiresShift": true,
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Quote", "Comma", "Period", "Slash", "Digit1", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-12-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Warm up with one short exchange",
             "generator": {
                 "type": "sentences",
-                "sentences": ["\"good morning,\" she said.", "\"see you later,\" he replied.", "\"where are you going?\" asked mia."],
+                "sentences": ["\"Good morning,\" she said.", "\"See you later,\" he replied.", "\"Where are you going?\" asked Mia."],
                 "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-12-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Keep the rhythm: let the quote marks fall between the words",
             "generator": {
                 "type": "sentences",
-                "sentences": ["\"let's begin,\" said the teacher.", "\"it is very cold,\" she whispered.", "\"call me soon,\" he told them."],
+                "sentences": ["\"Let's begin,\" said the teacher.", "\"It is very cold,\" she whispered.", "\"Call me soon,\" he told them."],
+                "count": 4
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-en-intermediate-12-ex-3",
+            "instruction": "Tiny challenge: capitals, question marks and exclamations in context",
+            "generator": {
+                "type": "sentences",
+                "sentences": ["\"I will win,\" she smiled.", "\"Come here,\" called the boy.", "\"Not again!\" he shouted."],
                 "count": 4
             }
         }

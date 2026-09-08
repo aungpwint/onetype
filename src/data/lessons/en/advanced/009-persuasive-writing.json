@@ -6,9 +6,9 @@
     "number": 9,
     "title": "Persuasive Writing",
     "titleMy": "ဆွဲဆောင်မှုရှိသော စာရေးသားခြင်း",
-    "description": "Type a persuasive paragraph. Practice varied vocabulary.",
+    "description": "A persuasive paragraph that makes its case in four sentences; type it with conviction and even rhythm.",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 94,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-9-ex-1",
             "kind": "text",
-            "instruction": "Everyone should learn to save drinking water. Clean water is a precious gift. When we close the tap and fix small leaks, we protect rivers and lakes for the future. Small actions create a big difference.",
+            "instruction": "Move from claim to example to reason; let each full stop reset your rhythm.",
             "text": "Everyone should learn to save drinking water. Clean water is a precious gift. When we close the tap and fix small leaks, we protect rivers and lakes for the future. Small actions create a big difference."
         }
     ],

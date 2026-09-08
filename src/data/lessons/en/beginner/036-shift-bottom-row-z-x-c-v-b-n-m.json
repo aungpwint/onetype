@@ -8,7 +8,7 @@
     "titleMy": "Shift အောက်တန်း - Z X C V B N M",
     "description": "Bottom row letters with correct Shift hand.",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -24,37 +24,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-36-ex-1",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Build caps Z and X, pinky down on shift",
             "generator": {
                 "type": "chunks",
                 "keys": ["Z", "X"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-36-ex-2",
-            "instruction": "Hold the correct Shift key",
-            "generator": {
-                "type": "chunks",
-                "keys": ["C", "V"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-36-ex-3",
-            "instruction": "Hold the correct Shift key",
-            "generator": {
-                "type": "chunks",
-                "keys": ["B", "N", "M"],
-                "count": 14,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -62,14 +36,27 @@
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-36-ex-4",
-            "instruction": "Hold the correct Shift key",
+            "id": "lesson-en-beginner-36-ex-2",
+            "instruction": "Follow the rhythm of C, V and B",
+            "generator": {
+                "type": "chunks",
+                "keys": ["C", "V", "B"],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-en-beginner-36-ex-3",
+            "instruction": "Tiny challenge: sweep the whole bottom row in caps",
             "generator": {
                 "type": "chunks",
                 "keys": ["Z", "X", "C", "V", "B", "N", "M"],
-                "count": 24,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

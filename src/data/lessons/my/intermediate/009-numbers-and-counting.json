@@ -6,9 +6,9 @@
     "number": 9,
     "title": "Numbers and Counting",
     "titleMy": "ကိန်းဂဏန်းနှင့် ရေတွက်ခြင်း",
-    "description": "Myanmar numbers up to 100.",
+    "description": "မြန်မာ ကိန်းဂဏန်းများကို ဂဏန်းတန်း နှင့် အတူ ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ ၁ မှ ၀ အထိ ကိန်းဂဏန်း အားလုံး ပါဝင်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-9-ex-1",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "၁ မှ ၅ အထိ ဂဏန်းများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["၁", "၂", "၃", "၄", "၅"],
-                "count": 18,
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable"
@@ -36,11 +36,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-9-ex-2",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "၆ မှ ၀ အထိ ဂဏန်းများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["၆", "၇", "၈", "၉", "၀"],
-                "count": 18,
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable"
@@ -49,7 +49,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-9-ex-3",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "ဂဏန်း အားလုံးကို မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["၁", "၂", "၃", "၄", "၅", "၆", "၇", "၈", "၉", "၀"],

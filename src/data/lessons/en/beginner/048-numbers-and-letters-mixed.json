@@ -5,10 +5,10 @@
     "language": "en",
     "number": 48,
     "title": "Numbers and Letters Mixed",
-    "titleMy": "ဂဏန်းနှင့် အက္ခရာ ရောနှော",
+    "titleMy": "ဂဏန်းနှင့် အက္ခရာ ရောနှော လေ့ကျင့်ခန်း",
     "description": "Combine numbers and letters. Practice switching between rows.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -42,12 +42,12 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-48-ex-1",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "Switch rows — a 1 d 4 keeps you bouncing",
             "generator": {
                 "type": "chunks",
                 "keys": ["a", "1", "d", "4"],
-                "count": 16,
-                "chunkMin": 3,
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
             }
@@ -55,40 +55,28 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-48-ex-2",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "Now the right hand — j 7 k 9",
             "generator": {
                 "type": "chunks",
                 "keys": ["j", "7", "k", "9"],
-                "count": 16,
-                "chunkMin": 3,
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "alternation"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-48-ex-3",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "Tiny challenge: letters and digits in one flow",
             "generator": {
                 "type": "chunks",
-                "keys": ["f", "g", "5", "6", "h"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-48-ex-4",
-            "instruction": "Type larger clusters fluently",
-            "generator": {
-                "type": "chunks",
-                "keys": ["s", "2", "e", "3", "r", "5"],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "keys": ["f", "g", "5", "6", "h", "k", "e", "3", "r", "s", "2"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

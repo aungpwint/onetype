@@ -6,9 +6,9 @@
     "number": 4,
     "title": "Same-Hand Difficult Patterns",
     "titleMy": "လက်တစ်ဖက်တည်း ခက်ခဲသော ပုံစံများ",
-    "description": "Practice typing consecutive same-hand keys for fluency.",
+    "description": "Link awkward key runs so one hand flows while the other rests; work each hand alone before joining them.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 90,
@@ -16,84 +16,59 @@
     },
     "focus": ["finger-independence"],
     "prerequisites": ["lesson-en-intermediate-3"],
-    "focusKeys": [
-        "KeyQ",
-        "KeyW",
-        "KeyE",
-        "KeyR",
-        "KeyT",
-        "KeyY",
-        "KeyU",
-        "KeyI",
-        "KeyO",
-        "KeyP",
-        "KeyZ",
-        "KeyX",
-        "KeyC",
-        "KeyV",
-        "KeyB",
-        "KeyN",
-        "KeyM",
-        "KeyA",
-        "KeyS",
-        "KeyD",
-        "KeyF",
-        "KeyJ",
-        "KeyK",
-        "KeyL"
-    ],
-    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "focusKeys": ["KeyQ", "KeyA", "KeyZ", "KeyE", "KeyD", "KeyC", "KeyR", "KeyF", "KeyV", "KeyT", "KeyG", "KeyB", "KeyY", "KeyU", "KeyH", "KeyJ", "KeyN", "KeyM", "KeyI", "KeyK", "KeyO", "KeyL", "Period", "KeyP", "Semicolon", "Slash"],
+    "targetFingers": ["left-pinky", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-4-ex-1",
-            "instruction": "Build speed across full words",
+            "instruction": "Warm up: let the left pinky own q, a and z",
             "generator": {
                 "type": "chunks",
-                "keys": ["q", "w", "e", "r", "t"],
-                "count": 22,
-                "chunkMin": 4,
-                "chunkMax": 6,
+                "keys": ["q", "a", "z"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-4-ex-2",
-            "instruction": "Build speed across full words",
+            "instruction": "Keep the left hand loose across the middle rows",
             "generator": {
                 "type": "chunks",
-                "keys": ["y", "u", "i", "o", "p"],
-                "count": 22,
-                "chunkMin": 4,
-                "chunkMax": 6,
-                "style": "runs"
+                "keys": ["e", "d", "c", "r", "f", "v", "t", "g", "b"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-4-ex-3",
-            "instruction": "Build speed across full words",
+            "instruction": "Mirror the same work for the right hand",
             "generator": {
                 "type": "chunks",
-                "keys": ["z", "x", "c", "v", "b", "n", "m"],
-                "count": 26,
-                "chunkMin": 4,
-                "chunkMax": 7,
-                "style": "runs"
+                "keys": ["y", "u", "h", "j", "n", "m", "i", "k"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-4-ex-4",
-            "instruction": "Build speed across full words",
+            "instruction": "Tiny challenge: both hands together, still in control",
             "generator": {
                 "type": "chunks",
-                "keys": ["a", "s", "d", "f", "j", "k", "l"],
-                "count": 24,
-                "chunkMin": 4,
-                "chunkMax": 6,
+                "keys": ["o", "l", ".", "p", ";", "/"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

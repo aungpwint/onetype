@@ -6,9 +6,9 @@
     "number": 21,
     "title": "Myanmar Digits",
     "titleMy": "မြန်မာဂဏန်းများ",
-    "description": "Myanmar digits ၀-၉ on the number row.",
+    "description": "နံပါတ် တန်းရှိ မြန်မာ ဂဏန်းများ ၀-၉ ကို ရိုက်လေ့ကျင့်သည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -23,37 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-21-ex-1",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "ဘယ်လက်ဖြင့် ၁ ၂ ၃ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["၁", "၂", "၃"],
-                "count": 14,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-21-ex-2",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
-            "generator": {
-                "type": "chunks",
-                "keys": ["၄", "၅", "၆"],
-                "count": 14,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-21-ex-3",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
-            "generator": {
-                "type": "chunks",
-                "keys": ["၇", "၈", "၉", "၀"],
-                "count": 16,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -61,12 +35,25 @@
         },
         {
             "kind": "generated",
-            "id": "lesson-my-beginner-21-ex-4",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "id": "lesson-my-beginner-21-ex-2",
+            "instruction": "လက်ညှိုးနှစ်ဖက်ဖြင့် ၄ ၅ ၆ တို့ကို ရိုက်ပါ",
+            "generator": {
+                "type": "chunks",
+                "keys": ["၄", "၅", "၆"],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-beginner-21-ex-3",
+            "instruction": "၀ မှ ၉ အထိ အားလုံး ဖြတ်သန်းလေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["၁", "၂", "၃", "၄", "၅", "၆", "၇", "၈", "၉", "၀"],
-                "count": 24,
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable",

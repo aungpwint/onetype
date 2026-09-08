@@ -6,9 +6,9 @@
     "number": 7,
     "title": "Bottom Row: လ ဘ ည",
     "titleMy": "အောက်တန်း ဗျည်းများ - လ ဘ ည",
-    "description": "လ (KeyV) and ဘ (KeyB) with the left index, ည (KeyN) with the right index.",
+    "description": "လ (KeyV) နှင့် ဘ (KeyB) ကို ဘယ်လက် လက်ညိုးဖြင့် ၊ ည (KeyN) ကို ညာလက် လက်ညိုးဖြင့် ရိုက်ရသည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 6,
+    "estimatedMinutes": 2,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-7-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "လ နှင့် ဘ တို့ဆီသို့ လက်ဆန့်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["လ"],
-                "count": 12,
+                "keys": ["လ", "ဘ"],
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -36,39 +36,26 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-7-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ညာညှိုးဖြင့် ည ကို ဆန့်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ဘ"],
-                "count": 12,
+                "keys": ["ည"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-7-ex-3",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["ည"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-7-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "အောက်တန်းခလုတ် သုံးခုလုံးကို ဖြတ်သန်းရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["လ", "ဘ", "ည"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

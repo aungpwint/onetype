@@ -5,10 +5,10 @@
     "language": "en",
     "number": 28,
     "title": "Numbers with Letters",
-    "titleMy": "ဂဏန်းနှင့် အက္ခရာ ရောနှော",
+    "titleMy": "ဂဏန်းနှင့် အက္ခရာ ပေါင်းစပ်",
     "description": "Combine numbers and letters. Real-world data like dates and codes.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -43,11 +43,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-28-ex-1",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "Pair each home-row key with the number above it",
             "generator": {
                 "type": "chunks",
                 "keys": ["a", "1", "s", "2"],
-                "count": 16,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
@@ -56,11 +56,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-28-ex-2",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "Mix letters and numbers like a real code",
             "generator": {
                 "type": "chunks",
-                "keys": ["d", "3", "f", "4", "j", "7"],
-                "count": 18,
+                "keys": ["d", "3", "f", "4", "j", "7", "k", "8", "l", "9", "0"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
@@ -69,24 +69,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-28-ex-3",
-            "instruction": "Type larger clusters fluently",
-            "generator": {
-                "type": "chunks",
-                "keys": ["k", "8", "l", "9", "0"],
-                "count": 16,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-28-ex-4",
-            "instruction": "Review everything you have learned",
+            "instruction": "Tiny challenge: jump between numbers and home row",
             "generator": {
                 "type": "chunks",
                 "keys": ["5", "6", "7", "g", "h"],
-                "count": 20,
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable",

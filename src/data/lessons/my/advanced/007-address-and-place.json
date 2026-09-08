@@ -6,9 +6,9 @@
     "number": 7,
     "title": "Address and Place",
     "titleMy": "လိပ်စာနှင့် နေရာ",
-    "description": "Sentences about addresses and locations.",
+    "description": "နေရပ်လိပ်စာ နှင့် နေရာ ဖော်ပြမှုများတွင် သုံးသော စကားလုံးများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 5,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
@@ -49,21 +49,21 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-7-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "လိပ်စာ စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["လိပ်စာ", "မြို့နယ်", "လမ်းကြား", "အိမ်နံပါတ်", "ခရိုင်"],
-                "count": 22
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-advanced-7-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "နေရာ ဖော်ပြသော စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["နေရာ", "အရှေ့ဘက်", "အနောက်ဘက်", "အနီးအနား"],
-                "count": 22
+                "count": 12
             }
         }
     ]

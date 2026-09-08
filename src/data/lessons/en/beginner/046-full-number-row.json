@@ -8,7 +8,7 @@
     "titleMy": "ဂဏန်းတန်း အပြည့်",
     "description": "Type all digits 0-9 in alternating patterns.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -23,39 +23,39 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-46-ex-1",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Warm up the left side — 1 to 5",
             "generator": {
                 "type": "chunks",
                 "keys": ["1", "2", "3", "4", "5"],
-                "count": 18,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-46-ex-2",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Now the right side — 6 to 0",
             "generator": {
                 "type": "chunks",
                 "keys": ["6", "7", "8", "9", "0"],
-                "count": 18,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-46-ex-3",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Tiny challenge: bounce across the whole number row",
             "generator": {
                 "type": "chunks",
                 "keys": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-                "count": 28,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable",
                 "mixed": true
             }

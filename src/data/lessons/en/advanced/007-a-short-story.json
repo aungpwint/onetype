@@ -6,9 +6,9 @@
     "number": 7,
     "title": "A Short Story",
     "titleMy": "ပုံပြင်တို",
-    "description": "Type a short story with dialogue and description.",
+    "description": "A short story with comas, capitals and a quietly funny ending; make the punctuation disappear into the flow.",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-7-ex-1",
             "kind": "text",
-            "instruction": "One evening, Sam could not find his house key. He searched the bag and the pocket many times. At last he saw the key hanging on the door. He laughed at his own mistake and walked inside.",
+            "instruction": "Pause for the comas, land the full stops, and let the story keep its pace.",
             "text": "One evening, Sam could not find his house key. He searched the bag and the pocket many times. At last he saw the key hanging on the door. He laughed at his own mistake and walked inside."
         }
     ],

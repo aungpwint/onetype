@@ -6,9 +6,9 @@
     "number": 3,
     "title": "Tone Practice",
     "titleMy": "အသံထွက် သင်္ကေတများ လေ့ကျင့်ခန်း",
-    "description": "Practice tone marks with various syllables.",
+    "description": "အသံထွက် သင်္ကေတများ နှင့် ဝဏ္ဏ အမျိုးမျိုးကို ချောမွေ့စွာ ရိုက်နိုင်ရန် ရည်ရွယ်သော သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 5,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
@@ -44,11 +44,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-3-ex-1",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "အသံထွက် သင်္ကေတများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကား", "ကီး", "ကယ်", "သေး"],
-                "count": 20,
+                "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 5,
                 "style": "variable"
@@ -57,11 +57,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-3-ex-2",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "အသံထွက် သင်္ကေတများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကံ", "ကို", "တို့", "နား"],
-                "count": 20,
+                "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 5,
                 "style": "variable"
@@ -70,11 +70,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-3-ex-3",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "အကြီးစား ဝဏ္ဏစုများကို မှန်ကန်စွာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["များ", "ဆည်း", "ရည်း"],
-                "count": 20,
+                "count": 12,
                 "chunkMin": 4,
                 "chunkMax": 6,
                 "style": "variable"

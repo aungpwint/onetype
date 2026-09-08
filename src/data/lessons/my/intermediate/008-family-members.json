@@ -6,9 +6,9 @@
     "number": 8,
     "title": "Family Members",
     "titleMy": "မိသားစုဝင်များ",
-    "description": "Family vocabulary: father, mother, brother, sister.",
+    "description": "မိသားစု ဝင်များ နှင့် ဆွေမျိုး ခေါ်ဝေါ်မှုများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ ဖခင် ၊ မိခင် ၊ သား ၊ သမီး ၊ အစ်ကို ၊ ညီမ ၊ ညီ ၊ များ စသည်တို့ ပါဝင်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
@@ -41,31 +41,31 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-8-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "မိသားစု စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ဖခင်", "မိခင်", "သား"],
-                "count": 18
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-8-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "မိသားစု စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["သမီး", "အစ်ကို", "ညီမ"],
-                "count": 18
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-8-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "စာလုံးတိုင်း မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ညီ", "ညီမ", "များ"],
-                "count": 20,
+                "count": 12,
                 "chunkMin": 4,
                 "chunkMax": 6,
                 "style": "variable"

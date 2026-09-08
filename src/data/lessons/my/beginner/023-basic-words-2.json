@@ -6,9 +6,9 @@
     "number": 23,
     "title": "Basic Words 2",
     "titleMy": "အခြေခံ စကားလုံးများ (၂)",
-    "description": "Everyday words: food, family, places.",
+    "description": "နေ့စဉ်သုံး စကားလုံးများကို ရိုက်လေ့ကျင့်သည် - အစားအစာ ၊ မိသားစု ၊ နေရာများ။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
@@ -45,31 +45,31 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-23-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "မြို့ နှင့် ရွာ နေရာများကို ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["မြို့", "ရွာ"],
-                "count": 16
+                "count": 10
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-23-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "မိသားစုနှင့် ကိုယ်ခန္ဓာ စကားလုံးများ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ညီ", "ညီမ", "လက်", "နား"],
-                "count": 18
+                "count": 10
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-23-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "အစားအစာ စကားလုံးများ ဖြတ်သန်းရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["မျက်စိ", "ဆန်", "ငါး", "ကြက်"],
-                "count": 18
+                "count": 10
             }
         }
     ]

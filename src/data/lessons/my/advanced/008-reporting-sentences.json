@@ -6,9 +6,9 @@
     "number": 8,
     "title": "Reporting Sentences",
     "titleMy": "အစီရင်ခံ ဝါကျများ",
-    "description": "News and reporting style sentences.",
+    "description": "သတင်း နှင့် အစီရင်ခံ ပုံစံဖြင့် ရေးသားထားသော ဝါကျများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 7,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
@@ -55,7 +55,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-8-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "အစီရင်ခံ ဝါကျတစ်ကြောင်းလုံး ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ယနေ့ မိုးလေဝသ အခြေအနေမှာ သာယာမည်ဖြစ်သည်။", "အစည်းအဝေးကို နံနက် ကိုးနာရီတွင် စတင်မည်ဖြစ်သည်။"],
@@ -65,7 +65,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-8-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "အစီရင်ခံ ဝါကျများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["လုပ်ငန်းဆောင်ရွက်ချက်များကို အစီရင်ခံစာ တင်ပြသည်။", "သတင်းအချက်အလက်များကို စနစ်တကျ ပြုစုထားသည်။"],

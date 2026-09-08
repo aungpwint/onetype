@@ -8,7 +8,7 @@
     "titleMy": "ပုဒ်ဖြတ်ပုဒ်ရပ်: မေးခွန်းသင်္ကေတ (?) နှင့် အာမေဋိတ်သင်္ကေတ (!)",
     "description": "Question marks and exclamation marks.",
     "difficulty": "medium",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 90,
@@ -46,12 +46,12 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-54-ex-1",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Meet the question mark and exclamation mark",
             "generator": {
                 "type": "chunks",
-                "keys": ["?", "?", "!", "!"],
-                "count": 18,
-                "chunkMin": 3,
+                "keys": ["?", "!"],
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
             }
@@ -59,7 +59,7 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-54-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Ask a question — end it with a question mark",
             "generator": {
                 "type": "sentences",
                 "sentences": ["what is this?", "where are you?", "who is he?"],
@@ -69,7 +69,7 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-54-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Tiny challenge: shout it — end with an exclamation",
             "generator": {
                 "type": "sentences",
                 "sentences": ["go now!", "look out!", "help me!"],

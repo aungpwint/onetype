@@ -8,7 +8,7 @@
     "titleMy": "အသုံးများသော အက္ခရာ ၅ လုံး စကားလုံးများ",
     "description": "Five-letter words using all keys you have learned.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -46,33 +46,33 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-25-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Take on longer words, letter by letter",
             "generator": {
                 "type": "words",
                 "words": ["first", "after", "again", "under", "never", "always"],
-                "count": 18,
+                "count": 8,
                 "maxWordLength": 5
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-25-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Keep the hand moving across the whole word",
             "generator": {
                 "type": "words",
                 "words": ["quick", "white", "three", "green", "happy", "house"],
-                "count": 18,
+                "count": 10,
                 "maxWordLength": 5
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-25-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Tiny challenge: finish each word without a pause",
             "generator": {
                 "type": "words",
                 "words": ["small", "point", "think", "world", "water", "large", "where"],
-                "count": 20,
+                "count": 10,
                 "maxWordLength": 5
             }
         }

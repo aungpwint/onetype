@@ -6,9 +6,9 @@
     "number": 7,
     "title": "Weather Words",
     "titleMy": "ရာသီဥတု စကားလုံးများ",
-    "description": "Weather vocabulary: rain, sun, wind.",
+    "description": "ရာသီဥတု နှင့် ပတ်သက်သော စကားလုံးများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ မိုး ၊ နေ ၊ လေ ၊ ပူ ၊ ဆောင်း ၊ နှင်း ၊ နွေ ၊ တိမ် ၊ မြူ ၊ ဟင်းလင်း စသည်တို့ ပါဝင်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
@@ -30,7 +30,6 @@
         "KeyI",
         "KeyF",
         "KeyJ",
-        "ShiftLeft",
         "BracketLeft",
         "KeyM"
     ],
@@ -41,31 +40,31 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-7-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "ရာသီဥတု စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["မိုး", "နေ", "လေ"],
-                "count": 18
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-7-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "ရာသီဥတု စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
-                "words": ["ဆီ", "နှင်း", "မြေ"],
-                "count": 18
+                "words": ["ပူ", "ဆောင်း", "နှင်း"],
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-7-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "စာလုံးတိုင်း မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
-                "words": ["ဒီ", "ဟို", "ဟာ"],
-                "count": 16
+                "words": ["နွေ", "တိမ်", "မြူ", "ဟင်းလင်း"],
+                "count": 12
             }
         }
     ]

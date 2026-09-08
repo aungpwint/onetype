@@ -6,9 +6,9 @@
     "number": 16,
     "title": "Syllable Building: C+V",
     "titleMy": "ဝဏ္ဏ ဖွဲ့ - ဗျည်း + သရ",
-    "description": "Build syllables with consonant + vowel combinations.",
+    "description": "ဗျည်း + သရ ဖွဲ့စည်းမှုဖြင့် ဝဏ္ဏများကို တည်ဆောက်၍ ရိုက်လေ့ကျင့်သည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 87,
@@ -24,12 +24,12 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-16-ex-1",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "က တွင် သရ နှစ်မျိုး ကိ နှင့် ကု တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကိ", "ကု"],
-                "count": 16,
-                "chunkMin": 3,
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
             }
@@ -37,39 +37,26 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-16-ex-2",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "စည်းချက်အတိုင်း ကူ နှင့် ကဲ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကူ", "ကဲ"],
-                "count": 16,
-                "chunkMin": 3,
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "alternation"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-16-ex-3",
-            "instruction": "Keep your fingers on the home row",
-            "generator": {
-                "type": "chunks",
-                "keys": ["ကေ", "ကာ", "ကီ"],
-                "count": 18,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-16-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "က တွင် သရ အားလုံး တစ်ဆက်တည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကိ", "ကု", "ကူ", "ကဲ", "ကေ", "ကာ", "ကီ"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable",
                 "mixed": true
             }

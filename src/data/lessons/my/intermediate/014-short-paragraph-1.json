@@ -6,9 +6,9 @@
     "number": 14,
     "title": "Short Paragraph 1",
     "titleMy": "စာပိုဒ်တို (၁)",
-    "description": "Type a short paragraph about oneself.",
+    "description": "မိမိ ပတ်ဝန်းကျင် အကြောင်း ရေးသားထားသော စာပိုဒ်တို ကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 6,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
@@ -49,7 +49,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-14-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "စာပိုဒ်တို ဝါကျတစ်ကြောင်းလုံး ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["မနက် မှာ နေ ထွက် တယ် ။", "ရွာ က အ နောက် မှာ တောင် ရှိ တယ် ။"],
@@ -59,7 +59,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-14-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "စာပိုဒ်တို ဝါကျများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ညဘက် မှာ မိုး က ရွာ တယ် ။", "မျက်စိ နဲ့ မြင်ရ တယ် ။"],

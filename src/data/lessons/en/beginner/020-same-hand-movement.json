@@ -8,7 +8,7 @@
     "titleMy": "လက်တစ်ဖက်တည်း ရွေ့လျားမှု",
     "description": "Type consecutive keys with the same hand. Build same-hand fluency.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -23,25 +23,25 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-20-ex-1",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Let the left hand walk across home and top rows on its own",
             "generator": {
                 "type": "chunks",
-                "keys": ["a", "s", "d", "f"],
-                "count": 16,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "runs"
+                "keys": ["a", "s", "d", "f", "w", "e", "r"],
+                "count": 8,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-20-ex-2",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Let the right hand walk the same path on its own",
             "generator": {
                 "type": "chunks",
-                "keys": ["j", "k", "l"],
-                "count": 14,
-                "chunkMin": 3,
+                "keys": ["j", "k", "l", "u", "i", "o", "p"],
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "runs"
             }
@@ -49,27 +49,15 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-20-ex-3",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "Tiny challenge: keep each hand moving without borrowing the other",
             "generator": {
                 "type": "chunks",
-                "keys": ["w", "e", "r"],
-                "count": 14,
-                "chunkMin": 3,
+                "keys": ["a", "s", "d", "f", "j", "k", "l", "w", "e", "r", "u", "i", "o", "p"],
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "runs"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-20-ex-4",
-            "instruction": "Type larger clusters fluently",
-            "generator": {
-                "type": "chunks",
-                "keys": ["u", "i", "o", "p"],
-                "count": 18,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "runs"
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

@@ -8,7 +8,7 @@
     "titleMy": "ဂဏန်းတန်း ဘယ်လက် - ၁ ၂ ၃ ၄ ၅",
     "description": "Left pinky: 1, ring: 2, middle: 3, index: 4-5.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 2,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -23,37 +23,37 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-44-ex-1",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Reach up to 1 2 3 with pinky, ring and middle",
             "generator": {
                 "type": "chunks",
                 "keys": ["1", "2", "3"],
-                "count": 14,
+                "count": 8,
                 "chunkMin": 2,
-                "chunkMax": 3,
+                "chunkMax": 4,
                 "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-44-ex-2",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Now the two index stretches — 4 and 5",
             "generator": {
                 "type": "chunks",
                 "keys": ["4", "5"],
-                "count": 12,
+                "count": 10,
                 "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-44-ex-3",
-            "instruction": "Cover the number row with your index-to-pinky fingers",
+            "instruction": "Tiny challenge: cover 1 to 5 with the left hand",
             "generator": {
                 "type": "chunks",
                 "keys": ["1", "2", "3", "4", "5"],
-                "count": 24,
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable"

@@ -8,7 +8,7 @@
     "titleMy": "ဘယ်လက် လက်သန်းနှင့် လက်သူကြွယ် - Q W A S Z X",
     "description": "Q above A, W above S. Z below A, X below S. Same finger, different rows.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 85,
@@ -23,52 +23,39 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-8-ex-1",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Reach up from A and S to Q and W",
             "generator": {
                 "type": "chunks",
-                "keys": ["q", "w"],
-                "count": 12,
+                "keys": ["q", "w", "a", "s"],
+                "count": 8,
                 "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-8-ex-2",
-            "instruction": "Keep your fingers on the home row",
-            "generator": {
-                "type": "chunks",
-                "keys": ["a", "s"],
-                "count": 12,
-                "chunkMin": 3,
                 "chunkMax": 4,
                 "style": "repetition"
             }
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-8-ex-3",
-            "instruction": "Reach to the new keys and return",
+            "id": "lesson-en-beginner-8-ex-2",
+            "instruction": "Drop below A and S to Z and X",
             "generator": {
                 "type": "chunks",
-                "keys": ["z", "x"],
-                "count": 12,
+                "keys": ["z", "x", "a", "s"],
+                "count": 10,
                 "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
-            "id": "lesson-en-beginner-8-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "id": "lesson-en-beginner-8-ex-3",
+            "instruction": "Tiny challenge: travel all three rows with one finger pair",
             "generator": {
                 "type": "chunks",
                 "keys": ["q", "w", "a", "s", "z", "x"],
-                "count": 30,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

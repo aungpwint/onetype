@@ -6,9 +6,9 @@
     "number": 18,
     "title": "Intermediate Review",
     "titleMy": "အလယ်အလတ် ပြန်လည်သုံးသပ်ခြင်း",
-    "description": "Comprehensive intermediate review with mixed content.",
+    "description": "A final round that brings the whole intermediate course together: words, sentences and mixed drills at speed.",
     "difficulty": "hard",
-    "estimatedMinutes": 14,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -16,51 +16,24 @@
     },
     "focus": ["speed"],
     "prerequisites": ["lesson-en-intermediate-17"],
-    "focusKeys": [
-        "KeyT",
-        "KeyH",
-        "KeyE",
-        "KeyA",
-        "KeyN",
-        "KeyD",
-        "KeyY",
-        "KeyO",
-        "KeyU",
-        "KeyW",
-        "KeyI",
-        "KeyS",
-        "KeyF",
-        "KeyR",
-        "KeyM",
-        "KeyV",
-        "KeyP",
-        "KeyC",
-        "KeyB",
-        "KeyL",
-        "Period",
-        "KeyK",
-        "KeyX",
-        "KeyG",
-        "KeyJ"
-    ],
-    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle", "right-pinky"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyJ", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyX", "KeyY", "Period"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-18-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Warm up with the words you met in the first lessons",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 24,
-                "maxWordLength": 7
+                "words": ["the", "for", "you", "are", "was", "that", "with", "this", "from", "have", "they", "were"],
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-18-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Keep the rhythm through the review sentences",
             "generator": {
                 "type": "sentences",
                 "sentences": ["practice builds speed and accuracy.", "every lesson adds new confidence.", "keep your eyes on the text."],
@@ -70,13 +43,13 @@
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-18-ex-3",
-            "instruction": "Review everything you have learned",
+            "instruction": "Tiny challenge: everything mixed, eyes up and in control",
             "generator": {
                 "type": "chunks",
                 "keys": ["f", "g", "h", "j", "r", "t", "y", "u", "v", "b", "n", "m"],
-                "count": 24,
-                "chunkMin": 4,
-                "chunkMax": 7,
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable",
                 "mixed": true
             }

@@ -8,7 +8,7 @@
     "titleMy": "ပုဒ်ဖြတ်ပုဒ်ရပ်: quotes နှင့် brackets",
     "description": "Quotation marks, single quotes, and brackets.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -46,12 +46,12 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-55-ex-1",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Meet the double and single quote",
             "generator": {
                 "type": "chunks",
-                "keys": ["\"", "'", "\"", "'"],
-                "count": 18,
-                "chunkMin": 3,
+                "keys": ["\"", "'"],
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
             }
@@ -59,20 +59,20 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-55-ex-2",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Open and close brackets in rhythm",
             "generator": {
                 "type": "chunks",
                 "keys": ["(", ")", "[", "]", "{", "}"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "alternation"
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-55-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Tiny challenge: quoted speech in a sentence",
             "generator": {
                 "type": "sentences",
                 "sentences": ["he said \"come in\".", "she asked \"why?\""],

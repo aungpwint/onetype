@@ -8,7 +8,7 @@
     "titleMy": "အသုံးများသော အက္ခရာ ၄ လုံး စကားလုံးများ",
     "description": "Four-letter words for more practice with the keys you know.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -43,33 +43,33 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-24-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Smooth four-letter words, one after another",
             "generator": {
                 "type": "words",
                 "words": ["with", "that", "from", "have", "your", "they", "this", "what"],
-                "count": 18,
+                "count": 8,
                 "maxWordLength": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-24-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Give each word its own steady beat",
             "generator": {
                 "type": "words",
                 "words": ["more", "time", "than", "said", "will", "each", "also", "says"],
-                "count": 20,
+                "count": 10,
                 "maxWordLength": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-24-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Tiny challenge: no hesitating between the letters",
             "generator": {
                 "type": "words",
                 "words": ["take", "them", "then", "into", "soon", "much", "know", "read", "look"],
-                "count": 22,
+                "count": 10,
                 "maxWordLength": 4
             }
         }

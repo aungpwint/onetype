@@ -6,9 +6,9 @@
     "number": 10,
     "title": "Vowels: ေ ု ူ ဲ",
     "titleMy": "သရများ - ေ ု ူ ဲ",
-    "description": "Vowels and tone signs: ိ (KeyD), ီ (KeyD+Shift), ေ (KeyA), ု (KeyK), ူ (KeyL), ဲ (KeyJ+Shift), ံ (KeyH+Shift)",
+    "description": "သရ နှင့် သံသင်္ကေတများကို လေ့ကျင့်သည် - ိ (KeyD) ၊ ီ (KeyD+Shift) ၊ ေ (KeyA) ၊ ု (KeyK) ၊ ူ (KeyL) ၊ ဲ (KeyJ+Shift) ၊ ံ (KeyH+Shift)။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -24,11 +24,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-10-ex-1",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "ကိ နှင့် ကီ တို့ကို ယှဉ်တွဲရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကိ", "ကီ"],
-                "count": 16,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
@@ -37,39 +37,26 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-10-ex-2",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "စည်းချက်အတိုင်း ကု နှင့် ကူ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကု", "ကူ"],
-                "count": 16,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "alternation"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-10-ex-3",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ကဲ ကံ ကေ ကာ အားလုံး တွဲဖက်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ကဲ", "ကံ"],
-                "count": 16,
+                "keys": ["ကဲ", "ကံ", "ကေ", "ကာ"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-10-ex-4",
-            "instruction": "Keep your fingers on the home row",
-            "generator": {
-                "type": "chunks",
-                "keys": ["ကိ", "ကီ", "ကု", "ကူ", "ကဲ", "ကံ", "ကေ", "ကာ"],
-                "count": 28,
-                "chunkMin": 3,
-                "chunkMax": 5,
                 "style": "variable",
                 "mixed": true
             }

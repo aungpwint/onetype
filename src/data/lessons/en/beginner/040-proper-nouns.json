@@ -8,7 +8,7 @@
     "titleMy": "ကိုယ်ပိုင်နာမ်များ",
     "description": "Names and places always start with a capital letter.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -46,33 +46,33 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-40-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Names start with a big letter — tap it once",
             "generator": {
                 "type": "words",
                 "words": ["John", "Mary", "James", "Alice"],
-                "count": 12,
+                "count": 10,
                 "maxWordLength": 5
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-40-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Capital cities — shift once for the first letter",
             "generator": {
                 "type": "words",
                 "words": ["London", "Paris", "Tokyo", "Cairo"],
-                "count": 12,
+                "count": 10,
                 "maxWordLength": 6
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-40-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Tiny challenge: days and months stay capitalized",
             "generator": {
                 "type": "words",
                 "words": ["Monday", "Friday", "Sunday", "March", "April"],
-                "count": 12,
+                "count": 10,
                 "maxWordLength": 6
             }
         }

@@ -8,7 +8,7 @@
     "titleMy": "အက္ခရာအကြီးများ အားလုံး",
     "description": "Type every letter uppercase. Use correct Shift hand for each.",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -53,53 +53,41 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-37-ex-1",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Capitalize A through F",
             "generator": {
                 "type": "chunks",
                 "keys": ["A", "B", "C", "D", "E", "F"],
-                "count": 18,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-37-ex-2",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Run through G to L in caps",
             "generator": {
                 "type": "chunks",
                 "keys": ["G", "H", "I", "J", "K", "L"],
-                "count": 18,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-37-ex-3",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Tiny challenge: the rest of the alphabet, all caps",
             "generator": {
                 "type": "chunks",
-                "keys": ["M", "N", "O", "P", "Q", "R", "S"],
-                "count": 20,
+                "keys": ["M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-37-ex-4",
-            "instruction": "Hold the correct Shift key",
-            "generator": {
-                "type": "chunks",
-                "keys": ["T", "U", "V", "W", "X", "Y", "Z"],
-                "count": 20,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "variable"
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

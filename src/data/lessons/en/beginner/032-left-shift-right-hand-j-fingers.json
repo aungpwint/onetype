@@ -8,7 +8,7 @@
     "titleMy": "ဘယ်ဘက် Shift + ညာလက်: J လက်ချောင်းများ",
     "description": "Press Left Shift with your left pinky while typing right-hand letters.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -24,24 +24,24 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-32-ex-1",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Meet capital J and F with the other hand's pinky on shift",
             "generator": {
                 "type": "chunks",
                 "keys": ["J", "F"],
-                "count": 16,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "alternation"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-32-ex-2",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Capitalize the right hand one letter at a time",
             "generator": {
                 "type": "chunks",
                 "keys": ["K", "L", "J", "H"],
-                "count": 18,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable"
@@ -50,27 +50,15 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-32-ex-3",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Tiny challenge: capital letters down the whole right hand",
             "generator": {
                 "type": "chunks",
-                "keys": ["U", "I", "O", "P"],
-                "count": 18,
+                "keys": ["U", "I", "O", "P", "M", "N", "Y"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-32-ex-4",
-            "instruction": "Alternate between both fingers and hands",
-            "generator": {
-                "type": "chunks",
-                "keys": ["M", "N", "Y", "J"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "alternation"
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

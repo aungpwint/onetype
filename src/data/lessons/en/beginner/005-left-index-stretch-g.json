@@ -8,7 +8,7 @@
     "titleMy": "ဘယ်လက် လက်ညှိုး ဆန့်ခြင်း - G",
     "description": "G is next to F. Stretch your left index finger right, then return to F.",
     "difficulty": "basic",
-    "estimatedMinutes": 6,
+    "estimatedMinutes": 2,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 85,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-5-ex-1",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Stretch to G with the left index finger, then rest on F",
             "generator": {
                 "type": "chunks",
-                "keys": ["f", "g"],
-                "count": 14,
+                "keys": ["g", "f"],
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -36,26 +36,26 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-5-ex-2",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "G is one step from F — reach and return",
             "generator": {
                 "type": "chunks",
-                "keys": ["f", "g", "f"],
-                "count": 18,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "keys": ["f", "g"],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-5-ex-3",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Tiny challenge: slide to G without lifting the finger",
             "generator": {
                 "type": "chunks",
                 "keys": ["f", "g"],
-                "count": 24,
-                "chunkMin": 3,
-                "chunkMax": 6,
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

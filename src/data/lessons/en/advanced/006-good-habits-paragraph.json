@@ -6,9 +6,9 @@
     "number": 6,
     "title": "Good Habits Paragraph",
     "titleMy": "ကောင်းသော အလေ့အကျင့်များ စာပိုဒ်",
-    "description": "Type about building good habits.",
+    "description": "A short essay about habits; the repetitions in the words mirror the repetitions in the message.",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-6-ex-1",
             "kind": "text",
-            "instruction": "Good habits start with small steps. If you read a little every day, you will read many books in a year. If you practice typing daily, your speed and accuracy will grow quickly. Keep going and never give up.",
+            "instruction": "Read the sentence first, then type it in one smooth pass.",
             "text": "Good habits start with small steps. If you read a little every day, you will read many books in a year. If you practice typing daily, your speed and accuracy will grow quickly. Keep going and never give up."
         }
     ],

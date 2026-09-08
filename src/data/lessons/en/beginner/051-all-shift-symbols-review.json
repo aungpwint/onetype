@@ -8,7 +8,7 @@
     "titleMy": "Shift သင်္ကေတ အားလုံး ပြန်လည်သုံးသပ်ခြင်း",
     "description": "All 10 shift-number symbols in sequence and patterns.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 88,
@@ -45,50 +45,37 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-51-ex-1",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Run through the left-hand symbols",
             "generator": {
                 "type": "chunks",
-                "keys": ["!", "@", "#", "$"],
-                "count": 16,
+                "keys": ["!", "@", "#", "$", "%"],
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "repetition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-51-ex-2",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Now the right-hand symbols",
             "generator": {
                 "type": "chunks",
-                "keys": ["%", "^", "&", "*"],
-                "count": 16,
+                "keys": ["^", "&", "*", "(", ")"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "variable"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-51-ex-3",
-            "instruction": "Reach the shifted symbols cleanly",
+            "instruction": "Tiny challenge: every shift symbol in one flow",
             "generator": {
                 "type": "chunks",
-                "keys": ["(", ")", "_", "+"],
-                "count": 16,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-51-ex-4",
-            "instruction": "Reach the shifted symbols cleanly",
-            "generator": {
-                "type": "chunks",
-                "keys": ["{", "}", "<", ">", "?", "\""],
-                "count": 20,
+                "keys": ["_", "+", "{", "}", "<", ">", "?", "\""],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable"

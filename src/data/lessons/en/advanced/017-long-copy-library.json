@@ -6,9 +6,9 @@
     "number": 17,
     "title": "Long Copy: Library",
     "titleMy": "စာပိုဒ်ရှည် လေ့ကျင့်ခန်း - စာကြည့်တိုက်",
-    "description": "Extended passage for building typing stamina.",
+    "description": "A longer literary passage; treat it like real copy-editing work and hold your accuracy until the final period.",
     "difficulty": "hard",
-    "estimatedMinutes": 20,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 95,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-17-ex-1",
             "kind": "text",
-            "instruction": "The library stands at the heart of our town like a quiet guardian of stories. Its tall shelves hold books of every color, some old with yellow pages and others brand new. On rainy afternoons, children gather there to read, and the only sound is the turning of pages and the soft rain on the roof.",
+            "instruction": "Read the whole passage once, then type it straight through at a working pace.",
             "text": "The library stands at the heart of our town like a quiet guardian of stories. Its tall shelves hold books of every color, some old with yellow pages and others brand new. On rainy afternoons, children gather there to read, and the only sound is the turning of pages and the soft rain on the roof."
         }
     ],

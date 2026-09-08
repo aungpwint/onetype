@@ -6,9 +6,9 @@
     "number": 17,
     "title": "Timed News Paragraph",
     "titleMy": "အချိန်ကိုက် သတင်းစာပိုဒ်",
-    "description": "Type news text quickly and accurately.",
+    "description": "သတင်း စာပိုဒ်များကို လျင်မြန်မှန်ကန်စွာ ရိုက်နိုင်ရန် အချိန်အကန့်အသတ်ဖြင့် လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 20,
+    "estimatedMinutes": 8,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 94,
@@ -53,7 +53,7 @@
         {
             "id": "lesson-my-advanced-17-ex-1",
             "kind": "text",
-            "instruction": "နိုင်ငံတစ်ဝန်း ငြိမ်းချမ်းရေးအတွက် ပညာရေး စနစ်ကို တိုးတက်အောင် ဆောင်ရွက်ရန် ဆုံးဖြတ်ခဲ့ကြသည်။ လူထုကလည်း ထောက်ခံခဲ့ကြသည်။",
+            "instruction": "သတင်းစာပိုဒ်တစ်ခုလုံးကို ချောမွေ့စွာ ရိုက်ပါ",
             "text": "နိုင်ငံတစ်ဝန်း ငြိမ်းချမ်းရေးအတွက် ပညာရေး စနစ်ကို တိုးတက်အောင် ဆောင်ရွက်ရန် ဆုံးဖြတ်ခဲ့ကြသည်။ လူထုကလည်း ထောက်ခံခဲ့ကြသည်။"
         }
     ],

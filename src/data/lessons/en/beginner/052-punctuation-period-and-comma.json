@@ -8,7 +8,7 @@
     "titleMy": "ပုဒ်ဖြတ်ပုဒ်ရပ်: period (.) နှင့် comma (,)",
     "description": "Period and comma in sentences.",
     "difficulty": "medium",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 90,
@@ -44,29 +44,29 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-52-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Finish each word with a period",
             "generator": {
                 "type": "words",
                 "words": ["cat.", "dog.", "big.", "run.", "sit."],
-                "count": 18,
+                "count": 8,
                 "maxWordLength": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-52-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Drop a comma after each word",
             "generator": {
                 "type": "words",
                 "words": ["red,", "blue,", "green,", "last,", "then,"],
-                "count": 18,
+                "count": 8,
                 "maxWordLength": 5
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-52-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Tiny challenge: short sentences, period at the end",
             "generator": {
                 "type": "sentences",
                 "sentences": ["they ran home.", "the sun went down.", "i saw a star."],

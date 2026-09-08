@@ -6,9 +6,9 @@
     "number": 5,
     "title": "School Words",
     "titleMy": "ကျောင်း စကားလုံးများ",
-    "description": "School vocabulary: classroom, exam, teacher, student.",
+    "description": "ကျောင်းဘဝ နှင့် ပညာရေးတွင် သုံးသော စကားလုံးများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ စာ ၊ ဆရာ ၊ ကျောင်း ၊ အိမ် ၊ စာသား ၊ စာမေးပွဲ ၊ သင်ခန်းစာ ၊ လက်ရေး စသည်တို့ ပါဝင်သည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 88,
@@ -42,21 +42,21 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-5-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "ကျောင်း စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["စာ", "ဆရာ", "ကျောင်း"],
-                "count": 18
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-5-ex-2",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "ကျောင်း စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["အိမ်", "ကျောင်း", "စာသား"],
-                "count": 20,
+                "count": 12,
                 "chunkMin": 4,
                 "chunkMax": 6,
                 "style": "variable"
@@ -65,11 +65,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-5-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "စာလုံးတိုင်း မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
             "generator": {
                 "type": "words",
-                "words": ["ချစ်", "လေး"],
-                "count": 16
+                "words": ["စာမေးပွဲ", "သင်ခန်းစာ", "လက်ရေး"],
+                "count": 9
             }
         }
     ]

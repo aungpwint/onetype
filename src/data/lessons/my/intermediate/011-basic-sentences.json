@@ -4,11 +4,11 @@
     "level": "intermediate",
     "language": "my",
     "number": 11,
-    "title": "Basic Sentences",
+    "title": "Everyday Sentences",
     "titleMy": "ဝါကျတို လေ့ကျင့်ခန်း",
-    "description": "Simple declarative sentences.",
+    "description": "ဝါကျတို များကို စနစ်ကျစွာ ရိုက်နိုင်ရန် ရည်ရွယ်သော သင်ခန်းစာ ဖြစ်သည်။ နေ့စဉ် သုံးသော အကြောင်းအရာများကို ဝါကျဖွဲ့ကာ လေ့ကျင့်ရမည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 5,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
@@ -52,7 +52,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-11-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "ဝါကျတစ်ကြောင်းလုံးကို ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["အဖေ က ရေ ကို လို တယ် ။", "အမေ က ဆန် ကို လို တယ် ။", "ညီ က ငါး ကို လို တယ် ။"],
@@ -62,7 +62,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-11-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "ဝါကျများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["မြို့ ရဲ့ ဘက် မှာ ရွာ ရှိ တယ် ။", "ညီ နဲ့ ညီမ က မြို့ မှာ နေ တယ် ။"],
@@ -72,7 +72,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-11-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "ဝါကျတစ်ကြောင်းလုံး မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["နွား က မြက် ကို စား တယ် ။", "အမေ က ဆန် ကို ချက် တယ် ။"],

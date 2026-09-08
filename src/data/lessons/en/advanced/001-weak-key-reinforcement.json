@@ -6,9 +6,9 @@
     "number": 1,
     "title": "Weak Key Reinforcement",
     "titleMy": "အားနည်းသော ကီးများ အားဖြည့်လေ့ကျင့်ခြင်း",
-    "description": "Drills targeting commonly mistyped keys.",
+    "description": "Revisit the keys that usually cause slips — the bottom row and the pinkies — until every finger feels reliable.",
     "difficulty": "medium",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -16,41 +16,41 @@
     },
     "focus": ["words"],
     "prerequisites": ["lesson-en-intermediate-18"],
-    "focusKeys": ["KeyT", "KeyH", "KeyE", "KeyA", "KeyN", "KeyD", "KeyY", "KeyO", "KeyU", "KeyW", "KeyI", "KeyS", "KeyF", "KeyR", "KeyM", "KeyV"],
-    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyG", "KeyH", "KeyI", "KeyJ", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyQ", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyX", "KeyY", "KeyZ"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-advanced-1-ex-1",
-            "instruction": "Build speed across full words",
+            "instruction": "Warm up: sweep the bottom row so no weak key is skipped",
             "generator": {
-                "type": "words",
-                "bank": "commonWords",
-                "count": 26,
-                "maxWordLength": 7
+                "type": "chunks",
+                "keys": ["z", "x", "c", "v", "b", "n", "m"],
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-advanced-1-ex-2",
-            "instruction": "Build speed across full words",
+            "instruction": "Reinforce the weak keys inside real words",
             "generator": {
                 "type": "words",
-                "bank": "commonWords",
-                "count": 30,
-                "maxWordLength": 8
+                "words": ["quiz", "jazz", "wax", "zebra", "quick", "blank", "mango", "pump", "vine", "cave", "exit", "buzz"],
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-advanced-1-ex-3",
-            "instruction": "Build speed across full words",
+            "instruction": "Tiny challenge: the weak keys hold up inside whole sentences",
             "generator": {
-                "type": "words",
-                "bank": "commonWords",
-                "count": 32,
-                "maxWordLength": 9
+                "type": "sentences",
+                "sentences": ["a quick zebra jumped over the box.", "my black vest hangs by the window.", "i practice the tricky keys every day."],
+                "count": 4
             }
         }
     ]

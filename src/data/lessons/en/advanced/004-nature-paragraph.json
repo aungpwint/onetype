@@ -6,9 +6,9 @@
     "number": 4,
     "title": "Nature Paragraph",
     "titleMy": "သဘာဝတရားအကြောင်း စာပိုဒ်",
-    "description": "Type about nature. Build rhythm and consistency.",
+    "description": "A calm paragraph about nature; build rhythm and consistency across four complete sentences.",
     "difficulty": "medium",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -18,7 +18,7 @@
         {
             "id": "lesson-en-advanced-4-ex-1",
             "kind": "text",
-            "instruction": "The forest is full of tall green trees and colorful flowers. A clear stream flows between the rocks. Birds sing sweet songs in the early morning. Nature gives us fresh air and calmness.",
+            "instruction": "Type steadily from the first word to the final full stop without looking down.",
             "text": "The forest is full of tall green trees and colorful flowers. A clear stream flows between the rocks. Birds sing sweet songs in the early morning. Nature gives us fresh air and calmness."
         }
     ],

@@ -6,9 +6,9 @@
     "number": 13,
     "title": "Informal Sentences",
     "titleMy": "စကားပြော ဝါကျများ",
-    "description": "Conversational sentences for everyday use.",
+    "description": "နေ့စဉ် စကားပြောတွင် သုံးလေ့ရှိသော ဝါကျများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ စကားပြော ဟန်ဖြင့် ရေးသားထားသော ဝါကျများ ပါဝင်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 5,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
@@ -52,7 +52,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-13-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "စကားပြော ဝါကျတစ်ကြောင်းလုံး ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ဒီနေ့ လဲ ကောင်း တယ် ။", "မနက်စာ က ကောင်း ပါ တယ် ။"],
@@ -62,7 +62,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-13-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "စကားပြော ဝါကျများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ညီ က ဒီ စာ ကို ဖတ် ပါ တယ် ။", "အမေ က ဆန် နဲ့ ငါး ကို ချက်တယ် ။"],

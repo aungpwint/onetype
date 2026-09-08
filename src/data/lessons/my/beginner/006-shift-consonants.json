@@ -6,9 +6,9 @@
     "number": 6,
     "title": "Shift Consonants: ဈ ဇ ဒ ဓ",
     "titleMy": "Shift ဗျည်းများ - ဈ ဇ ဒ ဓ",
-    "description": "Shift consonants practice: ဈ, ဇ, ဒ, ဓ, ဏ, ဌ, ဿ, ဗ",
+    "description": "Shift ဖြင့် ရိုက်ရသော ဗျည်းများကို လေ့ကျင့်သည် - ဈ ၊ ဇ ၊ ဒ ၊ ဓ ၊ ဏ ၊ ဌ ၊ ဿ ၊ ဗ။",
     "difficulty": "easy",
-    "estimatedMinutes": 6,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -24,11 +24,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-6-ex-1",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "စာလုံးကြီး ဗျည်း ဈ နှင့် ဇ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဈ", "ဇ"],
-                "count": 14,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
@@ -37,40 +37,28 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-6-ex-2",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "ဒ နှင့် ဓ တို့ကို စာလုံးကြီးဖြင့် ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဒ", "ဓ"],
-                "count": 14,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "alternation"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-6-ex-3",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "ကျန်ရှိ စာလုံးကြီး ဗျည်းများကို ဖြတ်သန်းရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ဏ", "ဌ"],
-                "count": 14,
+                "keys": ["ဏ", "ဌ", "ဿ", "ဗ"],
+                "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "alternation"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-6-ex-4",
-            "instruction": "Hold the correct Shift key",
-            "generator": {
-                "type": "chunks",
-                "keys": ["ဿ", "ဗ"],
-                "count": 14,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "alternation"
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

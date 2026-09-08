@@ -6,9 +6,9 @@
     "number": 3,
     "title": "Top Row Consonants: Right Hand",
     "titleMy": "အပေါ်တန်း ဗျည်းများ - ညာလက်",
-    "description": "Right hand top row: က(KeyU) င(KeyI) သ(KeyO) စ(KeyP) ဟ(BracketLeft)",
+    "description": "ညာလက်ဖြင့် ရိုက်ရသော အပေါ်တန်း ဗျည်းများ ဖြစ်သည် - က (KeyU) ၊ င (KeyI) ၊ သ (KeyO) ၊ စ (KeyP) ၊ ဟ (BracketLeft)။",
     "difficulty": "basic",
-    "estimatedMinutes": 6,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-3-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "ညာလက်ဖြင့် က နှင့် င တို့ကို ပြန်လည်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က", "င"],
-                "count": 14,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -36,39 +36,26 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-3-ex-2",
-            "instruction": "Warm up with short clusters",
+            "instruction": "သ နှင့် စ တို့အစွန်းအထိ ဆက်တိုက်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["သ", "စ"],
-                "count": 14,
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-3-ex-3",
-            "instruction": "Warm up with short clusters",
-            "generator": {
-                "type": "chunks",
-                "keys": ["ဟ"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-my-beginner-3-ex-4",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "ညာလက်ခလုတ် ငါးခုလုံးကို ဖြတ်သန်းဝင်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က", "င", "သ", "စ", "ဟ"],
-                "count": 26,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

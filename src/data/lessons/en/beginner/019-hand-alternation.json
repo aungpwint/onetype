@@ -8,7 +8,7 @@
     "titleMy": "လက်နှစ်ဖက် အလှည့်ကျ",
     "description": "Alternate between left and right hands. This builds speed and rhythm.",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -23,11 +23,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-19-ex-1",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "Bounce between the two index fingers: F then J",
             "generator": {
                 "type": "chunks",
                 "keys": ["f", "j"],
-                "count": 18,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
@@ -36,11 +36,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-19-ex-2",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "Hand off the turn to all four home-row fingers",
             "generator": {
                 "type": "chunks",
-                "keys": ["d", "k"],
-                "count": 18,
+                "keys": ["a", "d", "k", "l"],
+                "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "alternation"
@@ -49,27 +49,15 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-19-ex-3",
-            "instruction": "Alternate between both fingers and hands",
-            "generator": {
-                "type": "chunks",
-                "keys": ["a", "f", "j", "l"],
-                "count": 20,
-                "chunkMin": 4,
-                "chunkMax": 5,
-                "style": "variable"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-19-ex-4",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "Tiny challenge: pass the beat back and forth without pausing",
             "generator": {
                 "type": "chunks",
                 "keys": ["r", "u", "g", "y", "v", "n"],
-                "count": 20,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

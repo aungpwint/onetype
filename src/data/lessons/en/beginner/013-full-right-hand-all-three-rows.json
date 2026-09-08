@@ -8,7 +8,7 @@
     "titleMy": "ညာလက် အပြည့် - YUIOP HJKL NM",
     "description": "All right-hand keys across all three rows. Practice smooth vertical movement.",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 85,
@@ -23,12 +23,12 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-13-ex-1",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "Run the whole right-top row YUIOP",
             "generator": {
                 "type": "chunks",
                 "keys": ["y", "u", "i", "o", "p"],
-                "count": 16,
-                "chunkMin": 3,
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
             }
@@ -36,39 +36,26 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-13-ex-2",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Touch down on the home row HJKL and return",
             "generator": {
                 "type": "chunks",
-                "keys": ["h", "j", "k", "l"],
-                "count": 14,
-                "chunkMin": 3,
+                "keys": ["h", "j", "k", "l", "n", "m"],
+                "count": 10,
+                "chunkMin": 2,
                 "chunkMax": 4,
-                "style": "repetition"
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-13-ex-3",
-            "instruction": "Type larger clusters fluently",
-            "generator": {
-                "type": "chunks",
-                "keys": ["n", "m"],
-                "count": 10,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-13-ex-4",
-            "instruction": "Type larger clusters fluently",
+            "instruction": "Tiny challenge: glide up and down all three rows",
             "generator": {
                 "type": "chunks",
                 "keys": ["y", "u", "i", "o", "p", "h", "j", "k", "l", "n", "m"],
-                "count": 36,
-                "chunkMin": 3,
-                "chunkMax": 6,
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }

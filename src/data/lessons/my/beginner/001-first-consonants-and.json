@@ -6,9 +6,9 @@
     "number": 1,
     "title": "First Consonants: က and င",
     "titleMy": "ပထမ ဗျည်းများ - က နှင့် င",
-    "description": "Typing Myanmar consonants on the top row. က (KeyU) with right index, င (KeyI) with right middle.",
+    "description": "အပေါ်တန်းရှိ ဗျည်းများကို ရိုက်ခြင်းဖြင့် စတင် လေ့ကျင့်သည်။ က (KeyU) ကို ညာလက် လက်ညိုးဖြင့် ၊ င (KeyI) ကို ညာလက် လက်ခလယ်ဖြင့် ရိုက်ရသည်။",
     "difficulty": "basic",
-    "estimatedMinutes": 5,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
@@ -22,11 +22,11 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-1-ex-1",
-            "instruction": "Warm up with short clusters",
+            "instruction": "က နှင့် င တို့ကို လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က", "င"],
-                "count": 18,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -35,27 +35,28 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-1-ex-2",
-            "instruction": "Alternate between both fingers and hands",
+            "instruction": "စည်းချက်အတိုင်း က နှင့် င ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က", "င"],
-                "count": 18,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "alternation"
+                "count": 8,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-beginner-1-ex-3",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "လက်တည်ငြိမ်စွာထားပြီး ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က", "င"],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable",
+                "mixed": true
             }
         }
     ]

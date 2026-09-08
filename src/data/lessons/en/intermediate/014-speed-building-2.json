@@ -6,9 +6,9 @@
     "number": 14,
     "title": "Speed Building 2",
     "titleMy": "အရှိန်မြှင့် (၂)",
-    "description": "Longer passages for speed and rhythm.",
+    "description": "Move from home-row sprints to full pangrams; stretch every finger and every row without losing control.",
     "difficulty": "hard",
-    "estimatedMinutes": 12,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 93,
@@ -16,67 +16,53 @@
     },
     "focus": ["speed"],
     "prerequisites": ["lesson-en-intermediate-13"],
-    "focusKeys": [
-        "KeyT",
-        "KeyH",
-        "KeyE",
-        "KeyA",
-        "KeyN",
-        "KeyD",
-        "KeyY",
-        "KeyO",
-        "KeyU",
-        "KeyW",
-        "KeyI",
-        "KeyS",
-        "KeyF",
-        "KeyR",
-        "KeyM",
-        "KeyV",
-        "KeyG",
-        "KeyQ",
-        "KeyL",
-        "Period",
-        "KeyC",
-        "KeyK",
-        "KeyB"
-    ],
-    "targetFingers": ["left-index", "right-index", "left-middle", "left-pinky", "right-ring", "left-ring", "right-middle"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyJ", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyQ", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyX", "KeyY", "KeyZ", "Semicolon", "Period"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-14-ex-1",
-            "instruction": "Build speed across full words",
+            "instruction": "Warm up: sprint the home row",
             "generator": {
-                "type": "words",
-                "bank": "commonWords",
-                "count": 34,
-                "maxWordLength": 8
+                "type": "chunks",
+                "keys": ["a", "s", "d", "f", "j", "k", "l", ";"],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-14-ex-2",
-            "instruction": "Build speed across full words",
+            "instruction": "Keep the rhythm climbing to the top row",
             "generator": {
-                "type": "words",
-                "bank": "commonWords",
-                "count": 36,
-                "maxWordLength": 9
+                "type": "chunks",
+                "keys": ["e", "r", "t", "u", "i", "o"],
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "transition"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-intermediate-14-ex-3",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "Let each whole word come out in one motion",
+            "generator": {
+                "type": "words",
+                "words": ["quick", "brown", "jumps", "lazy", "river", "mountain", "wonderful", "beautiful", "together", "tomorrow"],
+                "count": 12
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-en-intermediate-14-ex-4",
+            "instruction": "Tiny challenge: full-sentence sprints with every letter",
             "generator": {
                 "type": "sentences",
-                "sentences": [
-                    "the morning sun rose over the quiet field.",
-                    "a flock of birds flew across the sky.",
-                    "the old bridge crosses the wide river."
-                ],
+                "sentences": ["the quick brown fox jumps over the lazy dog.", "pack my box with five dozen liquor jugs.", "how vexingly quick daft zebras jump."],
                 "count": 4
             }
         }

@@ -6,9 +6,9 @@
     "number": 24,
     "title": "Basic Sentences",
     "titleMy": "အခြေခံ ဝါကျတိုများ",
-    "description": "Simple Myanmar sentences.",
+    "description": "ရိုးရှင်းသော မြန်မာ ဝါကျတိုများကို ရိုက်လေ့ကျင့်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 88,
@@ -51,7 +51,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-24-ex-1",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "ရေနှင့် မိသားစု အကြောင်း ဝါကျများ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["အဖေ က ရေ ကို သောက် ။", "အမေ နဲ့ အဖေ က မြို့ မှာ နေ ။", "ညီ က ကလေး ။", "အိမ် က နီ ။"],
@@ -61,10 +61,20 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-24-ex-2",
-            "instruction": "Type the full phrases with correct spacing",
+            "instruction": "ငါး နှင့် မြို့ အကြောင်း ဝါကျများ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ငါး က ရေ ထဲ နေ ။", "မြို့ က ကြီး ။", "ကလေး က စာ ဖတ် ။", "ရေ က အေး ။"],
+                "count": 4
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-beginner-24-ex-3",
+            "instruction": "ဝါကျ ရှစ်ခုလုံး တစ်ဆက်တည်း ရိုက်ပါ",
+            "generator": {
+                "type": "sentences",
+                "sentences": ["အဖေ က ရေ ကို သောက် ။", "အမေ နဲ့ အဖေ က မြို့ မှာ နေ ။", "ညီ က ကလေး ။", "အိမ် က နီ ။", "ငါး က ရေ ထဲ နေ ။", "မြို့ က ကြီး ။", "ကလေး က စာ ဖတ် ။", "ရေ က အေး ။"],
                 "count": 4
             }
         }

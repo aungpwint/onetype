@@ -6,9 +6,9 @@
     "number": 14,
     "title": "Accuracy Challenge",
     "titleMy": "တိကျမှု စိန်ခေါ်မှု",
-    "description": "Type complex text with precision. No errors allowed.",
+    "description": "Slow down and make every stroke exact; precision is never wasted, it is the foundation of real speed.",
     "difficulty": "hard",
-    "estimatedMinutes": 15,
+    "estimatedMinutes": 6,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 95,
@@ -16,66 +16,41 @@
     },
     "focus": ["accuracy"],
     "prerequisites": ["lesson-en-advanced-13"],
-    "focusKeys": [
-        "KeyA",
-        "KeyC",
-        "KeyU",
-        "KeyR",
-        "KeyY",
-        "KeyP",
-        "KeyE",
-        "KeyI",
-        "KeyS",
-        "KeyO",
-        "KeyN",
-        "KeyH",
-        "KeyT",
-        "KeyM",
-        "KeyD",
-        "KeyF",
-        "KeyJ",
-        "KeyK",
-        "KeyL",
-        "Semicolon",
-        "KeyG",
-        "KeyW"
-    ],
-    "targetFingers": ["left-pinky", "left-middle", "right-index", "left-index", "right-pinky", "right-middle", "left-ring", "right-ring"],
+    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyJ", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Semicolon", "Period"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-en-advanced-14-ex-1",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Warm up: long words, one clean stroke at a time",
             "generator": {
                 "type": "words",
-                "words": ["accuracy", "precision", "rhythm", "cadence"],
-                "count": 20,
-                "maxWordLength": 9
+                "words": ["accuracy", "precision", "rhythm", "cadence", "steady", "control"],
+                "count": 12
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-advanced-14-ex-2",
-            "instruction": "Keep your fingers on the home row",
+            "instruction": "Re-anchor your fingers on the home row between every drill",
             "generator": {
                 "type": "chunks",
                 "keys": ["a", "s", "d", "f", "j", "k", "l", ";"],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 6,
+                "count": 14,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-advanced-14-ex-3",
-            "instruction": "Type whole words for rhythm",
+            "instruction": "Tiny challenge: no mistakes allowed, speed waits its turn",
             "generator": {
-                "type": "words",
-                "words": ["steady", "timing", "control", "flow"],
-                "count": 20,
-                "maxWordLength": 7
+                "type": "sentences",
+                "sentences": ["slow hands never make mistakes.", "a steady rhythm beats a racing mind.", "control each key before you chase speed."],
+                "count": 4
             }
         }
     ]

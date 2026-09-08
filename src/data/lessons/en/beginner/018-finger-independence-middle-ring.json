@@ -8,7 +8,7 @@
     "titleMy": "လက်ချောင်း လွတ်လပ်မှု - လက်ခလယ် နှစ်ဖက်",
     "description": "Middle finger drills. Practice independent movement on each hand.",
     "difficulty": "easy",
-    "estimatedMinutes": 10,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -23,12 +23,12 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-18-ex-1",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Stretch the left middle finger: E above, C below",
             "generator": {
                 "type": "chunks",
                 "keys": ["e", "d", "c"],
-                "count": 16,
-                "chunkMin": 3,
+                "count": 8,
+                "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
             }
@@ -36,28 +36,27 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-18-ex-2",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Stretch the right middle finger: I above, comma below",
             "generator": {
                 "type": "chunks",
-                "keys": ["e", "d", "c", "i", "k", ","],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 5,
-                "style": "variable"
+                "keys": ["i", "k", ","],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-en-beginner-18-ex-3",
-            "instruction": "Reach to the new keys and return",
+            "instruction": "Tiny challenge: both middle fingers move, others stay put",
             "generator": {
                 "type": "chunks",
-                "keys": ["d", "e", "c"],
-                "count": 24,
-                "chunkMin": 4,
-                "chunkMax": 6,
-                "style": "variable",
-                "mixed": true
+                "keys": ["e", "d", "c", "i", "k", ","],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "variable"
             }
         }
     ]

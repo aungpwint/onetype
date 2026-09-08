@@ -8,7 +8,7 @@
     "titleMy": "Shift အပေါ်တန်း ညာလက် - Y U I O P",
     "description": "Right-hand top row with Left Shift. Y U I O P uppercase.",
     "difficulty": "easy",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 2,
     "keyboard": "qwerty",
     "completion": {
         "minAccuracy": 87,
@@ -24,24 +24,11 @@
         {
             "kind": "generated",
             "id": "lesson-en-beginner-35-ex-1",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Build caps Y and U",
             "generator": {
                 "type": "chunks",
                 "keys": ["Y", "U"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 3,
-                "style": "repetition"
-            }
-        },
-        {
-            "kind": "generated",
-            "id": "lesson-en-beginner-35-ex-2",
-            "instruction": "Hold the correct Shift key",
-            "generator": {
-                "type": "chunks",
-                "keys": ["I", "O", "P"],
-                "count": 14,
+                "count": 8,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "repetition"
@@ -49,14 +36,27 @@
         },
         {
             "kind": "generated",
+            "id": "lesson-en-beginner-35-ex-2",
+            "instruction": "Follow the rhythm of I, O and P",
+            "generator": {
+                "type": "chunks",
+                "keys": ["I", "O", "P"],
+                "count": 10,
+                "chunkMin": 2,
+                "chunkMax": 4,
+                "style": "runs"
+            }
+        },
+        {
+            "kind": "generated",
             "id": "lesson-en-beginner-35-ex-3",
-            "instruction": "Hold the correct Shift key",
+            "instruction": "Tiny challenge: sweep across all five caps",
             "generator": {
                 "type": "chunks",
                 "keys": ["P", "O", "I", "U", "Y"],
-                "count": 22,
-                "chunkMin": 3,
-                "chunkMax": 5,
+                "count": 12,
+                "chunkMin": 2,
+                "chunkMax": 4,
                 "style": "variable"
             }
         }
