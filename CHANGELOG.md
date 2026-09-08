@@ -9,6 +9,71 @@ the curated source maintained alongside `scripts/release-notes.mjs`, which the
 `release` GitHub Actions workflow uses (with per-platform downloads, checksums
 and auto-update notes) to build every GitHub Release page.
 
+## [1.4.0] - 2026-09-08
+
+### Added
+
+- Mixed English + Myanmar typing: a combined "English + Myanmar" layout lets both
+  scripts be typed interchangeably in one round, with language-aware cluster
+  units and grading by the actually typed character; Myanmar pre-base vowels are
+  reordered to their press order inside mixed clusters. The 5-Minute Test,
+  10-Minute Exam and the new "Mixed Myanmar + English Text" advanced lesson use
+  it.
+- Procedural lesson generation engine: English and Myanmar lessons are no longer
+  static text but are generated deterministically from per-lesson specs
+  (repetition, alternation, runs, transitions, controlled chunks, plus word and
+  sentence lists) with a seeded randomiser, so every attempt stays consistent per
+  lesson.
+- Next-lesson recommendations on the Learn page: a practice sequencer picks the
+  best next exercise per student — unfinished path, weak-key boost, spiral
+  review, or completion — with reason-specific copy.
+- New shared UI building blocks (`CardSection`, `SettingRow`, `SelectField`,
+  `StatCard`) replacing repeated inline markup across the settings and dashboard
+  pages.
+- Typography upgrade: variable Inter, JetBrains Mono and Noto Sans Myanmar fonts
+  (with a Latin subset), plus Pyidaungsu Regular; the legacy Heavitas display
+  font was removed.
+
+### Changed
+
+- Session startup is noticeably faster: the lesson catalog warms in the
+  background at boot, lesson text and next-exercise counts resolve in parallel,
+  and exercise/page transitions were tightened.
+- Curriculum restructured and polished across all English and Myanmar levels,
+  with rewritten lesson instructions and retuned exercise counts and durations.
+- Lesson card titles now follow the app language: the Myanmar title is shown when
+  the app runs in Myanmar, with the other language as the secondary line.
+- Result dialog: the action bar sticks to the bottom edge with a blurred backing
+  so actions stay reachable at the minimum window height, and results show a
+  recoverable error state instead of wiping the dialog.
+- DevTools are bound to the build profile: the web inspector, its shortcuts
+  (F12, Ctrl+Shift+I) and the inspect context-menu action are disabled in release
+  builds, and source maps were dropped from production bundles.
+- Sound toggling is unified to a single persisted preference, and settings writes
+  are validated/coerced on set.
+- Student codes are now zero-padded (`STU###`) so rosters past nine learners keep
+  numbering correctly.
+
+### Fixed
+
+- Failed background update checks stay silent (no error surface) during startup.
+- Typing falls back to the physical key when the pressed character is not in the
+  layout's char map (e.g. the OS keyboard language differs from the layout).
+- Session teardown no longer lets the initial run state clobber cleanup.
+- Persistence, concurrency and accessibility audit fixes: per-student
+  key/finger/character stats are preserved when merging single writes; deleting a
+  learner clears orphaned activity rows and selects the next learner; stale async
+  overwrites are guarded; the command palette got a focus trap and combobox
+  semantics; the AFK dialog is `aria-modal`; correct/miss marks gained a shape
+  cue in addition to colour.
+- Browser import now purges the raw backup blob after a successful import.
+
+### Removed
+
+- The `src/core/languages` module was consolidated into the pedagogy definitions.
+- The `tauri-plugin-opener` dependency and its capability were removed.
+- Dead code and duplicate UI removed; storage keys centralised.
+
 ## [1.3.0] - 2026-09-07
 
 ### Added
