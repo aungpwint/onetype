@@ -283,9 +283,10 @@ export const useTypingStore = create<TypingState>((set, get) => {
         beginLesson: async (lessonId, mode = 'guided') => {
             const active = await requireActiveStudent(set)
             if (!active) return
-            const resolved = await resolveLessonById(lessonId)
+            // Resolve the lesson text and look up the attempt count in parallel
+            // so the session lands on screen as fast as either call allows.
+            const [resolved, attempt] = await Promise.all([resolveLessonById(lessonId), backend.nextExerciseAttempt(active.id, lessonId)])
             const layout = getLayoutOrThrow(resolved.layoutId)
-            const attempt = await backend.nextExerciseAttempt(active.id, lessonId)
             const session: TypingSessionState = {
                 kind: 'lesson',
                 lessonId,

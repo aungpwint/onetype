@@ -16,7 +16,32 @@
     },
     "focus": ["speed"],
     "prerequisites": ["lesson-en-advanced-12"],
-    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyQ", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Period"],
+    "focusKeys": [
+        "KeyA",
+        "KeyB",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyQ",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "KeyY",
+        "Period"
+    ],
     "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
@@ -49,7 +74,11 @@
             "instruction": "Tiny challenge: full sentences with your eyes on the text",
             "generator": {
                 "type": "sentences",
-                "sentences": ["the rapid river runs through the green valley.", "great ships sail across the wide ocean.", "strong bamboo bends before the heavy wind."],
+                "sentences": [
+                    "the rapid river runs through the green valley.",
+                    "great ships sail across the wide ocean.",
+                    "strong bamboo bends before the heavy wind."
+                ],
                 "count": 4
             }
         }

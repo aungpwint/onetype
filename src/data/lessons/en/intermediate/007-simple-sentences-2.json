@@ -16,7 +16,31 @@
     },
     "focus": ["sentences"],
     "prerequisites": ["lesson-en-intermediate-6"],
-    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Comma", "Period"],
+    "focusKeys": [
+        "KeyA",
+        "KeyB",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "KeyY",
+        "Comma",
+        "Period"
+    ],
     "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
@@ -36,7 +60,11 @@
             "instruction": "Keep the rhythm through the pause at the comma",
             "generator": {
                 "type": "sentences",
-                "sentences": ["after the meal, they wash the dishes.", "before you sleep, turn off the light.", "although it was warm, he wore a coat."],
+                "sentences": [
+                    "after the meal, they wash the dishes.",
+                    "before you sleep, turn off the light.",
+                    "although it was warm, he wore a coat."
+                ],
                 "count": 4
             }
         },

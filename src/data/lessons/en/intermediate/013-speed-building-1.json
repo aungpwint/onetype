@@ -16,7 +16,33 @@
     },
     "focus": ["speed"],
     "prerequisites": ["lesson-en-intermediate-12"],
-    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Period", "Comma", "Semicolon"],
+    "focusKeys": [
+        "KeyA",
+        "KeyB",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "KeyY",
+        "Period",
+        "Comma",
+        "Semicolon"
+    ],
     "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
@@ -36,7 +62,24 @@
             "instruction": "Keep the rhythm through the words you meet in every sentence",
             "generator": {
                 "type": "words",
-                "words": ["some", "them", "then", "there", "their", "what", "when", "while", "which", "more", "most", "only", "other", "where", "about", "again"],
+                "words": [
+                    "some",
+                    "them",
+                    "then",
+                    "there",
+                    "their",
+                    "what",
+                    "when",
+                    "while",
+                    "which",
+                    "more",
+                    "most",
+                    "only",
+                    "other",
+                    "where",
+                    "about",
+                    "again"
+                ],
                 "count": 16
             }
         },
@@ -46,7 +89,11 @@
             "instruction": "Tiny challenge: three steady sentences, eyes on the text",
             "generator": {
                 "type": "sentences",
-                "sentences": ["practice every day for steady progress.", "keep your eyes on the screen, not the keys.", "accuracy first; speed will follow."],
+                "sentences": [
+                    "practice every day for steady progress.",
+                    "keep your eyes on the screen, not the keys.",
+                    "accuracy first; speed will follow."
+                ],
                 "count": 4
             }
         }

@@ -16,7 +16,32 @@
     },
     "focus": ["sentences"],
     "prerequisites": ["lesson-en-intermediate-14"],
-    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyQ", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Period"],
+    "focusKeys": [
+        "KeyA",
+        "KeyB",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyQ",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "KeyY",
+        "Period"
+    ],
     "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
@@ -26,7 +51,11 @@
             "instruction": "Warm up with plain, factual sentences",
             "generator": {
                 "type": "sentences",
-                "sentences": ["i walked to the shop and bought some bread.", "the cat sat on the warm windowsill.", "my uncle lives in a small town."],
+                "sentences": [
+                    "i walked to the shop and bought some bread.",
+                    "the cat sat on the warm windowsill.",
+                    "my uncle lives in a small town."
+                ],
                 "count": 4
             }
         },
@@ -36,7 +65,11 @@
             "instruction": "Keep the rhythm across three short sentences",
             "generator": {
                 "type": "sentences",
-                "sentences": ["they planted flowers beside the front door.", "she found a shiny coin on the path.", "the water in the lake looks clear."],
+                "sentences": [
+                    "they planted flowers beside the front door.",
+                    "she found a shiny coin on the path.",
+                    "the water in the lake looks clear."
+                ],
                 "count": 4
             }
         },
@@ -46,7 +79,11 @@
             "instruction": "Tiny challenge: three sentences with no pause to look down",
             "generator": {
                 "type": "sentences",
-                "sentences": ["the morning sun rose over the quiet field.", "a flock of birds flew across the sky.", "the old bridge crosses the wide river."],
+                "sentences": [
+                    "the morning sun rose over the quiet field.",
+                    "a flock of birds flew across the sky.",
+                    "the old bridge crosses the wide river."
+                ],
                 "count": 4
             }
         }

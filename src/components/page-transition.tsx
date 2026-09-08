@@ -2,8 +2,8 @@ import { useLayoutEffect, useRef, type ReactNode, type RefObject } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 
-const PAGE_FADE_IN = 0.32
-const PAGE_FADE_OUT = 0.1
+const PAGE_FADE_IN = 0.18
+const PAGE_FADE_OUT = 0.06
 
 const PAGE_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
 

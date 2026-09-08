@@ -208,7 +208,7 @@ export default function Learn() {
                         className="h-full"
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.32, delay: i * 0.04, ease: CARD_EASE }}
+                        transition={{ duration: 0.22, delay: i * 0.025, ease: CARD_EASE }}
                     >
                         <LessonCard
                             lesson={lesson}

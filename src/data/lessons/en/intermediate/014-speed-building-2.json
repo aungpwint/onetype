@@ -16,7 +16,36 @@
     },
     "focus": ["speed"],
     "prerequisites": ["lesson-en-intermediate-13"],
-    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyJ", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyQ", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyX", "KeyY", "KeyZ", "Semicolon", "Period"],
+    "focusKeys": [
+        "KeyA",
+        "KeyB",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyQ",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "KeyX",
+        "KeyY",
+        "KeyZ",
+        "Semicolon",
+        "Period"
+    ],
     "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
@@ -62,7 +91,11 @@
             "instruction": "Tiny challenge: full-sentence sprints with every letter",
             "generator": {
                 "type": "sentences",
-                "sentences": ["the quick brown fox jumps over the lazy dog.", "pack my box with five dozen liquor jugs.", "how vexingly quick daft zebras jump."],
+                "sentences": [
+                    "the quick brown fox jumps over the lazy dog.",
+                    "pack my box with five dozen liquor jugs.",
+                    "how vexingly quick daft zebras jump."
+                ],
                 "count": 4
             }
         }

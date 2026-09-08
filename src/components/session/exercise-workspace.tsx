@@ -54,7 +54,7 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
             className="flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden"
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
+            transition={{ duration: 0.16, ease: 'easeOut' }}
         >
             <header className="shrink-0 border-b border-line bg-background/60 backdrop-blur-xl">
                 <div className="flex items-center justify-between gap-3 px-4 py-2.5 sm:px-6">

@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useUiStore } from '@/stores/ui-store'
 import { useStudentStore } from '@/stores/student-store'
 import { useSettingsStore } from '@/stores/settings-store'
+import { useLessonStore } from '@/stores/lesson-store'
 import { useStartupUpdateCheck } from '@/services/updater/use-updater'
 import { notificationService } from '@/services/notification/service'
 import { Shell } from '@/components/app-shell'
@@ -98,6 +99,10 @@ function Boot() {
         void useSettingsStore.getState().load()
         void useStudentStore.getState().load()
         void notificationService.init()
+        // Warm the lesson catalog in the background (single shared in-flight
+        // load) so the Learn screen and any lesson deep-link render instantly
+        // instead of paying the full import + validation cost on first click.
+        void useLessonStore.getState().loadCatalog()
     }, [])
     return null
 }

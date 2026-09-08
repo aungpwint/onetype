@@ -16,7 +16,32 @@
     },
     "focus": ["sentences"],
     "prerequisites": ["lesson-en-intermediate-5"],
-    "focusKeys": ["KeyA", "KeyB", "KeyC", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyK", "KeyL", "KeyM", "KeyN", "KeyO", "KeyP", "KeyR", "KeyS", "KeyT", "KeyU", "KeyV", "KeyW", "KeyY", "Period", "Quote"],
+    "focusKeys": [
+        "KeyA",
+        "KeyB",
+        "KeyC",
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyI",
+        "KeyK",
+        "KeyL",
+        "KeyM",
+        "KeyN",
+        "KeyO",
+        "KeyP",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "KeyW",
+        "KeyY",
+        "Period",
+        "Quote"
+    ],
     "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "exercises": [
@@ -36,7 +61,12 @@
             "instruction": "Keep the rhythm flowing through each short sentence",
             "generator": {
                 "type": "sentences",
-                "sentences": ["she reads a book at night.", "he drinks water every day.", "the birds sing in the tree.", "a small dog ran across the yard."],
+                "sentences": [
+                    "she reads a book at night.",
+                    "he drinks water every day.",
+                    "the birds sing in the tree.",
+                    "a small dog ran across the yard."
+                ],
                 "count": 4
             }
         },
@@ -46,7 +76,12 @@
             "instruction": "Tiny challenge: longer sentences at a steady pace",
             "generator": {
                 "type": "sentences",
-                "sentences": ["my friend lives near the lake.", "the children play in the park.", "please bring your bag tomorrow.", "the train leaves at eight o'clock."],
+                "sentences": [
+                    "my friend lives near the lake.",
+                    "the children play in the park.",
+                    "please bring your bag tomorrow.",
+                    "the train leaves at eight o'clock."
+                ],
                 "count": 4
             }
         }

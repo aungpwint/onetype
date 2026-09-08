@@ -59,7 +59,7 @@ export function Session({
             className="flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden"
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
+            transition={{ duration: 0.16, ease: 'easeOut' }}
         >
             <AnimatePresence initial={false}>
                 {minimalChrome ? (
@@ -69,6 +69,7 @@ export function Session({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
+                        transition={{ duration: 0.12 }}
                     >
                         <div className="flex items-center gap-1.5 rounded-full border border-line/70 bg-background/60 px-2.5 py-1.5 opacity-50 backdrop-blur transition-opacity hover:opacity-100">
                             <Button
@@ -149,7 +150,7 @@ export function Session({
     )
 }
 
-const PREP_STEP_MS = 420
+const PREP_STEP_MS = 360
 
 function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
     const [active, setActive] = useState(0)
@@ -167,7 +168,7 @@ function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
             className="relative isolate my-auto w-full max-w-sm overflow-hidden rounded-3xl border border-line bg-card/75 p-8 shadow-(--shadow-3) backdrop-blur-2xl sm:p-10"
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 14, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
             <span aria-hidden className="pointer-events-none absolute inset-0">
                 <span className="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-blue-600/10 blur-[100px]" />
@@ -262,6 +263,7 @@ export function SessionGate({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
+                    transition={{ duration: 0.12 }}
                 >
                     {children}
                 </motion.div>
@@ -272,7 +274,7 @@ export function SessionGate({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.15 }}
+                    transition={{ duration: 0.12 }}
                 >
                     {steps ? <PreparingCard steps={steps} note={note} /> : <Spinner label={loadingLabel} />}
                 </motion.div>
