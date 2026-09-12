@@ -18,7 +18,7 @@ export default function LessonPage() {
         return lessonId ? beginLesson(lessonId, mode) : Promise.resolve()
     }, [lessonId, beginLesson])
 
-    useBeginSession(lessonId, load)
+    const { reload } = useBeginSession(lessonId, load)
 
     return (
         <SessionGate
@@ -26,6 +26,7 @@ export default function LessonPage() {
             loadingLabel="Loading lesson text, keyboard and attempt…"
             steps={['Loading lesson text', 'Warming up the keyboard', 'Setting up your attempt']}
             note="Your progress is saved after every run."
+            onReload={reload}
         >
             {session?.kind === 'lesson' ? <ExerciseWorkspace onExit={() => navigate('/learn')} /> : null}
         </SessionGate>

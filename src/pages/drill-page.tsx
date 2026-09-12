@@ -36,7 +36,7 @@ export default function DrillPage() {
         }
     }, [beginDrill, layoutId, troubleKeys])
 
-    useBeginSession('drill', load)
+    const { reload } = useBeginSession('drill', load)
 
     if (error && session?.kind !== 'drill') {
         return (
@@ -64,6 +64,7 @@ export default function DrillPage() {
             loadingLabel="Building drill from your weak keys…"
             steps={['Building your drill', 'Warming up the keyboard', 'Setting up your attempt']}
             note="Built from the keys you keep missing."
+            onReload={reload}
         >
             {session?.kind === 'drill' && session.drill ? (
                 <Session durationSeconds={null} sourceName={session.resolved.title} eyebrow="Adaptive drill" onExit={() => navigate('/')} />

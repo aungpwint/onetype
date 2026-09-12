@@ -18,7 +18,7 @@ export default function TestPage() {
         if (test) await beginTest(test)
     }, [testId, beginTest])
 
-    useBeginSession(testId, load)
+    const { reload } = useBeginSession(testId, load)
 
     return (
         <SessionGate
@@ -26,6 +26,7 @@ export default function TestPage() {
             loadingLabel="Preparing test text, keyboard and attempt…"
             steps={['Preparing test text', 'Warming up the keyboard', 'Setting up your attempt']}
             note="Every run is timed, scored and saved against the paper's target. Always prepare carefully and write."
+            onReload={reload}
         >
             {session?.kind === 'test' && session.test ? (
                 <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} onExit={() => navigate('/tests')} />
