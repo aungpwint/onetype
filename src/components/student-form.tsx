@@ -46,10 +46,10 @@ export function StudentForm({ student, onDone }: { student?: Student; onDone?: (
     return (
         <div className="space-y-4">
             <Field label="Full name" hint="As it appears on the teacher's roll.">
-                <Input value={name} onChange={(e) => setName(e.currentTarget.value)} placeholder="e.g. Aye Aye" autoFocus />
+                <Input value={name} onChange={(e) => setName(e.currentTarget.value)} placeholder="e.g. Aung Aung" autoFocus />
             </Field>
             <Field label="Display name" hint="Optional — a short nickname.">
-                <Input value={displayName} onChange={(e) => setDisplayName(e.currentTarget.value)} placeholder="e.g. Aye" />
+                <Input value={displayName} onChange={(e) => setDisplayName(e.currentTarget.value)} placeholder="e.g. Aung" />
             </Field>
             <Field label="Mark">
                 <div className="flex flex-wrap gap-2">
