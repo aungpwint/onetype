@@ -49,7 +49,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-4-ex-1",
-            "instruction": "ခရီးသွား စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "ခရီးသွား စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ကား", "ရထား", "ခရီး", "လိုက်ကား"],

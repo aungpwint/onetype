@@ -44,10 +44,10 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-3-ex-1",
-            "instruction": "အသံထွက် သင်္ကေတများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "အသံထွက် သင်္ကေတများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ကား", "ကီး", "ကယ်", "သေး"],
+                "keys": ["ကား", "ကီး", "ယား", "သေး"],
                 "count": 12,
                 "chunkMin": 3,
                 "chunkMax": 5,

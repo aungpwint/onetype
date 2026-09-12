@@ -23,7 +23,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-9-ex-1",
-            "instruction": "၁ မှ ၅ အထိ ဂဏန်းများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "၁ မှ ၅ အထိ ဂဏန်းများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["၁", "၂", "၃", "၄", "၅"],

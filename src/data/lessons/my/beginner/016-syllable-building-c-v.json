@@ -53,12 +53,22 @@
             "instruction": "က တွင် သရ အားလုံး တစ်ဆက်တည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ကိ", "ကု", "ကူ", "ကဲ", "ကေ", "ကာ", "ကီ"],
+                "keys": ["ကိ", "ကု", "ကူ", "ကဲ", "ကာ", "ကီ"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,
                 "style": "variable",
                 "mixed": true
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-beginner-16-ex-4",
+            "instruction": "စာလုံးအပြည့် ကေ ဖြင့် လေ့ကျင့်ပါ",
+            "generator": {
+                "type": "words",
+                "words": ["ကေ", "နေ", "ရေ", "မေ"],
+                "count": 8
             }
         }
     ]

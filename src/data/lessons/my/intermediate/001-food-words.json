@@ -46,7 +46,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-1-ex-1",
-            "instruction": "စာလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "စာလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ဆန်", "ထမင်း", "ငါး", "ကြက်"],

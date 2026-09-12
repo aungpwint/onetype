@@ -44,10 +44,10 @@
         {
             "kind": "generated",
             "id": "lesson-my-advanced-4-ex-1",
-            "instruction": "ဗျည်းတွဲ အစုများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "ဗျည်းတွဲ အစုများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ချုပ်", "ခြေ", "ကျော"],
+                "keys": ["ချို", "ကြေး", "ကျော"],
                 "count": 12,
                 "chunkMin": 4,
                 "chunkMax": 6,
@@ -73,7 +73,7 @@
             "instruction": "ရှုပ်ထွေးသော ဗျည်းတွဲများကို မှန်ကန်စွာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ကျောင်း", "အခြေခံ", "ကြက်"],
+                "keys": ["ကျောင်း", "အခြေခံ", "ကြောင်း"],
                 "count": 12,
                 "chunkMin": 5,
                 "chunkMax": 7,

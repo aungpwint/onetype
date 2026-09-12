@@ -40,7 +40,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-7-ex-1",
-            "instruction": "ရာသီဥတု စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "ရာသီဥတု စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["မိုး", "နေ", "လေ"],

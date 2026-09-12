@@ -41,7 +41,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-8-ex-1",
-            "instruction": "မိသားစု စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "မိသားစု စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ဖခင်", "မိခင်", "သား"],

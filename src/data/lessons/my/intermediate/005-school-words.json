@@ -42,7 +42,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-5-ex-1",
-            "instruction": "ကျောင်း စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "ကျောင်း စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["စာ", "ဆရာ", "ကျောင်း"],
@@ -55,7 +55,7 @@
             "instruction": "ကျောင်း စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["အိမ်", "ကျောင်း", "စာသား"],
+                "keys": ["အိပ်ရာ", "ကျောင်း", "စာသား"],
                 "count": 12,
                 "chunkMin": 4,
                 "chunkMax": 6,

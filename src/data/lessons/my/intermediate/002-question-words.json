@@ -41,7 +41,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-2-ex-1",
-            "instruction": "မေးခွန်း စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "မေးခွန်း စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ဘာ", "ဘယ်"],

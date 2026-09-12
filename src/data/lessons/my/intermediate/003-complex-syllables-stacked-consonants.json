@@ -24,7 +24,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-3-ex-1",
-            "instruction": "ဗျည်းစု အစုများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "ဗျည်းစု အစုများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က္က", "က္ခ", "ပ္ပ"],

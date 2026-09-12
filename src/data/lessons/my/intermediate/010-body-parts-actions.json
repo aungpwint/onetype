@@ -47,7 +47,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-10-ex-1",
-            "instruction": "ကိုယ်ခန္ဓာ စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "ကိုယ်ခန္ဓာ စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["မျက်စိ", "နား", "လက်"],

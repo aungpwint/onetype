@@ -42,7 +42,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-6-ex-1",
-            "instruction": "အချိန် စကားလုံးများကို ဖြေးဖြေး ရိုက်ပါ",
+            "instruction": "အချိန် စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["နေ့", "ညဘက်", "မနက်"],
