@@ -9,6 +9,29 @@ the curated source maintained alongside `scripts/release-notes.mjs`, which the
 `release` GitHub Actions workflow uses (with per-platform downloads, checksums
 and auto-update notes) to build every GitHub Release page.
 
+## [1.5.0] - 2026-09-13
+
+### Added
+
+- About section in Settings showing the exact app version, description and
+  copyright, so installed builds are easy to identify.
+- Levels can now be unlocked without completing the previous level, giving
+  learners more freedom over their path.
+
+### Fixed
+
+- A session start no longer gets stuck on "Preparing your run": the session
+  gate recovers on its own when startup hiccups, instead of hanging.
+- Corrected Myanmar syllable and instruction data across all levels.
+
+### Changed
+
+- Onboarding card and language tiles polished for a cleaner first-run flow.
+- Dependencies updated and production security hardened (Sources dropped, DevTools
+  gated behind the build profile, updater signing verified against the configured
+  public key).
+- Production packaging and CI relicensed and hardened for reliable release builds.
+
 ## [1.4.0] - 2026-09-08
 
 ### Added

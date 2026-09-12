@@ -1,7 +1,7 @@
 {
     "name": "onetype",
     "private": true,
-    "version": "1.4.0",
+    "version": "1.5.0",
     "type": "module",
     "description": "Offline-first English and Myanmar typing tutor for students and classrooms.",
     "scripts": {
