@@ -24,6 +24,13 @@ name: Release
 #   TAURI_SIGNING_PRIVATE_KEY_PASSWORD password for the updater signing key
 #   WINDOWS_CERTIFICATE                (optional) base64 PFX for Authenticode signing
 #   WINDOWS_CERTIFICATE_PASSWORD       (optional) PFX password
+#   APPLE_CERTIFICATE                  (optional) base64 .p12 Apple Developer ID
+#                                      Application certificate (macOS signing)
+#   APPLE_CERTIFICATE_PASSWORD         (optional) .p12 password
+#   APPLE_SIGNING_IDENTITY             (optional) cert name, e.g. "Developer ID Application: Aung Pwint (TEAMID)"
+#   APPLE_ID                           (optional) Apple ID for notarization
+#   APPLE_PASSWORD                     (optional) app-specific password for notarization
+#   APPLE_TEAM_ID                      (optional) Apple Developer Team ID
 #
 # Environment variables (must match the release):
 #   GITHUB_REPOSITORY_OWNER / GITHUB_REPOSITORY  used to build download URLs and
@@ -108,6 +115,7 @@ jobs:
 
     env:
       WINDOWS_CERT: ${{ secrets.WINDOWS_CERTIFICATE }}
+      APPLE_CERT: ${{ secrets.APPLE_CERTIFICATE }}
 
     steps:
       - uses: actions/checkout@v4
@@ -120,7 +128,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 11
 
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
@@ -198,10 +206,29 @@ jobs:
           esac
           echo "updater signing key secret: OK (length ${#key}); password secret: OK (non-empty)"
 
+      # ------------------------------------------------------------------
+      # macOS Developer ID signing + notarization (production only). The
+      # signing certificate and Apple account are injected via CI secrets;
+      # when they are absent the build is produced unsigned (clearly
+      # distinct from signed production releases). tauri-bundler performs
+      # the actual signing + notarization during `pnpm tauri build` using
+      # the APPLE_* environment variables below.
+      # ------------------------------------------------------------------
+      - name: Import Apple certificate (macOS)
+        if: matrix.runner-os == 'macos' && env.APPLE_CERT != ''
+        uses: apple-actions/import-codesign-certs@v3
+        with:
+          p12-file-base64: ${{ secrets.APPLE_CERTIFICATE }}
+          p12-password: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+
       - name: Build & sign release bundles
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: pnpm tauri build --target ${{ matrix.target }}
 
       # ------------------------------------------------------------------

@@ -120,12 +120,22 @@ fn validate_path(path: &str) -> Result<std::path::PathBuf> {
     if path.is_empty() || path.as_bytes().contains(&0) {
         return Err(AppError::validation("Invalid file path."));
     }
-    if path.ends_with(':') || path.ends_with(":\\") {
+    let buf = std::path::PathBuf::from(path);
+    if !buf.is_absolute() {
         return Err(AppError::validation(
-            "Invalid file path: must be a file, not a drive root.",
+            "Invalid file path: must be an absolute path.",
         ));
     }
-    Ok(std::path::PathBuf::from(path))
+    if path.ends_with(':') || path.ends_with(":\\") || ends_with_separator(path) {
+        return Err(AppError::validation(
+            "Invalid file path: must be a file, not a directory or drive root.",
+        ));
+    }
+    Ok(buf)
+}
+
+fn ends_with_separator(path: &str) -> bool {
+    path.ends_with('/') || path.ends_with(std::path::MAIN_SEPARATOR)
 }
 
 pub fn export_all(
@@ -134,6 +144,26 @@ pub fn export_all(
     student_id: Option<String>,
 ) -> Result<crate::models::ExportFile> {
     let path = validate_path(&path)?;
+    if path.is_dir() {
+        return Err(AppError::validation(
+            "Export path must be a file, not a folder.",
+        ));
+    }
+    match path.parent() {
+        Some(parent) => {
+            let meta = std::fs::metadata(parent).map_err(|e| {
+                AppError::validation(format!("Export location is not accessible: {e}"))
+            })?;
+            if !meta.is_dir() {
+                return Err(AppError::validation(
+                    "Export location must be inside an existing folder.",
+                ));
+            }
+        }
+        None => {
+            return Err(AppError::validation("Invalid file path: no parent folder."));
+        }
+    }
     let data = repo::load_export(db.conn(), student_id.as_deref())?;
     let json = serde_json::to_string_pretty(&data)?;
     std::fs::write(&path, &json)?;
@@ -144,6 +174,9 @@ pub fn import_file(db: &mut Database, path: String) -> Result<crate::models::Imp
     let path = validate_path(&path)?;
     let metadata = std::fs::metadata(&path)
         .map_err(|e| AppError::import_error(format!("Could not read the selected file: {e}")))?;
+    if !metadata.is_file() {
+        return Err(AppError::import_error("The selected path is not a file."));
+    }
     if metadata.len() > 50 * 1024 * 1024 {
         return Err(AppError::import_error(
             "This backup file is too large (over 50 MB) to import.",
@@ -252,6 +285,66 @@ mod tests {
             },
         );
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn validate_path_rejects_relative_paths() {
+        assert!(validate_path("backups/notes.json").is_err());
+        assert!(validate_path("C:notes.json").is_err());
+    }
+
+    #[test]
+    fn validate_path_rejects_directories_and_drive_roots() {
+        assert!(validate_path("C:\\").is_err());
+        assert!(validate_path("C:/").is_err());
+        let dir = std::env::temp_dir();
+        assert!(validate_path(&format!("{}/", dir.display())).is_err());
+    }
+
+    #[test]
+    fn validate_path_accepts_absolute_file_path() {
+        let path = std::env::temp_dir().join("onetype-export-test.json");
+        assert!(validate_path(&path.to_string_lossy()).is_ok());
+    }
+
+    #[test]
+    fn export_all_rejects_directories_and_missing_folders() {
+        let mut db = Database::open_in_memory().unwrap();
+
+        let dir = tempfile::tempdir().unwrap();
+        let dir_path = dir.path().to_string_lossy().into_owned();
+        let res = export_all(&mut db, dir_path.clone(), None);
+        assert!(res.is_err());
+        assert_eq!(res.err().unwrap().code, "validation_error");
+
+        let missing_parent = dir
+            .path()
+            .join("does-not-exist")
+            .join("backup.json")
+            .to_string_lossy()
+            .into_owned();
+        let res = export_all(&mut db, missing_parent, None);
+        assert!(res.is_err());
+        assert_eq!(res.err().unwrap().code, "validation_error");
+    }
+
+    #[test]
+    fn export_all_writes_to_an_existing_folder() {
+        let mut db = Database::open_in_memory().unwrap();
+        let dir = tempfile::tempdir().unwrap();
+        let target = dir.path().join("backup.json");
+        let res = export_all(&mut db, target.to_string_lossy().into_owned(), None);
+        assert!(res.is_ok(), "expected export to succeed: {:?}", res.err());
+        assert!(target.exists());
+    }
+
+    #[test]
+    fn import_file_rejects_a_directory() {
+        let mut db = Database::open_in_memory().unwrap();
+        let dir = tempfile::tempdir().unwrap();
+        let res = import_file(&mut db, dir.path().to_string_lossy().into_owned());
+        assert!(res.is_err());
+        assert_eq!(res.err().unwrap().code, "import_error");
     }
 
     fn seed_student(db: &mut Database) -> crate::models::Student {

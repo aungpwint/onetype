@@ -9,7 +9,7 @@ pub fn now_millis() -> i64 {
 
 pub fn new_id(prefix: &str) -> String {
     let mut buf = [0u8; 8];
-    if getrandom::getrandom(&mut buf).is_err() {
+    if getrandom::fill(&mut buf).is_err() {
         fallback_rand(&mut buf);
     }
     let hex: String = buf.iter().map(|b| format!("{b:02x}")).collect();
