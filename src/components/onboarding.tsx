@@ -50,8 +50,8 @@ export function Onboarding() {
             {/* Themed ambient backdrop: everything pulls from the active palette
                 so it reads native under every premium preset, dark and light. */}
             <div aria-hidden className="pointer-events-none absolute inset-0 -z-20">
-                <div className="absolute top-[-22%] left-1/2 h-[46rem] w-[46rem] -translate-x-1/2 rounded-full bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] blur-[150px]" />
-                <div className="absolute -bottom-[26%] -left-[12%] h-[38rem] w-[38rem] rounded-full bg-[color-mix(in_srgb,var(--typing-correct)_7%,transparent)] blur-[130px]" />
+                <div className="absolute top-[-22%] left-1/2 h-184 w-184 -translate-x-1/2 rounded-full bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] blur-[150px]" />
+                <div className="absolute bottom-[-26%] left-[-12%] h-152 w-152 rounded-full bg-[color-mix(in_srgb,var(--typing-correct)_7%,transparent)] blur-[130px]" />
                 <div className="absolute inset-0 bg-linear-to-br from-[color-mix(in_srgb,var(--primary)_5%,transparent)] via-transparent to-transparent" />
             </div>
             <Atmosphere className="-z-10" />
@@ -166,9 +166,7 @@ export function Onboarding() {
                     </div>
                 </div>
 
-                <p className="mt-5 text-center text-xs text-muted-foreground">
-                    Every key you press here stays on this device. No account, no cloud.
-                </p>
+                <p className="mt-5 text-center text-xs text-muted-foreground">Every key you press here stays on this device. No account, no cloud.</p>
             </div>
         </div>
     )

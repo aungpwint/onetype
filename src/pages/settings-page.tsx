@@ -18,6 +18,7 @@ import {
     Timer,
     Search,
     CornerDownLeft,
+    Info,
 } from 'lucide-react'
 import * as backend from '@/services/backend'
 import { useUiStore, previewThemePreset, applyCurrentTheme } from '@/stores/ui-store'
@@ -189,7 +190,7 @@ export default function SettingsPage() {
                                     )}
                                     style={{ background: swatch.bg }}
                                 >
-                                    <span className="flex h-4 w-10 overflow-hidden rounded-sm border border-[var(--line-strong)]">
+                                    <span className="flex h-4 w-10 overflow-hidden rounded-sm border border-line-strong">
                                         <span style={{ background: swatch.bg, width: '40%' }} />
                                         <span style={{ background: swatch.ink, width: '40%' }} />
                                         <span style={{ background: swatch.primary, width: '20%' }} />
@@ -570,6 +571,23 @@ export default function SettingsPage() {
                 <p className="mt-3 text-xs text-muted-foreground">
                     In the browser/dev preview, export downloads a JSON file and import reads one back.
                 </p>
+            </CardSection>
+
+            <CardSection icon={<Info className="size-4" />} title="About" id="settings-about">
+                <div className="mt-4 flex items-center gap-3">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 font-display text-lg font-semibold text-primary">
+                        OT
+                    </span>
+                    <div>
+                        <p className="font-display text-base font-semibold">OneType</p>
+                        <p className="text-sm text-muted-foreground">Version {__APP_VERSION__}</p>
+                    </div>
+                </div>
+                <p className="mt-4 text-sm text-muted-foreground">
+                    Offline-first touch typing tutor for English and Myanmar. It tracks per-learner progress, builds practice lessons and tests from
+                    your weak keys, records WPM and accuracy, and keeps everything on this device — no account required.
+                </p>
+                <p className="mt-3 text-xs text-muted-foreground">Copyright © 2026 Aung Pwint</p>
             </CardSection>
 
             <Modal open={report !== null} onClose={() => setReport(null)} ariaLabel="Report">

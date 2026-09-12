@@ -1,7 +1,10 @@
+import { readFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8'))
 
 const host = process.env.TAURI_DEV_HOST
 
@@ -36,6 +39,10 @@ function chunkFor(id: string): string | undefined {
 // https://vite.dev/config/
 export default defineConfig(async () => ({
     plugins: [react(), tailwindcss()],
+
+    define: {
+        __APP_VERSION__: JSON.stringify(pkg.version),
+    },
 
     resolve: {
         alias: {

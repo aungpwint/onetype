@@ -28,6 +28,13 @@ const SETTINGS_SECTIONS: SettingsEntry[] = [
     { id: 'notifications', type: 'section', label: 'Notifications', section: 'Notifications', keywords: ['notify', 'alerts', 'os'] },
     { id: 'updates', type: 'section', label: 'Updates', section: 'Updates', keywords: ['version', 'auto update', 'install'] },
     { id: 'data', type: 'section', label: 'Data', section: 'Data', keywords: ['backup', 'export', 'import', 'database', 'health'] },
+    {
+        id: 'about',
+        type: 'section',
+        label: 'About',
+        section: 'About',
+        keywords: ['version', 'software', 'app', 'copyright', 'info', 'license'],
+    },
 ]
 
 const SETTINGS_ITEMS: SettingsEntry[] = [
