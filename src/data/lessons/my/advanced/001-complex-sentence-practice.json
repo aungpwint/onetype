@@ -15,7 +15,6 @@
         "minWpm": 18
     },
     "focus": ["sentences"],
-    "prerequisites": ["lesson-my-intermediate-15"],
     "focusKeys": [
         "Digit7",
         "KeyA",

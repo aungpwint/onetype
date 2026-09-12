@@ -15,7 +15,6 @@
         "minWpm": null
     },
     "focus": ["words"],
-    "prerequisites": ["lesson-my-beginner-25"],
     "focusKeys": [
         "BracketLeft",
         "KeyA",
