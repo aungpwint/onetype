@@ -101,7 +101,9 @@ OneType ships signed installers and auto-updates through GitHub Releases. See **
 
 - How to build the Windows installer (and test offline installation).
 - Versioning and the `scripts/set-version.mjs` helper.
-- Required CI secrets (`TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]`, `WINDOWS_CERTIFICATE[_PASSWORD]`).
+- Required CI secrets: `TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]`, with optional
+  `WINDOWS_CERTIFICATE[_PASSWORD]` (Authenticode) and `APPLE_*` secrets (macOS
+  signing/notarization) — see RELEASE.md §3.
 - Creating a release and how the auto-updater works end to end.
 - Recovering from a failed release and rolling back a bad one.
 

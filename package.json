@@ -3,6 +3,7 @@
     "private": true,
     "version": "1.4.0",
     "type": "module",
+    "description": "Offline-first English and Myanmar typing tutor for students and classrooms.",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",

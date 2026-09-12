@@ -19,6 +19,12 @@
     Usage:
       pwsh scripts/set-ci-secrets.ps1                     # repo aungpwint/onetype
       pwsh scripts/set-ci-secrets.ps1 -Repo owner/name    # other repository
+
+    The Apple code-signing secrets (APPLE_CERTIFICATE, APPLE_CERTIFICATE_PASSWORD,
+    APPLE_SIGNING_IDENTITY, APPLE_ID, APPLE_PASSWORD, APPLE_TEAM_ID) and the
+    Windows Authenticode secrets (WINDOWS_CERTIFICATE, WINDOWS_CERTIFICATE_PASSWORD)
+    are NOT handled here - they must be created manually with `gh secret set`
+    per RELEASE.md sections 7 and 7b.
 #>
 
 param(

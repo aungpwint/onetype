@@ -31,6 +31,10 @@
     "createUpdaterArtifacts": true,
     "publisher": "Aung Pwint",
     "copyright": "Copyright © 2026 Aung Pwint",
+    "homepage": "https://github.com/aungpwint/onetype",
+    "category": "Education",
+    "shortDescription": "English and Myanmar typing tutor for students and classrooms",
+    "longDescription": "OneType is an offline-first typing tutor that teaches English and Myanmar touch typing. It tracks per-student progress, generates practice lessons and typing tests from weak keys, records WPM and accuracy statistics, and works fully offline with no account required.",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

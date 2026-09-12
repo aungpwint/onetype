@@ -109,6 +109,18 @@ Secrets are configured in GitHub → Settings → Secrets and variables → Acti
 | `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` | password for the above key.                                                                                             | **Yes**     |
 | `WINDOWS_CERTIFICATE`                | base64 of a PFX containing the Authenticode certificate.                                                                | No (see §7) |
 | `WINDOWS_CERTIFICATE_PASSWORD`       | password for the PFX.                                                                                                   | No (see §7) |
+| `APPLE_CERTIFICATE`                  | base64 `.p12` Apple **Developer ID Application** certificate used to sign the macOS app.                                | No (see §7b) |
+| `APPLE_CERTIFICATE_PASSWORD`         | password for the `.p12`.                                                                                                | No (see §7b) |
+| `APPLE_SIGNING_IDENTITY`             | signing identity as shown in Keychain, e.g. `Developer ID Application: Aung Pwint (TEAMID)`.                            | No (see §7b) |
+| `APPLE_ID`                           | Apple ID used for notarization.                                                                                         | No (see §7b) |
+| `APPLE_PASSWORD`                     | app-specific password for the Apple ID (create it at appleid.apple.com → App-Specific Passwords).                       | No (see §7b) |
+| `APPLE_TEAM_ID`                      | Apple Developer Team ID.                                                                                                | No (see §7b) |
+
+> The updater key (`TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]`) is the **only**
+> secret required for a working release. Windows and Apple secrets are optional
+> production upgrades: when absent, the workflow produces unsigned (clearly
+> distinguishable) development/staging builds. When present, the corresponding
+> signing + notarization steps run automatically.
 
 The workflow passes `TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]` exactly as Tauri
 expects. They are masked by GitHub and never printed in logs. Only the **public**
@@ -252,6 +264,51 @@ staging builds remain clearly distinguishable from signed production builds.
 A real certificate must be obtained from a CA (e.g. DigiCert, GlobalSign,
 Sectigo). The pipeline is deliberately configured so the certificate can be
 injected securely through CI secrets later without changing the workflow.
+
+---
+
+## 7b. macOS code signing & notarization
+
+macOS signing is **production-only and optional**: when the `APPLE_*` secrets are
+all set, the macOS build signs the `.app` with your **Developer ID Application**
+certificate and notarizes it with Apple (both are done by tauri-bundler during
+`pnpm tauri build` through the environment variables the workflow passes). When
+they are absent, the macOS build is produced unsigned and Gatekeeper will warn
+on first launch — clearly distinct from signed production builds.
+
+Setup (one-time):
+
+1. In Keychain Access → My Certificates, export your **Developer ID
+   Application** certificate as a `.p12` with a password of your choice.
+2. Set the CI secrets (values are masked by GitHub, never logged):
+
+   ```bash
+   # base64-encode the .p12 so it can live in a single secret:
+   cert_b64=$(base64 -w0 /path/to/cert.p12)
+   gh secret set APPLE_CERTIFICATE     --repo aungpwint/onetype --body "$cert_b64"
+   gh secret set APPLE_CERTIFICATE_PASSWORD --repo aungpwint/onetype
+
+   # identity exactly as shown in Keychain, e.g.
+   gh secret set APPLE_SIGNING_IDENTITY --repo aungpwint/onetype  # "Developer ID Application: Aung Pwint (TEAMID)"
+
+   # notarization account
+   gh secret set APPLE_ID    --repo aungpwint/onetype  # your Apple ID email
+   gh secret set APPLE_PASSWORD --repo aungpwint/onetype  # app-specific password
+   gh secret set APPLE_TEAM_ID --repo aungpwint/onetype   # Team ID
+   ```
+
+   > Never commit the `.p12` or any of these secret values to the repository.
+   > The failure mode of a hardcoded Apple credential is account compromise and
+   > automatic revocation of your signing identity.
+
+3. Re-run the release. The `Import Apple certificate` step imports the `.p12`
+   into the ephemeral runner keychain, and the `Build & sign release bundles`
+   step passes `APPLE_SIGNING_IDENTITY`, `APPLE_ID`, `APPLE_PASSWORD` and
+   `APPLE_TEAM_ID` to tauri-bundler, which signs and notarizes the app.
+
+4. If only a subset of the `APPLE_*` secrets is set, the workflow still succeeds
+   but produces an **unsigned** macOS build. Set all of them together for a
+   fully signed, notarized build.
 
 ---
 
