@@ -222,14 +222,26 @@ jobs:
           p12-password: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
 
       - name: Build & sign release bundles
+        shell: bash
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-        run: pnpm tauri build --target ${{ matrix.target }}
+        run: |
+          set -euo pipefail
+          # macOS Developer ID signing + notarization is production-only and
+          # driven entirely by the APPLE_* secrets. Export them ONLY when the
+          # certificate is actually configured: tauri-bundler attempts to
+          # codesign whenever APPLE_SIGNING_IDENTITY is present (even as an
+          # empty string), so an unset secret must leave the variable absent to
+          # produce a clean unsigned build.
+          if [ "${{ matrix.runner-os }}" = "macos" ] && [ -n "${APPLE_CERT:-}" ]; then
+            export APPLE_SIGNING_IDENTITY="${{ secrets.APPLE_SIGNING_IDENTITY }}"
+            export APPLE_ID="${{ secrets.APPLE_ID }}"
+            export APPLE_PASSWORD="${{ secrets.APPLE_PASSWORD }}"
+            export APPLE_TEAM_ID="${{ secrets.APPLE_TEAM_ID }}"
+            echo "::notice::macOS signing + notarization enabled (APPLE_* secrets present)"
+          fi
+          pnpm tauri build --target ${{ matrix.target }}
 
       # ------------------------------------------------------------------
       # Windows Authenticode code signing (production only). The certificate
