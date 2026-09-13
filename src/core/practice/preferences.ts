@@ -1,4 +1,4 @@
-type PracticeUnit = 'time' | 'words'
+import type { PracticeUnit } from '@/core/materials/practice-material'
 
 interface PracticePreferences {
     unit: PracticeUnit
@@ -26,7 +26,8 @@ function asBoolean(value: string | number | boolean | undefined): boolean {
 }
 
 export function resolvedPracticePreferences(overrides: Partial<Record<keyof PracticePreferences, string | number | boolean>>): PracticePreferences {
-    const unit: PracticeUnit = overrides.unit === 'words' ? 'words' : 'time'
+    const unit: PracticeUnit =
+        overrides.unit === 'words' || overrides.unit === 'quote' || overrides.unit === 'text' ? overrides.unit : 'time'
     const rawTime = Number(overrides.time)
     const rawWords = Number(overrides.words)
     const lang = overrides.lang === 'myanmar' ? 'myanmar' : 'english'

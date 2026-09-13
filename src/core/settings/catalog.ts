@@ -18,6 +18,7 @@ const SETTINGS_SECTIONS: SettingsEntry[] = [
         keywords: ['caret', 'cursor', 'highlight', 'timer', 'errors'],
     },
     { id: 'practice', type: 'section', label: 'Practice', section: 'Practice', keywords: ['sound', 'finger', 'focus', 'goal'] },
+    { id: 'teacher', type: 'section', label: 'Teacher', section: 'Teacher', keywords: ['students', 'roll', 'class', 'classroom', 'codes'] },
     {
         id: 'shortcuts',
         type: 'section',
@@ -59,6 +60,13 @@ const SETTINGS_ITEMS: SettingsEntry[] = [
     { id: 'pace-caret', type: 'item', label: 'Pace caret', section: 'Typing experience', keywords: ['second caret', 'trail', 'wpm'] },
     { id: 'hide-extra-letters', type: 'item', label: 'Hide extra letters', section: 'Typing experience', keywords: ['word', 'current', 'show'] },
     { id: 'timer-style', type: 'item', label: 'Timer style', section: 'Typing experience', keywords: ['progress bar', 'text', 'mini', 'hidden'] },
+    {
+        id: 'lesson-mode',
+        type: 'item',
+        label: 'Lesson mode',
+        section: 'Typing experience',
+        keywords: ['guided', 'practice', 'strict', 'lesson', 'backspace'],
+    },
 
     { id: 'key-sounds', type: 'item', label: 'Key click sounds', section: 'Practice', keywords: ['click', 'type', 'volume', 'sound'] },
     { id: 'hand-guide', type: 'item', label: 'Hand guide', section: 'Practice', keywords: ['finger', 'next', 'hands', 'guide'] },
@@ -98,6 +106,8 @@ const SETTINGS_ITEMS: SettingsEntry[] = [
         section: 'Practice',
         keywords: ['goal', 'ring', 'dashboard', 'minutes', 'streak'],
     },
+
+    { id: 'student-code-prefix', type: 'item', label: 'Student code prefix', section: 'Teacher', keywords: ['code', 'prefix', 'roll number', 'STU'] },
 
     {
         id: 'notifications-enabled',

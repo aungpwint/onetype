@@ -145,7 +145,7 @@ export default function TestsPage() {
                 <Spinner label="Gathering the papers…" />
             ) : groups.length === 0 ? (
                 <p className="text-sm text-muted-foreground">
-                    No tests seeded. Add them in <code>src/data/seeds</code>.
+                    No tests yet. Starter tests are seeded automatically on first launch.
                 </p>
             ) : (
                 groups.map((group) => (

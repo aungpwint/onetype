@@ -58,25 +58,43 @@ fn row_to_student(row: &rusqlite::Row<'_>) -> rusqlite::Result<Student> {
     })
 }
 
+fn configured_student_code_prefix(conn: &Connection) -> Option<String> {
+    match conn.query_row(
+        "SELECT value FROM settings WHERE key = 'teacher.studentCodePrefix'",
+        [],
+        |r| r.get::<_, String>(0),
+    ) {
+        Ok(value)
+            if !value.is_empty()
+                && value.len() <= 6
+                && value.chars().all(|c| c.is_ascii_alphabetic()) =>
+        {
+            Some(value)
+        }
+        _ => None,
+    }
+}
+
 fn next_student_code(conn: &Connection) -> Result<String> {
+    let prefix = configured_student_code_prefix(conn).unwrap_or_else(|| "STU".to_string());
     // Numeric max of the suffix (mirrors the browser fallback in local.ts):
-    // a plain MAX() over TEXT would leave the max at "STU9" even after
-    // "STU10" exists, so a roster past 9 learners could never grow again.
+    // a plain MAX() over TEXT would leave the max at "{prefix}9" even after
+    // "{prefix}10" exists, so a roster past 9 learners could never grow again.
     // Read the raw suffixes and fold the max in Rust — a SQL MAX() over an
     // aggregate column reports a NULL declared type to rusqlite and fails on
     // empty tables.
     let mut stmt = conn.prepare(
-        "SELECT CAST(SUBSTR(student_code, 4) AS INTEGER) FROM students \
-         WHERE student_code LIKE 'STU%' AND SUBSTR(student_code, 4) GLOB '[0-9]*'",
+        "SELECT CAST(SUBSTR(student_code, LENGTH(?1) + 1) AS INTEGER) FROM students \
+         WHERE student_code LIKE ?2 || '%' AND SUBSTR(student_code, LENGTH(?1) + 1) GLOB '[0-9]*'",
     )?;
-    let rows = stmt.query_map([], |row| row.get::<_, i64>(0))?;
+    let rows = stmt.query_map(params![prefix, prefix], |row| row.get::<_, i64>(0))?;
     let mut max_suffix: Option<i64> = None;
     for suffix in rows {
         let value = suffix?;
         max_suffix = Some(max_suffix.map_or(value, |current| current.max(value)));
     }
     let next_number = max_suffix.unwrap_or(0) + 1;
-    Ok(format!("STU{:03}", next_number))
+    Ok(format!("{prefix}{next_number:03}"))
 }
 
 pub fn create_student(conn: &Connection, req: &CreateStudentRequest) -> Result<Student> {
@@ -1340,6 +1358,43 @@ mod tests {
             params![student.id, student.student_code, student.name, student.display_name, student.avatar, i64::from(student.active), student.created_at, student.updated_at],
         )?;
         Ok(student)
+    }
+
+    #[test]
+    fn next_student_code_respects_configured_prefix() {
+        let db = Database::open_in_memory().unwrap();
+        let conn = db.conn();
+        // Default prefix with no students starts the counter at STU001.
+        assert_eq!(next_student_code(conn).unwrap(), "STU001");
+        create_student(
+            conn,
+            &crate::models::CreateStudentRequest {
+                name: "A".into(),
+                student_code: None,
+                display_name: None,
+            },
+        )
+        .unwrap();
+        assert_eq!(next_student_code(conn).unwrap(), "STU002");
+
+        // A configured prefix is honoured, and existing codes that use another
+        // prefix do not contribute to the counter.
+        set_setting(conn, "teacher.studentCodePrefix", "TEA").unwrap();
+        create_student(
+            conn,
+            &crate::models::CreateStudentRequest {
+                name: "B".into(),
+                student_code: Some("TEA007".into()),
+                display_name: None,
+            },
+        )
+        .unwrap();
+        assert_eq!(next_student_code(conn).unwrap(), "TEA008");
+
+        // Invalid configured prefixes fall back to the default family; the
+        // existing STU001 is counted while the TEA-prefixed code is ignored.
+        set_setting(conn, "teacher.studentCodePrefix", "bad prefix!").unwrap();
+        assert_eq!(next_student_code(conn).unwrap(), "STU002");
     }
 
     #[test]

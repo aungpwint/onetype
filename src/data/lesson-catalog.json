@@ -1,6 +1,6 @@
 {
     "schemaVersion": 1,
-    "generatedFrom": "src/data/lessons/*.ts",
+    "generatedFrom": "src/data/lessons/**/*.json",
     "updatedAt": "2026-09-05T17:22:45.835Z",
     "lessons": [
         {

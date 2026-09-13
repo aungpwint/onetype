@@ -668,16 +668,21 @@ function bindKeys() {
         }
         if (status !== 'running' && status !== 'ready') return
         if (status === 'ready') {
-            // Lesson exercises follow the trainer's "Press Tab to start" gate;
-            // timed tests and drills keep the snappier first-key start.
-            if (session?.kind === 'lesson' && event.code !== 'Tab') return
+            // Guided lessons follow the trainer's "Press Tab to start" gate;
+            // practice mode starts on the first keystroke instead. Timed tests
+            // and drills keep the snappier first-key start.
+            const isLesson = session?.kind === 'lesson'
+            if (isLesson && session.mode !== 'practice' && event.code !== 'Tab') return
             useTypingStore.getState().start()
         }
         if (event.altKey || event.ctrlKey || event.metaKey) return
         if (event.repeat) return
         if (IGNORED_CODES.has(event.code)) return
         if (event.code === 'Backspace') {
-            engine.processKey('Backspace', 'none')
+            // Strict mode locks out corrections so a wrong keystroke has to
+            // stand as typed (and an accidental Backspace can't erase it).
+            const isStrictLesson = session?.kind === 'lesson' && session.mode === 'strict'
+            if (!isStrictLesson) engine.processKey('Backspace', 'none')
             return
         }
         event.preventDefault()

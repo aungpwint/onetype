@@ -79,14 +79,21 @@ function now(): number {
     return Date.now()
 }
 
+function configuredStudentCodePrefix(): string {
+    const settings = read<Record<string, string>>(KEYS.settings, {})
+    const prefix = settings['teacher.studentCodePrefix']
+    return typeof prefix === 'string' && /^[A-Za-z]{1,6}$/.test(prefix) ? prefix : 'STU'
+}
+
 function nextStudentCode(): string {
+    const prefix = configuredStudentCodePrefix()
     const students = read<Student[]>(KEYS.students, [])
     let max = 0
     for (const student of students) {
-        const match = /^STU(\d+)$/.exec(student.studentCode)
+        const match = new RegExp(`^${prefix}(\\d+)$`).exec(student.studentCode)
         if (match) max = Math.max(max, Number.parseInt(match[1], 10))
     }
-    return `STU${String(max + 1).padStart(3, '0')}`
+    return `${prefix}${String(max + 1).padStart(3, '0')}`
 }
 
 function seedTestsIfMissing() {

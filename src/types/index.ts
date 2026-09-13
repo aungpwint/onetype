@@ -20,8 +20,6 @@ export type FingerId =
 
 export type FingerState = 'idle' | 'active' | 'correct' | 'incorrect' | 'disabled'
 
-export type ExerciseType = 'character' | 'random-characters' | 'syllable' | 'word' | 'sentence' | 'paragraph' | 'mixed' | 'timed-test' | 'exam'
-
 export type TypingMode = 'guided' | 'practice' | 'strict' | 'test' | 'quick'
 
 export type ThemePreference = 'light' | 'dark' | 'system'

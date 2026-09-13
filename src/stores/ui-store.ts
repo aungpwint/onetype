@@ -110,9 +110,23 @@ export const useUiStore = create<UiState>((set) => ({
         applyTheme(theme, presetId)
         set({ themePreset: presetId })
     },
-    toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
-    setSidebarOpen: (open) => set({ sidebarOpen: open }),
-    toggleHandGuide: () => set((state) => ({ handGuideVisible: !state.handGuideVisible })),
+    toggleSidebar: () => {
+        const next = !useUiStore.getState().sidebarOpen
+        set({ sidebarOpen: next })
+        void useSettingsStore.getState().set('view.sidebar' as AppSettingKey, next ? 'on' : 'off')
+    },
+    setSidebarOpen: (open) => {
+        set({ sidebarOpen: open })
+        void useSettingsStore.getState().set('view.sidebar' as AppSettingKey, open ? 'on' : 'off')
+    },
+    toggleHandGuide: () => {
+        const next = !useUiStore.getState().handGuideVisible
+        set({ handGuideVisible: next })
+        // Keep the persisted practice.handGuide setting and the in-memory
+        // toggle in sync so the preference survives restarts (mirror the sound
+        // bridge).
+        void useSettingsStore.getState().set('practice.handGuide' as AppSettingKey, next ? 'on' : 'off')
+    },
     setSoundEnabled: (enabled) => {
         localStorage.setItem(UI_KEYS.sound, enabled ? 'on' : 'off')
         set({ soundEnabled: enabled })

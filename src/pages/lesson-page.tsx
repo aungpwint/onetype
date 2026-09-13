@@ -14,7 +14,10 @@ export default function LessonPage() {
     const beginLesson = useTypingStore((s) => s.beginLesson)
 
     const load = useCallback(() => {
-        const mode = (localStorage.getItem(UI_KEYS.lessonMode) as TypingMode | null) ?? 'guided'
+        const stored = localStorage.getItem(UI_KEYS.lessonMode)
+        // Only the lesson-applicable modes are meaningful here; anything else
+        // (test, quick, or a stale/unknown value) falls back to guided.
+        const mode: TypingMode = stored === 'practice' || stored === 'strict' ? stored : 'guided'
         return lessonId ? beginLesson(lessonId, mode) : Promise.resolve()
     }, [lessonId, beginLesson])
 

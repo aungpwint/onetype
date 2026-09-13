@@ -9,6 +9,29 @@ the curated source maintained alongside `scripts/release-notes.mjs`, which the
 `release` GitHub Actions workflow uses (with per-platform downloads, checksums
 and auto-update notes) to build every GitHub Release page.
 
+## [Unreleased]
+
+### Added
+
+- Lesson modes: lessons can now run in Guided (press Tab to start), Practice
+  (start on the first keystroke) or Strict (Backspace disabled) mode, chosen in
+  Settings.
+- Teacher settings: the prefix used for automatically generated student codes
+  is now configurable (new learners only — existing codes keep their prefix).
+
+### Fixed
+
+- Quote and custom-text practice modes now work: Time/Words/Quote/Text are all
+  selectable on the Practice screen, and the started button guards against
+  starting a run with empty custom text.
+- The hand-guide and sidebar preferences are now persisted and restored across
+  restarts instead of resetting every launch.
+
+### Changed
+
+- The Settings catalogue and search now cover the new Lesson mode and Teacher
+  options.
+
 ## [1.5.0] - 2026-09-13
 
 ### Added

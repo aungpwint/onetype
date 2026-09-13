@@ -19,12 +19,14 @@ import {
     Search,
     CornerDownLeft,
     Info,
+    Users,
 } from 'lucide-react'
 import * as backend from '@/services/backend'
 import { useUiStore, previewThemePreset, applyCurrentTheme } from '@/stores/ui-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { useStudentStore } from '@/stores/student-store'
 import { useUpdater } from '@/services/updater/use-updater'
+import { UI_KEYS } from '@/services/storage-keys'
 import type { ThemePreference } from '@/types'
 import { THEMES, DEFAULT_THEME_PRESET_ID } from '@/core/themes/registry'
 import { searchSettings, groupMatches, type SettingsEntry } from '@/core/settings/catalog'
@@ -67,10 +69,12 @@ export default function SettingsPage() {
     const notificationsEnabled = settings.get('notification.enabled')
     const notifyUpdates = settings.get('notification.notifyUpdates')
     const themeEffect = settings.get('design.themeEffect')
+    const studentCodePrefix = settings.get('teacher.studentCodePrefix')
 
     const [report, setReport] = useState<{ kind: 'export' | 'import'; message: string } | null>(null)
     const [busy, setBusy] = useState<string | null>(null)
     const [query, setQuery] = useState('')
+    const [lessonMode, setLessonMode] = useState(() => localStorage.getItem(UI_KEYS.lessonMode) ?? 'guided')
 
     const searchResults = useMemo(() => (query.trim() === '' ? null : groupMatches(searchSettings(query))), [query])
 
@@ -354,6 +358,27 @@ export default function SettingsPage() {
                             </SelectField>
                         </div>
                     </Field>
+                    <Field
+                        label="Lesson mode"
+                        hint="Guided waits for a Tab press; practice starts on the first keystroke; strict disables Backspace."
+                        id="settings-lesson-mode"
+                    >
+                        <div className="relative">
+                            <SelectField
+                                className="w-full"
+                                value={lessonMode}
+                                onChange={(e) => {
+                                    const next = e.currentTarget.value
+                                    localStorage.setItem(UI_KEYS.lessonMode, next)
+                                    setLessonMode(next)
+                                }}
+                            >
+                                <option value="guided">Guided (Tab to start)</option>
+                                <option value="practice">Practice (start on first key)</option>
+                                <option value="strict">Strict (no Backspace)</option>
+                            </SelectField>
+                        </div>
+                    </Field>
                 </div>
             </CardSection>
 
@@ -438,6 +463,23 @@ export default function SettingsPage() {
                         />
                     </Field>
                 </div>
+            </CardSection>
+
+            <CardSection icon={<Users className="size-4" />} title="Teacher" id="settings-teacher">
+                <Field
+                    label="Student code prefix"
+                    hint="Prepended to automatically generated student codes. Affects new learners only — existing codes keep their prefix. Letters only, up to six."
+                    id="settings-student-code-prefix"
+                >
+                    <input
+                        type="text"
+                        maxLength={6}
+                        value={studentCodePrefix}
+                        onChange={(e) => void settings.set('teacher.studentCodePrefix', e.currentTarget.value.replace(/[^A-Za-z]/g, ''))}
+                        placeholder="STU"
+                        className={cn(inputClass, 'w-44')}
+                    />
+                </Field>
             </CardSection>
 
             <CardSection icon={<Paintbrush className="size-4" />} title="Keyboard shortcuts" id="settings-shortcuts">

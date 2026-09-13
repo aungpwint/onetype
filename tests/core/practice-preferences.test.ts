@@ -42,6 +42,11 @@ describe('resolvedPracticePreferences', () => {
         })
     })
 
+    it('keeps the text and quote units instead of coercing them to time', () => {
+        expect(resolvedPracticePreferences({ unit: 'text' }).unit).toBe('text')
+        expect(resolvedPracticePreferences({ unit: 'quote' }).unit).toBe('quote')
+    })
+
     it('resolves punctuation and numbers from on/off and boolean inputs', () => {
         expect(resolvedPracticePreferences({ punctuation: 'on', numbers: 'off' })).toMatchObject({ punctuation: true, numbers: false })
         expect(resolvedPracticePreferences({ punctuation: true, numbers: '1' })).toMatchObject({ punctuation: true, numbers: true })

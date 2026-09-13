@@ -233,10 +233,11 @@ export default function PracticePage() {
 
                 <button
                     onClick={start}
-                    className="text-accent-foreground mt-8 flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold shadow-sm transition-colors hover:bg-accent/90 active:bg-accent/80"
+                    disabled={unit === 'text' && text.trim().length === 0}
+                    className="text-accent-foreground mt-8 flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold shadow-sm transition-colors hover:bg-accent/90 active:bg-accent/80 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-accent"
                 >
                     <RotateCcw className="size-4" />
-                    Start
+                    {unit === 'text' && text.trim().length === 0 ? 'Paste your text first' : 'Start'}
                 </button>
             </div>
         </>

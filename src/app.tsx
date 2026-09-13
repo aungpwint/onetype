@@ -96,9 +96,17 @@ function Boot() {
     useStartupUpdateCheck()
     useEffect(() => {
         void useUiStore.getState().setTheme(useUiStore.getState().theme)
-        void useSettingsStore.getState().load()
-        void useStudentStore.getState().load()
         void notificationService.init()
+        void useStudentStore.getState().load()
+        void useSettingsStore.getState().load().then(() => {
+            // Restore persisted view preferences once settings arrive, so a
+            // closed sidebar / hidden hand guide survives a restart.
+            const settings = useSettingsStore.getState()
+            useUiStore.setState({
+                sidebarOpen: settings.get('view.sidebar') === 'on',
+                handGuideVisible: settings.get('practice.handGuide') === 'on',
+            })
+        })
         // Warm the lesson catalog in the background (single shared in-flight
         // load) so the Learn screen and any lesson deep-link render instantly
         // instead of paying the full import + validation cost on first click.
