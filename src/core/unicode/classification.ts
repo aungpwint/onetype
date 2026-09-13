@@ -27,6 +27,7 @@ export const INDEPENDENT_VOWEL_OA_START = 0x1029 // ဩ
 export const INDEPENDENT_VOWEL_OA_END = 0x102a // ဪ
 export const VOWEL_SIGN_START = 0x102b // ါ
 export const VOWEL_SIGN_END = 0x1032 // ဲ
+export const VOWEL_SIGN_KINAUNG = 0x1035 // ၵ — E Kinaung (lar ai), an assigned vowel sign used in Rakhine
 export const PRE_BASE_VOWEL = 0x1031 // ေ — the only pre-base vowel in the core block
 export const ANUSVARA_TONE = 0x1036 // ံ
 export const DOT_BELOW_TONE = 0x1037 // ့
@@ -55,6 +56,7 @@ export function classifyMyanmarCharacter(code: number): MyanmarCharacterCategory
         return 'independent-vowel'
     }
     if (code === PRE_BASE_VOWEL) return 'pre-base-vowel'
+    if (code === VOWEL_SIGN_KINAUNG) return 'dependent-vowel'
     if (code >= VOWEL_SIGN_START && code <= VOWEL_SIGN_END) return 'dependent-vowel'
     if (code >= MEDIAL_START && code <= MEDIAL_END) return 'medial'
     if (code === ANUSVARA_TONE || code === DOT_BELOW_TONE || code === VISARGA_TONE) return 'tone'
@@ -76,7 +78,7 @@ export function isIndependentVowel(code: number): boolean {
 }
 
 export function isDependentVowel(code: number): boolean {
-    return code >= VOWEL_SIGN_START && code <= VOWEL_SIGN_END && code !== PRE_BASE_VOWEL
+    return (code >= VOWEL_SIGN_START && code <= VOWEL_SIGN_END && code !== PRE_BASE_VOWEL) || code === VOWEL_SIGN_KINAUNG
 }
 
 export function isPreBaseVowel(code: number): boolean {
@@ -114,6 +116,7 @@ export function isMyanmarSyllableHead(code: number): boolean {
 export function isMyanmarAttachingMark(code: number): boolean {
     return (
         (code >= VOWEL_SIGN_START && code <= VOWEL_SIGN_END) ||
+        code === VOWEL_SIGN_KINAUNG ||
         (code >= MEDIAL_START && code <= MEDIAL_END) ||
         code === ASAT ||
         code === VIRAMA ||

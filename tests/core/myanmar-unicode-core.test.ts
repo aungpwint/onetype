@@ -537,12 +537,12 @@ describe('Myanmar word-final preposed vowel (rendering regression)', () => {
         }
     })
 
-    it('merges a preposed vowel forward only into a following base consonant', () => {
-        // Internal preposed vowel still belongs to the syllable headed by the
-        // next base consonant ("ေခံ" inside အခြေခံ), while a word-final one
-        // stays with the preceding base.
-        expect(splitMyanmarSyllables('အခြေခံ')).toEqual(['အ', 'ခြ', 'ေခံ'])
-        expect(splitMyanmarSyllables('အခြေခံ စကားလုံး')).toEqual(['အ', 'ခြ', 'ေခံ', ' ', 'စ', 'ကား', 'လုံး'])
+    it('joins a mid-word preposed vowel into its own canonical base cluster', () => {
+        // Canonical Unicode stores the preposed vowel after its base (ခြေ),
+        // so the vowel merges backward — not forward — into the preceding
+        // syllable head.
+        expect(splitMyanmarSyllables('အခြေခံ')).toEqual(['အ', 'ခြေ', 'ခံ'])
+        expect(splitMyanmarSyllables('အခြေခံ စကားလုံး')).toEqual(['အ', 'ခြေ', 'ခံ', ' ', 'စ', 'ကား', 'လုံး'])
     })
 })
 

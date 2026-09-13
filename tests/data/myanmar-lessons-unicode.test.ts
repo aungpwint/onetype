@@ -99,7 +99,7 @@ describe('Canonical Myanmar word corpus', () => {
         expect(splitMyanmarSyllables('အဖေ')).toEqual(['အ', 'ဖေ'])
         expect(splitMyanmarSyllables('အမေ')).toEqual(['အ', 'မေ'])
         expect(splitMyanmarSyllables('ခြေ')).toEqual(['ခြေ'])
-        expect(splitMyanmarSyllables('အခြေခံ')).toEqual(['အ', 'ခြ', 'ေခံ'])
+        expect(splitMyanmarSyllables('အခြေခံ')).toEqual(['အ', 'ခြေ', 'ခံ'])
     })
 
     it('regression: the corrupted ZWNJ-preposed-vowel forms are flagged and normalized away', () => {

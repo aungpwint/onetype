@@ -47,7 +47,7 @@ describe('Myanmar grapheme runs are complete shaping units', () => {
         expect(texts.has('ဖေ')).toBe(true)
         expect(texts.has('မေ')).toBe(true)
         expect(texts.has('ခြေ')).toBe(true)
-        expect(texts.has('ေခံ')).toBe(true)
+        expect(texts.has('ခံ')).toBe(true)
     })
 })
 
@@ -237,8 +237,8 @@ describe('Regression: current word ≠ current grapheme (repeat-char isolation)'
     })
 
     it('the highlight never bleeds across a single Myanmar word — 3-grapheme "အခြေခံ"', () => {
-        // အခြေခံ is ONE word made of THREE graphemes: 'အ' [0,1), 'ခြ' [1,3),
-        // 'ေခံ' [3,6). While typing any one of them, ONLY that grapheme is
+        // အခြေခံ is ONE word made of THREE graphemes: 'အ' [0,1), 'ခြေ' [1,4),
+        // 'ခံ' [4,6). While typing any one of them, ONLY that grapheme is
         // current — the other two graphemes of the same word are NOT.
         const seq = buildSequence('အခြေခံ', myanmar)
         const runs = graphemeUnitRuns(seq)
@@ -250,15 +250,15 @@ describe('Regression: current word ≠ current grapheme (repeat-char isolation)'
         expect(isCurrentGrapheme(0, runs[1]!.startUnit, runs[1]!.endUnit)).toBe(false)
         expect(isCurrentGrapheme(0, runs[2]!.startUnit, runs[2]!.endUnit)).toBe(false)
 
-        // Caret on the middle grapheme (unit 1, inside 'ခြ').
-        expect(isCurrentGrapheme(1, runs[0]!.startUnit, runs[0]!.endUnit)).toBe(false)
-        expect(isCurrentGrapheme(1, runs[1]!.startUnit, runs[1]!.endUnit)).toBe(true)
-        expect(isCurrentGrapheme(1, runs[2]!.startUnit, runs[2]!.endUnit)).toBe(false)
+        // Caret on the middle grapheme (unit 2, inside 'ခြေ').
+        expect(isCurrentGrapheme(2, runs[0]!.startUnit, runs[0]!.endUnit)).toBe(false)
+        expect(isCurrentGrapheme(2, runs[1]!.startUnit, runs[1]!.endUnit)).toBe(true)
+        expect(isCurrentGrapheme(2, runs[2]!.startUnit, runs[2]!.endUnit)).toBe(false)
 
-        // Caret on the last grapheme (unit 3, inside 'ေခံ').
-        expect(isCurrentGrapheme(3, runs[0]!.startUnit, runs[0]!.endUnit)).toBe(false)
-        expect(isCurrentGrapheme(3, runs[1]!.startUnit, runs[1]!.endUnit)).toBe(false)
-        expect(isCurrentGrapheme(3, runs[2]!.startUnit, runs[2]!.endUnit)).toBe(true)
+        // Caret on the last grapheme (unit 4, inside 'ခံ').
+        expect(isCurrentGrapheme(4, runs[0]!.startUnit, runs[0]!.endUnit)).toBe(false)
+        expect(isCurrentGrapheme(4, runs[1]!.startUnit, runs[1]!.endUnit)).toBe(false)
+        expect(isCurrentGrapheme(4, runs[2]!.startUnit, runs[2]!.endUnit)).toBe(true)
     })
 })
 

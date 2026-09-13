@@ -113,15 +113,29 @@ export function splitMyanmarSyllables(text: string): string[] {
         }
 
         if (isSyllableStart(code, prev, next)) {
-            // A held preposed vowel merges only into a cluster headed by a real
-            // host base; otherwise re-join it to the syllable it follows.
-            if (pending.length > 0 && !isMyanmarSyllableHead(code)) {
+            // Canonical Unicode stores the preposed vowel (ေ) AFTER its own
+            // base (ရေ). When the cluster being built already has a head, the
+            // held vowel belongs to it and must not leak forward onto the next
+            // syllable. It only attaches forward when it opens a word run
+            // (legacy order, e.g. "ေရ"), where the current cluster has no head.
+            if (pending.length > 0 && hasSyllableHead(current)) {
                 current += pending
                 pending = ''
             }
             if (current.length > 0) out.push(current)
-            current = pending + chars[i]
-            pending = ''
+            // A stray/legacy pre-base vowel with no host head must not swallow
+            // the following whitespace/punctuation/digit (e.g. a lone "ေ" in a
+            // key legend followed by a space). Flush it as its own cluster and
+            // start the new group fresh. A real legacy word run ("ေ" + base,
+            // e.g. "ေရ") keeps the vowel attached forward.
+            if (pending.length > 0 && !hasSyllableHead(current) && !isMyanmarSyllableHead(code)) {
+                out.push(pending)
+                pending = ''
+                current = chars[i]
+            } else {
+                current = pending + chars[i]
+                pending = ''
+            }
         } else {
             // An attaching mark continues the current syllable; any held
             // preposed vowel belongs to it and lands BEFORE the mark.
@@ -129,12 +143,26 @@ export function splitMyanmarSyllables(text: string): string[] {
                 current += pending
                 pending = ''
             }
+            // A mark never attaches to a bare cross-script/whitespace run: an
+            // isolated diacritic shown on its own (key legends, stray input)
+            // starts its own cluster instead of fusing with surrounding spaces.
+            if (current.length > 0 && !containsMyanmar(current)) {
+                out.push(current)
+                current = ''
+            }
             current += chars[i]
         }
     }
     if (pending.length > 0) current += pending
     if (current.length > 0) out.push(current)
     return out
+}
+
+function hasSyllableHead(cluster: string): boolean {
+    for (const ch of cluster) {
+        if (isMyanmarSyllableHead(ch.codePointAt(0) ?? 0)) return true
+    }
+    return false
 }
 
 function isSyllableStart(code: number, prev: number, next: number): boolean {
