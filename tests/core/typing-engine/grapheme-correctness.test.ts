@@ -381,6 +381,33 @@ describe('English remains character-by-character and real-time', () => {
     })
 })
 
+describe('Regression: tt-char-ok appears per individual Myanmar character', () => {
+    it('ကို: typing က alone already flips that slot to ok, long before the cluster completes', () => {
+        const { engine, seq } = makeEngine('ကို', myanmar)
+        const run = graphemeUnitRuns(seq)[0]!
+        expect(seq.units.map((u) => u.text)).toEqual(['က', 'ိ', 'ု'])
+        expect(run.slots).toHaveLength(3)
+
+        // No keystrokes yet: nothing is ok, first character is current.
+        expect(slotStates(engine, run)).toEqual(['now', 'pending', 'pending'])
+
+        // After typing only the base က, exactly that character is tt-char-ok.
+        typeUnits(engine, seq, 1)
+        expect(slotStates(engine, run)).toEqual(['ok', 'now', 'pending'])
+
+        // Still composing — the whole cluster must NOT be green yet.
+        expect(present(engine, run).correctness).toBe('pending')
+
+        // ကိ်: both က and ိ ok, only ို remains.
+        typeUnits(engine, seq, 2)
+        expect(slotStates(engine, run)).toEqual(['ok', 'ok', 'now'])
+
+        // ကို complete: the whole grapheme commits green.
+        typeUnits(engine, seq, 3)
+        expect(present(engine, run).correctness).toBe('correct')
+    })
+})
+
 describe('Only one grapheme is current at any caret position (current-character highlight)', () => {
     it('က က က က: exactly one grapheme is current at each unit', () => {
         const { engine, seq } = makeEngine('က က က က', myanmar)

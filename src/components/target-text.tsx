@@ -339,8 +339,18 @@ const Char = memo(function Char({
                 : null
 
     if (view.isCurrent) {
-        // Slots are `display: contents` so Chromium shapes the whole grapheme as ONE text run.
+        // myantyper-style two-layer reveal. The syllable is shaped once as a
+        // composed dim ground layer (correct joined Myanmar), and a green
+        // overlay is drawn on top containing ONLY the typed prefix. A partial
+        // prefix shapes the same way as the composed whole for typical
+        // syllables, so every key press turns exactly its letter green at the
+        // moment of the keystroke — no per-unit boxes (spaced-out marks), no
+        // first-box colour bleed, no overlay misalignment.
         const activeInk = highlightMode === 'word' || highlightMode === 'letter' ? 'tt-char-focus' : null
+        const typedText = (view.slots ?? [])
+            .filter((slot) => slot.completed)
+            .map((slot) => slot.text)
+            .join('')
         const spanCount = Math.max(1, endUnit - startUnit)
         const slotWidth = `${100 / spanCount}%`
         const barAnchored = caretClass !== 'tt-caret--block' && caretClass !== 'tt-caret--underline'
@@ -357,26 +367,12 @@ const Char = memo(function Char({
                     hidden ?? undefined,
                 )}
             >
-                {(view.slots ?? []).map((slot) => {
-                    const slotClass = slot.isCurrent
-                        ? slot.outcome === 'incorrect'
-                            ? missClass
-                            : highlightMode === 'word'
-                              ? 'tt-word-now'
-                              : highlightMode === 'none'
-                                ? null
-                                : 'tt-char-focus'
-                        : slot.completed
-                          ? slot.outcome === 'incorrect'
-                              ? missClass
-                              : 'tt-char-ok'
-                          : 'tt-char-typed'
-                    return (
-                        <span key={slot.slot} className={cn('tt-slot', slotClass)}>
-                            {slot.text}
-                        </span>
-                    )
-                })}
+                <span className="tt-char-ground">{text}</span>
+                {typedText ? (
+                    <span aria-hidden className="tt-char-progress">
+                        <span>{typedText}</span>
+                    </span>
+                ) : null}
                 {focused ? (
                     <span
                         aria-hidden
