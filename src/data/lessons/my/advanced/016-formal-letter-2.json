@@ -6,62 +6,26 @@
     "number": 16,
     "title": "Formal Letter 2",
     "titleMy": "တရားဝင် စာ (၂)",
-    "description": "တရားဝင် စာ၏ နောက်ထပ် ပုံစံများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
+    "description": "ပိုမိုရှည်လျား ရှုပ်ထွေးသော တရားဝင် ဆက်သွယ်ရေးစာများကို ရိုက်ခြင်းဖြင့် ရုံးသုံးစကားအသုံးအနှုန်းနှင့် ခံနိုင်ရည်ကို မြှင့်တင်ရမည့် သင်ခန်းစာဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 7,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 94,
-        "minWpm": 30
+        "minWpm": 25
     },
-    "focusKeys": [
-        "Digit7",
-        "KeyA",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyL",
-        "KeyM",
-        "KeyN",
-        "KeyO",
-        "KeyP",
-        "KeyQ",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyV",
-        "KeyW",
-        "KeyX",
-        "KeyY",
-        "Period",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
+    "focus": ["sentences", "unicode", "speed", "accuracy"],
+    "prerequisites": ["lesson-my-advanced-15"],
+    "focusKeys": ["Digit1", "Digit2", "Digit5", "Digit7", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "Backslash", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-16-ex-1",
             "kind": "text",
-            "instruction": "လစာငွေ မေးမြန်းချက် စာကြောင်းများကို ရိုက်ပါ",
-            "text": "အလုပ်ခွင်ထဲ တစ်ရက် လစာငွေ နှင့် ပတ်သက်ပြီး မေးမြန်းချင်ပါသည်။ ပူးတွဲ တင်ပြပါသည်။"
-        },
-        {
-            "id": "lesson-my-advanced-16-ex-2",
-            "kind": "text",
-            "instruction": "ပန်ကြားချက် စာကြောင်းကို ရိုက်ပါ",
-            "text": "ကြင်နာစွာ ဆောင်ရွက်ပေးပါရန် ပန်ကြားပါသည်။"
+            "instruction": "ရုံးတွင်း ခွင့်တောင်းစာကို အစမှ အဆုံးအထိ ဆက်တိုက် ရိုက်ပါ",
+            "text": "လေးစားအပ်ပါသော လူ့စွမ်းအားအရင်းအမြစ်ဌာန အကြီးအကဲ ထံသို့၊ ကျွန်ုပ်သည် စီမံကိန်း အော်ပရေးရှင်းဌာနခွဲတွင် စီမံကိန်းမှူးအဖြစ် ဆောင်ရွက်နေသူ တစ်ဦးဖြစ်ပါသည်။ မိသားစု ကိစ္စတစ်ခုကို ဆောင်ရွက်ရန်အတွက် ယခုလ ၁၅ ရက်နေ့မှ ၂၁ ရက်နေ့အထိ ခုနစ်ရက်ကြာ ခွင့်ရက်ယူရန် အလေးအနက် လျှောက်ထားပါသည်။ ခွင့်ရက်ကာလအတွင်း ကျွန်ုပ်၏ လုပ်ငန်းတာဝန်များကို အငယ်တန်း စီမံကိန်းမှူးနှင့် လုပ်ဖော်ကိုင်ဖက်တစ်ဦးတို့အား အသေးစိတ် လွှဲပြောင်း ပေးအပ်ထားပါသည်။ နေ့စဉ် လုပ်ငန်း အစီရင်ခံစာများကို စနစ်တကျ ပြုစု၍ ဆက်သွယ်ရေးကြားခံမှ တစ်ဆင့် ပေးပို့သွားမည်ဖြစ်ပြီး အရေးပေါ်ကိစ္စများအတွက် ရုံးနှင့် တိုက်ရိုက် ဆက်သွယ်နိုင်ရန် လည်း စီစဉ် ထားပါသည်။ ထို့ကြောင့် ကျွန်ုပ်၏ လျှောက်ထားချက်ကို ကြင်နာစွာ ကြည့်ရှုသုံးသပ်၍ ခွင့်ပြုချက် ပေးအပ်ရန် အလေးအနက် တောင်းဆိုအပ်ပါသည်။"
         }
-    ],
-    "focus": ["sentences", "unicode", "accuracy"],
-    "prerequisites": ["lesson-my-advanced-15"]
+    ]
 }

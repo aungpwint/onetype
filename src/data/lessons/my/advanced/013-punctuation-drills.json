@@ -6,63 +6,38 @@
     "number": 13,
     "title": "Punctuation Drills",
     "titleMy": "ပုဒ်ဖြတ်ပုဒ်ရပ် လေ့ကျင့်ခန်း",
-    "description": "ပုဒ်ဖြတ်ပုဒ်ရပ် အမျိုးမျိုး ပါဝင်သော ဝါကျများကို မှန်ကန်စွာ ရိုက်နိုင်ရန် ရည်ရွယ်သော သင်ခန်းစာ ဖြစ်သည်။",
+    "description": "ပုဒ်ကလေးချက် (၊)၊ ပုဒ်ဖြတ်ချက် (။) နှင့် ကွင်းစကွင်းပိတ် ( ) တို့ သဘာဝကျ ပါဝင်သော ဝါကျများကို မှန်ကန်စွာ ရိုက်နိုင်စေရန် အထူးလေ့ကျင့်ရမည့် သင်ခန်းစာဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 6,
+    "estimatedMinutes": 8,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 93,
-        "minWpm": 25
+        "minAccuracy": 92,
+        "minWpm": 23
     },
-    "focus": ["punctuation"],
+    "focus": ["punctuation", "accuracy"],
     "prerequisites": ["lesson-my-advanced-12"],
-    "focusKeys": [
-        "KeyA",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyM",
-        "KeyN",
-        "KeyO",
-        "KeyP",
-        "KeyR",
-        "KeyS",
-        "KeyU",
-        "KeyV",
-        "Semicolon",
-        "Comma",
-        "Period",
-        "Digit7",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-middle", "right-index", "left-pinky", "right-middle", "left-index", "right-pinky", "right-ring", "left-ring"],
+    "focusKeys": ["Digit1", "Digit2", "Digit7", "Digit9", "Digit0", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
-            "kind": "generated",
             "id": "lesson-my-advanced-13-ex-1",
-            "instruction": "ပုဒ်ဖြတ်ပုဒ်ရပ် ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
+            "kind": "generated",
+            "instruction": "ပုဒ်ကလေးချက် နှင့် ပုဒ်ဖြတ်ချက်တို့ ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
-                "sentences": ["ခြေ ၊ လက် ၊ ခေါင်း ။", "နား ၊ မျက်စိ ၊ နှာခေါင်း ။"],
-                "count": 4
+                "sentences": ["ဈေးဆိုင်များ၊ ရုံးများနှင့် ကျောင်းများတွင် စည်းကမ်းကို စနစ်တကျ လိုက်နာရန် အရေးကြီးသည်။", "အစည်းအဝေးတွင် ကုန်ကျစရိတ်၊ ရောင်းအားနှင့် အမြတ်အစွန်းတို့ကို အသေးစိတ် ဆွေးနွေးခဲ့ကြသည်။", "သူသည် အချိန်မှန် ထခြင်း၊ လေ့ကျင့်ခန်း ပြုလုပ်ခြင်းနှင့် စာဖတ်ခြင်းကို နေ့စဉ် ကျင့်သုံးသည်။", "စာအုပ်စင်ပေါ်ရှိ စာအုပ်များ၊ ခဲတံများနှင့် မှတ်စုစာအုပ်များကို စနစ်တကျ စီစဉ်ထားပါသည်။"],
+                "count": 6
             }
         },
         {
-            "kind": "generated",
             "id": "lesson-my-advanced-13-ex-2",
-            "instruction": "ပုဒ်ဖြတ်ပုဒ်ရပ် များကို ရိုက်လေ့ကျင့်ပါ",
+            "kind": "generated",
+            "instruction": "ကွင်းစကွင်းပိတ် ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
-                "sentences": ["ရေ ကို သုံး ၊ နေ ကို ကြည့် ။", "ညီ က လာ ၊ ညီမ က သွား ။"],
+                "sentences": ["သင်တန်း (သုံးလကြာ) အပြီးတွင် စာမေးပွဲကို ဖြေဆိုရမည် ဖြစ်သည်။", "အစည်းအဝေးကို မြို့တော်ခန်းမ (ဒုတိယထပ်) တွင် ကျင်းပမည် ဖြစ်သည်။", "နေ့စဉ် လေ့လာချိန် (နံနက် ၉ နာရီမှ နေ့လယ် ၁၂ နာရီအထိ) ကို အိမ်တွင် သတ်မှတ်ထားသည်။"],
                 "count": 4
             }
         }

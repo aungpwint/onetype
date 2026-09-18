@@ -14,16 +14,16 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": ["KeyU", "KeyS", "KeyY", "KeyN"],
+    "focusKeys": ["KeyU", "KeyY", "KeyS", "KeyC"],
     "focus": ["medial"],
-    "targetFingers": ["right-index", "left-ring"],
+    "targetFingers": ["left-ring", "left-middle", "right-index"],
     "targetHands": ["right", "left"],
     "prerequisites": ["lesson-my-beginner-10"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-beginner-11-ex-1",
-            "instruction": "ကျ မှာ ဗျည်း နှင့် ယပင့် ပေါင်းစပ်ထားသည်",
+            "instruction": "ကျ ကို ထပ်ခါထပ်ခါ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကျ"],
@@ -36,10 +36,10 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-11-ex-2",
-            "instruction": "ပျ နှင့် ညျ တို့ကို ဆက်တိုက်ရိုက်ပါ",
+            "instruction": "ပျ နှင့် ချ တို့ကို ဆက်တိုက်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ပျ", "ညျ"],
+                "keys": ["ပျ", "ချ"],
                 "count": 10,
                 "chunkMin": 2,
                 "chunkMax": 4,
@@ -49,10 +49,10 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-11-ex-3",
-            "instruction": "ယပင့် စာလုံးကြို သုံးခုလုံး ဖြတ်သန်းရိုက်ပါ",
+            "instruction": "ယပင့် ဝဏ္ဏများကို တစ်ဆက်တည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ကျ", "ပျ", "ညျ"],
+                "keys": ["ကျ", "ပျ", "ချ"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,

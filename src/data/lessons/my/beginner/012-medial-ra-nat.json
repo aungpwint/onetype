@@ -23,7 +23,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-12-ex-1",
-            "instruction": "ကြ မှာ ဗျည်း နှင့် ရရစ် ပေါင်းစပ်ထားသည်",
+            "instruction": "ကြ ကို ထပ်ခါထပ်ခါ ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကြ"],
@@ -49,7 +49,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-12-ex-3",
-            "instruction": "ရရစ် စာလုံးကြို သုံးခုလုံး ဖြတ်သန်းရိုက်ပါ",
+            "instruction": "ရရစ် ဝဏ္ဏများကို တစ်ဆက်တည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကြ", "ပြ", "ကြာ"],

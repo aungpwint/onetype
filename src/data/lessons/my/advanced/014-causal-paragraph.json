@@ -6,56 +6,26 @@
     "number": 14,
     "title": "Causal Paragraph",
     "titleMy": "အကြောင်းကျိုးဆက် စာပိုဒ်",
-    "description": "အကြောင်းအကျိုး ဆက်စပ်ပုံကို ဖော်ပြသော စာပိုဒ်ကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
+    "description": "အကြောင်းရင်း၊ အကျိုးဆက်နှင့် တွေးခေါ်မှုတို့ ချိတ်ဆက်ထားသော စာပိုဒ်ကို ရိုက်စဉ် ဆက်စပ်ဝါကျများကို ချောမွေ့စွာ ရိုက်ရန် လေ့ကျင့်ရမည့် သင်ခန်းစာဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 5,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 94,
-        "minWpm": 28
+        "minAccuracy": 93,
+        "minWpm": 23
     },
-    "focusKeys": [
-        "Digit7",
-        "KeyA",
-        "KeyB",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyL",
-        "KeyM",
-        "KeyN",
-        "KeyO",
-        "KeyP",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyV",
-        "KeyW",
-        "KeyX",
-        "KeyY",
-        "Period",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
+    "focus": ["sentences", "unicode", "accuracy"],
+    "prerequisites": ["lesson-my-advanced-13"],
+    "focusKeys": ["Digit7", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "Backslash", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-14-ex-1",
             "kind": "text",
-            "instruction": "အကြောင်းကျိုးဆက် စာပိုဒ်တစ်ခုလုံးကို ရိုက်ပါ",
-            "text": "ရေအလုံအလောက်မရှိသောကြောင့် စိုက်ပျိုးရေး ဒုက္ခရောက်ခဲ့သည်။ ထို့ကြောင့် စပါးစျေးနှုန်း မြင့်တက်လာခဲ့ပါတယ်။ ရာသီဥတုလည်း ပူပြင်းခဲ့ပါတယ်။"
+            "instruction": "အကြောင်းကျိုးဆက် စာပိုဒ်တစ်ပိုဒ်လုံးကို အာရုံစူးစိုက်ပြီး ရိုက်ပါ",
+            "text": "မြို့ပြများတွင် လူဦးရေ ထူထပ်လာရခြင်း၏ အကြောင်းရင်းမှာ အလုပ်အကိုင်အခွင့်အလမ်းများ ပေါများလာခြင်းပင်ဖြစ်သည်။ နယ်မြို့များမှ လူငယ်အများစုက အလုပ်ရှာရန် မြို့ကြီးများသို့ ပြောင်းရွှေ့လာကြသဖြင့် မြို့တွင်း အိမ်ရာလိုအပ်ချက် တစ်နေ့တစ်ခြား မြင့်တက်လာသည်။ ထို့ကြောင့် အိမ်ငှားခနှင့် မြေဈေးများ ကြီးမြင့်လာပြီး ဝင်ငွေနည်းသူများအတွက် နေထိုင်စရိတ် ဝန်ထုပ်ဝန်ပိုး ဖြစ်လာသည်။ သို့ဖြစ်ရာ မြို့ပြစီမံကိန်းများတွင် လူတန်းစားမရွေး တတ်နိုင်သော အိမ်ရာများ ဖော်ဆောင်ရေးကို ဦးစားပေး ဆောင်ရွက်ကြရန် လိုအပ်လာသည်။"
         }
-    ],
-    "focus": ["sentences", "unicode", "speed", "accuracy"],
-    "prerequisites": ["lesson-my-advanced-13"]
+    ]
 }

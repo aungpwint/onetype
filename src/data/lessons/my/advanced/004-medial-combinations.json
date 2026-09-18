@@ -6,78 +6,64 @@
     "number": 4,
     "title": "Medial Combinations",
     "titleMy": "ဗျည်းတွဲများ လေ့ကျင့်ခန်း",
-    "description": "ဗျည်းတွဲ အစုများ ပါဝင်သော စကားလုံးများကို ကျွမ်းကျင်စွာ ရိုက်နိုင်ရန် ရည်ရွယ်သော သင်ခန်းစာ ဖြစ်သည်။",
-    "difficulty": "medium",
-    "estimatedMinutes": 5,
+    "description": "ျ၊ ြ၊ ှ၊ ွ စသည့် ဗျည်းတွဲအစုများ ပါဝင်သော စကားလုံးများကို ဝါကျအတွင်း၌ မှန်ကန် ချောမွေ့စွာ ရိုက်နိုင်ရန် ရည်ရွယ်သော သင်ခန်းစာဖြစ်သည်။",
+    "difficulty": "hard",
+    "estimatedMinutes": 7,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 92,
+        "minAccuracy": 90,
         "minWpm": 20
     },
     "focus": ["medial"],
-    "prerequisites": ["lesson-my-advanced-3"],
-    "focusKeys": [
-        "KeyA",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyM",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyY",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky"],
+    "focusKeys": ["Digit7", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyN", "KeyM", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
+    "prerequisites": ["lesson-my-advanced-3"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-advanced-4-ex-1",
-            "instruction": "ဗျည်းတွဲ အစုများကို ဖြည်းဖြည်း ရိုက်ပါ",
+            "instruction": "ဗျည်းတွဲများ ပါဝင်သော ဝါကျများကို ဖြည်းဖြည်း ရိုက်ပါ",
             "generator": {
-                "type": "chunks",
-                "keys": ["ချို", "ကြေး", "ကျော"],
-                "count": 12,
-                "chunkMin": 4,
-                "chunkMax": 6,
-                "style": "variable"
+                "type": "sentences",
+                "sentences": [
+                    "စာကြည့်တိုက်တွင် စာအုပ်များကို စနစ်တကျ စီထားသည်။",
+                    "ကျောင်းသားများသည် ကျူရှင် သင်တန်းကို တက်ရောက်နေကြသည်။",
+                    "လျှော်မှုန့်ဖြင့် အဝတ်အစားများကို လျှော်ဖွပ်တတ်သည်။",
+                    "မြန်မာနိုင်ငံတွင် လူမျိုးပေါင်းစုံ နေထိုင်ကြသည်။"
+                ],
+                "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-advanced-4-ex-2",
-            "instruction": "ဗျည်းတွဲ အစုများကို ချောမွေ့စွာ ရိုက်ပါ",
+            "instruction": "ဗျည်းတွဲများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
-                "type": "chunks",
-                "keys": ["များ", "ပျို", "ကြာ", "နှာ", "ကွာ"],
-                "count": 12,
-                "chunkMin": 4,
-                "chunkMax": 6,
-                "style": "variable"
+                "type": "sentences",
+                "sentences": [
+                    "ပရိသတ်များသည် ကြိုဆိုပွဲတွင် ပျော်ရွှင်စွာ ပါဝင်ခဲ့ကြသည်။",
+                    "ကျိုးကြောင်းဆီလျော်သော အဖြေကို ကြိုတင် စဉ်းစားထားသင့်သည်။",
+                    "နှာခေါင်းစည်းကို ဝတ်ဆင်၍ လူအများနှင့် ထိတွေ့ရာတွင် သတိပြုပါ။",
+                    "ကြားချိန်တွင် ကျောင်းသားများသည် ကျောင်းဝင်းထဲ၌ ကစားကြသည်။"
+                ],
+                "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-advanced-4-ex-3",
-            "instruction": "ရှုပ်ထွေးသော ဗျည်းတွဲများကို မှန်ကန်စွာ ရိုက်ပါ",
+            "instruction": "ဗျည်းတွဲ အမျိုးမျိုး ပါဝင်သော ဝါကျရှည်များကို ရိုက်ပါ",
             "generator": {
-                "type": "chunks",
-                "keys": ["ကျောင်း", "အခြေခံ", "ကြောင်း"],
-                "count": 12,
-                "chunkMin": 5,
-                "chunkMax": 7,
-                "style": "variable"
+                "type": "sentences",
+                "sentences": [
+                    "ရွှေတောင်ကြီးသို့ ရထားဖြင့် သွားရောက် လည်ပတ်ခဲ့သည်။",
+                    "ကြာရှည်စွာ လေ့ကျင့်ခဲ့သည့်အတွက် တစ်မိနစ်လျှင် စာလုံးများစွာ ရိုက်နိုင်သည်။",
+                    "မြို့ပေါ်တွင် လူနေအိမ်များနှင့် စီးပွားရေး လုပ်ငန်းများ စည်ကားလာသည်။",
+                    "ဒေသခံများ နေထိုင်ရေးအတွက် လျှပ်စစ်မီး ရရှိရန် ဆောင်ရွက်နေသည်။"
+                ],
+                "count": 4
             }
         }
     ]

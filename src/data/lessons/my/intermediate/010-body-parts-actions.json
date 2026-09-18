@@ -33,14 +33,12 @@
         "KeyG",
         "KeyI",
         "KeyK",
-        "KeyB",
         "ShiftRight",
         "KeyY",
-        "KeyO",
         "Digit7",
         "ShiftLeft"
     ],
-    "targetFingers": ["left-index", "left-ring", "right-index", "right-pinky", "left-middle", "left-pinky", "right-middle", "right-ring"],
+    "targetFingers": ["left-index", "left-ring", "right-index", "right-pinky", "left-middle", "left-pinky", "right-middle"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [

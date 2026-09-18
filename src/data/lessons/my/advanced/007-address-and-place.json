@@ -6,64 +6,64 @@
     "number": 7,
     "title": "Address and Place",
     "titleMy": "လိပ်စာနှင့် နေရာ",
-    "description": "နေရပ်လိပ်စာ နှင့် နေရာ ဖော်ပြမှုများတွင် သုံးသော စကားလုံးများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
-    "difficulty": "medium",
-    "estimatedMinutes": 5,
+    "description": "နေရပ်လိပ်စာ ဖော်ပြချက်များနှင့် နေရာ၊ လမ်းကြောင်း အညွှန်းများကို မြို့နယ်၊ လမ်းအမှတ်နှင့်အတူ ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာဖြစ်သည်။",
+    "difficulty": "hard",
+    "estimatedMinutes": 7,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 92,
+        "minAccuracy": 91,
         "minWpm": 22
     },
-    "focus": ["words"],
-    "prerequisites": ["lesson-my-advanced-6"],
-    "focusKeys": [
-        "Digit7",
-        "KeyA",
-        "KeyB",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyM",
-        "KeyP",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyV",
-        "KeyW",
-        "KeyY",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky"],
+    "focus": ["sentences", "numbers"],
+    "focusKeys": ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit7", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "Backslash", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
+    "prerequisites": ["lesson-my-advanced-6"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-advanced-7-ex-1",
-            "instruction": "လိပ်စာ စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
+            "instruction": "လိပ်စာ ဖော်ပြချက်များကို မှန်ကန်စွာ ရိုက်ပါ",
             "generator": {
-                "type": "words",
-                "words": ["လိပ်စာ", "မြို့နယ်", "လမ်းကြား", "အိမ်နံပါတ်", "ခရိုင်"],
-                "count": 12
+                "type": "sentences",
+                "sentences": [
+                    "မိမိ၏ အိမ်လိပ်စာကို ပုံစံထဲတွင် ရေးသားပါ။",
+                    "အိမ်နံပါတ် ၁၂၃၊ လမ်း ၄၅၊ မရမ်းကုန်းမြို့နယ်၊ ရန်ကုန်မြို့။",
+                    "တက္ကသိုလ် ခရိုင်အတွင်း နေထိုင်ခဲ့သော မိသားစုများ ရှိသည်။",
+                    "နေရာသစ်သို့ ပြောင်းရွှေ့သောအခါ လိပ်စာကို ရုံးသို့ အကြောင်းကြားပါ။"
+                ],
+                "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-advanced-7-ex-2",
-            "instruction": "နေရာ ဖော်ပြသော စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
+            "instruction": "နေရာ လမ်းညွှန်ချက်များကို ရိုက်ပါ",
             "generator": {
-                "type": "words",
-                "words": ["နေရာ", "အရှေ့ဘက်", "အနောက်ဘက်", "အနီးအနား"],
-                "count": 12
+                "type": "sentences",
+                "sentences": [
+                    "ဈေးသည် မြောက်ဘက်တွင် တည်ရှိပြီး ဘူတာရုံမှာ အရှေ့ဘက်၌ ရှိသည်။",
+                    "စာတိုက်ကို ဘတ်စ်ကား မှတ်တိုင်အနီးတွင် တွေ့ရှိနိုင်သည်။",
+                    "ဟိုတယ်သည် ကမ်းခြေနှင့် မလှမ်းမကမ်းတွင် တည်ဆောက်ထားသည်။",
+                    "ဆေးရုံသွားရန် ဤလမ်းကို ဖြောင့်တန်းစွာ သွားပါက ရောက်မည်။"
+                ],
+                "count": 4
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-advanced-7-ex-3",
+            "instruction": "နေရာနှင့် လမ်းကြောင်း ဖော်ပြသော ဝါကျများကို ရိုက်ပါ",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "မြို့ဟောင်း ရပ်ကွက်များတွင် ဈေးဆိုင်များ စီတန်း ဖွင့်လှစ်ထားသည်။",
+                    "မြေပုံပေါ်တွင် သွားမည့်နေရာကို ရှာဖွေပြီး လမ်းကြောင်းကို မှတ်သားပါ။",
+                    "ဒေသခံများအား ခရီးသွားများက လမ်းမေးနေကြသည်။",
+                    "ရပ်ကွက်တိုင်း၌ စာသင်ကျောင်းနှင့် စျေးကွက်တို့သည် မရှိမဖြစ် လိုအပ်သည်။"
+                ],
+                "count": 4
             }
         }
     ]

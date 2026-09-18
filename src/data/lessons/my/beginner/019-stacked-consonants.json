@@ -6,7 +6,7 @@
     "number": 19,
     "title": "Stacked Consonants",
     "titleMy": "ဗျည်းထပ်တင်",
-    "description": "ဝိရမ္ ္ ဖြင့် ဗျည်းကို ထပ်ပင်းရိုက်သည်။ ဥပမာ မင်္ဂလာ။",
+    "description": "ဝိရမ္ ္ (KeyF+Shift) ဖြင့် ဗျည်းကို ထပ်တင် ရိုက်သည်။ ဥပမာ က္က ၊ မင်္ဂလာ။",
     "difficulty": "medium",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -24,7 +24,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-19-ex-1",
-            "instruction": "ဗျည်းထပ်တက် က္က ကို အနီးကပ်ရိုက်ပါ",
+            "instruction": "က္က ကို ထပ်တင် ရိုက်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က္က"],
@@ -50,7 +50,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-19-ex-3",
-            "instruction": "ထပ်တက် သုံးမျိုးလုံး တစ်ဆက်တည်း ရိုက်ပါ",
+            "instruction": "ထပ်တင် ဝဏ္ဏ သုံးမျိုးကို တစ်ဆက်တည်း ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က္က", "က္ခ", "ပ္ပ"],

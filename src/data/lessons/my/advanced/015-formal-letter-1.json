@@ -6,60 +6,26 @@
     "number": 15,
     "title": "Formal Letter 1",
     "titleMy": "တရားဝင် စာ (၁)",
-    "description": "တရားဝင် ဆက်သွယ်ရေး စာများတွင် သုံးသော စတိုင်အတိုင်း ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
+    "description": "တရားဝင်စာ၏ ဖွင့်ပုံ၊ ရည်ရွယ်ချက်၊ တောင်းဆိုချက်နှင့် နိဂုံးပိုင်း အစီအစဉ်အတိုင်း ခေတ်မီ ရုံးသုံးစတိုင်ဖြင့် ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 6,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 94,
-        "minWpm": 28
+        "minAccuracy": 93,
+        "minWpm": 24
     },
-    "focusKeys": [
-        "KeyA",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyL",
-        "KeyM",
-        "KeyN",
-        "KeyO",
-        "KeyP",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyV",
-        "KeyW",
-        "KeyY",
-        "KeyZ",
-        "Period",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
+    "focus": ["sentences", "unicode", "accuracy"],
+    "prerequisites": ["lesson-my-advanced-14"],
+    "focusKeys": ["Digit7", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-15-ex-1",
             "kind": "text",
-            "instruction": "တရားဝင်စာဖွင့် စာကြောင်းကို ရိုက်ပါ",
-            "text": "ခင်လေးဇာ လေးစားစွာဖြင့် အကြောင်းကြားအပ်ပါသည်။"
-        },
-        {
-            "id": "lesson-my-advanced-15-ex-2",
-            "kind": "text",
-            "instruction": "စာ၏ အသေးစိတ် ဖော်ပြချက် စာကြောင်းများကို ရိုက်ပါ",
-            "text": "အသေးစိတ်အချက်အလက်များကို အောက်ပါအတိုင်း ဖော်ပြပါသည်။ နှင့် ပူးတွဲ ပေးပို့ပါသည်။"
+            "instruction": "တရားဝင်စာတစ်စောင်ကို ဖွင့်ပိုင်းမှ နိဂုံးအထိ ရိုက်ပါ",
+            "text": "လေးစားအပ်ပါသော မြို့နယ် ပညာရေးမှူး ထံသို့၊ ကျွန်ုပ်သည် အခြေခံပညာ အထက်တန်းကျောင်း တစ်ကျောင်းတွင် မြန်မာစာဆရာမအဖြစ် တာဝန်ထမ်းဆောင်နေသူ တစ်ဦးဖြစ်ပါသည်။ ရန်ကုန်မြို့တွင် လာမည့်လ၌ ကျင်းပမည့် ရက်တိုပညာရေးသင်တန်းသို့ တက်ရောက်ခွင့် ပန်ကြားလိုပါသည်။ ထိုသင်တန်းသည် မြန်မာစာ သင်ကြားရေးနည်းစနစ်အသစ်များနှင့် စပ်လျဉ်း၍ သိရှိနိုင်ရန် အထူး အထောက်အကူပြုနိုင်မည် ဖြစ်ပါသည်။ သင်တန်းရက်များတွင် ကျောင်းတာဝန်များ ပြတ်တောက်မှုမရှိစေရန် အစားထိုး ဆရာမတစ်ဦးနှင့် ကြိုတင် ညှိနှိုင်း ထားပြီးဖြစ်ပါသည်။ ထို့ကြောင့် သင်တန်း တက်ရောက်ခွင့်နှင့် ထောက်ခံစာ ထုတ်ပေးရန် လေးစားစွာ ပန်ကြားအပ်ပါသည်။ အသေးစိတ် အချက်အလက်များကို ပူးတွဲ တင်ပြထားပါသည်။"
         }
-    ],
-    "focus": ["sentences", "unicode", "accuracy"],
-    "prerequisites": ["lesson-my-advanced-14"]
+    ]
 }

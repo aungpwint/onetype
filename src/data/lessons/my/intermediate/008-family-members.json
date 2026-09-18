@@ -31,10 +31,9 @@
         "KeyP",
         "KeyU",
         "KeyK",
-        "KeyN",
-        "KeyS"
+        "KeyN"
     ],
-    "targetFingers": ["left-pinky", "left-middle", "right-middle", "left-index", "right-ring", "right-index", "right-pinky", "left-ring"],
+    "targetFingers": ["left-pinky", "left-middle", "right-middle", "left-index", "right-ring", "right-index", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [

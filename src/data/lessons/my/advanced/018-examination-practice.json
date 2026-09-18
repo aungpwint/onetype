@@ -6,63 +6,38 @@
     "number": 18,
     "title": "Examination Practice",
     "titleMy": "စာမေးပွဲ လေ့ကျင့်ခန်း",
-    "description": "အဆင့်မြင့် စာမေးပွဲ ပုံစံ စာပိုဒ်များကို ရိုက်ခြင်းဖြင့် ကျွမ်းကျင်မှု အပြည့်အဝ ရရှိရန် ရည်ရွယ်သော နောက်ဆုံး သင်ခန်းစာ ဖြစ်သည်။",
+    "description": "ယခင် သင်ခန်းစာများ၏ ကျွမ်းကျင်မှုအားလုံးကို ပေါင်းစပ်ပြီး ရှည်လျားသော စာပိုဒ်များကို တိကျလျင်မြန်စွာ ရိုက်နိုင်ခြင်း ရှိမရှိ အကဲဖြတ်သည့် နောက်ဆုံး စာမေးပွဲ သင်ခန်းစာဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 8,
+    "estimatedMinutes": 9,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 95,
-        "minWpm": 32
+        "minWpm": 27
     },
-    "focusKeys": [
-        "Digit7",
-        "KeyA",
-        "KeyB",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyL",
-        "KeyM",
-        "KeyN",
-        "KeyO",
-        "KeyP",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyV",
-        "KeyW",
-        "KeyX",
-        "KeyY",
-        "KeyZ",
-        "Period",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
+    "focus": ["speed", "accuracy", "sentences", "unicode"],
+    "prerequisites": ["lesson-my-advanced-17"],
+    "focusKeys": ["Digit7", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-18-ex-1",
             "kind": "text",
-            "instruction": "စာမေးပွဲ စာပိုဒ်တစ်ခုလုံးကို ရိုက်ပါ",
-            "text": "ပတ်ဝန်းကျင် ထိန်းသိမ်းရေးကို လူတိုင်း ပါဝင်ကူညီသင့်သည်။ အမှိုက်စနစ်တကျရှင်းခြင်းသည် ရိုးရှင်းသော နည်းလမ်းတစ်ခုဖြစ်သည်။"
+            "instruction": "နည်းပညာနှင့် ပညာရေးအကြောင်း ပထမစာပိုဒ်ကို ရိုက်ပါ",
+            "text": "နည်းပညာများ တစ်နေ့တစ်ခြား တိုးတက်လာသည်နှင့်အမျှ ၎င်းတို့ကို မည်သို့ အသုံးချရမည်နည်းဟူသော မေးခွန်းမှာ ပိုမို အရေးကြီးလာသည်။ စက်ပစ္စည်းအသစ်များကို သုံးတတ်ရုံမျှဖြင့် မလုံလောက်ဘဲ အချက်အလက်များကို ဝေဖန် ပိုင်းခြားနိုင်စွမ်းလည်း လိုအပ်ပါသည်။"
         },
         {
             "id": "lesson-my-advanced-18-ex-2",
             "kind": "text",
-            "instruction": "စာမေးပွဲ ဝါကျများကို မှန်ကန်စွာ ရိုက်ပါ",
-            "text": "အချိန်ကိုလေးစားပါ။ စာကိုပုံမှန်လေ့လာပါ။ ကျန်းမာရေးအတွက် အိပ်ရေးဝဝအိပ်ပါ။ ဘာသာစကားကို လေ့ကျင့်ပါ။"
+            "instruction": "အချိန်စီမံခန့်ခွဲမှု ဒုတိယစာပိုဒ်ကို ရိုက်ပါ",
+            "text": "အချိန်ကို စနစ်တကျ စီမံတတ်ခြင်းသည် အောင်မြင်မှုအတွက် အရေးကြီးသော အခြေခံတစ်ခုဖြစ်သည်။ နေ့စဉ်လုပ်ငန်းများကို သတ်မှတ်ထားသော အစီအစဉ်အတိုင်း လုပ်ဆောင်သူများသည် လုပ်ငန်းများကို ပိုမို လျင်မြန်စွာ အဆုံးသတ်နိုင်ကြသည်။ တစ်ဖက်တွင်မူ အစီအစဉ်မရှိဘဲ ဆောင်ရွက်သူများမှာ လိုက်လျောမှုနှင့် စိတ်ဖိစီးမှုတို့ကို ရင်ဆိုင်ရတတ်သည်။ ထို့ကြောင့် နေ့စဉ် မှတ်တမ်းရေးသားခြင်းနှင့် ဦးစားပေးအလုပ်များ စာရင်းပြုစုခြင်းတို့ဖြင့် စတင်ရန် အကြံပြုလိုပါသည်။"
+        },
+        {
+            "id": "lesson-my-advanced-18-ex-3",
+            "kind": "text",
+            "instruction": "လေ့ကျင့်ခန်း အဖြေပုံစံ နောက်ဆုံး စာပိုဒ်ကို ရိုက်ပါ",
+            "text": "အထက်ပါ အချက်များကို ပိုမိုကောင်းမွန်စွာ ကျွမ်းကျင်ရန် တရားဝင် စာတိုများ ရေးသားခြင်းဖြင့် လေ့ကျင့်နိုင်သည်။ အဆင့်ဆင့် ရိုက်နှိပ်လေ့ကျင့်ပါက ရိုက်နှုန်းနှင့် တိကျမှု နှစ်ခုစလုံး တိုးတက်လာမည် ဖြစ်သည်။ သင်ယူခဲ့သော ကျွမ်းကျင်မှုအားလုံးကို ပေါင်းစပ် အသုံးပြု၍ စိတ်ရှည်လက်ရှည်ဖြင့် လေ့ကျင့်ကြပါ။"
         }
-    ],
-    "focus": ["speed", "accuracy", "sentences", "unicode"],
-    "prerequisites": ["lesson-my-advanced-17"]
+    ]
 }

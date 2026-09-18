@@ -41,7 +41,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-22-ex-1",
-            "instruction": "ရေ နေ ကေ ကဲ့သို့ စကားလုံးတိုများ ရိုက်ပါ",
+            "instruction": "ရေ ၊ နေ ၊ ကေ ကဲ့သို့သော စကားလုံးတိုများကို ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ရေ", "နေ", "ကေ", "ကု", "ကူ", "ကဲ"],
@@ -51,7 +51,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-22-ex-2",
-            "instruction": "စည်းချက်အတိုင်း တု တူ မု မူ ရိုက်ပါ",
+            "instruction": "တု တူ မု မူ နု နူ တို့ကို ဆက်တိုက်ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["တု", "တူ", "မု", "မူ", "နု", "နူ"],

@@ -30,7 +30,6 @@
         "KeyS",
         "KeyV",
         "Semicolon",
-        "BracketLeft",
         "ShiftRight"
     ],
     "targetFingers": ["left-index", "left-middle", "left-ring", "left-pinky", "right-index", "right-middle", "right-pinky"],

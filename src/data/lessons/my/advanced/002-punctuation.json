@@ -4,73 +4,63 @@
     "level": "advanced",
     "language": "my",
     "number": 2,
-    "title": "Punctuation: ၍ ၎င်း ၌",
-    "titleMy": "မြန်မာ သင်္ကေတနှင့် အသုံးများ ၍ ၎င်း ၌",
-    "description": "မြန်မာ စာတွင် အသုံးပြုသော သင်္ကေတများ ဖြစ်သည့် ၍ ၊ ၎င်း ၊ ၌ တို့ ပါဝင်သော ဝါကျများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
-    "difficulty": "easy",
-    "estimatedMinutes": 4,
+    "title": "Myanmar Punctuation and Formal Usage",
+    "titleMy": "မြန်မာပုဒ်ဖြတ် သင်္ကေတနှင့် တရားဝင် အသုံးအနှုန်းများ",
+    "description": "မြန်မာစာရေးသားရာတွင် အသုံးများသော ပုဒ်ဖြတ်သင်္ကေတများနှင့် ၍၊ ၎င်း၊ ၌ စသည့် တရားဝင် အသုံးအနှုန်းများကို မှန်ကန်စွာ ရိုက်သွင်း လေ့ကျင့်ရန် ရည်ရွယ်ထားသော သင်ခန်းစာဖြစ်သည်။",
+    "difficulty": "hard",
+    "estimatedMinutes": 6,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
-        "minWpm": 18
+        "minWpm": 20
     },
-    "focus": ["punctuation"],
-    "prerequisites": ["lesson-my-advanced-1"],
-    "focusKeys": [
-        "Comma",
-        "Digit7",
-        "KeyA",
-        "KeyB",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyL",
-        "KeyM",
-        "KeyN",
-        "KeyO",
-        "KeyP",
-        "KeyQ",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyV",
-        "KeyW",
-        "KeyY",
-        "KeyZ",
-        "Period",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
+    "focus": ["punctuation", "sentences"],
+    "focusKeys": ["Digit7", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "Backslash", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
+    "prerequisites": ["lesson-my-advanced-1"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-advanced-2-ex-1",
-            "instruction": "ပုဒ်ဖြတ် သင်္ကေတများ ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
+            "instruction": "ကော်မာနှင့် ပုဒ်ဖြတ်သင်္ကေတများ ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
-                "sentences": ["ရေ၊ နေ၊ လေက သုံးမျိုးဖြစ်သည်။", "ကြက်၊ ငါး၊ ဆန်တို့ကို ဝယ်ယူသည်။"],
-                "count": 4
+                "sentences": [
+                    "စာအုပ်၊ ဘောပင်၊ ခဲတံ စသည်တို့ကို စားပွဲပေါ်တွင် စနစ်တကျ ထားရှိသည်။",
+                    "မနက်ခင်း၌ လေကောင်းလေသန့် ရှူခြင်း၊ လမ်းလျှောက်ခြင်းတို့သည် ကျန်းမာရေးအတွက် ကောင်းသည်။",
+                    "စာဖတ်ခြင်း၊ လေ့လာခြင်းနှင့် လေ့ကျင့်ခြင်းတို့သည် တိုးတက်မှုအတွက် အရေးကြီးသည်။"
+                ],
+                "count": 3
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-advanced-2-ex-2",
-            "instruction": "တရားဝင် သင်္ကေတများ ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
+            "instruction": "၍၊ ၎င်း၊ ၌ တို့ ပါဝင်သော ဝါကျများကို သေချာ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
-                "sentences": ["အိမ်သည် ရွာ၌ ရှိသည်။", "ညီသည် မြို့မှ လာခဲ့၍ တွေ့ဆုံသည်။"],
-                "count": 4
+                "sentences": [
+                    "ကြိုးစားလေ့လာ၍ အသိပညာများ တိုးပွားလာစေသည်။",
+                    "စာကြည့်တိုက်၌ သင်ထောက်ကူ စာအုပ်များကို စနစ်တကျ စီမံထားသည်။",
+                    "၎င်းစာရွက်စာတမ်းများကို လိုအပ်သည့်အခါ ပြန်လည် အသုံးပြုနိုင်သည်။"
+                ],
+                "count": 3
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-advanced-2-ex-3",
+            "instruction": "တရားဝင် စာရေးသားပုံဖြင့် ရေးသားထားသော ဝါကျများကို အမှားမရှိ ရိုက်ပါ",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ကျောင်း၌ ကျောင်းသားများအတွက် လိုအပ်သော သင်ထောက်ကူ ပစ္စည်းများကို ထားရှိသည်။",
+                    "သတ်မှတ်ထားသော စည်းမျဉ်းများကို လိုက်နာ၍ လုပ်ငန်းများကို ဆောင်ရွက်ရမည်။",
+                    "၎င်းတို့၏ အကြံပြုချက်များကို စုစည်း၍ လိုအပ်သည့် ပြင်ဆင်မှုများ ပြုလုပ်ခဲ့သည်။"
+                ],
+                "count": 3
             }
         }
     ]

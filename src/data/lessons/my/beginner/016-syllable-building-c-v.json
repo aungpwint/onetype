@@ -16,8 +16,8 @@
     },
     "focus": ["syllable"],
     "prerequisites": ["lesson-my-beginner-14"],
-    "focusKeys": ["KeyU", "KeyD", "KeyK", "KeyL", "KeyJ", "ShiftLeft", "KeyA", "KeyM", "ShiftRight"],
-    "targetFingers": ["right-index", "left-middle", "right-middle", "right-ring", "left-pinky", "right-pinky"],
+    "focusKeys": ["Digit7", "KeyE", "KeyR", "KeyU", "KeyA", "KeyD", "KeyJ", "KeyK", "KeyL", "KeyM", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["right", "left"],
     "requiresShift": true,
     "exercises": [

@@ -5,67 +5,61 @@
     "language": "my",
     "number": 1,
     "title": "Complex Sentence Practice",
-    "titleMy": "ဝါကျရှည်များ လေ့ကျင့်ခန်း",
-    "description": "ရှည်လျားသော ဝါကျများကို မှန်ကန်စွာ ရိုက်နိုင်ရန် ရည်ရွယ်သော သင်ခန်းစာ ဖြစ်သည်။ နေ့စဉ် သုံးစွဲသော စာကြောင်းများကို စာလုံးပေါင်း မှန်မှန်နှင့် လေ့ကျင့်ရမည်။",
-    "difficulty": "easy",
-    "estimatedMinutes": 4,
+    "titleMy": "ရှုပ်ထွေးသော ဝါကျများ လေ့ကျင့်ခြင်း",
+    "description": "နေ့စဉ်ဘဝ၊ ပညာရေးနှင့် အလုပ်အကိုင်ဆိုင်ရာ အကြောင်းအရာများကို အခြေခံထားသော ဝါကျရှည်များကို စာလုံးပေါင်းနှင့် ဝါကျဖွဲ့စည်းပုံ မှန်ကန်စွာ ရိုက်နိုင်ရန် လေ့ကျင့်ပေးသော အဆင့်မြင့် သင်ခန်းစာဖြစ်သည်။",
+    "difficulty": "hard",
+    "estimatedMinutes": 7,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 90,
-        "minWpm": 18
+        "minWpm": 20
     },
     "focus": ["sentences"],
-    "focusKeys": [
-        "Digit7",
-        "KeyA",
-        "KeyB",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyJ",
-        "KeyK",
-        "KeyM",
-        "KeyN",
-        "KeyO",
-        "KeyP",
-        "KeyQ",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyV",
-        "KeyW",
-        "KeyY",
-        "KeyZ",
-        "Period",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
+    "focusKeys": ["Digit7", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-advanced-1-ex-1",
-            "instruction": "ဝါကျရှည် တစ်ကြောင်းလုံး ရိုက်ပါ",
+            "instruction": "အောက်ပါဝါကျများကို စာလုံးပေါင်းမှန်ကန်စွာ တစ်ကြောင်းချင်း ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
-                "sentences": ["အဖေက ရေကို လိုသည်။", "အမေက ဆန်ကို လိုသည်။", "ဒီမြို့တော်ကို သွားသည်။"],
-                "count": 4
+                "sentences": [
+                    "နေ့စဉ် စာဖတ်လေ့ရှိသူများသည် ဗဟုသုတ တိုးပွားပြီး အမြင်ကျယ်လာသည်။",
+                    "အချိန်ကို စနစ်တကျ စီမံတတ်ပါက အလုပ်များ အချိန်မီ ပြီးမြောက်နိုင်သည်။",
+                    "ကွန်ပျူတာ ကျွမ်းကျင်မှု တိုးတက်ရန် အခြေခံမှစ၍ ပုံမှန် လေ့ကျင့်ရန် လိုအပ်သည်။"
+                ],
+                "count": 3
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-advanced-1-ex-2",
-            "instruction": "ဝါကျရှည်များကို ချောမွေ့စွာ ရိုက်ပါ",
+            "instruction": "ပိုမိုရှည်လျားသော ဝါကျများကို မရပ်တန့်ဘဲ ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
-                "sentences": ["ဒီမြို့က အကြီးဆုံး မြို့ဖြစ်သည်။", "ဒီရွာက သေးသော ရွာဖြစ်သည်။", "ဘာကို ပြောကြသည်။", "ရွာတွေမှာ နေကြသည်။"],
-                "count": 4
+                "sentences": [
+                    "နည်းပညာသစ်များကို သင်ယူရာတွင် သီအိုရီ ဖတ်ရှုခြင်းထက် လက်တွေ့ လေ့ကျင့်ခြင်းက ပိုထိရောက်သည်။",
+                    "အလုပ်တစ်ခု မစတင်မီ လိုအပ်သော အချက်အလက်များကို စုစည်းကာ ပြင်ဆင်ထားသင့်သည်။",
+                    "အဖွဲ့လိုက် လုပ်ဆောင်ရာတွင် မိမိတာဝန်ကို ကျေပွန်စွာ ထမ်းဆောင်သင့်သည်။"
+                ],
+                "count": 3
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-advanced-1-ex-3",
+            "instruction": "ရှုပ်ထွေးသော ဝါကျများကို အရှိန်နှင့် တိကျမှု ထိန်းသိမ်းပြီး ရိုက်ပါ",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ရည်မှန်းချက်ကို ရှင်းလင်းစွာ သတ်မှတ်ထားပြီး အဆင့်ဆင့် အကောင်အထည် ဖော်ပါက ရလဒ်ကောင်း ရရှိမည်။",
+                    "ကျွမ်းကျင်မှုများကို တစ်ကြိမ်တည်း သင်ယူ၍ မပြည့်စုံနိုင်သောကြောင့် အမြဲ သင်ယူ လေ့လာသင့်သည်။",
+                    "အင်တာနက်မှ ရရှိသော သတင်းများကို ယုံကြည်စိတ်ချရသော အရင်းအမြစ်များနှင့် နှိုင်းယှဉ် စစ်ဆေးသင့်သည်။"
+                ],
+                "count": 3
             }
         }
     ]

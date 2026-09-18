@@ -6,59 +6,33 @@
     "number": 8,
     "title": "Reporting Sentences",
     "titleMy": "အစီရင်ခံ ဝါကျများ",
-    "description": "သတင်း နှင့် အစီရင်ခံ ပုံစံဖြင့် ရေးသားထားသော ဝါကျများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
+    "description": "သတင်းနှင့် အစီရင်ခံချက် ပုံစံဖြင့် ရေးသားထားသော ဝါကျများကို ဌာနဆိုင်ရာ ဖော်ပြချက်များနှင့်အတူ ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာဖြစ်သည်။",
     "difficulty": "hard",
     "estimatedMinutes": 7,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 92,
-        "minWpm": 25
+        "minWpm": 23
     },
-    "focus": ["sentences"],
-    "prerequisites": ["lesson-my-advanced-7"],
-    "focusKeys": [
-        "Digit7",
-        "KeyA",
-        "KeyB",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyM",
-        "KeyN",
-        "KeyO",
-        "KeyP",
-        "KeyQ",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyV",
-        "KeyW",
-        "KeyX",
-        "KeyY",
-        "KeyZ",
-        "Period",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
+    "focus": ["sentences", "accuracy"],
+    "focusKeys": ["Digit7", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "Backslash", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
+    "prerequisites": ["lesson-my-advanced-7"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-advanced-8-ex-1",
-            "instruction": "အစီရင်ခံ ဝါကျတစ်ကြောင်းလုံး ရိုက်ပါ",
+            "instruction": "အစီရင်ခံ ဝါကျတိုများကို ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
-                "sentences": ["ယနေ့ မိုးလေဝသ အခြေအနေမှာ သာယာမည်ဖြစ်သည်။", "အစည်းအဝေးကို နံနက် ကိုးနာရီတွင် စတင်မည်ဖြစ်သည်။"],
+                "sentences": [
+                    "အစည်းအဝေး၏ ဆုံးဖြတ်ချက်များကို အစီရင်ခံစာတွင် ဖော်ပြထားသည်။",
+                    "ယနေ့ ရာသီဥတုမှာ သာယာပြီး နေအပြည့် ထွက်လာသည်။",
+                    "လုပ်ငန်း ဆောင်ရွက်မှုကို ဌာနအလိုက် ခွဲခြား၍ အစီရင်ခံသည်။",
+                    "သင်တန်း ပြီးဆုံးကြောင်း ဆရာများက အတည်ပြု ပြောကြားသည်။"
+                ],
                 "count": 4
             }
         },
@@ -68,7 +42,27 @@
             "instruction": "အစီရင်ခံ ဝါကျများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
-                "sentences": ["လုပ်ငန်းဆောင်ရွက်ချက်များကို အစီရင်ခံစာ တင်ပြသည်။", "သတင်းအချက်အလက်များကို စနစ်တကျ ပြုစုထားသည်။"],
+                "sentences": [
+                    "ရောင်းအားများသည် ယခင်လနှင့် ယှဉ်လျှင် ဆယ်ရာခိုင်နှုန်း မြင့်တက်ခဲ့သည်။",
+                    "ထုတ်ပြန်ချက်အရ ရထားခရီးစဉ်များ ပုံမှန် ပြေးဆွဲသွားမည် ဖြစ်သည်။",
+                    "ကျန်းမာရေး စစ်ဆေးမှုများတွင် ပြည်သူများ ပါဝင်ခဲ့ကြောင်း သိရသည်။",
+                    "ပရဟိတ အဖွဲ့က ရန်ပုံငွေ ထောက်ပံ့မှုကို လက်ခံ ရရှိကြောင်း ကြေညာသည်။"
+                ],
+                "count": 4
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-advanced-8-ex-3",
+            "instruction": "အစီရင်ခံစာ ဝါကျရှည်များကို တိကျစွာ ရိုက်ပါ",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "စုံစမ်းစစ်ဆေးမှု ရလဒ်များကို အစီရင်ခံစာအဖြစ် တင်ပြခဲ့သည်။",
+                    "ကနဦး စစ်ဆေးချက်များအရ အမှုကိစ္စမှာ ရှင်းလင်းနေဆဲဟု ဆိုသည်။",
+                    "ကျောင်းအုပ်၏ အစီရင်ခံစာအရ ကျောင်းသား အောင်နှုန်း မြင့်မားလာသည်။",
+                    "စစ်တမ်း ရလဒ်များကို အခြေခံ၍ ဝန်ဆောင်မှုကို ပြုပြင်ရန် အကြံပြုထားသည်။"
+                ],
                 "count": 4
             }
         }

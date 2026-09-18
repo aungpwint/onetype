@@ -4,68 +4,66 @@
     "level": "advanced",
     "language": "my",
     "number": 5,
-    "title": "Common Words Level 1",
-    "titleMy": "အသုံးများသော စကားလုံးများ (၁)",
-    "description": "လုပ်ငန်းခွင် နှင့် နေ့စဉ်ဘဝ တွင် အသုံးများသော စကားလုံးများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
-    "difficulty": "medium",
-    "estimatedMinutes": 5,
+    "title": "Professional Workplace Sentences",
+    "titleMy": "လုပ်ငန်းခွင် ဝါကျများ",
+    "description": "လုပ်ငန်းခွင်နှင့် ရုံးလုပ်ငန်းများတွင် အသုံးများသော တောင်းဆိုမှု၊ ညွှန်ကြားမှုနှင့် ဖော်ပြချက်များကို မှန်ကန်သော ဝါကျပုံစံဖြင့် ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာဖြစ်သည်။",
+    "difficulty": "hard",
+    "estimatedMinutes": 7,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 92,
-        "minWpm": 20
+        "minAccuracy": 91,
+        "minWpm": 22
     },
-    "focus": ["words"],
-    "prerequisites": ["lesson-my-advanced-4"],
-    "focusKeys": [
-        "Digit7",
-        "KeyA",
-        "KeyB",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyM",
-        "KeyN",
-        "KeyP",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyV",
-        "KeyW",
-        "KeyY",
-        "KeyZ",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky"],
+    "focus": ["sentences", "accuracy"],
+    "focusKeys": ["Digit7", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "Backslash", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
+    "prerequisites": ["lesson-my-advanced-4"],
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-advanced-5-ex-1",
-            "instruction": "အသုံးများသော စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
+            "instruction": "လုပ်ငန်းခွင် ဆိုင်ရာ ဝါကျများကို မှန်ကန်စွာ ရိုက်ပါ",
             "generator": {
-                "type": "words",
-                "bank": "words",
-                "count": 20
+                "type": "sentences",
+                "sentences": [
+                    "လိုအပ်သော စာရွက်စာတမ်းများကို ရုံးသို့ ပြန်လည် တင်သွင်းပါ။",
+                    "အစည်းအဝေး မစတင်မီ အချက်အလက်များကို ကြိုတင် ကြည့်ရှုပါ။",
+                    "ကျေးဇူးပြု၍ သင်၏ လိပ်စာကို ပြန်လည် ဖော်ပြပေးပါ။",
+                    "ဖိုင်များကို သိမ်းဆည်းပြီး ငွေစာရင်းကို စစ်ဆေးပါ။"
+                ],
+                "count": 4
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-advanced-5-ex-2",
-            "instruction": "စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
+            "instruction": "ရုံးလုပ်ငန်း ဆိုင်ရာ ဝါကျများကို ချောမွေ့စွာ ရိုက်ပါ",
             "generator": {
-                "type": "words",
-                "bank": "words",
-                "count": 20
+                "type": "sentences",
+                "sentences": [
+                    "တာဝန်ခံက အလုပ်သမားများအား နေ့စဉ် လုပ်ငန်းညွှန်ကြားချက် ပေးသည်။",
+                    "လုပ်ငန်းခွင် ဘေးကင်းရေးအတွက် စည်းမျဉ်းများကို လိုက်နာရန် လိုအပ်သည်။",
+                    "ငွေရငွေသုံး စာရင်းကို လစဉ် ပြန်လည် စစ်ဆေးရသည်။",
+                    "ပစ္စည်းအသစ်များကို မှတ်ပုံတင်၍ မှတ်တမ်း ထားရှိသည်။"
+                ],
+                "count": 4
+            }
+        },
+        {
+            "kind": "generated",
+            "id": "lesson-my-advanced-5-ex-3",
+            "instruction": "လုပ်ငန်းခွင် ဆိုင်ရာ ဝါကျရှည်များကို တိကျစွာ ရိုက်ပါ",
+            "generator": {
+                "type": "sentences",
+                "sentences": [
+                    "ဆုံးဖြတ်ချက်များ ချမှတ်ရာတွင် အားလုံး၏ အမြင်ကို စုစည်း နားထောင်သင့်သည်။",
+                    "သုံးစွဲသူ တုံ့ပြန်မှုများကို အခြေခံ၍ ဝန်ဆောင်မှုကို တိုးတက်အောင် ပြုပြင်သည်။",
+                    "ဒေတာများကို လုံခြုံစွာ သိမ်းဆည်းရန် နည်းပညာပိုင်းကို အပ်ဒိတ် ပြုလုပ်ထားသည်။",
+                    "အဖွဲ့လိုက် ပူးပေါင်း လုပ်ဆောင်ခြင်းဖြင့် လုပ်ငန်းများ မြန်ဆန် ပြီးစီးစေသည်။"
+                ],
+                "count": 4
             }
         }
     ]

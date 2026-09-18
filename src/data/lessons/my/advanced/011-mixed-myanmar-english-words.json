@@ -6,87 +6,68 @@
     "number": 11,
     "title": "Mixed Myanmar + English Text",
     "titleMy": "မြန်မာ + အင်္ဂလိပ် ရောနှော စာသား",
-    "description": "မြန်မာ ယူနီကုဒ် နှင့် အင်္ဂလိပ် စကားလုံးများ တစ်တန်းတည်း ရောနှော ပါဝင်သော သဘာဝ စာကြောင်းများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
+    "description": "မြန်မာစာကြောင်းများအတွင်း အင်္ဂလိပ်ဝေါဟာရများ သင့်တင့်စွာ ရောနှောပါဝင်သော ဝါကျများကို ချောမွေ့စွာ ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာဖြစ်သည်။",
     "difficulty": "hard",
-    "estimatedMinutes": 7,
+    "estimatedMinutes": 6,
     "keyboard": "mixed",
     "completion": {
-        "minAccuracy": 93,
+        "minAccuracy": 92,
         "minWpm": 22
     },
-    "focusKeys": [
-        "BracketLeft",
-        "Digit7",
-        "KeyA",
-        "KeyB",
-        "KeyC",
-        "KeyD",
-        "KeyE",
-        "KeyF",
-        "KeyG",
-        "KeyH",
-        "KeyI",
-        "KeyJ",
-        "KeyK",
-        "KeyL",
-        "KeyM",
-        "KeyN",
-        "KeyO",
-        "KeyP",
-        "KeyR",
-        "KeyS",
-        "KeyT",
-        "KeyU",
-        "KeyV",
-        "KeyW",
-        "KeyY",
-        "KeyZ",
-        "Period",
-        "Semicolon",
-        "ShiftLeft",
-        "ShiftRight"
-    ],
-    "targetFingers": ["left-index", "left-middle", "left-pinky", "left-ring", "right-index", "right-middle", "right-pinky", "right-ring"],
+    "focus": ["bilingual", "unicode", "sentences"],
+    "prerequisites": ["lesson-my-advanced-10"],
+    "focusKeys": ["Digit7", "Minus", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "Backslash", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Period", "Space", "ShiftLeft", "ShiftRight"],
+    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
             "id": "lesson-my-advanced-11-ex-1",
             "kind": "text",
-            "instruction": "Hello မင်္ဂလာပါ။",
+            "instruction": "အင်္ဂလိပ်နှင့် မြန်မာ ရောနှောထားသော ပထမဝါကျကို ရိုက်ပါ",
             "text": "Hello မင်္ဂလာပါ။"
         },
         {
             "id": "lesson-my-advanced-11-ex-2",
             "kind": "text",
-            "instruction": "Myanmar နဲ့ English ကို ရောနှောပြီး ရိုက်နိုင်ပါတယ်။",
-            "text": "Myanmar နဲ့ English ကို ရောနှောပြီး ရိုက်နိုင်ပါတယ်။"
+            "instruction": "email စစ်ဆေးခြင်းဆိုင်ရာ ဝါကျကို ရိုက်ပါ",
+            "text": "အလုပ်ရုံတွင် email အားလုံးကို နံနက်တိုင်း စစ်ဆေးရသည်။"
         },
         {
             "id": "lesson-my-advanced-11-ex-3",
             "kind": "text",
-            "instruction": "OneType ဟာ typing trainer တစ်ခုဖြစ်ပါတယ်။",
-            "text": "OneType ဟာ typing trainer တစ်ခုဖြစ်ပါတယ်။"
+            "instruction": "report နှင့် Excel အသုံးပြုခြင်းအကြောင်း ဝါကျကို ရိုက်ပါ",
+            "text": "တင်ပြရမည့် report များကို Excel ဖြင့် ပြုစုနေသည်။"
         },
         {
             "id": "lesson-my-advanced-11-ex-4",
             "kind": "text",
-            "instruction": "Python က programming language တစ်ခုပါ။",
-            "text": "Python က programming language တစ်ခုပါ။"
+            "instruction": "project ဆောင်ရွက်မှုအကြောင်း ဝါကျကို ရိုက်ပါ",
+            "text": "project ကြောင့် အလုပ်များသော်လည်း အဆင်ပြေပါသည်။"
         },
         {
             "id": "lesson-my-advanced-11-ex-5",
             "kind": "text",
-            "instruction": "This computer ကို သုံးတာ ကောင်းပါတယ်။",
-            "text": "This computer ကို သုံးတာ ကောင်းပါတယ်။"
+            "instruction": "website ပေါ် ဓာတ်ပုံတင်ခြင်းအကြောင်း ဝါကျကို ရိုက်ပါ",
+            "text": "သူငယ်ချင်းက သူ၏ website ပေါ်တွင် ဓာတ်ပုံများ တင်ထားသည်။"
         },
         {
             "id": "lesson-my-advanced-11-ex-6",
             "kind": "text",
-            "instruction": "Windows နဲ့ MacOS တွေဟာ operating systems တွေပါ။",
-            "text": "Windows နဲ့ MacOS တွေဟာ operating systems တွေပါ။"
+            "instruction": "file များ download လုပ်ခြင်းအကြောင်း ဝါကျကို ရိုက်ပါ",
+            "text": "လိုအပ်သော file များကို အင်တာနက်မှတစ်ဆင့် download လုပ်နိုင်သည်။"
+        },
+        {
+            "id": "lesson-my-advanced-11-ex-7",
+            "kind": "text",
+            "instruction": "online သင်တန်းနှင့် Wi-Fi အကြောင်း ဝါကျကို ရိုက်ပါ",
+            "text": "online သင်တန်းများတက်ရန် Wi-Fi ချိတ်ဆက်မှု ကောင်းမွန်ရန် လိုသည်။"
+        },
+        {
+            "id": "lesson-my-advanced-11-ex-8",
+            "kind": "text",
+            "instruction": "password လုံခြုံမှုအကြောင်း ဝါကျကို ရိုက်ပါ",
+            "text": "အရေးကြီးသော password များကို စာရွက်ပေါ်တွင် မရေးထားသင့်ပါ။"
         }
-    ],
-    "focus": ["bilingual", "unicode", "sentences"],
-    "prerequisites": ["lesson-my-advanced-10"]
+    ]
 }

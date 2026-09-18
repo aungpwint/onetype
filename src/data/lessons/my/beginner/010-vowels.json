@@ -14,9 +14,9 @@
         "minAccuracy": 85,
         "minWpm": null
     },
-    "focusKeys": ["KeyU", "KeyD", "ShiftRight", "KeyK", "KeyL", "KeyJ", "ShiftLeft", "KeyH", "KeyA", "KeyM"],
+    "focusKeys": ["Digit7", "KeyE", "KeyR", "KeyU", "KeyA", "KeyD", "KeyH", "KeyJ", "KeyK", "KeyL", "KeyM", "ShiftLeft", "ShiftRight"],
     "focus": ["syllable", "tone"],
-    "targetFingers": ["right-index", "left-middle", "right-pinky", "right-middle", "right-ring", "left-pinky"],
+    "targetFingers": ["left-pinky", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["right", "left"],
     "prerequisites": ["lesson-my-beginner-9"],
     "requiresShift": true,
