@@ -8,11 +8,11 @@
     "titleMy": "ဗျည်းထပ် စာလုံးများ",
     "description": "ဗျည်းထပ်ပါဝင်သော မြန်မာစာလုံးများကို Unicode အစီအစဉ်မှန်ကန်စွာ ရိုက်နိုင်ရန် လေ့ကျင့်ပေးသော သင်ခန်းစာဖြစ်သည်။ ဗျည်းထပ်များ၊ ဗျည်းတွဲများနှင့် သရပါဝင်သော စာလုံးပုံစံများကို အဆင့်လိုက် ရိုက်လေ့ကျင့်ရမည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 4,
+    "estimatedMinutes": 5,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 88,
-        "minWpm": null
+        "minAccuracy": 85,
+        "minWpm": 12
     },
     "focus": ["syllable", "unicode"],
     "prerequisites": ["lesson-my-intermediate-2"],

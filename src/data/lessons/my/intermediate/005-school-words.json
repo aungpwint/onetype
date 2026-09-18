@@ -8,11 +8,11 @@
     "titleMy": "ကျောင်းသုံး စကားလုံးများ",
     "description": "ကျောင်းနှင့် ပညာရေးတွင် အသုံးများသော စကားလုံးများကို မှန်ကန်ချောမွေ့စွာ ရိုက်နိုင်ရန် လေ့ကျင့်ပေးသော သင်ခန်းစာဖြစ်သည်။ ကျောင်း၊ ဆရာ၊ ဆရာမ၊ ကျောင်းသား၊ စာအုပ်၊ စာသင်ခန်း၊ သင်ခန်းစာ၊ စာမေးပွဲနှင့် လက်ရေး စသည့် စကားလုံးများ ပါဝင်သည်။",
     "difficulty": "medium",
-    "estimatedMinutes": 4,
+    "estimatedMinutes": 6,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 88,
-        "minWpm": null
+        "minAccuracy": 85,
+        "minWpm": 12
     },
     "focus": ["words"],
     "prerequisites": ["lesson-my-intermediate-4"],

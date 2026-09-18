@@ -8,11 +8,11 @@
     "titleMy": "မေးခွန်းစကားလုံးများ",
     "description": "မေးမြန်းရာတွင် အသုံးများသော မေးခွန်းစကားလုံးများကို ရိုက်လေ့ကျင့်ရန် ရည်ရွယ်ထားသော သင်ခန်းစာဖြစ်သည်။ ဘာ၊ ဘယ်၊ ဘယ်သူ၊ ဘယ်မှာ၊ ဘယ်လို၊ ဘယ်နှစ်၊ ဘယ်လောက်၊ ဘယ်နေ့ စသည့် မေးခွန်းစကားလုံးများ ပါဝင်သည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 3,
+    "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 88,
-        "minWpm": null
+        "minAccuracy": 85,
+        "minWpm": 12
     },
     "focus": ["words"],
     "prerequisites": ["lesson-my-intermediate-1"],
