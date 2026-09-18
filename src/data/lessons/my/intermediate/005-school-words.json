@@ -5,9 +5,9 @@
     "language": "my",
     "number": 5,
     "title": "School Words",
-    "titleMy": "ကျောင်း စကားလုံးများ",
-    "description": "ကျောင်းဘဝ နှင့် ပညာရေးတွင် သုံးသော စကားလုံးများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ စာ ၊ ဆရာ ၊ ကျောင်း ၊ အိမ် ၊ စာသား ၊ စာမေးပွဲ ၊ သင်ခန်းစာ ၊ လက်ရေး စသည်တို့ ပါဝင်သည်။",
-    "difficulty": "easy",
+    "titleMy": "ကျောင်းသုံး စကားလုံးများ",
+    "description": "ကျောင်းနှင့် ပညာရေးတွင် အသုံးများသော စကားလုံးများကို မှန်ကန်ချောမွေ့စွာ ရိုက်နိုင်ရန် လေ့ကျင့်ပေးသော သင်ခန်းစာဖြစ်သည်။ ကျောင်း၊ ဆရာ၊ ဆရာမ၊ ကျောင်းသား၊ စာအုပ်၊ စာသင်ခန်း၊ သင်ခန်းစာ၊ စာမေးပွဲနှင့် လက်ရေး စသည့် စကားလုံးများ ပါဝင်သည်။",
+    "difficulty": "medium",
     "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
@@ -17,59 +17,58 @@
     "focus": ["words"],
     "prerequisites": ["lesson-my-intermediate-4"],
     "focusKeys": [
-        "KeyP",
-        "KeyM",
-        "KeyQ",
         "Digit7",
-        "ShiftLeft",
-        "KeyU",
-        "KeyS",
         "KeyA",
-        "KeyI",
-        "KeyF",
-        "Semicolon",
-        "KeyT",
-        "KeyD",
-        "KeyR",
-        "KeyO",
         "KeyC",
-        "KeyV"
+        "KeyD",
+        "KeyE",
+        "KeyF",
+        "KeyI",
+        "KeyM",
+        "KeyO",
+        "KeyP",
+        "KeyQ",
+        "KeyR",
+        "KeyS",
+        "KeyT",
+        "KeyU",
+        "KeyV",
+        "Semicolon",
+        "ShiftLeft",
+        "ShiftRight"
     ],
-    "targetFingers": ["right-pinky", "right-index", "left-pinky", "left-ring", "right-middle", "left-index", "left-middle", "right-ring"],
-    "targetHands": ["right", "left"],
+    "targetFingers": ["left-index", "left-middle", "left-ring", "left-pinky", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-5-ex-1",
-            "instruction": "ကျောင်း စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
+            "instruction": "ကျောင်းနှင့် ပညာရေးတွင် အသုံးများသော စကားလုံးများကို ဖြည်းဖြည်းနှင့် မှန်ကန်စွာ ရိုက်ပါ။",
             "generator": {
                 "type": "words",
-                "words": ["စာ", "ဆရာ", "ကျောင်း"],
-                "count": 12
+                "words": ["စာ", "ဆရာ", "ဆရာမ", "ကျောင်း"],
+                "count": 16
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-5-ex-2",
-            "instruction": "ကျောင်း စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
+            "instruction": "ကျောင်းတွင်း အသုံးများသော စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ။",
             "generator": {
-                "type": "chunks",
-                "keys": ["အိပ်ရာ", "ကျောင်း", "စာသား"],
-                "count": 12,
-                "chunkMin": 4,
-                "chunkMax": 6,
-                "style": "variable"
+                "type": "words",
+                "words": ["ကျောင်းသား", "စာအုပ်", "စာသင်ခန်း", "သင်ခန်းစာ"],
+                "count": 16
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-5-ex-3",
-            "instruction": "စာလုံးတိုင်း မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
+            "instruction": "ရှည်လျားသော ပညာရေးဆိုင်ရာ စကားလုံးများကို အစီအစဉ်မှန်ကန်စွာ ရိုက်ပါ။",
             "generator": {
                 "type": "words",
-                "words": ["စာမေးပွဲ", "သင်ခန်းစာ", "လက်ရေး"],
-                "count": 9
+                "words": ["စာမေးပွဲ", "လက်ရေး", "အတန်းပိုင်", "ကျောင်းဆရာ"],
+                "count": 12
             }
         }
     ]

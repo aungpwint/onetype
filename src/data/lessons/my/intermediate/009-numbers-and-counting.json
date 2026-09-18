@@ -6,7 +6,7 @@
     "number": 9,
     "title": "Numbers and Counting",
     "titleMy": "ကိန်းဂဏန်းနှင့် ရေတွက်ခြင်း",
-    "description": "မြန်မာ ကိန်းဂဏန်းများကို ဂဏန်းတန်း နှင့် အတူ ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ ၁ မှ ၀ အထိ ကိန်းဂဏန်း အားလုံး ပါဝင်သည်။",
+    "description": "မြန်မာဂဏန်းများကို မှန်ကန်ချောမွေ့စွာ ရိုက်နိုင်ရန် လေ့ကျင့်ပေးသော သင်ခန်းစာဖြစ်သည်။ ၀ မှ ၉ အထိ မြန်မာဂဏန်းများ၊ ဂဏန်းအစီအစဉ်များနှင့် ရိုးရှင်းသော ဂဏန်းအစုများကို အဆင့်လိုက် ရိုက်လေ့ကျင့်ရမည်။",
     "difficulty": "medium",
     "estimatedMinutes": 4,
     "keyboard": "myanmar",
@@ -14,46 +14,47 @@
         "minAccuracy": 90,
         "minWpm": null
     },
-    "focus": ["numbers", "words"],
+    "focus": ["numbers"],
     "prerequisites": ["lesson-my-intermediate-8"],
     "focusKeys": ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0"],
     "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],
+    "requiresShift": false,
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-9-ex-1",
-            "instruction": "၁ မှ ၅ အထိ ဂဏန်းများကို ဖြည်းဖြည်း ရိုက်ပါ",
+            "instruction": "မြန်မာဂဏန်းများကို တစ်လုံးချင်း ဖြည်းဖြည်းနှင့် မှန်ကန်စွာ ရိုက်ပါ။",
             "generator": {
-                "type": "chunks",
-                "keys": ["၁", "၂", "၃", "၄", "၅"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 4,
-                "style": "variable"
+                "type": "words",
+                "words": ["၀", "၁", "၂", "၃", "၄", "၅", "၆", "၇", "၈", "၉"],
+                "count": 20
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-9-ex-2",
-            "instruction": "၆ မှ ၀ အထိ ဂဏန်းများကို ချောမွေ့စွာ ရိုက်ပါ",
+            "instruction": "ဂဏန်းနှစ်လုံးနှင့် သုံးလုံး အစုများကို ချောမွေ့စွာ ရိုက်ပါ။",
             "generator": {
                 "type": "chunks",
-                "keys": ["၆", "၇", "၈", "၉", "၀"],
-                "count": 12,
-                "chunkMin": 2,
-                "chunkMax": 4,
+                "keys": ["၁၂", "၂၃", "၃၄", "၄၅", "၅၆", "၆၇", "၇၈", "၈၉", "၁၀", "၂၅", "၃၆", "၄၇", "၅၈", "၆၉", "၁၀၀"],
+                "count": 15,
+                "chunkMin": 1,
+                "chunkMax": 1,
                 "style": "variable"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-9-ex-3",
-            "instruction": "ဂဏန်း အားလုံးကို မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
+            "instruction": "ဂဏန်းအစုများကို အစီအစဉ်မှန်ကန်စွာ ဆက်တိုက်ရိုက်ပါ။",
             "generator": {
-                "type": "words",
-                "words": ["၁", "၂", "၃", "၄", "၅", "၆", "၇", "၈", "၉", "၀"],
-                "count": 20
+                "type": "chunks",
+                "keys": ["၁၂၃", "၂၃၄", "၃၄၅", "၄၅၆", "၅၆၇", "၆၇၈", "၇၈၉", "၉၈၇", "၈၇၆", "၇၆၅", "၅၄၃", "၄၃၂"],
+                "count": 15,
+                "chunkMin": 1,
+                "chunkMax": 1,
+                "style": "variable"
             }
         }
     ]

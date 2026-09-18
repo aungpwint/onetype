@@ -5,8 +5,8 @@
     "language": "my",
     "number": 7,
     "title": "Weather Words",
-    "titleMy": "ရာသီဥတု စကားလုံးများ",
-    "description": "ရာသီဥတု နှင့် ပတ်သက်သော စကားလုံးများကို ရိုက်လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။ မိုး ၊ နေ ၊ လေ ၊ ပူ ၊ ဆောင်း ၊ နှင်း ၊ နွေ ၊ တိမ် ၊ မြူ ၊ ဟင်းလင်း စသည်တို့ ပါဝင်သည်။",
+    "titleMy": "ရာသီဥတုဆိုင်ရာ စကားလုံးများ",
+    "description": "ရာသီဥတုနှင့် အပူချိန်အခြေအနေများကို ဖော်ပြရာတွင် အသုံးများသော စကားလုံးများကို မှန်ကန်ချောမွေ့စွာ ရိုက်နိုင်ရန် လေ့ကျင့်ပေးသော သင်ခန်းစာဖြစ်သည်။ မိုး၊ နေ၊ လေ၊ ပူ၊ အေး၊ တိမ်၊ မြူ၊ နှင်းနှင့် မိုးရွာ စသည့် စကားလုံးများ ပါဝင်သည်။",
     "difficulty": "medium",
     "estimatedMinutes": 4,
     "keyboard": "myanmar",
@@ -17,30 +17,30 @@
     "focus": ["words"],
     "prerequisites": ["lesson-my-intermediate-6"],
     "focusKeys": [
-        "KeyR",
-        "KeyD",
-        "KeyK",
-        "Semicolon",
-        "KeyE",
         "KeyA",
-        "KeyV",
-        "KeyQ",
-        "ShiftRight",
-        "KeyS",
-        "KeyI",
+        "KeyD",
+        "KeyE",
         "KeyF",
+        "KeyI",
         "KeyJ",
+        "KeyK",
+        "KeyM",
+        "KeyQ",
+        "KeyR",
+        "KeyS",
+        "KeyV",
+        "Semicolon",
         "BracketLeft",
-        "KeyM"
+        "ShiftRight"
     ],
-    "targetFingers": ["left-index", "left-middle", "right-middle", "right-pinky", "left-pinky", "left-ring", "right-index"],
+    "targetFingers": ["left-index", "left-middle", "left-ring", "left-pinky", "right-index", "right-middle", "right-pinky"],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-7-ex-1",
-            "instruction": "ရာသီဥတု စကားလုံးများကို ဖြည်းဖြည်း ရိုက်ပါ",
+            "instruction": "အခြေခံ ရာသီဥတုစကားလုံးများကို ဖြည်းဖြည်းနှင့် မှန်ကန်စွာ ရိုက်ပါ။",
             "generator": {
                 "type": "words",
                 "words": ["မိုး", "နေ", "လေ"],
@@ -50,21 +50,21 @@
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-7-ex-2",
-            "instruction": "ရာသီဥတု စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ",
+            "instruction": "အပူချိန်နှင့် ကောင်းကင်အခြေအနေကို ဖော်ပြသော စကားလုံးများကို ချောမွေ့စွာ ရိုက်ပါ။",
             "generator": {
                 "type": "words",
-                "words": ["ပူ", "ဆောင်း", "နှင်း"],
-                "count": 12
+                "words": ["ပူ", "အေး", "တိမ်", "မြူ"],
+                "count": 16
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-7-ex-3",
-            "instruction": "စာလုံးတိုင်း မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
+            "instruction": "ပိုရှည်သော ရာသီဥတုဆိုင်ရာ စကားလုံးများကို အစီအစဉ်မှန်ကန်စွာ ရိုက်ပါ။",
             "generator": {
                 "type": "words",
-                "words": ["နွေ", "တိမ်", "မြူ", "ဟင်းလင်း"],
-                "count": 12
+                "words": ["နှင်း", "နွေ", "ဆောင်း", "မိုးရွာ", "မိုးတိမ်"],
+                "count": 15
             }
         }
     ]

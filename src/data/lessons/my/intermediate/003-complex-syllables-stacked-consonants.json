@@ -4,59 +4,59 @@
     "level": "intermediate",
     "language": "my",
     "number": 3,
-    "title": "Complex Syllables: Stacked Consonants",
-    "titleMy": "ရှုပ်ထွေးသော ဝဏ္ဏများ ဗျည်းထပ်တင်",
-    "description": "ဗျည်းထပ်တင် ဝဏ္ဏများ ပါဝင်သော စာလုံးစုများကို ချောမွေ့စွာ ရိုက်နိုင်ရန် ရည်ရွယ်သည်။ က္က ၊ က္ခ ၊ ပ္ပ ၊ မြန် ၊ မင်း ၊ ညင် ၊ ကျိ ၊ ကြာ ၊ မျာ ၊ ပြု အစရှိသော အစုများကို လေ့ကျင့်ရမည်။",
-    "difficulty": "easy",
+    "title": "Stacked Consonants",
+    "titleMy": "ဗျည်းထပ် စာလုံးများ",
+    "description": "ဗျည်းထပ်ပါဝင်သော မြန်မာစာလုံးများကို Unicode အစီအစဉ်မှန်ကန်စွာ ရိုက်နိုင်ရန် လေ့ကျင့်ပေးသော သင်ခန်းစာဖြစ်သည်။ ဗျည်းထပ်များ၊ ဗျည်းတွဲများနှင့် သရပါဝင်သော စာလုံးပုံစံများကို အဆင့်လိုက် ရိုက်လေ့ကျင့်ရမည်။",
+    "difficulty": "medium",
     "estimatedMinutes": 4,
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 88,
         "minWpm": null
     },
-    "focus": ["syllable"],
+    "focus": ["syllable", "unicode"],
     "prerequisites": ["lesson-my-intermediate-2"],
-    "focusKeys": ["KeyU", "KeyF", "ShiftRight", "KeyC", "KeyY", "KeyR", "KeyJ", "KeyE", "KeyI", "Semicolon", "KeyN", "KeyS", "KeyD", "KeyM", "KeyK"],
-    "targetFingers": ["right-index", "left-index", "right-pinky", "left-middle", "right-middle", "left-ring"],
-    "targetHands": ["right", "left"],
+    "focusKeys": ["KeyC", "KeyD", "KeyE", "KeyF", "KeyI", "KeyJ", "KeyK", "KeyM", "KeyN", "KeyR", "KeyS", "KeyU", "KeyY", "Semicolon", "ShiftRight"],
+    "targetFingers": ["left-index", "left-middle", "left-ring", "right-index", "right-middle", "right-pinky"],
+    "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-3-ex-1",
-            "instruction": "ဗျည်းစု အစုများကို ဖြည်းဖြည်း ရိုက်ပါ",
+            "instruction": "ဗျည်းထပ်များကို ဖြည်းဖြည်းနှင့် မှန်ကန်စွာ ရိုက်ပါ။",
             "generator": {
                 "type": "chunks",
-                "keys": ["က္က", "က္ခ", "ပ္ပ"],
-                "count": 12,
-                "chunkMin": 4,
-                "chunkMax": 6,
+                "keys": ["က္က", "က္ခ", "ပ္ပ", "မ္မ", "န္န"],
+                "count": 15,
+                "chunkMin": 1,
+                "chunkMax": 2,
                 "style": "variable"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-3-ex-2",
-            "instruction": "ဝဏ္ဏစုများကို ချောမွေ့စွာ ရိုက်ပါ",
+            "instruction": "ဗျည်းထပ်ပါဝင်သော စာလုံးများကို ချောမွေ့စွာ ရိုက်ပါ။",
             "generator": {
                 "type": "chunks",
-                "keys": ["မြန်", "မင်း", "ညင်"],
-                "count": 12,
-                "chunkMin": 4,
-                "chunkMax": 6,
+                "keys": ["မြန်", "မင်း", "ညှိ", "ကျွမ်း", "ပြန်"],
+                "count": 15,
+                "chunkMin": 1,
+                "chunkMax": 2,
                 "style": "variable"
             }
         },
         {
             "kind": "generated",
             "id": "lesson-my-intermediate-3-ex-3",
-            "instruction": "စာလုံးတိုင်း မှန်ကန်ကြောင်း သေချာ ရိုက်ပါ",
+            "instruction": "စာလုံးပုံစံများကို အစီအစဉ်မှန်ကန်စွာ ရိုက်ပါ။",
             "generator": {
                 "type": "chunks",
-                "keys": ["ကျိ", "ကြာ", "မျာ", "ပြု"],
-                "count": 12,
-                "chunkMin": 4,
-                "chunkMax": 6,
+                "keys": ["ကြာ", "မျှ", "ပြု", "ကျိ", "ကြွ", "ဖြစ်"],
+                "count": 15,
+                "chunkMin": 1,
+                "chunkMax": 2,
                 "style": "variable"
             }
         }
