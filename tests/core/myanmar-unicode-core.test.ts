@@ -489,6 +489,22 @@ describe('Myanmar syllable cluster segmentation', () => {
         expect(splitMyanmarSyllables('\u1004\u103A\u1039\u1001')).toEqual(['\u1004\u103A\u1039\u1001'])
     })
 
+    it('splits a syllable-final consonant (asat U+103A) from the next syllable', () => {
+        // Regression (keyboard order bug): "ဖတ်လေ့" was merged into one cluster,
+        // so the pre-base vowel ေ of the second syllable hoisted to the front of
+        // the whole word ("ေ" typed before "ဖတ်"). The asat U+103A marks a FINAL
+        // consonant — the following consonant starts a NEW syllable. Only virama
+        // U+1039 stacks (see previous test).
+        // "စာဖတ်လေ့" = စ+ာ | ဖ+တ+် | လ+ေ+့
+        expect(splitMyanmarSyllables('\u1005\u102C\u1016\u1010\u103A\u101C\u1031\u1037')).toEqual([
+            '\u1005\u102C',
+            '\u1016\u1010\u103A',
+            '\u101C\u1031\u1037',
+        ])
+        // The pre-base vowel belongs to its OWN syllable, never the previous one.
+        expect(splitMyanmarSyllables('\u1016\u1010\u103A\u101C\u1031\u1037')).toEqual(['\u1016\u1010\u103A', '\u101C\u1031\u1037'])
+    })
+
     it('splits two independent syllables', () => {
         // "ကမ္ဘာ" = က + မ + ္ + ဘ + ာ -> [က, မ္ဘာ]
         expect(splitMyanmarSyllables('\u1000\u1019\u1039\u1018\u102C')).toEqual(['\u1000', '\u1019\u1039\u1018\u102C'])

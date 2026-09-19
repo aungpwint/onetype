@@ -111,6 +111,19 @@ describe('every Myanmar key is buildable, typeable and slot-exact', () => {
         expect(runsJoin(seq)).toBe('ေ')
     })
 
+    it('types စာဖတ်လေ့ in syllabic order — ေ after ဖတ်, never at the word head', () => {
+        // Regression (keyboard order bug): the asat-final syllable "ဖတ်" used to
+        // fuse with "လေ့", hoisting the pre-base vowel to KeyA before KeyZ(KW...).
+        // The learner must type စ၊ာ၊ဖ၊တ၊်၊ေ၊လ၊့ — နောက် syllable's ေ comes right
+        // before its own base လ.
+        const phrase = 'စာဖတ်လေ့'
+        const seq = buildSequence(phrase, myanmar)
+        expect(seq.graphemes).toEqual(['စာ', 'ဖတ်', 'လေ့'])
+        expect(seq.units.map((u) => u.keyCode)).toEqual(['KeyP', 'KeyM', 'KeyZ', 'KeyW', 'KeyF', 'KeyA', 'KeyV', 'KeyH'])
+        const { engine } = typeThrough(phrase)
+        expect(engine.isComplete).toBe(true)
+    })
+
     it('space, digits and ASCII symbols keep identity slots', () => {
         for (const text of [' ', '၁', '*', '(', ')', '"', '?', ',', '.', '/', '-', '_', '+', '=', "'"]) {
             const { seq } = typeThrough(`က ${text} က`)

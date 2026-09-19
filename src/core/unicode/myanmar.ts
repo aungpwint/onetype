@@ -112,7 +112,7 @@ export function splitMyanmarSyllables(text: string): string[] {
             continue
         }
 
-        if (isSyllableStart(code, prev, next)) {
+        if (isSyllableStart(code, prev, next, upcomingHasPreBaseVowel(chars, i))) {
             // Canonical Unicode stores the preposed vowel (ေ) AFTER its own
             // base (ရေ). When the cluster being built already has a head, the
             // held vowel belongs to it and must not leak forward onto the next
@@ -165,19 +165,41 @@ function hasSyllableHead(cluster: string): boolean {
     return false
 }
 
-function isSyllableStart(code: number, prev: number, next: number): boolean {
+function isSyllableStart(code: number, prev: number, next: number, upcomingHasPreBase: boolean): boolean {
     // Base consonants (and vowel-letter bases) attach any cluster-internal marks.
     if (isMyanmarSyllableHead(code)) {
-        // Final consonants (followed by asat U+103A) and stacked consonants
-        // (following virama U+1039 / asat U+103A) continue the previous cluster.
+        // Final consonants (followed by asat U+103A) continue the previous cluster.
         if (isAsat(next)) return false
-        if (isAsat(prev) || isVirama(prev)) return false
+        // Stacked consonants (following virama U+1039 — including kinzi sequences
+        // like င + ် + ္) continue the previous cluster.
+        if (isVirama(prev)) return false
+        // A consonant after a final-consonant asat merges as part of a compound
+        // word (မြန်မာ, မျက်စိ, နားလည်…). It opens a NEW syllable only when its
+        // own upcoming cluster carries the pre-base vowel U+1031, so that the
+        // vowel is never hoisted to a merged cluster's front and the keyboard
+        // order stays syllable-wise: "ဖတ်လေ့" must type as ဖ၊တ၊်၊ေ၊လ၊့ — never
+        // ေ၊ဖ၊တ၊်၊လ၊့.
+        if (isAsat(prev)) return upcomingHasPreBase
         return true
     }
     // Medials and vowel signs always attach to the current cluster.
     if (isMyanmarAttachingMark(code)) return false
     // Anything else (punctuation, whitespace, digits) starts a new group.
     return true
+}
+
+// True when the syllable opening at `from` carries the pre-base vowel U+1031
+// somewhere in its own trailing run (medials, vowel signs, tones, asat — up to
+// the next syllable head or any non-attaching character).
+function upcomingHasPreBaseVowel(chars: string[], from: number): boolean {
+    for (let j = from + 1; j < chars.length; j++) {
+        const c = chars[j].codePointAt(0) ?? 0
+        if (isPreBaseVowel(c)) return true
+        if (isMyanmarSyllableHead(c)) return false
+        if (isMyanmarAttachingMark(c)) continue
+        return false
+    }
+    return false
 }
 
 // Mixed English + Myanmar segmentation: Myanmar syllables are split as complete
