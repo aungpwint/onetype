@@ -6,7 +6,7 @@
     "number": 4,
     "title": "Consonants Review",
     "titleMy": "ဗျည်းများ ပြန်လည်သုံးသပ်ခြင်း",
-    "description": "ယခုအထိ သင်ယူခဲ့သော ဗျည်းများ အားလုံးကို လက်နှစ်ဖက်ဖြင့် ပြန်လည် လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
+    "description": "ယခုအထိ သင်ယူခဲ့သော ဗျည်းများ အားလုံးကို လက်နှစ်ဖက်ဖြင့် ပြန်လည် လေ့ကျင့်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "basic",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -23,7 +23,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-4-ex-1",
-            "instruction": "ဘယ်လက် ဗျည်း ငါးခုကို ပြန်လည်လေ့ကျင့်ပါ",
+            "instruction": "ဘယ်လက် ဗျည်း ငါးခုကို ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဆ", "တ", "န", "မ", "အ"],
@@ -36,7 +36,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-4-ex-2",
-            "instruction": "ညာလက် ဗျည်း ငါးခုကို ပြန်လည်လေ့ကျင့်ပါ",
+            "instruction": "ညာလက် ဗျည်း ငါးခုကို ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က", "င", "သ", "စ", "ဟ"],
@@ -49,7 +49,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-4-ex-3",
-            "instruction": "လက်နှစ်ဖက်စလုံး တွဲဖက်လေ့ကျင့်ပါ",
+            "instruction": "လက်နှစ်ဖက်စလုံး တွဲဖက်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဆ", "တ", "န", "မ", "အ", "က", "င", "သ", "စ", "ဟ"],

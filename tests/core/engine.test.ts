@@ -7,6 +7,7 @@ import { englishQwerty } from '@/core/keyboard-layout/english-qwerty'
 import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { shiftHandFor } from '@/core/keyboard-layout/layout'
 import { resolveLessonById } from '@/data/curriculum'
+import { myanmarKeyboardOrder } from '@/core/unicode/keyboard-order'
 
 describe('scoring', () => {
     it('computes accuracy and WPM', () => {
@@ -89,7 +90,7 @@ describe('sequence building', () => {
         const word = '\u1031\u1000\u103B\u102C\u1004\u103A\u1038'
         const seq = buildSequence(word, myanmar)
         expect(seq.units.map((u) => u.keyCode)).toEqual(['KeyA', 'KeyU', 'KeyS', 'KeyM', 'KeyI', 'KeyF', 'Semicolon'])
-        expect(seq.units.map((u) => u.text).join('')).toBe(word)
+        expect(seq.units.map((u) => u.text).join('')).toBe(myanmarKeyboardOrder(word))
     })
 })
 
@@ -126,7 +127,7 @@ describe('typing unit model', () => {
     it('maps Myanmar combining sequences onto one typing unit per code point', () => {
         const word = '\u1031\u1000\u103B\u102C\u1004\u103A\u1038'
         const seq = buildSequence(word, myanmar)
-        expect(seq.units.map((u) => u.text).join('')).toBe(word)
+        expect(seq.units.map((u) => u.text).join('')).toBe(myanmarKeyboardOrder(word))
         expect(seq.graphemes.join('')).toBe(word)
         expect(seq.units).toHaveLength(seq.graphemes.join('').length)
         for (const unit of seq.units) {
@@ -290,7 +291,7 @@ describe('typing engine', () => {
         expect(engine.status).toBe('finished')
     })
 
-    it('backspace steps back exactly one unit for multi-cluster Myanmar', () => {
+it('backspace steps back exactly one unit for multi-cluster Myanmar', () => {
         // "ကာ သုံ" -> three clusters: [ကာ][space][သုံ]
         const two = buildSequence('\u1000\u102C \u101E\u102F\u1036', myanmar)
         expect(two.graphemes).toHaveLength(3) // "ကာ", " ", "သုံ"
@@ -300,12 +301,12 @@ describe('typing engine', () => {
         engine.processKey('KeyM', 'none')
         // Space unit
         engine.processKey('Space', 'none')
-        // Partial start of second cluster: သု (KeyO, KeyK)
+        // Partial start of second cluster: သ,ံ (KeyO, KeyH+shift) — the
+        // anusvara presses before the U vowel sign.
         engine.processKey('KeyO', 'none')
-        engine.processKey('KeyK', 'none')
+        engine.processKey('KeyH', 'shift')
         expect(engine.unitIndex).toBe(5)
-        // Backspace removes the last typed unit (the second keystroke of the
-        // second cluster), not the whole cluster.
+        // Backspace removes the last typed unit (the anusvara), not the whole cluster.
         engine.processKey('Backspace', 'none')
         expect(engine.unitIndex).toBe(4)
     })
@@ -589,11 +590,11 @@ describe('engine Myanmar cluster diagnosis', () => {
         expect(engine.unitIndex).toBe(2)
     })
 
-    it('grades a pre-base vowel cluster correctly in keyboard press order', () => {
-        // Stored logical ရေ = U+101B U+1031; press order is U+1031 (KeyA) then U+101B (Shift+Digit7).
+    it('grades a pre-base vowel cluster in keyboard order', () => {
+        // Stored logical ရေ = U+101B U+1031.
         const seq = buildSequence('\u101B\u1031', myanmar)
         expect(seq.units.map((u) => u.keyCode)).toEqual(['KeyA', 'Digit7'])
-        expect(seq.units[1].modifier).toBe('shift')
+        expect(seq.units[0].modifier).toBe('none')
         const engine = new TypingEngine({ sequence: seq, layout: myanmar })
         engine.processKey('KeyA', 'none')
         engine.processKey('Digit7', 'shift')

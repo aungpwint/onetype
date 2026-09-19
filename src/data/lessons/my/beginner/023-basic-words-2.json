@@ -6,7 +6,7 @@
     "number": 23,
     "title": "Basic Words 2",
     "titleMy": "အခြေခံ စကားလုံးများ (၂)",
-    "description": "နေ့စဉ်သုံး စကားလုံးများကို ရိုက်လေ့ကျင့်သည် - အစားအစာ ၊ မိသားစု ၊ နေရာများ။",
+    "description": "နေ့စဉ်သုံး စကားလုံးများကို ရိုက်လေ့ကျင့်သည် - အစားအစာ ၊ မိသားစု ၊ နေရာများ။",
     "difficulty": "medium",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -45,7 +45,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-23-ex-1",
-            "instruction": "မြို့ နှင့် ရွာ နေရာများကို ရိုက်ပါ",
+            "instruction": "မြို့ နှင့် ရွာ နေရာများကို ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["မြို့", "ရွာ"],
@@ -55,7 +55,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-23-ex-2",
-            "instruction": "မိသားစုနှင့် ကိုယ်ခန္ဓာ စကားလုံးများ ရိုက်ပါ",
+            "instruction": "မိသားစုနှင့် ကိုယ်ခန္ဓာ စကားလုံးများ ရိုက်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ညီ", "ညီမ", "လက်", "နား"],

@@ -6,7 +6,7 @@
     "number": 2,
     "title": "Top Row Consonants: Left Hand",
     "titleMy": "အပေါ်တန်း ဗျည်းများ - ဘယ်လက်",
-    "description": "ဘယ်လက်ဖြင့် ရိုက်ရသော အပေါ်တန်း ဗျည်းများ ဖြစ်သည် - ဆ (KeyQ) ၊ တ (KeyW) ၊ န (KeyE) ၊ မ (KeyR) ၊ အ (KeyT)။",
+    "description": "ဘယ်လက်ဖြင့် ရိုက်ရသော အပေါ်တန်း ဗျည်းများ ဖြစ်သည် - ဆ (KeyQ) ၊ တ (KeyW) ၊ န (KeyE) ၊ မ (KeyR) ၊ အ (KeyT)။",
     "difficulty": "basic",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -23,7 +23,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-2-ex-1",
-            "instruction": "ဘယ်လက်ဖြင့် ဆ နှင့် တ တို့ကို ရိုက်ပါ",
+            "instruction": "ဘယ်လက်ဖြင့် ဆ နှင့် တ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဆ", "တ"],

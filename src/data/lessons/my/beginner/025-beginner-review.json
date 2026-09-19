@@ -6,7 +6,7 @@
     "number": 25,
     "title": "Beginner Review",
     "titleMy": "အခြေခံ ပြန်လည်သုံးသပ်ခြင်း",
-    "description": "အခြေခံ အဆင့်ရှိ မြန်မာ စွမ်းရည်များကို ပြန်လည် သုံးသပ်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
+    "description": "အခြေခံ အဆင့်ရှိ မြန်မာ စွမ်းရည်များကို ပြန်လည် သုံးသပ်ရမည့် သင်ခန်းစာ ဖြစ်သည်။",
     "difficulty": "hard",
     "estimatedMinutes": 4,
     "keyboard": "myanmar",
@@ -43,7 +43,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-25-ex-1",
-            "instruction": "ဗျည်း က င တ န ကို ပြန်လည်လေ့ကျင့်ပါ",
+            "instruction": "ဗျည်း က င တ န ကို ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က", "င", "တ", "န"],
@@ -56,7 +56,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-25-ex-2",
-            "instruction": "က တွင် သရ ပေါင်းစုံ ပြန်လည်လေ့ကျင့်ပါ",
+            "instruction": "က တွင် သရ ပေါင်းစုံ ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကိ", "ကု", "ကဲ", "ကာ", "ကား"],
@@ -69,7 +69,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-25-ex-3",
-            "instruction": "ယပင့် ရရစ် မျာ တို့ကို ပြန်လည်လေ့ကျင့်ပါ",
+            "instruction": "ယပင့် ရရစ် မျာ တို့ကို ပြန်လည်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကျ", "ကြ", "မျာ"],
@@ -83,7 +83,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-25-ex-4",
-            "instruction": "အစစ်အမှန် စကားလုံးများဖြင့် ဖြတ်သန်းလေ့ကျင့်ပါ",
+            "instruction": "အစစ်အမှန် စကားလုံးများဖြင့် ဖြတ်သန်းလေ့ကျင့်ပါ",
             "generator": {
                 "type": "words",
                 "words": ["ရေ", "မြို့", "ဆန်", "ငါး", "ကြက်"],

@@ -125,7 +125,9 @@ describe('every Myanmar key is buildable, typeable and slot-exact', () => {
     })
 
     it('space, digits and ASCII symbols keep identity slots', () => {
-        for (const text of [' ', '၁', '*', '(', ')', '"', '?', ',', '.', '/', '-', '_', '+', '=', "'"]) {
+        // MyanSan exposes '*' only via the numpad <VK_MULTIPLY>, which the app
+        // main layout does not model; on the main rows '*' has no key slot.
+        for (const text of [' ', '၁', '(', ')', '"', '?', ',', '.', '/', '-', '_', '+', '=', "'"]) {
             const { seq } = typeThrough(`က ${text} က`)
             const runs = graphemeUnitRuns(seq)
             for (const g of runs) {

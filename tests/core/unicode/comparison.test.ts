@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
 import { diagnoseClusterComparison, summarizeClusterDiagnoses, type ClusterDiagnosis } from '@/core/unicode/comparison'
-import { keyboardOrderForCluster } from '@/core/typing-engine/sequence'
 
 function cp(text: string): string {
     return [...text].map((c) => `U+${c.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}`).join(' ')
@@ -61,17 +60,19 @@ describe('Myanmar cluster comparison engine', () => {
         expect(d.extra.join('')).toBe('ီ')
     })
 
-    it('accepts a correctly keyboard-ordered pre-base vowel cluster', () => {
-        // Stored/logical ကျေ => keyboard press order ေကျ (pre-base first).
-        const expectedKeyboard = keyboardOrderForCluster('ကျေ')
-        expect(expectedKeyboard).toBe('ေကျ')
-        expect(diagnoseClusterComparison(expectedKeyboard, expectedKeyboard).kind).toBe('ok')
+    it('keeps the pre-base vowel in logical Unicode order', () => {
+        expect(diagnoseClusterComparison('ကျေ', 'ကျေ').kind).toBe('ok')
+        expect(diagnoseClusterComparison('ကျေ', 'ေကျ').kind).toBe('wrong-order')
     })
 
-    it('classifies a wrong press inside a pre-base vowel cluster', () => {
-        // Expected press order ေကျ; learner hit ေ က ိ (wrong medial key).
-        const d = diagnoseClusterComparison('ေကျ', 'ေကီ')
+    it('classifies a wrong mark inside a logical cluster', () => {
+        const d = diagnoseClusterComparison('ကျေ', 'ကီ')
         expect(d.kind).toBe('wrong-sequence')
+    })
+
+    it('keeps canonical dot-below before asat storage order', () => {
+        // The learner presses `်` then `့`; MyanSan stores that as `့` then `်`.
+        expect(diagnoseClusterComparison('ကျင့်', '\u1000\u103b\u1004\u103a\u1037').kind).toBe('wrong-order')
     })
 
     it('accepts the multi-codepoint ၎င်း token as a single keystroke', () => {

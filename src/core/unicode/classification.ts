@@ -28,6 +28,8 @@ export const INDEPENDENT_VOWEL_OA_END = 0x102a // ဪ
 export const VOWEL_SIGN_START = 0x102b // ါ
 export const VOWEL_SIGN_END = 0x1032 // ဲ
 export const VOWEL_SIGN_KINAUNG = 0x1035 // ၵ — E Kinaung (lar ai), an assigned vowel sign used in Rakhine
+export const VOWEL_SIGN_U = 0x102f // ို — the U vowel sign (Myanmar VOWEL SIGN U)
+export const VOWEL_SIGN_UU = 0x1030 // ူ — the UU vowel sign (Myanmar VOWEL SIGN UU)
 export const PRE_BASE_VOWEL = 0x1031 // ေ — the only pre-base vowel in the core block
 export const ANUSVARA_TONE = 0x1036 // ံ
 export const DOT_BELOW_TONE = 0x1037 // ့
@@ -99,6 +101,10 @@ export function isVirama(code: number): boolean {
 
 export function isToneMark(code: number): boolean {
     return code === ANUSVARA_TONE || code === DOT_BELOW_TONE || code === VISARGA_TONE
+}
+
+export function isAnusvara(code: number): boolean {
+    return code === ANUSVARA_TONE
 }
 
 export function isMyanmarNumber(code: number): boolean {

@@ -69,7 +69,7 @@ function specificKeyCoverage(units: TypingUnit[], keys: string[], layout: Keyboa
             continue
         }
         // Multi-codepoint Myanmar units: check the logical grapheme appears
-        // anywhere in the built sequence (its press order is a permutation).
+        // anywhere in the built sequence.
         const seq = buildSequence(key, layout)
         const seqText = seq.text
         if (seqText.length > 0 && textOf(units).includes(seqText)) {

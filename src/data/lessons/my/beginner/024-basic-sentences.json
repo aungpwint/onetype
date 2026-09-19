@@ -6,7 +6,7 @@
     "number": 24,
     "title": "Basic Sentences",
     "titleMy": "အခြေခံ ဝါကျတိုများ",
-    "description": "ရိုးရှင်းသော မြန်မာ ဝါကျတိုများကို ရိုက်လေ့ကျင့်သည်။",
+    "description": "ရိုးရှင်းသော မြန်မာ ဝါကျတိုများကို ရိုက်လေ့ကျင့်သည်။",
     "difficulty": "medium",
     "estimatedMinutes": 4,
     "keyboard": "myanmar",
@@ -51,7 +51,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-24-ex-1",
-            "instruction": "ရေနှင့် မိသားစု အကြောင်း ဝါကျများ ရိုက်ပါ",
+            "instruction": "ရေနှင့် မိသားစု အကြောင်း ဝါကျများ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["အဖေ က ရေ ကို သောက် ။", "အမေ နဲ့ အဖေ က မြို့ မှာ နေ ။", "ညီ က ကလေး ။", "အိမ် က နီ ။"],
@@ -61,7 +61,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-24-ex-2",
-            "instruction": "ငါး နှင့် မြို့ အကြောင်း ဝါကျများ ရိုက်ပါ",
+            "instruction": "ငါး နှင့် မြို့ အကြောင်း ဝါကျများ ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
                 "sentences": ["ငါး က ရေ ထဲ နေ ။", "မြို့ က ကြီး ။", "ကလေး က စာ ဖတ် ။", "ရေ က အေး ။"],

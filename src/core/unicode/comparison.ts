@@ -1,4 +1,5 @@
 import { isMyanmarAttachingMark, isMyanmarSyllableHead, isPreBaseVowel } from './classification'
+import { normalizeMyanmarForComparison } from './myanmar'
 
 export type ClusterDiffKind = 'ok' | 'wrong-character' | 'missing-mark' | 'extra-mark' | 'wrong-order' | 'wrong-sequence'
 
@@ -71,8 +72,8 @@ export function diagnosisSortKey(diagnosis: ClusterDiagnosis): number {
 // (missing tone mark, extra medial, swapped pre-base vowel, …) is classified so
 // the app can tell the learner exactly what to fix.
 export function diagnoseClusterComparison(expectedRaw: string, typedRaw: string): ClusterDiagnosis {
-    const expected = expectedRaw.normalize('NFC')
-    const typed = typedRaw.normalize('NFC')
+    const expected = normalizeMyanmarForComparison(expectedRaw)
+    const typed = normalizeMyanmarForComparison(typedRaw)
 
     const common = { expected: expectedRaw, typed: typedRaw, missing: [] as string[], extra: [] as string[] }
 

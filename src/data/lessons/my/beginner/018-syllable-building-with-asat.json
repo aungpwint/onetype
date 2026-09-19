@@ -5,8 +5,8 @@
     "language": "my",
     "number": 18,
     "title": "Syllable Building: With Asat",
-    "titleMy": "ဝဏ္ဏ ဖွဲ့ - အသတ်ဖြင့်",
-    "description": "အသတ်ဖြင့် အဆုံးသတ်သော ဝဏ္ဏများ (အပိတ်ဝဏ္ဏများ) ကို ရိုက်လေ့ကျင့်သည်။",
+    "titleMy": "ဝဏ္ဏ ဖွဲ့ - အသတ်ဖြင့်",
+    "description": "အသတ်ဖြင့် အဆုံးသတ်သော ဝဏ္ဏများ (အပိတ်ဝဏ္ဏများ) ကို ရိုက်လေ့ကျင့်သည်။",
     "difficulty": "medium",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -23,7 +23,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-18-ex-1",
-            "instruction": "ကိုင် ကို ထပ်ခါထပ်ခါ ရိုက်လေ့ကျင့်ပါ",
+            "instruction": "ကိုင် ကို ထပ်ခါထပ်ခါ ရိုက်လေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကိုင်"],
@@ -36,7 +36,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-18-ex-2",
-            "instruction": "စည်းချက်အတိုင်း ပင် နှင့် ညင် တို့ကို ရိုက်ပါ",
+            "instruction": "စည်းချက်အတိုင်း ပင် နှင့် ညင် တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ပင်", "ညင်"],

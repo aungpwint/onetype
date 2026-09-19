@@ -24,6 +24,7 @@ import { useProgressionStore } from './progression-store'
 import { CONTENT_VERSION } from '@/services/local'
 import { playAchievementSound, playCompletionSound, playErrorSound, playKeySound } from '@/lib/sound'
 import { bindWindowFocusGuard, type FocusPolicy } from './window-focus'
+import { normalizeMyanmarForComparison } from '@/core/unicode/myanmar'
 
 export interface LiveStats {
     unitIndex: number
@@ -689,11 +690,11 @@ function bindKeys() {
         const pressed = resolvePressedKey(event, engine.layout)
         if (!pressed) return
         const expected = engine.expectedUnit
-        const rawChar = pressed.character != null ? pressed.character.normalize('NFC') : null
+        const rawChar = pressed.character != null ? normalizeMyanmarForComparison(pressed.character) : null
         const correct = expected
             ? pressed.modifier === expected.modifier &&
               (rawChar != null && engine.layout.lookupChar(rawChar) != null
-                  ? rawChar === expected.text.normalize('NFC')
+                  ? rawChar === normalizeMyanmarForComparison(expected.text)
                   : pressed.code === expected.keyCode)
             : pressed.code === 'Space'
         engine.processKey(pressed.code, pressed.modifier, pressed.character)

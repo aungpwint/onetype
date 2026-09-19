@@ -6,7 +6,7 @@
     "number": 6,
     "title": "Shift Consonants: ဈ ဇ ဒ ဓ",
     "titleMy": "Shift ဗျည်းများ - ဈ ဇ ဒ ဓ",
-    "description": "Shift ဖြင့် ရိုက်ရသော ဗျည်းများကို လေ့ကျင့်သည် - ဈ ၊ ဇ ၊ ဒ ၊ ဓ ၊ ဏ ၊ ဌ ၊ ဿ ၊ ဗ။",
+    "description": "Shift ဖြင့် ရိုက်ရသော ဗျည်းများကို လေ့ကျင့်သည် - ဈ ၊ ဇ ၊ ဒ ၊ ဓ ၊ ဏ ၊ ဌ ၊ ဿ ၊ ဗ။",
     "difficulty": "easy",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -24,7 +24,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-6-ex-1",
-            "instruction": "စာလုံးကြီး ဗျည်း ဈ နှင့် ဇ တို့ကို ရိုက်ပါ",
+            "instruction": "စာလုံးကြီး ဗျည်း ဈ နှင့် ဇ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဈ", "ဇ"],
@@ -37,7 +37,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-6-ex-2",
-            "instruction": "ဒ နှင့် ဓ တို့ကို စာလုံးကြီးဖြင့် ရိုက်ပါ",
+            "instruction": "ဒ နှင့် ဓ တို့ကို စာလုံးကြီးဖြင့် ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဒ", "ဓ"],

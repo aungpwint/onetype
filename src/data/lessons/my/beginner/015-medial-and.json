@@ -5,8 +5,8 @@
     "language": "my",
     "number": 15,
     "title": "Medial: ွ and ှ",
-    "titleMy": "ဝဆွဲ ွ နှင့် ဟထိုး ှ",
-    "description": "ဝဆွဲ ွ (KeyG+Shift) နှင့် ဟထိုး ှ (KeyS+Shift) တို့ကို လေ့ကျင့်သည်။ ဥပမာ ခွ (KeyC) ၊ နွ (KeyE) ၊ လွ (KeyV) ၊ မှာ (KeyR) ၊ လှ (KeyV)။",
+    "titleMy": "ဝဆွဲ ွ နှင့် ဟထိုး ှ",
+    "description": "ဝဆွဲ ွ (KeyG+Shift) နှင့် ဟထိုး ှ (KeyS+Shift) တို့ကို လေ့ကျင့်သည်။ ဥပမာ ခွ (KeyC) ၊ နွ (KeyE) ၊ လွ (KeyV) ၊ မှာ (KeyR) ၊ လှ (KeyV)။",
     "difficulty": "easy",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -24,7 +24,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-15-ex-1",
-            "instruction": "ဝဆွဲ ပါသော ခွ နှင့် နွ တို့ကို ရိုက်ပါ",
+            "instruction": "ဝဆွဲ ပါသော ခွ နှင့် နွ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ခွ", "နွ"],
@@ -50,7 +50,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-15-ex-3",
-            "instruction": "ဝဆွဲ နှင့် ဟထိုး ရောနှောလေ့ကျင့်ပါ",
+            "instruction": "ဝဆွဲ နှင့် ဟထိုး ရောနှောလေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ခွ", "နွ", "လွ", "မှာ", "လှ"],

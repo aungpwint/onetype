@@ -60,7 +60,7 @@ describe('Myanmar per-unit coloring: never fully green after one unit', () => {
     it('ရေ: typing only the pre-base vowel ေ (first unit) colors exactly that unit, not the grapheme', () => {
         const { engine, seq } = makeEngine('ရေ', myanmar)
         const run = graphemeUnitRuns(seq)[0]!
-        // Press order for ရေ is [ေ, ရ] (pre-base vowel first, then base).
+        // Myanmar keyboard order is [ေ, ရ], while display order is [ရ, ေ].
         expect(seq.units[0]!.text).toBe('ေ')
         typeUnits(engine, seq, 1)
         expect(engine.unitIndex).toBe(1)
@@ -221,7 +221,7 @@ describe('Cursor moves in real time during Myanmar composition', () => {
         expect(present(engine, run).isCurrent).toBe(true)
         expect(renderClass(present(engine, run))).toBe('current')
 
-        // After typing ေ (unit 0 → 1): cursor moves (progress 0.5), still composing.
+        // After typing ရ (unit 0 → 1): cursor moves (progress 0.5), still composing.
         typeUnits(engine, seq, 1)
         expect(engine.unitIndex).toBe(1)
         expect(present(engine, run).progress).toBe(0.5)

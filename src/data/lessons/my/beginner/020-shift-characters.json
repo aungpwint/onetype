@@ -6,7 +6,7 @@
     "number": 20,
     "title": "Shift Characters",
     "titleMy": "Shift အက္ခရာများ",
-    "description": "Shift ဖြင့် ရိုက်ရသော အက္ခရာများကို လေ့ကျင့်သည် - ဣ ၊ ဤ ၊ ဥ ၊ ဦ ၊ ဧ ၊ ဩ ၊ ဪ။",
+    "description": "Shift ဖြင့် ရိုက်ရသော အက္ခရာများကို လေ့ကျင့်သည် - ဣ ၊ ဤ ၊ ဥ ၊ ဦ ၊ ဧ ၊ ဩ ၊ ဪ။",
     "difficulty": "medium",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -24,7 +24,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-20-ex-1",
-            "instruction": "စာလုံးကြီးဖြင့် ဣ နှင့် ဤ တို့ကို ရိုက်ပါ",
+            "instruction": "စာလုံးကြီးဖြင့် ဣ နှင့် ဤ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဣ", "ဤ"],
@@ -37,7 +37,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-20-ex-2",
-            "instruction": "စည်းချက်အတိုင်း ဥ နှင့် ဦ တို့ကို ရိုက်ပါ",
+            "instruction": "စည်းချက်အတိုင်း ဥ နှင့် ဦ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဥ", "ဦ"],

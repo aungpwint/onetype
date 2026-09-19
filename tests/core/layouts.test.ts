@@ -52,7 +52,7 @@ describe('myanmar layout', () => {
     it('matches the punctuation and symbol keys of the HTML keymap', () => {
         expect(myanmar.outputFor('Backquote', 'none')?.text).toBe('\u1050')
         expect(myanmar.outputFor('Backquote', 'shift')?.text).toBe('\u100E')
-        expect(myanmar.outputFor('Digit8', 'shift')?.text).toBe('*')
+        expect(myanmar.outputFor('Digit8', 'shift')?.text).toBe('\u1002')
         expect(myanmar.outputFor('Digit9', 'shift')?.text).toBe('(')
         expect(myanmar.outputFor('Digit0', 'shift')?.text).toBe(')')
         expect(myanmar.outputFor('Minus', 'none')?.text).toBe('-')

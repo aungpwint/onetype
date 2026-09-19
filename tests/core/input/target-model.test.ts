@@ -44,7 +44,7 @@ describe('resolveTarget — English', () => {
 })
 
 describe('resolveTarget — Myanmar', () => {
-    it('starts on the pre-base vowel key of ရေ (keyboard press order first)', () => {
+    it('starts on the pre-base vowel key of ရေ (keyboard order)', () => {
         const engine = manualEngine('ရေ', myanmar)
         const target = resolveTarget(engine, myanmar)
         expect(target.keyCode).toBe('KeyA')
@@ -52,12 +52,12 @@ describe('resolveTarget — Myanmar', () => {
         expect(target.shiftHand).toBe(null)
     })
 
-    it('advances to the base-consonant unit of the same syllable after the vowel', () => {
+    it('advances to the pre-base vowel unit after the base', () => {
         const engine = manualEngine('ရေ', myanmar)
         expect(resolveTarget(engine, myanmar).keyCode).toBe('KeyA')
         engine.processKey('KeyA', 'none')
-        expect(resolveTarget(engine, myanmar).keyCode).toBe('Digit7')
         const target = resolveTarget(engine, myanmar)
+        expect(target.keyCode).toBe('Digit7')
         expect(target.requiresShift).toBe(true)
         expect(target.shiftHand).toBe(target.hand === 'left' ? 'right' : 'left')
     })

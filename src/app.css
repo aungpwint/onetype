@@ -920,12 +920,42 @@
     left: 0;
     z-index: 30;
     pointer-events: none;
+    opacity: 0.94;
 }
 
 .hand-overlay-hand svg {
     display: block;
     width: 100%;
     height: 100%;
+}
+
+/* The small contact halo is the visual bridge between the illustrated finger
+   and the next key. It is intentionally beneath the hand artwork, so the
+   fingertip remains the focus rather than looking like a UI cursor. */
+.hand-contact-point {
+    position: absolute;
+    z-index: 20;
+    width: 1.65rem;
+    height: 1.65rem;
+    margin: -0.825rem;
+    border: 2px solid color-mix(in srgb, var(--hand-active) 88%, white);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--hand-active) 18%, transparent);
+    box-shadow: 0 0 0 0.35rem color-mix(in srgb, var(--hand-active) 16%, transparent);
+    animation: hand-key-contact 1.15s ease-out infinite;
+}
+
+@keyframes hand-key-contact {
+    0%,
+    100% {
+        transform: scale(0.82);
+        opacity: 0.68;
+    }
+
+    48% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
 }
 
 /* ── Active-finger reach (finger-motion.ts) ───────────────────────────────
@@ -974,6 +1004,13 @@
 [data-active-finger~='right-pinky'] .hand-highlight[data-finger='right-pinky'] {
     stroke: var(--hand-active);
     stroke-width: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hand-contact-point {
+        animation: none;
+        transform: scale(0.92);
+    }
 }
 
 /* --- Ambient theme effects ------------------------------------------------

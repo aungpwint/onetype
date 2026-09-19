@@ -6,7 +6,7 @@
     "number": 5,
     "title": "Bottom Row: ခ ထ ဖ",
     "titleMy": "အောက်တန်း ဗျည်းများ - ခ ထ ဖ",
-    "description": "ခ (KeyC) ကို ဘယ်လက် လက်ခလယ်ဖြင့် ၊ ထ (KeyX) ကို ဘယ်လက် လက်သူကြွယ်ဖြင့် ၊ ဖ (KeyZ) ကို ဘယ်လက် လက်သန်းဖြင့် ရိုက်ရသည်။",
+    "description": "ခ (KeyC) ကို ဘယ်လက် လက်ခလယ်ဖြင့် ၊ ထ (KeyX) ကို ဘယ်လက် လက်သူကြွယ်ဖြင့် ၊ ဖ (KeyZ) ကို ဘယ်လက် လက်သန်းဖြင့် ရိုက်ရသည်။",
     "difficulty": "easy",
     "estimatedMinutes": 2,
     "keyboard": "myanmar",
@@ -23,7 +23,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-5-ex-1",
-            "instruction": "ခ နှင့် ထ တို့ဆီသို့ လက်ဆန့်ရိုက်ပါ",
+            "instruction": "ခ နှင့် ထ တို့ဆီသို့ လက်ဆန့်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ခ", "ထ"],
@@ -36,7 +36,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-5-ex-2",
-            "instruction": "ဖ ကို လက်သန်းဖြင့် ဆန့်ရိုက်ပါ",
+            "instruction": "ဖ ကို လက်သန်းဖြင့် ဆန့်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ဖ"],

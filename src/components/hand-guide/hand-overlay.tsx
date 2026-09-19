@@ -206,6 +206,17 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
         return fingers
     }, [isActive, activeKey, shiftKey])
 
+    const contactPoints = useMemo(() => {
+        if (!geometry || !isActive) return []
+        return Array.from(new Set([activeKey, shiftKey].filter((code): code is string => Boolean(code))))
+            .map((code) => {
+                const anchor = geometry.anchors.get(code)
+                if (!anchor) return null
+                return { code, x: geometry.kb.x + anchor.x, y: geometry.kb.y + anchor.y }
+            })
+            .filter((point): point is { code: string; x: number; y: number } => point !== null)
+    }, [activeKey, geometry, isActive, shiftKey])
+
     useEffect(() => {
         if (import.meta.env.DEV && handLayout && geometry) {
             validateHandLayout(handLayout, geometry.kb)
@@ -229,8 +240,17 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
     const rightPos = keyboardToPixel(geometry!.kb, handLayout.right)
 
     return (
-        <div ref={containerRef} className="hand-overlay-container" {...containerAttrs}>
+            <div ref={containerRef} className="hand-overlay-container" {...containerAttrs}>
             <div className="hand-overlay-keyboard">{children}</div>
+
+            {contactPoints.map((point) => (
+                <span
+                    key={point.code}
+                    className="hand-contact-point"
+                    style={{ left: point.x, top: point.y }}
+                    aria-hidden
+                />
+            ))}
 
             <div
                 className="hand-overlay-hand hand-overlay-left"

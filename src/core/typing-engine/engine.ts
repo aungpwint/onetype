@@ -1,10 +1,11 @@
 import type { Modifier, TypingMode } from '@/types'
 import { KeyboardLayout } from '@/core/keyboard-layout/layout'
-import { BuiltSequence, TypingUnit, keyboardOrderForCluster } from './sequence'
+import { BuiltSequence, TypingUnit } from './sequence'
 import { computeScore, ScoreMetrics } from '@/core/scoring/score'
 import { Stopwatch } from '@/core/timing/stopwatch'
 import { ClusterDiagnosis, diagnoseClusterComparison } from '@/core/unicode/comparison'
-import { containsMyanmar } from '@/core/unicode/myanmar'
+import { containsMyanmar, normalizeMyanmarForComparison } from '@/core/unicode/myanmar'
+import { myanmarKeyboardOrder } from '@/core/unicode/keyboard-order'
 
 export type EngineStatus = 'ready' | 'running' | 'paused' | 'finished'
 export type FinishReason = 'completed' | 'time-up' | 'stopped' | 'failed'
@@ -210,8 +211,8 @@ export class TypingEngine {
         // producing characters from a different script (e.g. English OS
         // keyboard while the app Myanmar layout is active) — fall back to
         // physical key code so the app-level layout still works.
-        const normalizedChar = character != null && character.length > 0 ? character.normalize('NFC') : null
-        const expectedChar = expected.text.normalize('NFC')
+        const normalizedChar = character != null && character.length > 0 ? normalizeMyanmarForComparison(character) : null
+        const expectedChar = normalizeMyanmarForComparison(expected.text)
         const charMatches = normalizedChar === expectedChar
         const codeMatches = code === expected.keyCode
         const charIsInLayout = normalizedChar != null && this.layout.lookupChar(normalizedChar) != null
@@ -314,8 +315,7 @@ export class TypingEngine {
         if (this.unitIndex >= end && !this.clusterDiagnoses.has(graphemeIndex)) {
             const expected = expectedGrapheme
             const typed = chars.join('')
-            const expectedInput = containsMyanmar(expected) ? keyboardOrderForCluster(expected) : expected
-            this.clusterDiagnoses.set(graphemeIndex, diagnoseClusterComparison(expectedInput, typed))
+            this.clusterDiagnoses.set(graphemeIndex, diagnoseClusterComparison(myanmarKeyboardOrder(expected), typed))
         }
     }
 

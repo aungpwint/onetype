@@ -6,7 +6,7 @@
     "number": 14,
     "title": "Tone Marks: း ့ ံ ဲ",
     "titleMy": "သံသင်္ကေတ - း ့ ံ ဲ",
-    "description": "သံသင်္ကေတများကို လေ့ကျင့်သည် - း (Semicolon) ၊ ့ (KeyH) ၊ ံ (KeyH+Shift) ၊ ဲ (KeyJ+Shift)။",
+    "description": "သံသင်္ကေတများကို လေ့ကျင့်သည် - း (Semicolon) ၊ ့ (KeyH) ၊ ံ (KeyH+Shift) ၊ ဲ (KeyJ+Shift)။",
     "difficulty": "easy",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -24,7 +24,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-14-ex-1",
-            "instruction": "သံသင်္ကေတ ပါသော ကား နှင့် ကီး တို့ကို ရိုက်ပါ",
+            "instruction": "သံသင်္ကေတ ပါသော ကား နှင့် ကီး တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကား", "ကီး"],
@@ -37,7 +37,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-14-ex-2",
-            "instruction": "စည်းချက်အတိုင်း ကံ နှင့် ကဲ့ တို့ကို ရိုက်ပါ",
+            "instruction": "စည်းချက်အတိုင်း ကံ နှင့် ကဲ့ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကံ", "ကဲ့"],

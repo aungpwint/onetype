@@ -3,17 +3,19 @@ import { getLayoutOrThrow } from '@/core/keyboard-layout/registry'
 import { splitMyanmarSyllables } from '@/core/unicode/myanmar'
 import type { LanguageDefinition } from './types'
 
-// Logical (stored) Myanmar order: base consonant [medial] [vowels] [tone
-// marks] where the pre-base vowel U+1031 comes AFTER the base in storage but
-// is typed FIRST (Pyidaungsu). The typing engine already handles the flip via
-// keyboardOrderForCluster, so composers here only produce canonical logical
-// text and every token is validated against the layout at generation time.
+// Logical Myanmar order: base consonant [medial] [vowels] [tone marks],
+// including U+1031 after its host base. Composers emit Unicode text only;
+// physical keyboard behavior is handled by the selected layout.
 
 const BASES = ['က', 'ခ', 'င', 'စ', 'ဆ', 'ည', 'တ', 'ထ', 'န', 'ပ', 'ဖ', 'ဘ', 'မ', 'လ', 'သ', 'ဟ', 'အ']
 const MEDIALS = ['', 'ျ', 'ြ']
-const OPEN_VOWELS = ['ေ', 'ာ', 'ိ', 'ီ', 'ု', 'ု', 'ု', 'ဲ', '်']
-const TONE_VOWELS = ['ာ', 'ို', 'ီ', 'ံ']
-const TONES = ['', 'း', '့', 'း', 'ံ']
+const OPEN_VOWELS = ['ေ', 'ာ', 'ိ', 'ီ', 'ု', 'ူ', 'ဲ', '်']
+const TONE_VOWELS = ['ာ', 'ို', 'ီ']
+const TONES = ['', 'း', '့']
+// Anusvara (U+1036) is a tone mark; combining it with another anusvara would
+// produce an invalid double-mark cluster, so it is composed separately.
+const ANUSVARA_VOWEL = ['ံ']
+const ANUSVARA_TONES = ['', 'း', '့']
 
 function compose(base: string, medial: string, vowel: string, tone: string): string {
     return `${base}${medial}${vowel}${tone}`
@@ -28,6 +30,7 @@ export function buildMyanmarSyllables(): string[] {
         ...BASES,
         ...BASES.flatMap((base) => OPEN_VOWELS.map((vowel) => compose(base, '', vowel, ''))),
         ...BASES.flatMap((base) => TONE_VOWELS.flatMap((vowel) => TONES.map((tone) => compose(base, '', vowel, tone)))),
+        ...BASES.flatMap((base) => ANUSVARA_VOWEL.flatMap((vowel) => ANUSVARA_TONES.map((tone) => compose(base, '', vowel, tone)))),
         ...BASES.flatMap((base) => MEDIALS.flatMap((medial) => OPEN_VOWELS.map((vowel) => compose(base, medial, vowel, '')))),
     ])
 }

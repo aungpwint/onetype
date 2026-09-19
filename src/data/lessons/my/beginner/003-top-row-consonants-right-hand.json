@@ -6,7 +6,7 @@
     "number": 3,
     "title": "Top Row Consonants: Right Hand",
     "titleMy": "အပေါ်တန်း ဗျည်းများ - ညာလက်",
-    "description": "ညာလက်ဖြင့် ရိုက်ရသော အပေါ်တန်း ဗျည်းများ ဖြစ်သည် - က (KeyU) ၊ င (KeyI) ၊ သ (KeyO) ၊ စ (KeyP) ၊ ဟ (BracketLeft)။",
+    "description": "ညာလက်ဖြင့် ရိုက်ရသော အပေါ်တန်း ဗျည်းများ ဖြစ်သည် - က (KeyU) ၊ င (KeyI) ၊ သ (KeyO) ၊ စ (KeyP) ၊ ဟ (BracketLeft)။",
     "difficulty": "basic",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -23,7 +23,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-3-ex-1",
-            "instruction": "ညာလက်ဖြင့် က နှင့် င တို့ကို ပြန်လည်ရိုက်ပါ",
+            "instruction": "ညာလက်ဖြင့် က နှင့် င တို့ကို ပြန်လည်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["က", "င"],
@@ -36,7 +36,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-3-ex-2",
-            "instruction": "သ နှင့် စ တို့အစွန်းအထိ ဆက်တိုက်ရိုက်ပါ",
+            "instruction": "သ နှင့် စ တို့အစွန်းအထိ ဆက်တိုက်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["သ", "စ"],

@@ -71,10 +71,10 @@ describe('typing engine wrong-press tracking', () => {
 
     it('works for the Myanmar layout', () => {
         const engine = new TypingEngine({ sequence: buildSequence('ရေ', myanmar), layout: myanmar })
-        // The first expected unit is ရ on KeyA; pressing Digit7:shift for it is a miss.
-        engine.processKey('Digit7', 'shift') // wrong for ရ
-        engine.processKey('KeyA', 'none') // correct ရ
-        engine.processKey('Digit7', 'shift') // correct ေ
+        // The first expected unit is ေ on KeyA; pressing the visual base first is a miss.
+        engine.processKey('Digit7', 'shift') // wrong for ေ
+        engine.processKey('KeyA', 'none') // correct ေ
+        engine.processKey('Digit7', 'shift') // correct ရ
 
         expect(engine.status).toBe('finished')
         expect(engine.incorrectCount).toBe(1)

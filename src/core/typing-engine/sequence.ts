@@ -3,8 +3,8 @@ import type { Hand } from '@/types'
 import type { FingerId } from '@/types'
 import { KeyboardLayout, shiftHandFor } from '@/core/keyboard-layout/layout'
 import { splitGraphemes } from '@/core/unicode/graphemes'
-import { findSuspiciousInvisibleCharacters, splitMyanmarSyllables, splitMixedClusters, containsMyanmar } from '@/core/unicode/myanmar'
-import { isPreBaseVowel } from '@/core/unicode/classification'
+import { findSuspiciousInvisibleCharacters, splitMyanmarSyllables, splitMixedClusters } from '@/core/unicode/myanmar'
+import { myanmarKeyboardOrder } from '@/core/unicode/keyboard-order'
 
 export interface TypingUnit {
     index: number
@@ -26,19 +26,8 @@ export interface BuiltSequence {
     charCount: number
 }
 
-// Stored/logical Unicode keeps the pre-base vowel U+1031 (ေ) AFTER its base
-// (ရေ), while keyboard press order puts it FIRST because on the Pyidaungsu
-// layout the base key sits on the left. Graphemes/ranges stay logical; units
-// are emitted in press order so the engine grades what the learner types.
-
-export function keyboardOrderForCluster(cluster: string): string {
-    if (!containsMyanmar(cluster)) return cluster
-    const chars = Array.from(cluster)
-    const prebase = chars.filter((c) => isPreBaseVowel(c.codePointAt(0) ?? 0))
-    if (prebase.length === 0) return cluster
-    const rest = chars.filter((c) => !isPreBaseVowel(c.codePointAt(0) ?? 0))
-    return [...prebase, ...rest].join('')
-}
+// Graphemes retain natural display order; Myanmar units are derived in the
+// keyboard's input order so validation never depends on shaped glyph order.
 
 export function buildSequence(text: string, layout: KeyboardLayout): BuiltSequence {
     // Any suspicious invisible characters must not reach the typing target,
@@ -55,10 +44,11 @@ export function buildSequence(text: string, layout: KeyboardLayout): BuiltSequen
     const units: TypingUnit[] = []
     for (let gi = 0; gi < graphemes.length; gi++) {
         const token = graphemes[gi]
-        // The cluster's press order is a permutation of its logical code points.
-        // For mixed text, only Myanmar clusters get the pre-base vowel reorder.
-        const inputToken = layout.language === 'myanmar' || containsMyanmar(token) ? keyboardOrderForCluster(token) : token
-        const pairs = layout.reverseMap([inputToken])
+        const isMyanmarToken = layout.language === 'myanmar' || (layout.language === 'mixed' && /[\u1000-\u109f\uaa60-\uaa7f\ua9e0-\ua9ff]/u.test(token))
+        // Preserve layout-defined multi-codepoint aliases such as ၎င်း as
+        // one key; only ordinary Myanmar syllables need reordering.
+        const inputText = isMyanmarToken && !layout.lookupChar(token) ? myanmarKeyboardOrder(token) : token
+        const pairs = layout.reverseMap([inputText])
         const start = units.length
         for (const pair of pairs) {
             const index = units.length

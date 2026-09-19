@@ -5,7 +5,8 @@ import { getLayoutOrThrow } from '@/core/keyboard-layout/registry'
 import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import { toLayoutId } from '@/types/keyboard'
 import { TypingEngine } from '@/core/typing-engine/engine'
-import { buildSequence, keyboardOrderForCluster } from '@/core/typing-engine/sequence'
+import { buildSequence } from '@/core/typing-engine/sequence'
+import { myanmarKeyboardOrder } from '@/core/unicode/keyboard-order'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { getLessonRepository, getCanonicalLesson } from '@/data/curriculum'
 import type { LessonExercise } from '@/types/exercise'
@@ -83,22 +84,20 @@ function assertExactlyTyped(word: string, layout: KeyboardLayout = myanmar): voi
 }
 
 describe('Myanmar keyboard produces the exact canonical Unicode sequence', () => {
-    it('types "ရေ" as ေ then ရ (KeyA then Digit7:shift) yet composes canonical "ရေ"', () => {
+    it('types "ရေ" in keyboard order while retaining natural display text', () => {
         const presses = keyboardPresses('ရေ')
         expect(presses.map((p) => `${p.code}:${p.modifier}`)).toEqual(['KeyA:none', 'Digit7:shift'])
-        expect(presses.map((p) => p.inserted).join(''), 'pressed glyphs are ေရ').toBe('ေရ')
+        expect(presses.map((p) => p.inserted).join(''), 'pressed code points are keyboard ordered').toBe('\u1031\u101b')
         expect(keyboardType('ရေ')).toBe('ရေ')
         expect(keyboardType('ရေ')).not.toContain('\u200C')
         expect([...keyboardType('ရေ')].map((c) => c.codePointAt(0))).toEqual([0x101b, 0x1031])
     })
 
-    it('expects the pre-base vowel first for every consonant+ေ combination', () => {
+    it('expects the pre-base vowel before the base in keyboard order', () => {
         for (const word of PREBASE_MATRIX) {
             const presses = keyboardPresses(word)
-            const base = Array.from(word).find((c) => c !== 'ေ')!
             expect(presses[0]?.code, word).toBe('KeyA')
             expect(presses[0]?.inserted, word).toBe('ေ')
-            expect(presses[presses.length - 1]?.inserted, word).toBe(base)
             expect(keyboardType(word), word).toBe(word)
         }
     })
@@ -111,7 +110,7 @@ describe('Myanmar keyboard produces the exact canonical Unicode sequence', () =>
         }
     })
 
-    it('press order is exactly the keyboardOrderForCluster permutation of each syllable', () => {
+    it('typed code points follow the keyboard sequence of each syllable', () => {
         for (const word of [...REPORTED_CORPUS, ...COMBINATIONS, ...SENTENCE_LINES]) {
             const seq = buildSequence(word, myanmar)
             const groups = new Map<number, string[]>()
@@ -121,7 +120,7 @@ describe('Myanmar keyboard produces the exact canonical Unicode sequence', () =>
                 groups.set(gi, [...(groups.get(gi) ?? []), inserted])
             }
             for (let gi = 0; gi < seq.graphemes.length; gi++) {
-                expect(groups.get(gi)?.join(''), `pressed cluster ${gi} of ${JSON.stringify(word)}`).toBe(keyboardOrderForCluster(seq.graphemes[gi]))
+                expect(groups.get(gi)?.join(''), `typed cluster ${gi} of ${JSON.stringify(word)}`).toBe(myanmarKeyboardOrder(seq.graphemes[gi]!))
             }
         }
     })
@@ -150,7 +149,7 @@ describe('Myanmar keyboard produces the exact canonical Unicode sequence', () =>
 })
 
 describe('Typing engine recognizes the keyboard-generated sequence', () => {
-    it('completes every corpus word as fully correct when the vowel is pressed first', () => {
+    it('completes every corpus word as fully correct in logical order', () => {
         for (const word of [...REPORTED_CORPUS, ...COMBINATIONS, ...PREBASE_MATRIX, ...AVOWEL_NO_PREBASE, ...SENTENCE_LINES]) {
             const seq = buildSequence(word, myanmar)
             const engine = new TypingEngine({ sequence: seq, layout: myanmar })
@@ -164,11 +163,11 @@ describe('Typing engine recognizes the keyboard-generated sequence', () => {
         }
     })
 
-    it('does NOT treat "ရ then ေ" as a clean correct input — it records a miss', () => {
+    it('rejects a repeated pre-base key before the base has been consumed', () => {
         const seq = buildSequence('ရေ', myanmar)
         const engine = new TypingEngine({ sequence: seq, layout: myanmar })
         expect(engine.expectedUnit?.keyCode).toBe('KeyA')
-        engine.processKey('Digit7', 'shift')
+        engine.processKey('KeyA', 'none')
         engine.processKey('KeyA', 'none')
         engine.processKey('Digit7', 'shift')
         expect(engine.incorrectCount).toBe(1)

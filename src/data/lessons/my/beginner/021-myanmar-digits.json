@@ -6,7 +6,7 @@
     "number": 21,
     "title": "Myanmar Digits",
     "titleMy": "မြန်မာဂဏန်းများ",
-    "description": "နံပါတ် တန်းရှိ မြန်မာ ဂဏန်းများ ၀-၉ ကို ရိုက်လေ့ကျင့်သည်။",
+    "description": "နံပါတ် တန်းရှိ မြန်မာ ဂဏန်းများ ၀-၉ ကို ရိုက်လေ့ကျင့်သည်။",
     "difficulty": "easy",
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
@@ -23,7 +23,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-21-ex-1",
-            "instruction": "ဘယ်လက်ဖြင့် ၁ ၂ ၃ တို့ကို ရိုက်ပါ",
+            "instruction": "ဘယ်လက်ဖြင့် ၁ ၂ ၃ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["၁", "၂", "၃"],
@@ -36,7 +36,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-21-ex-2",
-            "instruction": "လက်ညှိုးနှစ်ဖက်ဖြင့် ၄ ၅ ၆ တို့ကို ရိုက်ပါ",
+            "instruction": "လက်ညှိုးနှစ်ဖက်ဖြင့် ၄ ၅ ၆ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["၄", "၅", "၆"],
@@ -49,7 +49,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-21-ex-3",
-            "instruction": "၀ မှ ၉ အထိ အားလုံး ဖြတ်သန်းလေ့ကျင့်ပါ",
+            "instruction": "၀ မှ ၉ အထိ အားလုံး ဖြတ်သန်းလေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["၁", "၂", "၃", "၄", "၅", "၆", "၇", "၈", "၉", "၀"],

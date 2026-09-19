@@ -15,8 +15,8 @@ describe('mixed English + Myanmar sequence building', () => {
         expect(seq.graphemes).toEqual(['H', 'e', 'l', 'l', 'o', ' ', 'မင်္ဂ', 'လာ', 'ပါ'])
         expect(seq.units[0]).toMatchObject({ keyCode: 'KeyH', modifier: 'shift', text: 'H' })
         expect(seq.units[1]).toMatchObject({ keyCode: 'KeyE', modifier: 'none', text: 'e' })
-        // The Myanmar cluster keeps its press order (pre-base vowel first) and
-        // maps to the Pyidaungsu physical keys.
+        // Myanmar input units follow keyboard order while display graphemes
+        // remain in natural Unicode order.
         expect(seq.units.slice(6, 11).map((u) => u.text)).toEqual(['မ', 'င', '်', '္', 'ဂ'])
         expect(seq.graphemeUnitRanges[6]).toEqual([6, 11])
     })
@@ -112,6 +112,7 @@ describe('mixed engine grading by typed character', () => {
         const engine = new TypingEngine({ sequence, layout: mixedEnglishMyanmar })
         engine.processKey('KeyA', 'none', 'ေ')
         engine.processKey('Digit7', 'shift', 'ရ')
+        engine.processKey('KeyA', 'none', 'ေ')
         const diag = engine.clusterDiagnosisFor(0)
         expect(diag).not.toBeNull()
         engine.processKey('Space', 'none', ' ')

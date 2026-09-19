@@ -4,7 +4,13 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { getLessonRepository, getCanonicalLesson } from '@/data/curriculum'
-import { findSuspiciousInvisibleCharacters, normalizeMyanmarText, splitMyanmarSyllables, validateMyanmarText } from '@/core/unicode/myanmar'
+import {
+    findSuspiciousInvisibleCharacters,
+    isMyanmarLogicalOrder,
+    normalizeMyanmarText,
+    splitMyanmarSyllables,
+    validateMyanmarText,
+} from '@/core/unicode/myanmar'
 import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { languageDefinitionFor } from '@/core/pedagogy'
 import type { ExerciseGeneratorSpec } from '@/core/pedagogy'
@@ -53,6 +59,11 @@ const SHIPPED_WORDS = [
     'နေ',
     'နု',
     'နူ',
+    'ပုံ',
+    'ပုံမှန်',
+    'ပြုံး',
+    'လုံး',
+    'သုံး',
 ]
 
 describe('Myanmar lesson raw data', () => {
@@ -81,7 +92,7 @@ describe('Myanmar lesson raw data', () => {
 describe('Canonical Myanmar word corpus', () => {
     it.each(SHIPPED_WORDS)('%s is clean canonical Unicode', (word) => {
         expect(validateMyanmarText(word)).toEqual([])
-        expect(word.normalize('NFC')).toBe(word)
+        expect(isMyanmarLogicalOrder(word)).toBe(true)
     })
 
     it.each(SHIPPED_WORDS)('%s round-trips through syllable clustering', (word) => {
@@ -116,7 +127,7 @@ describe('Every canonical Myanmar lesson', () => {
         expect(myLessons.length).toBeGreaterThan(0)
     })
 
-    it('keeps every Myanmar-bearing string NFC and free of invisible characters', async () => {
+    it('keeps every Myanmar-bearing string in logical Unicode order and free of invisible characters', async () => {
         for (const lesson of myLessons) {
             const canonical = await getCanonicalLesson(lesson.id)
             const samples: string[] = []
@@ -130,6 +141,7 @@ describe('Every canonical Myanmar lesson', () => {
             }
             for (const sample of samples) {
                 expect(validateMyanmarText(sample), `${lesson.id}: ${JSON.stringify(sample)}`).toEqual([])
+                expect(isMyanmarLogicalOrder(sample), `${lesson.id}: ${JSON.stringify(sample)}`).toBe(true)
             }
         }
     })

@@ -53,7 +53,7 @@ const DIGIT_SHIFTED: Record<string, string> = {
     Digit5: '\u1054',
     Digit6: '\u1055',
     Digit7: '\u101B',
-    Digit8: '*',
+    Digit8: '\u1002',
     Digit9: '(',
     Digit0: ')',
 }
@@ -202,7 +202,7 @@ const rows: KeyDefinition[][] = [
         letterKey('KeyJ', 'home'),
         letterKey('KeyK', 'home'),
         letterKey('KeyL', 'home'),
-        { ...key('Semicolon', '\u1038', '\u1038', '\u1002'), row: 'home' as const },
+        { ...key('Semicolon', '\u1038', '\u1038', ':'), row: 'home' as const },
         { ...key('Quote', "'", "'", '"'), row: 'home' as const },
         { ...modifierKey('Enter', 'Enter'), row: 'home' as const, width: 2.25 },
     ],
@@ -248,5 +248,5 @@ export const myanmar = new KeyboardLayout({
     source: 'Pyidaungsu (Pyidaungsu MM), based on the keymap in keyboard-layout.html. Physical keys are the standard US QWERTY positions; the preposed vowel U+1031 (ေ) is emitted by the KeyA press as the bare code point so that stored lesson text stays clean canonical Myanmar Unicode (no Zero Width Non-Joiner).',
     rows,
     aliases: [{ text: '\u104E', code: 'KeyR', modifier: 'shift' }],
-    note: 'KeyR shift = ၎င်း (U+104E U+1004 U+103A U+1038); KeyA plain emits U+1031 (ေ). The legacy ZWNJ-prefixed U+1031 form that the raw Pyidaungsu font keymap sometimes carries is deliberately NOT emitted, so lesson data and rendered text remain valid Myanmar Unicode. Bare U+104E lesson forms are accepted as a legacy alias of the same key. Punctuation: , = , / ၊, . = . / ။, / = / ?, Shift+8/9/0 = * ( ), Backquote shift = ဎ, Backslash = ၏ / ၑ.',
+    note: 'KeyR shift = ၎င်း (U+104E U+1004 U+103A U+1038); KeyA plain emits U+1031 (ေ). The legacy ZWNJ-prefixed U+1031 form that the raw Pyidaungsu font keymap sometimes carries is deliberately NOT emitted, so lesson data and rendered text remain valid Myanmar Unicode. Bare U+104E lesson forms are accepted as a legacy alias of the same key. The punctuation and Shift+8/Shift+; bindings match the MyanSan (Myanmar3 smart) keymap typed in the app: , = , / ၊, . = . / ။, / = / ?, Shift+8 = ဂ, Shift+; = : (emits the bare colon, exactly as the MyanSan keyboard does).',
 } satisfies KeyboardLayoutSpec)

@@ -2,10 +2,12 @@ import { describe, expect, it } from 'vitest'
 
 import { myanmar } from '@/core/keyboard-layout/myanmar'
 import { TypingEngine } from '@/core/typing-engine/engine'
-import { buildSequence, keyboardOrderForCluster } from '@/core/typing-engine/sequence'
+import { buildSequence } from '@/core/typing-engine/sequence'
+import { myanmarKeyboardOrder } from '@/core/unicode/keyboard-order'
 import { splitGraphemes } from '@/core/unicode/graphemes'
 import {
     classifyMyanmarCharacter,
+    isAnusvara,
     isAsat,
     isBaseLetter,
     isDependentVowel,
@@ -20,14 +22,18 @@ import {
     isToneMark,
     isVirama,
     ASAT,
+    ANUSVARA_TONE,
     MEDIAL_END,
     MEDIAL_START,
     PRE_BASE_VOWEL,
     VIRAMA,
+    VOWEL_SIGN_U,
+    VOWEL_SIGN_UU,
 } from '@/core/unicode/classification'
 import {
     containsMyanmar,
     containsUnexpectedInvisibleCharacters,
+    isMyanmarLogicalOrder,
     normalizeMyanmarText,
     splitMyanmarSyllables,
     validateMyanmarText,
@@ -105,6 +111,38 @@ describe('Myanmar character classification core', () => {
         expect(classifyMyanmarCharacter(0x109f)).toBe('other') // block tail symbol
     })
 
+    describe('Myanmar keyboard input order', () => {
+        it.each([
+            ['ရေ', '\u1031\u101b'],
+            ['ရေး', '\u1031\u101b\u1038'],
+// MyanSan smart-reorders `်` then `့` to canonical `့` + `်`.
+            ['ကျင့်', '\u1000\u103b\u1004\u103a\u1037'],
+            ['သင့်', '\u101e\u1004\u103a\u1037'],
+            // MyanSan presses the anusvara `ံ` before the U/UU vowel sign.
+            ['ပုံမှန်', '\u1015\u1036\u102f\u1019\u103e\u1014\u103a'],
+            ['ပုံ', '\u1015\u1036\u102f'],
+            ['ပြုံး', '\u1015\u103c\u1036\u102f\u1038'],
+        ])('reorders %s without changing the display target', (display, input) => {
+            expect(myanmarKeyboardOrder(display)).toBe(input)
+            expect(buildSequence(display, myanmar).graphemes.join('')).toBe(display)
+            expect(buildSequence(display, myanmar).units.map((unit) => unit.text).join('')).toBe(input)
+        })
+
+        it('types ပုံမှန် in KMS-compatible physical-key order', () => {
+            const seq = buildSequence('ပုံမှန်', myanmar)
+            expect(seq.units.map((unit) => unit.keyCode)).toEqual(['KeyY', 'KeyH', 'KeyK', 'KeyR', 'KeyS', 'KeyE', 'KeyF'])
+            expect(seq.units.map((unit) => unit.modifier)).toEqual(['none', 'shift', 'none', 'none', 'shift', 'none', 'none'])
+            const engine = new TypingEngine({ sequence: seq, layout: myanmar })
+            for (const unit of seq.units) engine.processKey(unit.keyCode, unit.modifier)
+            expect(engine.isComplete).toBe(true)
+        })
+
+        it('keeps stacked consonants in keyboard order and does not add filler characters', () => {
+            expect(myanmarKeyboardOrder('က္က')).toBe('က္က')
+            expect(myanmarKeyboardOrder('သင်္ဘော')).not.toContain('\u200c')
+        })
+    })
+
     it('predicates agree with the classifier and stay disjoint where required', () => {
         expect(isBaseLetter(0x1000)).toBe(true)
         expect(isBaseLetter(0x103f)).toBe(true)
@@ -169,27 +207,26 @@ describe('keyboard press order for pre-base syllables', () => {
             }
             for (let gi = 0; gi < seq.graphemes.length; gi++) {
                 const pressed = groups.get(gi)!.join('')
-                expect(pressed, `press order for grapheme ${gi} of ${JSON.stringify(word)}`).toBe(keyboardOrderForCluster(seq.graphemes[gi]!))
+                expect(pressed, `typed grapheme ${gi} of ${JSON.stringify(word)}`).toBe(myanmarKeyboardOrder(seq.graphemes[gi]!))
             }
             // The stored text is the logical (canonical) Unicode of the word.
             expect(seq.graphemes.join(''), word).toBe(word)
         }
     })
 
-    it('keyboardOrderForCluster moves U+1031 to the front without touching order of the rest', () => {
-        expect([...keyboardOrderForCluster('ရေ')].map((c) => c.codePointAt(0))).toEqual([0x1031, 0x101b])
-        expect(keyboardOrderForCluster('ကေ'), 'single base + pre-base').toBe('ေက')
-        // ကြေ့ = က + medial-ra + ေ + dot-below: pre-base leads, logical order kept for the rest.
-        expect([...keyboardOrderForCluster('ကြေ့')].map((c) => c.codePointAt(0))).toEqual([
-            PRE_BASE_VOWEL,
+    it('typing units preserve logical code-point order', () => {
+        expect([...buildSequence('ရေ', myanmar).graphemes[0]!].map((c) => c.codePointAt(0))).toEqual([0x101b, 0x1031])
+        expect(buildSequence('ကေ', myanmar).graphemes[0], 'single base + pre-base').toBe('ကေ')
+        // ကြေ့ = က + medial-ra + ေ + dot-below.
+        expect([...buildSequence('ကြေ့', myanmar).graphemes[0]!].map((c) => c.codePointAt(0))).toEqual([
             0x1000, // က
             0x103c, // ြ
+            PRE_BASE_VOWEL,
             0x1037, // ့
         ])
         // No pre-base vowel: unchanged.
-        expect(keyboardOrderForCluster('ကု')).toBe('ကု')
-        expect(keyboardOrderForCluster('မြန်မာ')).toBe('မြန်မာ')
-        expect(keyboardOrderForCluster('hello')).toBe('hello')
+        expect(buildSequence('ကု', myanmar).graphemes[0]).toBe('ကု')
+        expect(buildSequence('မြန်မာ', myanmar).graphemes.join('')).toBe('မြန်မာ')
     })
 
     it('the sequence for the pre-base syllable ရေ consists of exactly two units', () => {
@@ -203,10 +240,112 @@ describe('keyboard press order for pre-base syllables', () => {
     })
 })
 
+describe('logical order for upper-right mark + lower vowel-sign stacks', () => {
+    it('keeps the Unicode vowel-sign order in "ပုံ"', () => {
+        expect([...buildSequence('ပုံ', myanmar).graphemes[0]!].map((c) => c.codePointAt(0))).toEqual([0x1015, 0x102f, 0x1036])
+        const seq = buildSequence('ပုံ', myanmar)
+        expect(seq.graphemes).toEqual(['ပုံ'])
+        expect(seq.graphemes.join('')).toBe('ပုံ')
+        // The learner presses the anusvara before the U vowel: Y, Shift+H, K.
+        expect(seq.units.map((u) => `${u.keyCode}:${u.modifier}`)).toEqual(['KeyY:none', 'KeyH:shift', 'KeyK:none'])
+        expect(seq.units.map((u) => u.text).join('')).toBe('\u1015\u1036\u102f')
+    })
+
+    it('applies to real words with a ြု/ူ + ံ/ဲ stack', () => {
+        const cases: Array<[string, number[]]> = [
+            ['သုံ', [0x101e, 0x102f, 0x1036]],
+            ['မုံ', [0x1019, 0x102f, 0x1036]],
+            ['သုံး', [0x101e, 0x102f, 0x1036, 0x1038]],
+            ['ပြုံး', [0x1015, 0x103c, 0x102f, 0x1036, 0x1038]],
+            ['လုံး', [0x101c, 0x102f, 0x1036, 0x1038]],
+        ]
+        for (const [stored, cps] of cases) {
+            const pressed = buildSequence(stored, myanmar).graphemes[0]!
+            expect([...pressed].map((c) => c.codePointAt(0)), stored).toEqual(cps)
+            expect(pressed.length, `press order is a permutation of ${stored}`).toBe(stored.length)
+            const seq = buildSequence(stored, myanmar)
+            expect(seq.graphemes.join(''), `stored text unchanged for ${stored}`).toBe(stored)
+        }
+        // The course follows the same physical order accepted by MyanSan:
+        // the anusvara ံ keys before the U vowel ြု.
+        const seq = buildSequence('ပြုံး', myanmar)
+        expect(seq.units.map((u) => `${u.keyCode}:${u.modifier}`)).toEqual([
+            'KeyY:none',
+            'KeyJ:none',
+            'KeyH:shift',
+            'KeyK:none',
+            'Semicolon:none',
+        ])
+    })
+
+    it('does not reinterpret a Myanmar cluster based on visual or keyboard order', () => {
+        expect(buildSequence('ပုံ', myanmar).graphemes[0]).toBe('ပုံ')
+        expect([...buildSequence('ပုံ', myanmar).graphemes[0]!].map((c) => c.codePointAt(0))).toEqual([0x1015, 0x102f, 0x1036])
+        // The vowel-sign stack types through end-to-end (O, Shift+H, K).
+        const seq = buildSequence('ကာ သုံ', myanmar)
+        expect(seq.units.slice(3).map((u) => `${u.keyCode}:${u.modifier}`)).toEqual(['KeyO:none', 'KeyH:shift', 'KeyK:none'])
+    })
+
+    it('leaves clusters without the stack, and non-Myanmar text, untouched', () => {
+        for (const word of ['ကံ', 'ကု', 'ကဲ', 'မြန်မာ']) {
+            expect(buildSequence(word, myanmar).graphemes.join(''), word).toBe(word)
+        }
+    })
+})
+
+describe('anusvara placement after dependent vowels (canonical ပုံ order)', () => {
+    it('accepts canonical vowel-then-anusvara syllables', () => {
+        for (const word of ['ပုံ', 'ပုံမှန်', 'ပြုံး', 'သုံး', 'လုံး', 'ကိံ', 'ကူံ']) {
+            expect(isMyanmarLogicalOrder(word), `${word} (${codePoints(word)})`).toBe(true)
+            expect(validateMyanmarText(word), `${word} validation problems`).toEqual([])
+        }
+    })
+
+    it('rejects stored anusvara-before-vowel bytes (ံု, ံူ) in lesson data', () => {
+        // ပံု = U+1015 U+1036 U+102F is NOT canonical storage: data must keep
+        // ပုံ = U+1015 U+102F U+1036. The learner still PRESSES ံ before ြု —
+        // that press order is produced by myanmarKeyboardOrder (see the
+        // keyboard-input-order describe block), never by stored bytes.
+        for (const bad of ['\u1015\u1036\u102f', '\u1015\u1036\u1030', '\u1000\u1036\u102d', '\u1005\u1015\u103c\u1036\u102f\u1038']) {
+            expect(isMyanmarLogicalOrder(bad), `${codePoints(bad)} must be rejected`).toBe(false)
+            expect(validateMyanmarText(bad).length, `${codePoints(bad)} must be validated as a problem`).toBeGreaterThan(0)
+        }
+    })
+
+    it('imposes the ပ ံ ြု press order without altering canonical storage', () => {
+        // Stored ပုံ stays canonical; the keyboard order moves the anusvara
+        // before the U/UU vowel sign.
+        expect(myanmarKeyboardOrder('ပုံ')).toBe('\u1015\u1036\u102f')
+        expect(myanmarKeyboardOrder('ပုံမှန်')).toBe('\u1015\u1036\u102f\u1019\u103e\u1014\u103a')
+        expect(myanmarKeyboardOrder('ပြုံး')).toBe('\u1015\u103c\u1036\u102f\u1038')
+        expect(myanmarKeyboardOrder('ကူံ')).toBe('\u1000\u1036\u1030')
+        // The stored text is untouched: it stays canonical Unicode.
+        expect('ပုံ').toBe('\u1015\u102f\u1036')
+    })
+
+    it('allows tone marks (့ း) after the anusvara but not vowels', () => {
+        for (const word of ['ကံ့', 'ကံး', 'သုံး']) {
+            expect(isMyanmarLogicalOrder(word), `${word} (${codePoints(word)})`).toBe(true)
+        }
+        for (const bad of ['\u1000\u1036\u102f\u1037', '\u1000\u1036\u102d\u1038']) {
+            expect(isMyanmarLogicalOrder(bad), `${codePoints(bad)} must be rejected`).toBe(false)
+        }
+    })
+
+    it('exposes the classification helpers for the U/UU vowel signs and anusvara', () => {
+        expect(VOWEL_SIGN_U).toBe(0x102f)
+        expect(VOWEL_SIGN_UU).toBe(0x1030)
+        expect(ANUSVARA_TONE).toBe(0x1036)
+        expect(isAnusvara(0x1036)).toBe(true)
+        expect(isAnusvara(0x1037)).toBe(false)
+        expect(isAnusvara(VOWEL_SIGN_U)).toBe(false)
+    })
+})
+
 describe('canonical lesson-target invariants (mission matrix)', () => {
-    it('every mission word is canonical Unicode: NFC, no zero-width, exact code points', () => {
+    it('every mission word is logical Unicode: no zero-width, exact code points', () => {
         for (const word of MISSION_CORPUS) {
-            expect(word.normalize('NFC'), `${word} (${codePoints(word)})`).toBe(word)
+            expect(isMyanmarLogicalOrder(word), `${word} (${codePoints(word)})`).toBe(true)
             expect(validateMyanmarText(word), `${word} validation problems`).toEqual([])
             expect(containsUnexpectedInvisibleCharacters(word), `${word} has hidden characters`).toBe(false)
             for (const ch of word) {
@@ -311,8 +450,8 @@ describe('Backspace steps back one unit (guided engine)', () => {
     })
 })
 
-describe('guided engine expects the pre-base vowel key first', () => {
-    it('progresses KeyA(ေ) → Digit7(ရ) and finishes "ရေ" as its single correct ISO sequence', () => {
+describe('guided engine expects Myanmar keyboard order', () => {
+    it('progresses KeyA(ေ) → Digit7(ရ) while retaining display text "ရေ"', () => {
         const seq = buildSequence('ရေ', myanmar)
         const engine = new TypingEngine({ sequence: seq, layout: myanmar })
         expect(engine.expectedUnit?.keyCode).toBe('KeyA')
@@ -330,7 +469,7 @@ describe('guided engine expects the pre-base vowel key first', () => {
         expect(engine.currentMetrics().accuracy).toBe(100)
     })
 
-    it('a leading base-key press (ရ before ေ) is recorded as an error, not silently accepted', () => {
+    it('a visual-order base press (ရ before ေ) is recorded as an error', () => {
         const seq = buildSequence('ရေ', myanmar)
         const engine = new TypingEngine({ sequence: seq, layout: myanmar })
         engine.processKey('Digit7', 'shift') // wrong first key
@@ -385,7 +524,7 @@ describe('unexpected, repeated and out-of-order keys (invalid-input policy)', ()
         expect(seq2.units.map((u) => `${u.keyCode}:${u.modifier}`)).toEqual(seq.units.map((u) => `${u.keyCode}:${u.modifier}`))
     })
 
-    it('a repeated pre-base key is an error once the base is expected (duplicate vowel)', () => {
+    it('a repeated base key is an error once the vowel is expected (duplicate base)', () => {
         const mk = () => {
             const seq = buildSequence('ရေ', myanmar)
             return new TypingEngine({ sequence: seq, layout: myanmar })
@@ -445,7 +584,7 @@ describe('unexpected, repeated and out-of-order keys (invalid-input policy)', ()
         // dedicated import boundary — never here.
         const legacyOrdered = 'ေရ'
         expect(normalizeMyanmarText(legacyOrdered)).toBe(legacyOrdered)
-        expect(validateMyanmarText(legacyOrdered)).toEqual([]) // NFC-valid, hidden-free
+        expect(validateMyanmarText(legacyOrdered).length).toBeGreaterThan(0)
         expect(splitMyanmarSyllables(legacyOrdered)).toEqual(['ေရ']) // not reordered to ရ+ေ
         expect(legacyOrdered).not.toBe('ရေ')
     })

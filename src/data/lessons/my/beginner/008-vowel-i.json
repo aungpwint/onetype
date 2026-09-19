@@ -6,7 +6,7 @@
     "number": 8,
     "title": "Vowel: ိ (i)",
     "titleMy": "သရ - ိ",
-    "description": "သရ ိ (KeyD) ကို လေ့ကျင့်သည်။ ဗျည်းတစ်လုံး ရိုက်ပြီးနောက် ိ ကို ရိုက်ရသည်။",
+    "description": "သရ ိ (KeyD) ကို လေ့ကျင့်သည်။ ဗျည်းတစ်လုံး ရိုက်ပြီးနောက် ိ ကို ရိုက်ရသည်။",
     "difficulty": "easy",
     "estimatedMinutes": 2,
     "keyboard": "myanmar",
@@ -23,7 +23,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-8-ex-1",
-            "instruction": "က နှင့် ိ ပေါင်းစည်း၍ ကိ ကို ရိုက်ပါ",
+            "instruction": "က နှင့် ိ ပေါင်းစည်း၍ ကိ ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကိ", "ငိ"],
@@ -36,7 +36,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-8-ex-2",
-            "instruction": "ဘယ်လက်ဖြင့် မိ နှင့် တိ တို့ကို ရိုက်ပါ",
+            "instruction": "ဘယ်လက်ဖြင့် မိ နှင့် တိ တို့ကို ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["မိ", "တိ"],
@@ -49,7 +49,7 @@
         {
             "kind": "generated",
             "id": "lesson-my-beginner-8-ex-3",
-            "instruction": "ိ သရ မျိုးစုံ ဖြတ်သန်းလေ့ကျင့်ပါ",
+            "instruction": "ိ သရ မျိုးစုံ ဖြတ်သန်းလေ့ကျင့်ပါ",
             "generator": {
                 "type": "chunks",
                 "keys": ["ကိ", "ငိ", "မိ", "တိ"],

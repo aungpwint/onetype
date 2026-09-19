@@ -1,4 +1,13 @@
-import { isMyanmarCodePoint, isMyanmarAttachingMark, isMyanmarSyllableHead, isPreBaseVowel, isAsat, isVirama } from './classification'
+import {
+    isAnusvara,
+    isAsat,
+    isDependentVowel,
+    isMyanmarAttachingMark,
+    isMyanmarCodePoint,
+    isMyanmarSyllableHead,
+    isPreBaseVowel,
+    isVirama,
+} from './classification'
 import { splitGraphemes } from './graphemes'
 
 export function containsMyanmar(text: string): boolean {
@@ -72,21 +81,61 @@ export function validateMyanmarText(text: string): MyanmarTextProblem[] {
     for (const found of findSuspiciousInvisibleCharacters(text)) {
         problems.push({ index: found.index, codePoint: found.codePoint, message: found.description })
     }
-    if (text.normalize('NFC') !== text) {
-        problems.push({ index: 0, codePoint: 0, message: 'text is not in NFC (canonical composition) normal form' })
+    if (containsMyanmar(text) && !isMyanmarLogicalOrder(text)) {
+        problems.push({ index: 0, codePoint: 0, message: 'Myanmar marks are not in logical Unicode order' })
     }
     return problems
 }
 
 export function normalizeMyanmarText(text: string): string {
-    const composed = text.normalize('NFC')
+    // NFC can reorder Myanmar marks (notably U+1037/U+103A) back into
+    // canonical-combining order, which is not the typing sequence. Preserve
+    // Myanmar-bearing text exactly and only use NFC for non-Myanmar text.
+    const composed = containsMyanmar(text) ? text : text.normalize('NFC')
     let out = ''
     for (const ch of composed) {
         const codePoint = ch.codePointAt(0) ?? 0
         if (SUSPICIOUS_CODEPOINTS.has(codePoint)) continue
         out += ch
     }
+
     return out
+}
+
+/**
+ * NFC is the only normalization used for typing comparison. Myanmar's
+ * combining marks have no canonical-composition rule that represents typing
+ * order, so this deliberately does not reorder code points.
+ */
+export function normalizeMyanmarForComparison(text: string): string {
+    return containsMyanmar(text) ? text : text.normalize('NFC')
+}
+
+/**
+ * Reports whether Myanmar uses the logical order required by OneType. The
+ * pre-base vowel must follow its host consonant. The anusvara U+1036 (ံ) must
+ * come after every dependent vowel sign in the syllable: Burmese canon stores
+ * vowels before the anusvara (ပုံ = ပ + ို + ံ, never ပံု = ပ + ံ + ို), and the
+ * reversed order does not render consistently across fonts. Dot-below U+1037
+ * and asat U+103A are accepted in either stored order: real Unicode documents
+ * contain both, while MyanSan's smart rule normalizes an asat-then-dot key
+ * press to dot-then-asat. The typing engine handles that press order.
+ */
+export function isMyanmarLogicalOrder(text: string): boolean {
+    for (const syllable of splitMyanmarSyllables(text)) {
+        const chars = Array.from(syllable)
+        const head = chars.findIndex((ch) => isMyanmarSyllableHead(ch.codePointAt(0) ?? 0))
+        const preBase = chars.findIndex((ch) => isPreBaseVowel(ch.codePointAt(0) ?? 0))
+        if (preBase >= 0 && head >= 0 && preBase < head) return false
+        const anusvara = chars.findIndex((ch) => isAnusvara(ch.codePointAt(0) ?? 0))
+        if (anusvara >= 0) {
+            for (let i = anusvara + 1; i < chars.length; i++) {
+                const code = chars[i]!.codePointAt(0) ?? 0
+                if (isDependentVowel(code) || isPreBaseVowel(code)) return false
+            }
+        }
+    }
+    return true
 }
 
 // Myanamar syllable segmentation: one full syllable cluster (base consonant +
