@@ -126,19 +126,8 @@ export function Shell({ children, contentRef }: { children: ReactNode; contentRe
                                     onClick={() => navigate('/')}
                                     aria-label="Back to dashboard"
                                 >
-                                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                                        <span className="relative flex h-full w-full items-center justify-center">
-                                            <svg viewBox="0 0 32 32" className="absolute inset-0 h-full w-full" aria-hidden>
-                                                <path
-                                                    d="M22 9.6c0-1.3-1-2.1-2.5-2.1-1 0-2 .4-2.7 1.1-.7.7-1 1.6-1 2.7v7.4c0 2.4-1.6 4.3-5.3 4.3V11.6c0-1.3-1-2.1-2.5-2.1-1 0-2 .4-2.7 1.1-.7.7-1 1.6-1 2.7"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth="2.2"
-                                                    strokeLinecap="round"
-                                                />
-                                                <circle cx="24" cy="24" r="3.4" fill="currentColor" />
-                                            </svg>
-                                        </span>
+                                    <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-primary shadow-inner ring-1 ring-white/10">
+                                        <img src="/logo.png" alt="OneType logo" className="h-full w-full object-cover" />
                                     </span>
                                     <span className="leading-none">
                                         <span className="text-lg font-bold text-ink">OneType</span>

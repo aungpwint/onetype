@@ -27,6 +27,11 @@ export function isNewerVersion(current: string, available: string): boolean {
     return compareVersions(available, current) > 0
 }
 
+export function isUpdateAvailable(current: string | undefined, available: string | undefined): boolean {
+    if (!current || !available) return false
+    return compareVersions(available, current) > 0
+}
+
 export function mapUpdateError(err: unknown): string {
     const message = err instanceof Error ? err.message : String(err)
     if (/network|fetch|connect|timeout|ECONNREFUSED/i.test(message)) {

@@ -34,6 +34,7 @@ export function useStartupUpdateCheck() {
         const runCheck = async (throttled: boolean) => {
             if (autoUpdate === 'off') return
             if (disposed) return
+            if (typeof navigator !== 'undefined' && navigator.onLine === false) return
 
             const now = Date.now()
             const last = Number(lastChecked) || 0
@@ -66,11 +67,19 @@ export function useStartupUpdateCheck() {
             void runCheck(true)
         }
 
+        const handleOnline = () => {
+            if (autoUpdate !== 'off') {
+                void runCheck(false)
+            }
+        }
+
         const interval = window.setInterval(() => void runCheck(false), CHECK_THROTTLE_MS)
+        window.addEventListener('online', handleOnline)
 
         return () => {
             disposed = true
             window.clearInterval(interval)
+            window.removeEventListener('online', handleOnline)
         }
     }, [autoUpdate, lastChecked, setSetting])
 }

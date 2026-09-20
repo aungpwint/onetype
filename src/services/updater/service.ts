@@ -1,6 +1,6 @@
 import { type Update } from '@tauri-apps/plugin-updater'
 import { relaunch } from '@tauri-apps/plugin-process'
-import { isNewerVersion, mapUpdateError, type UpdateStatus } from './types'
+import { isUpdateAvailable, mapUpdateError, type UpdateStatus } from './types'
 
 import { isTauriRuntime } from '@/services/ipc'
 import { notificationService } from '@/services/notification/service'
@@ -36,9 +36,26 @@ class UpdaterService {
         return this.status
     }
 
+    private async getCurrentVersion(): Promise<string | undefined> {
+        try {
+            const { getVersion } = await import('@tauri-apps/api/app')
+            return await getVersion()
+        } catch {
+            return undefined
+        }
+    }
+
+    private hasNetwork(): boolean {
+        return typeof navigator === 'undefined' || navigator.onLine !== false
+    }
+
     async check(currentVersion?: string, { silent = false } = {}): Promise<boolean> {
         if (this.checking) return false
         if (!isTauriRuntime()) {
+            this.emit({ state: 'not-available' })
+            return false
+        }
+        if (!this.hasNetwork()) {
             this.emit({ state: 'not-available' })
             return false
         }
@@ -51,11 +68,16 @@ class UpdaterService {
             const update = await check()
 
             if (!update) {
+                this.updateObj = null
+                this.version = undefined
                 this.emit({ state: 'not-available' })
                 return false
             }
 
-            if (currentVersion && !isNewerVersion(currentVersion, update.version)) {
+            const installedVersion = currentVersion ?? (await this.getCurrentVersion())
+            if (!isUpdateAvailable(installedVersion, update.version)) {
+                this.updateObj = null
+                this.version = undefined
                 this.emit({ state: 'not-available' })
                 return false
             }
@@ -70,6 +92,12 @@ class UpdaterService {
             })
             return true
         } catch (err) {
+            this.updateObj = null
+            this.version = undefined
+            if (!this.hasNetwork()) {
+                this.emit({ state: 'not-available' })
+                return false
+            }
             if (!silent) {
                 const message = mapUpdateError(err)
                 this.emit({ state: 'error', message })

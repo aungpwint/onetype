@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { CHECK_THROTTLE_MS, compareVersions, isNewerVersion, mapUpdateError, type UpdateStatus } from '@/services/updater/types'
+import { CHECK_THROTTLE_MS, compareVersions, isNewerVersion, isUpdateAvailable, mapUpdateError, type UpdateStatus } from '@/services/updater/types'
 
 describe('update state machine', () => {
     it('idle state exists', () => {
@@ -118,6 +118,14 @@ describe('isNewerVersion', () => {
         // running 1.1.0. Numeric comparison treats them as equal so this is "not
         // newer" (safe: no downgrade). Production channel uses plain MAJOR.MINOR.PATCH.
         expect(isNewerVersion('1.1.0', '1.1.0-beta')).toBe(false)
+    })
+})
+
+describe('isUpdateAvailable', () => {
+    it('skips prompts when the installed version already matches the available version', () => {
+        expect(isUpdateAvailable('1.6.0', '1.6.0')).toBe(false)
+        expect(isUpdateAvailable('1.6.0', '1.6.1')).toBe(true)
+        expect(isUpdateAvailable('1.6.0', '1.5.9')).toBe(false)
     })
 })
 
