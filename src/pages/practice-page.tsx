@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { cn, cardClass, eyebrowClass, pageTitleClass } from '@/lib/utils'
 import { useTypingStore } from '@/stores/typing-store'
 import { useSettingsStore } from '@/stores/settings-store'
+import { useScrollLock } from '@/hooks/use-scroll-lock'
 import { Session } from '@/components/session/session-workspace'
 import { unsupportedGraphemes, type PracticeUnit } from '@/core/materials/practice-material'
 import { layoutForLanguage } from '@/core/keyboard-layout/registry'
@@ -114,6 +115,11 @@ export default function PracticePage() {
     const inSession = session?.kind === 'practice'
     const reduceMotion = useReducedMotion()
 
+    // The practice route leaves the app shell like the lesson/test/drill
+    // routes, so html/body must be pinned to the viewport while this page is
+    // mounted (setup desk and live run alike).
+    useScrollLock()
+
     const prefs = resolvedPracticePreferences({
         unit,
         time,
@@ -178,9 +184,10 @@ export default function PracticePage() {
                 <span className="ml-auto hidden font-mono text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase sm:block">Quick practice</span>
             </header>
 
-            <main className="min-h-0 flex-1 overflow-y-auto">
-                <div className="mx-auto w-full max-w-5xl px-5 pt-10 pb-14 sm:px-8">
+            <main className="min-h-0 flex-1 overflow-hidden">
+                <div className="mx-auto flex h-full w-full max-w-5xl min-h-0 flex-col px-5 pt-6 pb-4 sm:px-8">
                     <motion.div
+                        className="shrink-0"
                         initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.22, ease: EASE }}
@@ -194,12 +201,12 @@ export default function PracticePage() {
                     </motion.div>
 
                     <motion.div
-                        className="mt-8 grid items-start gap-5 lg:grid-cols-[0.92fr_1.08fr]"
+                        className="mt-5 grid min-h-0 flex-1 gap-5 [grid-template-rows:minmax(0,1fr)] sm:mt-6 lg:grid-cols-[0.92fr_1.08fr]"
                         initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.26, delay: 0.05, ease: EASE }}
                     >
-                        <section className={cn(cardClass, 'order-1 flex flex-col p-5 sm:p-6 lg:order-2')}>
+                        <section className={cn(cardClass, 'order-1 flex min-h-0 flex-col p-5 sm:p-6 lg:order-2')}>
                             <div className="flex items-center justify-between gap-3">
                                 <p className={eyebrowClass}>What you'll type</p>
                                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-line bg-muted/50 text-accent">
@@ -207,51 +214,55 @@ export default function PracticePage() {
                                 </span>
                             </div>
 
-                            <div className="flex flex-1 flex-col items-center justify-center gap-3 py-8 text-center">
-                                {unit === 'time' ? (
-                                    <>
-                                        <p className="font-mono text-6xl leading-none font-semibold tracking-tight text-foreground tabular-nums">
-                                            {formatClock(time)}
-                                        </p>
-                                        <p className="text-xs leading-relaxed text-ink-faint">One steady run to the end · no pauses between lines.</p>
-                                    </>
-                                ) : unit === 'words' ? (
-                                    <>
-                                        <p className="font-mono text-6xl leading-none font-semibold tracking-tight text-foreground tabular-nums">
-                                            {words}
-                                            <span className="ml-2 text-2xl font-medium text-ink-faint">words</span>
-                                        </p>
-                                        <p className="text-xs leading-relaxed text-ink-faint">
-                                            By the count, not the clock · the meter fills as you type.
-                                        </p>
-                                    </>
-                                ) : unit === 'quote' && previewQuote ? (
-                                    <figure className="max-w-sm">
-                                        <blockquote
-                                            className={cn(
-                                                'font-display text-xl leading-relaxed font-medium tracking-[-0.01em] text-foreground',
-                                                langValue === 'myanmar' ? 'font-myanmar' : '',
-                                            )}
-                                        >
-                                            “{previewQuote.text}”
-                                        </blockquote>
-                                        <figcaption className="mt-3 text-xs text-ink-faint">— {previewQuote.source}</figcaption>
-                                        <p className="mt-3 text-xs leading-relaxed text-ink-faint">
-                                            A short quotation in {langLabel} · type it through, then get another.
-                                        </p>
-                                    </figure>
-                                ) : (
-                                    <div className="w-full">
-                                        {text.trim() ? (
-                                            <p className="line-clamp-4 font-display text-base leading-relaxed wrap-break-word text-foreground">{text}</p>
+                            <div className="min-h-0 flex-1 overflow-y-auto">
+                                <div className="flex min-h-full w-full flex-col items-center text-center">
+                                    <div className="m-auto flex w-full flex-col items-center gap-3 py-5">
+                                        {unit === 'time' ? (
+                                            <>
+                                                <p className="font-mono text-6xl leading-none font-semibold tracking-tight text-foreground tabular-nums">
+                                                    {formatClock(time)}
+                                                </p>
+                                                <p className="text-xs leading-relaxed text-ink-faint">One steady run to the end · no pauses between lines.</p>
+                                            </>
+                                        ) : unit === 'words' ? (
+                                            <>
+                                                <p className="font-mono text-6xl leading-none font-semibold tracking-tight text-foreground tabular-nums">
+                                                    {words}
+                                                    <span className="ml-2 text-2xl font-medium text-ink-faint">words</span>
+                                                </p>
+                                                <p className="text-xs leading-relaxed text-ink-faint">
+                                                    By the count, not the clock · the meter fills as you type.
+                                                </p>
+                                            </>
+                                        ) : unit === 'quote' && previewQuote ? (
+                                            <figure className="max-w-sm">
+                                                <blockquote
+                                                    className={cn(
+                                                        'font-display text-xl leading-relaxed font-medium tracking-[-0.01em] text-foreground',
+                                                        langValue === 'myanmar' ? 'font-myanmar' : '',
+                                                    )}
+                                                >
+                                                    “{previewQuote.text}”
+                                                </blockquote>
+                                                <figcaption className="mt-3 text-xs text-ink-faint">— {previewQuote.source}</figcaption>
+                                                <p className="mt-3 text-xs leading-relaxed text-ink-faint">
+                                                    A short quotation in {langLabel} · type it through, then get another.
+                                                </p>
+                                            </figure>
                                         ) : (
-                                            <p className="text-sm leading-relaxed text-ink-faint">
-                                                Type or paste your text in the setup panel and it appears here, ready to go.
-                                            </p>
+                                            <div className="w-full">
+                                                {text.trim() ? (
+                                                    <p className="line-clamp-4 font-display text-base leading-relaxed wrap-break-word text-foreground">{text}</p>
+                                                ) : (
+                                                    <p className="text-sm leading-relaxed text-ink-faint">
+                                                        Type or paste your text in the setup panel and it appears here, ready to go.
+                                                    </p>
+                                                )}
+                                                <p className="mt-3 text-xs text-ink-faint">Your own words, typed in the {langLabel} layout.</p>
+                                            </div>
                                         )}
-                                        <p className="mt-3 text-xs text-ink-faint">Your own words, typed in the {langLabel} layout.</p>
                                     </div>
-                                )}
+                                </div>
                             </div>
 
                             {startError ? (
@@ -273,7 +284,7 @@ export default function PracticePage() {
                             </button>
                         </section>
 
-                        <section className={cn(cardClass, 'order-2 p-5 sm:p-6 lg:order-1')}>
+                        <section className={cn(cardClass, 'order-2 min-h-0 overflow-y-auto p-5 sm:p-6 lg:order-1')}>
                             <div>
                                 <h2 className={eyebrowClass}>Pace</h2>
                                 <div className="mt-2.5 flex flex-wrap gap-1 rounded-lg border border-line bg-muted/70 p-1">
