@@ -2,6 +2,7 @@ import { memo, useCallback, useLayoutEffect, useMemo, useRef } from 'react'
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
 import { useShallow } from 'zustand/shallow'
 import { useTypingStore } from '@/stores/typing-store'
+import { resolveParagraphView, useUiStore } from '@/stores/ui-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { cn } from '@/lib/utils'
 import { containsMyanmar } from '@/core/unicode/myanmar'
@@ -111,14 +112,23 @@ export function TargetText() {
 
     const levelAdvancedLesson = session?.kind === 'lesson' && session.resolved.level === 'advanced'
 
-    const paragraphMode = useMemo(() => {
-        if (!session) return false
+    // Lessons hand the header toggle through as an explicit display choice
+    // (beginner always stays on a clean single line), while practice prose
+    // (quotes / custom texts) keeps its built-in paragraph behaviour and the
+    // rest falls back to the automatic length-driven layout.
+    const paragraphView = useUiStore((s) => s.paragraphView)
+    const paragraphMode = useMemo<boolean | null>(() => {
+        if (!session) return null
+        if (session.kind === 'lesson') {
+            // 'auto' defaults to paragraph from the advanced level onward.
+            return session.resolved.level === 'beginner' ? false : resolveParagraphView(paragraphView, session.resolved.level)
+        }
         if (session.kind === 'practice') {
             const unit = session.practice?.unit
-            return unit === 'quote' || unit === 'text'
+            return unit === 'quote' || unit === 'text' ? true : null
         }
-        return false
-    }, [session])
+        return null
+    }, [session, paragraphView])
 
     const { wrapMode } = useParagraphWrap({
         session,

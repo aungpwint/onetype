@@ -5,6 +5,15 @@ import { getThemePreset, isThemePresetId, applyThemePalette, DEFAULT_THEME_PRESE
 import { useSettingsStore, type AppSettingKey } from '@/stores/settings-store'
 import { UI_KEYS } from '@/services/storage-keys'
 
+// The display default follows the lesson level (single line below advanced,
+// paragraph from advanced onward). A learner can override it for the current
+// session via the header toggle; each new session falls back to the default.
+// null means "follow the level default".
+export function resolveParagraphView(preference: boolean | null, level: string | null | undefined): boolean {
+    if (preference !== null) return preference
+    return level === 'advanced'
+}
+
 interface UiState {
     theme: ThemePreference
     themePreset: string
@@ -13,6 +22,7 @@ interface UiState {
     keyboardVisible: boolean | null
     soundEnabled: boolean
     focusMode: boolean
+    paragraphView: boolean | null
     commandPaletteOpen: boolean
     setTheme: (theme: ThemePreference) => void
     setThemePreset: (preset: string) => void
@@ -22,6 +32,8 @@ interface UiState {
     toggleKeyboardVisible: (visible: boolean) => void
     setSoundEnabled: (enabled: boolean) => void
     setFocusMode: (enabled: boolean) => void
+    toggleParagraphView: (level?: string) => void
+    resetParagraphView: () => void
     setCommandPaletteOpen: (open: boolean) => void
 }
 
@@ -100,6 +112,7 @@ export const useUiStore = create<UiState>((set) => ({
     keyboardVisible: null,
     soundEnabled: readStoredSound(),
     focusMode: readStoredFocusMode(),
+    paragraphView: null,
     commandPaletteOpen: false,
     setTheme: (theme) => {
         localStorage.setItem(UI_KEYS.theme, theme)
@@ -147,6 +160,18 @@ export const useUiStore = create<UiState>((set) => ({
     setFocusMode: (enabled) => {
         localStorage.setItem(UI_KEYS.focusMode, enabled ? 'on' : 'off')
         set({ focusMode: enabled })
+    },
+    toggleParagraphView: (level) => {
+        // The first toggle in a session flips whichever view the level default
+        // produced (advanced → single line, below advanced → paragraph); after
+        // that it keeps flipping. The override lasts for this session only.
+        const view = useUiStore.getState().paragraphView
+        const next = !resolveParagraphView(view, level)
+        set({ paragraphView: next })
+    },
+    resetParagraphView: () => {
+        if (useUiStore.getState().paragraphView === null) return
+        set({ paragraphView: null })
     },
     setCommandPaletteOpen: (open) => set({ commandPaletteOpen: open }),
 }))

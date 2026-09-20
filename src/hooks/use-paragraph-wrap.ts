@@ -10,7 +10,7 @@ export const WRAP_OVERFLOW_FACTOR = 2
 interface ParagraphWrapInput {
     session: { kind: string } | null | undefined
     engine: TypingEngine | null | undefined
-    paragraphMode: boolean
+    paragraphMode: boolean | null
     activePhase: { text: string } | null | undefined
     sessionKey: string | null
     activePhaseKey: string | null
@@ -38,12 +38,20 @@ export function useParagraphWrap({
     viewportRef,
     contentRef,
 }: ParagraphWrapInput): { wrapMode: boolean } {
-    const wrapPhaseIsProse = useMemo(() => {
-        if (paragraphMode) return true
-        return Boolean(activePhase?.text.includes('\n'))
-    }, [paragraphMode, activePhase])
+    const autoMode = paragraphMode === null || paragraphMode === undefined
 
-    const wrapMeasureKey = engine && session && !wrapPhaseIsProse ? `${sessionKey ?? ''}|${activePhaseKey ?? 'all'}` : null
+    const wrapPhaseIsProse = useMemo(() => {
+        if (paragraphMode === true) return true
+        // Auto mode only: phase text with explicit line breaks stays prose.
+        if (autoMode && activePhase?.text.includes('\n')) return true
+        return false
+    }, [paragraphMode, autoMode, activePhase])
+
+    // Measuring is only meaningful in auto mode: an explicit choice is fixed.
+    // A forced single line never consults the overflow measurement, so the
+    // toggle really can collapse long prose back to one panned line.
+    const wrapMeasureKey =
+        engine && session && autoMode && !wrapPhaseIsProse ? `${sessionKey ?? ''}|${activePhaseKey ?? 'all'}` : null
 
     const [wrapMeasured, setWrapMeasured] = useState<{ key: string; long: boolean } | null>(null)
 

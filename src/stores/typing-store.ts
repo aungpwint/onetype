@@ -338,6 +338,9 @@ async function requireActiveStudent(set: (patch: Partial<TypingState>) => void):
 
 export const useTypingStore = create<TypingState>((set, get) => {
     const launchSession = (session: TypingSessionState) => {
+        // Paragraph view starts back at the level default for each new session,
+        // since a per-session override must not leak into the next run.
+        useUiStore.getState().resetParagraphView()
         const engine = createEngine(session)
         set({ session, engine, ...INITIAL_RUN_STATE })
         bindKeys()

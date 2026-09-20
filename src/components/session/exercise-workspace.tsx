@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowLeft, Pause, Play } from 'lucide-react'
+import { AlignJustify, ArrowLeft, Pause, Play, WrapText } from 'lucide-react'
 import { useTypingStore } from '@/stores/typing-store'
+import { resolveParagraphView, useUiStore } from '@/stores/ui-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { cn, eyebrowClass } from '@/lib/utils'
@@ -30,6 +31,8 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
     const error = useTypingStore((s) => s.error)
     const togglePause = useTypingStore((s) => s.togglePause)
     const abandon = useTypingStore((s) => s.abandon)
+    const paragraphView = useUiStore((s) => s.paragraphView)
+    const toggleParagraphView = useUiStore((s) => s.toggleParagraphView)
     const exitGuard = useConfirmExit(() => {
         abandon()
         onExit?.()
@@ -86,6 +89,23 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
                         <span className="mx-1 hidden h-5 w-px bg-line/70 sm:block" aria-hidden />
                         <div className="flex items-center gap-1">
                             <SessionTools level={resolved.level} />
+                            {session.kind === 'lesson' && (resolved.level === 'intermediate' || resolved.level === 'advanced') ? (
+                                <Button
+                                    variant="outline"
+                                    size="icon-sm"
+                                    onClick={() => toggleParagraphView(resolved.level)}
+                                    aria-pressed={resolveParagraphView(paragraphView, resolved.level)}
+                                    aria-label={resolveParagraphView(paragraphView, resolved.level) ? 'Show as a single line' : 'Wrap into a paragraph'}
+                                    title={resolveParagraphView(paragraphView, resolved.level) ? 'Show as a single line' : 'Wrap into a paragraph'}
+                                    className={
+                                        resolveParagraphView(paragraphView, resolved.level)
+                                            ? 'border-primary bg-primary/10 text-primary hover:border-primary hover:bg-primary/15 hover:text-primary'
+                                            : undefined
+                                    }
+                                >
+                                    {resolveParagraphView(paragraphView, resolved.level) ? <AlignJustify className="size-4" /> : <WrapText className="size-4" />}
+                                </Button>
+                            ) : null}
                             <Button
                                 variant="outline"
                                 size="icon-sm"
