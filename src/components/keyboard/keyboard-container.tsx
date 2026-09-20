@@ -1,4 +1,5 @@
 import { useMemo, type ReactNode } from 'react'
+import type { Level } from '@/types'
 import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import { useTypingStore } from '@/stores/typing-store'
 import { useUiStore } from '@/stores/ui-store'
@@ -7,11 +8,12 @@ import { VirtualKeyboard } from './virtual-keyboard'
 import { HandOverlay } from '@/components/hand-guide/hand-overlay'
 import { resolveTarget } from '@/core/target-model'
 
-export function KeyboardContainer({ layout, hideReadyMessage }: { layout: KeyboardLayout; hideReadyMessage?: boolean }) {
+export function KeyboardContainer({ layout, hideReadyMessage, level }: { layout: KeyboardLayout; hideReadyMessage?: boolean; level?: Level }) {
     const handGuide = useUiStore((s) => s.handGuideVisible)
+    const keyboardOverrideVisible = useUiStore((s) => s.keyboardVisible)
     const showKeyboard = useSettingsStore((s) => s.getEnum('practice.showKeyboard', ['on', 'off'] as const, 'on'))
 
-    if (showKeyboard === 'off') return null
+    if (showKeyboard === 'off' || (level === 'advanced' && !keyboardOverrideVisible)) return null
 
     return (
         <div className="mx-auto w-full max-w-5xl select-none">

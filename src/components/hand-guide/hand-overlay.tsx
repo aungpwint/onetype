@@ -240,16 +240,11 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
     const rightPos = keyboardToPixel(geometry!.kb, handLayout.right)
 
     return (
-            <div ref={containerRef} className="hand-overlay-container" {...containerAttrs}>
+        <div ref={containerRef} className="hand-overlay-container" {...containerAttrs}>
             <div className="hand-overlay-keyboard">{children}</div>
 
             {contactPoints.map((point) => (
-                <span
-                    key={point.code}
-                    className="hand-contact-point"
-                    style={{ left: point.x, top: point.y }}
-                    aria-hidden
-                />
+                <span key={point.code} className="hand-contact-point" style={{ left: point.x, top: point.y }} aria-hidden />
             ))}
 
             <div

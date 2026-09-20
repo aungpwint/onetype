@@ -291,7 +291,7 @@ describe('typing engine', () => {
         expect(engine.status).toBe('finished')
     })
 
-it('backspace steps back exactly one unit for multi-cluster Myanmar', () => {
+    it('backspace steps back exactly one unit for multi-cluster Myanmar', () => {
         // "ကာ သုံ" -> three clusters: [ကာ][space][သုံ]
         const two = buildSequence('\u1000\u102C \u101E\u102F\u1036', myanmar)
         expect(two.graphemes).toHaveLength(3) // "ကာ", " ", "သုံ"

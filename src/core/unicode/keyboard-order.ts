@@ -45,18 +45,12 @@ function reorderCore(core: string): string {
     if (!stacked) return [...prebase, ...pressed].join('')
 
     const baseInRest = pressed.findIndex((c) => c === chars[base])
-    return (
-        baseInRest < 0
-            ? [...prebase, ...pressed]
-            : [...pressed.slice(0, baseInRest), ...prebase, ...pressed.slice(baseInRest)]
-    ).join('')
+    return (baseInRest < 0 ? [...prebase, ...pressed] : [...pressed.slice(0, baseInRest), ...prebase, ...pressed.slice(baseInRest)]).join('')
 }
 
 export function myanmarKeyboardOrder(text: string): string {
     // Keep segmentation in one place. This prevents a multi-base syllable such
     // as "မှန်" (မ + ှ + န + ် + ့) from being interpreted differently by the
     // typing sequence and by the keyboard-order transformer.
-    return splitMyanmarSyllables(text)
-        .map(reorderCore)
-        .join('')
+    return splitMyanmarSyllables(text).map(reorderCore).join('')
 }

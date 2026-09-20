@@ -44,7 +44,8 @@ export function buildSequence(text: string, layout: KeyboardLayout): BuiltSequen
     const units: TypingUnit[] = []
     for (let gi = 0; gi < graphemes.length; gi++) {
         const token = graphemes[gi]
-        const isMyanmarToken = layout.language === 'myanmar' || (layout.language === 'mixed' && /[\u1000-\u109f\uaa60-\uaa7f\ua9e0-\ua9ff]/u.test(token))
+        const isMyanmarToken =
+            layout.language === 'myanmar' || (layout.language === 'mixed' && /[\u1000-\u109f\uaa60-\uaa7f\ua9e0-\ua9ff]/u.test(token))
         // Preserve layout-defined multi-codepoint aliases such as ၎င်း as
         // one key; only ordinary Myanmar syllables need reordering.
         const inputText = isMyanmarToken && !layout.lookupChar(token) ? myanmarKeyboardOrder(token) : token

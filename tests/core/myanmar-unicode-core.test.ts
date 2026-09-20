@@ -115,7 +115,7 @@ describe('Myanmar character classification core', () => {
         it.each([
             ['ရေ', '\u1031\u101b'],
             ['ရေး', '\u1031\u101b\u1038'],
-// MyanSan smart-reorders `်` then `့` to canonical `့` + `်`.
+            // MyanSan smart-reorders `်` then `့` to canonical `့` + `်`.
             ['ကျင့်', '\u1000\u103b\u1004\u103a\u1037'],
             ['သင့်', '\u101e\u1004\u103a\u1037'],
             // MyanSan presses the anusvara `ံ` before the U/UU vowel sign.
@@ -125,7 +125,11 @@ describe('Myanmar character classification core', () => {
         ])('reorders %s without changing the display target', (display, input) => {
             expect(myanmarKeyboardOrder(display)).toBe(input)
             expect(buildSequence(display, myanmar).graphemes.join('')).toBe(display)
-            expect(buildSequence(display, myanmar).units.map((unit) => unit.text).join('')).toBe(input)
+            expect(
+                buildSequence(display, myanmar)
+                    .units.map((unit) => unit.text)
+                    .join(''),
+            ).toBe(input)
         })
 
         it('types ပုံမှန် in KMS-compatible physical-key order', () => {
@@ -261,7 +265,10 @@ describe('logical order for upper-right mark + lower vowel-sign stacks', () => {
         ]
         for (const [stored, cps] of cases) {
             const pressed = buildSequence(stored, myanmar).graphemes[0]!
-            expect([...pressed].map((c) => c.codePointAt(0)), stored).toEqual(cps)
+            expect(
+                [...pressed].map((c) => c.codePointAt(0)),
+                stored,
+            ).toEqual(cps)
             expect(pressed.length, `press order is a permutation of ${stored}`).toBe(stored.length)
             const seq = buildSequence(stored, myanmar)
             expect(seq.graphemes.join(''), `stored text unchanged for ${stored}`).toBe(stored)
@@ -269,13 +276,7 @@ describe('logical order for upper-right mark + lower vowel-sign stacks', () => {
         // The course follows the same physical order accepted by MyanSan:
         // the anusvara ံ keys before the U vowel ြု.
         const seq = buildSequence('ပြုံး', myanmar)
-        expect(seq.units.map((u) => `${u.keyCode}:${u.modifier}`)).toEqual([
-            'KeyY:none',
-            'KeyJ:none',
-            'KeyH:shift',
-            'KeyK:none',
-            'Semicolon:none',
-        ])
+        expect(seq.units.map((u) => `${u.keyCode}:${u.modifier}`)).toEqual(['KeyY:none', 'KeyJ:none', 'KeyH:shift', 'KeyK:none', 'Semicolon:none'])
     })
 
     it('does not reinterpret a Myanmar cluster based on visual or keyboard order', () => {

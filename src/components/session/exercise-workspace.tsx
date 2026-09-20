@@ -85,7 +85,7 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
                         <Metric align="end" size="sm" value={`${Math.round(stats.accuracy)}%`} label="Accuracy" />
                         <span className="mx-1 hidden h-5 w-px bg-line/70 sm:block" aria-hidden />
                         <div className="flex items-center gap-1">
-                            <SessionTools />
+                            <SessionTools level={resolved.level} />
                             <Button
                                 variant="outline"
                                 size="icon-sm"
@@ -111,7 +111,7 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
                         {status === 'ready' ? <TabStartHint /> : null}
                         <QuickRestartHint />
                         <TargetText />
-                        <KeyboardContainer layout={layout} hideReadyMessage />
+                        <KeyboardContainer layout={layout} hideReadyMessage level={resolved.level} />
                         <ExerciseFooter />
                         <OutOfFocusWarning />
                     </div>

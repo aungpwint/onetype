@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { graphemeUnitRuns, type GraphemeRun, type GraphemeSlot } from '@/core/typing-engine/sequence'
 import { graphemePresentation, rangeHasIncorrect, type UnitOutcomeQuery } from '@/core/typing-engine/char-state'
+import { useParagraphWrap } from '@/hooks/use-paragraph-wrap'
 
 const NO_OUTCOMES: UnitOutcomeQuery = { unitOutcomeAt: () => null }
 
@@ -108,7 +109,30 @@ export function TargetText() {
 
     const sessionKey = session ? `${session.kind}-${session.lessonId ?? session.test?.id ?? ''}-${session.attempt}` : null
 
+    const levelAdvancedLesson = session?.kind === 'lesson' && session.resolved.level === 'advanced'
+
+    const paragraphMode = useMemo(() => {
+        if (!session) return false
+        if (session.kind === 'practice') {
+            const unit = session.practice?.unit
+            return unit === 'quote' || unit === 'text'
+        }
+        return false
+    }, [session])
+
+    const { wrapMode } = useParagraphWrap({
+        session,
+        engine,
+        paragraphMode,
+        activePhase,
+        sessionKey,
+        activePhaseKey,
+        viewportRef,
+        contentRef,
+    })
+
     useLayoutEffect(() => {
+        if (wrapMode) return
         const viewport = viewportRef.current
         const caret = caretRef.current
         const content = contentRef.current
@@ -134,7 +158,74 @@ export function TargetText() {
         if (Math.abs(currentLeft - nextOffset) < 0.5) return
 
         motionOffset.set(nextOffset)
-    }, [sessionKey, activePhaseKey, unitIndex, motionOffset])
+    }, [sessionKey, activePhaseKey, unitIndex, motionOffset, wrapMode])
+
+    const wrapScrollKey = wrapMode ? `${sessionKey ?? ''}|${activePhaseKey ?? ''}` : null
+    const previousScrollKeyRef = useRef<string | null>(null)
+    const verticalFollowRef = useRef({ raf: 0 })
+
+    const stopVerticalFollow = useCallback(() => {
+        const state = verticalFollowRef.current
+        if (state.raf !== 0) {
+            cancelAnimationFrame(state.raf)
+            state.raf = 0
+        }
+    }, [])
+
+    useLayoutEffect(() => stopVerticalFollow, [stopVerticalFollow])
+
+    useLayoutEffect(() => {
+        const viewport = viewportRef.current
+        if (!viewport) return
+        if (!wrapMode) {
+            previousScrollKeyRef.current = null
+            stopVerticalFollow()
+            viewport.scrollTop = 0
+            return
+        }
+        if (previousScrollKeyRef.current !== wrapScrollKey) {
+            previousScrollKeyRef.current = wrapScrollKey
+            stopVerticalFollow()
+            viewport.scrollTop = 0
+            return
+        }
+        const caret = caretRef.current
+        if (!caret) return
+        const caretRect = caret.getBoundingClientRect()
+        if (caretRect.width === 0) return
+        const viewportRect = viewport.getBoundingClientRect()
+        const caretCenter = caretRect.top + caretRect.height / 2 - viewportRect.top
+        const targetCenter = viewportRect.height * CARET_ANCHOR
+        const delta = caretCenter - targetCenter
+        if (Math.abs(delta) < 0.5) {
+            stopVerticalFollow()
+            return
+        }
+        const maxScroll = Math.max(0, viewport.scrollHeight - viewport.clientHeight)
+        const target = Math.min(maxScroll, Math.max(0, viewport.scrollTop + delta))
+        const from = viewport.scrollTop
+        if (Math.abs(target - from) < 1) return
+
+        if (reducedMotion) {
+            viewport.scrollTop = target
+            stopVerticalFollow()
+            return
+        }
+
+        // Glide the caret back to its anchor over a beat instead of snapping:
+        // line-tracked text stays calm while reading ahead down the paragraph.
+        const state = verticalFollowRef.current
+        if (state.raf !== 0) cancelAnimationFrame(state.raf)
+        const start = performance.now()
+        const duration = 200
+        const easeOut = (t: number) => 1 - Math.pow(1 - t, 4)
+        const step = (now: number) => {
+            const t = Math.min(1, (now - start) / duration)
+            viewport.scrollTop = from + (target - from) * easeOut(t)
+            state.raf = t < 1 ? requestAnimationFrame(step) : 0
+        }
+        state.raf = requestAnimationFrame(step)
+    }, [wrapMode, wrapScrollKey, unitIndex, reducedMotion, stopVerticalFollow])
 
     useLayoutEffect(() => {
         const content = contentRef.current
@@ -155,6 +246,17 @@ export function TargetText() {
 
     if (!session || !engine) return null
 
+    // Derived wrap layout, hoisted so the render reads as a flat declaration.
+    // Long prose (advanced quote/custom-text practice, e.g. the complex-
+    // sentence lines) flips the target to a wrapped paragraph column; short
+    // drills stay a single panned line.
+    const viewportWrapStyle = wrapMode ? { maxHeight: '60vh' } : undefined
+    const contentWrapClass = wrapMode ? 'tt-content--paragraph' : null
+    const contentWrapOffset = wrapMode ? 0 : springOffset
+    const targetLayoutClass = wrapMode ? 'tt-target--paragraph' : 'whitespace-nowrap'
+    const targetQuoteClass = wrapMode && levelAdvancedLesson ? 'tt-target--quote' : null
+    const targetFocusClass = windowFocused ? '' : 'tt-blurred'
+
     return (
         <motion.div
             className="mx-auto w-full max-w-5xl pb-4"
@@ -163,14 +265,11 @@ export function TargetText() {
             transition={{ duration: 0.25, ease: 'easeOut' }}
         >
             <div className="tt-container">
-                <div ref={viewportRef} className="tt-viewport">
-                    <motion.div ref={contentRef} className="tt-content" style={{ x: springOffset }}>
+                <div ref={viewportRef} className="tt-viewport" style={viewportWrapStyle}>
+                    <motion.div ref={contentRef} className={cn('tt-content', contentWrapClass)} style={{ x: contentWrapOffset }}>
                         <motion.p
                             key={activePhaseKey ?? 'all'}
-                            className={cn('tt-target mx-auto whitespace-nowrap', windowFocused ? '' : 'tt-blurred')}
-                            initial={{ opacity: 0, y: 8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.22, ease: 'easeOut' }}
+                            className={cn('tt-target mx-auto', targetLayoutClass, targetQuoteClass, targetFocusClass)}
                         >
                             <TextContent
                                 runs={runs}

@@ -61,7 +61,10 @@ describe('Myanmar cluster integrity', () => {
                 if (!isTarget) continue
                 for (const cluster of splitMyanmarSyllables(text)) {
                     const hasMyanmar = [...cluster].some((c) => c.codePointAt(0)! >= 0x1000 && c.codePointAt(0)! <= 0x109f)
-                    expect(hasMyanmar && cluster.includes(' '), `${lesson.id}: mixed cluster ${JSON.stringify(cluster)} of ${JSON.stringify(text)}`).toBe(false)
+                    expect(
+                        hasMyanmar && cluster.includes(' '),
+                        `${lesson.id}: mixed cluster ${JSON.stringify(cluster)} of ${JSON.stringify(text)}`,
+                    ).toBe(false)
                 }
             }
         }

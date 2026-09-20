@@ -10,6 +10,7 @@ interface UiState {
     themePreset: string
     sidebarOpen: boolean
     handGuideVisible: boolean
+    keyboardVisible: boolean | null
     soundEnabled: boolean
     focusMode: boolean
     commandPaletteOpen: boolean
@@ -18,6 +19,7 @@ interface UiState {
     toggleSidebar: () => void
     setSidebarOpen: (open: boolean) => void
     toggleHandGuide: () => void
+    toggleKeyboardVisible: (visible: boolean) => void
     setSoundEnabled: (enabled: boolean) => void
     setFocusMode: (enabled: boolean) => void
     setCommandPaletteOpen: (open: boolean) => void
@@ -95,6 +97,7 @@ export const useUiStore = create<UiState>((set) => ({
     themePreset: readStoredThemePreset(),
     sidebarOpen: true,
     handGuideVisible: false,
+    keyboardVisible: null,
     soundEnabled: readStoredSound(),
     focusMode: readStoredFocusMode(),
     commandPaletteOpen: false,
@@ -126,6 +129,13 @@ export const useUiStore = create<UiState>((set) => ({
         // toggle in sync so the preference survives restarts (mirror the sound
         // bridge).
         void useSettingsStore.getState().set('practice.handGuide' as AppSettingKey, next ? 'on' : 'off')
+    },
+    toggleKeyboardVisible: () => {
+        const next = !useUiStore.getState().keyboardVisible
+        set({ keyboardVisible: next })
+        // Mirror the persisted practice.showKeyboard setting so an "on"
+        // preference survives restarts, exactly like the hand-guide bridge.
+        void useSettingsStore.getState().set('practice.showKeyboard' as AppSettingKey, next ? 'on' : 'off')
     },
     setSoundEnabled: (enabled) => {
         localStorage.setItem(UI_KEYS.sound, enabled ? 'on' : 'off')

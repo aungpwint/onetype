@@ -88,6 +88,14 @@
     --typing-letter-spacing: 0;
     --typing-my-line-height: 1.8;
 
+    /* Paragraph-mode typing (advanced lessons, quote/custom-text practice):
+       a smaller, tighter measure so wrapped lines read like prose while the
+       focused syllable keeps a clear pop. */
+    --typing-paragraph-font-size: clamp(1.75rem, 1.5rem + 0.6vw, 2.125rem);
+    --typing-paragraph-line-height: 2;
+    --typing-paragraph-letter-spacing: -0.01em;
+    --typing-my-paragraph-line-height: 2.2;
+
     color-scheme: light;
 }
 
@@ -459,7 +467,9 @@
         position: relative;
         width: 100%;
         overflow: hidden;
-        padding: 0.875rem 0;
+        /* Generous vertical air so the panned single line reads as one calm,
+         distinct row and the wrapped paragraph breathes between lines. */
+        padding: 1.25rem 0;
     }
 
     .tt-content {
@@ -468,6 +478,43 @@
         will-change: transform;
         transform: translate3d(0, 0, 0);
         /* padding-left: 24px; */
+    }
+
+    /* Paragraph mode (advanced lessons, quote/custom-text practice): the
+       content fills the viewport width and wraps instead of panning as one
+       unwrapped line. Overrides the max-content sizing above. */
+    .tt-content--paragraph {
+        width: 100%;
+        min-width: 0;
+        padding-bottom: 0.75rem;
+    }
+
+    /* Paragraph-mode typing (advanced lessons, quote/custom-text practice):
+       a readable, left-aligned prose column. Words wrap at spaces (never split
+       mid-grapheme), `pretty` balances the trailing line so no line is left
+       stranded with a single token, and the compact metrics keep ~7-8 words
+       per line. */
+    .tt-target--paragraph {
+        font-size: var(--typing-paragraph-font-size);
+        line-height: var(--typing-paragraph-line-height);
+        letter-spacing: var(--typing-paragraph-letter-spacing);
+        margin-inline: auto;
+        padding-inline: 0.5rem;
+        text-align: left;
+        text-wrap: pretty;
+        word-break: normal;
+        overflow-wrap: normal;
+    }
+
+    .tt-target--paragraph .font-myanmar {
+        line-height: var(--typing-my-paragraph-line-height);
+    }
+
+    /* Quote presentation (advanced lessons): a centred, narrower block so the
+       wrapped lines read like a quotation rather than an edge-to-edge text. */
+    .tt-target--quote {
+        margin-inline: auto;
+        text-align: center;
     }
 
     .tt-char {
@@ -615,7 +662,7 @@
     }
 
     .tt-caret {
-        --tt-caret-w: 0.25rem;
+        --tt-caret-w: 0.1rem;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -623,21 +670,9 @@
         right: auto;
         width: var(--tt-caret-w);
         background-color: var(--primary);
-        /* Solid primary bar: the app's design tokens are plain :root vars, so
-         Tailwind v4 never generates bg-primary (only text-primary). The colour
-         and width live here instead. The current cluster anchors the caret
-         horizontally via an inline `left` (see target-text.tsx): it slides from
-         *before* the untyped syllable at progress 0 to *after* it at progress 1
-         and is clamped to the cluster box, so the insertion point always sits
-         on the current word boundary without ever splitting a shaped Myanmar
-         cluster or bleeding into its neighbours. */
         animation: caret-blink 1s var(--ease-in-out) infinite;
     }
 
-    /* Caret style variants (Monkeytype parity). The inline `left` computed by
-     the renderer positions the default bar midway through the current cluster;
-     block/underline variants instead hug the cluster box so the glyph stays
-     readable above the translucent wash. */
     .tt-caret--line {
         width: 0.135rem;
         top: -14%;
@@ -886,10 +921,6 @@
    browser never fake-bolds (or fake-italics) stacked clusters — synthetic
    strokes smear the medials and stacked consonants. */
 .font-myanmar {
-    /* Noto Sans Myanmar leads, Pyidaungsu falls back. The family is re-declared
-     here (not left to Tailwind's auto-generated utility): the token keeps
-     quoted multi-word fallback names, so the resolved chain is always correct
-     even if utility generation ever changes. */
     font-family: var(--font-myanmar);
     line-height: 1.4;
     font-synthesis: none;

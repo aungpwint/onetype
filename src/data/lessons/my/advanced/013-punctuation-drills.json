@@ -16,8 +16,56 @@
     },
     "focus": ["punctuation", "accuracy"],
     "prerequisites": ["lesson-my-advanced-12"],
-    "focusKeys": ["Digit1", "Digit2", "Digit7", "Digit9", "Digit0", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Space", "ShiftLeft", "ShiftRight"],
-    "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "left-thumb", "right-index", "right-middle", "right-ring", "right-pinky"],
+    "focusKeys": [
+        "Digit1",
+        "Digit2",
+        "Digit7",
+        "Digit9",
+        "Digit0",
+        "KeyQ",
+        "KeyW",
+        "KeyE",
+        "KeyR",
+        "KeyT",
+        "KeyY",
+        "KeyU",
+        "KeyI",
+        "KeyO",
+        "KeyP",
+        "KeyA",
+        "KeyS",
+        "KeyD",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "Semicolon",
+        "KeyZ",
+        "KeyX",
+        "KeyC",
+        "KeyV",
+        "KeyB",
+        "KeyN",
+        "KeyM",
+        "Comma",
+        "Period",
+        "Space",
+        "ShiftLeft",
+        "ShiftRight"
+    ],
+    "targetFingers": [
+        "left-pinky",
+        "left-ring",
+        "left-middle",
+        "left-index",
+        "left-thumb",
+        "right-index",
+        "right-middle",
+        "right-ring",
+        "right-pinky"
+    ],
     "targetHands": ["left", "right"],
     "requiresShift": true,
     "exercises": [
@@ -27,7 +75,12 @@
             "instruction": "ပုဒ်ကလေးချက် နှင့် ပုဒ်ဖြတ်ချက်တို့ ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
-                "sentences": ["ဈေးဆိုင်များ၊ ရုံးများနှင့် ကျောင်းများတွင် စည်းကမ်းကို စနစ်တကျ လိုက်နာရန် အရေးကြီးသည်။", "အစည်းအဝေးတွင် ကုန်ကျစရိတ်၊ ရောင်းအားနှင့် အမြတ်အစွန်းတို့ကို အသေးစိတ် ဆွေးနွေးခဲ့ကြသည်။", "သူသည် အချိန်မှန် ထခြင်း၊ လေ့ကျင့်ခန်း ပြုလုပ်ခြင်းနှင့် စာဖတ်ခြင်းကို နေ့စဉ် ကျင့်သုံးသည်။", "စာအုပ်စင်ပေါ်ရှိ စာအုပ်များ၊ ခဲတံများနှင့် မှတ်စုစာအုပ်များကို စနစ်တကျ စီစဉ်ထားပါသည်။"],
+                "sentences": [
+                    "ဈေးဆိုင်များ၊ ရုံးများနှင့် ကျောင်းများတွင် စည်းကမ်းကို စနစ်တကျ လိုက်နာရန် အရေးကြီးသည်။",
+                    "အစည်းအဝေးတွင် ကုန်ကျစရိတ်၊ ရောင်းအားနှင့် အမြတ်အစွန်းတို့ကို အသေးစိတ် ဆွေးနွေးခဲ့ကြသည်။",
+                    "သူသည် အချိန်မှန် ထခြင်း၊ လေ့ကျင့်ခန်း ပြုလုပ်ခြင်းနှင့် စာဖတ်ခြင်းကို နေ့စဉ် ကျင့်သုံးသည်။",
+                    "စာအုပ်စင်ပေါ်ရှိ စာအုပ်များ၊ ခဲတံများနှင့် မှတ်စုစာအုပ်များကို စနစ်တကျ စီစဉ်ထားပါသည်။"
+                ],
                 "count": 6
             }
         },
@@ -37,7 +90,11 @@
             "instruction": "ကွင်းစကွင်းပိတ် ပါဝင်သော ဝါကျများကို ရိုက်ပါ",
             "generator": {
                 "type": "sentences",
-                "sentences": ["သင်တန်း (သုံးလကြာ) အပြီးတွင် စာမေးပွဲကို ဖြေဆိုရမည် ဖြစ်သည်။", "အစည်းအဝေးကို မြို့တော်ခန်းမ (ဒုတိယထပ်) တွင် ကျင်းပမည် ဖြစ်သည်။", "နေ့စဉ် လေ့လာချိန် (နံနက် ၉ နာရီမှ နေ့လယ် ၁၂ နာရီအထိ) ကို အိမ်တွင် သတ်မှတ်ထားသည်။"],
+                "sentences": [
+                    "သင်တန်း (သုံးလကြာ) အပြီးတွင် စာမေးပွဲကို ဖြေဆိုရမည် ဖြစ်သည်။",
+                    "အစည်းအဝေးကို မြို့တော်ခန်းမ (ဒုတိယထပ်) တွင် ကျင်းပမည် ဖြစ်သည်။",
+                    "နေ့စဉ် လေ့လာချိန် (နံနက် ၉ နာရီမှ နေ့လယ် ၁၂ နာရီအထိ) ကို အိမ်တွင် သတ်မှတ်ထားသည်။"
+                ],
                 "count": 4
             }
         }

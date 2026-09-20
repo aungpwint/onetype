@@ -96,9 +96,7 @@ describe('Myanmar text audit (accuracy beyond logical order)', () => {
     it('reports problems across all Myanmar content', async () => {
         const audit: Audit = { problems: [], syllables: {}, tokens: {}, untypeableSample: [] }
 
-        const lessons = await Promise.all(
-            (await getLessonRepository()).listAllByLanguage().my.map((meta) => getCanonicalLesson(meta.id)),
-        )
+        const lessons = await Promise.all((await getLessonRepository()).listAllByLanguage().my.map((meta) => getCanonicalLesson(meta.id)))
 
         const strings: { label: string; field: string; value: string }[] = [
             ...collectMyanmarStrings(lessons),
@@ -106,9 +104,11 @@ describe('Myanmar text audit (accuracy beyond logical order)', () => {
                 { label: `quote ${i + 1}`, field: 'text', value: q.text },
                 { label: `quote ${i + 1}`, field: 'source', value: q.source },
             ]),
-            ...[...buildMyanmarSyllables(), ...SHIPPED_WORDS, ...myanmar.banks.words, ...myanmar.banks.sentences].map(
-                (value, i) => ({ label: 'pedagogy bank', field: `item ${i}`, value }),
-            ),
+            ...[...buildMyanmarSyllables(), ...SHIPPED_WORDS, ...myanmar.banks.words, ...myanmar.banks.sentences].map((value, i) => ({
+                label: 'pedagogy bank',
+                field: `item ${i}`,
+                value,
+            })),
         ]
 
         const layout = getLayoutOrThrow('myanmar')
