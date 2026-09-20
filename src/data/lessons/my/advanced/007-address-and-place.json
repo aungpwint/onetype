@@ -70,7 +70,6 @@
     ],
     "targetHands": ["left", "right"],
     "requiresShift": true,
-    "prerequisites": ["lesson-my-advanced-6"],
     "exercises": [
         {
             "kind": "generated",

@@ -64,7 +64,6 @@
     ],
     "targetHands": ["left", "right"],
     "requiresShift": true,
-    "prerequisites": ["lesson-my-advanced-9"],
     "exercises": [
         {
             "id": "lesson-my-advanced-10-ex-1",

@@ -15,7 +15,6 @@
         "minWpm": 23
     },
     "focus": ["sentences", "unicode", "accuracy"],
-    "prerequisites": ["lesson-my-advanced-13"],
     "focusKeys": [
         "Digit7",
         "KeyQ",

@@ -22,6 +22,5 @@
             "text": "Learning is a lifelong journey that begins at birth and continues until the end of life. Every skill we master, from reading a book to typing a letter, opens a new door. The best learners stay curious and never fear mistakes, because mistakes are the footprints on the road to mastery."
         }
     ],
-    "focus": ["sentences", "speed", "accuracy"],
-    "prerequisites": ["lesson-en-advanced-14"]
+    "focus": ["sentences", "speed", "accuracy"]
 }

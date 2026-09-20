@@ -22,6 +22,5 @@
             "text": "Last summer, my family visited a small town by the sea. We woke up early to watch the fishermen pull in their boats. I collected bright shells on the sand. It was the happiest day of my year."
         }
     ],
-    "focus": ["sentences", "speed", "accuracy"],
-    "prerequisites": ["lesson-en-advanced-11"]
+    "focus": ["sentences", "speed", "accuracy"]
 }

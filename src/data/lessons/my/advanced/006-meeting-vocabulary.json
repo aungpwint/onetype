@@ -62,7 +62,6 @@
     ],
     "targetHands": ["left", "right"],
     "requiresShift": true,
-    "prerequisites": ["lesson-my-advanced-5"],
     "exercises": [
         {
             "kind": "generated",

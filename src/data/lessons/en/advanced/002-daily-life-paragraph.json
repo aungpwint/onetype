@@ -22,6 +22,5 @@
             "text": "I wake up at six in the morning and brush my teeth. Then I eat breakfast and take the bus to work. I return home in the evening and watch a little television."
         }
     ],
-    "focus": ["sentences", "speed", "accuracy"],
-    "prerequisites": ["lesson-en-advanced-1"]
+    "focus": ["sentences", "speed", "accuracy"]
 }

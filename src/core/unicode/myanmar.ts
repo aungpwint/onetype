@@ -138,7 +138,7 @@ export function isMyanmarLogicalOrder(text: string): boolean {
     return true
 }
 
-// Myanamar syllable segmentation: one full syllable cluster (base consonant +
+// Myanmar syllable segmentation: one full syllable cluster (base consonant +
 // medials + vowel signs + asat/kinzi/stacking + tone marks) is one deletion
 // unit. Input must already be canonical (see `validateMyanmarText`).
 // Membership comes from the classification core — no code-point tables here.

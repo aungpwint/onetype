@@ -15,7 +15,6 @@
         "minWpm": 23
     },
     "focus": ["punctuation", "accuracy"],
-    "prerequisites": ["lesson-my-advanced-12"],
     "focusKeys": [
         "Digit1",
         "Digit2",

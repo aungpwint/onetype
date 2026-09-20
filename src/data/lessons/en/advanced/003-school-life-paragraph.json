@@ -22,6 +22,5 @@
             "text": "Our school has many big and bright classrooms. The teachers are kind and patient. We study English, Math, and Science every day. I enjoy learning new things with my classmates."
         }
     ],
-    "focus": ["sentences", "speed", "accuracy", "shift"],
-    "prerequisites": ["lesson-en-advanced-2"]
+    "focus": ["sentences", "speed", "accuracy", "shift"]
 }

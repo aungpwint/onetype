@@ -22,6 +22,5 @@
             "text": "To grow a plant, first put some soil in a pot. Next, plant a seed and cover it lightly. Then water it a little every day. Finally, place the pot near sunlight and wait for the seed to sprout."
         }
     ],
-    "focus": ["sentences", "speed", "accuracy"],
-    "prerequisites": ["lesson-en-advanced-10"]
+    "focus": ["sentences", "speed", "accuracy"]
 }

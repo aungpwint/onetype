@@ -22,6 +22,5 @@
             "text": "Computers and phones connect people around the world in seconds. We can learn, work, and shop using the internet. It is important to use technology wisely and not spend the whole day on a screen."
         }
     ],
-    "focus": ["sentences", "speed", "accuracy"],
-    "prerequisites": ["lesson-en-advanced-4"]
+    "focus": ["sentences", "speed", "accuracy"]
 }

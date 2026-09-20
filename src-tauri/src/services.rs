@@ -313,7 +313,7 @@ mod tests {
 
         let dir = tempfile::tempdir().unwrap();
         let dir_path = dir.path().to_string_lossy().into_owned();
-        let res = export_all(&mut db, dir_path.clone(), None);
+        let res = export_all(&mut db, dir_path, None);
         assert!(res.is_err());
         assert_eq!(res.err().unwrap().code, "validation_error");
 

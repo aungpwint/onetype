@@ -213,7 +213,6 @@ export const localBackend = {
         const id = localStorage.getItem(KEYS.activeStudentId)
         if (!id) return null
         const active = read<Student[]>(KEYS.students, []).find((s) => s.id === id)
-        if (active?.active) return active
         return active ?? null
     },
 

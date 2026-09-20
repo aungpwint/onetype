@@ -22,6 +22,5 @@
             "text": "Good habits start with small steps. If you read a little every day, you will read many books in a year. If you practice typing daily, your speed and accuracy will grow quickly. Keep going and never give up."
         }
     ],
-    "focus": ["sentences", "speed", "accuracy"],
-    "prerequisites": ["lesson-en-advanced-5"]
+    "focus": ["sentences", "speed", "accuracy"]
 }

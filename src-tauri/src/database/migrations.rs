@@ -1,7 +1,6 @@
 pub const SCHEMA_VERSION: i64 = 5;
 
 pub const MIGRATIONS: &[&str] = &[
-    // 1: core tables
     r#"
     CREATE TABLE IF NOT EXISTS schema_metadata (
         version INTEGER PRIMARY KEY,
@@ -24,7 +23,6 @@ pub const MIGRATIONS: &[&str] = &[
         value TEXT NOT NULL
     );
     "#,
-    // 2: lesson structure + progress + typing results
     r#"
     CREATE TABLE IF NOT EXISTS lesson_progress (
         id TEXT PRIMARY KEY,
@@ -91,7 +89,6 @@ pub const MIGRATIONS: &[&str] = &[
         status TEXT NOT NULL
     );
     "#,
-    // 3: statistics + typing tests
     r#"
     CREATE TABLE IF NOT EXISTS key_statistics (
         id TEXT PRIMARY KEY,
@@ -164,7 +161,6 @@ pub const MIGRATIONS: &[&str] = &[
     CREATE INDEX IF NOT EXISTS idx_test_results_student ON test_results(student_id);
     CREATE INDEX IF NOT EXISTS idx_key_stats_student ON key_statistics(student_id);
     "#,
-    // 4: daily activity (streaks) + achievements
     r#"
     CREATE TABLE IF NOT EXISTS daily_activity (
         id TEXT PRIMARY KEY,
@@ -189,7 +185,6 @@ pub const MIGRATIONS: &[&str] = &[
 
     CREATE INDEX IF NOT EXISTS idx_achievements_student ON achievements(student_id);
     "#,
-    // 5: performance indexes for statistics lookups and export scans
     r#"
     CREATE INDEX IF NOT EXISTS idx_finger_stats_student ON finger_statistics(student_id);
     CREATE INDEX IF NOT EXISTS idx_character_stats_student ON character_statistics(student_id);

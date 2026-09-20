@@ -22,6 +22,5 @@
             "text": "The library stands at the heart of our town like a quiet guardian of stories. Its tall shelves hold books of every color, some old with yellow pages and others brand new. On rainy afternoons, children gather there to read, and the only sound is the turning of pages and the soft rain on the roof."
         }
     ],
-    "focus": ["sentences", "speed", "accuracy"],
-    "prerequisites": ["lesson-en-advanced-16"]
+    "focus": ["sentences", "speed", "accuracy"]
 }

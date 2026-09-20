@@ -22,6 +22,5 @@
             "text": "Traveling opens our eyes to new places and cultures. We meet friendly people, taste new food, and hear different languages. Each journey teaches us something that no classroom can show us."
         }
     ],
-    "focus": ["sentences", "speed", "accuracy"],
-    "prerequisites": ["lesson-en-advanced-7"]
+    "focus": ["sentences", "speed", "accuracy"]
 }

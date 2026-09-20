@@ -15,7 +15,7 @@
         "minWpm": 34
     },
     "focus": ["accuracy"],
-    "prerequisites": ["lesson-en-advanced-13"],
+
     "focusKeys": [
         "KeyA",
         "KeyB",

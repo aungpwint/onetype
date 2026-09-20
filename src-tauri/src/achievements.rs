@@ -89,7 +89,6 @@ fn count_back(set: &std::collections::HashSet<String>, start: i32) -> i64 {
 }
 
 fn format_day(days: i32) -> String {
-    // days since epoch; convert to YYYY-MM-DD
     civil_from_days(UNIX_DAYS + days as i64)
 }
 

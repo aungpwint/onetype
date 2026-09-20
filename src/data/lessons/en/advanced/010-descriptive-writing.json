@@ -22,6 +22,5 @@
             "text": "The sunset turned the sky into a sea of orange and pink. Long shadows stretched across the quiet field. A cool breeze carried the smell of fresh grass while the first little star began to shine."
         }
     ],
-    "focus": ["sentences", "speed", "accuracy"],
-    "prerequisites": ["lesson-en-advanced-9"]
+    "focus": ["sentences", "speed", "accuracy"]
 }
