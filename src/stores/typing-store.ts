@@ -304,10 +304,37 @@ function drillResolvedLesson(drill: ReinforcedDrill, layoutId: string): Resolved
     }
 }
 
+// No-data fallback: rank the whole keyboard (home → top → bottom → number) so
+// an adaptive drill is still available before any weak-key stats exist.
+function layoutWeakKeyIds(layout: KeyboardLayout): Array<{ key: string; lowerBound: number }> {
+    const rowOrder = ['home', 'top', 'bottom', 'number']
+    const rows = layout.rows.filter((row) => rowOrder.includes(row[0]?.row ?? ''))
+    const seen = new Set<string>()
+    const ids: string[] = []
+    for (const row of rows) {
+        for (const key of row) {
+            if (key.kind === 'modifier') continue
+            if (key.plain !== undefined) {
+                if (!seen.has(key.code)) {
+                    seen.add(key.code)
+                    ids.push(key.code)
+                }
+            }
+            if (key.shifted !== undefined) {
+                const id = `${key.code}:shift`
+                if (!seen.has(id)) {
+                    seen.add(id)
+                    ids.push(id)
+                }
+            }
+        }
+    }
+    return ids.map((key, i) => ({ key, lowerBound: i }))
+}
+
 export async function buildAdaptiveDrill(
     opts: { goal?: MuscleMemoryGoal; layoutId?: string; troubleKeys?: string[] } = {},
 ): Promise<ReinforcedDrill | null> {
-    const active = useStudentStore.getState().active
     const layoutId = opts.layoutId ?? ENGLISH_LAYOUT_ID
     const layout = getLayout(layoutId) ?? englishQwerty
     // Position order means weakness: a lower index is a weaker key, which the
@@ -318,11 +345,20 @@ export async function buildAdaptiveDrill(
             { goal: opts.goal, layout },
         )
     }
+    // Mirror the session starters: ensure (and select) a learner profile before
+    // reading key stats, so a fresh store or an unselected default still works.
+    const active = await useStudentStore.getState().ensureActive()
     if (!active) return null
     const keys = await backend.weakKeys(active.id, layoutId, 8)
-    if (keys.length === 0) return null
-    const weakIds = keys.map((k, i) => ({ key: k.key, lowerBound: i }))
-    return reinforcementFromWeakKeys(weakIds, { goal: opts.goal, layout })
+    if (keys.length > 0) {
+        return reinforcementFromWeakKeys(
+            keys.map((k, i) => ({ key: k.key, lowerBound: i })),
+            { goal: opts.goal, layout },
+        )
+    }
+    // Too little typing data to rank keys yet: drill the whole keyboard.
+    const wholeKeyboard = layoutWeakKeyIds(layout)
+    return reinforcementFromWeakKeys(wholeKeyboard, { goal: opts.goal, layout, maxKeys: wholeKeyboard.length })
 }
 
 const NO_ACTIVE_STUDENT_ERROR = 'Please add a student profile first.'

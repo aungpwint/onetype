@@ -22,7 +22,7 @@ const LEVEL_LABEL: Record<string, string> = {
     advanced: 'Advanced',
 }
 
-export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
+export function ExerciseWorkspace({ onExit, backAriaLabel = 'Back to lessons' }: { onExit?: () => void; backAriaLabel?: string }) {
     const status = useTypingStore((s) => s.status)
     const tick = useTypingStore((s) => s.tick)
     void tick
@@ -45,7 +45,9 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
     if (!session || !resolved) return null
 
     const level = LEVEL_LABEL[resolved.level] ?? resolved.level
-    const label = `${level} • ${resolved.number}`
+    // A drill is a single unnumbered adaptive run, so it gets its own eyebrow
+    // instead of the lesson "Beginner • 3" pattern.
+    const label = session.kind === 'drill' ? 'Adaptive drill' : `${level} • ${resolved.number}`
     const title = resolved.title
     const hasMyanmar = containsMyanmar(title)
 
@@ -62,7 +64,7 @@ export function ExerciseWorkspace({ onExit }: { onExit?: () => void }) {
             <header className="shrink-0 border-b border-line bg-background/60 backdrop-blur-xl">
                 <div className="flex items-center justify-between gap-3 px-4 py-2.5 sm:px-6">
                     <div className="flex min-w-0 items-center gap-3">
-                        <Button variant="ghost" size="sm" onClick={exitGuard.requestExit} className="-ml-2 shrink-0" aria-label="Back to lessons">
+                        <Button variant="ghost" size="sm" onClick={exitGuard.requestExit} className="-ml-2 shrink-0" aria-label={backAriaLabel}>
                             <ArrowLeft className="size-4" />
                             <span>Back</span>
                         </Button>
@@ -165,7 +167,9 @@ function RoundProgress() {
         chapter = within.endUnit - within.startUnit
     }
 
-    return <Metric align="end" size="sm" label={`Round ${round}/${rounds}`} value={`${current} / ${chapter}`} />
+    // Drills are a single run over the whole sequence, so they show a plain
+    // progress readout instead of the lesson-style round counter.
+    return <Metric align="end" size="sm" label={phases && phases.length > 0 ? `Round ${round}/${rounds}` : 'Progress'} value={`${current} / ${chapter}`} />
 }
 
 function TabStartHint() {
