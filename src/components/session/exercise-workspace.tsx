@@ -91,13 +91,15 @@ export function ExerciseWorkspace({ onExit, backAriaLabel = 'Back to lessons' }:
                         <span className="mx-1 hidden h-5 w-px bg-line/70 sm:block" aria-hidden />
                         <div className="flex items-center gap-1">
                             <SessionTools level={resolved.level} />
-                            {session.kind === 'lesson' && (resolved.level === 'intermediate' || resolved.level === 'advanced') ? (
+                            {session.kind === 'lesson' ? (
                                 <Button
                                     variant="outline"
                                     size="icon-sm"
                                     onClick={() => toggleParagraphView(resolved.level)}
                                     aria-pressed={resolveParagraphView(paragraphView, resolved.level)}
-                                    aria-label={resolveParagraphView(paragraphView, resolved.level) ? 'Show as a single line' : 'Wrap into a paragraph'}
+                                    aria-label={
+                                        resolveParagraphView(paragraphView, resolved.level) ? 'Show as a single line' : 'Wrap into a paragraph'
+                                    }
                                     title={resolveParagraphView(paragraphView, resolved.level) ? 'Show as a single line' : 'Wrap into a paragraph'}
                                     className={
                                         resolveParagraphView(paragraphView, resolved.level)
@@ -105,7 +107,11 @@ export function ExerciseWorkspace({ onExit, backAriaLabel = 'Back to lessons' }:
                                             : undefined
                                     }
                                 >
-                                    {resolveParagraphView(paragraphView, resolved.level) ? <AlignJustify className="size-4" /> : <WrapText className="size-4" />}
+                                    {resolveParagraphView(paragraphView, resolved.level) ? (
+                                        <AlignJustify className="size-4" />
+                                    ) : (
+                                        <WrapText className="size-4" />
+                                    )}
                                 </Button>
                             ) : null}
                             <Button
@@ -169,7 +175,14 @@ function RoundProgress() {
 
     // Drills are a single run over the whole sequence, so they show a plain
     // progress readout instead of the lesson-style round counter.
-    return <Metric align="end" size="sm" label={phases && phases.length > 0 ? `Round ${round}/${rounds}` : 'Progress'} value={`${current} / ${chapter}`} />
+    return (
+        <Metric
+            align="end"
+            size="sm"
+            label={phases && phases.length > 0 ? `Round ${round}/${rounds}` : 'Progress'}
+            value={`${current} / ${chapter}`}
+        />
+    )
 }
 
 function TabStartHint() {

@@ -124,6 +124,10 @@ export function TargetText() {
             return session.resolved.level === 'beginner' ? false : resolveParagraphView(paragraphView, session.resolved.level)
         }
         if (session.kind === 'practice') {
+            // An explicit header toggle is authoritative for the whole run;
+            // otherwise quote/text keep their built-in paragraph layout and
+            // timed/word runs fall back to the length-driven single-line pan.
+            if (paragraphView !== null) return paragraphView
             const unit = session.practice?.unit
             return unit === 'quote' || unit === 'text' ? true : null
         }

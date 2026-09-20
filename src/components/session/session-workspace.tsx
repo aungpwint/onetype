@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { AlertTriangle, Check, Keyboard, Loader2, Pause, Play, LogOut, RotateCcw, ShieldAlert } from 'lucide-react'
+import { AlertTriangle, AlignJustify, ArrowLeft, Check, Keyboard, Loader2, Pause, Play, RotateCcw, ShieldAlert, WrapText } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useTypingStore } from '@/stores/typing-store'
-import { useUiStore } from '@/stores/ui-store'
+import { resolveParagraphView, useUiStore } from '@/stores/ui-store'
 import { useCapsLockState } from '@/hooks/use-caps-lock'
 import { isCapsLockWarningVisible } from '@/core/session/caps-lock'
 import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
@@ -38,6 +38,7 @@ export function Session({
     const status = useTypingStore((s) => s.status)
     const engine = useTypingStore((s) => s.engine)
     const error = useTypingStore((s) => s.error)
+    const session = useTypingStore((s) => s.session)
     const start = useTypingStore((s) => s.start)
     const togglePause = useTypingStore((s) => s.togglePause)
     const abandon = useTypingStore((s) => s.abandon)
@@ -53,6 +54,11 @@ export function Session({
     const toggleAction = status === 'running' || status === 'paused' ? togglePause : start
 
     const minimalChrome = focusMode && (status === 'running' || status === 'ready') && !error
+
+    const paragraphView = useUiStore((s) => s.paragraphView)
+    const toggleParagraphView = useUiStore((s) => s.toggleParagraphView)
+    const level = session?.resolved.level
+    const paragraphMode = level !== undefined && resolveParagraphView(paragraphView, level)
 
     const reduceMotion = useReducedMotion()
 
@@ -82,9 +88,24 @@ export function Session({
                                     exitGuard.requestExit()
                                 }}
                             >
-                                <LogOut className="size-3.5" />
-                                Exit
+                                <ArrowLeft className="size-3.5" />
+                                Back
                             </Button>
+                            {level !== undefined ? (
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={(e) => {
+                                        e.currentTarget.blur()
+                                        toggleParagraphView(level)
+                                    }}
+                                    aria-pressed={paragraphMode}
+                                    aria-label={paragraphMode ? 'Show as a single line' : 'Wrap into a paragraph'}
+                                    title={paragraphMode ? 'Show as a single line' : 'Wrap into a paragraph'}
+                                >
+                                    {paragraphMode ? <AlignJustify className="size-3.5" /> : <WrapText className="size-3.5" />}
+                                </Button>
+                            ) : null}
                             <span className="h-4 w-px bg-line/70" aria-hidden />
                             <Button
                                 variant="ghost"
@@ -106,6 +127,7 @@ export function Session({
                             title={sourceName}
                             status={status}
                             durationSeconds={durationSeconds}
+                            level={session?.resolved.level}
                             onToggle={toggleAction}
                             onExit={exitGuard.requestExit}
                         />
