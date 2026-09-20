@@ -243,7 +243,7 @@ export default function PracticePage() {
                                 ) : (
                                     <div className="w-full">
                                         {text.trim() ? (
-                                            <p className="line-clamp-4 font-display text-base leading-relaxed break-words text-foreground">{text}</p>
+                                            <p className="line-clamp-4 font-display text-base leading-relaxed wrap-break-word text-foreground">{text}</p>
                                         ) : (
                                             <p className="text-sm leading-relaxed text-ink-faint">
                                                 Type or paste your text in the setup panel and it appears here, ready to go.
