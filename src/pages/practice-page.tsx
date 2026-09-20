@@ -185,7 +185,7 @@ export default function PracticePage() {
             </header>
 
             <main className="min-h-0 flex-1 overflow-hidden">
-                <div className="mx-auto flex h-full w-full max-w-5xl min-h-0 flex-col px-5 pt-6 pb-4 sm:px-8">
+                <div className="mx-auto flex h-full min-h-0 w-full max-w-5xl flex-col px-5 pt-6 pb-4 sm:px-8">
                     <motion.div
                         className="shrink-0"
                         initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
@@ -201,7 +201,7 @@ export default function PracticePage() {
                     </motion.div>
 
                     <motion.div
-                        className="mt-5 grid min-h-0 flex-1 gap-5 [grid-template-rows:minmax(0,1fr)] sm:mt-6 lg:grid-cols-[0.92fr_1.08fr]"
+                        className="mt-5 grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)] gap-5 sm:mt-6 lg:grid-cols-[0.92fr_1.08fr]"
                         initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.26, delay: 0.05, ease: EASE }}
@@ -222,7 +222,9 @@ export default function PracticePage() {
                                                 <p className="font-mono text-6xl leading-none font-semibold tracking-tight text-foreground tabular-nums">
                                                     {formatClock(time)}
                                                 </p>
-                                                <p className="text-xs leading-relaxed text-ink-faint">One steady run to the end · no pauses between lines.</p>
+                                                <p className="text-xs leading-relaxed text-ink-faint">
+                                                    One steady run to the end · no pauses between lines.
+                                                </p>
                                             </>
                                         ) : unit === 'words' ? (
                                             <>
@@ -252,7 +254,9 @@ export default function PracticePage() {
                                         ) : (
                                             <div className="w-full">
                                                 {text.trim() ? (
-                                                    <p className="line-clamp-4 font-display text-base leading-relaxed wrap-break-word text-foreground">{text}</p>
+                                                    <p className="line-clamp-4 font-display text-base leading-relaxed wrap-break-word text-foreground">
+                                                        {text}
+                                                    </p>
                                                 ) : (
                                                     <p className="text-sm leading-relaxed text-ink-faint">
                                                         Type or paste your text in the setup panel and it appears here, ready to go.
