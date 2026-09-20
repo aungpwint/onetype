@@ -26,6 +26,7 @@ function makeLesson(overrides: Partial<LessonData> & { id: string; number: numbe
         prerequisites: [],
         focusKeys: [],
         phases: [],
+        exercises: [],
     }
     return { ...defaults, ...overrides } as LessonData
 }

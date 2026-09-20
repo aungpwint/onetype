@@ -81,6 +81,7 @@ export async function buildTestMaterial(test: TypingTest): Promise<ResolvedLesso
         layoutId: layout.id as RuntimeLayoutId,
         completion: { minAccuracy: test.minAccuracy, minWpm: test.minWpm },
         phases: lines.map((text, i) => ({ instruction: `Line ${i + 1}`, text })),
+        exercises: [],
     }
     return resolveLesson(lesson)
 }

@@ -45,27 +45,24 @@ export function useParagraphWrap({
 
     const wrapMeasureKey = engine && session && !wrapPhaseIsProse ? `${sessionKey ?? ''}|${activePhaseKey ?? 'all'}` : null
 
-    const [wrapMeasuredKey, setWrapMeasuredKey] = useState<string | null>(null)
-    const [wrapLong, setWrapLong] = useState(false)
+    const [wrapMeasured, setWrapMeasured] = useState<{ key: string; long: boolean } | null>(null)
 
     useLayoutEffect(() => {
-        if (!wrapMeasureKey) {
-            setWrapMeasuredKey(null)
-            setWrapLong(false)
-            return
-        }
-        if (wrapMeasuredKey === wrapMeasureKey) return
+        // Only measure a phase once, and only when it's not already prose.
+        // There is no reset branch: a null wrapMeasureKey simply leaves the
+        // last measurement unused, since wrapMode gates on a live key match.
+        if (!wrapMeasureKey) return
+        if (wrapMeasured?.key === wrapMeasureKey) return
         const viewport = viewportRef.current
         const content = contentRef.current
         if (!viewport || !content) return
         const lineWidth = content.scrollWidth
         const viewportWidth = viewport.clientWidth
         const isLong = lineWidth > viewportWidth * WRAP_OVERFLOW_FACTOR
-        setWrapMeasuredKey(wrapMeasureKey)
-        setWrapLong(isLong)
-    }, [wrapMeasureKey, wrapPhaseIsProse, wrapMeasuredKey, viewportRef, contentRef])
+        setWrapMeasured({ key: wrapMeasureKey, long: isLong })
+    }, [wrapMeasureKey, wrapMeasured, viewportRef, contentRef])
 
-    const wrapMode = wrapPhaseIsProse || (wrapMeasuredKey === wrapMeasureKey && wrapLong)
+    const wrapMode = wrapPhaseIsProse || (wrapMeasured?.key === wrapMeasureKey && wrapMeasured.long)
 
     return { wrapMode }
 }

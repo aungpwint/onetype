@@ -6,6 +6,7 @@ import { buildSequence, type BuiltSequence, type TypingUnit } from '@/core/typin
 import type { LessonData, LessonPhase } from './types'
 
 interface ResolvedPhase {
+    id: string
     label: string
     instruction: string
     startUnit: number
@@ -57,6 +58,7 @@ export function resolveLesson(data: LessonData): ResolvedLesson {
     for (const phase of data.phases) {
         const sequence = buildSequence(phase.text, getLayoutOrThrow(data.layoutId))
         allPhases.push({
+            id: data.exercises[phaseIndex]?.id ?? `${data.id}-ex-${phaseIndex + 1}`,
             label: `${data.number}.${phaseIndex + 1}`,
             instruction: phase.instruction,
             startUnit: unitOffset,

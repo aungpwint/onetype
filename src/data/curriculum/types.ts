@@ -22,4 +22,5 @@ export type LessonData = Pick<
     | 'requiresShift'
     | 'prerequisites'
     | 'phases'
+    | 'exercises'
 >

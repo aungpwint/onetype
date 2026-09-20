@@ -501,6 +501,30 @@ describe('typing engine', () => {
         expect(engine.keyOutcomes.size).toBe(0)
     })
 
+    it('starts from the configured startUnit so a resumed run skips earlier phases', () => {
+        const seq = buildSequence('cat dog', englishQwerty)
+        const engine = new TypingEngine({ sequence: seq, layout: englishQwerty, startUnit: 4 })
+        expect(engine.unitIndex).toBe(4)
+        expect(engine.expectedUnit?.text).toBe('d')
+        engine.processKey('KeyD', 'none')
+        engine.processKey('KeyO', 'none')
+        expect(engine.correctCount).toBe(2)
+        // restarted runs come back to the resume point, not the lesson start
+        engine.restart()
+        expect(engine.unitIndex).toBe(4)
+        expect(engine.correctCount).toBe(0)
+    })
+
+    it('finishes cleanly when starting at the very end of the sequence', () => {
+        const seq = buildSequence('cat', englishQwerty)
+        const engine = new TypingEngine({ sequence: seq, layout: englishQwerty, startUnit: 3 })
+        expect(engine.unitIndex).toBe(3)
+        engine.processKey('KeyX', 'none')
+        expect(engine.status).toBe('finished')
+        expect(engine.finishReason).toBe('completed')
+        expect(engine.isComplete).toBe(true)
+    })
+
     it('handles an empty sequence gracefully', () => {
         const seq = buildSequence('', englishQwerty)
         const engine = new TypingEngine({ sequence: seq, layout: englishQwerty })

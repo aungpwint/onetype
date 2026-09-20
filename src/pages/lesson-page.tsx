@@ -28,7 +28,7 @@ export default function LessonPage() {
             ready={session?.kind === 'lesson'}
             loadingLabel="Loading lesson text, keyboard and attempt…"
             steps={['Loading lesson text', 'Warming up the keyboard', 'Setting up your attempt']}
-            note="Your progress is saved after every run."
+            note="Your progress is saved after every exercise. Leaving early keeps everything you finished."
             onReload={reload}
         >
             {session?.kind === 'lesson' ? <ExerciseWorkspace onExit={() => navigate('/learn')} /> : null}

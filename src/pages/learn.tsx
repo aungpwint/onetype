@@ -66,6 +66,36 @@ export default function Learn() {
         }
     }, [active])
 
+    const langFiltered = lang === 'myanmar' ? 'myanmar' : 'english'
+
+    const lessonPhaseIds = useMemo(() => {
+        const map = new Map<string, { finalId: string; phaseIds: Set<string> }>()
+        for (const lvl of LEVEL_ORDER) {
+            for (const lesson of lessonsByLevel[lvl]) {
+                if (lesson.language !== langFiltered) continue
+                const phaseIds = new Set(lesson.exercises.map((exercise) => exercise.id))
+                const finalId = lesson.exercises[lesson.exercises.length - 1]?.id ?? lesson.id
+                map.set(lesson.id, { finalId, phaseIds })
+            }
+        }
+        return map
+    }, [lessonsByLevel, langFiltered])
+
+    const lessonAttemptResults = useMemo(() => {
+        // A lesson is mastered as a whole, so only the final exercise's verdict
+        // counts toward that lesson's mastery (legacy whole-lesson rows bucket
+        // alongside it). Earlier exercises surface only as an "attempted" signal.
+        const filtered: ExerciseResult[] = []
+        const partial = new Set<string>()
+        for (const result of exerciseResults) {
+            const info = lessonPhaseIds.get(result.lessonId)
+            if (!info) continue
+            if (result.exerciseId === info.finalId || result.exerciseId === result.lessonId) filtered.push(result)
+            else if (info.phaseIds.has(result.exerciseId)) partial.add(result.lessonId)
+        }
+        return { filtered, partial }
+    }, [exerciseResults, lessonPhaseIds])
+
     const masteryByLesson = useMemo(() => {
         const minAcc: Record<string, { minAccuracy: number }> = {}
         for (const lvl of LEVEL_ORDER) {
@@ -75,8 +105,12 @@ export default function Learn() {
                 }
             }
         }
-        return computeMasteryForLessons(exerciseResults, minAcc)
-    }, [exerciseResults, lessonsByLevel, lang])
+        const mastery = computeMasteryForLessons(lessonAttemptResults.filtered, minAcc)
+        for (const lessonId of lessonAttemptResults.partial) {
+            if (!mastery.has(lessonId)) mastery.set(lessonId, 'attempted')
+        }
+        return mastery
+    }, [lessonAttemptResults, lessonsByLevel, lang])
 
     const list = useMemo(() => {
         return lessonsByLevel[level].filter((l) => l.language === (lang === 'myanmar' ? 'myanmar' : 'english')).sort((a, b) => a.number - b.number)
@@ -87,7 +121,7 @@ export default function Learn() {
     const recommendation = useMemo(() => {
         if (!progressReady) return null
         const attemptsByLesson: Record<string, AttemptRecord[]> = {}
-        const chronological = [...exerciseResults].sort((a, b) => a.startedAt - b.startedAt)
+        const chronological = [...lessonAttemptResults.filtered].sort((a, b) => a.startedAt - b.startedAt)
         for (const result of chronological) {
             const bucket = attemptsByLesson[result.lessonId] ?? []
             bucket.push({ passed: result.passed, accuracy: result.accuracy })
@@ -96,7 +130,7 @@ export default function Learn() {
         const minAccuracyByLesson: Partial<Record<string, number>> = {}
         for (const lesson of list) minAccuracyByLesson[lesson.id] = lesson.completion.minAccuracy
         return recommendNextLesson({ lessons: list, attemptsByLesson, minAccuracyByLesson })
-    }, [progressReady, exerciseResults, list])
+    }, [progressReady, lessonAttemptResults, list])
 
     const unlockedById = useMemo(() => {
         const unlocked = new Set<string>()

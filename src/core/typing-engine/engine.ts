@@ -33,6 +33,7 @@ export interface TypingEngineOptions {
     layout: KeyboardLayout
     mode?: TypingMode
     durationSeconds?: number
+    startUnit?: number
     now?: () => number
     onEvent?: EngineListener
 }
@@ -42,6 +43,7 @@ export class TypingEngine {
     readonly layout: KeyboardLayout
     readonly mode: TypingMode
     readonly durationSeconds: number | null
+    readonly startUnit: number
 
     status: EngineStatus = 'ready'
     unitIndex = 0
@@ -66,6 +68,8 @@ export class TypingEngine {
         this.layout = options.layout
         this.mode = options.mode ?? 'guided'
         this.durationSeconds = options.durationSeconds ?? null
+        this.startUnit = Math.min(options.startUnit ?? 0, options.sequence.units.length)
+        this.unitIndex = this.startUnit
         this.stopwatch = new Stopwatch(options.now)
         if (options.onEvent) this.listeners.push(options.onEvent)
     }
@@ -189,8 +193,10 @@ export class TypingEngine {
             this.backspaceCount += 1
             // Backspace undoes exactly one typing unit: the current unit when it
             // holds a wrong attempt, otherwise the last consumed unit — so a
-            // multi-unit Myanmar grapheme unwinds unit-by-unit.
-            if (this.unitIndex > 0 || this.unitOutcomes.has(this.unitIndex)) {
+            // multi-unit Myanmar grapheme unwinds unit-by-unit. It never rewinds
+            // before the run's startUnit (a resumed lesson keeps earlier
+            // exercises already passed on earlier runs).
+            if (this.unitIndex > this.startUnit || this.unitOutcomes.has(this.unitIndex)) {
                 const target = this.unitOutcomes.has(this.unitIndex) ? this.unitIndex : this.unitIndex - 1
                 this.unitOutcomes.delete(target)
                 this.clearClusterStateFromUnit(target)
@@ -264,7 +270,7 @@ export class TypingEngine {
     }
 
     resetMetrics() {
-        this.unitIndex = 0
+        this.unitIndex = this.startUnit
         this.correctCount = 0
         this.incorrectCount = 0
         this.backspaceCount = 0
@@ -284,7 +290,7 @@ export class TypingEngine {
 
     restart() {
         this.resetMetrics()
-        this.emit({ type: 'restart', unitIndex: 0 })
+        this.emit({ type: 'restart', unitIndex: this.startUnit })
     }
 
     private recordWrongPress(expected: TypingUnit, code: string, modifier: Modifier) {

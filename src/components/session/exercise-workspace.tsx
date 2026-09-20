@@ -149,12 +149,18 @@ function RoundProgress() {
 }
 
 function TabStartHint() {
+    const session = useTypingStore((s) => s.session)
+    const phases = session?.resolved.phases ?? []
+    const resumeIndex = phases.findIndex((p) => p.startUnit === (session?.startUnit ?? 0))
+    const resuming = session?.kind === 'lesson' && resumeIndex > 0
     return (
         <div className="flex items-center justify-center gap-2.5" aria-live="polite">
             <span className="rounded-lg border border-line bg-card px-2.5 py-1 font-mono text-[0.6875rem] font-semibold tracking-[0.15em] text-foreground uppercase shadow-sm">
                 Tab
             </span>
-            <span className="text-xs font-medium text-muted-foreground">Press Tab to start</span>
+            <span className="text-xs font-medium text-muted-foreground">
+                {resuming ? `Resuming from exercise ${resumeIndex + 1} of ${phases.length} · ` : ''}Press Tab to start
+            </span>
         </div>
     )
 }

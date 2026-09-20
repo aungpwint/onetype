@@ -10,8 +10,9 @@ import { extractMissedWords } from '@/core/materials/missed-words'
 import type { KeyboardLayout } from '@/core/keyboard-layout/layout'
 import type { Modifier, TypingMode } from '@/types'
 import { resolvePressedKey } from '@/core/input/key-resolution'
-import type { ScoreMetrics } from '@/core/scoring/score'
-import type { AchievementRecord, TypingStatRecord, TypingTest } from '@/services/types'
+import { computeScore, type ScoreMetrics } from '@/core/scoring/score'
+import { splitGraphemes } from '@/core/unicode/graphemes'
+import type { AchievementRecord, SaveExerciseResultRequest, TypingStatRecord, TypingTest } from '@/services/types'
 import type { Student } from '@/services/types'
 import { reinforcementFromWeakKeys, type ReinforcedDrill, type MuscleMemoryGoal } from '@/core/reinforcement'
 import { projectMasteryDelta, type MasteryDelta } from '@/core/mastery'
@@ -62,6 +63,7 @@ interface TypingSessionState {
     mode: TypingMode
     durationSeconds: number | null
     attempt: number
+    startUnit: number
     startedAt: number
 }
 
@@ -126,6 +128,124 @@ function liveStats(engine: TypingEngine | null, totalUnits: number): LiveStats {
         cpm: metrics.cpm,
         elapsedMs: engine.elapsedMs(),
     }
+}
+
+interface PhaseRunTracker {
+    epoch: number
+    saved: Set<string>
+    passed: Set<string>
+    boundary: Map<string, PhaseBoundarySnapshot>
+    inflight: Map<string, Promise<void>>
+}
+
+interface PhaseBoundarySnapshot {
+    correct: number
+    incorrect: number
+    backspace: number
+    times: number
+    elapsedMs: number
+}
+
+const ZERO_BOUNDARY: PhaseBoundarySnapshot = { correct: 0, incorrect: 0, backspace: 0, times: 0, elapsedMs: 0 }
+
+// Per-session phase bookkeeping. exercise_results drive lesson mastery, so each
+// exercise's verdict is persisted the moment its last unit is typed — quitting
+// mid-run never costs the exercises already finished. An engine restart resets
+// the run-local counters, so saved/boundary are cleared along with it.
+const phaseRunTrackers = new Map<TypingSessionState, PhaseRunTracker>()
+
+function phaseAtBoundaryStart(lesson: ResolvedLesson, tracker: PhaseRunTracker, phase: ResolvedLesson['phases'][number]): PhaseBoundarySnapshot {
+    const index = lesson.phases.indexOf(phase)
+    const prevId = index > 0 ? lesson.phases[index - 1]?.id : undefined
+    return (prevId ? tracker.boundary.get(prevId) : undefined) ?? ZERO_BOUNDARY
+}
+
+function saveCompletedPhase(session: TypingSessionState, engine: TypingEngine, phase: ResolvedLesson['phases'][number]): Promise<void> {
+    const tracker = phaseRunTrackers.get(session)
+    if (!tracker) return Promise.resolve()
+    const inflight = tracker.inflight.get(phase.id)
+    if (inflight) return inflight
+    if (tracker.saved.has(phase.id)) return Promise.resolve()
+    const epoch = tracker.epoch
+    const write = (async () => {
+        const active = useStudentStore.getState().active
+        if (!active) return
+        const lesson = session.resolved
+        const prev = phaseAtBoundaryStart(lesson, tracker, phase)
+        const correct = engine.correctCount - prev.correct
+        const incorrect = engine.incorrectCount - prev.incorrect
+        const backspace = engine.backspaceCount - prev.backspace
+        const times = engine.correctTimes.slice(prev.times)
+        const elapsedMs = Math.max(0, engine.elapsedMs() - prev.elapsedMs)
+        const metrics = computeScore({
+            correctAttempts: correct,
+            incorrectAttempts: incorrect,
+            backspaceCount: backspace,
+            elapsedSeconds: elapsedMs / 1000,
+            language: session.layout.language === 'english' ? 'english' : session.layout.language,
+            clusters: splitGraphemes(phase.text).length,
+            correctTimes: times,
+        })
+        const passed = correct > 0 && passes(metrics, lesson.completion.minAccuracy, null)
+        const firstMs = times[0] ?? 0
+        const lastMs = times[times.length - 1] ?? elapsedMs
+        const request: SaveExerciseResultRequest = {
+            studentId: active.id,
+            lessonId: lesson.id,
+            exerciseId: phase.id,
+            level: lesson.level,
+            lessonNumber: lesson.number,
+            attempt: session.attempt,
+            startedAt: session.startedAt + firstMs,
+            endedAt: session.startedAt + lastMs,
+            durationMs: Math.round(elapsedMs),
+            wpm: metrics.grossWpm,
+            cpm: metrics.cpm,
+            accuracy: metrics.accuracy,
+            correctCount: correct,
+            errorCount: incorrect,
+            totalCount: phase.endUnit - phase.startUnit,
+            backspaceCount: backspace,
+            passed,
+            layoutId: session.layout.id,
+            layoutVersion: session.layout.version,
+            contentVersion: CONTENT_VERSION,
+        }
+        try {
+            await backend.saveExerciseResult(request)
+            // A quick-restart during the write arms a new attempt epoch; the old
+            // segment must not clobber the fresh run's phase bookkeeping.
+            if (tracker.epoch === epoch) {
+                if (passed) tracker.passed.add(phase.id)
+                tracker.saved.add(phase.id)
+            }
+        } catch {
+            // Best-effort: a failed per-exercise write must never block the run.
+            // The phase is left unsaved so a later boundary or finish can retry.
+        }
+        if (tracker.epoch === epoch) {
+            tracker.boundary.set(phase.id, {
+                correct: engine.correctCount,
+                incorrect: engine.incorrectCount,
+                backspace: engine.backspaceCount,
+                times: engine.correctTimes.length,
+                elapsedMs: engine.elapsedMs(),
+            })
+        }
+        tracker.inflight.delete(phase.id)
+    })()
+    tracker.inflight.set(phase.id, write)
+    return write
+}
+
+async function lessonCurrentlyPassed(session: TypingSessionState, engine: TypingEngine): Promise<boolean> {
+    const tracker = phaseRunTrackers.get(session)
+    if (!tracker) return false
+    const finalPhase = session.resolved.phases[session.resolved.phases.length - 1]
+    if (finalPhase && engine.unitIndex >= finalPhase.endUnit) {
+        await saveCompletedPhase(session, engine, finalPhase)
+    }
+    return session.resolved.phases.every((phase) => tracker.passed.has(phase.id))
 }
 
 const IGNORED_CODES = new Set([
@@ -226,6 +346,8 @@ export const useTypingStore = create<TypingState>((set, get) => {
     const teardownSession = () => {
         unbindKeys()
         unbindFocusGuard()
+        const current = get().session
+        if (current) phaseRunTrackers.delete(current)
         set({ ...INITIAL_RUN_STATE, session: null, engine: null, status: 'idle' })
     }
 
@@ -284,9 +406,31 @@ export const useTypingStore = create<TypingState>((set, get) => {
         beginLesson: async (lessonId, mode = 'guided') => {
             const active = await requireActiveStudent(set)
             if (!active) return
-            // Resolve the lesson text and look up the attempt count in parallel
-            // so the session lands on screen as fast as either call allows.
-            const [resolved, attempt] = await Promise.all([resolveLessonById(lessonId), backend.nextExerciseAttempt(active.id, lessonId)])
+            // Resolve the lesson text, then derive the run attempt and resume
+            // point from the student's stored per-exercise results in parallel.
+            const [resolved, results, progressRows] = await Promise.all([
+                resolveLessonById(lessonId),
+                backend.listExerciseResults(active.id),
+                backend.listLessonProgress(active.id),
+            ])
+            const phaseIds = resolved.phases.map((phase) => phase.id)
+            const attempt =
+                results
+                    .filter((r) => r.lessonId === lessonId && (phaseIds.includes(r.exerciseId) || r.exerciseId === lessonId))
+                    .reduce((max, r) => Math.max(max, r.attempt), 0) + 1
+            const lessonCompleted = progressRows.find((p) => p.lessonId === lessonId)?.completed ?? false
+            const passedPhases = new Set<string>()
+            for (const phase of resolved.phases) {
+                if (results.some((r) => r.exerciseId === phase.id && r.passed)) passedPhases.add(phase.id)
+            }
+            // Legacy fallback: lessons completed before per-exercise results only
+            // exist as exerciseId === lessonId rows, so treat them as fully
+            // passed rather than forcing the learner to redo everything.
+            if (passedPhases.size === 0 && lessonCompleted) {
+                for (const phase of resolved.phases) passedPhases.add(phase.id)
+            }
+            const resumeIndex = resolved.phases.findIndex((phase) => !passedPhases.has(phase.id))
+            const startUnit = resumeIndex === -1 ? 0 : resolved.phases[resumeIndex].startUnit
             const layout = getLayoutOrThrow(resolved.layoutId)
             const session: TypingSessionState = {
                 kind: 'lesson',
@@ -296,8 +440,10 @@ export const useTypingStore = create<TypingState>((set, get) => {
                 mode,
                 durationSeconds: null,
                 attempt,
+                startUnit,
                 startedAt: Date.now(),
             }
+            phaseRunTrackers.set(session, { epoch: 0, saved: new Set(), passed: passedPhases, boundary: new Map(), inflight: new Map() })
             launchSession(session)
         },
 
@@ -315,6 +461,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
                 mode: 'test',
                 durationSeconds: test.durationSeconds,
                 attempt,
+                startUnit: 0,
                 startedAt: Date.now(),
             }
             launchSession(session)
@@ -330,6 +477,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
                 mode: 'guided',
                 durationSeconds: null,
                 attempt: 1,
+                startUnit: 0,
                 startedAt: Date.now(),
             }
             launchSession(session)
@@ -348,6 +496,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
                 mode: 'quick',
                 durationSeconds: config.unit === 'time' ? (config.time ?? null) : null,
                 attempt: 1,
+                startUnit: 0,
                 startedAt: Date.now(),
             }
             launchSession(session)
@@ -451,10 +600,16 @@ export const useTypingStore = create<TypingState>((set, get) => {
             }
 
             // Show the verdict immediately; the writes below upgrade the screen
-            // (achievements, mastery, save-error) as they settle.
+            // (achievements, mastery, save-error) as they settle. A lesson's
+            // per-exercise verdicts settle as it runs, so the initial pass state
+            // is only certain when every exercise already passed on earlier runs.
+            const lessonAlreadyPassed =
+                session.kind === 'lesson'
+                    ? lesson.phases.length > 0 && lesson.phases.every((phase) => phaseRunTrackers.get(session)?.passed.has(phase.id))
+                    : false
             const passed =
                 session.kind === 'lesson'
-                    ? reason === 'completed' && passes(metrics, lesson.completion.minAccuracy, lesson.completion.minWpm)
+                    ? lessonAlreadyPassed
                     : session.kind === 'drill'
                       ? true
                       : (() => {
@@ -511,28 +666,10 @@ export const useTypingStore = create<TypingState>((set, get) => {
                 })
 
                 if (session.kind === 'lesson') {
-                    await backend.saveExerciseResult({
-                        studentId: active.id,
-                        lessonId: session.lessonId ?? '',
-                        exerciseId: session.lessonId ?? '',
-                        level: lesson.level,
-                        lessonNumber: lesson.number,
-                        attempt: session.attempt,
-                        startedAt: session.startedAt,
-                        endedAt: now,
-                        durationMs: Math.round(engine.elapsedMs()),
-                        wpm: metrics.grossWpm,
-                        cpm: metrics.cpm,
-                        accuracy: metrics.accuracy,
-                        correctCount: engine.correctCount,
-                        errorCount: engine.incorrectCount,
-                        totalCount: engine.sequence.units.length,
-                        backspaceCount: engine.backspaceCount,
-                        passed,
-                        layoutId: session.layout.id,
-                        layoutVersion,
-                        contentVersion,
-                    })
+                    // Each exercise's result was already persisted at its phase
+                    // boundary; only a fast-run finish (or a retried last phase)
+                    // still needs the final verdict flushed here.
+                    const lessonPassed = await lessonCurrentlyPassed(session, engine)
                     await useLessonStore.getState().saveProgress({
                         studentId: active.id,
                         lessonId: session.lessonId ?? '',
@@ -540,24 +677,33 @@ export const useTypingStore = create<TypingState>((set, get) => {
                         lessonNumber: lesson.number,
                         wpm: metrics.grossWpm,
                         accuracy: metrics.accuracy,
-                        completed: passed,
+                        completed: lessonPassed,
                         contentVersion,
                     })
                     await saveStatistics(active.id, session.layout.id)
-                    // The current attempt was already persisted by
-                    // saveExerciseResult, so the fetched history includes it.
+                    // The per-exercise results were persisted as the run landed,
+                    // so the fetched history includes them; mastery is keyed on
+                    // the final exercise (with legacy whole-lesson rows falling
+                    // back to the same bucket).
                     let masteryDelta: MasteryDelta | undefined
                     try {
                         const history = await backend.listExerciseResults(active.id)
+                        const finalPhaseId = lesson.phases[lesson.phases.length - 1]?.id ?? lesson.id
                         const attemptsForLesson = history
-                            .filter((r) => r.lessonId === session.lessonId)
+                            .filter(
+                                (r) => r.lessonId === session.lessonId && (r.exerciseId === finalPhaseId || r.exerciseId === session.lessonId),
+                            )
                             .sort((a, b) => a.attempt - b.attempt)
                             .map((r) => ({ passed: r.passed, accuracy: r.accuracy }))
                         masteryDelta = projectMasteryDelta(attemptsForLesson, lesson.completion.minAccuracy)
                     } catch {
                         masteryDelta = undefined
                     }
-                    publish({ masteryDelta, newlyUnlocked: await recordProgression(metrics, passed, reason) })
+                    publish({
+                        passed: lessonPassed,
+                        masteryDelta,
+                        newlyUnlocked: await recordProgression(metrics, lessonPassed, reason),
+                    })
                     return
                 }
 
@@ -623,6 +769,7 @@ function createEngine(session: TypingSessionState): TypingEngine {
         sequence: session.resolved.sequence,
         layout: session.layout,
         mode: session.mode,
+        startUnit: session.startUnit,
         durationSeconds:
             session.kind === 'test'
                 ? session.test!.durationSeconds
@@ -635,6 +782,19 @@ function createEngine(session: TypingSessionState): TypingEngine {
                 useTypingStore.setState({ wrongFlash: { unitIndex: event.expected?.index ?? 0, at: Date.now() } })
             } else if (event.type === 'correct' || event.type === 'restart') {
                 useTypingStore.setState({ wrongFlash: null })
+            }
+            if (session.kind === 'lesson') {
+                const tracker = phaseRunTrackers.get(session)
+                if (tracker) {
+                    if (event.type === 'correct') {
+                        const phase = session.resolved.phases.find((p) => event.unitIndex === p.endUnit - 1)
+                        if (phase) void saveCompletedPhase(session, engine, phase)
+                    } else if (event.type === 'restart') {
+                        tracker.epoch += 1
+                        tracker.saved.clear()
+                        tracker.boundary.clear()
+                    }
+                }
             }
             if (event.type === 'finish' || event.type === 'time-up') {
                 bindKeys()

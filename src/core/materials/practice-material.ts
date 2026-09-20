@@ -252,6 +252,7 @@ export async function buildPracticeMaterial(config: PracticeConfig): Promise<Res
         layoutId: layout.id as RuntimeLayoutId,
         completion: { minAccuracy: 0, minWpm: null },
         phases,
+        exercises: [],
     }
     return resolveLesson(lesson)
 }
