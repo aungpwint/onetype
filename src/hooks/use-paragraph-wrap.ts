@@ -50,8 +50,7 @@ export function useParagraphWrap({
     // Measuring is only meaningful in auto mode: an explicit choice is fixed.
     // A forced single line never consults the overflow measurement, so the
     // toggle really can collapse long prose back to one panned line.
-    const wrapMeasureKey =
-        engine && session && autoMode && !wrapPhaseIsProse ? `${sessionKey ?? ''}|${activePhaseKey ?? 'all'}` : null
+    const wrapMeasureKey = engine && session && autoMode && !wrapPhaseIsProse ? `${sessionKey ?? ''}|${activePhaseKey ?? 'all'}` : null
 
     const [wrapMeasured, setWrapMeasured] = useState<{ key: string; long: boolean } | null>(null)
 

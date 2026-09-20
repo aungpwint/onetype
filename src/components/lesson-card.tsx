@@ -139,8 +139,7 @@ export function LessonCard({ lesson, mastery, progress, locked = false, exercise
         </>
     )
 
-    const showExercises =
-        !locked && onRetake && exercisePassed && exercisePassed.length === lesson.exercises.length && exercisePassed.some(Boolean)
+    const showExercises = !locked && onRetake && exercisePassed && exercisePassed.length === lesson.exercises.length && exercisePassed.some(Boolean)
 
     const exercisesRow =
         showExercises !== false ? (

@@ -738,9 +738,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
                         const history = await backend.listExerciseResults(active.id)
                         const finalPhaseId = lesson.phases[lesson.phases.length - 1]?.id ?? lesson.id
                         const attemptsForLesson = history
-                            .filter(
-                                (r) => r.lessonId === session.lessonId && (r.exerciseId === finalPhaseId || r.exerciseId === session.lessonId),
-                            )
+                            .filter((r) => r.lessonId === session.lessonId && (r.exerciseId === finalPhaseId || r.exerciseId === session.lessonId))
                             .sort((a, b) => a.attempt - b.attempt)
                             .map((r) => ({ passed: r.passed, accuracy: r.accuracy }))
                         masteryDelta = projectMasteryDelta(attemptsForLesson, lesson.completion.minAccuracy)

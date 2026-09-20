@@ -8,7 +8,17 @@ import { VirtualKeyboard } from './virtual-keyboard'
 import { HandOverlay } from '@/components/hand-guide/hand-overlay'
 import { resolveTarget } from '@/core/target-model'
 
-export function KeyboardContainer({ layout, hideReadyMessage, level, defaultVisible }: { layout: KeyboardLayout; hideReadyMessage?: boolean; level?: Level; defaultVisible?: boolean }) {
+export function KeyboardContainer({
+    layout,
+    hideReadyMessage,
+    level,
+    defaultVisible,
+}: {
+    layout: KeyboardLayout
+    hideReadyMessage?: boolean
+    level?: Level
+    defaultVisible?: boolean
+}) {
     const handGuide = useUiStore((s) => s.handGuideVisible)
     const keyboardOverrideVisible = useUiStore((s) => s.keyboardVisible)
     const showKeyboard = useSettingsStore((s) => s.getEnum('practice.showKeyboard', ['on', 'off'] as const, 'on'))

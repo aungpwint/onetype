@@ -5,9 +5,7 @@ export function ConfirmAbandon({ open, onClose, onConfirm }: { open: boolean; on
     return (
         <Modal open={open} onClose={onClose} ariaLabel="Leave this round?">
             <h2 className="font-display text-lg">Leave this round?</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-                Finished exercises are saved. The exercise you're on will wait for you next time.
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground">Finished exercises are saved. The exercise you're on will wait for you next time.</p>
             <div className="mt-5 flex justify-end gap-2">
                 <Button variant="outline" onClick={onClose}>
                     Keep typing

@@ -17,8 +17,7 @@ export default function LessonPage() {
     // ?exercise=N (1-based) jumps straight into a specific exercise so a
     // previously completed one can be retaken without redoing the lesson.
     const exerciseParam = searchParams.get('exercise')
-    const exerciseIndex =
-        exerciseParam !== null && /^[1-9]\d*$/.test(exerciseParam) ? Math.max(0, parseInt(exerciseParam, 10) - 1) : undefined
+    const exerciseIndex = exerciseParam !== null && /^[1-9]\d*$/.test(exerciseParam) ? Math.max(0, parseInt(exerciseParam, 10) - 1) : undefined
 
     const load = useCallback(() => {
         const stored = localStorage.getItem(UI_KEYS.lessonMode)
