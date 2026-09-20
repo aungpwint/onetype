@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Clock, Crosshair, Gauge, Lock } from 'lucide-react'
+import { ArrowRight, Check, Clock, Crosshair, Gauge, Lock } from 'lucide-react'
 import type { LessonData } from '@/data/curriculum/types'
 import type { MasteryLevel } from '@/core/mastery'
 import type { LessonProgress } from '@/services/types'
@@ -12,6 +12,8 @@ interface LessonCardProps {
     mastery: MasteryLevel
     progress?: LessonProgress | null
     locked?: boolean
+    exercisePassed?: boolean[]
+    onRetake?: (lessonId: string, exerciseIndex: number) => void
 }
 
 const MASTERY_LABEL: Record<MasteryLevel, { text: string; variant: 'secondary' | 'success' | 'warning' }> = {
@@ -33,7 +35,7 @@ function MasteryBadge({ level }: { level: MasteryLevel }) {
     return <Badge variant={m.variant}>{m.text}</Badge>
 }
 
-export function LessonCard({ lesson, mastery, progress, locked = false }: LessonCardProps) {
+export function LessonCard({ lesson, mastery, progress, locked = false, exercisePassed, onRetake }: LessonCardProps) {
     const storedLang = useSettingsStore((s) => s.get('app.language'))
     const isMyanmar = storedLang === 'myanmar'
     const title = isMyanmar ? lesson.titleMy : lesson.title
@@ -137,13 +139,54 @@ export function LessonCard({ lesson, mastery, progress, locked = false }: Lesson
         </>
     )
 
-    return locked ? (
-        <div className={outerClass} aria-disabled="true">
-            {body}
+    const showExercises =
+        !locked && onRetake && exercisePassed && exercisePassed.length === lesson.exercises.length && exercisePassed.some(Boolean)
+
+    const exercisesRow =
+        showExercises !== false ? (
+            <div className="border-t border-line/60 px-4 pt-2.5 pb-3">
+                <p className="mb-1.5 text-[0.6875rem] font-semibold tracking-wider text-ink-faint uppercase">Exercises</p>
+                <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Exercises">
+                    {lesson.exercises.map((exercise, i) => {
+                        const done = exercisePassed?.[i] === true
+                        return done ? (
+                            <button
+                                key={exercise.id}
+                                type="button"
+                                onClick={() => onRetake?.(lesson.id, i)}
+                                title={`Retake exercise ${i + 1}`}
+                                aria-label={`Retake exercise ${i + 1}`}
+                                className="inline-flex items-center gap-1 rounded-lg border border-success/50 bg-success/10 px-2 py-1 text-xs font-semibold text-success transition-colors hover:bg-success/15 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                            >
+                                <Check className="size-3" aria-hidden />
+                                {i + 1}
+                            </button>
+                        ) : (
+                            <span
+                                key={exercise.id}
+                                title="Not passed yet"
+                                className="inline-flex min-w-7 items-center justify-center rounded-lg border border-line bg-muted px-1.5 py-1 font-mono text-xs text-ink-faint tabular-nums"
+                            >
+                                {i + 1}
+                            </span>
+                        )
+                    })}
+                </div>
+            </div>
+        ) : null
+
+    return (
+        <div className={outerClass}>
+            {locked ? (
+                <div className="grow" aria-disabled="true">
+                    {body}
+                </div>
+            ) : (
+                <Link to={`/lesson/${lesson.id}`} className="block grow focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none">
+                    {body}
+                </Link>
+            )}
+            {exercisesRow}
         </div>
-    ) : (
-        <Link to={`/lesson/${lesson.id}`} className={outerClass}>
-            {body}
-        </Link>
     )
 }

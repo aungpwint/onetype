@@ -84,7 +84,7 @@ interface TypingState {
     acknowledgeAway: () => void
     requestQuickRestart: () => boolean
     practiceMissedWords: () => Promise<void>
-    beginLesson: (lessonId: string, mode?: TypingMode) => Promise<void>
+    beginLesson: (lessonId: string, mode?: TypingMode, atIndex?: number) => Promise<void>
     beginTest: (test: TypingTest) => Promise<void>
     beginDrill: (drill: ReinforcedDrill) => Promise<void>
     beginPractice: (config: PracticeConfig) => Promise<void>
@@ -403,7 +403,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
             }
         },
 
-        beginLesson: async (lessonId, mode = 'guided') => {
+        beginLesson: async (lessonId, mode = 'guided', atIndex?: number) => {
             const active = await requireActiveStudent(set)
             if (!active) return
             // Resolve the lesson text, then derive the run attempt and resume
@@ -429,7 +429,12 @@ export const useTypingStore = create<TypingState>((set, get) => {
             if (passedPhases.size === 0 && lessonCompleted) {
                 for (const phase of resolved.phases) passedPhases.add(phase.id)
             }
-            const resumeIndex = resolved.phases.findIndex((phase) => !passedPhases.has(phase.id))
+            // A retake targets a specific already-finished exercise; otherwise
+            // resume at the first exercise that hasn't passed yet.
+            const resumeIndex =
+                atIndex !== undefined && resolved.phases.length > 0
+                    ? Math.min(Math.max(0, Math.floor(atIndex)), resolved.phases.length - 1)
+                    : resolved.phases.findIndex((phase) => !passedPhases.has(phase.id))
             const startUnit = resumeIndex === -1 ? 0 : resolved.phases[resumeIndex].startUnit
             const layout = getLayoutOrThrow(resolved.layoutId)
             const session: TypingSessionState = {
@@ -536,10 +541,14 @@ export const useTypingStore = create<TypingState>((set, get) => {
             }
             const prepare = (run: Promise<void>) => void run.catch(flagPrepareError)
             if (st.session.kind === 'lesson') {
-                const id = st.session.lessonId!
-                const mode = st.session.mode
+                const session = st.session
+                const id = session.lessonId!
+                const mode = session.mode
+                // Re-run the same exercise range: a retake session replays the
+                // exercise it jumped to, and a resume session its resume point.
+                const atIndex = session.resolved.phases.findIndex((p) => p.startUnit === session.startUnit)
                 clear()
-                prepare(beginLesson(id, mode))
+                prepare(beginLesson(id, mode, atIndex === -1 ? undefined : atIndex))
             } else if (st.session.kind === 'drill') {
                 const layoutId = st.session.drill?.layoutId
                 clear()

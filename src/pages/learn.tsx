@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
 import type { Level } from '@/types'
@@ -35,6 +35,7 @@ const CARD_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export default function Learn() {
     const { level: levelParam } = useParams<{ level: string }>()
+    const navigate = useNavigate()
     const lessonsByLevel = useLessonStore((s) => s.lessonsByLevel)
     const catalogLoaded = useLessonStore((s) => s.catalogLoaded)
     const catalogError = useLessonStore((s) => s.catalogError)
@@ -115,6 +116,26 @@ export default function Learn() {
     const list = useMemo(() => {
         return lessonsByLevel[level].filter((l) => l.language === (lang === 'myanmar' ? 'myanmar' : 'english')).sort((a, b) => a.number - b.number)
     }, [lessonsByLevel, level, lang])
+
+    // Aligned with lesson.exercises, one boolean per exercise: passed on the
+    // best stored per-exercise row (a legacy whole-lesson pass fills every slot).
+    const exercisePassedByLesson = useMemo(() => {
+        const map = new Map<string, boolean[]>()
+        for (const lesson of list) {
+            const states = lesson.exercises.map(() => false)
+            for (const r of exerciseResults) {
+                if (r.lessonId !== lesson.id) continue
+                if (r.exerciseId === lesson.id) {
+                    if (r.passed) states.fill(true)
+                    continue
+                }
+                const i = lesson.exercises.findIndex((e) => e.id === r.exerciseId)
+                if (i !== -1 && r.passed) states[i] = true
+            }
+            map.set(lesson.id, states)
+        }
+        return map
+    }, [list, exerciseResults])
 
     const progressReady = progressStudentId === active?.id
 
@@ -249,6 +270,8 @@ export default function Learn() {
                             mastery={masteryByLesson.get(lesson.id) ?? 'not-started'}
                             progress={progress?.[lesson.id]}
                             locked={progressReady && !unlockedById.has(lesson.id)}
+                            exercisePassed={exercisePassedByLesson.get(lesson.id)}
+                            onRetake={(id, index) => navigate(`/lesson/${id}?exercise=${index + 1}`)}
                         />
                     </motion.div>
                 ))}
