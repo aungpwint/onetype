@@ -36,7 +36,7 @@ export function SessionTools({ level }: { level?: Level }) {
                 aria-pressed={keyboardVisible === true}
                 title={keyboardVisible ? 'Hide virtual keyboard' : 'Show virtual keyboard'}
                 className={keyboardVisible ? toolActive : toolIdle}
-                onClick={() => toggleKeyboardVisible(!keyboardVisible)}
+                onClick={() => toggleKeyboardVisible()}
             >
                 <KeyboardIcon className="size-4" />
             </Button>

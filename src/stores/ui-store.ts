@@ -29,7 +29,7 @@ interface UiState {
     toggleSidebar: () => void
     setSidebarOpen: (open: boolean) => void
     toggleHandGuide: () => void
-    toggleKeyboardVisible: (visible: boolean) => void
+    toggleKeyboardVisible: () => void
     setSoundEnabled: (enabled: boolean) => void
     setFocusMode: (enabled: boolean) => void
     toggleParagraphView: (level?: string) => void

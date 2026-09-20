@@ -1,7 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { AlignJustify, ArrowLeft, Pause, Play, WrapText } from 'lucide-react'
+import { Pause, Play } from 'lucide-react'
 import { useTypingStore } from '@/stores/typing-store'
-import { resolveParagraphView, useUiStore } from '@/stores/ui-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { containsMyanmar } from '@/core/unicode/myanmar'
 import { cn, eyebrowClass } from '@/lib/utils'
@@ -9,7 +8,9 @@ import { KeyboardContainer } from '@/components/keyboard/keyboard-container'
 import { TargetText } from '@/components/target-text'
 import { ResultDialog } from '@/components/result-dialog'
 import { ConfirmAbandon } from '@/components/session/confirm-abandon'
+import { BackButton } from '@/components/session/back-button'
 import { OutOfFocusWarning } from '@/components/session/out-of-focus-warning'
+import { ParagraphToggle } from '@/components/session/paragraph-toggle'
 import { SessionError, KeyboardLoading } from '@/components/session/session-status'
 import { useConfirmExit } from '@/components/session/use-confirm-exit'
 import { SessionTools } from '@/components/session/session-tools'
@@ -31,8 +32,6 @@ export function ExerciseWorkspace({ onExit, backAriaLabel = 'Back to lessons' }:
     const error = useTypingStore((s) => s.error)
     const togglePause = useTypingStore((s) => s.togglePause)
     const abandon = useTypingStore((s) => s.abandon)
-    const paragraphView = useUiStore((s) => s.paragraphView)
-    const toggleParagraphView = useUiStore((s) => s.toggleParagraphView)
     const exitGuard = useConfirmExit(() => {
         abandon()
         onExit?.()
@@ -64,10 +63,7 @@ export function ExerciseWorkspace({ onExit, backAriaLabel = 'Back to lessons' }:
             <header className="shrink-0 border-b border-line bg-background/60 backdrop-blur-xl">
                 <div className="flex items-center justify-between gap-3 px-4 py-2.5 sm:px-6">
                     <div className="flex min-w-0 items-center gap-3">
-                        <Button variant="ghost" size="sm" onClick={exitGuard.requestExit} className="-ml-2 shrink-0" aria-label={backAriaLabel}>
-                            <ArrowLeft className="size-4" />
-                            <span>Back</span>
-                        </Button>
+                        <BackButton onClick={exitGuard.requestExit} ariaLabel={backAriaLabel} />
 
                         <span className="h-5 w-px shrink-0 bg-line/70" aria-hidden />
 
@@ -91,29 +87,7 @@ export function ExerciseWorkspace({ onExit, backAriaLabel = 'Back to lessons' }:
                         <span className="mx-1 hidden h-5 w-px bg-line/70 sm:block" aria-hidden />
                         <div className="flex items-center gap-1">
                             <SessionTools level={resolved.level} />
-                            {session.kind === 'lesson' ? (
-                                <Button
-                                    variant="outline"
-                                    size="icon-sm"
-                                    onClick={() => toggleParagraphView(resolved.level)}
-                                    aria-pressed={resolveParagraphView(paragraphView, resolved.level)}
-                                    aria-label={
-                                        resolveParagraphView(paragraphView, resolved.level) ? 'Show as a single line' : 'Wrap into a paragraph'
-                                    }
-                                    title={resolveParagraphView(paragraphView, resolved.level) ? 'Show as a single line' : 'Wrap into a paragraph'}
-                                    className={
-                                        resolveParagraphView(paragraphView, resolved.level)
-                                            ? 'border-primary bg-primary/10 text-primary hover:border-primary hover:bg-primary/15 hover:text-primary'
-                                            : undefined
-                                    }
-                                >
-                                    {resolveParagraphView(paragraphView, resolved.level) ? (
-                                        <AlignJustify className="size-4" />
-                                    ) : (
-                                        <WrapText className="size-4" />
-                                    )}
-                                </Button>
-                            ) : null}
+                            {session.kind === 'lesson' ? <ParagraphToggle level={resolved.level} /> : null}
                             <Button
                                 variant="outline"
                                 size="icon-sm"

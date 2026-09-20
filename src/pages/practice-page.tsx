@@ -9,8 +9,8 @@ import { unsupportedGraphemes, type PracticeUnit } from '@/core/materials/practi
 import { layoutForLanguage } from '@/core/keyboard-layout/registry'
 import { resolvedPracticePreferences } from '@/core/practice/preferences'
 import { quotePool } from '@/data/quotes'
-import { Button } from '@/components/ui/button'
-import { ArrowLeft, Hash, Play, Quote, Timer, Type, type LucideIcon } from 'lucide-react'
+import { BackButton } from '@/components/session/back-button'
+import { Hash, Play, Quote, Timer, Type, type LucideIcon } from 'lucide-react'
 
 const TIME_OPTIONS = [15, 30, 60, 120]
 const WORD_OPTIONS = [10, 25, 50, 100]
@@ -135,10 +135,7 @@ export default function PracticePage() {
     const previewQuote = useMemo(() => quotePool(langValue)[0] ?? null, [langValue])
 
     const layout = useMemo(() => layoutForLanguage(langValue), [langValue])
-    const badChars = useMemo(
-        () => (unit === 'text' && text.trim() ? unsupportedGraphemes(layout, text) : []),
-        [unit, text, layout],
-    )
+    const badChars = useMemo(() => (unit === 'text' && text.trim() ? unsupportedGraphemes(layout, text) : []), [unit, text, layout])
 
     const start = useCallback(() => {
         if (badChars.length > 0) return
@@ -177,10 +174,7 @@ export default function PracticePage() {
     return (
         <div className="flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden">
             <header className="flex shrink-0 items-center border-b border-line bg-background/60 px-4 py-2.5 backdrop-blur-xl sm:px-6">
-                <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="-ml-2 shrink-0" aria-label="Go back to the previous page">
-                    <ArrowLeft className="size-4" />
-                    <span>Back</span>
-                </Button>
+                <BackButton onClick={() => navigate(-1)} />
                 <span className="ml-auto hidden font-mono text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase sm:block">Quick practice</span>
             </header>
 
@@ -194,7 +188,8 @@ export default function PracticePage() {
                         <p className={eyebrowClass}>Practice · အမြန်လေ့ကျင့်ခြင်း</p>
                         <h1 className={cn(pageTitleClass, 'mt-1.5')}>Warm-up desk</h1>
                         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">
-                            No student profile needed. Set a pace, pick a language, and start typing — this run lives in the moment, and lives here only.
+                            No student profile needed. Set a pace, pick a language, and start typing — this run lives in the moment, and lives here
+                            only.
                         </p>
                     </motion.div>
 
@@ -226,7 +221,9 @@ export default function PracticePage() {
                                             {words}
                                             <span className="ml-2 text-2xl font-medium text-ink-faint">words</span>
                                         </p>
-                                        <p className="text-xs leading-relaxed text-ink-faint">By the count, not the clock · the meter fills as you type.</p>
+                                        <p className="text-xs leading-relaxed text-ink-faint">
+                                            By the count, not the clock · the meter fills as you type.
+                                        </p>
                                     </>
                                 ) : unit === 'quote' && previewQuote ? (
                                     <figure className="max-w-sm">
@@ -239,7 +236,9 @@ export default function PracticePage() {
                                             “{previewQuote.text}”
                                         </blockquote>
                                         <figcaption className="mt-3 text-xs text-ink-faint">— {previewQuote.source}</figcaption>
-                                        <p className="mt-3 text-xs leading-relaxed text-ink-faint">A short quotation in {langLabel} · type it through, then get another.</p>
+                                        <p className="mt-3 text-xs leading-relaxed text-ink-faint">
+                                            A short quotation in {langLabel} · type it through, then get another.
+                                        </p>
                                     </figure>
                                 ) : (
                                     <div className="w-full">
@@ -266,7 +265,7 @@ export default function PracticePage() {
                                 onClick={start}
                                 disabled={textEmpty || textBlocked}
                                 className={cn(
-                                    'flex w-full items-center justify-center gap-2.5 rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-(--shadow-2) transition-[background-color,transform,box-shadow] duration-150 ease-out hover:bg-primary-hover active:scale-[0.985] active:bg-primary-active disabled:pointer-events-none disabled:shadow-none disabled:opacity-45',
+                                    'hover:bg-primary-hover active:bg-primary-active flex w-full items-center justify-center gap-2.5 rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-(--shadow-2) transition-[background-color,transform,box-shadow] duration-150 ease-out active:scale-[0.985] disabled:pointer-events-none disabled:opacity-45 disabled:shadow-none',
                                 )}
                             >
                                 <Play className="size-4" />
@@ -322,9 +321,7 @@ export default function PracticePage() {
                                             {badChars.length > 0 ? (
                                                 <p className="mt-2.5 flex flex-wrap items-start gap-x-1.5 gap-y-1 rounded-lg border border-warning/30 bg-warning/5 px-3 py-2 text-xs leading-relaxed text-warning">
                                                     <span>Characters below aren't typed on the {langLabel} layout:</span>
-                                                    <span className="font-mono font-medium">
-                                                        {Array.from(new Set(badChars)).join(' ')}
-                                                    </span>
+                                                    <span className="font-mono font-medium">{Array.from(new Set(badChars)).join(' ')}</span>
                                                 </p>
                                             ) : null}
                                         </>
@@ -338,7 +335,11 @@ export default function PracticePage() {
                                 <h2 className={eyebrowClass}>Language</h2>
                                 <div className="mt-2.5 flex flex-wrap gap-1 rounded-lg border border-line bg-muted/70 p-1 sm:flex-nowrap">
                                     <Segment label="English" active={langValue === 'english'} onClick={() => updateLang('english')} />
-                                    <Segment label={<span className="font-myanmar">မြန်မာ</span>} active={langValue === 'myanmar'} onClick={() => updateLang('myanmar')} />
+                                    <Segment
+                                        label={<span className="font-myanmar">မြန်မာ</span>}
+                                        active={langValue === 'myanmar'}
+                                        onClick={() => updateLang('myanmar')}
+                                    />
                                 </div>
                             </div>
 
