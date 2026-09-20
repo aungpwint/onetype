@@ -26,12 +26,14 @@ export function Session({
     eyebrow,
     onExit,
     hideKeyboard,
+    keyboardDefault,
 }: {
     durationSeconds: number | null
     sourceName: string
     eyebrow?: string
     onExit?: () => void
     hideKeyboard?: boolean
+    keyboardDefault?: boolean
 }) {
     const status = useTypingStore((s) => s.status)
     const engine = useTypingStore((s) => s.engine)
@@ -137,7 +139,7 @@ export function Session({
                                 </motion.div>
                             ) : null}
                         </AnimatePresence>
-                        {hideKeyboard ? null : <KeyboardContainer layout={layout} />}
+                        {hideKeyboard ? null : <KeyboardContainer layout={layout} defaultVisible={keyboardDefault} />}
                         <OutOfFocusWarning />
                     </div>
                 </div>

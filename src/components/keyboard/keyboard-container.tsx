@@ -8,12 +8,19 @@ import { VirtualKeyboard } from './virtual-keyboard'
 import { HandOverlay } from '@/components/hand-guide/hand-overlay'
 import { resolveTarget } from '@/core/target-model'
 
-export function KeyboardContainer({ layout, hideReadyMessage, level }: { layout: KeyboardLayout; hideReadyMessage?: boolean; level?: Level }) {
+export function KeyboardContainer({ layout, hideReadyMessage, level, defaultVisible }: { layout: KeyboardLayout; hideReadyMessage?: boolean; level?: Level; defaultVisible?: boolean }) {
     const handGuide = useUiStore((s) => s.handGuideVisible)
     const keyboardOverrideVisible = useUiStore((s) => s.keyboardVisible)
     const showKeyboard = useSettingsStore((s) => s.getEnum('practice.showKeyboard', ['on', 'off'] as const, 'on'))
 
-    if (showKeyboard === 'off' || (level === 'advanced' && !keyboardOverrideVisible)) return null
+    if (defaultVisible !== undefined) {
+        // Sessions with an explicit keyboard default (quick practice = hidden)
+        // start from that default and only an in-run toggle changes it.
+        const visible = keyboardOverrideVisible ?? defaultVisible
+        if (!visible) return null
+    } else if (showKeyboard === 'off' || (level === 'advanced' && !keyboardOverrideVisible)) {
+        return null
+    }
 
     return (
         <div className="mx-auto w-full max-w-5xl select-none">

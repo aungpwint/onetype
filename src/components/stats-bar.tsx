@@ -41,15 +41,22 @@ export function StatsBar() {
     const totalUnits = store.session?.resolved.totalUnits ?? 0
     const unitIndex = engine?.unitIndex ?? 0
     const incorrectCount = engine?.incorrectCount ?? 0
-    const metrics = engine?.currentMetrics() ?? null
-    const speedUnit = metrics?.speedUnit ?? 'wpm'
+    const metricView = engine?.currentMetrics() ?? null
+    const speedUnit = metricView?.speedUnit ?? 'wpm'
     const speedLabel = speedUnit === 'units/min' ? 'UNITS/MIN' : 'WPM'
-    const speed = Math.round(metrics?.speed ?? 0)
-    const raw = Math.round(metrics?.rawSpeed ?? 0)
-    const consistency = Math.round(metrics?.consistency ?? 100)
-    const accuracy = metrics?.accuracy ?? 0
+    const speed = Math.round(metricView?.speed ?? 0)
+    const raw = Math.round(metricView?.rawSpeed ?? 0)
+    const consistency = Math.round(metricView?.consistency ?? 100)
+    const accuracy = metricView?.accuracy ?? 0
+    const totalAttempts = metricView?.totalAttempts ?? 0
     const progress = totalUnits > 0 ? Math.round((unitIndex / totalUnits) * 100) : 0
     const idle = unitIndex === 0
+    // Quick practice starts alive: before the first key it already shows live
+    // numbers (0 wpm, 100% accuracy, full timer) instead of empty dashes that
+    // read like a loading or broken screen.
+    const practiceRun = store.session?.kind === 'practice'
+    const live = !idle || practiceRun
+    const displayAccuracy = totalAttempts === 0 ? 100 : accuracy
     const rawLabel = speedUnit === 'units/min' ? 'Raw units/min' : 'Raw WPM'
 
     const timed = durationSeconds !== null && remaining !== null
@@ -66,7 +73,7 @@ export function StatsBar() {
                         timerStyle === 'mini' ? 'text-4xl sm:text-5xl' : 'text-6xl sm:text-7xl',
                     )}
                 >
-                    {idle ? '—' : speed}
+                    {live ? speed : '—'}
                 </span>
                 <span className={cn('text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase', timerStyle === 'mini' && 'mb-0.5')}>
                     {speedLabel}
@@ -93,19 +100,19 @@ export function StatsBar() {
             ) : null}
 
             <div className="mt-3.5 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
-                <Metric label="Accuracy" value={idle ? '—' : `${accuracy.toFixed(1)}%`} />
+                <Metric label="Accuracy" value={live ? `${displayAccuracy.toFixed(1)}%` : '—'} />
                 <span className="h-5 w-px bg-line-strong/60" aria-hidden />
-                <Metric label={rawLabel} value={idle ? '—' : String(raw)} />
+                <Metric label={rawLabel} value={live ? String(raw) : '—'} />
                 <span className="h-5 w-px bg-line-strong/60" aria-hidden />
-                <Metric label="Consistency" value={idle ? '—' : `${consistency}%`} />
+                <Metric label="Consistency" value={live ? `${consistency}%` : '—'} />
                 {!timed || timerStyle !== 'off' ? (
                     <>
                         <span className="h-5 w-px bg-line-strong/60" aria-hidden />
-                        <Metric label={timerLabel} value={idle ? '—' : timerValue} />
+                        <Metric label={timerLabel} value={live ? timerValue : '—'} />
                     </>
                 ) : null}
                 <span className="h-5 w-px bg-line-strong/60" aria-hidden />
-                <Metric label="Errors" value={idle ? '—' : String(incorrectCount)} tone={incorrectCount > 0 ? 'destructive' : 'muted'} />
+                <Metric label="Errors" value={live ? String(incorrectCount) : '—'} tone={incorrectCount > 0 ? 'destructive' : 'muted'} />
             </div>
         </div>
     )

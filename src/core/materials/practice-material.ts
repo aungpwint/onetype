@@ -41,16 +41,21 @@ export interface PracticeConfig {
     numbers?: boolean
 }
 
-function encodableLine(layout: KeyboardLayout, raw: string): string {
+export function unsupportedGraphemes(layout: KeyboardLayout, raw: string): string[] {
     const line = layout.language === 'myanmar' ? normalizeMyanmarText(raw) : raw
+    const unsupported: string[] = []
     for (const grapheme of splitGraphemes(line)) {
         try {
             layout.reverseMap([grapheme])
         } catch {
-            return ''
+            unsupported.push(grapheme)
         }
     }
-    return line
+    return unsupported
+}
+
+function encodableLine(layout: KeyboardLayout, raw: string): string {
+    return unsupportedGraphemes(layout, raw).length === 0 ? (layout.language === 'myanmar' ? normalizeMyanmarText(raw) : raw) : ''
 }
 
 function encodablePool(layout: KeyboardLayout, language: 'english' | 'myanmar' | 'mixed', pools: { en: LessonData[]; my: LessonData[] }): string[] {
