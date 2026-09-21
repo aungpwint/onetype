@@ -315,18 +315,18 @@ describe('envelope and state machine (approach → press → held → release)',
 })
 
 describe('toTransformAttribute', () => {
-    it('renders the SVG transform string (rotate about the moved base, then translate)', () => {
+    it('renders the SVG transform string (rotate about the base, then translate)', () => {
         const geo = fingerGeometry('left', LEFT_GEOMETRY, 'left-thumb')
         const prof = FINGER_PROFILES['left-thumb']
         const attr = toTransformAttribute(geo, prof, null, 0)
-        expect(attr).toBe('rotate(-3.00 144.40 168.20) translate(-2.00 0.00)')
+        expect(attr).toBe('translate(-2.00 0.00) rotate(-3.00 146.40 168.20)')
     })
 
-    it("bends about the finger's own base even while translating", () => {
+    it("rotates about the finger's own base before translating", () => {
         const geo = fingerGeometry('left', LEFT_GEOMETRY, 'left-index')
         const prof = FINGER_PROFILES['left-index']
         const attr = toTransformAttribute(geo, prof, { tx: 5, ty: -3, deg: 4 }, 1)
-        expect(attr).toBe('rotate(4.00 153.00 89.40) translate(5.00 -3.00)')
+        expect(attr).toBe('translate(5.00 -3.00) rotate(4.00 148.00 92.40)')
     })
 })
 

@@ -960,6 +960,23 @@
     height: 100%;
 }
 
+/* Pose swaps remount the hand's <div> (pose-keyed in HandOverlay), so the short
+   fade keeps rapid left/right alternation smooth instead of a hard cut; the
+   idle hand never remounts, so it stays completely still while typing. */
+.hand-overlay-hand {
+    animation: hand-guide-pose-in 150ms ease-out;
+}
+
+@keyframes hand-guide-pose-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 /* The small contact halo is the visual bridge between the illustrated finger
    and the next key. It is intentionally beneath the hand artwork, so the
    fingertip remains the focus rather than looking like a UI cursor. */
@@ -1041,6 +1058,10 @@
     .hand-contact-point {
         animation: none;
         transform: scale(0.92);
+    }
+
+    .hand-overlay-hand {
+        animation: none;
     }
 }
 

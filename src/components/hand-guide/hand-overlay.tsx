@@ -1,24 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import { leftHandSvg, rightHandSvg } from './hand-assets'
+import type { Hand } from '@/types'
+import { TYPING_CLUB_VIEWBOX, typingClubHandSvg } from './hand-assets'
 import { handForFinger, fingerForCodeOrNull as resolveFinger } from '@/core/finger-mapping/finger-map'
-import {
-    LEFT_GEOMETRY,
-    RIGHT_GEOMETRY,
-    computeHandLayout,
-    fingerAnchors,
-    fingerGeometry,
-    handArtExtent,
-    handToKeyboard,
-    inspectHandLayout,
-    keyboardToPixel,
-    validateHandLayout,
-    type KeyAnchor,
-    type KeyboardGeometry,
-    type HandLayout,
-    type HandPlacement,
-} from './hand-geometry'
-import { FINGER_PROFILES, FingerAnimator, fingertipInKeyboard, targetForKey, type FingerTarget } from './finger-motion'
-import type { FingerId, Hand } from '@/types'
+import { computeHandLayout, type KeyAnchor, type KeyboardGeometry, type HandLayout } from './hand-geometry'
 
 interface HandOverlayProps {
     layout: {
@@ -30,14 +14,85 @@ interface HandOverlayProps {
     children?: ReactNode
 }
 
-function isDebugEnabled(): boolean {
-    return import.meta.env.DEV && typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('handdebug')
+const REFERENCE_HAND_ANCHORS = {
+    left: { x: 243, y: 228.4 },
+    right: { x: 342, y: 228.4 },
+    pitch: 99,
+    scale: 0.9,
+    leftOffsetX: -40,
+    offsetY: -5,
 }
 
-const HANDS: { hand: Hand; geom: typeof LEFT_GEOMETRY; placementKey: 'left' | 'right' }[] = [
-    { hand: 'left', geom: LEFT_GEOMETRY, placementKey: 'left' },
-    { hand: 'right', geom: RIGHT_GEOMETRY, placementKey: 'right' },
-]
+const KEY_GROUPS: Record<string, string> = {
+    Backquote: 'tilda',
+    Digit1: 'key-1',
+    Digit2: 'key-2',
+    Digit3: 'key-3',
+    Digit4: 'key-4',
+    Digit5: 'key-5',
+    Digit6: 'key-6',
+    Digit7: 'key-7',
+    Digit8: 'key-8',
+    Digit9: 'key-9',
+    Digit0: 'key-0',
+    Minus: 'minus',
+    Equal: 'equal',
+    Tab: 'tab',
+    KeyQ: 'q',
+    KeyW: 'w',
+    KeyE: 'e',
+    KeyR: 'r',
+    KeyT: 't',
+    KeyY: 'y',
+    KeyU: 'u',
+    KeyI: 'i',
+    KeyO: 'o',
+    KeyP: 'p',
+    BracketLeft: 'open-bracket',
+    BracketRight: 'close-bracket',
+    Backslash: 'backslash',
+    KeyA: 'a',
+    KeyS: 's',
+    KeyD: 'd',
+    KeyF: 'f',
+    KeyG: 'g',
+    KeyH: 'h',
+    KeyJ: 'j',
+    KeyK: 'k',
+    KeyL: 'l',
+    Semicolon: 'semicolon',
+    Quote: 'quote',
+    Enter: 'enter',
+    KeyZ: 'z',
+    KeyX: 'x',
+    KeyC: 'c',
+    KeyV: 'v',
+    KeyB: 'b',
+    KeyN: 'n',
+    KeyM: 'm',
+    Comma: 'comma',
+    Period: 'dot',
+    Slash: 'slash',
+    Space: 'space',
+}
+
+function visibleGroups(hand: Hand, activeKey: string | null | undefined, shiftKey: string | null | undefined): Set<string> {
+    const neutralId = hand === 'left' ? 'neutral-left' : 'neutral-right'
+    const groups = new Set<string>()
+    const keyGroup = activeKey ? KEY_GROUPS[activeKey] : undefined
+    // The sprite draws the space-bar press with the right thumb, so the pose is
+    // owned by the right hand even though the finger mapping resolves to left.
+    const keyHand: Hand | null = activeKey
+        ? activeKey === 'Space'
+            ? 'right'
+            : handForFinger(resolveFinger(activeKey) ?? 'left-pinky')
+        : null
+    if (keyGroup && keyHand === hand) groups.add(keyGroup)
+    if (shiftKey === 'ShiftLeft' && hand === 'left') groups.add('shift-left')
+    if (shiftKey === 'ShiftRight' && hand === 'right') groups.add('shift-right')
+    if (groups.size === 0) groups.add(neutralId)
+    return groups
+}
 
 export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, children }: HandOverlayProps) {
     const containerRef = useRef<HTMLDivElement>(null)
@@ -45,8 +100,6 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
         kb: KeyboardGeometry
         anchors: Map<string, KeyAnchor>
     } | null>(null)
-
-    const debug = useMemo(() => isDebugEnabled(), [])
 
     const measure = useCallback(() => {
         const container = containerRef.current
@@ -110,119 +163,6 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
 
     const handLayout = useMemo<HandLayout | null>(() => (geometry ? computeHandLayout(geometry.anchors) : null), [geometry])
 
-    const animatorRef = useRef<FingerAnimator | null>(null)
-    const handsMounted = handLayout !== null
-    useEffect(() => {
-        const container = containerRef.current
-        if (!container || !handsMounted) {
-            animatorRef.current?.destroy()
-            animatorRef.current = null
-            return
-        }
-        const animator = new FingerAnimator(container)
-        animatorRef.current = animator
-        return () => {
-            animator.destroy()
-            if (animatorRef.current === animator) animatorRef.current = null
-        }
-    }, [handsMounted])
-
-    useEffect(() => {
-        const animator = animatorRef.current
-        if (!animator || !handLayout) return
-
-        const targets = new Map<FingerId, FingerTarget | null>()
-
-        const reachFinger = (finger: FingerId | null, code: string) => {
-            if (!finger) return
-            const anchor = geometry?.anchors.get(code)
-            if (!anchor) return
-            const hand = handForFinger(finger)
-            const place = handLayout[hand === 'left' ? 'left' : 'right']
-            const geom = hand === 'left' ? LEFT_GEOMETRY : RIGHT_GEOMETRY
-            const target = targetForKey(finger, place, geom, FINGER_PROFILES[finger], {
-                x: anchor.x,
-                y: anchor.y,
-            })
-            if (target) targets.set(finger, target)
-        }
-
-        if (isActive) {
-            if (activeKey) reachFinger(resolveFinger(activeKey), activeKey)
-            if (shiftKey === 'ShiftLeft') reachFinger('left-pinky', shiftKey)
-            else if (shiftKey === 'ShiftRight') reachFinger('right-pinky', shiftKey)
-        }
-
-        animator.setTargets(targets)
-    }, [isActive, activeKey, shiftKey, handLayout, geometry])
-
-    useEffect(() => {
-        const animator = animatorRef.current
-        const scope = containerRef.current
-        if (!animator || !scope || !debug || !handLayout) return
-
-        const boxes = HANDS.flatMap((h) => {
-            const place = handLayout[h.placementKey]
-            return Array.from(fingerAnchors(h.geom)).map(([finger]) => {
-                const geo = fingerGeometry(h.hand, h.geom, finger)
-                const rest = handToKeyboard(place, geo.tip)
-                const baseLocal = h.geom.bases[finger] ?? geo.base
-                const base = handToKeyboard(place, baseLocal)
-                return { finger, place, geo, rest, base }
-            })
-        })
-
-        animator.onSample = () => {
-            for (const b of boxes) {
-                const p = animator.currentP(b.finger)
-                const t = animator.currentTarget(b.finger)
-                const tip = fingertipInKeyboard(b.place, b.geo, FINGER_PROFILES[b.finger], t, p)
-                const cur = scope.querySelector(`#dbg-cur-${b.finger}`)
-                if (cur) {
-                    cur.setAttribute('cx', tip.x.toFixed(1))
-                    cur.setAttribute('cy', tip.y.toFixed(1))
-                }
-                const vec = scope.querySelector(`#dbg-vec-${b.finger}`)
-                if (vec) {
-                    vec.setAttribute('x1', b.base.x.toFixed(1))
-                    vec.setAttribute('y1', b.base.y.toFixed(1))
-                    vec.setAttribute('x2', tip.x.toFixed(1))
-                    vec.setAttribute('y2', tip.y.toFixed(1))
-                }
-            }
-        }
-        return () => {
-            animator.onSample = null
-        }
-    }, [debug, handLayout])
-
-    const activeFingers = useMemo<Set<FingerId>>(() => {
-        const fingers = new Set<FingerId>()
-        if (!isActive) return fingers
-        if (shiftKey === 'ShiftLeft') fingers.add('left-pinky')
-        else if (shiftKey === 'ShiftRight') fingers.add('right-pinky')
-        const target = resolveFinger(activeKey)
-        if (target) fingers.add(target)
-        return fingers
-    }, [isActive, activeKey, shiftKey])
-
-    const contactPoints = useMemo(() => {
-        if (!geometry || !isActive) return []
-        return Array.from(new Set([activeKey, shiftKey].filter((code): code is string => Boolean(code))))
-            .map((code) => {
-                const anchor = geometry.anchors.get(code)
-                if (!anchor) return null
-                return { code, x: geometry.kb.x + anchor.x, y: geometry.kb.y + anchor.y }
-            })
-            .filter((point): point is { code: string; x: number; y: number } => point !== null)
-    }, [activeKey, geometry, isActive, shiftKey])
-
-    useEffect(() => {
-        if (import.meta.env.DEV && handLayout && geometry) {
-            validateHandLayout(handLayout, geometry.kb)
-        }
-    }, [handLayout, geometry])
-
     if (!handLayout) {
         return (
             <div ref={containerRef} className="hand-overlay-container">
@@ -231,168 +171,62 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
         )
     }
 
-    const containerAttrs: Record<string, unknown> = {}
-    if (activeFingers.size > 0) {
-        containerAttrs['data-active-finger'] = Array.from(activeFingers).join(' ')
+    const spriteScale = (((geometry!.anchors.get('KeyJ')?.x ?? 0) - (geometry!.anchors.get('KeyF')?.x ?? 99)) / 99) * REFERENCE_HAND_ANCHORS.scale
+    const leftPos = {
+        x:
+            geometry!.kb.x +
+            (geometry!.anchors.get('KeyF')?.x ?? 0) -
+            REFERENCE_HAND_ANCHORS.left.x * spriteScale +
+            REFERENCE_HAND_ANCHORS.leftOffsetX,
+        y:
+            geometry!.kb.y +
+            (geometry!.anchors.get('KeyF')?.y ?? 0) -
+            REFERENCE_HAND_ANCHORS.left.y * spriteScale +
+            REFERENCE_HAND_ANCHORS.pitch +
+            REFERENCE_HAND_ANCHORS.offsetY,
     }
-
-    const leftPos = keyboardToPixel(geometry!.kb, handLayout.left)
-    const rightPos = keyboardToPixel(geometry!.kb, handLayout.right)
+    const rightPos = {
+        x: geometry!.kb.x + (geometry!.anchors.get('KeyJ')?.x ?? 0) - REFERENCE_HAND_ANCHORS.right.x * spriteScale,
+        y:
+            geometry!.kb.y +
+            (geometry!.anchors.get('KeyJ')?.y ?? 0) -
+            REFERENCE_HAND_ANCHORS.right.y * spriteScale +
+            REFERENCE_HAND_ANCHORS.pitch +
+            REFERENCE_HAND_ANCHORS.offsetY,
+    }
+    const leftGroups = visibleGroups('left', isActive ? activeKey : null, isActive ? shiftKey : null)
+    const rightGroups = visibleGroups('right', isActive ? activeKey : null, isActive ? shiftKey : null)
+    const leftSvg = typingClubHandSvg('left', leftGroups)
+    const rightSvg = typingClubHandSvg('right', rightGroups)
 
     return (
-        <div ref={containerRef} className="hand-overlay-container" {...containerAttrs}>
+        <div ref={containerRef} className="hand-overlay-container">
             <div className="hand-overlay-keyboard">{children}</div>
 
-            {contactPoints.map((point) => (
-                <span key={point.code} className="hand-contact-point" style={{ left: point.x, top: point.y }} aria-hidden />
-            ))}
-
             <div
+                key={`left-${[...leftGroups].sort().join(',')}`}
                 className="hand-overlay-hand hand-overlay-left"
                 style={{
-                    width: LEFT_GEOMETRY.view.w,
-                    height: LEFT_GEOMETRY.view.h,
-                    transform: `translate(${leftPos.x}px, ${leftPos.y}px) scale(${handLayout.left.scale})`,
+                    width: TYPING_CLUB_VIEWBOX.width * spriteScale,
+                    height: TYPING_CLUB_VIEWBOX.height * spriteScale,
+                    transform: `translate(${leftPos.x}px, ${leftPos.y}px)`,
                     transformOrigin: '0 0',
                 }}
                 aria-hidden
-                dangerouslySetInnerHTML={{ __html: leftHandSvg }}
+                dangerouslySetInnerHTML={{ __html: leftSvg }}
             />
             <div
+                key={`right-${[...rightGroups].sort().join(',')}`}
                 className="hand-overlay-hand hand-overlay-right"
                 style={{
-                    width: RIGHT_GEOMETRY.view.w,
-                    height: RIGHT_GEOMETRY.view.h,
-                    transform: `translate(${rightPos.x}px, ${rightPos.y}px) scale(${handLayout.right.scale})`,
+                    width: TYPING_CLUB_VIEWBOX.width * spriteScale,
+                    height: TYPING_CLUB_VIEWBOX.height * spriteScale,
+                    transform: `translate(${rightPos.x}px, ${rightPos.y}px)`,
                     transformOrigin: '0 0',
                 }}
                 aria-hidden
-                dangerouslySetInnerHTML={{ __html: rightHandSvg }}
+                dangerouslySetInnerHTML={{ __html: rightSvg }}
             />
-
-            {debug && <HandDebugLayer kb={geometry!.kb} layout={handLayout} anchors={geometry!.anchors} />}
         </div>
-    )
-}
-
-interface HandDebugLayerProps {
-    kb: KeyboardGeometry
-    layout: HandLayout
-    anchors: ReadonlyMap<string, KeyAnchor>
-}
-
-function HandDebugLayer({ kb, layout, anchors }: HandDebugLayerProps) {
-    const diagnostics = inspectHandLayout(layout, kb)
-    const d: HandPlacement[] = HANDS.map((h) => layout[h.placementKey])
-
-    const keyMarkers = Array.from(anchors.values())
-    const fingerMarkers = HANDS.flatMap((h) => {
-        const place = layout[h.placementKey]
-        return Array.from(fingerAnchors(h.geom)).map(([finger]) => {
-            const geo = fingerGeometry(h.hand, h.geom, finger)
-            const rest = handToKeyboard(place, geo.tip)
-            const baseLocal = h.geom.bases[finger] ?? geo.base
-            const base = handToKeyboard(place, baseLocal)
-            return {
-                finger,
-                rest,
-                base,
-                prof: FINGER_PROFILES[finger],
-                place,
-                geo,
-            }
-        })
-    })
-
-    const windowBoxes = HANDS.map((h) => {
-        const place = layout[h.placementKey]
-        return {
-            key: h.hand,
-            x: place.x,
-            y: place.y,
-            w: h.geom.view.w * place.scale,
-            hh: h.geom.view.h * place.scale,
-        }
-    })
-
-    const artBoxes = HANDS.map((h) => {
-        const ext = handArtExtent(layout[h.placementKey], h.geom)
-        const place = layout[h.placementKey]
-        return {
-            key: h.hand,
-            x: ext.left,
-            y: place.y,
-            w: ext.right - ext.left,
-            hh: h.geom.view.h * place.scale,
-        }
-    })
-
-    return (
-        <svg
-            className="hand-debug"
-            style={{ position: 'absolute', left: kb.x, top: kb.y, zIndex: 50, pointerEvents: 'none' }}
-            width={kb.width}
-            height={kb.height}
-            viewBox={`0 0 ${kb.width} ${kb.height}`}
-            aria-hidden
-        >
-            <g fontFamily="var(--font-mono)" fontSize={10} fill="#d34">
-                <rect x={0.5} y={0.5} width={kb.width - 1} height={kb.height - 1} fill="none" stroke="#d34" strokeWidth={1} strokeDasharray="4 3" />
-                <text x={4} y={12}>
-                    keyboard {kb.width.toFixed(0)}×{kb.height.toFixed(0)}
-                </text>
-
-                <line x1={layout.axisX} y1={0} x2={layout.axisX} y2={kb.height} stroke="#d34" strokeWidth={1} strokeDasharray="2 3" />
-                <text x={layout.axisX + 3} y={12}>
-                    axis {layout.axisX.toFixed(0)}
-                </text>
-
-                {keyMarkers.map((k) => (
-                    <circle key={k.code} cx={k.x} cy={k.y} r={2} fill="#4d8" opacity={0.9} />
-                ))}
-
-                {windowBoxes.map((b) => (
-                    <rect key={`win-${b.key}`} x={b.x} y={b.y} width={b.w} height={b.hh} fill="none" stroke="#48f" strokeWidth={1} />
-                ))}
-                {artBoxes.map((b) => (
-                    <rect key={`art-${b.key}`} x={b.x} y={b.y} width={b.w} height={b.hh} fill="none" stroke="#f80" strokeWidth={1} />
-                ))}
-                {d.map((p, i) => (
-                    <g key={i}>
-                        <circle cx={p.x} cy={p.y} r={3} fill="none" stroke="#48f" strokeWidth={1.5} />
-                        <line x1={p.x - 5} y1={p.y} x2={p.x + 5} y2={p.y} stroke="#48f" strokeWidth={1} />
-                        <line x1={p.x} y1={p.y - 5} x2={p.x} y2={p.y + 5} stroke="#48f" strokeWidth={1} />
-                    </g>
-                ))}
-
-                {fingerMarkers.map((m) => (
-                    <g key={m.finger}>
-                        <rect x={m.base.x - 1.5} y={m.base.y - 1.5} width={3} height={3} fill="none" stroke="#f80" strokeWidth={1} />
-                        <circle cx={m.rest.x} cy={m.rest.y} r={2} fill="#d34" opacity={0.9} />
-                        <text x={m.rest.x + 3} y={m.rest.y - 2}>
-                            {m.finger}
-                        </text>
-                        <line
-                            id={`dbg-vec-${m.finger}`}
-                            x1={m.base.x}
-                            y1={m.base.y}
-                            x2={m.rest.x}
-                            y2={m.rest.y}
-                            stroke="#f80"
-                            strokeWidth={0.75}
-                            strokeDasharray="2 2"
-                            opacity={0.6}
-                        />
-                        <circle id={`dbg-cur-${m.finger}`} cx={m.rest.x} cy={m.rest.y} r={2.5} fill="#0ff" opacity={0.95} />
-                    </g>
-                ))}
-
-                {diagnostics.axisClearancePx < 0 && (
-                    <text x={4} y={kb.height - 6} fill="#d34">
-                        OVERLAP: axis clearance {diagnostics.axisClearancePx.toFixed(1)}px — inspect the mapping (diagnostics logged to console)
-                    </text>
-                )}
-            </g>
-        </svg>
     )
 }

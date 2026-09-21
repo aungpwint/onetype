@@ -129,7 +129,7 @@ export function computeHandLayout(anchors: ReadonlyMap<string, KeyAnchor>): Hand
     }
 
     const right: HandPlacement = {
-        x: 2 * axisX - (left.x + LEFT_GEOMETRY.view.w * leftScale),
+        x: j.x - RIGHT_GEOMETRY.index.x * rightScale,
         y: homeRowY - RIGHT_GEOMETRY.index.y * rightScale,
         scale: rightScale,
     }

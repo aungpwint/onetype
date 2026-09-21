@@ -231,9 +231,7 @@ function interpolate(target: FingerTarget, prof: FingerMotionProfile, p: number)
 
 export function toTransformAttribute(geo: FingerGeometry, prof: FingerMotionProfile, target: FingerTarget | null, p: number): string {
     const t = interpolate(target ?? ZERO_TARGET, prof, p)
-    const bx = geo.base.x + t.tx
-    const by = geo.base.y + t.ty
-    return `rotate(${fmt(t.deg)} ${fmt(bx)} ${fmt(by)}) translate(${fmt(t.tx)} ${fmt(t.ty)})`
+    return `translate(${fmt(t.tx)} ${fmt(t.ty)}) rotate(${fmt(t.deg)} ${fmt(geo.base.x)} ${fmt(geo.base.y)})`
 }
 
 export function fingertipPosition(geo: FingerGeometry, prof: FingerMotionProfile, target: FingerTarget | null, p: number): Vec2 {
