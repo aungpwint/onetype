@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { POSE_PADS, poseHand, TYPING_CLUB_VIEWBOX, typingClubHandSprite } from '@/components/hand-guide/hand-assets'
+import {
+    POSE_PADS,
+    POSE_ROW_REFS,
+    poseHand,
+    TYPING_CLUB_VIEWBOX,
+    typingClubHandSprite,
+} from '@/components/hand-guide/hand-assets'
 import type { Hand } from '@/types'
 
 function groupsOf(hand: Hand): Map<string, string> {
@@ -64,5 +70,18 @@ describe('POSE_PADS', () => {
         expect(poseHand('key-6')).toBe('right')
         expect(poseHand('space')).toBe('right')
         expect(poseHand('enter')).toBe('right')
+    })
+})
+
+describe('POSE_ROW_REFS', () => {
+    it('covers the unpadded reaches and resolves each to a hand and sprite group', () => {
+        const groups = new Set([...groupsOf('left').keys(), ...groupsOf('right').keys()])
+        expect(Object.keys(POSE_ROW_REFS).length).toBeGreaterThanOrEqual(7)
+        for (const pose of Object.keys(POSE_ROW_REFS)) {
+            expect(poseHand(pose)).not.toBeNull()
+            expect(groups.has(pose)).toBe(true)
+            expect(POSE_PADS[pose]).toBeUndefined()
+            expect(POSE_ROW_REFS[pose]).toEqual(expect.any(Number))
+        }
     })
 })

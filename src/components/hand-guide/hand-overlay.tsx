@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Hand } from '@/types'
-import { POSE_PADS, poseHand, TYPING_CLUB_VIEWBOX, typingClubHandSprite } from './hand-assets'
+import { POSE_PADS, POSE_ROW_REFS, poseHand, TYPING_CLUB_VIEWBOX, typingClubHandSprite } from './hand-assets'
 import { handForFinger, fingerForCodeOrNull as resolveFinger } from '@/core/finger-mapping/finger-map'
 import { computeHandLayout, type KeyAnchor, type KeyboardGeometry, type HandLayout } from './hand-geometry'
 
@@ -240,6 +240,23 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
             transforms.set(pose, {
                 x: (key.x - host.x) / scale - (pad.x - anchor.x),
                 y: (key.y - host.y) / scale - (pad.y - anchor.y),
+            })
+        }
+        for (const [pose, refY] of Object.entries(POSE_ROW_REFS)) {
+            if (refY === undefined) continue
+            const hand = poseHand(pose)
+            const code = POSE_TO_KEY[pose]
+            if (!hand || !code) continue
+            const key = geometry.anchors.get(code)
+            const host = geometry.anchors.get(hand === 'left' ? 'KeyF' : 'KeyJ')
+            if (!key || !host) continue
+            const anchor = SPRITE_INDEX_ANCHOR[hand]
+            // Vertical-only: land the painted row/thumb reference on the real
+            // key row so these reaches stay put when the sprite scale changes
+            // on resize; the artwork's x reach stays proportional to width.
+            transforms.set(pose, {
+                x: 0,
+                y: (key.y - host.y) / scale - (refY - anchor.y),
             })
         }
         return transforms

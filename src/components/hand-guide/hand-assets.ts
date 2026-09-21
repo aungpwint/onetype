@@ -80,12 +80,9 @@ const PER_HAND_GROUP_IDS: Readonly<Record<Hand, ReadonlySet<string>>> = {
  *  the exact spots the fingers land; the overlay measures the real DOM keyboard
  *  and translates each pose so its pad sits dead-centre on the matching key.
  *
- *  Poses whose press pad cannot be read from the artwork are intentionally
- *  omitted (they keep the plain home-anchored placement):
- *  - neutral-*, enter, space, shift-right: wide/modifier reaches drawn to the
- *    key's outer region rather than its centre.
- *  - z, x, m, comma, dot: the artwork only carries a resting-thumb marker in
- *    those poses, so there is no reliable press coordinate to align to. */
+ *  Poses handled here carry a press pad that can be read from the artwork.
+ *  Reaches without one (bottom row z x m comma dot) and wide/modifier keys
+ *  (enter, space, shift-right) are aligned vertically via `POSE_ROW_REFS`. */
 export const POSE_PADS: Readonly<Partial<Record<string, { x: number; y: number }>>> = {
     tilda: { x: 121.0, y: 102.2 },
     'key-1': { x: 145.6, y: 106.4 },
@@ -136,6 +133,24 @@ export const POSE_PADS: Readonly<Partial<Record<string, { x: number; y: number }
 /** Which hand owns a pose group (left index-anchored on KeyF, right on KeyJ). */
 export function poseHand(pose: string): Hand | null {
     return LEFT_GROUP_IDS.has(pose) ? 'left' : RIGHT_GROUP_IDS.has(pose) ? 'right' : null
+}
+
+/** Vertical-only tracking for reaches without a press pad in the artwork
+ *  (bottom-row z x m comma dot) and for wide/modifier reaches (space thumb,
+ *  shift-right). Rows are drawn in fixed viewBox units, so once the sprite is
+ *  scaled to the measured keyboard the painted reaches drift away from keys
+ *  whose row pitch is a fixed pixel height per breakpoint. Aligning the row or
+ *  thumb reference (sprite y, measured from the artwork) to the real key row
+ *  keeps them on their keys at every window size; x keeps the artwork's
+ *  natural reach, which is horizontally correct at any scale by construction. */
+export const POSE_ROW_REFS: Readonly<Partial<Record<string, number>>> = {
+    z: 185.63,
+    x: 185.63,
+    m: 186.05,
+    comma: 186.05,
+    dot: 186.05,
+    'shift-right': 186.05,
+    space: 218.3,
 }
 
 /** One balanced scan of the raw sprite: splits out every top-level `st0` pose
