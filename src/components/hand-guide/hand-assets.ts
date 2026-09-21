@@ -75,6 +75,69 @@ const PER_HAND_GROUP_IDS: Readonly<Record<Hand, ReadonlySet<string>>> = {
     right: RIGHT_GROUP_IDS,
 }
 
+/** True sprite position (typing-club-hands.svg units) of the pressed finger pad
+ *  inside each reach pose, recovered from the artwork with getBBox(). These are
+ *  the exact spots the fingers land; the overlay measures the real DOM keyboard
+ *  and translates each pose so its pad sits dead-centre on the matching key.
+ *
+ *  Poses whose press pad cannot be read from the artwork are intentionally
+ *  omitted (they keep the plain home-anchored placement):
+ *  - neutral-*, enter, space, shift-right: wide/modifier reaches drawn to the
+ *    key's outer region rather than its centre.
+ *  - z, x, m, comma, dot: the artwork only carries a resting-thumb marker in
+ *    those poses, so there is no reliable press coordinate to align to. */
+export const POSE_PADS: Readonly<Partial<Record<string, { x: number; y: number }>>> = {
+    tilda: { x: 121.0, y: 102.2 },
+    'key-1': { x: 145.6, y: 106.4 },
+    'key-2': { x: 180.4, y: 109.0 },
+    'key-3': { x: 204.9, y: 106.2 },
+    'key-4': { x: 237.9, y: 103.2 },
+    'key-5': { x: 269.2, y: 104.7 },
+    'key-6': { x: 299.3, y: 104.3 },
+    'key-7': { x: 329.2, y: 109.7 },
+    'key-8': { x: 361.0, y: 98.8 },
+    'key-9': { x: 393.1, y: 99.1 },
+    'key-0': { x: 419.3, y: 100.4 },
+    minus: { x: 448.2, y: 100.8 },
+    equal: { x: 477.1, y: 103.4 },
+    tab: { x: 129.7, y: 137.1 },
+    q: { x: 156.5, y: 133.4 },
+    w: { x: 191.3, y: 137.1 },
+    e: { x: 220.7, y: 135.2 },
+    r: { x: 252.8, y: 133.3 },
+    t: { x: 277.8, y: 133.4 },
+    y: { x: 313.3, y: 131.4 },
+    u: { x: 342.8, y: 130.0 },
+    i: { x: 374.8, y: 128.8 },
+    o: { x: 403.1, y: 133.8 },
+    p: { x: 430.6, y: 130.2 },
+    'open-bracket': { x: 464.4, y: 128.9 },
+    'close-bracket': { x: 488.9, y: 133.5 },
+    backslash: { x: 526.0, y: 126.7 },
+    a: { x: 170.3, y: 160.4 },
+    s: { x: 202.2, y: 158.0 },
+    d: { x: 230.8, y: 157.6 },
+    f: { x: 261.7, y: 160.4 },
+    g: { x: 288.6, y: 160.4 },
+    h: { x: 326.0, y: 157.8 },
+    j: { x: 355.5, y: 157.0 },
+    k: { x: 382.2, y: 149.9 },
+    l: { x: 410.6, y: 154.5 },
+    semicolon: { x: 442.7, y: 161.4 },
+    quote: { x: 474.4, y: 162.4 },
+    c: { x: 238.0, y: 181.8 },
+    v: { x: 281.4, y: 187.6 },
+    b: { x: 303.1, y: 187.5 },
+    n: { x: 341.3, y: 186.8 },
+    slash: { x: 468.2, y: 185.3 },
+    'shift-left': { x: 140.0, y: 188.4 },
+}
+
+/** Which hand owns a pose group (left index-anchored on KeyF, right on KeyJ). */
+export function poseHand(pose: string): Hand | null {
+    return LEFT_GROUP_IDS.has(pose) ? 'left' : RIGHT_GROUP_IDS.has(pose) ? 'right' : null
+}
+
 /** One balanced scan of the raw sprite: splits out every top-level `st0` pose
  *  group into its own XML block and keeps the shared <svg>/<style> head. */
 function splitSprite(raw: string): {
@@ -118,27 +181,25 @@ function splitSprite(raw: string): {
 
 const { svgHead, groups } = splitSprite(typingClubHandsRaw)
 
-/** Cache of built pose sprites, keyed by `${hand}|${sorted group ids}`. Each
- *  hand has ~30 pose groups, so this stays tiny (~30x2 entries), and renders
- *  no longer rebuild or re-parse the 60 KB sprite per keystroke. */
+/** Cache of built pose sprites, keyed by hand. Each hand sprite embeds every
+ *  pose group once (hidden, revealed via `data-hand-pose`), so typing that
+ *  alternates keys never re-parses or rebuilds the ~60 KB artwork. */
 const SPRITE_CACHE = new Map<string, string>()
 
-export function typingClubHandSvg(hand: Hand, visibleGroups: ReadonlySet<string>): string {
-    const cacheKey = `${hand}|${[...visibleGroups].sort().join(',')}`
-    const cached = SPRITE_CACHE.get(cacheKey)
+export function typingClubHandSprite(hand: Hand): string {
+    const cached = SPRITE_CACHE.get(hand)
     if (cached !== undefined) return cached
-    const sprite = buildSprite(hand, visibleGroups)
-    SPRITE_CACHE.set(cacheKey, sprite)
+    const sprite = buildHandSprite(hand)
+    SPRITE_CACHE.set(hand, sprite)
     return sprite
 }
 
-function buildSprite(hand: Hand, visibleGroups: ReadonlySet<string>): string {
-    const ownGroups = groups[hand]
+function buildHandSprite(hand: Hand): string {
+    const neutralId = hand === 'left' ? 'neutral-left' : 'neutral-right'
     let body = ''
-    for (const id of visibleGroups) {
-        const xml = ownGroups.get(id)
-        if (!xml) continue
-        body += xml.replace(GROUP_PATTERN(id), `id="${id}" style="display:block"`)
+    for (const [id, xml] of groups[hand]) {
+        const visible = id === neutralId ? 'block' : 'none'
+        body += xml.replace(GROUP_PATTERN(id), `id="${id}" class="st0" data-hand-pose="${id}" style="display:${visible}"`)
     }
     return svgHead + body + '</svg>\n'
 }

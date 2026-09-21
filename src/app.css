@@ -960,9 +960,9 @@
     height: 100%;
 }
 
-/* Pose swaps remount the hand's <div> (pose-keyed in HandOverlay), so the short
-   fade keeps rapid left/right alternation smooth instead of a hard cut; the
-   idle hand never remounts, so it stays completely still while typing. */
+/* The idle hand fades in once on mount; individual pose swaps are crossfaded
+   from revealPoses() in HandOverlay (sprites stay mounted per hand, so rapid
+   keystrokes only toggle group display instead of remounting the artwork). */
 .hand-overlay-hand {
     animation: hand-guide-pose-in 150ms ease-out;
 }

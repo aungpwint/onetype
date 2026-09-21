@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Hand } from '@/types'
-import { TYPING_CLUB_VIEWBOX, typingClubHandSvg } from './hand-assets'
+import { POSE_PADS, poseHand, TYPING_CLUB_VIEWBOX, typingClubHandSprite } from './hand-assets'
 import { handForFinger, fingerForCodeOrNull as resolveFinger } from '@/core/finger-mapping/finger-map'
 import { computeHandLayout, type KeyAnchor, type KeyboardGeometry, type HandLayout } from './hand-geometry'
 
@@ -79,6 +79,11 @@ const KEY_GROUPS: Record<string, string> = {
     Space: 'space',
 }
 
+/** Reverse of KEY_GROUPS: pose id -> the key it targets (those with pads). */
+const POSE_TO_KEY: Record<string, string> = Object.fromEntries(
+    Object.entries(KEY_GROUPS).map(([code, pose]) => [pose, code]),
+)
+
 function visibleGroups(hand: Hand, activeKey: string | null | undefined, shiftKey: string | null | undefined): Set<string> {
     const neutralId = hand === 'left' ? 'neutral-left' : 'neutral-right'
     const groups = new Set<string>()
@@ -95,6 +100,47 @@ function visibleGroups(hand: Hand, activeKey: string | null | undefined, shiftKe
     if (shiftKey === 'ShiftRight' && hand === 'right') groups.add('shift-right')
     if (groups.size === 0) groups.add(neutralId)
     return groups
+}
+
+/** Reveal the visible pose groups inside a mounted hand sprite and crossfade
+ *  the newly shown pose (reusing the pose-in easing) while hiding the rest.
+ *  Sprites are mounted once per hand, so rapid keystrokes only flip a couple
+ *  of `display` styles instead of re-parsing the artwork.
+ *
+ *  `transforms` carries the per-pose pad corrections computed from the measured
+ *  keyboard: each pose's artwork shifts so its pressed pad sits dead-centre on
+ *  the real key, fixing the fixed vertical/horizontal offset baked into the
+ *  sprite drawing (e.g. the Tab reach landing low). */
+function revealPoses(
+    root: HTMLElement | null,
+    visible: ReadonlySet<string>,
+    transforms: ReadonlyMap<string, { x: number; y: number }> | null,
+): void {
+    if (!root) return
+    const reduced =
+        typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+            ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            : false
+    for (const el of root.querySelectorAll<SVGGElement>('[data-hand-pose]')) {
+        const id = el.dataset.handPose ?? ''
+        const moved = transforms?.get(id)
+        el.style.transform = moved ? `translate(${moved.x}px, ${moved.y}px)` : ''
+        const show = visible.has(id)
+        if (show) {
+            if (el.style.display === 'none') {
+                el.style.opacity = '0'
+                el.style.transition = reduced ? 'none' : 'opacity 150ms ease-out'
+                el.style.display = 'block'
+                requestAnimationFrame(() => {
+                    if (el.isConnected && el.style.display === 'block') el.style.opacity = '1'
+                })
+            }
+        } else if (el.style.display !== 'none') {
+            el.style.transition = 'none'
+            el.style.opacity = '1'
+            el.style.display = 'none'
+        }
+    }
 }
 
 export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, children }: HandOverlayProps) {
@@ -166,6 +212,50 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
 
     const handLayout = useMemo<HandLayout | null>(() => (geometry ? computeHandLayout(geometry.anchors) : null), [geometry])
 
+    const leftGroups = useMemo(
+        () => visibleGroups('left', isActive ? activeKey : null, isActive ? shiftKey : null),
+        [isActive, activeKey, shiftKey],
+    )
+    const rightGroups = useMemo(
+        () => visibleGroups('right', isActive ? activeKey : null, isActive ? shiftKey : null),
+        [isActive, activeKey, shiftKey],
+    )
+    const poseTransforms = useMemo(() => {
+        const transforms = new Map<string, { x: number; y: number }>()
+        if (!geometry) return transforms
+        const scale =
+            ((geometry.anchors.get('KeyJ')?.x ?? 0) - (geometry.anchors.get('KeyF')?.x ?? 0)) / (3 * SPRITE_KEY_PITCH)
+        for (const [pose, pad] of Object.entries(POSE_PADS)) {
+            const hand = poseHand(pose)
+            const code = POSE_TO_KEY[pose]
+            if (!hand || !code || !pad) continue
+            const key = geometry.anchors.get(code)
+            const host = geometry.anchors.get(hand === 'left' ? 'KeyF' : 'KeyJ')
+            if (!key || !host) continue
+            const anchor = SPRITE_INDEX_ANCHOR[hand]
+            // Correction that lands the pose's pad on the real key centre. The
+            // measurement is in DOM px but group transforms live in the sprite's
+            // viewBox units (scale px each), so the pixel delta is divided by
+            // `scale` — e.g. the Tab reach is lifted by ~13px / scale ~= 5 units.
+            transforms.set(pose, {
+                x: (key.x - host.x) / scale - (pad.x - anchor.x),
+                y: (key.y - host.y) / scale - (pad.y - anchor.y),
+            })
+        }
+        return transforms
+    }, [geometry])
+    const leftSprite = useMemo(() => typingClubHandSprite('left'), [])
+    const rightSprite = useMemo(() => typingClubHandSprite('right'), [])
+    const leftRef = useRef<HTMLDivElement>(null)
+    const rightRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        revealPoses(leftRef.current, leftGroups, poseTransforms)
+    }, [leftGroups, poseTransforms])
+    useEffect(() => {
+        revealPoses(rightRef.current, rightGroups, poseTransforms)
+    }, [rightGroups, poseTransforms])
+
     if (!handLayout) {
         return (
             <div ref={containerRef} className="hand-overlay-container">
@@ -183,18 +273,14 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
         x: geometry!.kb.x + (geometry!.anchors.get('KeyJ')?.x ?? 0) - SPRITE_INDEX_ANCHOR.right.x * spriteScale,
         y: geometry!.kb.y + (geometry!.anchors.get('KeyJ')?.y ?? 0) - SPRITE_INDEX_ANCHOR.right.y * spriteScale,
     }
-    const leftGroups = visibleGroups('left', isActive ? activeKey : null, isActive ? shiftKey : null)
-    const rightGroups = visibleGroups('right', isActive ? activeKey : null, isActive ? shiftKey : null)
-    const leftSvg = typingClubHandSvg('left', leftGroups)
-    const rightSvg = typingClubHandSvg('right', rightGroups)
 
     return (
         <div ref={containerRef} className="hand-overlay-container">
             <div className="hand-overlay-keyboard">{children}</div>
 
             <div
-                key={`left-${[...leftGroups].sort().join(',')}`}
                 className="hand-overlay-hand hand-overlay-left"
+                ref={leftRef}
                 style={{
                     width: TYPING_CLUB_VIEWBOX.width * spriteScale,
                     height: TYPING_CLUB_VIEWBOX.height * spriteScale,
@@ -202,11 +288,11 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
                     transformOrigin: '0 0',
                 }}
                 aria-hidden
-                dangerouslySetInnerHTML={{ __html: leftSvg }}
+                dangerouslySetInnerHTML={{ __html: leftSprite }}
             />
             <div
-                key={`right-${[...rightGroups].sort().join(',')}`}
                 className="hand-overlay-hand hand-overlay-right"
+                ref={rightRef}
                 style={{
                     width: TYPING_CLUB_VIEWBOX.width * spriteScale,
                     height: TYPING_CLUB_VIEWBOX.height * spriteScale,
@@ -214,7 +300,7 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
                     transformOrigin: '0 0',
                 }}
                 aria-hidden
-                dangerouslySetInnerHTML={{ __html: rightSvg }}
+                dangerouslySetInnerHTML={{ __html: rightSprite }}
             />
         </div>
     )
