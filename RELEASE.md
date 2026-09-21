@@ -268,7 +268,11 @@ of not signing: Windows SmartScreen shows "Unknown publisher".
 **How signing works (pipeline used must stay in-sync):**
 - Signing is configured in `src-tauri/tauri.conf.json` →
   `bundle.windows.signCommand`, which points at
-  `scripts/windows-signing.ps1 -Action Sign "%1"`.
+  `..\scripts\windows-signing.ps1 -Action Sign "%1"`. The tauri CLI runs the
+  bundler from the `src-tauri` directory, so the script path must be anchored
+  with the leading `..\` to reach the repo-root `scripts/` folder — a bare
+  `scripts/...` path does NOT resolve and the build fails with
+  `failed to run powershell`.
 - During `pnpm tauri build`, tauri-bundler invokes that script for the
   application `.exe`, the NSIS installer, the NSIS uninstaller and the MSI.
   The script decodes the base64 PFX from `WINDOWS_CERTIFICATE`, imports it into
