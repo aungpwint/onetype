@@ -13,6 +13,40 @@ and auto-update notes) to build every GitHub Release page.
 
 ### Added
 
+- The hand guide now uses the Typing Club sprite set, with hand poses that land
+  on the measured centres of the actual keys at every window size.
+- Warm-up desk practice redesigned with safe custom text handling and live
+  quick-practice stats.
+- Adaptive drills run inside the exercise workspace, and rounds always start
+  without a stale "no data" state.
+- A level-aware paragraph view with a per-session toggle, wrapping long target
+  prose into a paragraph column.
+- Learners can retake individual completed lesson exercises, and lesson
+  exercises save incrementally so a run can resume where it left off.
+- A lesson-style back button and paragraph toggle on the practice header.
+- Myanmar intermediate lessons reworked: new words and sentences, calibrated
+  duration estimates and completion thresholds, and refined lesson data.
+
+### Fixed
+
+- Typed Myanmar now turns green per keystroke with a layered reveal, the correct
+  press order is enforced, and pre-base vowels stay inside their own syllable
+  cluster.
+- Myanmar press order and Burmese text accuracy audited across the curriculum.
+- The practice page stays pinned to the viewport (scroll lock extracted).
+- Updated updater checks so upgrade states are detected more reliably.
+
+### Changed
+
+- Typing Club hand-guide guideline stroke slimmed, canonical Tailwind utilities
+  and formatting applied, dead comments stripped, and lesson prerequisites
+  removed.
+- App logo refreshed and long signatures/statement lines reformatted.
+
+## [1.6.0] - 2026-09-13
+
+### Added
+
 - Lesson modes: lessons can now run in Guided (press Tab to start), Practice
   (start on the first keystroke) or Strict (Backspace disabled) mode, chosen in
   Settings.

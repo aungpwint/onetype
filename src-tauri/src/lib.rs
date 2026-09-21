@@ -39,7 +39,7 @@ pub fn run() {
             let db = init_database(app)?;
             app.manage(Mutex::new(db));
 
-tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
+            tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
                 .title("OneType — English & Myanmar Typing Tutor")
                 .inner_size(1280.0, 800.0)
                 .min_inner_size(960.0, 640.0)
