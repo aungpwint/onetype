@@ -22,8 +22,11 @@ name: Release
 # Required repository secrets:
 #   TAURI_SIGNING_PRIVATE_KEY          base64 minisign private key (updater signing)
 #   TAURI_SIGNING_PRIVATE_KEY_PASSWORD password for the updater signing key
-#   WINDOWS_CERTIFICATE                (optional) base64 PFX for Authenticode signing
-#   WINDOWS_CERTIFICATE_PASSWORD       (optional) PFX password
+#   WINDOWS_CERTIFICATE                REQUIRED (for Windows production releases):
+#                                      base64 PFX of the CA-issued Authenticode
+#                                      code-signing certificate (see RELEASE.md §7).
+#                                      The build FAILS on Windows if it is unset.
+#   WINDOWS_CERTIFICATE_PASSWORD       password for the Windows PFX
 #   APPLE_CERTIFICATE                  (optional) base64 .p12 Apple Developer ID
 #                                      Application certificate (macOS signing)
 #   APPLE_CERTIFICATE_PASSWORD         (optional) .p12 password
@@ -114,7 +117,6 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     env:
-      WINDOWS_CERT: ${{ secrets.WINDOWS_CERTIFICATE }}
       APPLE_CERT: ${{ secrets.APPLE_CERTIFICATE }}
 
     steps:
@@ -207,6 +209,46 @@ jobs:
           echo "updater signing key secret: OK (length ${#key}); password secret: OK (non-empty)"
 
       # ------------------------------------------------------------------
+      # Windows Authenticode signing is REQUIRED for Windows production
+      # legs: if the certificate secret is missing the run fails right here
+      # instead of shipping an installer that Windows flags as unknown
+      # publisher.
+      # Signing itself happens inside `pnpm tauri build` via
+      # `bundle.windows.signCommand` (scripts/windows-signing.ps1) so the
+      # updater `.sig` files are computed over the *final, signed* installers.
+      # ------------------------------------------------------------------
+      - name: Validate Windows signing configuration (required)
+        if: matrix.runner-os == 'windows'
+        shell: pwsh
+        env:
+          WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $missing = @()
+          if ([string]::IsNullOrWhiteSpace($env:WINDOWS_CERTIFICATE)) {
+            $missing += "WINDOWS_CERTIFICATE (base64 PFX of your CA-issued code-signing certificate)"
+          }
+          if ([string]::IsNullOrWhiteSpace($env:WINDOWS_CERTIFICATE_PASSWORD)) {
+            $missing += "WINDOWS_CERTIFICATE_PASSWORD"
+          }
+          if ($missing.Count -gt 0) {
+            Write-Host "::error::Windows production legs require Authenticode signing, but these repository secrets are missing: $($missing -join ', '). Add them with: gh secret set WINDOWS_CERTIFICATE --repo ${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }} (see RELEASE.md section 7). Refusing to build an unsigned Windows installer."
+            exit 1
+          }
+          try {
+            $bytes = [System.Convert]::FromBase64String($env:WINDOWS_CERTIFICATE)
+            if ($bytes.Length -lt 4 -or ($bytes[0] -ne 0x30)) {
+              Write-Host '::error::WINDOWS_CERTIFICATE does not decode to a PKCS#12 (.pfx) container (expects DER SEQUENCE 0x30). Re-export your certificate as a PFX and base64-encode it (see RELEASE.md section 7).'
+              exit 1
+            }
+          } catch {
+            Write-Host '::error::WINDOWS_CERTIFICATE is not valid base64. Re-encode your .pfx: base64 -w0 cert.pfx (see RELEASE.md section 7).'
+            exit 1
+          }
+          Write-Host "Windows signing configuration OK - Authenticode signing is enabled for this release."
+
+      # ------------------------------------------------------------------
       # macOS Developer ID signing + notarization (production only). The
       # signing certificate and Apple account are injected via CI secrets;
       # when they are absent the build is produced unsigned (clearly
@@ -226,6 +268,8 @@ jobs:
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+          WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
         run: |
           set -euo pipefail
           # macOS Developer ID signing + notarization is production-only and
@@ -241,24 +285,71 @@ jobs:
             export APPLE_TEAM_ID="${{ secrets.APPLE_TEAM_ID }}"
             echo "::notice::macOS signing + notarization enabled (APPLE_* secrets present)"
           fi
+          # On Windows, tauri-bundler Authenticode-signs the app exe, the NSIS
+          # installer and the MSI inside this build via
+          # bundle.windows.signCommand (scripts/windows-signing.ps1). The
+          # WINDOWS_* env vars above are read by that script; they are ignored
+          # on macOS/Linux. The updater .sig is produced AFTER signing, over the
+          # final signed artifacts.
           pnpm tauri build --target ${{ matrix.target }}
 
       # ------------------------------------------------------------------
-      # Windows Authenticode code signing (production only). The certificate
-      # is injected via CI secrets; when absent the step is skipped so
-      # development/staging builds stay clearly distinct from signed
-      # production releases (which only occur from version tags with the
-      # certificate configured).
+      # Verify the Authenticode signatures of the exact artifacts that will
+      # be uploaded. Each must show Status: Valid, a trusted chain, an
+      # embedded publisher identity, a SHA-256 digest and an RFC 3161
+      # timestamp. This step FAILS the run if any artifact is unsigned or
+      # invalid - an unsigned installer can never be released.
+      #
+      # Note: tauri restores an UNSIGNED copy at release/onetype.exe after
+      # bundling; the signed application executable ships inside the NSIS
+      # installer payload. So we extract `onetype.exe` from the installer
+      # with 7-Zip and verify THAT - it is the exact binary users will run.
       # ------------------------------------------------------------------
-      - name: Sign Windows bundles (Authenticode)
-        if: matrix.runner-os == 'windows' && env.WINDOWS_CERT != ''
-        uses: dlemstra/code-sign-action@v1
-        with:
-          certificate: ${{ secrets.WINDOWS_CERTIFICATE }}
-          password: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
-          files: |
-            src-tauri/target/${{ matrix.target }}/release/bundle/nsis/*.exe
-            src-tauri/target/${{ matrix.target }}/release/bundle/msi/*.msi
+      - name: Verify Windows Authenticode signatures
+        if: matrix.runner-os == 'windows'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $target = '${{ matrix.target }}'
+          $root = "src-tauri/target/$target/release"
+
+          $nsis = @(Get-ChildItem -Path "$root/bundle/nsis/*-setup.exe" -ErrorAction SilentlyContinue)
+          $msi  = @(Get-ChildItem -Path "$root/bundle/msi/*.msi" -ErrorAction SilentlyContinue)
+          if (-not $nsis) { Write-Host '::error::NSIS installer not found after tauri build.'; exit 1 }
+          if (-not $msi)  { Write-Host '::error::MSI not found after tauri build.'; exit 1 }
+          $installer = $nsis[0].FullName
+
+          $sevenZip = @('C:\Program Files\7-Zip\7z.exe', 'C:\Program Files (x86)\7-Zip\7z.exe') |
+            Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+          if (-not $sevenZip) {
+            $cmd = Get-Command 7z -ErrorAction SilentlyContinue
+            if ($cmd) { $sevenZip = $cmd.Source }
+          }
+          if (-not $sevenZip) {
+            Write-Host '::error::7-Zip (7z.exe) not found - cannot extract the signed application exe from the NSIS installer for verification (see RELEASE.md section 7).'
+            exit 1
+          }
+          $staging = Join-Path $env:TEMP ("onetype-verify-" + [guid]::NewGuid().ToString('N'))
+          New-Item -ItemType Directory -Path $staging | Out-Null
+          & $sevenZip x -y -o"$staging" $installer | Out-Null
+          if ($LASTEXITCODE -ne 0) { Write-Host "::error::7-Zip failed to extract $installer."; exit 1 }
+          $appExe = @(Get-ChildItem -Path $staging -Recurse -Filter 'onetype.exe' -ErrorAction SilentlyContinue) |
+            Select-Object -First 1
+          if (-not $appExe) {
+            Write-Host '::error::Could not locate onetype.exe inside the NSIS installer payload - cannot verify the shipped application executable.'
+            exit 1
+          }
+
+          $files = @($appExe.FullName, $installer) + @($msi[0].FullName)
+          foreach ($file in $files) {
+            & scripts/windows-signing.ps1 -Action Verify -File $file
+            if ($LASTEXITCODE -ne 0) {
+              Write-Host "::error::Windows Authenticode verification FAILED for $file - the artifact will not be released."
+              exit $LASTEXITCODE
+            }
+          }
+          Write-Host "All Windows artifacts (application exe, NSIS installer, MSI) carry valid, trusted, SHA-256, RFC 3161 timestamped Authenticode signatures."
+          Remove-Item -LiteralPath $staging -Recurse -Force -ErrorAction SilentlyContinue
 
       - name: Upload bundle artifacts
         uses: actions/upload-artifact@v4

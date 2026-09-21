@@ -43,6 +43,8 @@
       "icons/icon.ico"
     ],
     "windows": {
+      "signCommand": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/windows-signing.ps1 -Action Sign %1",
+      "digestAlgorithm": "sha256",
       "nsis": {
         "installMode": "currentUser",
         "installerIcon": "icons/icon.ico"

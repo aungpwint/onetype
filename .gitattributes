@@ -1,0 +1,4 @@
+# Force Markdown files to UTF-8 (no BOM) with LF line endings,
+# independent of core.autocrlf / core.eol settings.
+*.md text eol=lf charset=utf-8
+*.markdown text eol=lf charset=utf-8

@@ -24,7 +24,9 @@
     APPLE_SIGNING_IDENTITY, APPLE_ID, APPLE_PASSWORD, APPLE_TEAM_ID) and the
     Windows Authenticode secrets (WINDOWS_CERTIFICATE, WINDOWS_CERTIFICATE_PASSWORD)
     are NOT handled here - they must be created manually with `gh secret set`
-    per RELEASE.md sections 7 and 7b.
+    per RELEASE.md sections 7 and 7b. Add the Windows secrets before releasing,
+    otherwise the Windows production build now FAILS (signing is required, see
+    RELEASE.md section 7).
 #>
 
 param(
@@ -93,6 +95,6 @@ $fpPw = -join ($fpBytes | ForEach-Object { $_.ToString("x2") })
 Write-Host "[set-ci-secrets] OK - secrets updated on $Repo" -ForegroundColor Green
 Write-Host "  TAURI_SIGNING_PRIVATE_KEY          len $($key.Length)  sha256:$fp"
 Write-Host "  TAURI_SIGNING_PRIVATE_KEY_PASSWORD len $($password.Length)  sha256:$fpPw"
-Write-Host "[set-ci-secrets] Next: re-push tag v1.0.1 or re-run the failed release run in GitHub Actions."
+Write-Host "[set-ci-secrets] Next: re-push the version tag (e.g. the failed run's vX.Y.Z) or re-run the release in GitHub Actions."
 Write-Host "[set-ci-secrets] Verified locally: this key/password signed a file and the derived"
 Write-Host "[set-ci-secrets] public key matches plugins.updater.pubkey (F4B14476E075161B)."

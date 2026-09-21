@@ -107,8 +107,8 @@ Secrets are configured in GitHub → Settings → Secrets and variables → Acti
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- | ------------ |
 | `TAURI_SIGNING_PRIVATE_KEY`          | base64 minisign **private** key used to sign update bundles. Without it, updater artifacts (`.sig`) cannot be produced. | **Yes**      |
 | `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` | password for the above key.                                                                                             | **Yes**      |
-| `WINDOWS_CERTIFICATE`                | base64 of a PFX containing the Authenticode certificate.                                                                | No (see §7)  |
-| `WINDOWS_CERTIFICATE_PASSWORD`       | password for the PFX.                                                                                                   | No (see §7)  |
+| `WINDOWS_CERTIFICATE`                | base64 of a PFX containing the Authenticode **code-signing** certificate. The Windows build **fails** without it (signing is a hard requirement, see §7). | **Yes***   |
+| `WINDOWS_CERTIFICATE_PASSWORD`       | password for the PFX.                                                                                                                                       | **Yes***   |
 | `APPLE_CERTIFICATE`                  | base64 `.p12` Apple **Developer ID Application** certificate used to sign the macOS app.                                | No (see §7b) |
 | `APPLE_CERTIFICATE_PASSWORD`         | password for the `.p12`.                                                                                                | No (see §7b) |
 | `APPLE_SIGNING_IDENTITY`             | signing identity as shown in Keychain, e.g. `Developer ID Application: Aung Pwint (TEAMID)`.                            | No (see §7b) |
@@ -116,11 +116,13 @@ Secrets are configured in GitHub → Settings → Secrets and variables → Acti
 | `APPLE_PASSWORD`                     | app-specific password for the Apple ID (create it at appleid.apple.com → App-Specific Passwords).                       | No (see §7b) |
 | `APPLE_TEAM_ID`                      | Apple Developer Team ID.                                                                                                | No (see §7b) |
 
-> The updater key (`TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]`) is the **only**
-> secret required for a working release. Windows and Apple secrets are optional
-> production upgrades: when absent, the workflow produces unsigned (clearly
-> distinguishable) development/staging builds. When present, the corresponding
-> signing + notarization steps run automatically.
+> The updater key (`TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]`) is required for
+> every release. `WINDOWS_CERTIFICATE[_PASSWORD]` (`*` above) are **required
+> whenever the release must produce a Windows installer** - the Windows build
+> leg refuses to run unsigned, so a missing Windows certificate aborts the
+> whole release (nothing is published). Apple secrets remain optional: when
+> absent, the macOS build is produced unsigned and clearly distinguishable
+> from a signed production build.
 
 The workflow passes `TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]` exactly as Tauri
 expects. They are masked by GitHub and never printed in logs. Only the **public**
@@ -254,16 +256,89 @@ To test offline installation:
 
 ## 7. Windows code signing (Authenticode)
 
-Code signing is **production-only and optional**: if you have an Authenticode
-certificate, put the PFX (base64) and its password into the
-`WINDOWS_CERTIFICATE` and `WINDOWS_CERTIFICATE_PASSWORD` secrets. When those two
-secrets are both set, the Windows build signs the NSIS `.exe` and MSI with a
-timestamp. When they are absent, the signing step is skipped; development and
-staging builds remain clearly distinguishable from signed production builds.
+Windows production builds **must** be Authenticode-signed with a real
+CA-issued **code-signing** certificate (e.g. DigiCert, GlobalSign, Sectigo).
+Signing is a hard gate: the CI Windows leg fails the release if the signing
+credentials are missing, and `pnpm tauri build` on Windows fails immediately if
+`WINDOWS_CERTIFICATE` is not set. This guarantees a released installer never
+shows Windows "Unknown publisher".
 
-A real certificate must be obtained from a CA (e.g. DigiCert, GlobalSign,
-Sectigo). The pipeline is deliberately configured so the certificate can be
-injected securely through CI secrets later without changing the workflow.
+**How signing works (pipeline used must stay in-sync):**
+- Signing is configured in `src-tauri/tauri.conf.json` →
+  `bundle.windows.signCommand`, which points at
+  `scripts/windows-signing.ps1 -Action Sign "%1"`.
+- During `pnpm tauri build`, tauri-bundler invokes that script for the
+  application `.exe`, the NSIS installer, the NSIS uninstaller and the MSI.
+  The script decodes the base64 PFX from `WINDOWS_CERTIFICATE`, imports it into
+  the `CurrentUser\My` certificate store, and signs with `signtool` using a
+  **SHA-256** digest and an **RFC 3161 timestamp** (DigiCert by default,
+  override with `WINDOWS_TIMESTAMP_URL`). It then re-verifies each file.
+- The Tauri updater `.sig` files are produced **after** signing, over the final
+  signed installers — do **not** sign Windows artifacts *after* `tauri build`
+  (that would invalidate the `.sig` files).
+- After the build, CI runs `scripts/windows-signing.ps1 -Action Verify` on the
+  application `.exe` (extracted from the installer payload — tauri restores an
+  unsigned copy at `release/onetype.exe`), on the NSIS installer and on the
+  MSI, printing release diagnostics
+  (publisher subject, issuer, expiry, thumbprint, signature status). The run
+  fails if any artifact is unsigned or invalid, so the exact bytes uploaded to
+  the GitHub Release are the verified, signed ones.
+
+**One-time setup (certificate → CI secrets):**
+
+1. Obtain a code-signing certificate (Code Signing EKU 1.3.6.1.5.5.7.3.3) and
+   export it together with its private key as a `.pfx` (DigiCert: "Export with
+   private key" → PKCS #12). Keep the file private.
+2. Set the GitHub Actions secrets (values are masked, never logged):
+
+    ```bash
+    cert_b64=$(base64 -w0 /path/to/code-signing.pfx)
+    gh secret set WINDOWS_CERTIFICATE       --repo aungpwint/onetype --body "$cert_b64"
+    gh secret set WINDOWS_CERTIFICATE_PASSWORD --repo aungpwint/onetype   # prompts, hidden input
+    ```
+
+3. Confirm the secrets are set (values cannot be read back — GitHub only
+    reveals names):
+
+    ```bash
+    gh secret list --repo aungpwint/onetype
+    ```
+
+    The full validation (PFX decodes, imports, signs every artifact with a
+    timestamp, chains to a trusted root) runs automatically on the next
+    release; any problem fails the Windows leg with a clear message.
+
+**Local production Windows build (developer machine):**
+
+```powershell
+$env:WINDOWS_CERTIFICATE            = "<base64 PFX of your code-signing certificate>"
+$env:WINDOWS_CERTIFICATE_PASSWORD   = "<PFX password>"
+$env:TAURI_SIGNING_PRIVATE_KEY      = "<base64 minisign key from set-ci-secrets>"
+$env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD = "<minisign key password>"
+pnpm tauri build
+# verify every artifact that should be signed (the signed app exe lives inside
+# the installer payload; tauri restores an unsigned copy at release/onetype.exe):
+pwsh scripts/windows-signing.ps1 -Action Verify -File src-tauri\target\x86_64-pc-windows-msvc\release\bundle\nsis\<...>_x64-setup.exe
+pwsh scripts/windows-signing.ps1 -Action Verify -File src-tauri\target\x86_64-pc-windows-msvc\release\bundle\msi\<...>.msi
+```
+
+`pnpm tauri dev` needs none of these variables (no bundling happens in dev), so
+day-to-day development is unaffected.
+
+**Microsoft Artifact Signing alternative:** this project ships only from GitHub
+Actions and has no Azure account/trust setup, so standard OV code-signing is
+used. Because signing goes through the single `bundle.windows.signCommand`
+hook, adopting Microsoft Artifact Signing later only requires pointing that
+command at the Artifact Signing CLI (and adding the `AZURE_*` secrets); the
+required-secret gate and the verification step below stay unchanged.
+
+> **SmartScreen note:** a correctly signed installer removes the "Unknown
+> publisher" warning, because Windows then identifies the publisher from the
+> embedded certificate. It does **not** give an immediate untracked reputation
+> score; until an app's reputation is established, SmartScreen may still show
+> "Unrecognized app" on brand-new, low-volume signatures. That warning is
+> expected and resolves as reputation builds; it is a reputation question, not
+> a signing defect.
 
 ---
 
