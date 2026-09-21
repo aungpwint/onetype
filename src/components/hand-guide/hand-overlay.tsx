@@ -14,14 +14,17 @@ interface HandOverlayProps {
     children?: ReactNode
 }
 
-const REFERENCE_HAND_ANCHORS = {
-    left: { x: 243, y: 228.4 },
-    right: { x: 342, y: 228.4 },
-    pitch: 99,
-    scale: 0.9,
-    leftOffsetX: -40,
-    offsetY: -5,
+// Placement of the Typing Club sprite relative to the measured keyboard.
+// The sprite's own home-row finger pads and key pitch were recovered from the
+// artwork (typing-club-hands.svg): left index pad (f pose) at (261.7, 160.4),
+// right index pad (j pose) at (355.5, 157.0), average home-row pitch 29.5u.
+// Anchoring those pads on the real KeyF/KeyJ centres and scaling to the DOM
+// gap between them keeps every home-row key aligned and both hands symmetric.
+const SPRITE_INDEX_ANCHOR = {
+    left: { x: 261.7, y: 160.4 },
+    right: { x: 355.5, y: 157.0 },
 }
+const SPRITE_KEY_PITCH = 29.5
 
 const KEY_GROUPS: Record<string, string> = {
     Backquote: 'tilda',
@@ -171,28 +174,14 @@ export function HandOverlay({ layout, activeKey, shiftKey, isActive = true, chil
         )
     }
 
-    const spriteScale = (((geometry!.anchors.get('KeyJ')?.x ?? 0) - (geometry!.anchors.get('KeyF')?.x ?? 99)) / 99) * REFERENCE_HAND_ANCHORS.scale
+    const spriteScale = ((geometry!.anchors.get('KeyJ')?.x ?? 0) - (geometry!.anchors.get('KeyF')?.x ?? 0)) / (3 * SPRITE_KEY_PITCH)
     const leftPos = {
-        x:
-            geometry!.kb.x +
-            (geometry!.anchors.get('KeyF')?.x ?? 0) -
-            REFERENCE_HAND_ANCHORS.left.x * spriteScale +
-            REFERENCE_HAND_ANCHORS.leftOffsetX,
-        y:
-            geometry!.kb.y +
-            (geometry!.anchors.get('KeyF')?.y ?? 0) -
-            REFERENCE_HAND_ANCHORS.left.y * spriteScale +
-            REFERENCE_HAND_ANCHORS.pitch +
-            REFERENCE_HAND_ANCHORS.offsetY,
+        x: geometry!.kb.x + (geometry!.anchors.get('KeyF')?.x ?? 0) - SPRITE_INDEX_ANCHOR.left.x * spriteScale,
+        y: geometry!.kb.y + (geometry!.anchors.get('KeyF')?.y ?? 0) - SPRITE_INDEX_ANCHOR.left.y * spriteScale,
     }
     const rightPos = {
-        x: geometry!.kb.x + (geometry!.anchors.get('KeyJ')?.x ?? 0) - REFERENCE_HAND_ANCHORS.right.x * spriteScale,
-        y:
-            geometry!.kb.y +
-            (geometry!.anchors.get('KeyJ')?.y ?? 0) -
-            REFERENCE_HAND_ANCHORS.right.y * spriteScale +
-            REFERENCE_HAND_ANCHORS.pitch +
-            REFERENCE_HAND_ANCHORS.offsetY,
+        x: geometry!.kb.x + (geometry!.anchors.get('KeyJ')?.x ?? 0) - SPRITE_INDEX_ANCHOR.right.x * spriteScale,
+        y: geometry!.kb.y + (geometry!.anchors.get('KeyJ')?.y ?? 0) - SPRITE_INDEX_ANCHOR.right.y * spriteScale,
     }
     const leftGroups = visibleGroups('left', isActive ? activeKey : null, isActive ? shiftKey : null)
     const rightGroups = visibleGroups('right', isActive ? activeKey : null, isActive ? shiftKey : null)
