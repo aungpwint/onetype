@@ -22,10 +22,14 @@ name: Release
 # Required repository secrets:
 #   TAURI_SIGNING_PRIVATE_KEY          base64 minisign private key (updater signing)
 #   TAURI_SIGNING_PRIVATE_KEY_PASSWORD password for the updater signing key
-#   WINDOWS_CERTIFICATE                REQUIRED (for Windows production releases):
-#                                      base64 PFX of the CA-issued Authenticode
-#                                      code-signing certificate (see RELEASE.md §7).
-#                                      The build FAILS on Windows if it is unset.
+#   WINDOWS_CERTIFICATE                (BEST-EFFORT) base64 PFX of the CA-issued
+#                                      Authenticode code-signing certificate (see
+#                                      RELEASE.md §7). When set, Windows artifacts
+#                                      are signed with SHA-256 + RFC 3161 stamp and
+#                                      verified before upload. When UNSET the
+#                                      Windows build proceeds UNSIGNED with a clear
+#                                      warning (SmartScreen "Unknown publisher") -
+#                                      it does NOT fail the release.
 #   WINDOWS_CERTIFICATE_PASSWORD       password for the Windows PFX
 #   APPLE_CERTIFICATE                  (optional) base64 .p12 Apple Developer ID
 #                                      Application certificate (macOS signing)
@@ -118,6 +122,7 @@ jobs:
 
     env:
       APPLE_CERT: ${{ secrets.APPLE_CERTIFICATE }}
+      HAVE_WINDOWS_CERT: ${{ secrets.WINDOWS_CERTIFICATE != '' && secrets.WINDOWS_CERTIFICATE_PASSWORD != '' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -209,31 +214,36 @@ jobs:
           echo "updater signing key secret: OK (length ${#key}); password secret: OK (non-empty)"
 
       # ------------------------------------------------------------------
-      # Windows Authenticode signing is REQUIRED for Windows production
-      # legs: if the certificate secret is missing the run fails right here
-      # instead of shipping an installer that Windows flags as unknown
-      # publisher.
-      # Signing itself happens inside `pnpm tauri build` via
-      # `bundle.windows.signCommand` (scripts/windows-signing.ps1) so the
-      # updater `.sig` files are computed over the *final, signed* installers.
+      # Windows Authenticode signing is BEST-EFFORT: when the certificate
+      # secrets are configured we validate them here, sign inside
+      # `pnpm tauri build` via `bundle.windows.signCommand`
+      # (scripts/windows-signing.ps1) so the updater `.sig` files are
+      # computed over the *final, signed* installers, and verify the results
+      # in a later step. When the secrets are NOT configured the build runs
+      # unsigned (windows-signing.ps1 exits 0 with a warning) so the release
+      # can still ship - SmartScreen will flag the installer as Unknown
+      # publisher, which is why signing is strongly recommended.
       # ------------------------------------------------------------------
-      - name: Validate Windows signing configuration (required)
-        if: matrix.runner-os == 'windows'
+      - name: Windows Authenticode signing - NOT configured (best-effort notice)
+        if: matrix.runner-os == 'windows' && env.HAVE_WINDOWS_CERT != 'true'
+        shell: bash
+        run: |
+          echo "::warning::WINDOWS_CERTIFICATE / WINDOWS_CERTIFICATE_PASSWORD are not configured - this Windows build will be UNSIGNED (Windows SmartScreen may show 'Unknown publisher'). Set the secrets and re-run any release to sign every artifact (see RELEASE.md section 7)."
+
+      - name: Validate Windows signing configuration (when configured)
+        if: matrix.runner-os == 'windows' && env.HAVE_WINDOWS_CERT == 'true'
         shell: pwsh
         env:
           WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
           WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
         run: |
           $ErrorActionPreference = 'Stop'
-          $missing = @()
           if ([string]::IsNullOrWhiteSpace($env:WINDOWS_CERTIFICATE)) {
-            $missing += "WINDOWS_CERTIFICATE (base64 PFX of your CA-issued code-signing certificate)"
+            Write-Host '::error::WINDOWS_CERTIFICATE secret is empty.'
+            exit 1
           }
           if ([string]::IsNullOrWhiteSpace($env:WINDOWS_CERTIFICATE_PASSWORD)) {
-            $missing += "WINDOWS_CERTIFICATE_PASSWORD"
-          }
-          if ($missing.Count -gt 0) {
-            Write-Host "::error::Windows production legs require Authenticode signing, but these repository secrets are missing: $($missing -join ', '). Add them with: gh secret set WINDOWS_CERTIFICATE --repo ${{ env.GITHUB_OWNER }}/${{ env.GITHUB_REPO }} (see RELEASE.md section 7). Refusing to build an unsigned Windows installer."
+            Write-Host '::error::WINDOWS_CERTIFICATE_PASSWORD secret is empty.'
             exit 1
           }
           try {
@@ -287,18 +297,20 @@ jobs:
           fi
           # On Windows, tauri-bundler Authenticode-signs the app exe, the NSIS
           # installer and the MSI inside this build via
-          # bundle.windows.signCommand (scripts/windows-signing.ps1). The
-          # WINDOWS_* env vars above are read by that script; they are ignored
-          # on macOS/Linux. The updater .sig is produced AFTER signing, over the
-          # final signed artifacts.
+          # bundle.windows.signCommand (scripts/windows-signing.ps1) *when the
+          # WINDOWS_* env vars are configured*; otherwise that script skips
+          # (exit 0, warning) and the build is produced unsigned. The env vars
+          # are ignored on macOS/Linux. The updater .sig is produced AFTER
+          # signing, over the final signed artifacts.
           pnpm tauri build --target ${{ matrix.target }}
 
       # ------------------------------------------------------------------
       # Verify the Authenticode signatures of the exact artifacts that will
       # be uploaded. Each must show Status: Valid, a trusted chain, an
       # embedded publisher identity, a SHA-256 digest and an RFC 3161
-      # timestamp. This step FAILS the run if any artifact is unsigned or
-      # invalid - an unsigned installer can never be released.
+      # timestamp. This step runs only when Authenticode signing was
+      # configured (HAVE_WINDOWS_CERT) and FAILS the run if any artifact
+      # is unsigned or invalid - a broken signature can never be released.
       #
       # Note: tauri restores an UNSIGNED copy at release/onetype.exe after
       # bundling; the signed application executable ships inside the NSIS
@@ -306,7 +318,7 @@ jobs:
       # with 7-Zip and verify THAT - it is the exact binary users will run.
       # ------------------------------------------------------------------
       - name: Verify Windows Authenticode signatures
-        if: matrix.runner-os == 'windows'
+        if: matrix.runner-os == 'windows' && env.HAVE_WINDOWS_CERT == 'true'
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'

@@ -24,9 +24,10 @@
  * validates and publishes the GitHub Release and updater metadata.
  *
  * Required CI secrets (never local): TAURI_SIGNING_PRIVATE_KEY,
- * TAURI_SIGNING_PRIVATE_KEY_PASSWORD, and WINDOWS_CERTIFICATE[_PASSWORD]
- * (required for Windows legs - the release fails on Windows without them,
- * see RELEASE.md section 7).
+ * TAURI_SIGNING_PRIVATE_KEY_PASSWORD, and (strongly recommended but optional)
+ * WINDOWS_CERTIFICATE[_PASSWORD] - when the Windows secrets are absent the
+ * Windows build is produced UNSIGNED with a warning instead of failing the
+ * release, see RELEASE.md section 7.
  */
 
 import { spawnSync } from 'node:child_process'

@@ -10,7 +10,9 @@
                 PFX from the WINDOWS_CERTIFICATE env var, imports it into the
                 CurrentUser\My certificate store, and signs the file with
                 `signtool sign` (SHA-256 digest, RFC 3161 timestamp), then
-                verifies the result before returning.
+                verifies the result before returning. When the certificate
+                env vars are NOT set, signing is SKIPPED (exit 0) with a loud
+                warning so a best-effort unsigned build can proceed.
       Verify  - run after `tauri build` completes to check that a file carries
                 a valid, chain-trusted, SHA-256, RFC 3161 timestamped
                 Authenticode signature and to print safe release diagnostics
@@ -18,8 +20,11 @@
 
     Environment variables (never commit certificates or passwords to the repo):
 
-      WINDOWS_CERTIFICATE          base64-encoded PKCS#12 (.pfx) containing the
-                                   CA-issued code-signing certificate + private key
+      WINDOWS_CERTIFICATE          (BEST-EFFORT) base64-encoded PKCS#12 (.pfx)
+                                   containing the CA-issued code-signing
+                                   certificate + private key. If unset, Sign
+                                   skips the file (unsigned build with warning);
+                                   Verify fails (an unsigned file is invalid).
       WINDOWS_CERTIFICATE_PASSWORD password for the PFX
       WINDOWS_TIMESTAMP_URL        (optional) RFC 3161 timestamp server, defaults
                                    to http://timestamp.digicert.com
@@ -30,7 +35,9 @@
       pwsh scripts/windows-signing.ps1 -Action Sign   -File <path>   # tauri signCommand
       pwsh scripts/windows-signing.ps1 -Action Verify -File <path>   # CI / manual verification
 
-    Exits non-zero on any failure so an unsigned/broken artifact fails the build.
+    Exits non-zero on any real failure so a broken artifact fails the build.
+    The one deliberate exception: Sign exits 0 (with a warning) when no
+    WINDOWS_CERTIFICATE is configured, so an unsigned best-effort build works.
     No secrets (PFX contents or password) are ever written to the log.
 #>
 
@@ -144,12 +151,10 @@ if (-not (Test-Path -LiteralPath $resolved -PathType Leaf)) {
 
 if ($Action -eq 'Sign') {
   $certB64 = [string]$env:WINDOWS_CERTIFICATE
-  if ([string]::IsNullOrWhiteSpace($certB64)) {
-    Write-Fail "production signing requires the WINDOWS_CERTIFICATE env var (base64 PFX of a CA-issued code-signing certificate). Set it on this machine (see RELEASE.md section 7) - refusing to produce an unsigned production build."
-  }
   $certPassword = [string]$env:WINDOWS_CERTIFICATE_PASSWORD
-  if ([string]::IsNullOrWhiteSpace($certPassword)) {
-    Write-Fail "production signing requires the WINDOWS_CERTIFICATE_PASSWORD env var. Set it on this machine (see RELEASE.md section 7)."
+  if ([string]::IsNullOrWhiteSpace($certB64) -or [string]::IsNullOrWhiteSpace($certPassword)) {
+    Write-Host "[windows-signing] WARNING: WINDOWS_CERTIFICATE / WINDOWS_CERTIFICATE_PASSWORD are not set - SKIPPING Authenticode signing for $resolved. This build is UNSIGNED and Windows/Edge may report `"Unknown publisher`". Configure them (see RELEASE.md section 7) to sign production builds."
+    exit 0
   }
 
   $pfxPath = Join-Path $env:TEMP ("onetype-signing-" + [guid]::NewGuid().ToString('N') + '.pfx')

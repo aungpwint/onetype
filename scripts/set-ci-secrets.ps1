@@ -24,9 +24,9 @@
     APPLE_SIGNING_IDENTITY, APPLE_ID, APPLE_PASSWORD, APPLE_TEAM_ID) and the
     Windows Authenticode secrets (WINDOWS_CERTIFICATE, WINDOWS_CERTIFICATE_PASSWORD)
     are NOT handled here - they must be created manually with `gh secret set`
-    per RELEASE.md sections 7 and 7b. Add the Windows secrets before releasing,
-    otherwise the Windows production build now FAILS (signing is required, see
-    RELEASE.md section 7).
+    per RELEASE.md sections 7 and 7b. Add the Windows secrets to get
+    Authenticode-signed installers; without them the Windows build is produced
+    UNSIGNED with a warning (best-effort, see RELEASE.md section 7).
 #>
 
 param(
