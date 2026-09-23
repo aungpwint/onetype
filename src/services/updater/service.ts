@@ -1,6 +1,12 @@
 import { type Update } from '@tauri-apps/plugin-updater'
 import { relaunch } from '@tauri-apps/plugin-process'
-import { isUpdateAvailable, mapUpdateError, type UpdateStatus } from './types'
+import {
+    isUpdateAvailable,
+    mapUpdateError,
+    snoozeRemaining,
+    UPDATE_SNOOZE_MS,
+    type UpdateStatus,
+} from './types'
 
 import { isTauriRuntime } from '@/services/ipc'
 import { notificationService } from '@/services/notification/service'
@@ -13,6 +19,21 @@ function updateNotificationsEnabled(): boolean {
 
 type Listener = (status: UpdateStatus) => void
 
+function snoozeUntil(): number {
+    return Number(useSettingsStore.getState().get('updater.snoozeUntil')) || 0
+}
+
+export function updateSnoozeRemaining(version?: string): number {
+    return snoozeRemaining(Date.now(), snoozeUntil(), useSettingsStore.getState().get('updater.snoozeVersion'), version)
+}
+
+export async function snoozeUpdate(version?: string): Promise<void> {
+    const store = useSettingsStore.getState()
+    const base = Math.max(Date.now(), snoozeUntil())
+    await store.set('updater.snoozeUntil', String(base + UPDATE_SNOOZE_MS))
+    if (version) await store.set('updater.snoozeVersion', version)
+}
+
 class UpdaterService {
     private status: UpdateStatus = { state: 'idle' }
     private listeners = new Set<Listener>()
@@ -20,6 +41,8 @@ class UpdaterService {
     private version: string | undefined
     private checking = false
     private downloading = false
+    private installedVersion: string | undefined
+    private installedVersionRead = false
 
     subscribe(fn: Listener): () => void {
         this.listeners.add(fn)
@@ -45,11 +68,19 @@ class UpdaterService {
         }
     }
 
+    private async getInstalledVersion(): Promise<string | undefined> {
+        if (!this.installedVersionRead) {
+            this.installedVersionRead = true
+            this.installedVersion = await this.getCurrentVersion()
+        }
+        return this.installedVersion
+    }
+
     private hasNetwork(): boolean {
         return typeof navigator === 'undefined' || navigator.onLine !== false
     }
 
-    async check(currentVersion?: string, { silent = false } = {}): Promise<boolean> {
+    async check(currentVersion?: string, { silent = false, force = false } = {}): Promise<boolean> {
         if (this.checking) return false
         if (!isTauriRuntime()) {
             this.emit({ state: 'not-available' })
@@ -74,8 +105,15 @@ class UpdaterService {
                 return false
             }
 
-            const installedVersion = currentVersion ?? (await this.getCurrentVersion())
+            const installedVersion = currentVersion ?? (await this.getInstalledVersion()) ?? update.currentVersion
             if (!isUpdateAvailable(installedVersion, update.version)) {
+                this.updateObj = null
+                this.version = undefined
+                this.emit({ state: 'not-available' })
+                return false
+            }
+
+            if (!force && updateSnoozeRemaining(update.version) > 0) {
                 this.updateObj = null
                 this.version = undefined
                 this.emit({ state: 'not-available' })

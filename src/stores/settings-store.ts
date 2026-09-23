@@ -32,6 +32,8 @@ export const APP_SETTING_KEYS = [
     'dashboard.dailyGoalMinutes',
     'teacher.studentCodePrefix',
     'updater.lastChecked',
+    'updater.snoozeUntil',
+    'updater.snoozeVersion',
     'notification.enabled',
     'notification.notifyUpdates',
     'notification.lastNotifiedVersion',
@@ -70,12 +72,16 @@ export const DEFAULT_SETTINGS: Record<AppSettingKey, string> = {
     'dashboard.dailyGoalMinutes': '15',
     'teacher.studentCodePrefix': 'STU',
     'updater.lastChecked': '0',
+    'updater.snoozeUntil': '0',
+    'updater.snoozeVersion': '',
     'notification.enabled': 'on',
     'notification.notifyUpdates': 'on',
     'notification.lastNotifiedVersion': '',
 }
 
 const ON_OFF: readonly string[] = ['on', 'off']
+
+let loadInFlight: Promise<void> | null = null
 
 // Per-key value rules. Any value failing its predicate is coerced back to the
 // default at write time, so garbage (a bad editor value, a malformed import, a
@@ -115,6 +121,8 @@ const SETTING_RULES: Partial<Record<AppSettingKey, (value: string) => boolean>> 
     'dashboard.dailyGoalMinutes': (v) => nonNegativeNumber(v),
     'teacher.studentCodePrefix': (v) => /^[A-Za-z]{1,6}$/.test(v),
     'updater.lastChecked': (v) => nonNegativeNumber(v),
+    'updater.snoozeUntil': (v) => nonNegativeNumber(v),
+    'updater.snoozeVersion': (v) => v.length <= 64,
     'notification.enabled': (v) => ON_OFF.includes(v),
     'notification.notifyUpdates': (v) => ON_OFF.includes(v),
     'notification.lastNotifiedVersion': (v) => v.length <= 64,
@@ -151,12 +159,19 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     values: { ...DEFAULT_SETTINGS },
     loaded: false,
     load: async () => {
-        try {
-            const all = await backend.allSettings()
-            set({ values: { ...DEFAULT_SETTINGS, ...all }, loaded: true })
-        } catch {
-            set({ values: { ...DEFAULT_SETTINGS }, loaded: true })
-        }
+        if (get().loaded) return
+        if (loadInFlight) return loadInFlight
+        loadInFlight = (async () => {
+            try {
+                const all = await backend.allSettings()
+                set({ values: { ...DEFAULT_SETTINGS, ...all }, loaded: true })
+            } catch {
+                set({ values: { ...DEFAULT_SETTINGS }, loaded: true })
+            } finally {
+                loadInFlight = null
+            }
+        })()
+        return loadInFlight
     },
     get: (key) => {
         return get().values[key] ?? DEFAULT_SETTINGS[key]

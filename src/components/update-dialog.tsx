@@ -1,6 +1,8 @@
 import { AlertCircle, CheckCircle2, Download, Loader2, RefreshCw } from 'lucide-react'
 import { useState } from 'react'
 import { useUpdater } from '@/services/updater/use-updater'
+import { snoozeUpdate } from '@/services/updater/service'
+import { useSettingsStore } from '@/stores/settings-store'
 import { Modal } from './ui'
 import { Button } from './ui/button'
 import { Progress } from './ui/progress'
@@ -15,18 +17,36 @@ function formatBytes(bytes: number | undefined): string {
 
 export function UpdateDialog() {
     const { status, check, updateNow, install, reset, autoUpdate } = useUpdater()
+    const settingsLoaded = useSettingsStore((s) => s.loaded)
     const [dismissedVersion, setDismissedVersion] = useState<string | null>(null)
     const [dismissedDownload, setDismissedDownload] = useState(false)
 
     if (autoUpdate === 'off') return null
+    if (!settingsLoaded) return null
     if (status.state === 'idle' || status.state === 'checking' || status.state === 'not-available') return null
     if (status.state === 'available' && dismissedVersion === status.version) return null
     if (status.state === 'downloaded' && dismissedDownload) return null
 
     const handleLater = () => {
-        if (status.state === 'available') setDismissedVersion(status.version)
-        else if (status.state === 'downloaded') setDismissedDownload(true)
+        if (status.state === 'available') {
+            setDismissedVersion(status.version)
+            void snoozeUpdate(status.version)
+        } else if (status.state === 'downloaded') setDismissedDownload(true)
         else if (status.state === 'error' || status.state === 'completed') void reset()
+    }
+
+    const handleUpdateNow = () => {
+        if (status.state === 'available') void snoozeUpdate(status.version)
+        void updateNow()
+    }
+
+    const handleInstall = () => {
+        if (status.state === 'downloaded' && status.version) void snoozeUpdate(status.version)
+        void install()
+    }
+
+    const handleCheckAgain = () => {
+        check()
     }
 
     const busy = status.state === 'downloading' || status.state === 'installing'
@@ -51,7 +71,7 @@ export function UpdateDialog() {
                         <Button variant="ghost" onClick={handleLater}>
                             Later
                         </Button>
-                        <Button variant="brass" onClick={() => void updateNow()}>
+                        <Button variant="brass" onClick={handleUpdateNow}>
                             <Download className="size-4" />
                             Update Now
                         </Button>
@@ -91,7 +111,7 @@ export function UpdateDialog() {
                         <Button variant="ghost" onClick={handleLater}>
                             Later
                         </Button>
-                        <Button variant="default" onClick={() => void install()}>
+                        <Button variant="default" onClick={handleInstall}>
                             <RefreshCw className="size-4" />
                             Restart &amp; Update
                         </Button>
@@ -140,7 +160,7 @@ export function UpdateDialog() {
                         <Button variant="ghost" onClick={handleLater}>
                             Later
                         </Button>
-                        <Button variant="default" onClick={() => void check()}>
+                        <Button variant="default" onClick={handleCheckAgain}>
                             <RefreshCw className="size-4" />
                             Try again
                         </Button>

@@ -13,7 +13,7 @@ export function useUpdater() {
         return updaterService.subscribe(setStatus)
     }, [])
 
-    const check = useCallback(() => updaterService.check(), [])
+    const check = useCallback(() => updaterService.check(undefined, { force: true }), [])
     const downloadAndInstall = useCallback(() => updaterService.downloadAndInstall(), [])
     const updateNow = useCallback(() => updaterService.downloadAndInstall(true), [])
     const install = useCallback(() => updaterService.install(), [])
@@ -31,10 +31,17 @@ export function useStartupUpdateCheck() {
     useEffect(() => {
         let disposed = false
 
+        const ensureSettings = async () => {
+            const settings = useSettingsStore.getState()
+            if (!settings.loaded) await settings.load()
+        }
+
         const runCheck = async (throttled: boolean) => {
             if (autoUpdate === 'off') return
             if (disposed) return
             if (typeof navigator !== 'undefined' && navigator.onLine === false) return
+            await ensureSettings()
+            if (disposed) return
 
             const now = Date.now()
             const last = Number(lastChecked) || 0

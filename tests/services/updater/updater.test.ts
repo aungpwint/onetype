@@ -1,5 +1,14 @@
 import { describe, it, expect } from 'vitest'
-import { CHECK_THROTTLE_MS, compareVersions, isNewerVersion, isUpdateAvailable, mapUpdateError, type UpdateStatus } from '@/services/updater/types'
+import {
+    CHECK_THROTTLE_MS,
+    UPDATE_SNOOZE_MS,
+    compareVersions,
+    isNewerVersion,
+    isUpdateAvailable,
+    mapUpdateError,
+    snoozeRemaining,
+    type UpdateStatus,
+} from '@/services/updater/types'
 
 describe('update state machine', () => {
     it('idle state exists', () => {
@@ -164,6 +173,28 @@ describe('mapUpdateError', () => {
     it('maps unknown errors', () => {
         expect(mapUpdateError(new Error('something weird'))).toBe('An update error occurred.')
         expect(mapUpdateError('string error')).toBe('An update error occurred.')
+    })
+})
+
+describe('snoozeRemaining', () => {
+    const now = 1_000_000_000_000
+
+    it('returns 0 when there is no active snooze', () => {
+        expect(snoozeRemaining(now, 0, '', undefined)).toBe(0)
+        expect(snoozeRemaining(now, now, '1.7.0', '1.7.0')).toBe(0)
+    })
+
+    it('returns the remaining time for an active snooze', () => {
+        expect(snoozeRemaining(now, now + UPDATE_SNOOZE_MS, '1.7.0', '1.7.0')).toBe(UPDATE_SNOOZE_MS)
+        expect(snoozeRemaining(now, now + 5_000, '1.7.0', undefined)).toBe(5_000)
+    })
+
+    it('breaks the snooze early when a newer release appears', () => {
+        expect(snoozeRemaining(now, now + UPDATE_SNOOZE_MS, '1.7.0', '1.8.0')).toBe(0)
+    })
+
+    it('keeps the snooze for the same or an older release', () => {
+        expect(snoozeRemaining(now, now + UPDATE_SNOOZE_MS, '1.8.0', '1.7.0')).toBe(UPDATE_SNOOZE_MS)
     })
 })
 

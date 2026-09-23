@@ -10,6 +10,7 @@ export type UpdateStatus =
     | { state: 'error'; message: string }
 
 export const CHECK_THROTTLE_MS = 6 * 60 * 60 * 1000 // 6 hours
+export const UPDATE_SNOOZE_MS = 24 * 60 * 60 * 1000 // 1 day
 
 export function compareVersions(a: string, b: string): number {
     const pa = a.split('.').map(Number)
@@ -30,6 +31,18 @@ export function isNewerVersion(current: string, available: string): boolean {
 export function isUpdateAvailable(current: string | undefined, available: string | undefined): boolean {
     if (!current || !available) return false
     return compareVersions(available, current) > 0
+}
+
+export function snoozeRemaining(
+    now: number,
+    untilMs: number,
+    snoozedVersion: string | undefined,
+    version: string | undefined,
+): number {
+    const remaining = untilMs - now
+    if (remaining <= 0) return 0
+    if (snoozedVersion && version && compareVersions(version, snoozedVersion) > 0) return 0
+    return remaining
 }
 
 export function mapUpdateError(err: unknown): string {
