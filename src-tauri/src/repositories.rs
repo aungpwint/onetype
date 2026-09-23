@@ -255,7 +255,7 @@ pub fn get_active_student(conn: &Connection) -> Result<Option<Student>> {
 
 // ---------- lesson progress ----------
 
-const LESSON_PROGRESS_COLS: &str = "student_id, lesson_id, level, lesson_number, best_wpm, best_accuracy, attempts, completions, completed, last_practiced_at, content_version";
+const LESSON_PROGRESS_COLS: &str = "student_id, lesson_id, level, lesson_number, best_wpm, best_accuracy, attempts, completions, completed, last_practiced_at, content_version, resume_unit, resume_phase_id, resume_correct, resume_incorrect, resume_backspace, resume_started_at, resume_updated_at";
 
 fn row_to_lesson_progress(row: &rusqlite::Row<'_>) -> rusqlite::Result<LessonProgress> {
     Ok(LessonProgress {
@@ -270,6 +270,13 @@ fn row_to_lesson_progress(row: &rusqlite::Row<'_>) -> rusqlite::Result<LessonPro
         completed: row.get::<_, i64>("completed")? != 0,
         last_practiced_at: row.get("last_practiced_at")?,
         content_version: row.get("content_version")?,
+        resume_unit: row.get("resume_unit")?,
+        resume_phase_id: row.get("resume_phase_id")?,
+        resume_correct: row.get("resume_correct")?,
+        resume_incorrect: row.get("resume_incorrect")?,
+        resume_backspace: row.get("resume_backspace")?,
+        resume_started_at: row.get("resume_started_at")?,
+        resume_updated_at: row.get("resume_updated_at")?,
     })
 }
 
@@ -308,6 +315,80 @@ pub fn save_lesson_progress(
     )?;
     get_lesson_progress(conn, &req.student_id, &req.lesson_id)?
         .ok_or_else(|| AppError::not_found("Lesson progress not found."))
+}
+
+pub fn save_lesson_resume(
+    conn: &Connection,
+    req: &SaveLessonResumeRequest,
+) -> Result<LessonProgress> {
+    require_student(conn, &req.student_id)?;
+    check_not_negative_i64(req.lesson_number, "lessonNumber")?;
+    if req.resume_unit <= 0 {
+        return Err(AppError::validation(
+            "resumeUnit must be a positive integer.",
+        ));
+    }
+    check_not_negative_i64(req.resume_correct, "resumeCorrect")?;
+    check_not_negative_i64(req.resume_incorrect, "resumeIncorrect")?;
+    check_not_negative_i64(req.resume_backspace, "resumeBackspace")?;
+    if req.resume_updated_at <= 0 {
+        return Err(AppError::validation(
+            "resumeUpdatedAt must be a positive integer.",
+        ));
+    }
+    conn.execute(
+        "INSERT INTO lesson_progress (id, student_id, lesson_id, level, lesson_number, best_wpm, best_accuracy, attempts, completions, completed, last_practiced_at, content_version, resume_unit, resume_phase_id, resume_correct, resume_incorrect, resume_backspace, resume_started_at, resume_updated_at)
+         VALUES (?1, ?2, ?3, ?4, ?5, 0, 0, 0, 0, 0, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)
+         ON CONFLICT(student_id, lesson_id) DO UPDATE SET
+            last_practiced_at = excluded.last_practiced_at,
+            content_version = MAX(content_version, excluded.content_version),
+            resume_unit = excluded.resume_unit,
+            resume_phase_id = excluded.resume_phase_id,
+            resume_correct = excluded.resume_correct,
+            resume_incorrect = excluded.resume_incorrect,
+            resume_backspace = excluded.resume_backspace,
+            resume_started_at = excluded.resume_started_at,
+            resume_updated_at = excluded.resume_updated_at",
+        params![
+            new_id("lp"),
+            req.student_id,
+            req.lesson_id,
+            req.level,
+            req.lesson_number,
+            now_millis(),
+            req.content_version,
+            req.resume_unit,
+            req.resume_phase_id,
+            req.resume_correct,
+            req.resume_incorrect,
+            req.resume_backspace,
+            req.resume_started_at,
+            req.resume_updated_at,
+        ],
+    )?;
+    get_lesson_progress(conn, &req.student_id, &req.lesson_id)?
+        .ok_or_else(|| AppError::not_found("Lesson progress not found."))
+}
+
+pub fn clear_lesson_resume(
+    conn: &Connection,
+    student_id: &str,
+    lesson_id: &str,
+) -> Result<()> {
+    require_student(conn, student_id)?;
+    conn.execute(
+        "UPDATE lesson_progress SET
+            resume_unit = NULL,
+            resume_phase_id = NULL,
+            resume_correct = 0,
+            resume_incorrect = 0,
+            resume_backspace = 0,
+            resume_started_at = NULL,
+            resume_updated_at = NULL
+         WHERE student_id = ?1 AND lesson_id = ?2",
+        params![student_id, lesson_id],
+    )?;
+    Ok(())
 }
 
 pub fn get_lesson_progress(
@@ -1124,7 +1205,9 @@ pub fn load_export(conn: &Connection, student_filter: Option<&str>) -> Result<Ex
     let mut all_test_results = Vec::new();
 
     for s in &students {
-        let mut stmt = conn.prepare("SELECT student_id, lesson_id, level, lesson_number, best_wpm, best_accuracy, attempts, completions, completed, last_practiced_at, content_version FROM lesson_progress WHERE student_id = ?1")?;
+        let mut stmt = conn.prepare(&format!(
+            "SELECT {LESSON_PROGRESS_COLS} FROM lesson_progress WHERE student_id = ?1"
+        ))?;
         let rows = stmt.query_map(params![s.id], row_to_lesson_progress)?;
         let mut p = Vec::new();
         for row in rows {
@@ -1264,9 +1347,9 @@ pub fn import_export(conn: &mut Connection, file: ExportFile) -> Result<ImportRe
                 continue;
             }
             tx.execute(
-                "INSERT OR IGNORE INTO lesson_progress (id, student_id, lesson_id, level, lesson_number, best_wpm, best_accuracy, attempts, completions, completed, last_practiced_at, content_version)
-                 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)",
-                params![new_id("lp"), s.id, lp.lesson_id, lp.level, lp.lesson_number, lp.best_wpm, lp.best_accuracy, lp.attempts, lp.completions, i64::from(lp.completed), lp.last_practiced_at, lp.content_version],
+                "INSERT OR IGNORE INTO lesson_progress (id, student_id, lesson_id, level, lesson_number, best_wpm, best_accuracy, attempts, completions, completed, last_practiced_at, content_version, resume_unit, resume_phase_id, resume_correct, resume_incorrect, resume_backspace, resume_started_at, resume_updated_at)
+                 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19)",
+                params![new_id("lp"), s.id, lp.lesson_id, lp.level, lp.lesson_number, lp.best_wpm, lp.best_accuracy, lp.attempts, lp.completions, i64::from(lp.completed), lp.last_practiced_at, lp.content_version, lp.resume_unit, lp.resume_phase_id, lp.resume_correct, lp.resume_incorrect, lp.resume_backspace, lp.resume_started_at, lp.resume_updated_at],
             )?;
         }
         for er in es.exercise_results {
@@ -1503,6 +1586,125 @@ mod tests {
                 wpm: -5.0,
                 accuracy: 90.0,
                 completed: true,
+                content_version: 1,
+            },
+        );
+        assert!(result.is_err());
+        assert_eq!(result.err().unwrap().code, "validation_error");
+    }
+
+    #[test]
+    fn save_lesson_resume_persists_and_updates_checkpoint() {
+        let db = Database::open_in_memory().unwrap();
+        let id = seeded_student_id(&db);
+        let saved = save_lesson_resume(
+            db.conn(),
+            &SaveLessonResumeRequest {
+                student_id: id.clone(),
+                lesson_id: "l1".into(),
+                level: "beginner".into(),
+                lesson_number: 1,
+                resume_unit: 25,
+                resume_phase_id: Some("p2".into()),
+                resume_correct: 3,
+                resume_incorrect: 1,
+                resume_backspace: 2,
+                resume_started_at: Some(1000),
+                resume_updated_at: 2000,
+                content_version: 2,
+            },
+        )
+        .unwrap();
+        assert_eq!(saved.resume_unit, Some(25));
+        assert_eq!(saved.resume_phase_id.as_deref(), Some("p2"));
+        assert_eq!(saved.resume_correct, 3);
+        assert_eq!(saved.resume_incorrect, 1);
+        assert_eq!(saved.resume_backspace, 2);
+        assert_eq!(saved.resume_started_at, Some(1000));
+        assert_eq!(saved.resume_updated_at, Some(2000));
+        // A checkpoint write must never touch the mastery aggregates.
+        assert_eq!(saved.attempts, 0);
+        assert_eq!(saved.completions, 0);
+
+        let updated = save_lesson_resume(
+            db.conn(),
+            &SaveLessonResumeRequest {
+                student_id: id.clone(),
+                lesson_id: "l1".into(),
+                level: "beginner".into(),
+                lesson_number: 1,
+                resume_unit: 31,
+                resume_phase_id: Some("p2".into()),
+                resume_correct: 7,
+                resume_incorrect: 2,
+                resume_backspace: 2,
+                resume_started_at: Some(1000),
+                resume_updated_at: 4000,
+                content_version: 2,
+            },
+        )
+        .unwrap();
+        assert_eq!(updated.resume_unit, Some(31));
+        assert_eq!(updated.resume_correct, 7);
+        assert_eq!(updated.attempts, 0);
+
+        assert_eq!(list_lesson_progress(db.conn(), &id).unwrap().len(), 1);
+    }
+
+    #[test]
+    fn clear_lesson_resume_wipes_checkpoint_keeps_aggregates() {
+        let db = Database::open_in_memory().unwrap();
+        let id = seeded_student_id(&db);
+        save_lesson_resume(
+            db.conn(),
+            &SaveLessonResumeRequest {
+                student_id: id.clone(),
+                lesson_id: "l1".into(),
+                level: "beginner".into(),
+                lesson_number: 1,
+                resume_unit: 25,
+                resume_phase_id: Some("p2".into()),
+                resume_correct: 3,
+                resume_incorrect: 1,
+                resume_backspace: 2,
+                resume_started_at: Some(1000),
+                resume_updated_at: 2000,
+                content_version: 2,
+            },
+        )
+        .unwrap();
+        let progress = get_lesson_progress(db.conn(), &id, "l1").unwrap().unwrap();
+        assert!(progress.resume_unit.is_some());
+
+        clear_lesson_resume(db.conn(), &id, "l1").unwrap();
+        let cleared = get_lesson_progress(db.conn(), &id, "l1").unwrap().unwrap();
+        assert_eq!(cleared.resume_unit, None);
+        assert_eq!(cleared.resume_phase_id, None);
+        assert_eq!(cleared.resume_correct, 0);
+        assert_eq!(cleared.resume_incorrect, 0);
+        assert_eq!(cleared.resume_backspace, 0);
+        assert_eq!(cleared.resume_started_at, None);
+        assert_eq!(cleared.resume_updated_at, None);
+    }
+
+    #[test]
+    fn save_lesson_resume_rejects_negative_counts() {
+        let db = Database::open_in_memory().unwrap();
+        let id = seeded_student_id(&db);
+        let result = save_lesson_resume(
+            db.conn(),
+            &SaveLessonResumeRequest {
+                student_id: id,
+                lesson_id: "l1".into(),
+                level: "beginner".into(),
+                lesson_number: 1,
+                resume_unit: 10,
+                resume_phase_id: None,
+                resume_correct: -1,
+                resume_incorrect: 0,
+                resume_backspace: 0,
+                resume_started_at: None,
+                resume_updated_at: 1000,
                 content_version: 1,
             },
         );

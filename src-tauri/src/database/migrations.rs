@@ -1,4 +1,4 @@
-pub const SCHEMA_VERSION: i64 = 5;
+pub const SCHEMA_VERSION: i64 = 6;
 
 pub const MIGRATIONS: &[&str] = &[
     r#"
@@ -190,6 +190,15 @@ pub const MIGRATIONS: &[&str] = &[
     CREATE INDEX IF NOT EXISTS idx_character_stats_student ON character_statistics(student_id);
     CREATE INDEX IF NOT EXISTS idx_exercise_results_exercise ON exercise_results(student_id, exercise_id);
     CREATE INDEX IF NOT EXISTS idx_typing_sessions_num ON typing_sessions(student_id, lesson_number);
+    "#,
+    r#"
+    ALTER TABLE lesson_progress ADD COLUMN resume_unit INTEGER;
+    ALTER TABLE lesson_progress ADD COLUMN resume_phase_id TEXT;
+    ALTER TABLE lesson_progress ADD COLUMN resume_correct INTEGER NOT NULL DEFAULT 0;
+    ALTER TABLE lesson_progress ADD COLUMN resume_incorrect INTEGER NOT NULL DEFAULT 0;
+    ALTER TABLE lesson_progress ADD COLUMN resume_backspace INTEGER NOT NULL DEFAULT 0;
+    ALTER TABLE lesson_progress ADD COLUMN resume_started_at INTEGER;
+    ALTER TABLE lesson_progress ADD COLUMN resume_updated_at INTEGER;
     "#,
 ];
 

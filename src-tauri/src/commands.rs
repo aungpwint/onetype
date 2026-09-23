@@ -64,6 +64,25 @@ pub async fn save_lesson_progress(
 }
 
 #[tauri::command]
+pub async fn save_lesson_resume(
+    state: State<'_, Mutex<Database>>,
+    req: SaveLessonResumeRequest,
+) -> Result<LessonProgress> {
+    let db = lock(&state)?;
+    repo::save_lesson_resume(db.conn(), &req)
+}
+
+#[tauri::command]
+pub async fn clear_lesson_resume(
+    state: State<'_, Mutex<Database>>,
+    student_id: String,
+    lesson_id: String,
+) -> Result<()> {
+    let db = lock(&state)?;
+    repo::clear_lesson_resume(db.conn(), &student_id, &lesson_id)
+}
+
+#[tauri::command]
 pub async fn get_lesson_progress(
     state: State<'_, Mutex<Database>>,
     student_id: String,

@@ -34,6 +34,28 @@ export interface LessonProgress {
     completed: boolean
     lastPracticedAt: number
     contentVersion: number
+    resumeUnit?: number | null
+    resumePhaseId?: string | null
+    resumeCorrect?: number
+    resumeIncorrect?: number
+    resumeBackspace?: number
+    resumeStartedAt?: number | null
+    resumeUpdatedAt?: number | null
+}
+
+export interface SaveLessonResumeRequest {
+    studentId: string
+    lessonId: string
+    level: string
+    lessonNumber: number
+    resumeUnit: number
+    resumePhaseId: string | null
+    resumeCorrect: number
+    resumeIncorrect: number
+    resumeBackspace: number
+    resumeStartedAt: number | null
+    resumeUpdatedAt: number
+    contentVersion: number
 }
 
 export interface SaveLessonProgressRequest {

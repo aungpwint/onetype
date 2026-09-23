@@ -89,6 +89,20 @@ pub struct LessonProgress {
     pub completed: bool,
     pub last_practiced_at: i64,
     pub content_version: i64,
+    #[serde(default)]
+    pub resume_unit: Option<i64>,
+    #[serde(default)]
+    pub resume_phase_id: Option<String>,
+    #[serde(default)]
+    pub resume_correct: i64,
+    #[serde(default)]
+    pub resume_incorrect: i64,
+    #[serde(default)]
+    pub resume_backspace: i64,
+    #[serde(default)]
+    pub resume_started_at: Option<i64>,
+    #[serde(default)]
+    pub resume_updated_at: Option<i64>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -101,6 +115,23 @@ pub struct SaveLessonProgressRequest {
     pub wpm: f64,
     pub accuracy: f64,
     pub completed: bool,
+    pub content_version: i64,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SaveLessonResumeRequest {
+    pub student_id: String,
+    pub lesson_id: String,
+    pub level: String,
+    pub lesson_number: i64,
+    pub resume_unit: i64,
+    pub resume_phase_id: Option<String>,
+    pub resume_correct: i64,
+    pub resume_incorrect: i64,
+    pub resume_backspace: i64,
+    pub resume_started_at: Option<i64>,
+    pub resume_updated_at: i64,
     pub content_version: i64,
 }
 

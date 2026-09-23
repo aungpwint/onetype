@@ -11,6 +11,7 @@ import type {
     SaveExerciseResultRequest,
     SaveKeyStatsRequest,
     SaveLessonProgressRequest,
+    SaveLessonResumeRequest,
     SaveTestResultRequest,
     SaveTypingSessionRequest,
     StreakInfo,
@@ -240,11 +241,65 @@ export const localBackend = {
             completed: (all[index]?.completed ?? false) || completed,
             lastPracticedAt: now(),
             contentVersion: req.contentVersion,
+            resumeUnit: all[index]?.resumeUnit ?? null,
+            resumePhaseId: all[index]?.resumePhaseId ?? null,
+            resumeCorrect: all[index]?.resumeCorrect ?? 0,
+            resumeIncorrect: all[index]?.resumeIncorrect ?? 0,
+            resumeBackspace: all[index]?.resumeBackspace ?? 0,
+            resumeStartedAt: all[index]?.resumeStartedAt ?? null,
+            resumeUpdatedAt: all[index]?.resumeUpdatedAt ?? null,
         }
         if (index >= 0) all[index] = next
         else all.push(next)
         write(KEYS.lessonProgress, all)
         return next
+    },
+
+    saveLessonResume: async (req: SaveLessonResumeRequest): Promise<LessonProgress> => {
+        const all = read<LessonProgress[]>(KEYS.lessonProgress, [])
+        const index = all.findIndex((p) => p.studentId === req.studentId && p.lessonId === req.lessonId)
+        const previous = index >= 0 ? all[index] : null
+        const next: LessonProgress = {
+            studentId: req.studentId,
+            lessonId: req.lessonId,
+            level: req.level,
+            lessonNumber: req.lessonNumber,
+            bestWpm: previous?.bestWpm ?? 0,
+            bestAccuracy: previous?.bestAccuracy ?? 0,
+            attempts: previous?.attempts ?? 0,
+            completions: previous?.completions ?? 0,
+            completed: previous?.completed ?? false,
+            lastPracticedAt: now(),
+            contentVersion: req.contentVersion,
+            resumeUnit: req.resumeUnit,
+            resumePhaseId: req.resumePhaseId,
+            resumeCorrect: req.resumeCorrect,
+            resumeIncorrect: req.resumeIncorrect,
+            resumeBackspace: req.resumeBackspace,
+            resumeStartedAt: req.resumeStartedAt,
+            resumeUpdatedAt: req.resumeUpdatedAt,
+        }
+        if (index >= 0) all[index] = next
+        else all.push(next)
+        write(KEYS.lessonProgress, all)
+        return next
+    },
+
+    clearLessonResume: async (studentId: string, lessonId: string): Promise<void> => {
+        const all = read<LessonProgress[]>(KEYS.lessonProgress, [])
+        const index = all.findIndex((p) => p.studentId === studentId && p.lessonId === lessonId)
+        if (index < 0) return
+        all[index] = {
+            ...all[index],
+            resumeUnit: null,
+            resumePhaseId: null,
+            resumeCorrect: 0,
+            resumeIncorrect: 0,
+            resumeBackspace: 0,
+            resumeStartedAt: null,
+            resumeUpdatedAt: null,
+        }
+        write(KEYS.lessonProgress, all)
     },
 
     listTypingSessions: async (studentId: string, limit: number): Promise<TypingSession[]> => {
@@ -430,7 +485,7 @@ export const localBackend = {
             format: 'onetype-export',
             version: 1,
             exportedAt: now(),
-            schemaVersion: 5,
+            schemaVersion: 6,
             students: studentData,
             lessonProgress: [],
             exerciseResults: [],

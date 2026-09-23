@@ -16,6 +16,7 @@ import type {
     SaveExerciseResultRequest,
     SaveKeyStatsRequest,
     SaveLessonProgressRequest,
+    SaveLessonResumeRequest,
     SaveTestResultRequest,
     SaveTypingSessionRequest,
     StreakInfo,
@@ -69,6 +70,16 @@ export async function saveLessonProgress(req: SaveLessonProgressRequest): Promis
 export async function getLessonProgress(studentId: string, lessonId: string): Promise<LessonProgress | null> {
     if (!isTauriRuntime()) return localBackend.getLessonProgress(studentId, lessonId)
     return invokeCommand('get_lesson_progress', { studentId, lessonId })
+}
+
+export async function saveLessonResume(req: SaveLessonResumeRequest): Promise<LessonProgress | null> {
+    if (!isTauriRuntime()) return localBackend.saveLessonResume(req)
+    return invokeCommand('save_lesson_resume', { req })
+}
+
+export async function clearLessonResume(studentId: string, lessonId: string): Promise<void> {
+    if (!isTauriRuntime()) return localBackend.clearLessonResume(studentId, lessonId)
+    return invokeCommand('clear_lesson_resume', { studentId, lessonId })
 }
 
 export async function listLessonProgress(studentId: string): Promise<LessonProgress[]> {

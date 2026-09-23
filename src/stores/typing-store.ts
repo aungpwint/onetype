@@ -26,6 +26,13 @@ import { CONTENT_VERSION } from '@/services/local'
 import { playAchievementSound, playCompletionSound, playErrorSound, playKeySound } from '@/lib/sound'
 import { bindWindowFocusGuard, type FocusPolicy } from './window-focus'
 import { normalizeMyanmarForComparison } from '@/core/unicode/myanmar'
+import {
+    chooseLessonResumePoint,
+    computeResumeCheckpoint,
+    phaseContainingUnit,
+    type ResumeCheckpoint,
+    type ResumeSeed,
+} from '@/core/practice/resume'
 
 export interface LiveStats {
     unitIndex: number
@@ -136,6 +143,8 @@ interface PhaseRunTracker {
     passed: Set<string>
     boundary: Map<string, PhaseBoundarySnapshot>
     inflight: Map<string, Promise<void>>
+    /** Merged counts carried across sessions for the in-progress phase. */
+    resume: ResumeSeed | null
 }
 
 interface PhaseBoundarySnapshot {
@@ -160,6 +169,76 @@ function phaseAtBoundaryStart(lesson: ResolvedLesson, tracker: PhaseRunTracker, 
     return (prevId ? tracker.boundary.get(prevId) : undefined) ?? ZERO_BOUNDARY
 }
 
+// Unit-precision resume: the caret position plus merged counters are checkpointed
+// (debounced while typing, flushed on abandon) so a lesson that is quit mid-way
+// through an exercise resumes at the exact unit — not just at the next exercise.
+const RESUME_DEBOUNCE_MS = 2000
+let resumeSaveTimer: number | null = null
+
+function cancelResumeSave() {
+    if (resumeSaveTimer !== null) {
+        window.clearTimeout(resumeSaveTimer)
+        resumeSaveTimer = null
+    }
+}
+
+function scheduleResumeSave(session: TypingSessionState, engine: TypingEngine) {
+    cancelResumeSave()
+    resumeSaveTimer = window.setTimeout(() => {
+        resumeSaveTimer = null
+        const state = useTypingStore.getState()
+        if (state.session !== session || state.engine !== engine) return
+        void saveResumeCheckpoint(session, engine)
+    }, RESUME_DEBOUNCE_MS)
+}
+
+async function saveResumeCheckpoint(session: TypingSessionState, engine: TypingEngine): Promise<void> {
+    const tracker = phaseRunTrackers.get(session)
+    const active = useStudentStore.getState().active
+    if (!tracker || !active) return
+    const phases = session.resolved.phases
+    if (phases.length === 0) return
+    const found = phaseContainingUnit(phases, engine.unitIndex)
+    if (!found) return
+    const phase = session.resolved.phases.find((p) => p.id === found.id)
+    if (!phase) return
+    const checkpoint = computeResumeCheckpoint({
+        unitIndex: engine.unitIndex,
+        startUnit: session.startUnit,
+        phase,
+        sessionCounters: {
+            correct: engine.correctCount,
+            incorrect: engine.incorrectCount,
+            backspace: engine.backspaceCount,
+        },
+        phaseBaseCounters: phaseAtBoundaryStart(session.resolved, tracker, phase),
+        seed: tracker.resume?.phaseId === phase.id ? tracker.resume : null,
+        sessionStartedAt: session.startedAt,
+        updatedAt: Date.now(),
+    })
+    if (!checkpoint) return
+    const lesson = session.resolved
+    try {
+        await backend.saveLessonResume({
+            studentId: active.id,
+            lessonId: session.lessonId ?? lesson.id,
+            level: lesson.level,
+            lessonNumber: lesson.number,
+            resumeUnit: checkpoint.unit,
+            resumePhaseId: checkpoint.phaseId,
+            resumeCorrect: checkpoint.correct,
+            resumeIncorrect: checkpoint.incorrect,
+            resumeBackspace: checkpoint.backspace,
+            resumeStartedAt: checkpoint.startedAt,
+            resumeUpdatedAt: checkpoint.updatedAt,
+            contentVersion: CONTENT_VERSION,
+        })
+    } catch {
+        // Best-effort like every other persistence path; the next debounce or
+        // abandon flush retries.
+    }
+}
+
 function saveCompletedPhase(
     session: TypingSessionState,
     engine: TypingEngine,
@@ -177,9 +256,12 @@ function saveCompletedPhase(
         if (!active) return
         const lesson = session.resolved
         const prev = phaseAtBoundaryStart(lesson, tracker, phase)
-        const correct = engine.correctCount - prev.correct
-        const incorrect = engine.incorrectCount - prev.incorrect
-        const backspace = engine.backspaceCount - prev.backspace
+        // A phase resumed mid-way merges its carried-over counts into the verdict
+        // so an exercise completed across sessions scores its full typed span.
+        const seed = tracker.resume && tracker.resume.phaseId === phase.id ? tracker.resume : null
+        const correct = engine.correctCount - prev.correct + (seed?.correct ?? 0)
+        const incorrect = engine.incorrectCount - prev.incorrect + (seed?.incorrect ?? 0)
+        const backspace = engine.backspaceCount - prev.backspace + (seed?.backspace ?? 0)
         const times = engine.correctTimes.slice(prev.times)
         const elapsedMs = Math.max(0, engine.elapsedMs() - prev.elapsedMs)
         const metrics = computeScore({
@@ -229,6 +311,10 @@ function saveCompletedPhase(
             // The phase is left unsaved so a later boundary or finish can retry.
         }
         if (tracker.epoch === epoch) {
+            // The merged seed is consumed once its phase lands a result; the
+            // boundary captures this run's reeled-first segment for the phase
+            // that follows.
+            if (seed) tracker.resume = null
             tracker.boundary.set(phase.id, {
                 correct: engine.correctCount,
                 incorrect: engine.incorrectCount,
@@ -397,6 +483,7 @@ export const useTypingStore = create<TypingState>((set, get) => {
         bindFocusGuard()
     }
     const teardownSession = () => {
+        cancelResumeSave()
         unbindKeys()
         unbindFocusGuard()
         const current = get().session
@@ -483,12 +570,29 @@ export const useTypingStore = create<TypingState>((set, get) => {
                 for (const phase of resolved.phases) passedPhases.add(phase.id)
             }
             // A retake targets a specific already-finished exercise; otherwise
-            // resume at the first exercise that hasn't passed yet.
-            const resumeIndex =
-                atIndex !== undefined && resolved.phases.length > 0
-                    ? Math.min(Math.max(0, Math.floor(atIndex)), resolved.phases.length - 1)
-                    : resolved.phases.findIndex((phase) => !passedPhases.has(phase.id))
-            const startUnit = resumeIndex === -1 ? 0 : resolved.phases[resumeIndex].startUnit
+            // resume at the first exercise that hasn't passed yet — or, when a
+            // mid-exercise checkpoint exists, at the exact unit where the lesson
+            // was last left off.
+            const progressRow = progressRows.find((p) => p.lessonId === lessonId)
+            const checkpoint: ResumeCheckpoint | null =
+                typeof progressRow?.resumeUnit === 'number' && progressRow.resumeUnit > 0
+                    ? {
+                          unit: progressRow.resumeUnit,
+                          phaseId: progressRow.resumePhaseId ?? null,
+                          correct: progressRow.resumeCorrect ?? 0,
+                          incorrect: progressRow.resumeIncorrect ?? 0,
+                          backspace: progressRow.resumeBackspace ?? 0,
+                          startedAt: progressRow.resumeStartedAt ?? null,
+                          updatedAt: progressRow.resumeUpdatedAt ?? 0,
+                      }
+                    : null
+            const resume = chooseLessonResumePoint({
+                phases: resolved.phases,
+                passes: (phaseId) => passedPhases.has(phaseId),
+                checkpoint,
+                atIndex,
+            })
+            const startUnit = resume.startUnit
             const layout = getLayoutOrThrow(resolved.layoutId)
             const session: TypingSessionState = {
                 kind: 'lesson',
@@ -501,7 +605,14 @@ export const useTypingStore = create<TypingState>((set, get) => {
                 startUnit,
                 startedAt: Date.now(),
             }
-            phaseRunTrackers.set(session, { epoch: 0, saved: new Set(), passed: passedPhases, boundary: new Map(), inflight: new Map() })
+            phaseRunTrackers.set(session, {
+                epoch: 0,
+                saved: new Set(),
+                passed: passedPhases,
+                boundary: new Map(),
+                inflight: new Map(),
+                resume: resume.seed,
+            })
             launchSession(session)
         },
 
@@ -623,8 +734,14 @@ export const useTypingStore = create<TypingState>((set, get) => {
         },
 
         abandon: () => {
-            const { engine } = get()
-            if (engine) engine.finish('stopped')
+            const { engine, session } = get()
+            if (engine) {
+                cancelResumeSave()
+                // Persist the exact caret position before tearing the session
+                // down — quitting mid-exercise must be resumable.
+                if (session?.kind === 'lesson') void saveResumeCheckpoint(session, engine)
+                engine.finish('stopped')
+            }
             teardownSession()
         },
 
@@ -725,8 +842,14 @@ export const useTypingStore = create<TypingState>((set, get) => {
                 if (session.kind === 'lesson') {
                     // Each exercise's result was already persisted at its phase
                     // boundary; only a fast-run finish (or a retried last phase)
-                    // still needs the final verdict flushed here.
+                    // still needs the final verdict flushed here. Stop checkpoint
+                    // writes, and a lesson that passed has nothing left to
+                    // resume — drop its stored position.
+                    cancelResumeSave()
                     const lessonPassed = await lessonCurrentlyPassed(session, engine)
+                    if (lessonPassed) {
+                        await backend.clearLessonResume(active.id, session.lessonId ?? '').catch(() => undefined)
+                    }
                     await useLessonStore.getState().saveProgress({
                         studentId: active.id,
                         lessonId: session.lessonId ?? '',
@@ -849,9 +972,13 @@ function createEngine(session: TypingSessionState): TypingEngine {
                         tracker.saved.clear()
                         tracker.boundary.clear()
                     }
+                    if (event.type === 'correct' || event.type === 'incorrect' || event.type === 'backspace') {
+                        scheduleResumeSave(session, engine)
+                    }
                 }
             }
             if (event.type === 'finish' || event.type === 'time-up') {
+                cancelResumeSave()
                 bindKeys()
                 window.setTimeout(() => {
                     void useTypingStore.getState().persistAndFinish(engine)

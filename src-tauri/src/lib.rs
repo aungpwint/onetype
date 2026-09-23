@@ -57,6 +57,8 @@ pub fn run() {
             commands::set_active_student,
             commands::get_active_student,
             commands::save_lesson_progress,
+            commands::save_lesson_resume,
+            commands::clear_lesson_resume,
             commands::get_lesson_progress,
             commands::list_lesson_progress,
             commands::save_typing_session,
