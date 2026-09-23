@@ -33,6 +33,7 @@ export default function DrillPage() {
             steps={['Building your drill', 'Warming up the keyboard', 'Setting up your attempt']}
             note="Built from the keys you keep missing — or, until there's enough typing data, a tour of the whole keyboard."
             onReload={reload}
+            onLeave={() => navigate('/')}
         >
             {session?.kind === 'drill' ? <ExerciseWorkspace onExit={() => navigate('/')} backAriaLabel="Back to dashboard" /> : null}
         </SessionGate>

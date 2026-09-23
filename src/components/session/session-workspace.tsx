@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { AlertTriangle, Check, Keyboard, Loader2, Pause, Play, RotateCcw, ShieldAlert } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { formatDuration } from '@/lib/format'
 import { useTypingStore } from '@/stores/typing-store'
 import { useUiStore } from '@/stores/ui-store'
 import { useCapsLockState } from '@/hooks/use-caps-lock'
@@ -151,15 +152,38 @@ export function Session({
 }
 
 const PREP_STEP_MS = 360
+// After this long without a result the preparation card stops pretending it is
+// making progress and hands the learner concrete choices instead.
+const PREPARING_ATTENTION_AFTER_MS = 10_000
 
-function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
+const PREP_IS_LOCAL_LINE = 'Everything is set up on your device — no internet needed.'
+
+function PreparingCard({
+    steps,
+    note,
+    elapsedMs,
+    attention,
+    attempt,
+    onRetry,
+    onLeave,
+}: {
+    steps: string[]
+    note?: string
+    elapsedMs: number
+    attention: boolean
+    attempt: number
+    onRetry: () => void
+    onLeave?: () => void
+}) {
     const [active, setActive] = useState(0)
     const reduceMotion = useReducedMotion()
+    const shownActive = attention ? steps.length - 1 : active
 
     useEffect(() => {
+        if (attention) return
         const id = window.setInterval(() => setActive((a) => (a + 1) % steps.length), PREP_STEP_MS)
         return () => window.clearInterval(id)
-    }, [steps.length])
+    }, [attention, steps.length])
 
     return (
         <motion.div
@@ -181,12 +205,15 @@ function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
                     <Keyboard className="size-5" />
                 </span>
 
-                <p className="mt-5 font-display text-xl font-semibold tracking-[-0.01em]">Preparing your run</p>
+                <p className="mt-5 font-display text-xl font-semibold tracking-[-0.01em]">
+                    {attention ? 'Still getting ready…' : 'Preparing your run'}
+                </p>
+                <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">{PREP_IS_LOCAL_LINE}</p>
 
                 <ol className="mt-6 flex flex-col gap-3 text-sm">
                     {steps.map((step, i) => {
-                        const done = i < active
-                        const current = i === active
+                        const done = i < shownActive
+                        const current = i === shownActive
                         return (
                             <motion.li
                                 key={step}
@@ -212,16 +239,36 @@ function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
                     })}
                 </ol>
 
-                <div className="mt-6 h-1 w-44 overflow-hidden rounded-full bg-muted" aria-hidden>
-                    <motion.span
-                        key={active}
-                        className="block h-full rounded-full bg-accent"
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{ duration: PREP_STEP_MS / 1000, ease: 'easeInOut' }}
-                        style={{ transformOrigin: 'left' }}
-                    />
-                </div>
+                {/* An honest clock beats fake progress: the elapsed readout is what
+                    the learner can actually hold the app to. */}
+                <span
+                    aria-hidden
+                    className="mt-6 inline-flex items-center gap-2 rounded-full border border-line/70 bg-background/60 px-3 py-1 font-mono text-[0.6875rem] font-semibold tracking-[0.15em] text-muted-foreground uppercase"
+                >
+                    {attention ? 'taking a moment' : 'working'} · {formatDuration(elapsedMs)}
+                </span>
+
+                {attention ? (
+                    <div className="mt-6 flex flex-col items-center gap-2">
+                        <p className="text-base font-medium text-foreground">This is taking a little longer than usual.</p>
+                        <p className="max-w-xs text-xs leading-relaxed text-muted-foreground">
+                            Nothing is downloading and no connection is being waited on, so a retry is quick and safe.
+                            {attempt > 0 ? ` You're on attempt ${attempt + 1}.` : ''}
+                        </p>
+                        <div className="mt-1 flex items-center gap-2">
+                            <Button
+                                onClick={(e) => {
+                                    e.currentTarget.blur()
+                                    onRetry()
+                                }}
+                            >
+                                <RotateCcw className="size-4" />
+                                Try again
+                            </Button>
+                            {onLeave ? <BackButton onClick={onLeave} ariaLabel="Leave this session" compact /> : null}
+                        </div>
+                    </div>
+                ) : null}
 
                 {note ? <p className="mt-4 max-w-xs text-xs leading-relaxed text-muted-foreground">{note}</p> : null}
             </div>
@@ -229,15 +276,13 @@ function PreparingCard({ steps, note }: { steps: string[]; note?: string }) {
     )
 }
 
-const PREPARING_STUCK_AFTER_MS = 12_000
-const MAX_PREPARING_RELOADS = 3
-
 export function SessionGate({
     ready,
     loadingLabel,
     steps,
     note,
     onReload,
+    onLeave,
     children,
 }: {
     ready: boolean
@@ -245,40 +290,36 @@ export function SessionGate({
     steps?: string[]
     note?: string
     onReload?: () => void
+    onLeave?: () => void
     children: ReactNode
 }) {
     const error = useTypingStore((s) => s.error)
     const clearError = useTypingStore((s) => s.clearError)
-    const [reloads, setReloads] = useState(0)
-    const [gaveUp, setGaveUp] = useState(false)
+    const [attempt, setAttempt] = useState(0)
+    const [elapsedMs, setElapsedMs] = useState(0)
 
     useScrollLock()
 
-    // A prepare that never settles must not freeze the app: after a grace window
-    // we reload automatically a few times, then give the learner a hard failure
-    // card instead of an endless spinner.
+    const preparing = !ready && !error
+
+    // Tick an honest elapsed clock while a prepare is in flight. Rebinding to
+    // `attempt` resets the clock on each retry so a fresh try reads as fresh.
     useEffect(() => {
-        if (ready || error || gaveUp) return
-        const id = window.setTimeout(() => {
-            if (onReload && reloads < MAX_PREPARING_RELOADS) {
-                setReloads((n) => n + 1)
-                onReload()
-            } else {
-                setGaveUp(true)
-            }
-        }, PREPARING_STUCK_AFTER_MS)
-        return () => window.clearTimeout(id)
-    }, [ready, error, gaveUp, reloads, onReload])
+        if (!preparing) return
+        const startedAt = Date.now()
+        const id = window.setInterval(() => setElapsedMs(Date.now() - startedAt), 1000)
+        return () => window.clearInterval(id)
+    }, [preparing, attempt])
 
     const retry = useCallback(() => {
         clearError()
-        setReloads(0)
-        setGaveUp(false)
+        setElapsedMs(0)
+        setAttempt((n) => n + 1)
         if (onReload) onReload()
         else window.location.reload()
     }, [clearError, onReload])
 
-    const preparingNote = reloads > 0 ? 'This is taking longer than usual — trying again automatically.' : note
+    const attention = preparing && elapsedMs >= PREPARING_ATTENTION_AFTER_MS
 
     return (
         <AnimatePresence mode="wait">
@@ -302,18 +343,7 @@ export function SessionGate({
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.12 }}
                 >
-                    <PrepareFailedCard message={error} onRetry={retry} />
-                </motion.div>
-            ) : gaveUp ? (
-                <motion.div
-                    key="failed"
-                    className="flex h-full min-h-0 flex-1 items-center justify-center overflow-y-auto px-6 py-6"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.12 }}
-                >
-                    <PrepareFailedCard message="This run could not be prepared." onRetry={retry} />
+                    <PrepareFailedCard message={error} onRetry={retry} onLeave={onLeave} />
                 </motion.div>
             ) : (
                 <motion.div
@@ -324,14 +354,29 @@ export function SessionGate({
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.12 }}
                 >
-                    {steps ? <PreparingCard steps={steps} note={preparingNote} /> : <Spinner label={loadingLabel} />}
+                    {steps ? (
+                        <PreparingCard
+                            // Keyed by attempt so a retry remounts the card with a
+                            // fresh step cycle and entrance animation.
+                            key={attempt}
+                            steps={steps}
+                            note={note}
+                            elapsedMs={elapsedMs}
+                            attention={attention}
+                            attempt={attempt}
+                            onRetry={retry}
+                            onLeave={onLeave}
+                        />
+                    ) : (
+                        <Spinner label={loadingLabel} />
+                    )}
                 </motion.div>
             )}
         </AnimatePresence>
     )
 }
 
-function PrepareFailedCard({ message, onRetry }: { message: string; onRetry: () => void }) {
+function PrepareFailedCard({ message, onRetry, onLeave }: { message: string; onRetry: () => void; onLeave?: () => void }) {
     const reduceMotion = useReducedMotion()
 
     return (
@@ -355,17 +400,22 @@ function PrepareFailedCard({ message, onRetry }: { message: string; onRetry: () 
 
                 <p className="mt-5 font-display text-xl font-semibold tracking-[-0.01em]">Couldn't start this run</p>
                 <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">{message}</p>
+                <p className="mt-3 max-w-xs text-xs leading-relaxed text-muted-foreground">
+                    {PREP_IS_LOCAL_LINE} Nothing is waiting on a network, so retrying won't change your setup.
+                </p>
 
-                <Button
-                    className="mt-6"
-                    onClick={(e) => {
-                        e.currentTarget.blur()
-                        onRetry()
-                    }}
-                >
-                    <RotateCcw className="size-4" />
-                    Try again
-                </Button>
+                <div className="mt-6 flex items-center justify-center gap-2">
+                    <Button
+                        onClick={(e) => {
+                            e.currentTarget.blur()
+                            onRetry()
+                        }}
+                    >
+                        <RotateCcw className="size-4" />
+                        Try again
+                    </Button>
+                    {onLeave ? <BackButton onClick={onLeave} ariaLabel="Leave this session" compact /> : null}
+                </div>
             </div>
         </motion.div>
     )

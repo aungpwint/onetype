@@ -27,6 +27,7 @@ export default function TestPage() {
             steps={['Preparing test text', 'Warming up the keyboard', 'Setting up your attempt']}
             note="Every run is timed, scored and saved against the paper's target. Always prepare carefully and write."
             onReload={reload}
+            onLeave={() => navigate('/tests')}
         >
             {session?.kind === 'test' && session.test ? (
                 <Session durationSeconds={session.test.durationSeconds} sourceName={session.test.name} onExit={() => navigate('/tests')} />

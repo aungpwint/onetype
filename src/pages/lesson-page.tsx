@@ -36,6 +36,7 @@ export default function LessonPage() {
             steps={['Loading lesson text', 'Warming up the keyboard', 'Setting up your attempt']}
             note="Your progress is saved after every exercise. Leaving early keeps everything you finished."
             onReload={reload}
+            onLeave={() => navigate('/learn')}
         >
             {session?.kind === 'lesson' ? <ExerciseWorkspace onExit={() => navigate('/learn')} /> : null}
         </SessionGate>
