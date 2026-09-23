@@ -15,7 +15,6 @@
         "minWpm": null
     },
     "focus": ["finger-independence"],
-    "prerequisites": ["lesson-en-intermediate-16"],
     "focusKeys": ["KeyQ", "KeyA", "KeyZ", "KeyW", "KeyS", "KeyX", "KeyO", "KeyL", "Period", "KeyP", "Semicolon", "Slash"],
     "targetFingers": ["left-pinky", "left-ring", "right-ring", "right-pinky"],
     "targetHands": ["left", "right"],

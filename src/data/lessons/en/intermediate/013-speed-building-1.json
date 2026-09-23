@@ -15,7 +15,6 @@
         "minWpm": null
     },
     "focus": ["speed"],
-    "prerequisites": ["lesson-en-intermediate-12"],
     "focusKeys": [
         "KeyA",
         "KeyB",

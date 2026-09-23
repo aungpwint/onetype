@@ -15,7 +15,6 @@
         "minWpm": null
     },
     "focus": ["sentences", "punctuation"],
-    "prerequisites": ["lesson-my-intermediate-11"],
     "focusKeys": [
         "KeyB",
         "ShiftRight",

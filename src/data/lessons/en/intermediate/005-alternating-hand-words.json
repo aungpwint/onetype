@@ -15,7 +15,6 @@
         "minWpm": null
     },
     "focus": ["hand-alternation"],
-    "prerequisites": ["lesson-en-intermediate-4"],
     "focusKeys": ["KeyA", "KeyB", "KeyD", "KeyE", "KeyF", "KeyG", "KeyH", "KeyI", "KeyL", "KeyM", "KeyN", "KeyO", "KeyR", "KeyS", "KeyT", "KeyW"],
     "targetFingers": ["left-pinky", "left-ring", "left-middle", "left-index", "right-index", "right-middle", "right-ring"],
     "targetHands": ["left", "right"],

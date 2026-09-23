@@ -15,7 +15,6 @@
         "minWpm": null
     },
     "focus": ["syllable", "unicode"],
-    "prerequisites": ["lesson-my-intermediate-2"],
     "focusKeys": ["KeyC", "KeyD", "KeyE", "KeyF", "KeyI", "KeyJ", "KeyK", "KeyM", "KeyN", "KeyR", "KeyS", "KeyU", "KeyY", "Semicolon", "ShiftRight"],
     "targetFingers": ["left-index", "left-middle", "left-ring", "right-index", "right-middle", "right-pinky"],
     "targetHands": ["left", "right"],

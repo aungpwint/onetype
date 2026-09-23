@@ -15,7 +15,6 @@
         "minWpm": null
     },
     "focus": ["finger-independence"],
-    "prerequisites": ["lesson-en-intermediate-3"],
     "focusKeys": [
         "KeyQ",
         "KeyA",

@@ -15,7 +15,6 @@
         "minWpm": null
     },
     "focus": ["sentences", "punctuation"],
-    "prerequisites": ["lesson-en-intermediate-10"],
     "requiresShift": true,
     "focusKeys": [
         "KeyA",
