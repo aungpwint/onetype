@@ -427,13 +427,17 @@ jobs:
             Write-Host "Consistent publisher across all artifacts: $firstSubject"
           } else {
             foreach ($file in $files) {
-              $out = & scripts/windows-signing.ps1 -Action Verify -File $file 2>&1
+              & scripts/windows-signing.ps1 -Action Verify -File $file
               if ($LASTEXITCODE -ne 0) {
                 Write-Host "::error::Windows signing status verification FAILED for $file."
                 exit $LASTEXITCODE
               }
-              if (($out -join "`n") -notmatch 'SIGNING_STATUS=unsigned') {
-                Write-Host "::error::Windows artifact $file is NOT reported as unsigned, but no certificate is configured - refusing to publish inconsistent signing metadata."
+              # Direct, output-agnostic check: with no certificate configured every
+              # artifact must be genuinely unsigned. A valid signature would mean
+              # inconsistent signing metadata — refuse to publish it.
+              $sig = Get-AuthenticodeSignature -FilePath $file
+              if ($sig.Status -eq 'Valid') {
+                Write-Host "::error::Windows artifact $file carries a valid Authenticode signature but no certificate is configured - refusing to publish inconsistent signing metadata."
                 exit 1
               }
             }
