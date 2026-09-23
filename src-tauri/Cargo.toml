@@ -1,6 +1,6 @@
 [package]
 name = "onetype"
-version = "1.8.0"
+version = "1.9.0"
 description = "English & Myanmar typing tutor"
 authors = ["Aung Pwint"]
 edition = "2021"

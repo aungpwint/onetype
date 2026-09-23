@@ -23,11 +23,13 @@
  * The tag push triggers .github/workflows/release.yml, which builds, signs,
  * validates and publishes the GitHub Release and updater metadata.
  *
- * Required CI secrets (never local): TAURI_SIGNING_PRIVATE_KEY,
- * TAURI_SIGNING_PRIVATE_KEY_PASSWORD, and (strongly recommended but optional)
- * WINDOWS_CERTIFICATE[_PASSWORD] - when the Windows secrets are absent the
- * Windows build is produced UNSIGNED with a warning instead of failing the
- * release, see RELEASE.md section 7.
+ * Required CI secrets (never local): TAURI_SIGNING_PRIVATE_KEY +
+ * TAURI_SIGNING_PRIVATE_KEY_PASSWORD (Tauri updater signing - always required).
+ * Windows Authenticode signing is OPTIONAL and PFX-based: set
+ * WINDOWS_CERTIFICATE + WINDOWS_CERTIFICATE_PASSWORD to sign every Windows
+ * artifact; without them the release proceeds and publishes the Windows
+ * installer honestly as UNSIGNED (Tauri updater signing still applies).
+ * See RELEASE.md section 7.
  */
 
 import { spawnSync } from 'node:child_process'

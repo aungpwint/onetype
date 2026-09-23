@@ -2,48 +2,82 @@
 <#
     windows-signing.ps1
 
-    Authenticode signing / verification helper for OneType Windows production
-    builds. It is invoked in two modes:
+    Authenticode signing / verification helper for OneType Windows builds. It
+    is invoked in two modes:
 
       Sign    - called once per file by Tauri's `bundle.windows.signCommand`
-                (the `%1` placeholder is the file to sign). Decodes the base64
-                PFX from the WINDOWS_CERTIFICATE env var, imports it into the
-                CurrentUser\My certificate store, and signs the file with
-                `signtool sign` (SHA-256 digest, RFC 3161 timestamp), then
-                verifies the result before returning. When the certificate
-                env vars are NOT set, signing is SKIPPED (exit 0) with a loud
-                warning so a best-effort unsigned build can proceed.
-      Verify  - run after `tauri build` completes to check that a file carries
-                a valid, chain-trusted, SHA-256, RFC 3161 timestamped
-                Authenticode signature and to print safe release diagnostics
-                (publisher / issuer / expiry / thumbprint).
+                (the `%1` placeholder is the file to sign). WHEN a CA-issued
+                code-signing certificate is configured:
 
-    Environment variables (never commit certificates or passwords to the repo):
+                  WINDOWS_CERTIFICATE          base64 PKCS#12 (.pfx)
+                  WINDOWS_CERTIFICATE_PASSWORD password for the PFX
 
-      WINDOWS_CERTIFICATE          (BEST-EFFORT) base64-encoded PKCS#12 (.pfx)
-                                   containing the CA-issued code-signing
-                                   certificate + private key. If unset, Sign
-                                   skips the file (unsigned build with warning);
-                                   Verify fails (an unsigned file is invalid).
+                the file is Authenticode-signed with `signtool` (SHA-256
+                digest + RFC 3161 timestamp) and re-verified. When the
+                certificate is NOT configured the file is SKIPPED (exit 0) with
+                an explicit "unsigned" notice, so plain local `pnpm tauri
+                build` runs and open-source CI builds stay unsigned and
+                unblocked. Windows signing is OPTIONAL; it is never a hard
+                requirement for an open-source release.
+
+      Verify  - run after `tauri build` to report the REAL signing status of a
+                file and to print safe release diagnostics. If the file is
+                Authenticode-signed it is verified strictly (valid signature,
+                trusted chain, embedded publisher, SHA-256 digest, RFC 3161
+                timestamp). If the file is unsigned, an explicit "unsigned"
+                status is reported and the script exits 0 UNLESS -RequireSigned
+                was passed (then it fails, so CI can hard-verify the "signed"
+                mode). The script never claims an unsigned file is signed.
+
+    Environment variables (never commit certificates, passwords or tokens):
+
+      WINDOWS_CERTIFICATE          base64-encoded PKCS#12 (.pfx) containing a
+                                   CA-issued code-signing certificate + private
+                                   key. If unset, Sign skips the file (unsigned
+                                   build with a clear notice); Verify of an
+                                   unsigned file reports 'unsigned'.
       WINDOWS_CERTIFICATE_PASSWORD password for the PFX
-      WINDOWS_TIMESTAMP_URL        (optional) RFC 3161 timestamp server, defaults
-                                   to http://timestamp.digicert.com
+      WINDOWS_TIMESTAMP_URL        (optional) RFC 3161 timestamp server,
+                                   defaults to http://timestamp.digicert.com
       WINDOWS_SIGN_DESCRIPTION     (optional) description stamped into the signed
-                                   signature (the ``/d`` value). Defaults to the
-                                   product string below. The *publisher* shown by
-                                   Windows always comes from the certificate
-                                   subject, not from this string.
+                                   file (the /d value). Defaults to the product
+                                   string below. The *publisher* shown by Windows
+                                   always comes from the certificate subject, not
+                                   from this string.
+      WINDOWS_EXPECTED_PUBLISHER   (optional) expected publisher name that MUST
+                                   appear in the signing certificate subject of
+                                   every signed artifact (or pass
+                                   -ExpectedPublisher). The release workflow sets
+                                   it from the WINDOWS_EXPECTED_PUBLISHER
+                                   repository variable and independently enforces
+                                   one consistent publisher across all artifacts.
       TAURI_WINDOWS_SIGNTOOL_PATH  (optional) explicit path to signtool.exe;
                                    otherwise it is located from the Windows SDK
 
     Usage:
-      pwsh scripts/windows-signing.ps1 -Action Sign   -File <path>   # tauri signCommand
-      pwsh scripts/windows-signing.ps1 -Action Verify -File <path>   # CI / manual verification
+      powershell scripts/windows-signing.ps1 -Action Sign   -File <path>   # tauri signCommand
+      pwsh scripts/windows-signing.ps1 -Action Verify -File <path>          # unsigned → clears, signed → strict verify
+      pwsh scripts/windows-signing.ps1 -Action Verify -File <path> -RequireSigned -ExpectedPublisher "Acme Corp"
 
-    Exits non-zero on any real failure so a broken artifact fails the build.
-    The one deliberate exception: Sign exits 0 (with a warning) when no
-    WINDOWS_CERTIFICATE is configured, so an unsigned best-effort build works.
-    No secrets (PFX contents or password) are ever written to the log.
+    Exit codes:
+      0 - success. For Sign with no certificate this is an explicit "unsigned"
+          (the build continues honestly unblocked). For Verify of an unsigned
+          file without -RequireSigned, also 0 (the status is reported).
+      1 - any real failure: signing was configured but failed, verification
+          failed, a signed file was required but missing, etc.
+
+    No secrets (PFX contents, passwords, tokens) are ever written to the log.
+
+    SmartScreen note: a correctly signed installer lets Windows identify the
+    publisher from the embedded certificate (no more "Unknown publisher"). It
+    does NOT grant an instant reputation score: even a freshly signed, trusted
+    OV/EV certificate can still show "Windows protected your PC" /
+    "Microsoft Defender SmartScreen prevented an unrecognized app from
+    starting" until SmartScreen reputation accumulates through consistent
+    releases and real downloads. That is expected behavior, not a signing
+    defect; do not recommend disabling SmartScreen or Defender as a
+    workaround. There is no free configuration that makes SmartScreen warnings
+    disappear immediately for a brand-new identity.
 #>
 
 param(
@@ -52,7 +86,21 @@ param(
   [string]$Action,
 
   [Parameter(Mandatory = $true)]
-  [string]$File
+  [string]$File,
+
+  # Optional expected publisher: a human/company name that MUST appear in the
+  # signing certificate subject of every signed file (case-insensitive
+  # substring match). Defaults to the WINDOWS_EXPECTED_PUBLISHER env var; when
+  # empty the check is skipped (the release workflow still enforces a
+  # consistent publisher across all artifacts independently). This is how CI
+  # fails on an "unexpected publisher" - e.g. a wrong certificate accidentally
+  # configured in the secrets.
+  [string]$ExpectedPublisher = $env:WINDOWS_EXPECTED_PUBLISHER,
+
+  # When set (CI signed-mode verification), Verify FAILS if the file is not
+  # Authenticode-signed. When unset, Verify reports the real status and exits 0
+  # for an unsigned file (honest open-source release support).
+  [switch]$RequireSigned
 )
 
 $ErrorActionPreference = 'Stop'
@@ -129,6 +177,12 @@ function Assert-Signed([string]$Path) {
   if (-not $sig.SignerCertificate) {
     Write-Fail "no signer certificate found in '$Path'."
   }
+  if ($ExpectedPublisher) {
+    $subject = [string]$sig.SignerCertificate.Subject
+    if ($subject -notmatch [regex]::Escape($ExpectedPublisher)) {
+      Write-Fail "unexpected publisher on '$Path': certificate subject '$subject' does not contain the expected publisher '$ExpectedPublisher'."
+    }
+  }
   if (-not $sig.TimeStamperCertificate) {
     Write-Fail "signature on '$Path' is NOT timestamped - an RFC 3161 timestamp is required."
   }
@@ -158,7 +212,9 @@ if ($Action -eq 'Sign') {
   $certB64 = [string]$env:WINDOWS_CERTIFICATE
   $certPassword = [string]$env:WINDOWS_CERTIFICATE_PASSWORD
   if ([string]::IsNullOrWhiteSpace($certB64) -or [string]::IsNullOrWhiteSpace($certPassword)) {
-    Write-Host "[windows-signing] WARNING: WINDOWS_CERTIFICATE / WINDOWS_CERTIFICATE_PASSWORD are not set - SKIPPING Authenticode signing for $resolved. This build is UNSIGNED and Windows/Edge may report `"Unknown publisher`". Configure them (see RELEASE.md section 7) to sign production builds."
+    Write-Host "[windows-signing] UNSIGNED: WINDOWS_CERTIFICATE / WINDOWS_CERTIFICATE_PASSWORD are not set - SKIPPING Authenticode signing for $resolved."
+    Write-Host "[windows-signing] This Windows artifact is UNSIGNED. Windows/Edge may show 'Unknown publisher' and SmartScreen may warn on first launch."
+    Write-Host "::notice::SIGNING_STATUS=unsigned"
     exit 0
   }
 
@@ -214,12 +270,28 @@ if ($Action -eq 'Sign') {
 
     # Re-verify the freshly signed file before the build continues.
     $null = Assert-Signed $resolved
+    Write-Host "::notice::SIGNING_STATUS=signed"
     Write-Host "[windows-signing] signed and verified OK: $resolved"
   } finally {
     Remove-Item -LiteralPath $pfxPath -Force -ErrorAction SilentlyContinue
   }
 }
 else {
+  $sig = Get-AuthenticodeSignature -FilePath $resolved
+  $isSigned = ($sig.Status -ne 'NotSigned') -and ($null -ne $sig.SignerCertificate)
+
+  if (-not $isSigned -and $RequireSigned) {
+    Write-Fail "signature verification was REQUIRED (-RequireSigned) but '$resolved' is UNSIGNED."
+  }
+
+  if (-not $isSigned) {
+    Write-Host "--- Windows Authenticode signature diagnostics: $resolved"
+    Write-Host "  Status:              unsigned (no Authenticode signature present)"
+    Write-Host "::notice::SIGNING_STATUS=unsigned"
+    Write-Host "--- UNSIGNED artifact: $resolved"
+    exit 0
+  }
+
   $sig = Assert-Signed $resolved
   $cert = $sig.SignerCertificate
   $stamp = $sig.TimeStamperCertificate
@@ -232,5 +304,6 @@ else {
   Write-Host "  Cert validity:       $($cert.NotBefore.ToString('yyyy-MM-dd'))  to  $($cert.NotAfter.ToString('yyyy-MM-dd'))"
   Write-Host "  Digest algorithm:    SHA-256"
   Write-Host "  Timestamp:           $($stamp.Subject)"
+  Write-Host "::notice::SIGNING_STATUS=signed"
   Write-Host "--- verified OK: $resolved"
 }

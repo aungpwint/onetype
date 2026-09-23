@@ -26,6 +26,7 @@
  *     --owner aungpwint --repo onetype \
  *     --assets-dir dist/updates \
  *     --checksums dist/updates/checksums.txt \
+ *     --windows-signing-status signed|unsigned|unknown \
  *     --out dist/release-notes.md
  */
 
@@ -148,6 +149,7 @@ let owner = arg('owner') || process.env.GITHUB_OWNER || ''
 let repo = arg('repo') || process.env.GITHUB_REPO || ''
 let tag = arg('tag')
 let version = arg('version')
+const windowsSigningStatus = (arg('windows-signing-status') || '').toLowerCase()
 
 function buildNotes() {
     owner = ensure(owner, '--owner (or GITHUB_OWNER)')
@@ -249,6 +251,37 @@ function buildNotes() {
     // --- Checksums ----------------------------------------------------------
     const checksumsBlock = checksumsText ? `\`\`\`\n${checksumsText}\n\`\`\`` : '_Checksums are published as the `checksums.txt` release asset._'
 
+    // --- Windows signing status (honest, never a false claim) ---------------
+    const windowsSigningBlock =
+        windows.length === 0 || windowsSigningStatus === 'unknown'
+            ? ''
+            : windowsSigningStatus === 'signed'
+              ? [
+                    '## Windows Signing',
+                    '',
+                    'All Windows artifacts (application executable, NSIS installer, MSI) are',
+                    '**Authenticode-signed** with a CA-issued code-signing certificate (SHA-256',
+                    'digest + RFC 3161 timestamp). Signatures were re-verified in CI before',
+                    'upload. The publisher Windows shows on install comes from the certificate',
+                    'subject.',
+                    '',
+                ].join('\n')
+              : [
+                    '## Windows Signing',
+                    '',
+                    'The Windows installer in this release is **unsigned** — no commercial',
+                    'code-signing certificate is configured for this open-source project.',
+                    'Windows may report "Unknown publisher" or that SmartScreen blocked an',
+                    '"unrecognised app" on first launch. That is Windows reputation/trust',
+                    'behaviour, not a defect: the warning shrinks as more people download the',
+                    'app. Please do **not** disable SmartScreen or Windows Defender to install.',
+                    '',
+                    'The auto-update path is unaffected and fully protected: every update is',
+                    'signed with the OneType minisign key, verified on-device before install,',
+                    'and published with its Tauri updater `.sig` and SHA-256 checksums.',
+                    '',
+                ].join('\n')
+
     // --- Updater ------------------------------------------------------------
     const updaterNote = [
         'Every update is downloaded over HTTPS and verified against the OneType minisign public key',
@@ -268,6 +301,7 @@ function buildNotes() {
         `## Installation Instructions${install || '\n\n_No platform install instructions._'}`,
         ``,
         `## SHA256 Checksums\n\n${checksumsBlock}`,
+        windowsSigningBlock ? `\n${windowsSigningBlock}` : '',
         updaterNote ? `\n## Auto-update\n\n${updaterNote}` : '',
         ``,
     ].join('\n')
