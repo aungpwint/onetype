@@ -11,8 +11,8 @@
     "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 92,
-        "minWpm": 20
+        "minAccuracy": 85,
+        "minWpm": null
     },
     "focus": ["sentences"],
     "prerequisites": ["lesson-en-intermediate-5"],

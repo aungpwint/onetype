@@ -11,7 +11,7 @@
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 85,
+        "minAccuracy": 81,
         "minWpm": null
     },
     "focusKeys": ["Digit7", "KeyE", "KeyR", "KeyU", "KeyA", "KeyD", "KeyH", "KeyJ", "KeyK", "KeyL", "KeyM", "ShiftLeft", "ShiftRight"],
@@ -53,7 +53,7 @@
             "instruction": "ကဲ ကံ ကေ ကာ အားလုံး တွဲဖက်ရိုက်ပါ",
             "generator": {
                 "type": "chunks",
-                "keys": ["ကဲ", "ကံ", "ကာ"],
+                "keys": ["ကဲ", "ကံ", "ကေ", "ကာ"],
                 "count": 12,
                 "chunkMin": 2,
                 "chunkMax": 4,

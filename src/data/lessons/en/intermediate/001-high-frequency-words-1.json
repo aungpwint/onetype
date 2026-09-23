@@ -11,8 +11,8 @@
     "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 90,
-        "minWpm": 18
+        "minAccuracy": 83,
+        "minWpm": null
     },
     "focus": ["words"],
     "focusKeys": [

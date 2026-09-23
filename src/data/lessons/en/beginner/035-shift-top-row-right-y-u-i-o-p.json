@@ -8,10 +8,10 @@
     "titleMy": "Shift အပေါ်တန်း ညာလက် - Y U I O P",
     "description": "Right-hand top row with Left Shift. Y U I O P uppercase.",
     "difficulty": "easy",
-    "estimatedMinutes": 2,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 87,
+        "minAccuracy": 81,
         "minWpm": null
     },
     "focusKeys": ["KeyY", "ShiftLeft", "KeyU", "KeyI", "KeyO", "KeyP"],

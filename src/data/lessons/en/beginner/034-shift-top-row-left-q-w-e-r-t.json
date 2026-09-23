@@ -8,10 +8,10 @@
     "titleMy": "Shift အပေါ်တန်း ဘယ်လက် - Q W E R T",
     "description": "Left-hand top row with Right Shift. Q W E R T uppercase.",
     "difficulty": "easy",
-    "estimatedMinutes": 2,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 87,
+        "minAccuracy": 81,
         "minWpm": null
     },
     "focusKeys": ["KeyQ", "ShiftRight", "KeyW", "KeyE", "KeyR", "KeyT"],

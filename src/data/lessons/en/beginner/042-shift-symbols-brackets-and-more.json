@@ -11,7 +11,7 @@
     "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 88,
+        "minAccuracy": 82,
         "minWpm": null
     },
     "focusKeys": ["BracketLeft", "ShiftLeft", "BracketRight", "Comma", "Period", "Slash", "Equal", "Minus"],

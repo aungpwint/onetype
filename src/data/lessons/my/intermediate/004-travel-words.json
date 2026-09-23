@@ -12,7 +12,7 @@
     "keyboard": "myanmar",
     "completion": {
         "minAccuracy": 85,
-        "minWpm": 12
+        "minWpm": null
     },
     "focus": ["words"],
     "prerequisites": ["lesson-my-intermediate-3"],

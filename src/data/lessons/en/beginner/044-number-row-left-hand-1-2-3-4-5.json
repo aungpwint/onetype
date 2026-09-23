@@ -8,10 +8,10 @@
     "titleMy": "ဂဏန်းတန်း ဘယ်လက် - ၁ ၂ ၃ ၄ ၅",
     "description": "Left pinky: 1, ring: 2, middle: 3, index: 4-5.",
     "difficulty": "easy",
-    "estimatedMinutes": 2,
+    "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 87,
+        "minAccuracy": 81,
         "minWpm": null
     },
     "focusKeys": ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5"],

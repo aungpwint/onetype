@@ -11,8 +11,8 @@
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 88,
-        "minWpm": 15
+        "minAccuracy": 85,
+        "minWpm": null
     },
     "focus": ["sentences", "punctuation"],
     "prerequisites": ["lesson-my-intermediate-11"],

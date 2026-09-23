@@ -11,8 +11,8 @@
     "estimatedMinutes": 6,
     "keyboard": "mixed",
     "completion": {
-        "minAccuracy": 92,
-        "minWpm": 22
+        "minAccuracy": 88,
+        "minWpm": null
     },
     "focus": ["bilingual", "unicode", "sentences"],
     "focusKeys": [

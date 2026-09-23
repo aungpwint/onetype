@@ -11,8 +11,8 @@
     "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 90,
-        "minWpm": 20
+        "minAccuracy": 85,
+        "minWpm": null
     },
     "focus": ["finger-independence"],
     "prerequisites": ["lesson-en-intermediate-3"],

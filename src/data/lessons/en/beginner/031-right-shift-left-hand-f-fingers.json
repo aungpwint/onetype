@@ -11,7 +11,7 @@
     "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 87,
+        "minAccuracy": 81,
         "minWpm": null
     },
     "focusKeys": ["KeyF", "ShiftRight", "KeyJ", "ShiftLeft", "KeyD", "KeyS", "KeyA", "KeyR", "KeyT", "KeyY", "KeyG", "KeyB", "KeyV", "KeyH"],

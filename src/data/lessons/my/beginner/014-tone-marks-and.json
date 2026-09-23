@@ -11,7 +11,7 @@
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 85,
+        "minAccuracy": 81,
         "minWpm": null
     },
     "focusKeys": ["KeyU", "KeyM", "Semicolon", "KeyD", "ShiftRight", "KeyH", "ShiftLeft", "KeyJ", "KeyW", "KeyK"],

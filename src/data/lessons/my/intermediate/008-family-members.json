@@ -11,8 +11,8 @@
     "estimatedMinutes": 5,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 87,
-        "minWpm": 15
+        "minAccuracy": 85,
+        "minWpm": null
     },
     "focus": ["words"],
     "prerequisites": ["lesson-my-intermediate-7"],

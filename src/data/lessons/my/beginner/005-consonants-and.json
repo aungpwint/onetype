@@ -8,10 +8,10 @@
     "titleMy": "အောက်တန်း ဗျည်းများ - ခ ထ ဖ",
     "description": "ခ (KeyC) ကို ဘယ်လက် လက်ခလယ်ဖြင့် ၊ ထ (KeyX) ကို ဘယ်လက် လက်သူကြွယ်ဖြင့် ၊ ဖ (KeyZ) ကို ဘယ်လက် လက်သန်းဖြင့် ရိုက်ရသည်။",
     "difficulty": "easy",
-    "estimatedMinutes": 2,
+    "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 85,
+        "minAccuracy": 81,
         "minWpm": null
     },
     "focusKeys": ["KeyC", "KeyX", "KeyZ"],

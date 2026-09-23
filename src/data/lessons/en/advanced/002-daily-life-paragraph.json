@@ -11,8 +11,8 @@
     "estimatedMinutes": 4,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 93,
-        "minWpm": 30
+        "minAccuracy": 86,
+        "minWpm": null
     },
     "exercises": [
         {

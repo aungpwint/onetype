@@ -11,8 +11,8 @@
     "estimatedMinutes": 5,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 90,
-        "minWpm": 22
+        "minAccuracy": 85,
+        "minWpm": null
     },
     "focus": ["hand-alternation"],
     "prerequisites": ["lesson-en-intermediate-4"],

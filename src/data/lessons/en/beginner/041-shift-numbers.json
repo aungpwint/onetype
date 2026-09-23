@@ -11,7 +11,7 @@
     "estimatedMinutes": 3,
     "keyboard": "qwerty",
     "completion": {
-        "minAccuracy": 88,
+        "minAccuracy": 82,
         "minWpm": null
     },
     "focusKeys": ["Digit1", "ShiftRight", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "ShiftLeft", "Digit7", "Digit8", "Digit9", "Digit0"],

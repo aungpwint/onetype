@@ -11,8 +11,8 @@
     "estimatedMinutes": 3,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 87,
-        "minWpm": 12
+        "minAccuracy": 82,
+        "minWpm": null
     },
     "focus": ["words"],
     "prerequisites": ["lesson-my-beginner-22"],

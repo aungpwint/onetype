@@ -11,8 +11,8 @@
     "estimatedMinutes": 7,
     "keyboard": "myanmar",
     "completion": {
-        "minAccuracy": 90,
-        "minWpm": 20
+        "minAccuracy": 88,
+        "minWpm": null
     },
     "focus": ["sentences"],
     "focusKeys": [
