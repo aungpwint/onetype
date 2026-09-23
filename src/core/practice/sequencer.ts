@@ -25,6 +25,10 @@ export interface SequencerInput {
 const DEFAULT_REQUIRED_LEVEL: MasteryLevel = 'passed'
 const DEFAULT_WEAK_BOOST_THRESHOLD = 0.75
 
+// A lesson unlocks the next one after this many recorded attempts even without
+// a pass, so a learner who is struggling is never permanently stuck.
+export const PROGRESSION_AFTER_ATTEMPTS = 2
+
 function minAccuracyFor(lesson: LessonData, input: SequencerInput): number {
     return input.minAccuracyByLesson?.[lesson.id] ?? lesson.completion.minAccuracy
 }

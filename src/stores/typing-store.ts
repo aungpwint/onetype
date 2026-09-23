@@ -160,12 +160,17 @@ function phaseAtBoundaryStart(lesson: ResolvedLesson, tracker: PhaseRunTracker, 
     return (prevId ? tracker.boundary.get(prevId) : undefined) ?? ZERO_BOUNDARY
 }
 
-function saveCompletedPhase(session: TypingSessionState, engine: TypingEngine, phase: ResolvedLesson['phases'][number]): Promise<void> {
+function saveCompletedPhase(
+    session: TypingSessionState,
+    engine: TypingEngine,
+    phase: ResolvedLesson['phases'][number],
+    override?: { forcePassed?: boolean },
+): Promise<void> {
     const tracker = phaseRunTrackers.get(session)
     if (!tracker) return Promise.resolve()
     const inflight = tracker.inflight.get(phase.id)
     if (inflight) return inflight
-    if (tracker.saved.has(phase.id)) return Promise.resolve()
+    if (tracker.saved.has(phase.id) && !override?.forcePassed) return Promise.resolve()
     const epoch = tracker.epoch
     const write = (async () => {
         const active = useStudentStore.getState().active
@@ -186,7 +191,7 @@ function saveCompletedPhase(session: TypingSessionState, engine: TypingEngine, p
             clusters: splitGraphemes(phase.text).length,
             correctTimes: times,
         })
-        const passed = correct > 0 && passes(metrics, lesson.completion.minAccuracy, null)
+        const passed = override?.forcePassed ?? (correct > 0 && passes(metrics, lesson.completion.minAccuracy, null))
         const firstMs = times[0] ?? 0
         const lastMs = times[times.length - 1] ?? elapsedMs
         const request: SaveExerciseResultRequest = {
@@ -244,6 +249,15 @@ async function lessonCurrentlyPassed(session: TypingSessionState, engine: Typing
     const finalPhase = session.resolved.phases[session.resolved.phases.length - 1]
     if (finalPhase && engine.unitIndex >= finalPhase.endUnit) {
         await saveCompletedPhase(session, engine, finalPhase)
+    }
+    const runPassed = engine.currentMetrics().accuracy >= session.resolved.completion.minAccuracy
+    if (runPassed) {
+        for (const phase of session.resolved.phases) {
+            if (!tracker.passed.has(phase.id)) {
+                await saveCompletedPhase(session, engine, phase, { forcePassed: true })
+            }
+        }
+        return true
     }
     return session.resolved.phases.every((phase) => tracker.passed.has(phase.id))
 }
@@ -648,16 +662,11 @@ export const useTypingStore = create<TypingState>((set, get) => {
             }
 
             // Show the verdict immediately; the writes below upgrade the screen
-            // (achievements, mastery, save-error) as they settle. A lesson's
-            // per-exercise verdicts settle as it runs, so the initial pass state
-            // is only certain when every exercise already passed on earlier runs.
-            const lessonAlreadyPassed =
-                session.kind === 'lesson'
-                    ? lesson.phases.length > 0 && lesson.phases.every((phase) => phaseRunTrackers.get(session)?.passed.has(phase.id))
-                    : false
+            // (achievements, mastery, save-error) as they settle. For lessons the
+            // run's own accuracy is the verdict, mirroring lessonCurrentlyPassed.
             const passed =
                 session.kind === 'lesson'
-                    ? lessonAlreadyPassed
+                    ? metrics.accuracy >= lesson.completion.minAccuracy
                     : session.kind === 'drill'
                       ? true
                       : (() => {

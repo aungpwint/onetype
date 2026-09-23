@@ -9,6 +9,7 @@ import { ACHIEVEMENT_CATALOG } from '@/data/achievements'
 import * as backend from '@/services/backend'
 import { computePersonalBest, type PersonalBestInfo } from '@/core/scoring/personal-best'
 import { classStanding, type Standing } from '@/core/leaderboard/standing'
+import { PROGRESSION_AFTER_ATTEMPTS } from '@/core/practice/sequencer'
 import { Modal } from './ui'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
@@ -111,8 +112,10 @@ function ResultDialogInner() {
     const pb = usePersonalBest(result?.metrics.speed ?? 0, result?.metrics.speedUnit ?? 'wpm', session?.startedAt ?? 0, session?.layout.id ?? '')
     const rank = useClassResultRank(session?.test?.id ?? null)
 
+    const secondTry = !result?.passed && (result?.attempt ?? 0) >= PROGRESSION_AFTER_ATTEMPTS
+
     const nextLessonId =
-        result?.passed && session?.kind === 'lesson'
+        result && session?.kind === 'lesson' && (result.passed || secondTry)
             ? (lessonsByLevel[session.resolved.level]?.find(
                   (l) => l.number === session.resolved.number + 1 && l.language === session.resolved.language,
               )?.id ?? null)
@@ -214,7 +217,11 @@ function ResultDialogInner() {
                                   ? 'Clean run. Repeat to sharpen, or tweak the add-ons and go again.'
                                   : 'Well typed. Move to the next line.'
                               : 'You beat the target. Keep the form.'
-                          : `Target was ${target.minAccuracy}% accuracy${target.minWpm !== null ? ` and ${target.minWpm} WPM` : ''}. One more round.`}
+                          : `Target was ${target.minAccuracy}% accuracy${target.minWpm !== null ? ` and ${target.minWpm} WPM` : ''}. ${
+                                isLesson && secondTry
+                                    ? 'You have given this lesson a good second try — you can move on, or practice it once more.'
+                                    : 'One more round.'
+                            }`}
                 </p>
             </div>
 
@@ -344,7 +351,7 @@ function ResultDialogInner() {
                 </Button>
                 {nextLessonId ? (
                     <Button variant="brass" onClick={beforeNavigate(`/lesson/${nextLessonId}`)}>
-                        Next lesson
+                        {result.passed ? 'Next lesson' : 'Move on to next lesson'}
                         <ArrowRight className="size-4" />
                     </Button>
                 ) : null}

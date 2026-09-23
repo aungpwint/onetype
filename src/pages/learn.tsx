@@ -12,6 +12,7 @@ import { LanguageToggle } from '@/components/language-toggle'
 import { LessonCard } from '@/components/lesson-card'
 import { computeMasteryForLessons, type AttemptRecord } from '@/core/mastery'
 import { recommendNextLesson } from '@/core/practice'
+import { PROGRESSION_AFTER_ATTEMPTS } from '@/core/practice/sequencer'
 import { pct } from '@/lib/format'
 import { cn, appPageClass } from '@/lib/utils'
 import type { ExerciseResult } from '@/services/types'
@@ -113,6 +114,14 @@ export default function Learn() {
         return mastery
     }, [lessonAttemptResults, lessonsByLevel, lang])
 
+    const maxAttemptByLesson = useMemo(() => {
+        const map = new Map<string, number>()
+        for (const result of exerciseResults) {
+            map.set(result.lessonId, Math.max(result.attempt, map.get(result.lessonId) ?? 0))
+        }
+        return map
+    }, [exerciseResults])
+
     const list = useMemo(() => {
         return lessonsByLevel[level].filter((l) => l.language === (lang === 'myanmar' ? 'myanmar' : 'english')).sort((a, b) => a.number - b.number)
     }, [lessonsByLevel, level, lang])
@@ -162,12 +171,12 @@ export default function Learn() {
                 isRoot ||
                 prereqs.every((id) => {
                     const mastered = masteryByLesson.get(id)
-                    return mastered === 'passed' || mastered === 'mastered'
+                    return mastered === 'passed' || mastered === 'mastered' || (maxAttemptByLesson.get(id) ?? 0) >= PROGRESSION_AFTER_ATTEMPTS
                 })
             if (ok) unlocked.add(lesson.id)
         }
         return unlocked
-    }, [list, masteryByLesson])
+    }, [list, masteryByLesson, maxAttemptByLesson])
 
     const doneCount = list.filter((l) => progress?.[l.id]?.completed).length
 
