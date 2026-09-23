@@ -370,11 +370,7 @@ pub fn save_lesson_resume(
         .ok_or_else(|| AppError::not_found("Lesson progress not found."))
 }
 
-pub fn clear_lesson_resume(
-    conn: &Connection,
-    student_id: &str,
-    lesson_id: &str,
-) -> Result<()> {
+pub fn clear_lesson_resume(conn: &Connection, student_id: &str, lesson_id: &str) -> Result<()> {
     require_student(conn, student_id)?;
     conn.execute(
         "UPDATE lesson_progress SET

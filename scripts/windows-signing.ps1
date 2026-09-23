@@ -28,6 +28,11 @@
       WINDOWS_CERTIFICATE_PASSWORD password for the PFX
       WINDOWS_TIMESTAMP_URL        (optional) RFC 3161 timestamp server, defaults
                                    to http://timestamp.digicert.com
+      WINDOWS_SIGN_DESCRIPTION     (optional) description stamped into the signed
+                                   signature (the ``/d`` value). Defaults to the
+                                   product string below. The *publisher* shown by
+                                   Windows always comes from the certificate
+                                   subject, not from this string.
       TAURI_WINDOWS_SIGNTOOL_PATH  (optional) explicit path to signtool.exe;
                                    otherwise it is located from the Windows SDK
 
@@ -182,6 +187,15 @@ if ($Action -eq 'Sign') {
     $timestampUrl = 'http://timestamp.digicert.com'
     if ($env:WINDOWS_TIMESTAMP_URL) { $timestampUrl = $env:WINDOWS_TIMESTAMP_URL }
 
+    # The description/URL fields are stamped into the signature and surface in
+    # Windows file properties and install prompts as publication metadata. The
+    # publisher *name* itself always comes from the certificate subject.
+    $signDescription = if ($env:WINDOWS_SIGN_DESCRIPTION) {
+      $env:WINDOWS_SIGN_DESCRIPTION
+    } else {
+      'OneType - English and Myanmar typing tutor for students and classrooms'
+    }
+
     $signArgs = @(
       'sign',
       '/f', $pfxPath,
@@ -189,7 +203,7 @@ if ($Action -eq 'Sign') {
       '/fd', 'SHA256',
       '/tr', $timestampUrl,
       '/td', 'SHA256',
-      '/d', 'OneType',
+      '/d', $signDescription,
       '/du', 'https://github.com/aungpwint/onetype',
       $resolved
     )

@@ -349,6 +349,40 @@ signing-configuration gate and the verification step above stay unchanged.
 > expected and resolves as reputation builds; it is a reputation question, not
 > a signing defect.
 
+### Where the publisher information Windows installs actually comes from
+
+All of the publisher metadata below is set in `src-tauri/tauri.conf.json`
+(`bundle.*`) and in `scripts/windows-signing.ps1`. Windows itself shows more
+than one "publisher":
+
+| What Windows shows | Where it comes from | Configured as |
+| --- | --- | --- |
+| **Verified publisher** in the UAC prompt / SmartScreen | The **Authenticode certificate subject** (e.g. `CN=…, O=…`). This is the one users rely on — it can only come from a real CA-issued code-signing certificate, never from configuration. | The certificate itself (CI secret `WINDOWS_CERTIFICATE`) |
+| **Company / Manufacturer** (file Properties → Details, and the Apps & features entry) | The installer's version-info resource and uninstall registry keys | `bundle.publisher` ("Aung Pwint") |
+| **Product name, Product version** | The app/installer version info | `productName` + `version` (top level) |
+| **Copyright / LegalCopyright** | The installer's version-info resource | `bundle.copyright` |
+| **Description** | File description and uninstall `Comments` | `bundle.shortDescription` + `bundle.longDescription` |
+| **Support/website link** | Signature URL (`signtool /du`) and uninstall registry `URLInfoAbout` | `bundle.homepage` and the `/du` value in `windows-signing.ps1` |
+| **Signature description** | Stamped into the signature by `signtool /d`; override with `WINDOWS_SIGN_DESCRIPTION` | `scripts/windows-signing.ps1` |
+
+Practical consequences:
+
+- The single most important change for Windows security is obtaining an
+  **OV (or EV) code-signing certificate** whose subject is a real legal/company
+  name — that name is what Windows prints as the verified publisher. Until then,
+  every installed copy reports `Aung Pwint` (the key metadata above), which is
+  correct but has no CA-verified backing.
+- The rest of the metadata (manufacturer, copyright, description, links) must
+  stay consistent in `tauri.conf.json` so the file Properties tab, the Start
+  Menu entry and the Apps & features listing all describe the same publisher.
+- The NSIS installer uses `webviewInstallMode: embedBootstrapper` so the WebView2
+  runtime setup is embedded and silent: installing no longer launches a
+  separate, unsiged Microsoft bootstrapper download in the middle of setup, and
+  `installMode: currentUser` means no admin-elevation prompt is needed. Both are
+  deliberate Windows-security/smoothness choices. For fully-offline classroom
+  machines, swap `embedBootstrapper` for `offlineInstaller` (~127 MB installer,
+  no network needed at all).
+
 ---
 
 ## 7b. macOS code signing & notarization
