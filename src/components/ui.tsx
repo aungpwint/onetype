@@ -93,6 +93,7 @@ export function Modal({
     dismissable = true,
     className,
     closeOnBackdrop,
+    disableEscape,
 }: {
     open: boolean
     onClose: () => void
@@ -102,6 +103,7 @@ export function Modal({
     dismissable?: boolean
     className?: string
     closeOnBackdrop?: boolean
+    disableEscape?: boolean
 }) {
     const panelRef = useRef<HTMLDivElement | null>(null)
     const reduceMotion = useReducedMotion()
@@ -110,7 +112,7 @@ export function Modal({
         if (!open) return
         const previouslyFocused = document.activeElement as HTMLElement | null
         const onKey = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') onClose()
+            if (event.key === 'Escape' && !disableEscape) onClose()
         }
         if (dismissable) window.addEventListener('keydown', onKey)
         // Move focus into the panel on open so keyboard users land in the dialog.
@@ -122,7 +124,7 @@ export function Modal({
             if (dismissable) window.removeEventListener('keydown', onKey)
             previouslyFocused?.focus()
         }
-    }, [open, onClose, dismissable])
+    }, [open, onClose, dismissable, disableEscape])
 
     return (
         <AnimatePresence>

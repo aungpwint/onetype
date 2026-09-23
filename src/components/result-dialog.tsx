@@ -126,18 +126,24 @@ function ResultDialogInner() {
     }, [loadCatalog])
 
     useEffect(() => {
-        if (!nextLessonId) return
+        // Enter advances to the next lesson, or falls back to re-running the
+        // same round when there is no next lesson to move to. Never activate
+        // while focus sits on an interactive control (native behaviour wins).
         const onKey = (event: KeyboardEvent) => {
             if (event.key !== 'Enter') return
             const tag = (event.target as HTMLElement | null)?.tagName
             if (tag === 'BUTTON' || tag === 'A' || tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return
             event.preventDefault()
-            clear()
-            navigate(`/lesson/${nextLessonId}`)
+            if (nextLessonId) {
+                clear()
+                navigate(`/lesson/${nextLessonId}`)
+            } else {
+                retry()
+            }
         }
         window.addEventListener('keydown', onKey)
         return () => window.removeEventListener('keydown', onKey)
-    }, [nextLessonId, clear, navigate])
+    }, [nextLessonId, clear, navigate, retry])
 
     if (!result || !session) return null
 
@@ -178,6 +184,7 @@ function ResultDialogInner() {
             ariaLabel="Session result"
             width="max-w-4xl"
             closeOnBackdrop={false}
+            disableEscape
             className="max-h-[min(calc(100vh-3rem),900px)] overflow-y-auto"
         >
             <div className="pr-10">
