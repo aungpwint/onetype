@@ -42,7 +42,17 @@ export function cursorProgressInCluster(unitIndex: number, startUnit: number, en
 // grapheme's result is memoized on a full content signature, so re-renders
 // only recompute when the caret unit, slot texts, or per-unit outcomes change.
 export function graphemePresentation(unitIndex: number, startUnit: number, slots: GraphemeSlot[], query: UnitOutcomeQuery): GraphemePresentation {
-    const endUnit = startUnit + slots.length
+    // A grapheme's unit span is driven by its keyboard presses, not its
+    // code-point count — multi-codepoint aliases such as "၎င်း" map every
+    // slot to a single unit (unitLocal 0). Deriving endUnit from the slot
+    // count alone keeps such graphemes wrongly "current" while the caret is
+    // already inside the following grapheme, which makes two graphemes
+    // current at once and turns the shared branch cache into a render loop.
+    let maxUnitLocal = -1
+    for (const slot of slots) {
+        if (slot.unitLocal > maxUnitLocal) maxUnitLocal = slot.unitLocal
+    }
+    const endUnit = startUnit + maxUnitLocal + 1
     if (!isCurrentGrapheme(unitIndex, startUnit, endUnit)) {
         if (unitIndex >= endUnit) {
             return rangeHasIncorrect(query, startUnit, endUnit) ? INCORRECT : CORRECT

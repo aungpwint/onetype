@@ -180,6 +180,28 @@ describe('graphemePresentation (canonical per-unit render state)', () => {
         expect(graphemePresentation(5, 5, [], EMPTY).correctness).toBe('correct')
         expect(graphemePresentation(6, 5, [], EMPTY).correctness).toBe('correct')
     })
+
+    it('spans multi-code-point single-press aliases by press units, not slot count (၎င်း)', () => {
+        // "၎င်း" is U+104E U+1004 U+103A U+1038 produced by ONE keystroke, so
+        // every logical slot maps to the same unit — the cluster really spans
+        // one unit, not four. Deriving the span from the slot count keeps it
+        // "current" while the caret is already in the following grapheme,
+        // driving two current chars and locking the branch cache in a render
+        // loop ("Maximum update depth exceeded").
+        const kyain: GraphemeSlot[] = ['\u104E', '\u1004', '\u103A', '\u1038'].map((text) => ({ text, unitLocal: 0 }))
+
+        expect(graphemePresentation(4, 4, kyain, EMPTY).isCurrent).toBe(true)
+        expect(graphemePresentation(4, 4, kyain, EMPTY).slots).toHaveLength(4)
+
+        // The caret has moved on: the alias is finished, never current again.
+        const done = graphemePresentation(5, 4, kyain, queryOf([[4, true]]))
+        expect(done).toEqual({ isCurrent: false, progress: 1, correctness: 'correct', slots: null })
+
+        // A following grapheme at unit 5 is the sole current one.
+        const next = graphemePresentation(5, 5, [{ text: 'တ', unitLocal: 0 }], queryOf([[4, true]]))
+        expect(next.isCurrent).toBe(true)
+        expect(graphemePresentation(5, 4, kyain, queryOf([[4, true]]))).toBe(done)
+    })
 })
 
 describe('cursorProgressInCluster (STATE 1 — input/cursor progress)', () => {
